@@ -741,30 +741,40 @@
   }
 
   // ── Step navigation ───────────────────────────────────────────────────────
-  async function nextStep() {
-    await saveCurrentStep();
-    if (currentStep < 5) goToStep(currentStep + 1);
+  function nextStep() {
+    const prev = currentStep;
+    if (currentStep < 5) {
+      goToStep(currentStep + 1);
+    }
+    // Save in background without blocking UI
+    saveCurrentStep(prev);
   }
 
-  async function nextStepD() {
-    await saveCurrentStep();
+  function nextStepD() {
+    const prev = currentStep;
     goToStep(4);
     const cta = document.getElementById('ctaDashboard');
     if (cta) cta.style.display = '';
+    saveCurrentStep(prev);
   }
 
   function prevStep() {
-    if (currentStep > 0) goToStep(currentStep - 1);
+    if (currentStep > 0) {
+      goToStep(currentStep - 1);
+    }
   }
 
   function goToStep(n) {
-    const curEl = document.getElementById('step-' + currentStep);
-    if (curEl) curEl.classList.remove('active');
+    document.querySelectorAll('.step-pane').forEach(p => p.classList.remove('active'));
     currentStep = n;
     const nextEl = document.getElementById('step-' + n);
     if (nextEl) nextEl.classList.add('active');
     updateProgressBar();
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const mf = document.querySelector('.mobile-frame');
+    if (mf) mf.scrollTop = 0;
+    const appEl = document.getElementById('app');
+    if (appEl) appEl.scrollTop = 0;
   }
 
   function updateProgressBar() {
@@ -780,11 +790,21 @@
   }
 
   // ── Save logic ────────────────────────────────────────────────────────────
-  async function saveCurrentStep() {
-    if (!userId) return;
-    const data = collectStepData(currentStep);
-    await VDB.updateHealthSection(userId, data);
-    flashSave(currentStep);
+  async function saveCurrentStep(stepToSave) {
+    const s = typeof stepToSave === 'number' ? stepToSave : currentStep;
+    try {
+      if (!userId) {
+        const u = firebase.auth().currentUser || (window.__spaAuth && window.__spaAuth.user);
+        if (u) userId = u.uid;
+      }
+      if (userId) {
+        const data = collectStepData(s);
+        await VDB.updateHealthSection(userId, data);
+        flashSave(s);
+      }
+    } catch (err) {
+      console.warn('[health-profile] save error on step ' + s + ':', err);
+    }
   }
 
   function collectStepData(step) {
@@ -876,70 +896,88 @@
   }
 
   async function saveLab() {
-    if (!userId) return;
-    const num = id => { 
-      const el = document.getElementById(id);
-      if (!el || el.value === '') return null;
-      const v = parseFloat(el.value); 
-      return isNaN(v) ? null : v; 
-    };
-    const creatinine = num('labCreatinine');
-    const acr = num('labACR');
+    try {
+      if (!userId) {
+        const u = firebase.auth().currentUser || (window.__spaAuth && window.__spaAuth.user);
+        if (u) userId = u.uid;
+      }
+      if (userId) {
+        const num = id => { 
+          const el = document.getElementById(id);
+          if (!el || el.value === '') return null;
+          const v = parseFloat(el.value); 
+          return isNaN(v) ? null : v; 
+        };
+        const creatinine = num('labCreatinine');
+        const acr = num('labACR');
 
-    // Calculate eGFR using MDRD formula (simplified for adults)
-    let eGFR = null;
-    if (creatinine && creatinine > 0) {
-      // eGFR = 175 × (Scr)^-1.154 × (Age)^-0.203 (simplified, assuming average age)
-      // For simplicity in this version, use: eGFR ≈ 186 / (Creatinine^1.154)
-      eGFR = Math.round(186 / Math.pow(creatinine, 1.154));
+        // Calculate eGFR using MDRD formula (simplified for adults)
+        let eGFR = null;
+        if (creatinine && creatinine > 0) {
+          eGFR = Math.round(186 / Math.pow(creatinine, 1.154));
+        }
+
+        // Determine KDIGO stage from eGFR + ACR
+        let kdigoStage = null;
+        if (eGFR !== null && acr !== null) {
+          let gStage = 'G1';
+          if (eGFR < 90 && eGFR >= 60) gStage = 'G2';
+          else if (eGFR < 60 && eGFR >= 45) gStage = 'G3a';
+          else if (eGFR < 45 && eGFR >= 30) gStage = 'G3b';
+          else if (eGFR < 30 && eGFR >= 15) gStage = 'G4';
+          else if (eGFR < 15) gStage = 'G5';
+
+          let aStage = 'A1';
+          if (acr >= 30 && acr < 300) aStage = 'A2';
+          else if (acr >= 300) aStage = 'A3';
+
+          kdigoStage = gStage + '-' + aStage;
+        }
+
+        await VDB.saveLabResults(userId, {
+          fastingGlucose:   num('labFastingGlucose'),
+          hbA1c:            num('labHbA1c'),
+          totalCholesterol: num('labTotalChol'),
+          hdl:              num('labHDL'),
+          ldl:              num('labLDL'),
+          triglycerides:    num('labTriglycerides'),
+          sbp:              num('labSBP'),
+          dbp:              num('labDBP'),
+          uricAcid:         num('labUricAcid'),
+          creatinine:       creatinine,
+          acr:              acr,
+          eGFR:             eGFR,
+          kdigoStage:       kdigoStage,
+          labDate:          document.getElementById('labDate')?.value || null,
+        });
+        flashSave(4);
+      }
+    } catch (e) {
+      console.warn('[health-profile] saveLab error:', e);
     }
-
-    // Determine KDIGO stage from eGFR + ACR
-    let kdigoStage = null;
-    if (eGFR !== null && acr !== null) {
-      // KDIGO: G (eGFR) + A (ACR)
-      let gStage = 'G1'; // eGFR ≥90
-      if (eGFR < 90 && eGFR >= 60) gStage = 'G2';
-      else if (eGFR < 60 && eGFR >= 45) gStage = 'G3a';
-      else if (eGFR < 45 && eGFR >= 30) gStage = 'G3b';
-      else if (eGFR < 30 && eGFR >= 15) gStage = 'G4';
-      else if (eGFR < 15) gStage = 'G5';
-
-      let aStage = 'A1'; // ACR <30
-      if (acr >= 30 && acr < 300) aStage = 'A2';
-      else if (acr >= 300) aStage = 'A3';
-
-      kdigoStage = gStage + '-' + aStage;
-    }
-
-    await VDB.saveLabResults(userId, {
-      fastingGlucose:   num('labFastingGlucose'),
-      hbA1c:            num('labHbA1c'),
-      totalCholesterol: num('labTotalChol'),
-      hdl:              num('labHDL'),
-      ldl:              num('labLDL'),
-      triglycerides:    num('labTriglycerides'),
-      sbp:              num('labSBP'),
-      dbp:              num('labDBP'),
-      uricAcid:         num('labUricAcid'),
-      creatinine:       creatinine,
-      acr:              acr,  // NEW: Albumin-Creatinine Ratio (BATCH 16)
-      eGFR:             eGFR, // NEW: Auto-calculated (BATCH 16)
-      kdigoStage:       kdigoStage, // NEW: Auto-derived KDIGO stage (BATCH 16)
-      labDate:          document.getElementById('labDate')?.value || null,
-    });
-    flashSave(4);
-    setTimeout(() => nav('health-dashboard.html'), 800);
+    setTimeout(() => nav('health-dashboard.html'), 600);
   }
 
-  function skipLab() { nextStep(); }
+  function skipLab() {
+    goToStep(5);
+  }
 
   async function saveSDOH() {
-    if (!userId) return;
-    const data = collectStepData(5);
-    await VDB.updateHealthSection(userId, data);
-    flashSave(5);
-    setTimeout(() => nav('health-dashboard.html'), 800);
+    try {
+      if (!userId) {
+        const u = firebase.auth().currentUser || (window.__spaAuth && window.__spaAuth.user);
+        if (u) userId = u.uid;
+      }
+      if (userId) {
+        const data = collectStepData(5);
+        await VDB.updateHealthSection(userId, data);
+        flashSave(5);
+      }
+    } catch (e) {
+      console.warn('[health-profile] saveSDOH error:', e);
+    }
+    if (typeof showToast === 'function') showToast('Profil Kesehatan Lengkap!', 'success');
+    setTimeout(() => nav('health-dashboard.html'), 600);
   }
 
   function updateSocialSlider() {
@@ -953,10 +991,9 @@
   function flashSave(step) {
     const el = document.getElementById('save-' + step);
     if (!el) return;
-    // Play notification sound when data is saved
     try {
       if (typeof playNotification === 'function') {
-        playNotification('success');  // Play success beep
+        playNotification('success');
       }
     } catch (e) {
       console.warn('⚠️ Notification sound unavailable');
@@ -1011,6 +1048,24 @@
     const sel = document.querySelector('[data-group="' + group + '"].selected');
     return sel ? sel.dataset.val : null;
   }
+
+  // Bind all functions explicitly to window for 100% mobile compatibility
+  window.nextStep = nextStep;
+  window.nextStepD = nextStepD;
+  window.prevStep = prevStep;
+  window.goToStep = goToStep;
+  window.saveCurrentStep = saveCurrentStep;
+  window.collectStepData = collectStepData;
+  window.saveLab = saveLab;
+  window.skipLab = skipLab;
+  window.saveSDOH = saveSDOH;
+  window.updateSocialSlider = updateSocialSlider;
+  window.updateSlider = updateSlider;
+  window.updateSliderRaw = updateSliderRaw;
+  window.calcBMI = calcBMI;
+  window.pickRadio = pickRadio;
+  window.pickRadioVal = pickRadioVal;
+  window.getRadioVal = getRadioVal;
 </script>
 </body>
 </html>
