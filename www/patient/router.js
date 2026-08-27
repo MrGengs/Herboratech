@@ -288,10 +288,10 @@ const HerboraTechRouter = (() => {
         let text = script.textContent;
         if (!text.trim()) continue;
 
-        // Patch location.search to use SPA params
+        // Patch location.search to use SPA params safely
         text = text.replace(
-          /location\.search/g,
-          "(window.__spaSearchString || location.search)"
+          /(?<![_.])\b(?:window\.)?location\.search\b/g,
+          "(window.__spaSearchString || window.location.search)"
         );
 
         // Halaman-halaman ini ditulis dengan asumsi skripnya berjalan di scope

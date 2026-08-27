@@ -33,9 +33,9 @@
   <div class="section">
     <!-- Profile Card -->
     <div class="neu-card" data-animate="up" style="text-align:center;">
-      <div class="neu-avatar-xl" id="profile-avatar" style="margin:0 auto 12px;overflow:hidden;">AF</div>
-      <div style="font-size:1.1rem;font-weight:700;">Ahmad Fauzi</div>
-      <div style="font-size:0.78rem;color:var(--text-tertiary);">ahmad.fauzi@email.com</div>
+      <div class="neu-avatar-xl" id="profile-avatar" style="margin:0 auto 12px;overflow:hidden;">--</div>
+      <div id="profile-name" style="font-size:1.1rem;font-weight:700;">Pengguna</div>
+      <div id="profile-email" style="font-size:0.78rem;color:var(--text-tertiary);">...</div>
       <div style="display:flex;justify-content:center;gap:12px;margin-top:16px;">
         <div class="neu-inset" style="padding:8px 16px;text-align:center;"><div style="font-size:1.1rem;font-weight:800;color:var(--primary-dark);">87</div><div style="font-size:0.6rem;color:var(--text-muted);">Health Score</div></div>
         <div class="neu-inset" style="padding:8px 16px;text-align:center;"><div style="font-size:1.1rem;font-weight:800;color:var(--info);">12</div><div style="font-size:0.6rem;color:var(--text-muted);">Konsultasi</div></div>
@@ -132,11 +132,11 @@
     }
 
     // Name
-    const nameEl = document.querySelector('.neu-card [style*="font-size:1.1rem"]');
+    const nameEl = document.getElementById('profile-name') || document.querySelector('.neu-card [style*="font-size:1.1rem"]');
     if (nameEl) nameEl.textContent = name;
 
     // Email
-    const emailEl = document.querySelector('.neu-card [style*="text-tertiary"]');
+    const emailEl = document.getElementById('profile-email') || document.querySelector('.neu-card [style*="text-tertiary"]');
     if (emailEl) emailEl.textContent = email;
 
     // Role badge — show after email

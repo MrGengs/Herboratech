@@ -93,8 +93,8 @@
   </header>
 
   <div class="section" style="padding-bottom:0">
-    <p class="text-sm" style="color:var(--text-tertiary)" data-animate="up">Selamat Pagi 👋</p>
-    <h2 style="font-size:1.3rem;font-weight:700;margin-top:2px" data-animate="up" data-delay="50">Ahmad Fauzi</h2>
+    <p class="text-sm" id="patient-greeting-time" style="color:var(--text-tertiary)" data-animate="up">Selamat Pagi 👋</p>
+    <h2 id="patient-greeting-name" style="font-size:1.3rem;font-weight:700;margin-top:2px" data-animate="up" data-delay="50">Pengguna</h2>
   </div>
 
   <!-- CAROUSEL -->
@@ -259,8 +259,12 @@
   // Update greeting with real name
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Selamat Pagi' : hour < 17 ? 'Selamat Siang' : 'Selamat Malam';
-  document.querySelector('.section p.text-sm').textContent = greeting + ' 👋';
-  document.querySelector('.section h2').textContent = profile.name || user.displayName || 'Pengguna';
+  const greetTimeEl = document.getElementById('patient-greeting-time') || document.querySelector('.section p.text-sm');
+  if (greetTimeEl) greetTimeEl.textContent = greeting + ' 👋';
+
+  const realName = profile.name || user.displayName || user.email?.split('@')[0] || 'Pengguna';
+  const greetNameEl = document.getElementById('patient-greeting-name') || document.querySelector('.section h2');
+  if (greetNameEl) greetNameEl.textContent = realName;
 
   // Load unread notification count
   const unread = await VDB.getUnreadCount(user.uid).catch(() => 0);
