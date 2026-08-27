@@ -529,6 +529,76 @@ ul, ol { list-style: none; }
   padding: var(--sp-20) var(--sp-24);
 }
 
+/* ═══════════════════════════
+   WADAH IKON
+   ═══════════════════════════ */
+
+/* Kotak membulat berisi satu ikon, dengan latar tint dari warnanya sendiri.
+   Warnanya diatur satu variabel --ib berisi tiga angka RGB, jadi tiap
+   pemakaian cukup menulis style="--ib:201,74,66" alih-alih mengulang
+   color dan background rgba yang panjang. Bentuknya tetap seragam. */
+.icon-box {
+  --ib: 14,124,70;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(var(--ib), 0.12);
+  color: rgb(var(--ib));
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.icon-box ion-icon { font-size: 1.35rem; }
+
+.icon-box-sm { width: 36px; height: 36px; border-radius: 10px; }
+.icon-box-sm ion-icon { font-size: 1.1rem; }
+
+.icon-box-lg { width: 52px; height: 52px; border-radius: 14px; }
+.icon-box-lg ion-icon { font-size: 1.6rem; }
+
+/* ═══════════════════════════
+   KEPALA KARTU
+   ═══════════════════════════ */
+
+/* Pola tetap: judul, subjudul abu di bawahnya, lalu tombol tindakan
+   kotak-membulat di pojok kanan atas. Subjudul dan tombol keduanya
+   opsional — kartu yang hanya punya judul tetap tampil benar. */
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-12);
+  margin-bottom: var(--sp-16);
+}
+.card-head-text { min-width: 0; }
+.card-head-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.2px;
+}
+.card-head-sub {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+.card-head-action {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--bg);
+  color: var(--text-secondary);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.card-head-action:hover {
+  background: rgba(14,124,70,0.12);
+  color: var(--primary-dark);
+}
+.card-head-action ion-icon { font-size: 0.95rem; }
+
 .section-header {
   display: flex;
   align-items: center;
