@@ -194,23 +194,35 @@ window.renderDashboard = async function(hp) {
   const age = hp.dateOfBirth
     ? Math.floor((Date.now() - new Date(hp.dateOfBirth)) / (365.25*24*3600*1000))
     : null;
-  document.getElementById('heroName').textContent = 'Profil Kesehatan Saya';
-  document.getElementById('heroSub').textContent  = [
-    age ? age + ' tahun' : null,
-    hp.gender === 'male' ? 'Pria' : hp.gender === 'female' ? 'Wanita' : null,
-  ].filter(Boolean).join(' · ') || 'Data tidak lengkap';
-  document.getElementById('heroEmoji').textContent = hp.gender === 'female' ? '👩' : '👨';
+  const nameEl = document.getElementById('heroName');
+  if (nameEl) nameEl.textContent = 'Profil Kesehatan Saya';
+  
+  const subEl = document.getElementById('heroSub');
+  if (subEl) {
+    subEl.textContent = [
+      age ? age + ' tahun' : null,
+      hp.gender === 'male' ? 'Pria' : hp.gender === 'female' ? 'Wanita' : null,
+    ].filter(Boolean).join(' · ') || 'Data tidak lengkap';
+  }
+  
+  const emojiEl = document.getElementById('heroEmoji');
+  if (emojiEl) emojiEl.textContent = hp.gender === 'female' ? '👩' : '👨';
 
   const bmi = hp.bmi || (hp.weightKg && hp.heightCm
     ? +(hp.weightKg / Math.pow(hp.heightCm/100, 2)).toFixed(1) : null);
   if (bmi) {
     const bmiCat = bmi < 18.5 ? 'Kurus' : bmi < 25 ? 'Normal' : bmi < 30 ? 'Gemuk' : 'Obesitas';
-    document.getElementById('heroBMI').textContent = 'BMI ' + bmi + ' — ' + bmiCat;
+    const bmiEl = document.getElementById('heroBMI');
+    if (bmiEl) bmiEl.textContent = 'BMI ' + bmi + ' — ' + bmiCat;
   }
 
   const comp = hp.profileCompleteness || 0;
-  document.getElementById('heroCompleteness').textContent = comp + '%';
-  setTimeout(() => { document.getElementById('heroCFill').style.width = comp + '%'; }, 200);
+  const compEl = document.getElementById('heroCompleteness');
+  if (compEl) compEl.textContent = comp + '%';
+  setTimeout(() => { 
+    const fillEl = document.getElementById('heroCFill');
+    if (fillEl) fillEl.style.width = comp + '%'; 
+  }, 200);
 
   // Risk scores
   const scores = RiskEngine.calculateAll(hp);
@@ -225,48 +237,55 @@ window.renderDashboard = async function(hp) {
     }
   });
   
-  VDB.saveRiskScore(currentUserId, scores).catch(console.warn);
+  if (currentUserId) VDB.saveRiskScore(currentUserId, scores).catch(console.warn);
 
   const BAR = { low: '#27AE60', medium: '#F2994A', high: '#EB5757' };
-  document.getElementById('riskGrid').innerHTML = models.map(m => {
-    const s = scores[m];
-    const color = BAR[s.category];
-    const meta  = MODEL_META[m];
-    return `<div class="risk-mini">
-      <div class="risk-mini-top">
-        <span style="font-size:1.1rem;">${meta.emoji}</span>
-        <span style="font-size:1.15rem;font-weight:800;color:${color};">${s.score}</span>
-      </div>
-      <div class="risk-mini-label">${meta.label}</div>
-      <div style="font-size:0.6rem;color:${color};font-weight:700;">${RiskEngine.RISK_LABEL_ID[s.category]}</div>
-      <div class="risk-mini-bar">
-        <div class="risk-mini-fill" style="background:${color};" data-w="${s.score}"></div>
-      </div>
-    </div>`;
-  }).join('');
+  const gridEl = document.getElementById('riskGrid');
+  if (gridEl) {
+    gridEl.innerHTML = models.map(m => {
+      const s = scores[m];
+      const color = BAR[s.category];
+      const meta  = MODEL_META[m];
+      return `<div class="risk-mini">
+        <div class="risk-mini-top">
+          <span style="font-size:1.1rem;">${meta.emoji}</span>
+          <span style="font-size:1.15rem;font-weight:800;color:${color};">${s.score}</span>
+        </div>
+        <div class="risk-mini-label">${meta.label}</div>
+        <div style="font-size:0.6rem;color:${color};font-weight:700;">${RiskEngine.RISK_LABEL_ID[s.category]}</div>
+        <div class="risk-mini-bar">
+          <div class="risk-mini-fill" style="background:${color};" data-w="${s.score}"></div>
+        </div>
+      </div>`;
+    }).join('');
 
-  setTimeout(() => {
-    document.querySelectorAll('.risk-mini-fill').forEach(el => {
-      el.style.width = el.dataset.w + '%';
-    });
-  }, 400);
+    setTimeout(() => {
+      document.querySelectorAll('.risk-mini-fill').forEach(el => {
+        el.style.width = el.dataset.w + '%';
+      });
+    }, 400);
+  }
 
   // Trend & Factors
-  const history = await VDB.getRiskScoreHistory(currentUserId, 10).catch(() => []);
+  const history = currentUserId ? await VDB.getRiskScoreHistory(currentUserId, 10).catch(() => []) : [];
   window.renderTrendChart(history);
 
   const allFactors = [];
   models.forEach(m => scores[m].factors.slice(0, 2).forEach(f => allFactors.push({ f, cat: scores[m].category })));
   const uniqueFactors = [...new Map(allFactors.map(x => [x.f, x])).values()].slice(0, 6);
   if (uniqueFactors.length > 0) {
-    document.getElementById('factorsSection').style.display = '';
-    document.getElementById('factorsList').innerHTML = uniqueFactors.map(x =>
-      `<span style="display:inline-block;padding:4px 10px;border-radius:20px;font-size:0.68rem;font-weight:600;background:${
-        x.cat === 'high' ? 'rgba(235,87,87,0.1)' : x.cat === 'medium' ? 'rgba(242,153,74,0.1)' : 'rgba(39,174,96,0.1)'
-      };color:${
-        x.cat === 'high' ? '#EB5757' : x.cat === 'medium' ? '#F2994A' : '#27AE60'
-      };margin:2px;">${x.f}</span>`
-    ).join('');
+    const secEl = document.getElementById('factorsSection');
+    const listEl = document.getElementById('factorsList');
+    if (secEl) secEl.style.display = '';
+    if (listEl) {
+      listEl.innerHTML = uniqueFactors.map(x =>
+        `<span style="display:inline-block;padding:4px 10px;border-radius:20px;font-size:0.68rem;font-weight:600;background:${
+          x.cat === 'high' ? 'rgba(235,87,87,0.1)' : x.cat === 'medium' ? 'rgba(242,153,74,0.1)' : 'rgba(39,174,96,0.1)'
+        };color:${
+          x.cat === 'high' ? '#EB5757' : x.cat === 'medium' ? '#F2994A' : '#27AE60'
+        };margin:2px;">${x.f}</span>`
+      ).join('');
+    }
   }
 
   // Herbal
@@ -276,6 +295,7 @@ window.renderDashboard = async function(hp) {
 
 window.loadHerbalRecs = async function(conditions) {
   const wrap = document.getElementById('herbalList');
+  if (!wrap) return;
   const seen = new Set();
   const results = [];
   for (const c of conditions.slice(0, 3)) {
@@ -304,7 +324,15 @@ window.loadHerbalRecs = async function(conditions) {
 
 window.renderTrendChart = function(history) {
   const container = document.getElementById('trendWrap');
-  if (!history || !history.length) return;
+  if (!container) return;
+  if (!history || !history.length) {
+    container.innerHTML = `
+      <div style="text-align:center;color:var(--text-muted);font-size:0.78rem;">
+        <ion-icon name="trending-up-outline" style="font-size:1.8rem;"></ion-icon>
+        <div style="margin-top:6px;">Belum ada data historis</div>
+      </div>`;
+    return;
+  }
 
   const latest = history[0].scores || {};
   const diseases = ['diabetes', 'heart', 'hypertension', 'stroke', 'metabolic', 'sleep'];
@@ -325,8 +353,11 @@ window.renderTrendChart = function(history) {
       </div>`;
     }).join('');
 
-  container.innerHTML = `<div style="width:100%;padding:10px 0;">${rows}</div>`;
-  document.getElementById('trendMsg').textContent = history.length + ' data tersimpan';
+  container.innerHTML = `
+    <div style="width:100%;padding:10px 0;">
+      ${rows}
+      <div style="text-align:center;color:var(--text-muted);font-size:0.7rem;margin-top:6px;">${history.length} data tersimpan</div>
+    </div>`;
 };
 
 window.recalc = async function() {
