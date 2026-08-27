@@ -222,17 +222,13 @@ const HerboraTechRouter = (() => {
         appEl.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:80vh;"><div class="neu-card" style="text-align:center;padding:40px;"><ion-icon name="hourglass-outline" style="font-size:2rem;color:var(--primary);margin-bottom:12px;display:block;"></ion-icon><div style="color:var(--text-secondary);font-size:0.85rem;">Memuat...</div></div></div>';
       }
 
-      // Fetch HTML (with cache)
-      let html = _cache.get(page);
-      if (!html) {
-        const resp = await fetch(page + '.html');
-        if (!resp.ok) {
-          appEl.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:80vh;"><div class="neu-card" style="text-align:center;padding:40px;"><ion-icon name="alert-circle-outline" style="font-size:2rem;color:var(--danger);margin-bottom:12px;display:block;"></ion-icon><div style="font-weight:600;color:var(--text-primary);">Halaman tidak ditemukan</div><div style="color:var(--text-secondary);font-size:0.8rem;margin-top:8px;">' + page + '.html</div><button class="neu-btn neu-btn-primary" style="margin-top:16px;" onclick="nav(\'home.html\')">Kembali</button></div></div>';
-          return;
-        }
-        html = await resp.text();
-        _cache.set(page, html);
+      // Fetch HTML (always fresh without stale cache)
+      const resp = await fetch(page + '.html?_t=' + Date.now(), { cache: 'no-cache' });
+      if (!resp.ok) {
+        appEl.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:80vh;"><div class="neu-card" style="text-align:center;padding:40px;"><ion-icon name="alert-circle-outline" style="font-size:2rem;color:var(--danger);margin-bottom:12px;display:block;"></ion-icon><div style="font-weight:600;color:var(--text-primary);">Halaman tidak ditemukan</div><div style="color:var(--text-secondary);font-size:0.8rem;margin-top:8px;">' + page + '.html</div><button class="neu-btn neu-btn-primary" style="margin-top:16px;" onclick="nav(\'home.html\')">Kembali</button></div></div>';
+        return;
       }
+      const html = await resp.text();
 
       // Parse HTML
       const parser = new DOMParser();
