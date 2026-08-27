@@ -486,7 +486,7 @@ function startDetailedAssessment() {
   document.getElementById('modeSelector').style.display = 'none';
   document.getElementById('introCard').style.display = 'none';
   conversationHistory = [];
-  addAIMessage(`Kita akan melakukan penilaian kesehatan menyeluruh. Saya melihat data sensor Anda:\n\n❤️ HR: ${Math.round(vitalsData.hr)} bpm\n💧 SpO2: ${Math.round(vitalsData.spo2)}%\n🌡️ Suhu: ${vitalsData.temp.toFixed(1)}°C\n\nCeritakan keluhan utama Anda secara detail — sejak kapan, seberapa sering, dan apa yang memperburuk atau memperingan gejala?`);
+  addAIMessage(`Kita akan melakukan penilaian kesehatan menyeluruh. Saya melihat data sensor Anda:\n\n❤️ HR: ${Math.round(Number(vitalsData.hr) || 0)} bpm\n💧 SpO2: ${Math.round(Number(vitalsData.spo2) || 0)}%\n🌡️ Suhu: ${Number(vitalsData.temp || 0).toFixed(1)}°C\n\nCeritakan keluhan utama Anda secara detail — sejak kapan, seberapa sering, dan apa yang memperburuk atau memperingan gejala?`);
 }
 
 function clearChat() {
@@ -560,7 +560,7 @@ async function sendChat() {
 
 Data Pasien:
 - Nama: ${currentProfile.name}
-- Vital Signs: HR ${Math.round(vitalsData.hr)} bpm, SpO2 ${Math.round(vitalsData.spo2)}%, Suhu ${vitalsData.temp.toFixed(1)}°C
+- Vital Signs: HR ${Math.round(Number(vitalsData.hr) || 0)} bpm, SpO2 ${Math.round(Number(vitalsData.spo2) || 0)}%, Suhu ${Number(vitalsData.temp || 0).toFixed(1)}°C
 - Mode: ${currentMode === 'quick' ? 'Quick Symptom Check (2-3 pertanyaan singkat)' : 'Detailed Assessment (5-7 pertanyaan mendalam)'}${riskSummary}
 
 Instruksi:
@@ -619,7 +619,7 @@ async function generateAssessment() {
 Percakapan:
 ${conversationHistory.map(m => `${m.role === 'user' ? 'Pasien' : 'AI'}: ${m.content}`).join('\n')}
 
-Vital Signs: HR ${Math.round(vitalsData.hr)}, SpO2 ${Math.round(vitalsData.spo2)}%, Suhu ${vitalsData.temp.toFixed(1)}°C
+Vital Signs: HR ${Math.round(Number(vitalsData.hr) || 0)}, SpO2 ${Math.round(Number(vitalsData.spo2) || 0)}%, Suhu ${Number(vitalsData.temp || 0).toFixed(1)}°C
 
 Balas HANYA dalam JSON valid (tanpa markdown code block):
 {

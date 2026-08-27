@@ -425,9 +425,9 @@
       // Start real-time vitals for this patient
       VitalsManager.start(patientId);
       VitalsManager.subscribe(vitals => {
-        if (vitals.hr) document.getElementById('hr-live').textContent = vitals.hr;
-        if (vitals.spo2) document.getElementById('spo2-live').textContent = vitals.spo2.toFixed(1);
-        if (vitals.temperature) document.getElementById('temp-live').textContent = vitals.temperature.toFixed(1);
+        if (vitals && vitals.hr && document.getElementById('hr-live')) document.getElementById('hr-live').textContent = Math.round(Number(vitals.hr));
+        if (vitals && vitals.spo2 && document.getElementById('spo2-live')) document.getElementById('spo2-live').textContent = Number(vitals.spo2).toFixed(1);
+        if (vitals && vitals.temperature && document.getElementById('temp-live')) document.getElementById('temp-live').textContent = Number(vitals.temperature).toFixed(1);
       });
     } else {
       // No patientId — fall back to simulation with mock data
