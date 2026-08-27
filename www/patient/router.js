@@ -298,8 +298,17 @@ const HerboraTechRouter = (() => {
           "(window.__spaSearchString || location.search)"
         );
 
+        // Bungkus dalam blok agar `let`/`const` di tingkat atas halaman menjadi
+        // block-scoped. Tanpa ini, berpindah ke halaman kedua yang mendeklarasikan
+        // nama sama (mis. `currentStep`, ada di 13 halaman screening/kuesioner)
+        // melempar "Identifier has already been declared" dan navigasi mati.
+        //
+        // Blok, bukan IIFE: deklarasi `function` tetap terangkat ke global
+        // (Annex B, sloppy mode) sehingga handler onclick="nextStep()" di HTML
+        // tetap menemukannya. IIFE menyelesaikan bentrokan tapi mematikan
+        // seluruh handler itu.
         const el = document.createElement('script');
-        el.textContent = text;
+        el.textContent = '{\n' + text + '\n}';
         appEl.appendChild(el);
       }
 

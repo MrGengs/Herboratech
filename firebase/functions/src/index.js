@@ -25,16 +25,19 @@ dotenv.config();
 admin.initializeApp();
 
 // Get Gemini API Key from environment
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || functions.config().gemini?.api_key;
+// functions.config() sudah dihentikan Google; satu-satunya sumber sekarang
+// adalah environment variable, diisi lewat firebase/functions/.env
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 if (!GEMINI_API_KEY) {
-  console.error('❌ GEMINI_API_KEY not configured. Set it via:');
-  console.error('   firebase functions:config:set gemini.api_key="your-key"');
-  console.error('   OR create .env file with GEMINI_API_KEY=your-key');
+  console.error('❌ GEMINI_API_KEY belum diisi.');
+  console.error('   Buat firebase/functions/.env berisi GEMINI_API_KEY=kunci-anda');
 }
 
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+// 'gemini-pro' sudah dipensiunkan dan akan menghasilkan 404 saat dipanggil.
+// Disamakan dengan model yang dipakai sisi klien (ai-chat.html, ai-consultation.html).
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 // CORS configuration
 const corsHandler = cors({ origin: true });

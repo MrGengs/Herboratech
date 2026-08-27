@@ -1,4 +1,7 @@
 {
+  "functions": {
+    "source": "firebase/functions"
+  },
   "hosting": {
     "public": "www",
     "ignore": [
