@@ -298,17 +298,22 @@ const HerboraTechRouter = (() => {
           "(window.__spaSearchString || location.search)"
         );
 
-        // Bungkus dalam blok agar `let`/`const` di tingkat atas halaman menjadi
-        // block-scoped. Tanpa ini, berpindah ke halaman kedua yang mendeklarasikan
-        // nama sama (mis. `currentStep`, ada di 13 halaman screening/kuesioner)
-        // melempar "Identifier has already been declared" dan navigasi mati.
+        // Halaman-halaman ini ditulis dengan asumsi skripnya berjalan di scope
+        // global. Router memuat banyak halaman ke satu scope yang sama, jadi
+        // `let`/`const` bernama sama di dua halaman melempar
+        // "Identifier '<nama>' has already been declared" dan navigasi mati.
+        // Contoh: `currentStep` ada di 13 halaman screening/kuesioner,
+        // `_geUser` di beberapa halaman lain.
         //
-        // Blok, bukan IIFE: deklarasi `function` tetap terangkat ke global
-        // (Annex B, sloppy mode) sehingga handler onclick="nextStep()" di HTML
-        // tetap menemukannya. IIFE menyelesaikan bentrokan tapi mematikan
-        // seluruh handler itu.
+        // Membungkus dengan blok atau IIFE memang menghentikan bentrokan, TAPI
+        // menyembunyikan variabel dari handler inline: onclick="..." dievaluasi
+        // di scope global, sehingga onclick di doctor-detail.html yang membaca
+        // _ddDoctorId langsung mati.
+        //
+        // `var` menyelesaikan keduanya sekaligus: boleh dideklarasi ulang, dan
+        // menjadi properti window sehingga handler inline tetap menemukannya.
         const el = document.createElement('script');
-        el.textContent = '{\n' + text + '\n}';
+        el.textContent = globalizeTopLevel(text);
         appEl.appendChild(el);
       }
 
@@ -319,6 +324,97 @@ const HerboraTechRouter = (() => {
     } finally {
       _isNavigating = false;
     }
+  }
+
+  // ─── Deklarasi tingkat atas → var ───────────────────
+  // Ubah `let`/`const` di kedalaman 0 menjadi `var`. Deklarasi bersarang
+  // dibiarkan utuh agar semantik block-scope-nya tidak berubah — mengubah
+  // `for (let i...)` menjadi `var` akan merusak closure di dalam loop.
+  //
+  // FAIL-SAFE: pemindai ini sederhana, bukan parser penuh. Kalau pembukuan
+  // kurung tidak kembali ke nol di akhir, berarti ia tersesat (mis. literal
+  // regex yang tidak terbaca benar) — dalam kasus itu skrip dikembalikan apa
+  // adanya. Konsekuensinya bentrokan mungkin tetap terjadi di halaman
+  // tersebut, tapi tidak ada kode yang berubah maknanya secara diam-diam.
+  const _BS = String.fromCharCode(92);   // backslash
+  const _NL = String.fromCharCode(10);   // newline
+
+  function globalizeTopLevel(src) {
+    let out = '', i = 0;
+    let brace = 0, paren = 0, bracket = 0;
+    let prevSig = '';
+    const tmpl = [];
+    const isWs = ch => ch === ' ' || ch === '\t' || ch === _NL || ch === '\r';
+
+    while (i < src.length) {
+      const c = src[i], c2 = src.substr(i, 2);
+
+      if (c2 === '//') { const j = src.indexOf(_NL, i); const e = j === -1 ? src.length : j; out += src.slice(i, e); i = e; continue; }
+      if (c2 === '/*') { const j = src.indexOf('*/', i + 2); const e = j === -1 ? src.length : j + 2; out += src.slice(i, e); i = e; continue; }
+
+      if (c === '"' || c === "'") {
+        let j = i + 1;
+        while (j < src.length) {
+          if (src[j] === _BS) { j += 2; continue; }
+          if (src[j] === c) { j++; break; }
+          if (src[j] === _NL) break;   // string berkutip tak boleh lintas baris
+          j++;
+        }
+        out += src.slice(i, j); i = j; prevSig = c; continue;
+      }
+
+      if (tmpl.length) {
+        const top = tmpl[tmpl.length - 1];
+        if (!top.inExpr) {
+          if (c === _BS) { out += src.substr(i, 2); i += 2; continue; }
+          if (c2 === '${') { top.inExpr = true; top.depth = 0; out += c2; i += 2; continue; }
+          if (c === '`') { tmpl.pop(); out += c; i++; continue; }
+          out += c; i++; continue;
+        }
+        if (c === '{') top.depth++;
+        if (c === '}') { if (top.depth === 0) { top.inExpr = false; out += c; i++; continue; } top.depth--; }
+      }
+      if (c === '`') { tmpl.push({ inExpr: false, depth: 0 }); out += c; i++; prevSig = c; continue; }
+
+      if (c === '/' && (prevSig === '' || '(,=:[!&|?{};+-*%~^<>'.indexOf(prevSig) !== -1)) {
+        let j = i + 1, cls = false;
+        while (j < src.length) {
+          if (src[j] === _BS) { j += 2; continue; }
+          if (src[j] === '[') cls = true;
+          else if (src[j] === ']') cls = false;
+          else if (src[j] === '/' && !cls) { j++; break; }
+          else if (src[j] === _NL) break;
+          j++;
+        }
+        while (j < src.length && /[a-z]/.test(src[j])) j++;
+        out += src.slice(i, j); i = j; prevSig = '/'; continue;
+      }
+
+      if (c === '{') brace++; else if (c === '}') brace--;
+      else if (c === '(') paren++; else if (c === ')') paren--;
+      else if (c === '[') bracket++; else if (c === ']') bracket--;
+
+      if (brace === 0 && paren === 0 && bracket === 0 && !tmpl.length && (c === 'l' || c === 'c')) {
+        const m = /^(let|const)([ \t\r\n]+[A-Za-z_$[{])/.exec(src.slice(i));
+        const boundaryOk = prevSig === '' || !/[A-Za-z0-9_$.]/.test(prevSig);
+        if (m && boundaryOk) {
+          out += 'var' + m[2];
+          i += m[0].length;
+          prevSig = m[2].trim().slice(-1);
+          continue;
+        }
+      }
+
+      out += c;
+      if (!isWs(c)) prevSig = c;
+      i++;
+    }
+
+    if (brace !== 0 || paren !== 0 || bracket !== 0) {
+      console.warn('[SPA Router] Pemindai kehilangan jejak kurung; skrip dipakai apa adanya.');
+      return src;
+    }
+    return out;
   }
 
   // Load non-shared external script if not already loaded
