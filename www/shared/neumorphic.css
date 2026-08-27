@@ -28,6 +28,18 @@ ion-icon {
   --shadow-dark: rgba(0,0,0,0.55);
   --shadow-light: rgba(255,255,255,0.045);
   
+  /* Glass — kartu melayang, agak tembus pandang.
+     Isinya GELAP, bukan putih. Di tema gelap, kaca putih transparan
+     justru mencerahkan panel sampai teks sekunder jatuh ke rasio 2.50
+     dan tersier 1.57. Kaca gelap meredupkan apa pun di belakangnya,
+     jadi teks selamat sementara warna blob tetap tembus sebagai semburat. */
+  --glass:        rgba(12,18,14,0.70);
+  --glass-strong: rgba(12,18,14,0.82);
+  --glass-border: rgba(255,255,255,0.12);
+  --glass-hi:     rgba(255,255,255,0.10);
+  --glass-blur:   blur(20px) saturate(150%);
+  --float: 0 24px 50px -18px rgba(0,0,0,0.72), 0 8px 20px -10px rgba(0,0,0,0.50);
+
   /* Aura — rim tipis + halo berwarna pada kartu. Satu variabel --aura
      mengubah warna konteks sebuah kartu tanpa menyentuh apa pun lagi. */
   --aura-green:  79,209,160;
@@ -120,7 +132,18 @@ html {
 body {
   font-family: var(--font);
   color: var(--text-primary);
-  background: var(--bg);
+  /* Blob pekat, bukan gradien lembut. Blur adalah low-pass filter: di atas
+     gradien yang sudah halus ia tidak menghapus apa pun, sehingga panel
+     kaca tidak pernah terbaca sebagai kaca. Blob memberinya sesuatu untuk
+     dikerjakan, dan warnanya tembus samar ke permukaan kartu. */
+  background:
+    radial-gradient(520px 520px at 12% 6%,   rgba(79,209,160,0.30), transparent 60%),
+    radial-gradient(460px 460px at 88% 20%,  rgba(55,199,194,0.26), transparent 60%),
+    radial-gradient(560px 560px at 74% 86%,  rgba(111,168,255,0.20), transparent 62%),
+    radial-gradient(400px 400px at 22% 76%,  rgba(255,179,71,0.15), transparent 60%),
+    var(--bg);
+  background-repeat: no-repeat;
+  background-attachment: scroll;
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
@@ -140,7 +163,7 @@ ul, ol { list-style: none; }
   width: var(--mobile-w);
   min-height: 100vh;
   margin: 0 auto;
-  background: var(--bg);
+  background: transparent;
   position: relative;
   overflow-x: hidden;
   padding-top: var(--header-h);
@@ -222,28 +245,46 @@ ul, ol { list-style: none; }
 
 /* — Card — */
 .neu-card {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-lg);
   box-shadow:
-    var(--shadow-out),
+    var(--float),
     0 0 0 1px rgba(var(--aura), var(--aura-rim)),
-    0 14px 38px -12px rgba(var(--aura), var(--aura-halo));
+    0 20px 46px -16px rgba(var(--aura), var(--aura-halo)),
+    inset 0 1px 0 var(--glass-hi);
   padding: var(--sp-24);
   transition: all 0.3s ease;
 }
 
 .neu-card-sm {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-md);
-  box-shadow: var(--shadow-out-sm);
+  box-shadow:
+    var(--float),
+    0 0 0 1px rgba(var(--aura), var(--aura-rim)),
+    0 20px 46px -16px rgba(var(--aura), var(--aura-halo)),
+    inset 0 1px 0 var(--glass-hi);
   padding: var(--sp-16);
   transition: all 0.3s ease;
 }
 
 .neu-card-flat {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-out);
+  box-shadow:
+    var(--float),
+    0 0 0 1px rgba(var(--aura), var(--aura-rim)),
+    0 20px 46px -16px rgba(var(--aura), var(--aura-halo)),
+    inset 0 1px 0 var(--glass-hi);
   padding: var(--sp-20);
 }
 
@@ -648,13 +689,20 @@ ul, ol { list-style: none; }
   width: 52px;
   height: 52px;
   border-radius: var(--r-md);
-  box-shadow: var(--shadow-out-sm);
+  box-shadow:
+    var(--float),
+    0 0 0 1px rgba(var(--aura), var(--aura-rim)),
+    0 20px 46px -16px rgba(var(--aura), var(--aura-halo)),
+    inset 0 1px 0 var(--glass-hi);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
   transition: all 0.25s ease;
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
 }
 
 .quick-item:active .qi-icon { box-shadow: var(--shadow-in-sm); transform: scale(0.95); }
@@ -678,11 +726,18 @@ ul, ol { list-style: none; }
 
 .vital-card {
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-out);
+  box-shadow:
+    var(--float),
+    0 0 0 1px rgba(var(--aura), var(--aura-rim)),
+    0 20px 46px -16px rgba(var(--aura), var(--aura-halo)),
+    inset 0 1px 0 var(--glass-hi);
   padding: var(--sp-16);
   position: relative;
   overflow: hidden;
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
 }
 
 .vital-card .v-icon { font-size: 1.4rem; margin-bottom: var(--sp-8); }
@@ -796,10 +851,17 @@ ul, ol { list-style: none; }
 }
 
 .chat-bubble.received {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   color: var(--text-primary);
   border-bottom-left-radius: 4px;
-  box-shadow: var(--shadow-out-sm);
+  box-shadow:
+    var(--float),
+    0 0 0 1px rgba(var(--aura), var(--aura-rim)),
+    0 20px 46px -16px rgba(var(--aura), var(--aura-halo)),
+    inset 0 1px 0 var(--glass-hi);
 }
 
 .chat-time { font-size: 0.62rem; color: var(--text-muted); margin-top: 3px; }
@@ -822,13 +884,20 @@ ul, ol { list-style: none; }
   width: 42px;
   height: 42px;
   border-radius: var(--r-md);
-  box-shadow: var(--shadow-out-sm);
+  box-shadow:
+    var(--float),
+    0 0 0 1px rgba(var(--aura), var(--aura-rim)),
+    0 20px 46px -16px rgba(var(--aura), var(--aura-halo)),
+    inset 0 1px 0 var(--glass-hi);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.1rem;
   flex-shrink: 0;
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
 }
 
 .notif-item .ni-content { flex: 1; }
@@ -938,7 +1007,7 @@ ul, ol { list-style: none; }
   margin-left: 260px;
   padding: var(--sp-32);
   flex: 1;
-  background: var(--bg);
+  background: transparent;
   min-height: 100vh;
 }
 
@@ -962,9 +1031,16 @@ ul, ol { list-style: none; }
 }
 
 .stat-card {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-out);
+  box-shadow:
+    var(--float),
+    0 0 0 1px rgba(var(--aura), var(--aura-rim)),
+    0 20px 46px -16px rgba(var(--aura), var(--aura-halo)),
+    inset 0 1px 0 var(--glass-hi);
   padding: var(--sp-24);
 }
 
@@ -987,9 +1063,16 @@ ul, ol { list-style: none; }
 
 /* — Data Table — */
 .neu-table-wrap {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-out);
+  box-shadow:
+    var(--float),
+    0 0 0 1px rgba(var(--aura), var(--aura-rim)),
+    0 20px 46px -16px rgba(var(--aura), var(--aura-halo)),
+    inset 0 1px 0 var(--glass-hi);
   overflow: hidden;
 }
 
