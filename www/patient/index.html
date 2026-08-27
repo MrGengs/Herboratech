@@ -41,9 +41,15 @@
   <script src="../shared/notification-audio.js"></script>
 
   <!-- SPA Router -->
-  <!-- Path absolut dari root situs: tetap benar baik diakses sebagai
-       /patient maupun /patient/. Kalau relatif ("router.js"), URL tanpa
   <script src="/patient/router.js?v=2.0.2"></script>
+  <script>
+    // Fallback jika dimuat dari direktori relatif
+    if (typeof HerboraTechRouter === 'undefined') {
+      const s = document.createElement('script');
+      s.src = 'router.js?v=2.0.2';
+      document.head.appendChild(s);
+    }
+  </script>
 
   <!-- Bootstrap: auth once, start vitals once, boot router -->
   <script>
@@ -59,7 +65,21 @@
         }
 
         // Boot router (installs patches + loads initial page)
-        HerboraTechRouter.init();
+        if (typeof HerboraTechRouter !== 'undefined') {
+          HerboraTechRouter.init();
+        } else {
+          let attempts = 0;
+          const poll = setInterval(() => {
+            attempts++;
+            if (typeof HerboraTechRouter !== 'undefined') {
+              clearInterval(poll);
+              HerboraTechRouter.init();
+            } else if (attempts > 30) {
+              clearInterval(poll);
+              console.error('[SPA] HerboraTechRouter failed to load');
+            }
+          }, 50);
+        }
       } catch (err) {
         console.error('[SPA] Bootstrap failed:', err);
       }
