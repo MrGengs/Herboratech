@@ -377,9 +377,12 @@ async function loadPatientVitals() {
 }
 
 function updateVitalsUI() {
-  document.getElementById('hrVal').textContent = Math.round(vitalsData.hr);
-  document.getElementById('spo2Val').textContent = Math.round(vitalsData.spo2) + '%';
-  document.getElementById('tempVal').textContent = vitalsData.temp.toFixed(1) + '\u00B0';
+  const hr   = Number(vitalsData.hr)   || 0;
+  const spo2 = Number(vitalsData.spo2) || 0;
+  const temp = Number(vitalsData.temp) || 0;
+  document.getElementById('hrVal').textContent   = Math.round(hr);
+  document.getElementById('spo2Val').textContent = Math.round(spo2) + '%';
+  document.getElementById('tempVal').textContent  = temp.toFixed(1) + '\u00B0';
 }
 
 // ── Chat Render Helpers ───────────────────────────────────────────────────

@@ -313,7 +313,9 @@ const HerboraTechRouter = (() => {
         // `var` menyelesaikan keduanya sekaligus: boleh dideklarasi ulang, dan
         // menjadi properti window sehingga handler inline tetap menemukannya.
         const el = document.createElement('script');
-        el.textContent = globalizeTopLevel(text);
+        const processed = globalizeTopLevel(text);
+        el.textContent = processed;
+        el.onerror = (e) => console.error('[SPA Router] Inline script error:', e);
         appEl.appendChild(el);
       }
 
@@ -411,8 +413,10 @@ const HerboraTechRouter = (() => {
     }
 
     if (brace !== 0 || paren !== 0 || bracket !== 0) {
-      console.warn('[SPA Router] Pemindai kehilangan jejak kurung; skrip dipakai apa adanya.');
-      return src;
+      // Fallback: simple regex-based let/const → var to avoid "already declared" errors.
+      // Not 100% accurate but prevents hard crashes on complex scripts.
+      console.warn('[SPA Router] Pemindai kehilangan jejak kurung; pakai regex fallback.');
+      return src.replace(/^([ \t]*)(let|const)([ \t]+)/gm, '$1var$3');
     }
     return out;
   }
