@@ -23,17 +23,29 @@
        ═══════════════════════════════════════════════ */
 
     /* ── SAPAAN ── */
+    /* .app-header bawaan berposisi fixed dan dipusatkan dengan
+       left:50% + transform:translateX(-50%). Mengubah position saja
+       TIDAK cukup: transform tetap berlaku pada elemen static, sehingga
+       seluruh header tergeser setengah lebarnya ke kiri dan teks sapaan
+       keluar dari layar. Ketiga properti itu harus dinetralkan bersama. */
     .app-header {
+      position: static;
+      transform: none;
+      left: auto;
+      max-width: none;
+      width: 100%;
       background: transparent;
       box-shadow: none;
       border: none;
-      position: static;
       padding: 20px 20px 4px;
       height: auto;
       display: flex;
       align-items: center;
       gap: 12px;
     }
+    /* padding-top frame disediakan untuk header yang fixed; di sini
+       header ikut mengalir, jadi ruang itu jadi celah kosong. */
+    .mobile-frame { padding-top: 0; }
     .greet-time { font-size: 0.76rem; color: var(--text-tertiary); font-weight: 600; }
     .greet-name { font-size: 1.32rem; font-weight: 800; letter-spacing: -0.6px; margin-top: 1px; }
 
