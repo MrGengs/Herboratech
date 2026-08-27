@@ -13,12 +13,12 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="../shared/firebase.js"></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(91,166,114,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-logo span { color: #5BA672 !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
-    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .sidebar-item:hover { color: #5BA672; background: rgba(91,166,114,0.08); }
+    .sidebar-item.active { color: #5BA672 !important; background: rgba(91,166,114,0.15); border-left: 3px solid #5BA672; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
     @media (min-width: 768px) { .ml-dist-grid { grid-template-columns: 1fr 1fr !important; } }
 
@@ -46,7 +46,7 @@
       font-weight: 600;
       margin-bottom: 10px;
     }
-    .model-badge.active { background: rgba(39,174,96,0.12); color: #27AE60; }
+    .model-badge.active { background: rgba(47,122,74,0.12); color: #2F7A4A; }
     .param-row {
       display: flex; justify-content: space-between; align-items: center;
       padding: 5px 0;
@@ -72,8 +72,8 @@
       font-weight: 700;
     }
     .risk-pill.high { background: rgba(235,87,87,0.12); color: #EB5757; }
-    .risk-pill.medium { background: rgba(242,153,74,0.12); color: #F2994A; }
-    .risk-pill.low { background: rgba(39,174,96,0.12); color: #27AE60; }
+    .risk-pill.medium { background: rgba(224,159,62,0.12); color: #E09F3E; }
+    .risk-pill.low { background: rgba(47,122,74,0.12); color: #2F7A4A; }
 
     .refresh-btn {
       display: inline-flex; align-items: center; gap: 6px;
@@ -124,7 +124,7 @@
         <button class="refresh-btn" onclick="loadStats()">
           <ion-icon name="refresh-outline"></ion-icon> Refresh Data
         </button>
-        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#9B51E0,#6FCF97)">A</div>
+        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#9B51E0,#5BA672)">A</div>
       </div>
     </div>
 
@@ -149,7 +149,7 @@
         <div class="sc-change" id="stat-highrisk-sub" style="color:var(--danger)">Memuat...</div>
       </div>
       <div class="stat-card">
-        <div class="sc-icon" style="background:rgba(39,174,96,0.12);color:#27AE60">🧠</div>
+        <div class="sc-icon" style="background:rgba(47,122,74,0.12);color:#2F7A4A">🧠</div>
         <div class="sc-value" id="stat-models">7</div>
         <div class="sc-label">Model Tersedia</div>
         <div class="sc-change up" id="stat-engine">Memuat...</div>
@@ -194,7 +194,7 @@
           <div class="param-row"><span class="param-key">Output</span><span class="param-val">0–100, 10-year risk</span></div>
         </div>
 
-        <div class="model-card" style="border-top-color:#F2994A;">
+        <div class="model-card" style="border-top-color:#E09F3E;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Hipertensi</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: JNC-8 / WHO-ISH</div>
@@ -214,7 +214,7 @@
           <div class="param-row"><span class="param-key">Riwayat stroke</span><span class="param-val">+30 poin</span></div>
         </div>
 
-        <div class="model-card" style="border-top-color:#27AE60;">
+        <div class="model-card" style="border-top-color:#2F7A4A;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Kualitas Tidur</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: PSQI Adapted</div>
@@ -270,7 +270,7 @@
         <span style="font-weight:700;font-size:0.9rem;">Roadmap Model</span>
       </div>
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(39,174,96,0.07);border-left:3px solid #27AE60;">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(47,122,74,0.07);border-left:3px solid #2F7A4A;">
           <span style="font-size:1rem;">✅</span>
           <div><div style="font-weight:600;font-size:0.82rem;">v1.0 — Rule-based Models (Sekarang)</div><div style="font-size:0.7rem;color:var(--text-muted);">6 model klinis: IDF, FINDRISC, Framingham, JNC-8, ASCVD, PSQI</div></div>
         </div>
@@ -365,8 +365,8 @@
       const pctHigh   = Math.round(c.high   / c.total * 100);
       return `<tr>
         <td style="font-weight:600;">${DISEASE_LABELS[k]}</td>
-        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctLow}px;max-width:60px;background:#27AE60;"></div><span style="font-size:0.68rem;color:#27AE60;">${c.low}</span></div></td>
-        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctMedium}px;max-width:60px;background:#F2994A;"></div><span style="font-size:0.68rem;color:#F2994A;">${c.medium}</span></div></td>
+        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctLow}px;max-width:60px;background:#2F7A4A;"></div><span style="font-size:0.68rem;color:#2F7A4A;">${c.low}</span></div></td>
+        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctMedium}px;max-width:60px;background:#E09F3E;"></div><span style="font-size:0.68rem;color:#E09F3E;">${c.medium}</span></div></td>
         <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctHigh}px;max-width:60px;background:#EB5757;"></div><span style="font-size:0.68rem;color:#EB5757;">${c.high}</span></div></td>
       </tr>`;
     }).filter(Boolean).join('') ||
@@ -423,9 +423,9 @@
       { key: 'metabolic',    label: 'Sindrom Metabolik', color: '#9B51E0' },
       { key: 'diabetes',     label: 'Diabetes T2',       color: '#2F80ED' },
       { key: 'heart',        label: 'Jantung',           color: '#EB5757' },
-      { key: 'hypertension', label: 'Hipertensi',        color: '#F2994A' },
+      { key: 'hypertension', label: 'Hipertensi',        color: '#E09F3E' },
       { key: 'stroke',       label: 'Stroke',            color: '#EB5757' },
-      { key: 'sleep',        label: 'Kualitas Tidur',    color: '#27AE60' },
+      { key: 'sleep',        label: 'Kualitas Tidur',    color: '#2F7A4A' },
       { key: 'stress_wesad', label: 'Stres (WESAD GSR)', color: '#56CCF2' },
     ];
 

@@ -21,8 +21,8 @@
 
     .vital-grid .vital-card:nth-child(1) { border-top: 3px solid #EB5757; }
     .vital-grid .vital-card:nth-child(2) { border-top: 3px solid #2F80ED; }
-    .vital-grid .vital-card:nth-child(3) { border-top: 3px solid #F2994A; }
-    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #27AE60; }
+    .vital-grid .vital-card:nth-child(3) { border-top: 3px solid #E09F3E; }
+    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #2F7A4A; }
 
     .profile-hero {
       background: linear-gradient(135deg, #0C2352, #1D5DB5);
@@ -213,7 +213,7 @@
 
         <div class="timeline-item" data-animate="up" data-delay="100">
           <div style="position:relative;flex-shrink:0;">
-            <div class="timeline-dot" style="background:var(--warning);box-shadow:0 0 0 3px rgba(242,153,74,0.2);"></div>
+            <div class="timeline-dot" style="background:var(--warning);box-shadow:0 0 0 3px rgba(224,159,62,0.2);"></div>
             <div class="timeline-line"></div>
           </div>
           <div class="neu-card-sm" style="flex:1;margin-bottom:0;">
@@ -230,7 +230,7 @@
 
         <div class="timeline-item" data-animate="up" data-delay="150">
           <div style="position:relative;flex-shrink:0;">
-            <div class="timeline-dot" style="background:var(--primary-dark);box-shadow:0 0 0 3px rgba(39,174,96,0.2);"></div>
+            <div class="timeline-dot" style="background:var(--primary-dark);box-shadow:0 0 0 3px rgba(47,122,74,0.2);"></div>
           </div>
           <div class="neu-card-sm" style="flex:1;margin-bottom:0;">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;">
@@ -345,8 +345,8 @@
       const barGrad = cat === 'high'
         ? 'linear-gradient(90deg,#EB5757,#FF7B7B)'
         : cat === 'medium'
-          ? 'linear-gradient(90deg,#F2994A,#FFD54F)'
-          : 'linear-gradient(90deg,#27AE60,#56CCF2)';
+          ? 'linear-gradient(90deg,#E09F3E,#FFD54F)'
+          : 'linear-gradient(90deg,#2F7A4A,#56CCF2)';
       const catLabel = cat === 'high' ? '↑ Tinggi' : cat === 'medium' ? '↑ Sedang' : '↓ Rendah';
       const topFactors = (data.factors || []).slice(0, 2).join(', ') || info.fallbackFactors;
       return `<div class="neu-card-sm" data-animate="up" data-delay="${100 + i * 50}">
@@ -439,11 +439,11 @@
     setTimeout(() => {
       sparkline(document.getElementById('hr-spark'), [78,82,85,80,88,84,82,86,83,82], '#EB5757', 32);
       sparkline(document.getElementById('spo2-spark'), [97,96,95,97,96,94,96,97,96,96], '#2F80ED', 32);
-      sparkline(document.getElementById('temp-spark'), [36.5,36.7,36.8,36.6,36.9,36.8,36.7,36.8,36.8,36.8], '#F2994A', 32);
-      sparkline(document.getElementById('step-spark'), [5200,4800,6100,3900,5500,4200,4800,4200,4200,4200], '#27AE60', 32);
+      sparkline(document.getElementById('temp-spark'), [36.5,36.7,36.8,36.6,36.9,36.8,36.7,36.8,36.8,36.8], '#E09F3E', 32);
+      sparkline(document.getElementById('step-spark'), [5200,4800,6100,3900,5500,4200,4800,4200,4200,4200], '#2F7A4A', 32);
       sparkline(document.getElementById('trend-chart'), [80,82,79,85,88,84,82,86,83,82,80,85,82,82], '#2F80ED', 70);
       const overallScore = renderRiskScores(latestRisk);
-      const gaugeColor = overallScore >= 60 ? '#EB5757' : overallScore >= 30 ? '#F2994A' : '#27AE60';
+      const gaugeColor = overallScore >= 60 ? '#EB5757' : overallScore >= 30 ? '#E09F3E' : '#2F7A4A';
       createGauge(document.getElementById('risk-gauge'), overallScore, 100, gaugeColor);
     }, 300);
   })();

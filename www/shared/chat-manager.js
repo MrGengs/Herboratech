@@ -104,8 +104,8 @@ class VChatManager {
     if (msg.type === 'vital_share') {
       const v = msg.metadata?.vitals || {};
       return `<div class="chat-bubble ${msg.isMine ? 'sent' : 'received'}" style="padding:0;overflow:hidden;max-width:85%;">
-        <div style="background:rgba(39,174,96,0.1);border:1px solid rgba(39,174,96,0.3);border-radius:14px;padding:12px 14px;">
-          <div style="font-size:0.7rem;font-weight:700;color:#27AE60;margin-bottom:6px;">📊 DATA VITAL SIGN</div>
+        <div style="background:rgba(47,122,74,0.1);border:1px solid rgba(47,122,74,0.3);border-radius:14px;padding:12px 14px;">
+          <div style="font-size:0.7rem;font-weight:700;color:#2F7A4A;margin-bottom:6px;">📊 DATA VITAL SIGN</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:0.72rem;">
             <span>HR: <b>${v.hr || '-'} bpm</b></span>
             <span>SpO2: <b>${v.spo2 || '-'}%</b></span>

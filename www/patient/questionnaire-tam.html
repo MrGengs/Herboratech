@@ -168,14 +168,14 @@
         <div><div style="font-weight:600;font-size:0.84rem;">Perceived Usefulness (PU)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Persepsi kegunaan aplikasi</div></div>
       </div>
       <div class="neu-card-sm" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
-        <div style="width:40px;height:40px;border-radius:12px;background:rgba(39,174,96,0.1);display:flex;align-items:center;justify-content:center;">
-          <ion-icon name="hand-left-outline" style="font-size:1.2rem;color:#27AE60;"></ion-icon>
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,122,74,0.1);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="hand-left-outline" style="font-size:1.2rem;color:#2F7A4A;"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.84rem;">Perceived Ease of Use (PEOU)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Persepsi kemudahan penggunaan</div></div>
       </div>
       <div class="neu-card-sm" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
-        <div style="width:40px;height:40px;border-radius:12px;background:rgba(242,153,74,0.1);display:flex;align-items:center;justify-content:center;">
-          <ion-icon name="heart-outline" style="font-size:1.2rem;color:#F2994A;"></ion-icon>
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(224,159,62,0.1);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="heart-outline" style="font-size:1.2rem;color:#E09F3E;"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.84rem;">Attitude Toward Using (ATU)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Sikap terhadap penggunaan</div></div>
       </div>
@@ -228,7 +228,7 @@
   <div class="step-pane" data-step="3">
     <div class="section">
       <div class="dimension-header">
-        <ion-icon name="hand-left-outline" style="color:#27AE60;"></ion-icon>
+        <ion-icon name="hand-left-outline" style="color:#2F7A4A;"></ion-icon>
         <span>Perceived Ease of Use (PEOU)</span>
       </div>
       <div class="likert-question" data-q="peou1">
@@ -258,7 +258,7 @@
   <div class="step-pane" data-step="4">
     <div class="section">
       <div class="dimension-header">
-        <ion-icon name="heart-outline" style="color:#F2994A;"></ion-icon>
+        <ion-icon name="heart-outline" style="color:#E09F3E;"></ion-icon>
         <span>Attitude Toward Using (ATU)</span>
       </div>
       <div class="likert-question" data-q="atu1">
@@ -331,13 +331,13 @@
           </div>
           <div class="rb-item">
             <span class="rb-label" style="min-width:60px;">PEOU</span>
-            <div class="rb-bar"><div class="rb-bar-fill" id="bar-peou" style="width:0%;background:linear-gradient(90deg,#1B7A3D,#27AE60);"></div></div>
-            <span class="rb-value" id="score-peou" style="color:#27AE60;">0/20</span>
+            <div class="rb-bar"><div class="rb-bar-fill" id="bar-peou" style="width:0%;background:linear-gradient(90deg,#1B7A3D,#2F7A4A);"></div></div>
+            <span class="rb-value" id="score-peou" style="color:#2F7A4A;">0/20</span>
           </div>
           <div class="rb-item">
             <span class="rb-label" style="min-width:60px;">ATU</span>
-            <div class="rb-bar"><div class="rb-bar-fill" id="bar-atu" style="width:0%;background:linear-gradient(90deg,#D68910,#F2994A);"></div></div>
-            <span class="rb-value" id="score-atu" style="color:#F2994A;">0/20</span>
+            <div class="rb-bar"><div class="rb-bar-fill" id="bar-atu" style="width:0%;background:linear-gradient(90deg,#D68910,#E09F3E);"></div></div>
+            <span class="rb-value" id="score-atu" style="color:#E09F3E;">0/20</span>
           </div>
           <div class="rb-item">
             <span class="rb-label" style="min-width:60px;">BI</span>
@@ -484,13 +484,13 @@ function calculateResults() {
   } else if (pct >= 60) {
     chip.textContent = 'Diterima';
     chip.className = 'neu-chip';
-    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(39,174,96,0.12);color:#27AE60;';
-    interp.innerHTML = '<strong style="color:#27AE60;">Tingkat penerimaan baik.</strong><br>Anda cukup menerima teknologi HerboraTech. Masih ada ruang untuk meningkatkan pengalaman penggunaan agar lebih optimal.';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(47,122,74,0.12);color:#2F7A4A;';
+    interp.innerHTML = '<strong style="color:#2F7A4A;">Tingkat penerimaan baik.</strong><br>Anda cukup menerima teknologi HerboraTech. Masih ada ruang untuk meningkatkan pengalaman penggunaan agar lebih optimal.';
   } else if (pct >= 40) {
     chip.textContent = 'Cukup Diterima';
     chip.className = 'neu-chip';
-    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(242,153,74,0.12);color:#F2994A;';
-    interp.innerHTML = '<strong style="color:#F2994A;">Tingkat penerimaan cukup.</strong><br>Anda memiliki pandangan yang netral terhadap HerboraTech. Perlu evaluasi lebih lanjut pada aspek kegunaan dan kemudahan penggunaan.';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(224,159,62,0.12);color:#E09F3E;';
+    interp.innerHTML = '<strong style="color:#E09F3E;">Tingkat penerimaan cukup.</strong><br>Anda memiliki pandangan yang netral terhadap HerboraTech. Perlu evaluasi lebih lanjut pada aspek kegunaan dan kemudahan penggunaan.';
   } else {
     chip.textContent = 'Perlu Peningkatan';
     chip.className = 'neu-chip';

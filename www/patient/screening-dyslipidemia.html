@@ -10,12 +10,12 @@
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
     :root {
-      --primary-dys: #F2994A;
+      --primary-dys: #E09F3E;
       --primary-dys-dark: #E67E22;
     }
     .app-header {
       background: linear-gradient(135deg, var(--primary-dys) 0%, #F2C94C 100%);
-      box-shadow: 0 2px 16px rgba(242, 153, 74, 0.25);
+      box-shadow: 0 2px 16px rgba(224, 159, 62, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
@@ -45,7 +45,7 @@
     .step-dot.current {
       background: linear-gradient(135deg, var(--primary-dys), #F2C94C);
       color: #fff; border-color: transparent;
-      box-shadow: 0 4px 12px rgba(242,153,74,0.4);
+      box-shadow: 0 4px 12px rgba(224,159,62,0.4);
       transform: scale(1.15);
     }
     .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
@@ -76,8 +76,8 @@
 
     .traffic-light-card { padding: 12px; border-radius: 12px; margin-bottom: 10px; display: flex; gap: 12px; align-items: center; }
     .tl-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-    .tl-dot.green { background: #27AE60; box-shadow: 0 0 8px rgba(39,174,96,0.4); }
-    .tl-dot.yellow { background: #F2994A; box-shadow: 0 0 8px rgba(242,153,74,0.4); }
+    .tl-dot.green { background: #2F7A4A; box-shadow: 0 0 8px rgba(47,122,74,0.4); }
+    .tl-dot.yellow { background: #E09F3E; box-shadow: 0 0 8px rgba(224,159,62,0.4); }
     .tl-dot.red { background: #EB5757; box-shadow: 0 0 8px rgba(235,87,87,0.4); }
     .tl-content { flex: 1; }
     .tl-title { font-size: 0.8rem; font-weight: 700; margin-bottom: 2px; }
@@ -89,7 +89,7 @@
       background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 12px; padding: 12px;
       text-align: center; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
     }
-    .symptom-opt.selected { border-color: var(--primary-dys); background: rgba(242,153,74,0.05); }
+    .symptom-opt.selected { border-color: var(--primary-dys); background: rgba(224,159,62,0.05); }
     .symptom-icon { font-size: 1.4rem; margin-bottom: 4px; }
     .symptom-label { font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); }
 
@@ -100,11 +100,11 @@
       text-align: center; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
       font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
     }
-    .radio-opt:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(242,153,74,0.15); }
-    .radio-opt.selected { border-color: var(--primary-dys); background: linear-gradient(135deg, rgba(242,153,74,0.1), rgba(242,196,76,0.1)); color: var(--primary-dys-dark); font-weight: 700; }
+    .radio-opt:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(224,159,62,0.15); }
+    .radio-opt.selected { border-color: var(--primary-dys); background: linear-gradient(135deg, rgba(224,159,62,0.1), rgba(242,196,76,0.1)); color: var(--primary-dys-dark); font-weight: 700; }
 
     /* Recommendations */
-    .rec-herbal { background: rgba(39, 174, 96, 0.05); border-left: 4px solid #27AE60; padding: 14px; border-radius: 12px; margin-top: 14px; }
+    .rec-herbal { background: rgba(47, 122, 74, 0.05); border-left: 4px solid #2F7A4A; padding: 14px; border-radius: 12px; margin-top: 14px; }
     .rec-diet { background: rgba(47, 128, 237, 0.05); border-left: 4px solid #2F80ED; padding: 14px; border-radius: 12px; margin-top: 14px; }
 
     .confirm-btn-wrap {
@@ -115,7 +115,7 @@
       background: linear-gradient(135deg, var(--primary-dys), #F2C94C);
       color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
       font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 6px 18px rgba(242,153,74,0.3);
+      box-shadow: 0 6px 18px rgba(224,159,62,0.3);
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
   </style>
@@ -163,7 +163,7 @@
           <div style="font-size:0.65rem;color:var(--text-muted);margin-top:8px;">Ukur di bagian tengah antara tulang rusuk terbawah dan panggul.</div>
         </div>
 
-        <div id="bmi-result-card" class="neu-card" style="margin-top:14px;display:none;background:rgba(242,153,74,0.05);text-align:center;">
+        <div id="bmi-result-card" class="neu-card" style="margin-top:14px;display:none;background:rgba(224,159,62,0.05);text-align:center;">
           <div style="font-size:0.75rem;font-weight:700;color:var(--primary-dys-dark);">BMI Anda</div>
           <div id="bmi-val" style="font-size:1.8rem;font-weight:800;color:var(--text-primary);">24.2</div>
           <div id="bmi-lbl" style="font-size:0.75rem;font-weight:700;color:var(--primary-dys-dark);">Normal</div>
@@ -344,7 +344,7 @@
             <div class="traffic-light-card" style="background:#EFFFF5;">
               <div class="tl-dot green"></div>
               <div class="tl-content">
-                <div class="tl-title" style="color:#27AE60;">UTAMAKAN</div>
+                <div class="tl-title" style="color:#2F7A4A;">UTAMAKAN</div>
                 <div class="tl-list">Ikan laut (Kembung), Tempe, Sayuran hijau, Alpukat.</div>
               </div>
             </div>

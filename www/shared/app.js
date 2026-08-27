@@ -65,7 +65,7 @@ function initCarousels() {
 }
 
 // ── SVG Sparkline ──
-function sparkline(container, data, color = '#6FCF97', h = 36) {
+function sparkline(container, data, color = '#5BA672', h = 36) {
   if (!container || !data.length) return;
   const w = container.offsetWidth || 120;
   const max = Math.max(...data);
@@ -86,7 +86,7 @@ function sparkline(container, data, color = '#6FCF97', h = 36) {
 }
 
 // ── Gauge / Circular Progress ──
-function createGauge(container, value, max = 100, color = '#27AE60') {
+function createGauge(container, value, max = 100, color = '#2F7A4A') {
   if (!container) return;
   const r = 42;
   const circ = 2 * Math.PI * r;
@@ -110,7 +110,7 @@ function createGauge(container, value, max = 100, color = '#27AE60') {
 }
 
 // ── Bar Chart (simple) ──
-function miniBarChart(container, data, labels, color = '#6FCF97') {
+function miniBarChart(container, data, labels, color = '#5BA672') {
   if (!container) return;
   const max = Math.max(...data);
   const barW = 100 / data.length;
@@ -156,7 +156,7 @@ function initTabs(selector) {
 
 // ── Toast Notification ──
 function showToast(msg, type = 'success') {
-  const colors = { success: '#27AE60', error: '#EB5757', warning: '#F2994A', info: '#2F80ED' };
+  const colors = { success: '#2F7A4A', error: '#EB5757', warning: '#E09F3E', info: '#2F80ED' };
   const toast = document.createElement('div');
   toast.style.cssText = `
     position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);

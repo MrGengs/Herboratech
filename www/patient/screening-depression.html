@@ -386,13 +386,13 @@
       if ((phqAnswers[9] || 0) > 0) { crisisBox.style.display = 'block'; }
 
       if (totalScore <= 4) {
-        resLevel.textContent = 'MINIMAL'; resLevel.style.color = '#27AE60';
+        resLevel.textContent = 'MINIMAL'; resLevel.style.color = '#2F7A4A';
         resDesc.textContent = 'Gejala depresi yang terdeteksi minimal atau tidak ada.';
       } else if (totalScore <= 9) {
         resLevel.textContent = 'RINGAN'; resLevel.style.color = '#F2C94C';
         resDesc.textContent = 'Ada gejala depresi ringan. Disarankan melakukan manajemen stres dan olahraga.';
       } else if (totalScore <= 14) {
-        resLevel.textContent = 'SEDANG'; resLevel.style.color = '#F2994A';
+        resLevel.textContent = 'SEDANG'; resLevel.style.color = '#E09F3E';
         resDesc.textContent = 'Anda menunjukkan gejala depresi sedang. Disarankan konsultasi dengan psikolog.';
         recList.innerHTML = '<li>⚠️ Rujuk ke Psikolog atau Konselor.</li><li>Lakukan journaling rasa syukur setiap malam.</li><li>Pertahankan paparan sinar matahari pagi (15 menit).</li>';
       } else {

@@ -146,10 +146,10 @@ async function loadConsultations(doctorId) {
 
     const gradients = [
       'linear-gradient(135deg,#EB5757,#FF7B7B)',
-      'linear-gradient(135deg,#6C63FF,#8B83FF)',
-      'linear-gradient(135deg,#27AE60,#6FCF97)',
+      'linear-gradient(135deg,#2A9D8F,#45B5A6)',
+      'linear-gradient(135deg,#2F7A4A,#5BA672)',
       'linear-gradient(135deg,#2F80ED,#56CCF2)',
-      'linear-gradient(135deg,#F2994A,#F2C94C)'
+      'linear-gradient(135deg,#E09F3E,#F2C94C)'
     ];
 
     for (let i = 0; i < allConsults.length; i++) {
@@ -224,7 +224,7 @@ async function renderCompletedList(consults) {
     return;
   }
   chatList.innerHTML = '';
-  const gradients = ['linear-gradient(135deg,#EB5757,#FF7B7B)','linear-gradient(135deg,#6C63FF,#8B83FF)','linear-gradient(135deg,#27AE60,#6FCF97)','linear-gradient(135deg,#2F80ED,#56CCF2)','linear-gradient(135deg,#F2994A,#F2C94C)'];
+  const gradients = ['linear-gradient(135deg,#EB5757,#FF7B7B)','linear-gradient(135deg,#2A9D8F,#45B5A6)','linear-gradient(135deg,#2F7A4A,#5BA672)','linear-gradient(135deg,#2F80ED,#56CCF2)','linear-gradient(135deg,#E09F3E,#F2C94C)'];
   for (let i = 0; i < consults.length; i++) {
     const c = consults[i];
     const patient = c.patientId ? await VDB.getUser(c.patientId) : null;

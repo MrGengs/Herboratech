@@ -262,7 +262,7 @@
             </ul>
           </div>
 
-          <div class="neu-card" style="margin-bottom:14px;background:rgba(39, 174, 96, 0.05);border-left:4px solid #27AE60;">
+          <div class="neu-card" style="margin-bottom:14px;background:rgba(47, 122, 74, 0.05);border-left:4px solid #2F7A4A;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="font-size:1.2rem;">🌿</span>
               <span style="font-size:0.85rem;font-weight:800;color:#1A5C38;">Rekomendasi Herbal</span>
@@ -396,11 +396,11 @@
         fib4Val.textContent = fib4.toFixed(2);
         if (fib4 < 1.30) {
           badge.textContent = 'LOW RISK';
-          badge.style.background = '#27AE601A'; badge.style.color = '#27AE60';
+          badge.style.background = '#2F7A4A1A'; badge.style.color = '#2F7A4A';
           desc.textContent = 'Indeks FIB-4 Anda rendah. Hati Anda kemungkinan besar dalam kondisi sehat (tanpa fibrosis).';
         } else if (fib4 <= 2.67) {
           badge.textContent = 'INDETERMINATE';
-          badge.style.background = '#F2994A1A'; badge.style.color = '#F2994A';
+          badge.style.background = '#E09F3E1A'; badge.style.color = '#E09F3E';
           desc.textContent = 'Hasil Anda berada di zona tengah. Perlu evaluasi medis lebih lanjut untuk memastikan kondisi fibrosis hati.';
           medList.innerHTML = '<li>Rujuk ke dokter penyakit dalam untuk pemeriksaan USG Abdomen.</li><li>Lakukan tes fungsi hati (ALT/AST) berkala.</li>';
           herbalName.textContent = 'Kapsul Meniran-Temulawak';

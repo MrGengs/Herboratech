@@ -3,14 +3,14 @@
    Soft UI · Organic Health · AIoT Wellness
    
    Color palette inspired by neumorphic education UI:
-   - Background:  #E4EBF5 (soft blue-gray)
-   - Shadow dark:  #c8d0e7
+   - Background:  #EAEFE8 (soft blue-gray)
+   - Shadow dark:  #cbd4c6
    - Shadow light: #FFFFFF
-   - Primary:      #6FCF97 (natural green)
-   - Accent:       #6C63FF (soft purple for AI features)
+   - Primary:      #5BA672 (natural green)
+   - Accent:       #2A9D8F (soft purple for AI features)
    ═══════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 /* ── IONICONS FIX (CORS Workaround) ── */
 ion-icon {
@@ -23,9 +23,9 @@ ion-icon {
 /* ── CSS Variables ── */
 :root {
   /* Neumorphic Base */
-  --bg: #E4EBF5;
-  --bg-dark: #d1d9e6;
-  --shadow-dark: #c8d0e7;
+  --bg: #EAEFE8;
+  --bg-dark: #D6DDD2;
+  --shadow-dark: #CBD4C6;
   --shadow-light: #FFFFFF;
   
   /* Neumorphic Shadows */
@@ -36,32 +36,32 @@ ion-icon {
   --shadow-in-sm: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
   
   /* Primary Green */
-  --primary: #6FCF97;
-  --primary-dark: #27AE60;
-  --primary-darker: #1E8449;
-  --primary-light: #A8E6C1;
-  --primary-bg: rgba(111,207,151,0.15);
-  --primary-gradient: linear-gradient(135deg, #6FCF97 0%, #27AE60 100%);
+  --primary: #5BA672;
+  --primary-dark: #2F7A4A;
+  --primary-darker: #23583A;
+  --primary-light: #9CC9A9;
+  --primary-bg: rgba(91,166,114,0.15);
+  --primary-gradient: linear-gradient(135deg, #5BA672 0%, #2F7A4A 100%);
   
   /* Accent Purple (AI features) */
-  --accent: #6C63FF;
-  --accent-light: #8B83FF;
-  --accent-bg: rgba(108,99,255,0.12);
+  --accent: #2A9D8F;
+  --accent-light: #45B5A6;
+  --accent-bg: rgba(42,157,143,0.12);
   
   /* Semantic */
   --danger: #EB5757;
   --danger-bg: rgba(235,87,87,0.12);
-  --warning: #F2994A;
-  --warning-bg: rgba(242,153,74,0.12);
+  --warning: #E09F3E;
+  --warning-bg: rgba(224,159,62,0.12);
   --info: #2F80ED;
   --info-bg: rgba(47,128,237,0.12);
-  --success: #27AE60;
-  --success-bg: rgba(39,174,96,0.12);
+  --success: #2F7A4A;
+  --success-bg: rgba(47,122,74,0.12);
   
   /* Text - Accessible contrast ratios */
-  --text-primary: #2D3748;    /* ~11:1 on #E4EBF5 */
-  --text-secondary: #4A5568;  /* ~7:1 */
-  --text-tertiary: #6B7B8D;   /* ~4.5:1 */
+  --text-primary: #2D3748;    /* 10.3:1 di atas --bg #EAEFE8 */
+  --text-secondary: #4A5568;  /* 6.5:1 */
+  --text-tertiary: #6B7B8D;   /* 3.7:1 - hanya lolos AA untuk teks besar, bukan 4.5:1 */
   --text-muted: #8896A6;      /* decorative only */
   --text-on-primary: #FFFFFF;
   
@@ -87,7 +87,7 @@ ion-icon {
   --r-circle: 50%;
   
   /* Font */
-  --font: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   
   /* Layout */
   --mobile-w: 393px;
@@ -245,7 +245,7 @@ ul, ol { list-style: none; }
   border-radius: var(--r-lg);
   padding: var(--sp-24);
   color: var(--text-on-primary);
-  box-shadow: 6px 6px 16px rgba(39,174,96,0.3), -4px -4px 12px var(--shadow-light);
+  box-shadow: 6px 6px 16px rgba(47,122,74,0.3), -4px -4px 12px var(--shadow-light);
   position: relative;
   overflow: hidden;
 }
@@ -283,17 +283,17 @@ ul, ol { list-style: none; }
 .neu-btn-primary {
   background: var(--primary-gradient);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(39,174,96,0.35), -3px -3px 8px var(--shadow-light);
+  box-shadow: 4px 4px 10px rgba(47,122,74,0.35), -3px -3px 8px var(--shadow-light);
   padding: var(--sp-12) var(--sp-32);
 }
 
-.neu-btn-primary:active { box-shadow: inset 3px 3px 6px rgba(30,132,73,0.4), inset -3px -3px 6px rgba(168,230,193,0.3); }
+.neu-btn-primary:active { box-shadow: inset 3px 3px 6px rgba(35,88,58,0.4), inset -3px -3px 6px rgba(156,201,169,0.3); }
 .neu-btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
 
 .neu-btn-accent {
-  background: linear-gradient(135deg, #6C63FF, #8B83FF);
+  background: linear-gradient(135deg, #2A9D8F, #45B5A6);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(108,99,255,0.3), -3px -3px 8px var(--shadow-light);
+  box-shadow: 4px 4px 10px rgba(42,157,143,0.3), -3px -3px 8px var(--shadow-light);
 }
 
 .neu-btn-danger {
@@ -756,7 +756,7 @@ ul, ol { list-style: none; }
 .neu-tab.active {
   color: #fff;
   background: var(--primary-gradient);
-  box-shadow: 3px 3px 8px rgba(39,174,96,0.3);
+  box-shadow: 3px 3px 8px rgba(47,122,74,0.3);
 }
 
 /* ═══════════════════════════
@@ -777,7 +777,7 @@ ul, ol { list-style: none; }
   color: #fff;
   border-bottom-right-radius: 4px;
   margin-left: auto;
-  box-shadow: 3px 3px 8px rgba(39,174,96,0.25);
+  box-shadow: 3px 3px 8px rgba(47,122,74,0.25);
 }
 
 .chat-bubble.received {
@@ -1001,7 +1001,7 @@ ul, ol { list-style: none; }
   border-bottom: 1px solid rgba(200,208,231,0.4);
 }
 
-.neu-table tbody tr:hover { background: rgba(111,207,151,0.05); }
+.neu-table tbody tr:hover { background: rgba(91,166,114,0.05); }
 
 /* ═══════════════════════════
    ANIMATIONS

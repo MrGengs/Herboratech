@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(91,166,114,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-logo span { color: #5BA672 !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
-    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .sidebar-item:hover { color: #5BA672; background: rgba(91,166,114,0.08); }
+    .sidebar-item.active { color: #5BA672 !important; background: rgba(91,166,114,0.15); border-left: 3px solid #5BA672; }
 
     .import-card { background: var(--bg); box-shadow: var(--shadow-out); border-radius: 20px; padding: 24px; margin-bottom: 20px; }
     .import-title { font-weight: 800; font-size: 1rem; color: var(--text-primary); margin-bottom: 6px; }
@@ -22,13 +22,13 @@
 
     .tab-bar { display: flex; gap: 8px; margin-bottom: 20px; }
     .tab-btn { padding: 8px 18px; border-radius: 10px; border: none; font-family: var(--font); font-size: 0.82rem; font-weight: 700; cursor: pointer; background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); transition: all 0.2s; }
-    .tab-btn.active { background: linear-gradient(135deg,#27AE60,#6FCF97); color: #fff; box-shadow: 0 4px 14px rgba(39,174,96,0.3); }
+    .tab-btn.active { background: linear-gradient(135deg,#2F7A4A,#5BA672); color: #fff; box-shadow: 0 4px 14px rgba(47,122,74,0.3); }
 
-    .json-textarea { width: 100%; height: 280px; border-radius: 12px; border: 1.5px solid var(--shadow-dark); background: #10180f; color: #6FCF97; font-family: 'Consolas', monospace; font-size: 0.78rem; padding: 14px; resize: vertical; outline: none; line-height: 1.6; box-sizing: border-box; }
-    .json-textarea:focus { border-color: #6FCF97; }
+    .json-textarea { width: 100%; height: 280px; border-radius: 12px; border: 1.5px solid var(--shadow-dark); background: #10180f; color: #5BA672; font-family: 'Consolas', monospace; font-size: 0.78rem; padding: 14px; resize: vertical; outline: none; line-height: 1.6; box-sizing: border-box; }
+    .json-textarea:focus { border-color: #5BA672; }
 
     .drop-zone { border: 2px dashed var(--shadow-dark); border-radius: 14px; padding: 36px 20px; text-align: center; cursor: pointer; transition: all 0.2s; }
-    .drop-zone:hover, .drop-zone.drag-over { border-color: #6FCF97; background: rgba(111,207,151,0.05); }
+    .drop-zone:hover, .drop-zone.drag-over { border-color: #5BA672; background: rgba(91,166,114,0.05); }
     .drop-zone ion-icon { font-size: 2.2rem; color: var(--text-secondary); }
     .drop-zone p { font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0 0; }
     .drop-zone small { font-size: 0.75rem; color: var(--text-tertiary); }
@@ -37,22 +37,22 @@
     .preview-box { background: var(--bg); box-shadow: var(--shadow-in); border-radius: 12px; padding: 14px; margin-top: 12px; }
     .preview-stat { display: flex; gap: 12px; flex-wrap: wrap; }
     .ps-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; }
-    .ps-chip.green { background: rgba(39,174,96,0.12); color: #27AE60; }
+    .ps-chip.green { background: rgba(47,122,74,0.12); color: #2F7A4A; }
     .ps-chip.blue { background: rgba(86,204,242,0.12); color: #2D9CDB; }
-    .ps-chip.orange { background: rgba(242,153,74,0.12); color: #F2994A; }
+    .ps-chip.orange { background: rgba(224,159,62,0.12); color: #E09F3E; }
     .ps-chip.red { background: rgba(235,87,87,0.12); color: #EB5757; }
 
     .import-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: var(--font); font-size: 0.9rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; transition: all 0.2s; }
-    .import-btn.primary { background: linear-gradient(135deg,#27AE60,#6FCF97); color: #fff; box-shadow: 0 4px 16px rgba(39,174,96,0.35); }
+    .import-btn.primary { background: linear-gradient(135deg,#2F7A4A,#5BA672); color: #fff; box-shadow: 0 4px 16px rgba(47,122,74,0.35); }
     .import-btn.secondary { background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); }
     .import-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .import-btn:hover:not(:disabled) { transform: translateY(-2px); }
 
     .progress-wrap { background: var(--shadow-dark); border-radius: 8px; height: 10px; margin: 10px 0; overflow: hidden; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, #27AE60, #6FCF97); border-radius: 8px; transition: width 0.3s ease; width: 0%; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #2F7A4A, #5BA672); border-radius: 8px; transition: width 0.3s ease; width: 0%; }
 
     .log-area { background: #0d1f0d; border-radius: 12px; padding: 14px; max-height: 260px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.74rem; line-height: 1.7; margin-top: 14px; }
-    .log-line.success { color: #6FCF97; }
+    .log-line.success { color: #5BA672; }
     .log-line.error { color: #EB5757; }
     .log-line.info { color: #56CCF2; }
     .log-line.warn { color: #F2C94C; }
@@ -63,7 +63,7 @@
     .collection-toggle { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
     .ct-label { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); }
     .ct-opt { padding: 6px 14px; border-radius: 8px; border: 1.5px solid var(--shadow-dark); font-family: var(--font); font-size: 0.78rem; font-weight: 700; cursor: pointer; background: var(--bg); color: var(--text-secondary); transition: all 0.15s; }
-    .ct-opt.selected { border-color: #27AE60; color: #27AE60; background: rgba(39,174,96,0.08); }
+    .ct-opt.selected { border-color: #2F7A4A; color: #2F7A4A; background: rgba(47,122,74,0.08); }
   </style>
 </head>
 <body>
@@ -95,7 +95,7 @@
       <h1 style="border-left:4px solid var(--primary-dark);padding-left:12px;">Import Herbal JSON</h1>
       <div class="header-actions">
         <button class="neu-icon-btn"><ion-icon name="notifications-outline"></ion-icon><span class="badge"></span></button>
-        <div class="neu-avatar-sm" style="background:linear-gradient(135deg,#F2994A,#FFD54F)">A</div>
+        <div class="neu-avatar-sm" style="background:linear-gradient(135deg,#E09F3E,#FFD54F)">A</div>
       </div>
     </div>
 
@@ -626,8 +626,8 @@ atau array langsung:
     // Cleaning stats jika OCR
     if (cleanStats) {
       stats.innerHTML +=
-        `<div style="width:100%;margin-top:10px;padding:8px 10px;background:rgba(39,174,96,0.08);border-radius:10px;font-size:0.75rem;color:var(--text-secondary);">` +
-        `<span style="font-weight:700;color:#27AE60;">🧹 Cleaning OCR:</span> ` +
+        `<div style="width:100%;margin-top:10px;padding:8px 10px;background:rgba(47,122,74,0.08);border-radius:10px;font-size:0.75rem;color:var(--text-secondary);">` +
+        `<span style="font-weight:700;color:#2F7A4A;">🧹 Cleaning OCR:</span> ` +
         `${cleanStats.dosageCleaned} dosage dibersihkan · ` +
         `${cleanStats.warnCleaned} warnings difilter · ` +
         `${cleanStats.prepReclassified} tipe direklasifikasi` +
@@ -646,8 +646,8 @@ atau array langsung:
 
     // List preview 20 item
       list.innerHTML = items.slice(0, 20).map(f => {
-        const evColor = f.evidenceLevel === 'A' ? '#27AE60' : f.evidenceLevel === 'B' ? '#2D9CDB' : '#F2994A';
-        const evBg    = f.evidenceLevel === 'A' ? 'rgba(39,174,96,0.12)' : f.evidenceLevel === 'B' ? 'rgba(86,204,242,0.12)' : 'rgba(242,153,74,0.12)';
+        const evColor = f.evidenceLevel === 'A' ? '#2F7A4A' : f.evidenceLevel === 'B' ? '#2D9CDB' : '#E09F3E';
+        const evBg    = f.evidenceLevel === 'A' ? 'rgba(47,122,74,0.12)' : f.evidenceLevel === 'B' ? 'rgba(86,204,242,0.12)' : 'rgba(224,159,62,0.12)';
         const sub2    = isTCMData
           ? (f.tcmProperties?.flavor || []).join(', ')
           : (f.indications || []).slice(0,2).join(', ');

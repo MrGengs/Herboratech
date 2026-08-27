@@ -30,8 +30,8 @@
     }
 
     .intro-card {
-      background: linear-gradient(135deg, rgba(74,67,204,0.08), rgba(108,99,255,0.05));
-      border: 1px solid rgba(108,99,255,0.2);
+      background: linear-gradient(135deg, rgba(74,67,204,0.08), rgba(42,157,143,0.05));
+      border: 1px solid rgba(42,157,143,0.2);
       border-radius: 16px;
       padding: 16px;
       margin-bottom: 16px;
@@ -41,9 +41,9 @@
     }
     .ai-avatar-sm {
       width: 36px; height: 36px; border-radius: 12px;
-      background: linear-gradient(135deg, #4A43CC, #6C63FF);
+      background: linear-gradient(135deg, #4A43CC, #2A9D8F);
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; box-shadow: 0 3px 10px rgba(108,99,255,0.4);
+      flex-shrink: 0; box-shadow: 0 3px 10px rgba(42,157,143,0.4);
     }
     .intro-text { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
 
@@ -77,7 +77,7 @@
       max-width: 82%;
     }
     .bubble-user {
-      background: linear-gradient(135deg, #4A43CC, #6C63FF);
+      background: linear-gradient(135deg, #4A43CC, #2A9D8F);
       border-radius: 14px 14px 0 14px;
       padding: 11px 14px;
       font-size: 0.8rem;
@@ -85,7 +85,7 @@
       line-height: 1.6;
       max-width: 82%;
       align-self: flex-end;
-      box-shadow: 0 3px 12px rgba(108,99,255,0.3);
+      box-shadow: 0 3px 12px rgba(42,157,143,0.3);
     }
     .chat-timestamp {
       font-size: 0.58rem;
@@ -94,9 +94,9 @@
     }
 
     .ai-assessment-card {
-      border: 2px solid rgba(108,99,255,0.3);
+      border: 2px solid rgba(42,157,143,0.3);
       border-radius: 16px;
-      background: linear-gradient(135deg, rgba(74,67,204,0.05), rgba(108,99,255,0.03));
+      background: linear-gradient(135deg, rgba(74,67,204,0.05), rgba(42,157,143,0.03));
       padding: 16px;
     }
     .assessment-title { font-size: 0.82rem; font-weight: 700; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
@@ -104,7 +104,7 @@
     .assessment-diagnosis { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 4px; }
     .confidence-bar-track { height: 6px; background: var(--bg); box-shadow: var(--shadow-in); border-radius: 3px; overflow: hidden; margin-top: 4px; }
     .confidence-bar-fill { height: 100%; border-radius: 3px; }
-    .assessment-rec { font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(108,99,255,0.15); }
+    .assessment-rec { font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(42,157,143,0.15); }
 
     /* Layout — fullscreen chat, no bottom nav */
     .mobile-frame {
@@ -141,17 +141,17 @@
     }
     .chat-input-wrap input {
       flex: 1; border: none; background: transparent;
-      font-family: 'Poppins', sans-serif; font-size: 0.82rem;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.82rem;
       color: var(--text-primary);
     }
     .chat-input-wrap input:focus { outline: none; }
     .chat-input-wrap input::placeholder { color: var(--text-muted); }
     .send-btn {
       width: 38px; height: 38px; border-radius: 50%;
-      background: linear-gradient(135deg, #4A43CC, #6C63FF);
+      background: linear-gradient(135deg, #4A43CC, #2A9D8F);
       border: none; display: flex; align-items: center; justify-content: center;
       cursor: pointer; flex-shrink: 0;
-      box-shadow: 0 3px 10px rgba(108,99,255,0.4);
+      box-shadow: 0 3px 10px rgba(42,157,143,0.4);
     }
     .send-btn ion-icon { color: #fff; font-size: 1rem; }
     .send-btn:active { transform: scale(0.94); }
@@ -230,7 +230,7 @@
     <div class="chat-area" id="chatArea" data-animate="up" data-delay="120"></div>
 
     <!-- Loading Indicator -->
-    <div id="loadingIndicator" style="display:none;margin-top:12px;padding:12px;background:rgba(108,99,255,0.1);border-radius:12px;border:1px solid rgba(108,99,255,0.2);text-align:center;">
+    <div id="loadingIndicator" style="display:none;margin-top:12px;padding:12px;background:rgba(42,157,143,0.1);border-radius:12px;border:1px solid rgba(42,157,143,0.2);text-align:center;">
       <ion-icon name="hourglass-outline" style="color:var(--accent);animation:spin 2s linear infinite;"></ion-icon>
       <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Analisis AI sedang berjalan...</div>
     </div>
@@ -662,12 +662,12 @@ function displayAssessmentCard(assessment) {
   const div = document.createElement('div');
   div.className = 'chat-bubble-ai';
 
-  const urgencyColor = assessment.urgency === 'tinggi' ? '#EB5757' : assessment.urgency === 'sedang' ? '#F2994A' : '#6FCF97';
-  const urgencyBg = assessment.urgency === 'tinggi' ? 'rgba(235,87,87,0.1)' : assessment.urgency === 'sedang' ? 'rgba(242,153,74,0.1)' : 'rgba(111,207,151,0.1)';
+  const urgencyColor = assessment.urgency === 'tinggi' ? '#EB5757' : assessment.urgency === 'sedang' ? '#E09F3E' : '#5BA672';
+  const urgencyBg = assessment.urgency === 'tinggi' ? 'rgba(235,87,87,0.1)' : assessment.urgency === 'sedang' ? 'rgba(224,159,62,0.1)' : 'rgba(91,166,114,0.1)';
 
   let differentialHTML = '';
   if (assessment.differential && assessment.differential.length > 0) {
-    differentialHTML = '<div style="margin-top:8px;border-top:1px solid rgba(108,99,255,0.15);padding-top:8px;"><strong style="font-size:0.78rem;">Diagnosis Alternatif:</strong>';
+    differentialHTML = '<div style="margin-top:8px;border-top:1px solid rgba(42,157,143,0.15);padding-top:8px;"><strong style="font-size:0.78rem;">Diagnosis Alternatif:</strong>';
     assessment.differential.forEach(d => {
       differentialHTML += `<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:4px;">${escHtml(d.name)} (${d.probability}%)</div>`;
     });

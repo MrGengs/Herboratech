@@ -9,15 +9,15 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(91,166,114,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-logo span { color: #5BA672 !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
-    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .sidebar-item:hover { color: #5BA672; background: rgba(91,166,114,0.08); }
+    .sidebar-item.active { color: #5BA672 !important; background: rgba(91,166,114,0.15); border-left: 3px solid #5BA672; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
     .filter-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-    .filter-tab { padding: 6px 16px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; cursor: pointer; border: none; background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); transition: all 0.2s; font-family: 'Poppins', sans-serif; }
+    .filter-tab { padding: 6px 16px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; cursor: pointer; border: none; background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); transition: all 0.2s; font-family: 'Plus Jakarta Sans', sans-serif; }
     .filter-tab.active { background: var(--primary-dark); color: #fff; box-shadow: none; }
 
     /* Modal */
@@ -28,7 +28,7 @@
     .modal-title { font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
     .modal-field { margin-bottom:16px; }
     .modal-field label { font-size:0.78rem; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:6px; }
-    .modal-field select { width:100%; padding:12px 16px; border-radius:12px; border:none; background:var(--bg); box-shadow:var(--shadow-in); font-family:'Poppins',sans-serif; font-size:0.88rem; color:var(--text-primary); outline:none; cursor:pointer; }
+    .modal-field select { width:100%; padding:12px 16px; border-radius:12px; border:none; background:var(--bg); box-shadow:var(--shadow-in); font-family:'Plus Jakarta Sans',sans-serif; font-size:0.88rem; color:var(--text-primary); outline:none; cursor:pointer; }
     .modal-actions { display:flex; gap:10px; margin-top:24px; }
     .modal-actions button { flex:1; }
   </style>
@@ -146,10 +146,10 @@ let _activeFilter = 'semua';
 const AVATAR_COLORS = [
   'linear-gradient(135deg,#EB5757,#FF7B7B)',
   'linear-gradient(135deg,#2F80ED,#56CCF2)',
-  'linear-gradient(135deg,#6C63FF,#8B83FF)',
-  'linear-gradient(135deg,#F2994A,#FFD54F)',
-  'linear-gradient(135deg,#6FCF97,#27AE60)',
-  'linear-gradient(135deg,#F2C94C,#F2994A)',
+  'linear-gradient(135deg,#2A9D8F,#45B5A6)',
+  'linear-gradient(135deg,#E09F3E,#FFD54F)',
+  'linear-gradient(135deg,#5BA672,#2F7A4A)',
+  'linear-gradient(135deg,#F2C94C,#E09F3E)',
   'linear-gradient(135deg,#EB5757,#9B51E0)',
 ];
 
