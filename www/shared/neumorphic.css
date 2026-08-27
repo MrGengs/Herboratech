@@ -34,12 +34,12 @@ ion-icon {
   --surface:      #FFFFFF;
   --surface-soft: #F7F9F8;
 
-  /* Neumorphic Shadows */
-  --shadow-out: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
-  --shadow-out-sm: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
-  --shadow-out-lg: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
-  --shadow-in: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
-  --shadow-in-sm: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
+  /* Shadows — datar: satu arah, lembut */
+  --shadow-out: 0 2px 12px rgba(16,24,40,0.06), 0 1px 3px rgba(16,24,40,0.04);
+  --shadow-out-sm: 0 1px 6px rgba(16,24,40,0.05), 0 1px 2px rgba(16,24,40,0.03);
+  --shadow-out-lg: 0 8px 28px rgba(16,24,40,0.10), 0 2px 8px rgba(16,24,40,0.05);
+  --shadow-in: inset 0 0 0 1px rgba(16,24,40,0.09);
+  --shadow-in-sm: inset 0 0 0 1px rgba(16,24,40,0.07);
   
   /* Primary Green */
   --primary: #17A05C;
@@ -91,10 +91,10 @@ ion-icon {
   --sp-64: 64px;
   
   /* Radius */
-  --r-sm: 10px;
-  --r-md: 15px;
+  --r-sm: 12px;
+  --r-md: 16px;
   --r-lg: 20px;
-  --r-xl: 25px;
+  --r-xl: 24px;
   --r-full: 50px;
   --r-circle: 50%;
   
@@ -257,7 +257,7 @@ ul, ol { list-style: none; }
   border-radius: var(--r-lg);
   padding: var(--sp-24);
   color: var(--text-on-primary);
-  box-shadow: 6px 6px 16px rgba(14,124,70,0.3), -4px -4px 12px var(--shadow-light);
+  box-shadow: 0 10px 26px rgba(14,124,70,0.22);
   position: relative;
   overflow: hidden;
 }
@@ -295,23 +295,23 @@ ul, ol { list-style: none; }
 .neu-btn-primary {
   background: var(--primary-gradient);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(14,124,70,0.35), -3px -3px 8px var(--shadow-light);
+  box-shadow: 0 6px 18px rgba(14,124,70,0.24);
   padding: var(--sp-12) var(--sp-32);
 }
 
-.neu-btn-primary:active { box-shadow: inset 3px 3px 6px rgba(10,95,53,0.4), inset -3px -3px 6px rgba(143,211,172,0.3); }
+.neu-btn-primary:active { box-shadow: inset 0 0 0 1px rgba(10,95,53,0.28); }
 .neu-btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
 
 .neu-btn-accent {
   background: linear-gradient(135deg, #3FBE84, #0E7C46);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(14,124,70,0.3), -3px -3px 8px var(--shadow-light);
+  box-shadow: 0 6px 18px rgba(14,124,70,0.22);
 }
 
 .neu-btn-danger {
   background: linear-gradient(135deg, #C94A42, #FF7B7B);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(201,74,66,0.3), -3px -3px 8px var(--shadow-light);
+  box-shadow: 0 6px 18px rgba(201,74,66,0.22);
 }
 
 .neu-btn-block { width: 100%; }
