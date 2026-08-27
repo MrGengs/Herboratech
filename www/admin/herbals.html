@@ -9,30 +9,30 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(79,209,160,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,190,63,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #4FD1A0 !important; }
+    .sidebar-logo span { color: #6FBE3F !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #4FD1A0; background: rgba(79,209,160,0.08); }
-    .sidebar-item.active { color: #4FD1A0 !important; background: rgba(79,209,160,0.15); border-left: 3px solid #4FD1A0; }
+    .sidebar-item:hover { color: #6FBE3F; background: rgba(111,190,63,0.08); }
+    .sidebar-item.active { color: #6FBE3F !important; background: rgba(111,190,63,0.15); border-left: 3px solid #6FBE3F; }
 
     .filter-bar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
     .search-input { flex: 1; min-width: 160px; padding: 10px 16px; border-radius: 10px; border: 2px solid var(--shadow-dark); background: var(--bg); font-size: 0.9rem; }
-    .search-input:focus { outline: none; border-color: #2FA87C; }
+    .search-input:focus { outline: none; border-color: #3A7A2A; }
 
     .filter-select { padding: 10px 16px; border-radius: 10px; border: 2px solid var(--shadow-dark); background: var(--bg); font-size: 0.9rem; cursor: pointer; }
-    .filter-select:focus { outline: none; border-color: #2FA87C; }
+    .filter-select:focus { outline: none; border-color: #3A7A2A; }
 
     .data-table { width: 100%; border-collapse: collapse; }
     .data-table th { background: var(--bg); padding: 12px; text-align: left; font-weight: 700; font-size: 0.85rem; color: var(--text-secondary); border-bottom: 2px solid var(--shadow-dark); }
     .data-table td { padding: 14px 12px; border-bottom: 1px solid var(--shadow-dark); font-size: 0.9rem; }
-    .data-table tr:hover { background: rgba(79, 209, 160, 0.03); }
+    .data-table tr:hover { background: rgba(111, 190, 63, 0.03); }
 
     .table-action-btn { padding: 6px 12px; margin-right: 8px; border-radius: 8px; border: none; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
     .btn-edit { background: rgba(45, 156, 219, 0.1); color: #2D9CDB; }
     .btn-edit:hover { background: rgba(45, 156, 219, 0.2); }
-    .btn-delete { background: rgba(255, 107, 122, 0.1); color: #FF6B7A; }
-    .btn-delete:hover { background: rgba(255, 107, 122, 0.2); }
+    .btn-delete { background: rgba(201, 74, 66, 0.1); color: #C94A42; }
+    .btn-delete:hover { background: rgba(201, 74, 66, 0.2); }
 
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; align-items: center; justify-content: center; }
     .modal-overlay.open { display: flex; }
@@ -42,26 +42,26 @@
     .form-group { margin-bottom: 16px; }
     .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
     .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border-radius: 10px; border: 2px solid var(--shadow-dark); background: white; font-family: inherit; font-size: 0.9rem; }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #2FA87C; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #3A7A2A; }
     .form-group textarea { resize: vertical; min-height: 80px; }
 
     .modal-actions { display: flex; gap: 12px; margin-top: 24px; justify-content: flex-end; }
     .modal-actions button { padding: 10px 20px; border-radius: 10px; border: none; font-weight: 600; cursor: pointer; }
     .modal-actions .btn-cancel { background: var(--shadow-dark); color: var(--text-primary); }
-    .modal-actions .btn-save { background: linear-gradient(135deg, #186045, #22815F); color: white; }
+    .modal-actions .btn-save { background: linear-gradient(135deg, #7CC242, #4E9E33); color: white; }
 
     .empty-state { text-align: center; padding: 40px; color: var(--text-secondary); }
     .empty-icon { font-size: 3rem; margin-bottom: 16px; }
 
     .pagination { display: flex; gap: 8px; justify-content: center; margin-top: 24px; }
     .pagination button { padding: 8px 12px; border-radius: 8px; border: 2px solid var(--shadow-dark); background: var(--bg); color: var(--text-primary); cursor: pointer; }
-    .pagination button.active { background: #2FA87C; color: white; border-color: #2FA87C; }
+    .pagination button.active { background: #3A7A2A; color: white; border-color: #3A7A2A; }
     .pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
 
     .evidence-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; }
-    .ev-a { background: rgba(47, 168, 124, 0.15); color: #2FA87C; }
+    .ev-a { background: rgba(58, 122, 42, 0.15); color: #3A7A2A; }
     .ev-b { background: rgba(45, 156, 219, 0.15); color: #2D9CDB; }
-    .ev-c { background: rgba(255, 179, 71, 0.15); color: #FFB347; }
+    .ev-c { background: rgba(176, 125, 30, 0.15); color: #B07D1E; }
   </style>
 </head>
 <body>
@@ -212,7 +212,7 @@
 <!-- Delete Confirmation Modal -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal-box">
-    <div class="modal-title" style="color: #FF6B7A;">Hapus Herbal?</div>
+    <div class="modal-title" style="color: #C94A42;">Hapus Herbal?</div>
     <p style="color: var(--text-secondary); margin-bottom: 24px;">
       Apakah Anda yakin ingin menghapus herbal <strong id="deleteHerbalName"></strong>? Tindakan ini tidak dapat dibatalkan.
     </p>

@@ -10,7 +10,7 @@
   <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
   <style>
     :root {
-      --sus-primary: #2FA87C;
+      --sus-primary: #3A7A2A;
       --sus-dark: #1B7A3D;
     }
     .app-header {
@@ -42,7 +42,7 @@
     .step-dot.current {
       background: linear-gradient(135deg, var(--sus-dark), var(--sus-primary));
       color: #fff; border-color: transparent;
-      box-shadow: 0 4px 12px rgba(47,168,124,0.4);
+      box-shadow: 0 4px 12px rgba(58,122,42,0.4);
       transform: scale(1.15);
     }
     .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
@@ -64,7 +64,7 @@
       background: linear-gradient(135deg, var(--sus-dark), var(--sus-primary));
       color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
       font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 6px 18px rgba(47,168,124,0.3);
+      box-shadow: 0 6px 18px rgba(58,122,42,0.3);
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
     .btn-proceed:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -92,16 +92,16 @@
       font-size: 0.78rem; font-weight: 500; color: var(--text-secondary);
       display: flex; align-items: center; gap: 10px;
     }
-    .likert-opt.selected { border-color: var(--sus-primary); background: rgba(47,168,124,0.05); color: var(--sus-dark); font-weight: 600; }
+    .likert-opt.selected { border-color: var(--sus-primary); background: rgba(58,122,42,0.05); color: var(--sus-dark); font-weight: 600; }
     .likert-opt .radio-circle {
       width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--shadow-dark);
       flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
     }
     .likert-opt.selected .radio-circle { border-color: var(--sus-primary); background: var(--sus-primary); }
-    .likert-opt.selected .radio-circle::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bg); }
+    .likert-opt.selected .radio-circle::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
 
     .intro-card {
-      background: linear-gradient(135deg, rgba(47,168,124,0.08), rgba(47,168,124,0.02));
+      background: linear-gradient(135deg, rgba(58,122,42,0.08), rgba(58,122,42,0.02));
       border-left: 4px solid var(--sus-primary); border-radius: 14px; padding: 18px; margin-bottom: 16px;
     }
     .intro-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--sus-dark); margin-bottom: 8px; }
@@ -118,7 +118,7 @@
     }
     .sus-scale-bar {
       height: 16px; border-radius: 8px; overflow: hidden; position: relative;
-      background: linear-gradient(90deg, #FF6B7A 0%, #FFB347 25%, #F2C94C 50%, #2FA87C 75%, #6FA8FF 100%);
+      background: linear-gradient(90deg, #C94A42 0%, #B07D1E 25%, #F2C94C 50%, #3A7A2A 75%, #2F73B5 100%);
     }
     .sus-scale-marker {
       position: absolute; top: -6px; width: 4px; height: 28px; background: var(--text-primary);
@@ -169,7 +169,7 @@
       </div>
       <div class="neu-card-sm" style="margin-bottom:12px;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,168,124,0.1);display:flex;align-items:center;justify-content:center;">
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(58,122,42,0.1);display:flex;align-items:center;justify-content:center;">
             <ion-icon name="checkmark-circle-outline" style="font-size:1.2rem;color:var(--sus-primary);"></ion-icon>
           </div>
           <div>
@@ -180,8 +180,8 @@
       </div>
       <div class="neu-card-sm" style="margin-bottom:12px;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:40px;height:40px;border-radius:12px;background:rgba(111,168,255,0.1);display:flex;align-items:center;justify-content:center;">
-            <ion-icon name="analytics-outline" style="font-size:1.2rem;color:#6FA8FF;"></ion-icon>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,115,181,0.1);display:flex;align-items:center;justify-content:center;">
+            <ion-icon name="analytics-outline" style="font-size:1.2rem;color:#2F73B5;"></ion-icon>
           </div>
           <div>
             <div style="font-weight:600;font-size:0.84rem;">Skor SUS: 0 - 100</div>
@@ -189,7 +189,7 @@
           </div>
         </div>
       </div>
-      <div class="neu-card-sm" style="background:rgba(47,168,124,0.04);border:1px dashed rgba(47,168,124,0.3);">
+      <div class="neu-card-sm" style="background:rgba(58,122,42,0.04);border:1px dashed rgba(58,122,42,0.3);">
         <p style="font-size:0.75rem;color:var(--text-tertiary);text-align:center;margin:0;">
           <ion-icon name="time-outline" style="vertical-align:middle;"></ion-icon>
           Estimasi waktu: <strong>3-5 menit</strong> &bull; 10 pertanyaan
@@ -430,11 +430,11 @@ function calculateResults() {
   const interp = document.getElementById('sus-interp-text');
 
   let grade, gradeColor, gradeBg;
-  if (susScore >= 85) { grade = 'A'; gradeColor = '#6FA8FF'; gradeBg = 'rgba(111,168,255,0.12)'; }
-  else if (susScore >= 72) { grade = 'B'; gradeColor = '#2FA87C'; gradeBg = 'rgba(47,168,124,0.12)'; }
+  if (susScore >= 85) { grade = 'A'; gradeColor = '#2F73B5'; gradeBg = 'rgba(47,115,181,0.12)'; }
+  else if (susScore >= 72) { grade = 'B'; gradeColor = '#3A7A2A'; gradeBg = 'rgba(58,122,42,0.12)'; }
   else if (susScore >= 68) { grade = 'C'; gradeColor = '#F2C94C'; gradeBg = 'rgba(242,201,76,0.15)'; }
-  else if (susScore >= 51) { grade = 'D'; gradeColor = '#FFB347'; gradeBg = 'rgba(255,179,71,0.12)'; }
-  else { grade = 'F'; gradeColor = '#FF6B7A'; gradeBg = 'rgba(255,107,122,0.12)'; }
+  else if (susScore >= 51) { grade = 'D'; gradeColor = '#B07D1E'; gradeBg = 'rgba(176,125,30,0.12)'; }
+  else { grade = 'F'; gradeColor = '#C94A42'; gradeBg = 'rgba(201,74,66,0.12)'; }
 
   badge.textContent = `Grade ${grade}`;
   badge.style.background = gradeBg;

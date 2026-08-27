@@ -12,7 +12,7 @@
   <style>
     .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
     .app-header .logo { color: #fff; }
-    .app-header .logo span { color: #4FD1A0; }
+    .app-header .logo span { color: #6FBE3F; }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
 
     /* Progress bar */
@@ -20,7 +20,7 @@
     .progress-steps { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; }
     .progress-step { flex: 1; height: 4px; border-radius: 4px; background: var(--shadow-dark); transition: background 0.3s; }
     .progress-step.done { background: var(--primary-dark); }
-    .progress-step.active { background: linear-gradient(90deg, var(--primary-dark), #4FD1A0); }
+    .progress-step.active { background: linear-gradient(90deg, var(--primary-dark), #6FBE3F); }
     .progress-label { font-size: 0.72rem; color: var(--text-secondary); text-align: center; }
 
     /* Steps */
@@ -34,12 +34,12 @@
 
     .slider-wrap { display: flex; align-items: center; gap: 12px; }
     .slider-wrap input[type=range] { flex: 1; -webkit-appearance: none; height: 6px; border-radius: 6px; background: var(--shadow-dark); outline: none; }
-    .slider-wrap input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--primary-dark); cursor: pointer; box-shadow: 0 2px 6px rgba(47,168,124,0.4); }
+    .slider-wrap input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--primary-dark); cursor: pointer; box-shadow: 0 2px 6px rgba(58,122,42,0.4); }
     .slider-value { min-width: 52px; text-align: right; font-weight: 700; font-size: 0.9rem; color: var(--primary-dark); }
 
     .radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
     .radio-opt { padding: 8px 14px; border-radius: 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); transition: all 0.15s; user-select: none; }
-    .radio-opt.selected { background: linear-gradient(135deg, var(--primary-dark), #4FD1A0); color: #fff; box-shadow: 0 4px 12px rgba(47,168,124,0.3); }
+    .radio-opt.selected { background: linear-gradient(135deg, var(--primary-dark), #6FBE3F); color: #fff; box-shadow: 0 4px 12px rgba(58,122,42,0.3); }
 
     .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 14px; margin-bottom: 10px; }
     .toggle-info { flex: 1; }
@@ -48,7 +48,7 @@
     .neu-toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; cursor: pointer; }
     .neu-toggle input { position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; z-index: 2; margin: 0; }
     .toggle-slider { position: absolute; inset: 0; background: var(--shadow-dark); border-radius: 24px; transition: 0.3s; z-index: 1; }
-    .toggle-slider:before { content: ''; position: absolute; height: 18px; width: 18px; left: 3px; bottom: 3px; background: var(--bg); border-radius: 50%; transition: 0.3s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+    .toggle-slider:before { content: ''; position: absolute; height: 18px; width: 18px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: 0.3s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
     .neu-toggle input:checked + .toggle-slider { background: var(--primary-dark); }
     .neu-toggle input:checked + .toggle-slider:before { transform: translateX(20px); }
     .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 14px; margin-bottom: 10px; cursor: pointer; transition: background 0.2s; }
@@ -61,22 +61,22 @@
 
     /* BMI badge */
     .bmi-badge { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 14px; font-weight: 700; font-size: 0.88rem; margin-top: 12px; }
-    .bmi-badge.normal { background: rgba(47,168,124,0.12); color: #2FA87C; }
-    .bmi-badge.overweight { background: rgba(255,179,71,0.12); color: #FFB347; }
-    .bmi-badge.obese { background: rgba(255,107,122,0.12); color: #FF6B7A; }
+    .bmi-badge.normal { background: rgba(58,122,42,0.12); color: #3A7A2A; }
+    .bmi-badge.overweight { background: rgba(176,125,30,0.12); color: #B07D1E; }
+    .bmi-badge.obese { background: rgba(201,74,66,0.12); color: #C94A42; }
     .bmi-badge.thin { background: rgba(86,204,242,0.12); color: #2D9CDB; }
 
     /* Action buttons */
     .step-actions { display: flex; gap: 10px; margin-top: 24px; }
     .btn-prev { flex: 1; padding: 13px; border: none; border-radius: 14px; font-family: var(--font); font-size: 0.88rem; font-weight: 700; background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); cursor: pointer; transition: all 0.15s; }
-    .btn-next { flex: 2; padding: 13px; border: none; border-radius: 14px; font-family: var(--font); font-size: 0.9rem; font-weight: 700; background: var(--primary-gradient); color: #fff; cursor: pointer; box-shadow: 0 4px 14px rgba(47,168,124,0.35); transition: all 0.15s; }
+    .btn-next { flex: 2; padding: 13px; border: none; border-radius: 14px; font-family: var(--font); font-size: 0.9rem; font-weight: 700; background: var(--primary-gradient); color: #fff; cursor: pointer; box-shadow: 0 4px 14px rgba(58,122,42,0.35); transition: all 0.15s; }
     .btn-next:active { transform: scale(0.98); }
     .btn-skip { flex: 1; padding: 13px; border: none; border-radius: 14px; font-family: var(--font); font-size: 0.82rem; font-weight: 600; background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-tertiary); cursor: pointer; }
 
     .step-title { font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
     .step-sub { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 20px; }
 
-    .save-indicator { display: none; font-size: 0.72rem; color: #2FA87C; text-align: center; margin-top: 6px; }
+    .save-indicator { display: none; font-size: 0.72rem; color: #3A7A2A; text-align: center; margin-top: 6px; }
   </style>
 </head>
 <body>

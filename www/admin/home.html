@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(79,209,160,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,190,63,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #4FD1A0 !important; }
+    .sidebar-logo span { color: #6FBE3F !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #4FD1A0; background: rgba(79,209,160,0.08); }
-    .sidebar-item.active { color: #4FD1A0 !important; background: rgba(79,209,160,0.15); border-left: 3px solid #4FD1A0; }
+    .sidebar-item:hover { color: #6FBE3F; background: rgba(111,190,63,0.08); }
+    .sidebar-item.active { color: #6FBE3F !important; background: rgba(111,190,63,0.15); border-left: 3px solid #6FBE3F; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
     @media (min-width: 768px) {
       .admin-home-grid { grid-template-columns: 2fr 1fr !important; }
@@ -45,7 +45,7 @@
     <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
   </aside>
   <main class="admin-main">
-    <div class="admin-topbar" data-animate="up"><h1>Dashboard</h1><div class="header-actions"><button class="neu-icon-btn"><ion-icon name="notifications-outline"></ion-icon><span class="badge"></span></button><div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#FFB347,#FFD54F)">A</div></div></div>
+    <div class="admin-topbar" data-animate="up"><h1>Dashboard</h1><div class="header-actions"><button class="neu-icon-btn"><ion-icon name="notifications-outline"></ion-icon><span class="badge"></span></button><div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#B07D1E,#FFD54F)">A</div></div></div>
 
     <div class="stat-grid" data-animate="up" data-delay="100">
       <div class="stat-card"><div class="sc-icon" style="background:var(--primary-bg);color:var(--primary-dark)">👥</div><div class="sc-value" id="users-count">—</div><div class="sc-label">Total Users</div><div class="sc-change up" id="users-change">Memuat...</div></div>
@@ -72,7 +72,7 @@
         <div style="display:flex;flex-direction:column;gap:12px;">
           <div><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--text-tertiary);">Server Uptime</span><span style="font-weight:600;color:var(--success);">99.8%</span></div><div class="neu-progress"><div class="neu-progress-fill" style="width:99.8%"></div></div></div>
           <div><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--text-tertiary);">API Response</span><span style="font-weight:600;color:var(--primary-dark);">142ms</span></div><div class="neu-progress"><div class="neu-progress-fill" style="width:85%"></div></div></div>
-          <div><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--text-tertiary);">BLE Success Rate</span><span style="font-weight:600;color:var(--info);">96.2%</span></div><div class="neu-progress"><div class="neu-progress-fill" style="width:96.2%;background:linear-gradient(90deg,#6FA8FF,#56CCF2)"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--text-tertiary);">BLE Success Rate</span><span style="font-weight:600;color:var(--info);">96.2%</span></div><div class="neu-progress"><div class="neu-progress-fill" style="width:96.2%;background:linear-gradient(90deg,#2F73B5,#56CCF2)"></div></div></div>
         </div>
       </div>
     </div>

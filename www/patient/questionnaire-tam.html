@@ -10,7 +10,7 @@
   <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
   <style>
     :root {
-      --tam-primary: #6FA8FF;
+      --tam-primary: #2F73B5;
       --tam-dark: #1A5276;
     }
     .app-header {
@@ -44,7 +44,7 @@
     .step-dot.current {
       background: linear-gradient(135deg, var(--tam-dark), var(--tam-primary));
       color: #fff; border-color: transparent;
-      box-shadow: 0 4px 12px rgba(111,168,255,0.4);
+      box-shadow: 0 4px 12px rgba(47,115,181,0.4);
       transform: scale(1.15);
     }
     .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
@@ -66,7 +66,7 @@
       background: linear-gradient(135deg, var(--tam-dark), var(--tam-primary));
       color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
       font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 6px 18px rgba(111,168,255,0.3);
+      box-shadow: 0 6px 18px rgba(47,115,181,0.3);
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
     .btn-proceed:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -90,8 +90,8 @@
       font-size: 0.78rem; font-weight: 500; color: var(--text-secondary);
       display: flex; align-items: center; gap: 10px;
     }
-    .likert-opt:hover { border-color: rgba(111,168,255,0.3); }
-    .likert-opt.selected { border-color: var(--tam-primary); background: rgba(111,168,255,0.05); color: var(--tam-primary); font-weight: 600; }
+    .likert-opt:hover { border-color: rgba(47,115,181,0.3); }
+    .likert-opt.selected { border-color: var(--tam-primary); background: rgba(47,115,181,0.05); color: var(--tam-primary); font-weight: 600; }
     .likert-opt .radio-circle {
       width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--shadow-dark);
       flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
@@ -100,11 +100,11 @@
       border-color: var(--tam-primary); background: var(--tam-primary);
     }
     .likert-opt.selected .radio-circle::after {
-      content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bg);
+      content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff;
     }
 
     .intro-card {
-      background: linear-gradient(135deg, rgba(111,168,255,0.08), rgba(111,168,255,0.02));
+      background: linear-gradient(135deg, rgba(47,115,181,0.08), rgba(47,115,181,0.02));
       border-left: 4px solid var(--tam-primary); border-radius: 14px; padding: 18px; margin-bottom: 16px;
     }
     .intro-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--tam-dark); margin-bottom: 8px; }
@@ -130,7 +130,7 @@
 
     .dimension-header {
       display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
-      padding: 12px 16px; background: rgba(111,168,255,0.06); border-radius: 12px;
+      padding: 12px 16px; background: rgba(47,115,181,0.06); border-radius: 12px;
     }
     .dimension-header ion-icon { font-size: 1.3rem; color: var(--tam-primary); }
     .dimension-header span { font-size: 0.88rem; font-weight: 700; color: var(--tam-dark); }
@@ -162,20 +162,20 @@
         <p>Kuesioner ini bertujuan untuk mengukur tingkat penerimaan Anda terhadap teknologi aplikasi <strong>HerboraTech</strong>. Penilaian mencakup 4 dimensi utama:</p>
       </div>
       <div class="neu-card-sm" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
-        <div style="width:40px;height:40px;border-radius:12px;background:rgba(111,168,255,0.1);display:flex;align-items:center;justify-content:center;">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,115,181,0.1);display:flex;align-items:center;justify-content:center;">
           <ion-icon name="bulb-outline" style="font-size:1.2rem;color:var(--tam-primary);"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.84rem;">Perceived Usefulness (PU)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Persepsi kegunaan aplikasi</div></div>
       </div>
       <div class="neu-card-sm" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
-        <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,168,124,0.1);display:flex;align-items:center;justify-content:center;">
-          <ion-icon name="hand-left-outline" style="font-size:1.2rem;color:#2FA87C;"></ion-icon>
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(58,122,42,0.1);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="hand-left-outline" style="font-size:1.2rem;color:#3A7A2A;"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.84rem;">Perceived Ease of Use (PEOU)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Persepsi kemudahan penggunaan</div></div>
       </div>
       <div class="neu-card-sm" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
-        <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,179,71,0.1);display:flex;align-items:center;justify-content:center;">
-          <ion-icon name="heart-outline" style="font-size:1.2rem;color:#FFB347;"></ion-icon>
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(176,125,30,0.1);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="heart-outline" style="font-size:1.2rem;color:#B07D1E;"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.84rem;">Attitude Toward Using (ATU)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Sikap terhadap penggunaan</div></div>
       </div>
@@ -185,7 +185,7 @@
         </div>
         <div><div style="font-weight:600;font-size:0.84rem;">Behavioral Intention (BI)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Niat untuk menggunakan</div></div>
       </div>
-      <div class="neu-card-sm" style="background:rgba(111,168,255,0.04);border:1px dashed rgba(111,168,255,0.3);">
+      <div class="neu-card-sm" style="background:rgba(47,115,181,0.04);border:1px dashed rgba(47,115,181,0.3);">
         <p style="font-size:0.75rem;color:var(--text-tertiary);text-align:center;margin:0;">
           <ion-icon name="time-outline" style="vertical-align:middle;"></ion-icon>
           Estimasi waktu: <strong>5-8 menit</strong> &bull; 16 pertanyaan
@@ -228,7 +228,7 @@
   <div class="step-pane" data-step="3">
     <div class="section">
       <div class="dimension-header">
-        <ion-icon name="hand-left-outline" style="color:#2FA87C;"></ion-icon>
+        <ion-icon name="hand-left-outline" style="color:#3A7A2A;"></ion-icon>
         <span>Perceived Ease of Use (PEOU)</span>
       </div>
       <div class="likert-question" data-q="peou1">
@@ -258,7 +258,7 @@
   <div class="step-pane" data-step="4">
     <div class="section">
       <div class="dimension-header">
-        <ion-icon name="heart-outline" style="color:#FFB347;"></ion-icon>
+        <ion-icon name="heart-outline" style="color:#B07D1E;"></ion-icon>
         <span>Attitude Toward Using (ATU)</span>
       </div>
       <div class="likert-question" data-q="atu1">
@@ -331,13 +331,13 @@
           </div>
           <div class="rb-item">
             <span class="rb-label" style="min-width:60px;">PEOU</span>
-            <div class="rb-bar"><div class="rb-bar-fill" id="bar-peou" style="width:0%;background:linear-gradient(90deg,#1B7A3D,#2FA87C);"></div></div>
-            <span class="rb-value" id="score-peou" style="color:#2FA87C;">0/20</span>
+            <div class="rb-bar"><div class="rb-bar-fill" id="bar-peou" style="width:0%;background:linear-gradient(90deg,#1B7A3D,#3A7A2A);"></div></div>
+            <span class="rb-value" id="score-peou" style="color:#3A7A2A;">0/20</span>
           </div>
           <div class="rb-item">
             <span class="rb-label" style="min-width:60px;">ATU</span>
-            <div class="rb-bar"><div class="rb-bar-fill" id="bar-atu" style="width:0%;background:linear-gradient(90deg,#D68910,#FFB347);"></div></div>
-            <span class="rb-value" id="score-atu" style="color:#FFB347;">0/20</span>
+            <div class="rb-bar"><div class="rb-bar-fill" id="bar-atu" style="width:0%;background:linear-gradient(90deg,#D68910,#B07D1E);"></div></div>
+            <span class="rb-value" id="score-atu" style="color:#B07D1E;">0/20</span>
           </div>
           <div class="rb-item">
             <span class="rb-label" style="min-width:60px;">BI</span>
@@ -484,18 +484,18 @@ function calculateResults() {
   } else if (pct >= 60) {
     chip.textContent = 'Diterima';
     chip.className = 'neu-chip';
-    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(47,168,124,0.12);color:#2FA87C;';
-    interp.innerHTML = '<strong style="color:#2FA87C;">Tingkat penerimaan baik.</strong><br>Anda cukup menerima teknologi HerboraTech. Masih ada ruang untuk meningkatkan pengalaman penggunaan agar lebih optimal.';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(58,122,42,0.12);color:#3A7A2A;';
+    interp.innerHTML = '<strong style="color:#3A7A2A;">Tingkat penerimaan baik.</strong><br>Anda cukup menerima teknologi HerboraTech. Masih ada ruang untuk meningkatkan pengalaman penggunaan agar lebih optimal.';
   } else if (pct >= 40) {
     chip.textContent = 'Cukup Diterima';
     chip.className = 'neu-chip';
-    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(255,179,71,0.12);color:#FFB347;';
-    interp.innerHTML = '<strong style="color:#FFB347;">Tingkat penerimaan cukup.</strong><br>Anda memiliki pandangan yang netral terhadap HerboraTech. Perlu evaluasi lebih lanjut pada aspek kegunaan dan kemudahan penggunaan.';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(176,125,30,0.12);color:#B07D1E;';
+    interp.innerHTML = '<strong style="color:#B07D1E;">Tingkat penerimaan cukup.</strong><br>Anda memiliki pandangan yang netral terhadap HerboraTech. Perlu evaluasi lebih lanjut pada aspek kegunaan dan kemudahan penggunaan.';
   } else {
     chip.textContent = 'Perlu Peningkatan';
     chip.className = 'neu-chip';
-    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(255,107,122,0.12);color:#FF6B7A;';
-    interp.innerHTML = '<strong style="color:#FF6B7A;">Tingkat penerimaan rendah.</strong><br>Anda belum sepenuhnya menerima teknologi HerboraTech. Masukan Anda sangat berharga untuk perbaikan aplikasi ke depan.';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(201,74,66,0.12);color:#C94A42;';
+    interp.innerHTML = '<strong style="color:#C94A42;">Tingkat penerimaan rendah.</strong><br>Anda belum sepenuhnya menerima teknologi HerboraTech. Masukan Anda sangat berharga untuk perbaikan aplikasi ke depan.';
   }
 }
 

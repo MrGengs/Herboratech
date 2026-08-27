@@ -11,14 +11,14 @@
   <style>
     .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
     .app-header .logo { color: #fff; }
-    .app-header .logo span { color: #4FD1A0; }
+    .app-header .logo span { color: #6FBE3F; }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
     .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
     .app-header > div[style*="font-weight:700"] { color: #fff; }
     .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
     .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
     .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
-    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(47,168,124,0.5)); }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(58,122,42,0.5)); }
   </style>
 </head>
 <body>
@@ -80,7 +80,7 @@
 
     <!-- Filter baris 2: kategori -->
     <div style="display:flex;gap:8px;margin-top:8px;overflow-x:auto;scrollbar-width:none;">
-      <span class="neu-chip fcat-chip fcat-active" style="background:rgba(47,168,124,0.12);color:#2FA87C;cursor:pointer;white-space:nowrap;font-weight:700;" onclick="filterFCat('semua',this)">Semua Kondisi</span>
+      <span class="neu-chip fcat-chip fcat-active" style="background:rgba(58,122,42,0.12);color:#3A7A2A;cursor:pointer;white-space:nowrap;font-weight:700;" onclick="filterFCat('semua',this)">Semua Kondisi</span>
       <span class="neu-chip fcat-chip" style="cursor:pointer;white-space:nowrap;" onclick="filterFCat('pencernaan',this)">Pencernaan</span>
       <span class="neu-chip fcat-chip" style="cursor:pointer;white-space:nowrap;" onclick="filterFCat('imunitas',this)">Imunitas</span>
       <span class="neu-chip fcat-chip" style="cursor:pointer;white-space:nowrap;" onclick="filterFCat('metabolisme',this)">Metabolisme</span>
@@ -90,8 +90,8 @@
     </div>
 
     <!-- Medical disclaimer -->
-    <div style="margin-top:14px;padding:10px 14px;background:rgba(255,107,122,0.06);border:1px solid rgba(255,107,122,0.2);border-radius:12px;font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">
-      <span style="font-weight:700;color:#FF6B7A;">⚕ Disclaimer:</span>
+    <div style="margin-top:14px;padding:10px 14px;background:rgba(201,74,66,0.06);border:1px solid rgba(201,74,66,0.2);border-radius:12px;font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">
+      <span style="font-weight:700;color:#C94A42;">⚕ Disclaimer:</span>
       Resep herbal ini bersifat edukatif. Selalu konsultasikan dengan dokter sebelum menggunakannya, terutama jika sedang mengonsumsi obat-obatan.
     </div>
 
@@ -120,7 +120,7 @@
     </div>
 
     <!-- Chat area -->
-    <div id="herbal-chat-box" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;max-height:400px;overflow-y:auto;padding:12px;background:rgba(47,168,124,0.04);border-radius:16px;">
+    <div id="herbal-chat-box" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;max-height:400px;overflow-y:auto;padding:12px;background:rgba(58,122,42,0.04);border-radius:16px;">
       <div class="chat-bubble received" style="margin-bottom:8px;">
         <div style="font-size:0.85rem;line-height:1.5;">Halo! 👋 Saya AI Herbal Advisor. Ceritakan kondisi kesehatan atau keluhan Anda, dan saya akan merekomendasikan ramuan herbal yang aman dan terbukti berdasarkan database HerboraTech.</div>
       </div>
@@ -138,13 +138,13 @@
 
     <!-- Response area -->
     <div id="herbal-response" style="display:none;">
-      <div style="border-top:1px solid rgba(47,168,124,0.2);padding-top:16px;margin-top:12px;">
+      <div style="border-top:1px solid rgba(58,122,42,0.2);padding-top:16px;margin-top:12px;">
         <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px;">📋 Rekomendasi Herbal:</div>
         <div id="herbs-recommendation" style="display:flex;flex-direction:column;gap:12px;"></div>
       </div>
 
-      <div style="margin-top:16px;padding:12px;background:rgba(255,107,122,0.06);border-left:3px solid rgba(255,107,122,0.3);border-radius:8px;font-size:0.75rem;color:var(--text-secondary);line-height:1.5;">
-        <div style="font-weight:700;color:#FF6B7A;margin-bottom:4px;">⚠️ Penting:</div>
+      <div style="margin-top:16px;padding:12px;background:rgba(201,74,66,0.06);border-left:3px solid rgba(201,74,66,0.3);border-radius:8px;font-size:0.75rem;color:var(--text-secondary);line-height:1.5;">
+        <div style="font-weight:700;color:#C94A42;margin-bottom:4px;">⚠️ Penting:</div>
         <div>AI Herbal Advisor memberikan rekomendasi berdasarkan pengetahuan umum. Selalu konsultasikan dengan dokter atau ahli herbal sebelum menggunakan ramuan baru, terutama jika sedang minum obat lain.</div>
       </div>
     </div>
@@ -152,7 +152,7 @@
     <!-- Loading indicator -->
     <div id="herbal-loading" style="display:none;text-align:center;padding:20px;">
       <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px;">⏳ Memproses rekomendasi...</div>
-      <div style="width:40px;height:40px;margin:0 auto;border:3px solid rgba(47,168,124,0.2);border-top-color:#2FA87C;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+      <div style="width:40px;height:40px;margin:0 auto;border:3px solid rgba(58,122,42,0.2);border-top-color:#3A7A2A;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
     </div>
   </div>
 
@@ -161,8 +161,8 @@
       to { transform: rotate(360deg); }
     }
     .herb-card {
-      background: linear-gradient(135deg, rgba(47,168,124,0.08) 0%, rgba(79,209,160,0.04) 100%);
-      border-left: 3px solid #2FA87C;
+      background: linear-gradient(135deg, rgba(58,122,42,0.08) 0%, rgba(111,190,63,0.04) 100%);
+      border-left: 3px solid #3A7A2A;
       padding: 12px;
       border-radius: 10px;
       font-size: 0.8rem;
@@ -170,13 +170,13 @@
     .herb-card > div:first-child {
       font-weight: 700;
       font-size: 0.85rem;
-      color: #2FA87C;
+      color: #3A7A2A;
       margin-bottom: 6px;
     }
     .herb-compound {
       display: inline-block;
-      background: rgba(47,168,124,0.12);
-      color: #2FA87C;
+      background: rgba(58,122,42,0.12);
+      color: #3A7A2A;
       padding: 2px 8px;
       border-radius: 12px;
       font-size: 0.7rem;
@@ -192,11 +192,11 @@
     }
     .herb-grade-A {
       background: #E8F5E9;
-      color: #2FA87C;
+      color: #3A7A2A;
     }
     .herb-grade-B {
       background: #FFF3E0;
-      color: #FFB347;
+      color: #B07D1E;
     }
     .herb-grade-C {
       background: #F3E5F5;
@@ -204,7 +204,7 @@
     }
     .herb-grade-D {
       background: #FFEBEE;
-      color: #FF6B7A;
+      color: #C94A42;
     }
   </style>
 
@@ -253,7 +253,7 @@ let formulaCatFilter  = 'semua';
 let formulaSearchQ    = '';
 const FORMULA_PAGE = 20;
 
-const evStyle = { A:'background:#E8F5E9;color:#2FA87C;', B:'background:#FFF3E0;color:#FFB347;', C:'background:#F3E5F5;color:#9B51E0;' };
+const evStyle = { A:'background:#E8F5E9;color:#3A7A2A;', B:'background:#FFF3E0;color:#B07D1E;', C:'background:#F3E5F5;color:#9B51E0;' };
 const prepLabel = { rebus:'Rebus', seduh:'Seduh', tumbuk:'Tumbuk', tempel:'Tempel', mandi:'Mandi', peras:'Peras', olesan:'Olesan' };
 
 // ── Tab switching ──────────────────────────────────────────────────────────
@@ -318,13 +318,13 @@ function renderFormulas(list, append = false) {
     div.style.cssText = 'cursor:pointer;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;';
     div.onclick = () => nav('herbal-formula.html?id=' + f.id);
     div.innerHTML = `
-      <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,168,124,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">${f.emoji || '🌿'}</div>
+      <div style="width:40px;height:40px;border-radius:12px;background:rgba(58,122,42,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">${f.emoji || '🌿'}</div>
       <div style="flex:1;min-width:0;">
         <div style="font-weight:700;font-size:0.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${f.name || '—'}</div>
         <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:3px;line-height:1.4;">${inds || f.category || ''}</div>
         <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;align-items:center;">
           ${topicalBadge}
-          ${prep ? `<span style="background:rgba(47,168,124,0.1);color:#2FA87C;border-radius:8px;padding:1px 6px;font-size:0.65rem;font-weight:700;">${prep}</span>` : ''}
+          ${prep ? `<span style="background:rgba(58,122,42,0.1);color:#3A7A2A;border-radius:8px;padding:1px 6px;font-size:0.65rem;font-weight:700;">${prep}</span>` : ''}
           <span style="margin-left:auto;padding:2px 8px;border-radius:20px;font-size:0.6rem;font-weight:700;${evStyle[ev]}">ev.${ev}</span>
         </div>
       </div>`;
@@ -385,7 +385,7 @@ function filterType(type, el) {
 
 function filterFCat(cat, el) {
   document.querySelectorAll('.fcat-chip').forEach(c => { c.classList.remove('fcat-active'); c.style.cssText = 'cursor:pointer;white-space:nowrap;'; });
-  el.classList.add('fcat-active'); el.style.cssText = 'background:rgba(47,168,124,0.12);color:#2FA87C;cursor:pointer;white-space:nowrap;font-weight:700;';
+  el.classList.add('fcat-active'); el.style.cssText = 'background:rgba(58,122,42,0.12);color:#3A7A2A;cursor:pointer;white-space:nowrap;font-weight:700;';
   formulaCatFilter = cat;
   loadFormulas(true);
 }
@@ -507,8 +507,8 @@ async function sendHerbalQuery() {
 
     const errorDiv = document.createElement('div');
     errorDiv.className = 'chat-bubble received';
-    errorDiv.style.borderLeft = '3px solid #FF6B7A';
-    errorDiv.innerHTML = `<div style="font-size:0.85rem;color:#FF6B7A;line-height:1.5;">⚠️ Maaf, terjadi kesalahan saat memproses rekomendasi. Silakan coba lagi.</div>`;
+    errorDiv.style.borderLeft = '3px solid #C94A42';
+    errorDiv.innerHTML = `<div style="font-size:0.85rem;color:#C94A42;line-height:1.5;">⚠️ Maaf, terjadi kesalahan saat memproses rekomendasi. Silakan coba lagi.</div>`;
     chatBox.appendChild(errorDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -571,9 +571,9 @@ function renderHerbalRecommendations(data) {
         <span class="herb-grade ${gradeClass}">Level Bukti ${herb.gradeEvidence || 'C'}</span>
 
         ${herb.interactions && herb.interactions.length > 0 ? `
-          <div style="margin-top:8px;padding:8px;background:rgba(255,107,122,0.08);border-radius:6px;border-left:2px solid #FF6B7A;">
-            <div style="font-size:0.7rem;font-weight:700;color:#FF6B7A;margin-bottom:4px;">⚠️ Interaksi Obat:</div>
-            <div style="font-size:0.7rem;color:#FF6B7A;">${herb.interactions.join(', ')}</div>
+          <div style="margin-top:8px;padding:8px;background:rgba(201,74,66,0.08);border-radius:6px;border-left:2px solid #C94A42;">
+            <div style="font-size:0.7rem;font-weight:700;color:#C94A42;margin-bottom:4px;">⚠️ Interaksi Obat:</div>
+            <div style="font-size:0.7rem;color:#C94A42;">${herb.interactions.join(', ')}</div>
           </div>
         ` : ''}
 
@@ -591,7 +591,7 @@ function renderHerbalRecommendations(data) {
   // Add BPOM note
   if (herbsData.bpomApproved) {
     container.innerHTML += `
-      <div style="margin-top:12px;padding:10px;background:rgba(47,168,124,0.08);border-radius:8px;font-size:0.75rem;color:#2FA87C;">
+      <div style="margin-top:12px;padding:10px;background:rgba(58,122,42,0.08);border-radius:8px;font-size:0.75rem;color:#3A7A2A;">
         ✅ Herbal yang direkomendasikan telah melalui verifikasi BPOM (Badan Pengawas Obat dan Makanan).
       </div>
     `;

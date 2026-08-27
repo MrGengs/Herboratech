@@ -11,11 +11,11 @@
   <style>
     /* === COLOR SCHEME === */
     :root {
-      --q-tam: #6FA8FF;
+      --q-tam: #2F73B5;
       --q-tam-dark: #1A5276;
-      --q-sus: #2FA87C;
+      --q-sus: #3A7A2A;
       --q-sus-dark: #1B7A3D;
-      --q-ux: #37C7C2;
+      --q-ux: #35803A;
       --q-ux-dark: #4A42B0;
     }
 
@@ -49,8 +49,8 @@
     .section-tab.active[data-section="ux"] { border-bottom-color: var(--q-ux); color: var(--q-ux); }
     .section-tab.done::after {
       content: '✓'; position: absolute; top: 4px; right: 8px;
-      font-size: 0.6rem; font-weight: 800; color: #2FA87C;
-      background: rgba(47,168,124,0.12); width: 16px; height: 16px;
+      font-size: 0.6rem; font-weight: 800; color: #3A7A2A;
+      background: rgba(58,122,42,0.12); width: 16px; height: 16px;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
     }
     .section-tab .tab-label { display: block; font-size: 0.72rem; font-weight: 700; }
@@ -122,32 +122,32 @@
       width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--shadow-dark);
       flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
     }
-    .likert-opt.selected .radio-circle::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bg); }
+    .likert-opt.selected .radio-circle::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
 
     /* TAM colors */
     .q-section[data-section="tam"] .q-number { color: var(--q-tam); }
-    .q-section[data-section="tam"] .likert-opt.selected { border-color: var(--q-tam); background: rgba(111,168,255,0.05); color: var(--q-tam-dark); font-weight: 600; }
+    .q-section[data-section="tam"] .likert-opt.selected { border-color: var(--q-tam); background: rgba(47,115,181,0.05); color: var(--q-tam-dark); font-weight: 600; }
     .q-section[data-section="tam"] .likert-opt.selected .radio-circle { border-color: var(--q-tam); background: var(--q-tam); }
     .q-section[data-section="tam"] .step-dot.past { background: var(--q-tam); border-color: var(--q-tam); }
-    .q-section[data-section="tam"] .step-dot.current { background: linear-gradient(135deg, var(--q-tam-dark), var(--q-tam)); box-shadow: 0 3px 10px rgba(111,168,255,0.35); }
+    .q-section[data-section="tam"] .step-dot.current { background: linear-gradient(135deg, var(--q-tam-dark), var(--q-tam)); box-shadow: 0 3px 10px rgba(47,115,181,0.35); }
     .q-section[data-section="tam"] .step-line.done { background: var(--q-tam); }
     .q-section[data-section="tam"] .step-title-text { color: var(--q-tam); }
 
     /* SUS colors */
     .q-section[data-section="sus"] .q-number { color: var(--q-sus); }
-    .q-section[data-section="sus"] .likert-opt.selected { border-color: var(--q-sus); background: rgba(47,168,124,0.05); color: var(--q-sus-dark); font-weight: 600; }
+    .q-section[data-section="sus"] .likert-opt.selected { border-color: var(--q-sus); background: rgba(58,122,42,0.05); color: var(--q-sus-dark); font-weight: 600; }
     .q-section[data-section="sus"] .likert-opt.selected .radio-circle { border-color: var(--q-sus); background: var(--q-sus); }
     .q-section[data-section="sus"] .step-dot.past { background: var(--q-sus); border-color: var(--q-sus); }
-    .q-section[data-section="sus"] .step-dot.current { background: linear-gradient(135deg, var(--q-sus-dark), var(--q-sus)); box-shadow: 0 3px 10px rgba(47,168,124,0.35); }
+    .q-section[data-section="sus"] .step-dot.current { background: linear-gradient(135deg, var(--q-sus-dark), var(--q-sus)); box-shadow: 0 3px 10px rgba(58,122,42,0.35); }
     .q-section[data-section="sus"] .step-line.done { background: var(--q-sus); }
     .q-section[data-section="sus"] .step-title-text { color: var(--q-sus); }
 
     /* UX colors */
     .q-section[data-section="ux"] .q-number { color: var(--q-ux); }
-    .q-section[data-section="ux"] .likert-opt.selected { border-color: var(--q-ux); background: rgba(55,199,194,0.05); color: var(--q-ux-dark); font-weight: 600; }
+    .q-section[data-section="ux"] .likert-opt.selected { border-color: var(--q-ux); background: rgba(53,128,58,0.05); color: var(--q-ux-dark); font-weight: 600; }
     .q-section[data-section="ux"] .likert-opt.selected .radio-circle { border-color: var(--q-ux); background: var(--q-ux); }
     .q-section[data-section="ux"] .step-dot.past { background: var(--q-ux); border-color: var(--q-ux); }
-    .q-section[data-section="ux"] .step-dot.current { background: linear-gradient(135deg, var(--q-ux-dark), var(--q-ux)); box-shadow: 0 3px 10px rgba(55,199,194,0.35); }
+    .q-section[data-section="ux"] .step-dot.current { background: linear-gradient(135deg, var(--q-ux-dark), var(--q-ux)); box-shadow: 0 3px 10px rgba(53,128,58,0.35); }
     .q-section[data-section="ux"] .step-line.done { background: var(--q-ux); }
     .q-section[data-section="ux"] .step-title-text { color: var(--q-ux); }
 
@@ -255,7 +255,7 @@
     <!-- TAM Step 1: Intro -->
     <div class="step-pane active" data-section="tam" data-step="1">
       <div class="section">
-        <div class="intro-card" style="background:linear-gradient(135deg,rgba(111,168,255,0.08),rgba(111,168,255,0.02));border-left:4px solid var(--q-tam);">
+        <div class="intro-card" style="background:linear-gradient(135deg,rgba(47,115,181,0.08),rgba(47,115,181,0.02));border-left:4px solid var(--q-tam);">
           <h3 style="color:var(--q-tam-dark);">Bagian 1: Technology Acceptance Model (TAM)</h3>
           <p>Mengukur tingkat penerimaan Anda terhadap teknologi HerboraTech melalui <strong>4 dimensi</strong>: Perceived Usefulness, Perceived Ease of Use, Attitude, dan Behavioral Intention.</p>
         </div>
@@ -266,12 +266,12 @@
             <div style="font-size:0.58rem;color:var(--text-tertiary);">Kegunaan</div>
           </div>
           <div class="neu-card-sm" style="text-align:center;padding:14px 10px;">
-            <ion-icon name="hand-left-outline" style="font-size:1.4rem;color:#2FA87C;"></ion-icon>
+            <ion-icon name="hand-left-outline" style="font-size:1.4rem;color:#3A7A2A;"></ion-icon>
             <div style="font-size:0.7rem;font-weight:600;margin-top:6px;">PEOU</div>
             <div style="font-size:0.58rem;color:var(--text-tertiary);">Kemudahan</div>
           </div>
           <div class="neu-card-sm" style="text-align:center;padding:14px 10px;">
-            <ion-icon name="heart-outline" style="font-size:1.4rem;color:#FFB347;"></ion-icon>
+            <ion-icon name="heart-outline" style="font-size:1.4rem;color:#B07D1E;"></ion-icon>
             <div style="font-size:0.7rem;font-weight:600;margin-top:6px;">ATU</div>
             <div style="font-size:0.58rem;color:var(--text-tertiary);">Sikap</div>
           </div>
@@ -281,7 +281,7 @@
             <div style="font-size:0.58rem;color:var(--text-tertiary);">Niat Penggunaan</div>
           </div>
         </div>
-        <div class="neu-card-sm" style="margin-top:12px;background:rgba(111,168,255,0.04);border:1px dashed rgba(111,168,255,0.3);">
+        <div class="neu-card-sm" style="margin-top:12px;background:rgba(47,115,181,0.04);border:1px dashed rgba(47,115,181,0.3);">
           <p style="font-size:0.72rem;color:var(--text-tertiary);text-align:center;margin:0;">16 pertanyaan &bull; Skala Likert 1-5</p>
         </div>
       </div>
@@ -290,7 +290,7 @@
     <!-- TAM Step 2: PU -->
     <div class="step-pane" data-section="tam" data-step="2">
       <div class="section">
-        <div class="dimension-header" style="background:rgba(111,168,255,0.06);">
+        <div class="dimension-header" style="background:rgba(47,115,181,0.06);">
           <ion-icon name="bulb-outline" style="color:var(--q-tam);"></ion-icon>
           <span style="color:var(--q-tam-dark);">Perceived Usefulness (PU)</span>
         </div>
@@ -304,8 +304,8 @@
     <!-- TAM Step 3: PEOU -->
     <div class="step-pane" data-section="tam" data-step="3">
       <div class="section">
-        <div class="dimension-header" style="background:rgba(47,168,124,0.06);">
-          <ion-icon name="hand-left-outline" style="color:#2FA87C;"></ion-icon>
+        <div class="dimension-header" style="background:rgba(58,122,42,0.06);">
+          <ion-icon name="hand-left-outline" style="color:#3A7A2A;"></ion-icon>
           <span style="color:var(--q-sus-dark);">Perceived Ease of Use (PEOU)</span>
         </div>
         <div class="likert-question" data-q="peou1"><div class="q-number">1 / 4</div><div class="q-text">Saya merasa mudah mempelajari cara menggunakan aplikasi HerboraTech.</div><div class="likert-options"></div></div>
@@ -318,8 +318,8 @@
     <!-- TAM Step 4: ATU + BI -->
     <div class="step-pane" data-section="tam" data-step="4">
       <div class="section">
-        <div class="dimension-header" style="background:rgba(255,179,71,0.06);">
-          <ion-icon name="heart-outline" style="color:#FFB347;"></ion-icon>
+        <div class="dimension-header" style="background:rgba(176,125,30,0.06);">
+          <ion-icon name="heart-outline" style="color:#B07D1E;"></ion-icon>
           <span style="color:#D68910;">Attitude Toward Using (ATU)</span>
         </div>
         <div class="likert-question" data-q="atu1"><div class="q-number">1 / 4</div><div class="q-text">Saya merasa senang menggunakan aplikasi HerboraTech untuk kesehatan saya.</div><div class="likert-options"></div></div>
@@ -363,11 +363,11 @@
     <!-- SUS Step 1: Intro -->
     <div class="step-pane active" data-section="sus" data-step="1">
       <div class="section">
-        <div class="intro-card" style="background:linear-gradient(135deg,rgba(47,168,124,0.08),rgba(47,168,124,0.02));border-left:4px solid var(--q-sus);">
+        <div class="intro-card" style="background:linear-gradient(135deg,rgba(58,122,42,0.08),rgba(58,122,42,0.02));border-left:4px solid var(--q-sus);">
           <h3 style="color:var(--q-sus-dark);">Bagian 2: System Usability Scale (SUS)</h3>
           <p>Metode standar industri untuk mengukur <strong>usability</strong>. Terdiri dari 10 pertanyaan — beberapa bernada negatif (ditandai *). Skor akhir: 0-100.</p>
         </div>
-        <div class="neu-card-sm" style="background:rgba(47,168,124,0.04);border:1px dashed rgba(47,168,124,0.3);">
+        <div class="neu-card-sm" style="background:rgba(58,122,42,0.04);border:1px dashed rgba(58,122,42,0.3);">
           <p style="font-size:0.72rem;color:var(--text-tertiary);text-align:center;margin:0;">10 pertanyaan &bull; Skor ≥ 68 = di atas rata-rata</p>
         </div>
       </div>
@@ -418,11 +418,11 @@
     <!-- UX Step 1: Intro -->
     <div class="step-pane active" data-section="ux" data-step="1">
       <div class="section">
-        <div class="intro-card" style="background:linear-gradient(135deg,rgba(55,199,194,0.08),rgba(55,199,194,0.02));border-left:4px solid var(--q-ux);">
+        <div class="intro-card" style="background:linear-gradient(135deg,rgba(53,128,58,0.08),rgba(53,128,58,0.02));border-left:4px solid var(--q-ux);">
           <h3 style="color:var(--q-ux-dark);">Bagian 3: Penilaian User Experience</h3>
           <p>Menilai pengalaman Anda secara menyeluruh mencakup 5 dimensi: Visual Design, Navigasi, Konten, Kepuasan, dan Kepercayaan. Termasuk feedback terbuka.</p>
         </div>
-        <div class="neu-card-sm" style="background:rgba(55,199,194,0.04);border:1px dashed rgba(55,199,194,0.3);">
+        <div class="neu-card-sm" style="background:rgba(53,128,58,0.04);border:1px dashed rgba(53,128,58,0.3);">
           <p style="font-size:0.72rem;color:var(--text-tertiary);text-align:center;margin:0;">20 pertanyaan + feedback opsional</p>
         </div>
       </div>
@@ -431,7 +431,7 @@
     <!-- UX Step 2: Visual + Navigasi -->
     <div class="step-pane" data-section="ux" data-step="2">
       <div class="section">
-        <div class="dimension-header" style="background:rgba(55,199,194,0.06);">
+        <div class="dimension-header" style="background:rgba(53,128,58,0.06);">
           <ion-icon name="eye-outline" style="color:var(--q-ux);"></ion-icon>
           <span style="color:var(--q-ux-dark);">Visual Design</span>
         </div>
@@ -442,8 +442,8 @@
 
         <div style="height:14px"></div>
 
-        <div class="dimension-header" style="background:rgba(111,168,255,0.06);">
-          <ion-icon name="navigate-outline" style="color:#6FA8FF;"></ion-icon>
+        <div class="dimension-header" style="background:rgba(47,115,181,0.06);">
+          <ion-icon name="navigate-outline" style="color:#2F73B5;"></ion-icon>
           <span style="color:var(--q-tam-dark);">Navigasi & Interaksi</span>
         </div>
         <div class="likert-question" data-q="nav1"><div class="q-number">1 / 4</div><div class="q-text">Saya dapat menemukan fitur yang dibutuhkan dengan mudah.</div><div class="likert-options"></div></div>
@@ -456,8 +456,8 @@
     <!-- UX Step 3: Konten -->
     <div class="step-pane" data-section="ux" data-step="3">
       <div class="section">
-        <div class="dimension-header" style="background:rgba(47,168,124,0.06);">
-          <ion-icon name="document-text-outline" style="color:#2FA87C;"></ion-icon>
+        <div class="dimension-header" style="background:rgba(58,122,42,0.06);">
+          <ion-icon name="document-text-outline" style="color:#3A7A2A;"></ion-icon>
           <span style="color:var(--q-sus-dark);">Konten & Informasi</span>
         </div>
         <div class="likert-question" data-q="ci1"><div class="q-number">1 / 4</div><div class="q-text">Informasi kesehatan yang disajikan mudah dipahami.</div><div class="likert-options"></div></div>
@@ -470,8 +470,8 @@
     <!-- UX Step 4: Kepuasan + Kepercayaan -->
     <div class="step-pane" data-section="ux" data-step="4">
       <div class="section">
-        <div class="dimension-header" style="background:rgba(255,179,71,0.06);">
-          <ion-icon name="happy-outline" style="color:#FFB347;"></ion-icon>
+        <div class="dimension-header" style="background:rgba(176,125,30,0.06);">
+          <ion-icon name="happy-outline" style="color:#B07D1E;"></ion-icon>
           <span style="color:#D68910;">Kepuasan Pengguna</span>
         </div>
         <div class="likert-question" data-q="sat1"><div class="q-number">1 / 4</div><div class="q-text">Saya puas dengan pengalaman menggunakan HerboraTech secara keseluruhan.</div><div class="likert-options"></div></div>
@@ -481,8 +481,8 @@
 
         <div style="height:14px"></div>
 
-        <div class="dimension-header" style="background:rgba(255,107,122,0.06);">
-          <ion-icon name="shield-checkmark-outline" style="color:#FF6B7A;"></ion-icon>
+        <div class="dimension-header" style="background:rgba(201,74,66,0.06);">
+          <ion-icon name="shield-checkmark-outline" style="color:#C94A42;"></ion-icon>
           <span style="color:#C0392B;">Kepercayaan & Keamanan</span>
         </div>
         <div class="likert-question" data-q="tr1"><div class="q-number">1 / 4</div><div class="q-text">Saya merasa data kesehatan saya aman di HerboraTech.</div><div class="likert-options"></div></div>
@@ -495,7 +495,7 @@
     <!-- UX Step 5: Feedback -->
     <div class="step-pane" data-section="ux" data-step="5">
       <div class="section">
-        <div class="dimension-header" style="background:rgba(55,199,194,0.06);">
+        <div class="dimension-header" style="background:rgba(53,128,58,0.06);">
           <ion-icon name="chatbox-ellipses-outline" style="color:var(--q-ux);"></ion-icon>
           <span style="color:var(--q-ux-dark);">Feedback Terbuka (Opsional)</span>
         </div>
@@ -550,8 +550,8 @@
       <div class="neu-card detail-section" style="margin-top:16px;">
         <div class="ds-title"><ion-icon name="analytics-outline" style="color:var(--q-tam);"></ion-icon> TAM — Penerimaan Teknologi</div>
         <div class="ds-bar-row"><span class="ds-bar-label">PU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-pu" style="width:0%;background:var(--q-tam);"></div></div><span class="ds-bar-val" style="color:var(--q-tam);" id="r-val-pu">0/20</span></div>
-        <div class="ds-bar-row"><span class="ds-bar-label">PEOU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-peou" style="width:0%;background:#2FA87C;"></div></div><span class="ds-bar-val" style="color:#2FA87C;" id="r-val-peou">0/20</span></div>
-        <div class="ds-bar-row"><span class="ds-bar-label">ATU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-atu" style="width:0%;background:#FFB347;"></div></div><span class="ds-bar-val" style="color:#FFB347;" id="r-val-atu">0/20</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">PEOU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-peou" style="width:0%;background:#3A7A2A;"></div></div><span class="ds-bar-val" style="color:#3A7A2A;" id="r-val-peou">0/20</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">ATU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-atu" style="width:0%;background:#B07D1E;"></div></div><span class="ds-bar-val" style="color:#B07D1E;" id="r-val-atu">0/20</span></div>
         <div class="ds-bar-row"><span class="ds-bar-label">BI</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-bi" style="width:0%;background:#9B51E0;"></div></div><span class="ds-bar-val" style="color:#9B51E0;" id="r-val-bi">0/20</span></div>
         <div id="tam-interp" style="margin-top:10px;font-size:0.76rem;color:var(--text-secondary);line-height:1.5;"></div>
       </div>
@@ -563,7 +563,7 @@
           <div style="font-size:2rem;font-weight:800;color:var(--q-sus);" id="r-sus-score">0</div>
           <div style="font-size:0.7rem;color:var(--text-tertiary);">dari 100 &bull; <span id="r-sus-grade">-</span></div>
         </div>
-        <div style="height:14px;border-radius:7px;overflow:hidden;background:linear-gradient(90deg,#FF6B7A 0%,#FFB347 25%,#F2C94C 50%,#2FA87C 75%,#6FA8FF 100%);position:relative;">
+        <div style="height:14px;border-radius:7px;overflow:hidden;background:linear-gradient(90deg,#C94A42 0%,#B07D1E 25%,#F2C94C 50%,#3A7A2A 75%,#2F73B5 100%);position:relative;">
           <div id="r-sus-marker" style="position:absolute;top:-2px;width:4px;height:18px;background:var(--text-primary);border-radius:2px;left:0%;transition:left 0.8s ease;"></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:0.58rem;color:var(--text-muted);margin-top:4px;">
@@ -576,10 +576,10 @@
       <div class="neu-card detail-section" style="margin-top:12px;">
         <div class="ds-title"><ion-icon name="sparkles-outline" style="color:var(--q-ux);"></ion-icon> UX — User Experience</div>
         <div class="ds-bar-row"><span class="ds-bar-label">Visual</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-vd" style="width:0%;background:var(--q-ux);"></div></div><span class="ds-bar-val" style="color:var(--q-ux);" id="r-val-vd">0%</span></div>
-        <div class="ds-bar-row"><span class="ds-bar-label">Navigasi</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-nav" style="width:0%;background:#6FA8FF;"></div></div><span class="ds-bar-val" style="color:#6FA8FF;" id="r-val-nav">0%</span></div>
-        <div class="ds-bar-row"><span class="ds-bar-label">Konten</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-ci" style="width:0%;background:#2FA87C;"></div></div><span class="ds-bar-val" style="color:#2FA87C;" id="r-val-ci">0%</span></div>
-        <div class="ds-bar-row"><span class="ds-bar-label">Kepuasan</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-sat" style="width:0%;background:#FFB347;"></div></div><span class="ds-bar-val" style="color:#FFB347;" id="r-val-sat">0%</span></div>
-        <div class="ds-bar-row"><span class="ds-bar-label">Trust</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-tr" style="width:0%;background:#FF6B7A;"></div></div><span class="ds-bar-val" style="color:#FF6B7A;" id="r-val-tr">0%</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">Navigasi</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-nav" style="width:0%;background:#2F73B5;"></div></div><span class="ds-bar-val" style="color:#2F73B5;" id="r-val-nav">0%</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">Konten</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-ci" style="width:0%;background:#3A7A2A;"></div></div><span class="ds-bar-val" style="color:#3A7A2A;" id="r-val-ci">0%</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">Kepuasan</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-sat" style="width:0%;background:#B07D1E;"></div></div><span class="ds-bar-val" style="color:#B07D1E;" id="r-val-sat">0%</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">Trust</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-tr" style="width:0%;background:#C94A42;"></div></div><span class="ds-bar-val" style="color:#C94A42;" id="r-val-tr">0%</span></div>
         <div id="ux-interp" style="margin-top:10px;font-size:0.76rem;color:var(--text-secondary);line-height:1.5;"></div>
       </div>
 
@@ -783,9 +783,9 @@ function showFinalResults() {
   const tamPct = (tamTotal / 80) * 100;
   const tamInterp = document.getElementById('tam-interp');
   if (tamPct >= 80) tamInterp.innerHTML = '<strong style="color:var(--q-tam);">Penerimaan sangat tinggi.</strong> Anda sangat menerima teknologi HerboraTech.';
-  else if (tamPct >= 60) tamInterp.innerHTML = '<strong style="color:#2FA87C;">Penerimaan baik.</strong> Ada ruang peningkatan pada beberapa aspek.';
-  else if (tamPct >= 40) tamInterp.innerHTML = '<strong style="color:#FFB347;">Penerimaan cukup.</strong> Perlu evaluasi kegunaan dan kemudahan.';
-  else tamInterp.innerHTML = '<strong style="color:#FF6B7A;">Penerimaan rendah.</strong> Masukan Anda sangat berharga untuk perbaikan.';
+  else if (tamPct >= 60) tamInterp.innerHTML = '<strong style="color:#3A7A2A;">Penerimaan baik.</strong> Ada ruang peningkatan pada beberapa aspek.';
+  else if (tamPct >= 40) tamInterp.innerHTML = '<strong style="color:#B07D1E;">Penerimaan cukup.</strong> Perlu evaluasi kegunaan dan kemudahan.';
+  else tamInterp.innerHTML = '<strong style="color:#C94A42;">Penerimaan rendah.</strong> Masukan Anda sangat berharga untuk perbaikan.';
 
   // === SUS ===
   let susSum = 0;
@@ -808,7 +808,7 @@ function showFinalResults() {
 
   const susInterp = document.getElementById('sus-interp');
   if (susScore >= 68) susInterp.innerHTML = `<strong style="color:var(--q-sus);">Skor ${susScore} — di atas rata-rata industri.</strong> Usability HerboraTech baik.`;
-  else susInterp.innerHTML = `<strong style="color:#FFB347;">Skor ${susScore} — di bawah rata-rata.</strong> Beberapa aspek usability perlu diperbaiki.`;
+  else susInterp.innerHTML = `<strong style="color:#B07D1E;">Skor ${susScore} — di bawah rata-rata.</strong> Beberapa aspek usability perlu diperbaiki.`;
 
   // === UX ===
   const uxDims = {
@@ -831,9 +831,9 @@ function showFinalResults() {
 
   const uxInterp = document.getElementById('ux-interp');
   if (uxPct >= 85) uxInterp.innerHTML = '<strong style="color:var(--q-ux);">UX Excellent!</strong> Pengalaman pengguna luar biasa di semua dimensi.';
-  else if (uxPct >= 70) uxInterp.innerHTML = '<strong style="color:#2FA87C;">UX Baik.</strong> Pengalaman positif dengan ruang peningkatan.';
-  else if (uxPct >= 50) uxInterp.innerHTML = '<strong style="color:#FFB347;">UX Cukup.</strong> Beberapa dimensi perlu perhatian khusus.';
-  else uxInterp.innerHTML = '<strong style="color:#FF6B7A;">UX Perlu Perbaikan.</strong> Masukan Anda sangat berharga.';
+  else if (uxPct >= 70) uxInterp.innerHTML = '<strong style="color:#3A7A2A;">UX Baik.</strong> Pengalaman positif dengan ruang peningkatan.';
+  else if (uxPct >= 50) uxInterp.innerHTML = '<strong style="color:#B07D1E;">UX Cukup.</strong> Beberapa dimensi perlu perhatian khusus.';
+  else uxInterp.innerHTML = '<strong style="color:#C94A42;">UX Perlu Perbaikan.</strong> Masukan Anda sangat berharga.';
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }

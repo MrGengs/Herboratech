@@ -9,16 +9,16 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(79,209,160,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,190,63,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #4FD1A0 !important; }
+    .sidebar-logo span { color: #6FBE3F !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #4FD1A0; background: rgba(79,209,160,0.08); }
-    .sidebar-item.active { color: #4FD1A0 !important; background: rgba(79,209,160,0.15); border-left: 3px solid #4FD1A0; }
+    .sidebar-item:hover { color: #6FBE3F; background: rgba(111,190,63,0.08); }
+    .sidebar-item.active { color: #6FBE3F !important; background: rgba(111,190,63,0.15); border-left: 3px solid #6FBE3F; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
 
     .profile-card { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
-    .profile-avatar { width: 96px; height: 96px; border-radius: 50%; background: linear-gradient(135deg, #4FD1A0, #2FA87C); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; color: #fff; flex-shrink: 0; box-shadow: var(--shadow-out); }
+    .profile-avatar { width: 96px; height: 96px; border-radius: 50%; background: linear-gradient(135deg, #6FBE3F, #3A7A2A); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; color: #fff; flex-shrink: 0; box-shadow: var(--shadow-out); }
     .profile-info { flex: 1; }
     .profile-name { font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
     .profile-meta { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
@@ -108,7 +108,7 @@
             <button class="neu-btn-sm" style="font-size:0.7rem;padding:4px 10px;" onclick="openRoleModal()">
               <ion-icon name="pencil-outline"></ion-icon> Ubah Role
             </button>
-            <span class="neu-chip" id="status-chip" style="background:#E8F8F0;color:#2FA87C;font-size:0.72rem;padding:3px 10px;">-</span>
+            <span class="neu-chip" id="status-chip" style="background:#E8F8F0;color:#3A7A2A;font-size:0.72rem;padding:3px 10px;">-</span>
           </div>
           <div class="profile-meta">
             <div class="profile-meta-row"><ion-icon name="mail-outline"></ion-icon> <span id="profile-email">-</span></div>
@@ -162,7 +162,7 @@
           </tr>
           <tr>
             <td style="color:var(--text-tertiary);font-size:0.82rem;">18 Mar 2026, 09:15</td>
-            <td><span class="neu-chip" style="background:#E8F8F0;color:#2FA87C;font-size:0.7rem;padding:2px 8px;">Booking</span></td>
+            <td><span class="neu-chip" style="background:#E8F8F0;color:#3A7A2A;font-size:0.7rem;padding:2px 8px;">Booking</span></td>
             <td style="font-size:0.85rem;">Booking konsultasi dengan dr. Sarah W.</td>
             <td style="font-size:0.82rem;color:var(--text-tertiary);font-family:monospace;">182.1.44.55</td>
           </tr>
@@ -235,7 +235,7 @@
     <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
       <label class="role-option" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg);box-shadow:var(--shadow-out-sm);border-radius:12px;cursor:pointer;border:2px solid transparent;" onclick="selectRoleOption(this, 'patient')">
         <input type="radio" name="newRole" value="patient" style="display:none;">
-        <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#186045,#22815F);display:flex;align-items:center;justify-content:center;">
+        <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#7CC242,#4E9E33);display:flex;align-items:center;justify-content:center;">
           <ion-icon name="person-outline" style="color:#fff;font-size:1.2rem;"></ion-icon>
         </div>
         <div style="flex:1;">
@@ -334,7 +334,7 @@ let _currentUser = null;
     if (user.isActive !== false) {
       statusChip.textContent = 'Aktif';
       statusChip.style.background = '#E8F8F0';
-      statusChip.style.color = '#2FA87C';
+      statusChip.style.color = '#3A7A2A';
       btnDeactivate.style.display = '';
       btnActivate.style.display = 'none';
     } else {
@@ -374,7 +374,7 @@ async function activateUser() {
     showToast('Akun berhasil diaktifkan.', 'success');
     document.getElementById('status-chip').textContent = 'Aktif';
     document.getElementById('status-chip').style.background = '#E8F8F0';
-    document.getElementById('status-chip').style.color = '#2FA87C';
+    document.getElementById('status-chip').style.color = '#3A7A2A';
     document.getElementById('btn-activate').style.display = 'none';
     document.getElementById('btn-deactivate').style.display = '';
   } catch (err) {
@@ -451,7 +451,7 @@ async function saveNewRole() {
     // Update UI
     const roleMap = { patient: 'Pasien', doctor: 'Dokter', admin: 'Admin' };
     const roleColors = {
-      patient: { bg: '#E8F8F0', color: '#2FA87C' },
+      patient: { bg: '#E8F8F0', color: '#3A7A2A' },
       doctor: { bg: 'var(--info-bg)', color: 'var(--info)' },
       admin: { bg: 'var(--accent-bg)', color: 'var(--accent)' }
     };
@@ -491,7 +491,7 @@ async function suspendUser() {
     // Update UI
     const chip = document.getElementById('status-chip');
     chip.textContent = 'Suspended';
-    chip.style.cssText = 'background:rgba(255,107,122,0.12);color:#FF6B7A;';
+    chip.style.cssText = 'background:rgba(201,74,66,0.12);color:#C94A42;';
     document.getElementById('btn-deactivate').style.display = 'none';
     document.getElementById('btn-activate').style.display = '';
 

@@ -10,12 +10,12 @@
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
     :root {
-      --primary-obs: #4FD1A0;
+      --primary-obs: #6FBE3F;
       --primary-obs-dark: #219653;
     }
     .app-header {
-      background: linear-gradient(135deg, var(--primary-obs) 0%, #2FA87C 100%);
-      box-shadow: 0 2px 16px rgba(79, 209, 160, 0.25);
+      background: linear-gradient(135deg, var(--primary-obs) 0%, #3A7A2A 100%);
+      box-shadow: 0 2px 16px rgba(111, 190, 63, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
@@ -43,9 +43,9 @@
     }
     .step-dot.past { background: var(--primary-obs); color: #fff; border-color: var(--primary-obs); }
     .step-dot.current {
-      background: linear-gradient(135deg, var(--primary-obs), #2FA87C);
+      background: linear-gradient(135deg, var(--primary-obs), #3A7A2A);
       color: #fff; border-color: transparent;
-      box-shadow: 0 4px 12px rgba(79,209,160,0.4);
+      box-shadow: 0 4px 12px rgba(111,190,63,0.4);
       transform: scale(1.15);
     }
     .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
@@ -64,10 +64,10 @@
       border-top: 1px solid var(--shadow-dark); padding: 14px 20px; z-index: 30;
     }
     .btn-proceed {
-      background: linear-gradient(135deg, var(--primary-obs), #2FA87C);
+      background: linear-gradient(135deg, var(--primary-obs), #3A7A2A);
       color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
       font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 6px 18px rgba(79,209,160,0.3);
+      box-shadow: 0 6px 18px rgba(111,190,63,0.3);
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
 
@@ -82,7 +82,7 @@
       background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 12px; padding: 12px;
       text-align: center; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
     }
-    .symptom-opt.selected { border-color: var(--primary-obs); background: rgba(79,209,160,0.05); }
+    .symptom-opt.selected { border-color: var(--primary-obs); background: rgba(111,190,63,0.05); }
   </style>
 </head>
 <body>
@@ -251,7 +251,7 @@
             </ul>
           </div>
 
-          <div class="neu-card" style="margin-bottom:14px;background:rgba(47, 168, 124, 0.05);border-left:4px solid #2FA87C;">
+          <div class="neu-card" style="margin-bottom:14px;background:rgba(58, 122, 42, 0.05);border-left:4px solid #3A7A2A;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="font-size:1.2rem;">🌿</span>
               <span style="font-size:0.85rem;font-weight:800;color:#1A5C38;">Rekomendasi Herbal</span>
@@ -389,16 +389,16 @@
         resHoma.textContent = homaIR.toFixed(2);
         if (homaIR <= 1.9) {
           badge.textContent = 'SENSITIF (NORMAL)';
-          badge.style.background = '#2FA87C1A'; badge.style.color = '#2FA87C';
+          badge.style.background = '#3A7A2A1A'; badge.style.color = '#3A7A2A';
           desc.textContent = 'Sel-sel tubuh Anda merespons insulin dengan sangat baik. Pertahankan pola hidup sehat ini.';
         } else if (homaIR < 2.9) {
           badge.textContent = 'RESISTENSI AWAL';
-          badge.style.background = '#FFB3471A'; badge.style.color = '#FFB347';
+          badge.style.background = '#B07D1E1A'; badge.style.color = '#B07D1E';
           desc.textContent = 'Ada tanda-tanda awal resistensi insulin. Pankreas bekerja lebih keras untuk menjaga gula darah tetap normal.';
           medList.innerHTML = '<li>Lakukan jalan kaki 15 menit SEGERA setelah makan.</li><li>Batasi asupan karbohidrat glikemik tinggi (nasi putih berlebih, tepung).</li>';
         } else {
           badge.textContent = 'RESISTENSI TINGGI';
-          badge.style.background = '#FF6B7A1A'; badge.style.color = '#FF6B7A';
+          badge.style.background = '#C94A421A'; badge.style.color = '#C94A42';
           desc.textContent = 'Tingkat resistensi insulin Anda tinggi. Risiko progresi menjadi Diabetes Tipe 2 sangat besar.';
           medList.innerHTML = '<li>⚠️ Rujuk ke dokter spesialis penyakit dalam untuk pemeriksaan HbA1c.</li><li>Wajib menurunkan asupan gula tambahan (zero added sugar).</li><li>Target penurunan BB 7-10%.</li>';
           herbalName.textContent = 'Standardized Bitter Melon (Pare)';
