@@ -26,7 +26,7 @@
     .auth-bg::after {
       content:''; position:absolute; bottom:-100px; left:50%; transform:translateX(-50%);
       width:600px; height:600px; border-radius:50%;
-      background:radial-gradient(circle, rgba(47,111,79,0.07) 0%, transparent 70%);
+      background:radial-gradient(circle, rgba(79,209,160,0.07) 0%, transparent 70%);
     }
 
     /* MAIN */
@@ -34,7 +34,7 @@
 
     /* BACK LINK */
     .back-link { position:fixed; top:20px; left:20px; z-index:10; display:flex; align-items:center; gap:6px; color:rgba(255,255,255,0.5); font-size:0.82rem; font-weight:500; text-decoration:none; transition:color 0.2s; }
-    .back-link:hover { color:#2F6F4F; }
+    .back-link:hover { color:#4FD1A0; }
 
     /* CARD */
     .auth-card {
@@ -51,7 +51,7 @@
 
     /* LOGO */
     .auth-logo { text-align:center; margin-bottom:28px; }
-    .logo-mark { width:60px; height:60px; border-radius:18px; background:linear-gradient(135deg,#0D2B1A,#1D4F38); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; box-shadow:0 8px 24px rgba(29,79,56,0.35); }
+    .logo-mark { width:60px; height:60px; border-radius:18px; background:linear-gradient(135deg,#0D2B1A,#2FA87C); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; box-shadow:0 8px 24px rgba(47,168,124,0.35); }
     .logo-mark ion-icon { font-size:2rem; color:#fff; }
     .auth-logo .brand { font-size:1.4rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; }
     .auth-logo .brand span { color:var(--primary-dark); }
@@ -68,7 +68,7 @@
     .input-wrap { position:relative; }
     .input-wrap ion-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-secondary); font-size:1rem; pointer-events:none; }
     .neu-input { width:100%; background:var(--bg); border:none; border-radius:12px; padding:12px 14px 12px 40px; font-size:0.875rem; color:var(--text-primary); box-shadow:var(--shadow-in); font-family:'Plus Jakarta Sans',sans-serif; outline:none; transition:box-shadow 0.2s; }
-    .neu-input:focus { box-shadow:var(--shadow-in), 0 0 0 2px rgba(29,79,56,0.25); }
+    .neu-input:focus { box-shadow:var(--shadow-in), 0 0 0 2px rgba(47,168,124,0.25); }
     .neu-input::placeholder { color:var(--text-secondary); opacity:0.6; }
     .pw-toggle { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:var(--text-secondary); font-size:1rem; padding:4px; }
 
@@ -78,8 +78,8 @@
     .forgot-link:hover { text-decoration:underline; }
 
     /* SUBMIT BTN */
-    .btn-login { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#1D4F38,#2F6F4F); color:#fff; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; box-shadow:0 6px 24px rgba(47,111,79,0.4); transition:transform 0.2s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:0.02em; }
-    .btn-login:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 32px rgba(47,111,79,0.5); }
+    .btn-login { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#186045,#22815F); color:#fff; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; box-shadow:0 6px 24px rgba(79,209,160,0.4); transition:transform 0.2s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:0.02em; }
+    .btn-login:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 32px rgba(79,209,160,0.5); }
     .btn-login:active { transform:translateY(0); }
     .btn-login:disabled { opacity:0.7; cursor:not-allowed; transform:none; }
 
@@ -91,9 +91,9 @@
     .social-logo { width:18px; height:18px; border-radius:4px; object-fit:contain; font-size:1rem; }
 
     /* ERROR BOX */
-    #auth-error { display:none; background:rgba(178,58,52,0.08); border:1px solid rgba(178,58,52,0.25); border-radius:10px; padding:10px 14px; margin-bottom:16px; font-size:0.8rem; color:#C0392B; font-weight:500; line-height:1.5; }
+    #auth-error { display:none; background:rgba(255,107,122,0.08); border:1px solid rgba(255,107,122,0.25); border-radius:10px; padding:10px 14px; margin-bottom:16px; font-size:0.8rem; color:#C0392B; font-weight:500; line-height:1.5; }
     #auth-error.show { display:flex; align-items:flex-start; gap:8px; }
-    #auth-error ion-icon { font-size:1rem; flex-shrink:0; margin-top:1px; color:#B23A34; }
+    #auth-error ion-icon { font-size:1rem; flex-shrink:0; margin-top:1px; color:#FF6B7A; }
 
     /* REGISTER LINK */
     .register-row { text-align:center; margin-top:20px; }
@@ -116,8 +116,8 @@
 <!-- ECG decoration -->
 <div class="ecg-deco">
   <svg viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <polyline points="0,20 80,20 100,20 110,5 120,35 130,5 140,20 160,20 240,20 260,20 270,8 280,32 290,8 300,20 320,20 400,20 420,20 430,5 440,35 450,5 460,20 480,20 560,20 580,20 590,8 600,32 610,8 620,20 640,20 720,20 740,20 750,5 760,35 770,5 780,20 800,20 880,20 900,20 910,8 920,32 930,8 940,20 960,20 1040,20 1060,20 1070,5 1080,35 1090,5 1100,20 1120,20 1200,20 1220,20 1230,8 1240,32 1250,8 1260,20 1280,20 1360,20 1380,20 1390,5 1400,35 1410,5 1420,20 1440,20" fill="none" stroke="#2F6F4F" stroke-width="1.5"/>
-    <polyline points="1440,20 1520,20 1540,20 1550,5 1560,35 1570,5 1580,20 1600,20 1680,20 1700,20 1710,8 1720,32 1730,8 1740,20 1760,20 1840,20 1860,20 1870,5 1880,35 1890,5 1900,20 1920,20 2000,20 2020,20 2030,8 2040,32 2050,8 2060,20 2080,20 2160,20 2180,20 2190,5 2200,35 2210,5 2220,20 2240,20 2320,20 2340,20 2350,8 2360,32 2370,8 2380,20 2400,20 2440,20 2460,20 2470,5 2480,35 2490,5 2500,20 2520,20 2600,20 2620,20 2630,8 2640,32 2650,8 2660,20 2680,20 2760,20 2780,20 2790,5 2800,35 2810,5 2820,20 2840,20 2880,20" fill="none" stroke="#2F6F4F" stroke-width="1.5"/>
+    <polyline points="0,20 80,20 100,20 110,5 120,35 130,5 140,20 160,20 240,20 260,20 270,8 280,32 290,8 300,20 320,20 400,20 420,20 430,5 440,35 450,5 460,20 480,20 560,20 580,20 590,8 600,32 610,8 620,20 640,20 720,20 740,20 750,5 760,35 770,5 780,20 800,20 880,20 900,20 910,8 920,32 930,8 940,20 960,20 1040,20 1060,20 1070,5 1080,35 1090,5 1100,20 1120,20 1200,20 1220,20 1230,8 1240,32 1250,8 1260,20 1280,20 1360,20 1380,20 1390,5 1400,35 1410,5 1420,20 1440,20" fill="none" stroke="#4FD1A0" stroke-width="1.5"/>
+    <polyline points="1440,20 1520,20 1540,20 1550,5 1560,35 1570,5 1580,20 1600,20 1680,20 1700,20 1710,8 1720,32 1730,8 1740,20 1760,20 1840,20 1860,20 1870,5 1880,35 1890,5 1900,20 1920,20 2000,20 2020,20 2030,8 2040,32 2050,8 2060,20 2080,20 2160,20 2180,20 2190,5 2200,35 2210,5 2220,20 2240,20 2320,20 2340,20 2350,8 2360,32 2370,8 2380,20 2400,20 2440,20 2460,20 2470,5 2480,35 2490,5 2500,20 2520,20 2600,20 2620,20 2630,8 2640,32 2650,8 2660,20 2680,20 2760,20 2780,20 2790,5 2800,35 2810,5 2820,20 2840,20 2880,20" fill="none" stroke="#4FD1A0" stroke-width="1.5"/>
   </svg>
 </div>
 

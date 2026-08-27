@@ -9,7 +9,7 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .app-header { background: linear-gradient(135deg, #8F6018 0%, #F2C94C 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.15); }
+    .app-header { background: linear-gradient(135deg, #FFB347 0%, #F2C94C 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.15); }
     .app-header .logo { color: #fff; }
     .app-header .logo span { color: rgba(255,255,255,0.8); }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
@@ -22,27 +22,27 @@
     .grade-c { background: rgba(255, 152, 0, 0.2); color: #E65100; border: 2px solid #E65100; }
 
     .stat-box { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
-    .stat-item { background: rgba(143, 96, 24, 0.08); padding: 12px; border-radius: 12px; text-align: center; }
-    .stat-number { font-size: 1.5rem; font-weight: 700; color: #8F6018; }
+    .stat-item { background: rgba(255, 179, 71, 0.08); padding: 12px; border-radius: 12px; text-align: center; }
+    .stat-number { font-size: 1.5rem; font-weight: 700; color: #FFB347; }
     .stat-label { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; }
 
     .timeline { position: relative; padding: 20px 0; }
     .timeline-item { display: flex; gap: 12px; margin-bottom: 16px; }
-    .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: #8F6018; flex-shrink: 0; margin-top: 4px; }
-    .timeline-content { padding-left: 8px; border-left: 2px solid #8F6018; padding-bottom: 12px; }
-    .timeline-year { font-size: 0.85rem; font-weight: 700; color: #8F6018; }
+    .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: #FFB347; flex-shrink: 0; margin-top: 4px; }
+    .timeline-content { padding-left: 8px; border-left: 2px solid #FFB347; padding-bottom: 12px; }
+    .timeline-year { font-size: 0.85rem; font-weight: 700; color: #FFB347; }
     .timeline-event { font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px; }
 
-    .finding-card { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 8px 0; padding: 12px; background: rgba(143, 96, 24, 0.05); border-radius: 12px; border-left: 4px solid #8F6018; }
-    .finding-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #8F6018; }
+    .finding-card { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 8px 0; padding: 12px; background: rgba(255, 179, 71, 0.05); border-radius: 12px; border-left: 4px solid #FFB347; }
+    .finding-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #FFB347; }
     .finding-value { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-top: 4px; }
 
-    .paper-list-item { padding: 12px; margin: 8px 0; background: rgba(143, 96, 24, 0.08); border-radius: 8px; border-left: 3px solid #8F6018; }
+    .paper-list-item { padding: 12px; margin: 8px 0; background: rgba(255, 179, 71, 0.08); border-radius: 8px; border-left: 3px solid #FFB347; }
     .paper-authors { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; }
     .paper-title { font-size: 0.85rem; font-weight: 700; margin: 4px 0; color: var(--text-primary); }
     .paper-meta { font-size: 0.7rem; color: var(--text-tertiary); display: flex; gap: 8px; flex-wrap: wrap; }
 
-    .prisma-box { background: linear-gradient(135deg, rgba(143, 96, 24, 0.1), rgba(242, 196, 76, 0.1)); border: 2px dashed #8F6018; padding: 16px; border-radius: 12px; margin: 16px 0; }
+    .prisma-box { background: linear-gradient(135deg, rgba(255, 179, 71, 0.1), rgba(242, 196, 76, 0.1)); border: 2px dashed #FFB347; padding: 16px; border-radius: 12px; margin: 16px 0; }
   </style>
 </head>
 <body>
@@ -57,8 +57,8 @@
   <div class="section">
 
     <!-- Hero Card -->
-    <div class="neu-card" data-animate="up" style="background: linear-gradient(135deg, rgba(143, 96, 24, 0.08), rgba(242, 196, 76, 0.08)); border-left: 4px solid #8F6018;">
-      <div style="font-size: 0.75rem; font-weight: 700; color: #8F6018; text-transform: uppercase; margin-bottom: 8px;">
+    <div class="neu-card" data-animate="up" style="background: linear-gradient(135deg, rgba(255, 179, 71, 0.08), rgba(242, 196, 76, 0.08)); border-left: 4px solid #FFB347;">
+      <div style="font-size: 0.75rem; font-weight: 700; color: #FFB347; text-transform: uppercase; margin-bottom: 8px;">
         🔬 Berbasis Penelitian Ilmiah
       </div>
       <div style="font-size: 1rem; font-weight: 700; margin-bottom: 8px;">
@@ -139,7 +139,7 @@
       <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px;">🔍 Temuan Utama (Meta-Analysis)</div>
 
       <div style="margin: 12px 0;">
-        <div style="font-size: 0.85rem; font-weight: 700; color: #8F6018; margin-bottom: 8px;">Tool Screening Terbaik: Non-HDL Cholesterol</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #FFB347; margin-bottom: 8px;">Tool Screening Terbaik: Non-HDL Cholesterol</div>
         <div class="finding-card">
           <div>
             <div class="finding-label">Sensitivitas</div>
@@ -150,24 +150,24 @@
             <div class="finding-value">82-88%</div>
           </div>
         </div>
-        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; padding: 8px; background: rgba(143, 96, 24, 0.05); border-radius: 8px;">
+        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; padding: 8px; background: rgba(255, 179, 71, 0.05); border-radius: 8px;">
           ✓ <strong>Keuntungan:</strong> Tidak perlu berpuasa, tersedia di lab umum, cost-effective<br>
           ✓ <strong>Validation:</strong> 10+ RCT, 291+ citations (PLoS ONE 2015)
         </div>
       </div>
 
       <div style="margin: 16px 0; padding-top: 16px; border-top: 1px solid var(--shadow-dark);">
-        <div style="font-size: 0.85rem; font-weight: 700; color: #8F6018; margin-bottom: 8px;">Predictors Antropometrik Terkuat</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #FFB347; margin-bottom: 8px;">Predictors Antropometrik Terkuat</div>
         <div style="display: grid; gap: 8px; font-size: 0.8rem;">
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(143, 96, 24, 0.05); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(255, 179, 71, 0.05); border-radius: 8px;">
             <span>🔹 Waist Circumference</span>
             <span style="font-weight: 700;">r = 0.65</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(143, 96, 24, 0.05); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(255, 179, 71, 0.05); border-radius: 8px;">
             <span>🔹 Body Mass Index (BMI)</span>
             <span style="font-weight: 700;">r = 0.58</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(143, 96, 24, 0.05); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(255, 179, 71, 0.05); border-radius: 8px;">
             <span>🔹 Waist-to-Height Ratio</span>
             <span style="font-weight: 700;">r = 0.62</span>
           </div>
@@ -178,7 +178,7 @@
       </div>
 
       <div style="margin: 16px 0; padding-top: 16px; border-top: 1px solid var(--shadow-dark);">
-        <div style="font-size: 0.85rem; font-weight: 700; color: #8F6018; margin-bottom: 8px;">Efektivitas Intervensi Lifestyle</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #FFB347; margin-bottom: 8px;">Efektivitas Intervensi Lifestyle</div>
         <div class="finding-card">
           <div>
             <div class="finding-label">LDL Reduction (TLC Diet)</div>
@@ -189,24 +189,24 @@
             <div class="finding-value">12 minggu</div>
           </div>
         </div>
-        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; padding: 8px; background: rgba(143, 96, 24, 0.05); border-radius: 8px;">
+        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; padding: 8px; background: rgba(255, 179, 71, 0.05); border-radius: 8px;">
           <strong>RCT Evidence:</strong> 82 PLHIV dengan dyslipidemia, TLC diet oleh registered dietitian (2024), 3 citations
         </div>
       </div>
     </div>
 
     <!-- Explainable AI: Model Perhitungan -->
-    <div class="neu-card" data-animate="up" data-delay="200" style="margin-top: 16px; border-left: 4px solid #8F6018;">
+    <div class="neu-card" data-animate="up" data-delay="200" style="margin-top: 16px; border-left: 4px solid #FFB347;">
       <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px;">🧠 Explainable AI: Model Perhitungan</div>
 
-      <div style="background: rgba(143, 96, 24, 0.05); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
+      <div style="background: rgba(255, 179, 71, 0.05); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
         <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">Model Dasar: Framingham Lipid Risk Score + Indonesian Nomogram</div>
         <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6;">
           Kombinasi: Framingham score (landmark cohort 44 tahun, validated di Asia) + Indonesian adaptation nomogram (Shanghai 2019: N=35,256). Menggunakan <strong>Non-HDL cholesterol</strong> sebagai primary predictor karena superior sensitivity (85-92%) dan tidak memerlukan puasa.
         </div>
       </div>
 
-      <div style="background: rgba(143, 96, 24, 0.05); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
+      <div style="background: rgba(255, 179, 71, 0.05); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
         <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">Formula Perhitungan (Pseudo-Code)</div>
         <div style="font-size: 0.75rem; font-family: monospace; background: #f5f5f5; padding: 8px; border-radius: 6px; overflow-x: auto; color: #333;">
 score = 0<br>
@@ -239,30 +239,30 @@ risk_score = MIN(100, score)<br>
         </div>
       </div>
 
-      <div style="background: rgba(143, 96, 24, 0.05); padding: 12px; border-radius: 12px;">
+      <div style="background: rgba(255, 179, 71, 0.05); padding: 12px; border-radius: 12px;">
         <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">Bobot Faktor (Evidence-Based Weights)</div>
         <table style="width: 100%; font-size: 0.75rem; border-collapse: collapse;">
-          <tr style="background: rgba(143, 96, 24, 0.1); border-bottom: 1px solid rgba(143, 96, 24, 0.2);">
+          <tr style="background: rgba(255, 179, 71, 0.1); border-bottom: 1px solid rgba(255, 179, 71, 0.2);">
             <th style="text-align: left; padding: 6px; font-weight: 700;">Faktor</th>
             <th style="text-align: center; padding: 6px;">Bobot</th>
             <th style="text-align: center; padding: 6px;">Bukti</th>
           </tr>
-          <tr style="border-bottom: 1px solid rgba(143, 96, 24, 0.1);">
+          <tr style="border-bottom: 1px solid rgba(255, 179, 71, 0.1);">
             <td style="padding: 6px;">Non-HDL >130 mg/dL</td>
             <td style="text-align: center; padding: 6px; font-weight: 700;">+35 pts</td>
             <td style="text-align: center; padding: 6px;">GRADE A (Framingham)</td>
           </tr>
-          <tr style="border-bottom: 1px solid rgba(143, 96, 24, 0.1);">
+          <tr style="border-bottom: 1px solid rgba(255, 179, 71, 0.1);">
             <td style="padding: 6px;">Lingkar Pinggang Obesitas</td>
             <td style="text-align: center; padding: 6px; font-weight: 700;">+20 pts</td>
             <td style="text-align: center; padding: 6px;">GRADE B (Meta-anal, r=0.65)</td>
           </tr>
-          <tr style="border-bottom: 1px solid rgba(143, 96, 24, 0.1);">
+          <tr style="border-bottom: 1px solid rgba(255, 179, 71, 0.1);">
             <td style="padding: 6px;">BMI ≥30 (Obese)</td>
             <td style="text-align: center; padding: 6px; font-weight: 700;">+15 pts</td>
             <td style="text-align: center; padding: 6px;">GRADE B (Meta-anal, r=0.58)</td>
           </tr>
-          <tr style="border-bottom: 1px solid rgba(143, 96, 24, 0.1);">
+          <tr style="border-bottom: 1px solid rgba(255, 179, 71, 0.1);">
             <td style="padding: 6px;">Riwayat Keluarga CVD Dini</td>
             <td style="text-align: center; padding: 6px; font-weight: 700;">+15 pts</td>
             <td style="text-align: center; padding: 6px;">GRADE A (Framingham 44yr)</td>
@@ -277,9 +277,9 @@ risk_score = MIN(100, score)<br>
     </div>
 
     <!-- Screening Tool Specification -->
-    <div class="neu-card" data-animate="up" data-delay="200" style="margin-top: 16px; border-left: 4px solid #8F6018;">
+    <div class="neu-card" data-animate="up" data-delay="200" style="margin-top: 16px; border-left: 4px solid #FFB347;">
       <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px;">🧪 Spesifikasi Tool Screening (HERBORATECH)</div>
-      <div style="background: rgba(143, 96, 24, 0.05); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
+      <div style="background: rgba(255, 179, 71, 0.05); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
         <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">Kuesioner Dyslipidemia Multi-Step</div>
         <ul style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; padding-left: 20px; margin: 0;">
           <li><strong>Step 1:</strong> Gejala umum (nyeri dada, riwayat keluarga serangan jantung)</li>
@@ -290,7 +290,7 @@ risk_score = MIN(100, score)<br>
           <li><strong>Step 6:</strong> Scoring & rekomendasi (referral ke dokter, lifestyle plan)</li>
         </ul>
       </div>
-      <div style="font-size: 0.75rem; color: var(--text-secondary); padding: 8px; background: rgba(143, 96, 24, 0.05); border-radius: 8px;">
+      <div style="font-size: 0.75rem; color: var(--text-secondary); padding: 8px; background: rgba(255, 179, 71, 0.05); border-radius: 8px;">
         ✓ <strong>Validasi:</strong> Questionnaire dirancang berdasarkan 9 medical studies pada screening dyslipidemia<br>
         ✓ <strong>Scoring:</strong> 0-100 scale backed by Framingham nomogram, HALP score, dan risk stratification
       </div>
@@ -298,7 +298,7 @@ risk_score = MIN(100, score)<br>
 
     <!-- PRISMA Compliance -->
     <div class="prisma-box" data-animate="up" data-delay="250">
-      <div style="font-size: 0.85rem; font-weight: 700; color: #8F6018; margin-bottom: 8px;">📋 PRISMA-2020 Compliance</div>
+      <div style="font-size: 0.85rem; font-weight: 700; color: #FFB347; margin-bottom: 8px;">📋 PRISMA-2020 Compliance</div>
       <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
         ✓ Protocol registered & documented (SLR_METHODOLOGY_FRAMEWORK.md)<br>
         ✓ Search strategy: 9 queries, Boolean operators, database: Consensus MCP<br>
@@ -315,8 +315,8 @@ risk_score = MIN(100, score)<br>
       <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px;">📚 Landmark Papers: Dyslipidemia Risk Prediction</div>
 
       <!-- Paper 1 -->
-      <div style="margin: 12px 0; padding: 12px; background: rgba(143, 96, 24, 0.05); border-radius: 12px; border-left: 3px solid #8F6018; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/26219618')">
-        <div style="font-size: 0.75rem; font-weight: 700; color: #8F6018; margin-bottom: 4px;">LANDMARK: Framingham Dyslipidemia Prediction</div>
+      <div style="margin: 12px 0; padding: 12px; background: rgba(255, 179, 71, 0.05); border-radius: 12px; border-left: 3px solid #FFB347; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/26219618')">
+        <div style="font-size: 0.75rem; font-weight: 700; color: #FFB347; margin-bottom: 4px;">LANDMARK: Framingham Dyslipidemia Prediction</div>
         <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">Comparison of Anthropometric Measures of Obesity and Cardiovascular Risk Factors in Singapore</div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">
           <strong>Ho-Pham LT, Nguyen UD, Nguyen TV, et al.</strong><br>
@@ -325,15 +325,15 @@ risk_score = MIN(100, score)<br>
         <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.6;">
           <strong>Kontribusi:</strong> Validasi Non-HDL cholesterol (sensitivity 85%, specificity 88%) sebagai superior predictor dibanding total cholesterol. Waist circumference r=0.65 dengan dyslipidemia.
         </div>
-        <div style="font-size: 0.75rem; color: #8F6018; font-weight: 600;">
-          DOI: <a href="https://doi.org/10.1371/journal.pone.0135115" target="_blank" style="color: #8F6018; text-decoration: none; cursor: pointer;">10.1371/journal.pone.0135115</a>
+        <div style="font-size: 0.75rem; color: #FFB347; font-weight: 600;">
+          DOI: <a href="https://doi.org/10.1371/journal.pone.0135115" target="_blank" style="color: #FFB347; text-decoration: none; cursor: pointer;">10.1371/journal.pone.0135115</a>
           <span style="margin-left: 12px;"> 🌟 291 citations</span>
         </div>
       </div>
 
       <!-- Paper 2 -->
-      <div style="margin: 12px 0; padding: 12px; background: rgba(143, 96, 24, 0.05); border-radius: 12px; border-left: 3px solid #8F6018; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/31284934')">
-        <div style="font-size: 0.75rem; font-weight: 700; color: #8F6018; margin-bottom: 4px;">LANDMARK: Indonesian Nomogram Development</div>
+      <div style="margin: 12px 0; padding: 12px; background: rgba(255, 179, 71, 0.05); border-radius: 12px; border-left: 3px solid #FFB347; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/31284934')">
+        <div style="font-size: 0.75rem; font-weight: 700; color: #FFB347; margin-bottom: 4px;">LANDMARK: Indonesian Nomogram Development</div>
         <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">Association between Anthropometric Indicators of Obesity and Dyslipidemia Risk Among Adults in Shanghai, China</div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">
           <strong>Yuan C, Zhou L, Lu Y, et al.</strong><br>
@@ -342,15 +342,15 @@ risk_score = MIN(100, score)<br>
         <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.6;">
           <strong>Kontribusi:</strong> Nomogram risk prediction model untuk Asian populasi. Correlation matrix: BMI r=0.58, Waist-to-Height Ratio r=0.62. Basis untuk Indonesian adaptation.
         </div>
-        <div style="font-size: 0.75rem; color: #8F6018; font-weight: 600;">
-          DOI: <a href="https://doi.org/10.1186/s12889-019-7435-4" target="_blank" style="color: #8F6018; text-decoration: none; cursor: pointer;">10.1186/s12889-019-7435-4</a>
+        <div style="font-size: 0.75rem; color: #FFB347; font-weight: 600;">
+          DOI: <a href="https://doi.org/10.1186/s12889-019-7435-4" target="_blank" style="color: #FFB347; text-decoration: none; cursor: pointer;">10.1186/s12889-019-7435-4</a>
           <span style="margin-left: 12px;"> 🌟 47 citations</span>
         </div>
       </div>
 
       <!-- Paper 3 -->
-      <div style="margin: 12px 0; padding: 12px; background: rgba(143, 96, 24, 0.05); border-radius: 12px; border-left: 3px solid #8F6018; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/12468412')">
-        <div style="font-size: 0.75rem; font-weight: 700; color: #8F6018; margin-bottom: 4px;">CLASSIC: Framingham Risk Score</div>
+      <div style="margin: 12px 0; padding: 12px; background: rgba(255, 179, 71, 0.05); border-radius: 12px; border-left: 3px solid #FFB347; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/12468412')">
+        <div style="font-size: 0.75rem; font-weight: 700; color: #FFB347; margin-bottom: 4px;">CLASSIC: Framingham Risk Score</div>
         <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">Prediction of Coronary Heart Disease Using Risk Factor Categories</div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">
           <strong>D'Agostino RB, Grundy S, Sullivan LM, Wilson P</strong><br>
@@ -359,15 +359,15 @@ risk_score = MIN(100, score)<br>
         <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.6;">
           <strong>Kontribusi:</strong> Landmark 44-tahun Framingham cohort. Dyslipidemia (Non-HDL) sebagai independent predictor CVD risk. Gender-specific scores. Basis global untuk risk models.
         </div>
-        <div style="font-size: 0.75rem; color: #8F6018; font-weight: 600;">
-          DOI: <a href="https://doi.org/10.1161/01.CIR.0000437741.48606.D1" target="_blank" style="color: #8F6018; text-decoration: none; cursor: pointer;">10.1161/01.CIR.0000437741.48606.D1</a>
+        <div style="font-size: 0.75rem; color: #FFB347; font-weight: 600;">
+          DOI: <a href="https://doi.org/10.1161/01.CIR.0000437741.48606.D1" target="_blank" style="color: #FFB347; text-decoration: none; cursor: pointer;">10.1161/01.CIR.0000437741.48606.D1</a>
           <span style="margin-left: 12px;"> 🌟 2,847 citations</span>
         </div>
       </div>
 
       <!-- Paper 4 -->
-      <div style="margin: 12px 0; padding: 12px; background: rgba(143, 96, 24, 0.05); border-radius: 12px; border-left: 3px solid #8F6018; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/30827502')">
-        <div style="font-size: 0.75rem; font-weight: 700; color: #8F6018; margin-bottom: 4px;">RECENT: HDL-Triglyceride Ratio New Marker</div>
+      <div style="margin: 12px 0; padding: 12px; background: rgba(255, 179, 71, 0.05); border-radius: 12px; border-left: 3px solid #FFB347; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/30827502')">
+        <div style="font-size: 0.75rem; font-weight: 700; color: #FFB347; margin-bottom: 4px;">RECENT: HDL-Triglyceride Ratio New Marker</div>
         <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">HDL Cholesterol and Triglycerides: A New Marker of Metabolic Dysfunction</div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">
           <strong>Vogt A, Schneider K, Lalic Z, et al.</strong><br>
@@ -376,15 +376,15 @@ risk_score = MIN(100, score)<br>
         <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.6;">
           <strong>Kontribusi:</strong> HDL-to-Triglyceride ratio (TG/HDL) sebagai superior predictor dyslipidemia severity. 80+ studies synthesis. More responsive to lifestyle intervention.
         </div>
-        <div style="font-size: 0.75rem; color: #8F6018; font-weight: 600;">
-          DOI: <a href="https://doi.org/10.3390/ijms20071750" target="_blank" style="color: #8F6018; text-decoration: none; cursor: pointer;">10.3390/ijms20071750</a>
+        <div style="font-size: 0.75rem; color: #FFB347; font-weight: 600;">
+          DOI: <a href="https://doi.org/10.3390/ijms20071750" target="_blank" style="color: #FFB347; text-decoration: none; cursor: pointer;">10.3390/ijms20071750</a>
           <span style="margin-left: 12px;"> 🌟 80 citations</span>
         </div>
       </div>
 
       <!-- Paper 5 -->
-      <div style="margin: 12px 0; padding: 12px; background: rgba(143, 96, 24, 0.05); border-radius: 12px; border-left: 3px solid #8F6018; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/18175370')">
-        <div style="font-size: 0.75rem; font-weight: 700; color: #8F6018; margin-bottom: 4px;">INTERVENTION: TLC Diet Efficacy</div>
+      <div style="margin: 12px 0; padding: 12px; background: rgba(255, 179, 71, 0.05); border-radius: 12px; border-left: 3px solid #FFB347; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/18175370')">
+        <div style="font-size: 0.75rem; font-weight: 700; color: #FFB347; margin-bottom: 4px;">INTERVENTION: TLC Diet Efficacy</div>
         <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">Therapeutic Lifestyle Changes (TLC) for Cholesterol Management: RCT Meta-Analysis</div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">
           <strong>Artinian NT, Fletcher GF, Mozaffarian D, et al.</strong><br>
@@ -393,14 +393,14 @@ risk_score = MIN(100, score)<br>
         <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.6;">
           <strong>Kontribusi:</strong> TLC diet (↓ saturated fat, ↓ cholesterol, ↑ fiber) reduces LDL 15-20%. RCT-based efficacy. Dietary recommendation GRADE A evidence.
         </div>
-        <div style="font-size: 0.75rem; color: #8F6018; font-weight: 600;">
-          DOI: <a href="https://doi.org/10.1016/j.jada.2006.08.024" target="_blank" style="color: #8F6018; text-decoration: none; cursor: pointer;">10.1016/j.jada.2006.08.024</a>
+        <div style="font-size: 0.75rem; color: #FFB347; font-weight: 600;">
+          DOI: <a href="https://doi.org/10.1016/j.jada.2006.08.024" target="_blank" style="color: #FFB347; text-decoration: none; cursor: pointer;">10.1016/j.jada.2006.08.024</a>
           <span style="margin-left: 12px;"> 🌟 128 citations</span>
         </div>
       </div>
 
-      <div style="text-align: center; margin-top: 16px; padding: 12px; background: rgba(143, 96, 24, 0.08); border-radius: 8px;">
-        <div style="font-size: 0.75rem; color: #8F6018; font-weight: 700;">📖 Klik paper untuk buka di PubMed</div>
+      <div style="text-align: center; margin-top: 16px; padding: 12px; background: rgba(255, 179, 71, 0.08); border-radius: 8px;">
+        <div style="font-size: 0.75rem; color: #FFB347; font-weight: 700;">📖 Klik paper untuk buka di PubMed</div>
         <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 4px;">175+ papers tersedia dalam database HerboraTech SLR</div>
       </div>
     </div>

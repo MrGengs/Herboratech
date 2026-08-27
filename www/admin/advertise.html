@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(47,111,79,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(79,209,160,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #2F6F4F !important; }
+    .sidebar-logo span { color: #4FD1A0 !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #2F6F4F; background: rgba(47,111,79,0.08); }
-    .sidebar-item.active { color: #2F6F4F !important; background: rgba(47,111,79,0.15); border-left: 3px solid #2F6F4F; }
+    .sidebar-item:hover { color: #4FD1A0; background: rgba(79,209,160,0.08); }
+    .sidebar-item.active { color: #4FD1A0 !important; background: rgba(79,209,160,0.15); border-left: 3px solid #4FD1A0; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
 
     .ads-form { background: var(--bg-elevated); border-radius: var(--r-xl); padding: 20px; box-shadow: var(--shadow-out); margin-bottom: 24px; }
@@ -166,7 +166,7 @@ async function loadBanners() {
       const card = document.createElement('div');
       card.className = 'ad-card';
       const statusHtml = ad.active
-        ? '<span class="ad-status" style="background:rgba(29,79,56,0.15);color:#1D4F38;">Aktif</span>'
+        ? '<span class="ad-status" style="background:rgba(47,168,124,0.15);color:#2FA87C;">Aktif</span>'
         : '<span class="ad-status" style="background:rgba(0,0,0,0.1);color:var(--text-muted);">Nonaktif</span>';
       card.innerHTML = `
         <div class="ad-img-wrap">

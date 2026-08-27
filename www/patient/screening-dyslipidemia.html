@@ -10,12 +10,12 @@
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
     :root {
-      --primary-dys: #8F6018;
+      --primary-dys: #FFB347;
       --primary-dys-dark: #E67E22;
     }
     .app-header {
       background: linear-gradient(135deg, var(--primary-dys) 0%, #F2C94C 100%);
-      box-shadow: 0 2px 16px rgba(143, 96, 24, 0.25);
+      box-shadow: 0 2px 16px rgba(255, 179, 71, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
@@ -45,7 +45,7 @@
     .step-dot.current {
       background: linear-gradient(135deg, var(--primary-dys), #F2C94C);
       color: #fff; border-color: transparent;
-      box-shadow: 0 4px 12px rgba(143,96,24,0.4);
+      box-shadow: 0 4px 12px rgba(255,179,71,0.4);
       transform: scale(1.15);
     }
     .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
@@ -76,9 +76,9 @@
 
     .traffic-light-card { padding: 12px; border-radius: 12px; margin-bottom: 10px; display: flex; gap: 12px; align-items: center; }
     .tl-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-    .tl-dot.green { background: #1D4F38; box-shadow: 0 0 8px rgba(29,79,56,0.4); }
-    .tl-dot.yellow { background: #8F6018; box-shadow: 0 0 8px rgba(143,96,24,0.4); }
-    .tl-dot.red { background: #B23A34; box-shadow: 0 0 8px rgba(178,58,52,0.4); }
+    .tl-dot.green { background: #2FA87C; box-shadow: 0 0 8px rgba(47,168,124,0.4); }
+    .tl-dot.yellow { background: #FFB347; box-shadow: 0 0 8px rgba(255,179,71,0.4); }
+    .tl-dot.red { background: #FF6B7A; box-shadow: 0 0 8px rgba(255,107,122,0.4); }
     .tl-content { flex: 1; }
     .tl-title { font-size: 0.8rem; font-weight: 700; margin-bottom: 2px; }
     .tl-list { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.4; }
@@ -89,7 +89,7 @@
       background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 12px; padding: 12px;
       text-align: center; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
     }
-    .symptom-opt.selected { border-color: var(--primary-dys); background: rgba(143,96,24,0.05); }
+    .symptom-opt.selected { border-color: var(--primary-dys); background: rgba(255,179,71,0.05); }
     .symptom-icon { font-size: 1.4rem; margin-bottom: 4px; }
     .symptom-label { font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); }
 
@@ -100,12 +100,12 @@
       text-align: center; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
       font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
     }
-    .radio-opt:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(143,96,24,0.15); }
-    .radio-opt.selected { border-color: var(--primary-dys); background: linear-gradient(135deg, rgba(143,96,24,0.1), rgba(242,196,76,0.1)); color: var(--primary-dys-dark); font-weight: 700; }
+    .radio-opt:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,179,71,0.15); }
+    .radio-opt.selected { border-color: var(--primary-dys); background: linear-gradient(135deg, rgba(255,179,71,0.1), rgba(242,196,76,0.1)); color: var(--primary-dys-dark); font-weight: 700; }
 
     /* Recommendations */
-    .rec-herbal { background: rgba(29, 79, 56, 0.05); border-left: 4px solid #1D4F38; padding: 14px; border-radius: 12px; margin-top: 14px; }
-    .rec-diet { background: rgba(44, 110, 155, 0.05); border-left: 4px solid #2C6E9B; padding: 14px; border-radius: 12px; margin-top: 14px; }
+    .rec-herbal { background: rgba(47, 168, 124, 0.05); border-left: 4px solid #2FA87C; padding: 14px; border-radius: 12px; margin-top: 14px; }
+    .rec-diet { background: rgba(111, 168, 255, 0.05); border-left: 4px solid #6FA8FF; padding: 14px; border-radius: 12px; margin-top: 14px; }
 
     .confirm-btn-wrap {
       position: sticky; bottom: 0; background: var(--bg);
@@ -115,7 +115,7 @@
       background: linear-gradient(135deg, var(--primary-dys), #F2C94C);
       color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
       font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 6px 18px rgba(143,96,24,0.3);
+      box-shadow: 0 6px 18px rgba(255,179,71,0.3);
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
   </style>
@@ -163,7 +163,7 @@
           <div style="font-size:0.65rem;color:var(--text-muted);margin-top:8px;">Ukur di bagian tengah antara tulang rusuk terbawah dan panggul.</div>
         </div>
 
-        <div id="bmi-result-card" class="neu-card" style="margin-top:14px;display:none;background:rgba(143,96,24,0.05);text-align:center;">
+        <div id="bmi-result-card" class="neu-card" style="margin-top:14px;display:none;background:rgba(255,179,71,0.05);text-align:center;">
           <div style="font-size:0.75rem;font-weight:700;color:var(--primary-dys-dark);">BMI Anda</div>
           <div id="bmi-val" style="font-size:1.8rem;font-weight:800;color:var(--text-primary);">24.2</div>
           <div id="bmi-lbl" style="font-size:0.75rem;font-weight:700;color:var(--primary-dys-dark);">Normal</div>
@@ -344,14 +344,14 @@
             <div class="traffic-light-card" style="background:#EFFFF5;">
               <div class="tl-dot green"></div>
               <div class="tl-content">
-                <div class="tl-title" style="color:#1D4F38;">UTAMAKAN</div>
+                <div class="tl-title" style="color:#2FA87C;">UTAMAKAN</div>
                 <div class="tl-list">Ikan laut (Kembung), Tempe, Sayuran hijau, Alpukat.</div>
               </div>
             </div>
             <div class="traffic-light-card" style="background:#FFEEEE;">
               <div class="tl-dot red"></div>
               <div class="tl-content">
-                <div class="tl-title" style="color:#B23A34;">HINDARI</div>
+                <div class="tl-title" style="color:#FF6B7A;">HINDARI</div>
                 <div class="tl-list">Gorengan, Santan kental, Jeroan, Minuman manis.</div>
               </div>
             </div>

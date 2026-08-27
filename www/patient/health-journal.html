@@ -29,11 +29,11 @@
       font-size: 0.78rem; font-weight: 500; color: var(--text-secondary);
       position: relative; transition: all 0.15s;
     }
-    .cal-cell:hover { background: rgba(47,111,79,0.12); }
+    .cal-cell:hover { background: rgba(79,209,160,0.12); }
     .cal-cell.today {
-      background: linear-gradient(135deg, #1D4F38, #2F6F4F);
+      background: linear-gradient(135deg, #186045, #22815F);
       color: #fff; font-weight: 700;
-      box-shadow: 0 3px 10px rgba(29,79,56,0.35);
+      box-shadow: 0 3px 10px rgba(47,168,124,0.35);
     }
     .cal-cell.selected {
       background: var(--bg);
@@ -59,7 +59,7 @@
     .entry-meta { flex: 1; }
     .entry-time { font-size: 0.68rem; color: var(--text-muted); }
     .entry-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-    .symptom-tag { font-size: 0.65rem; padding: 3px 10px; border-radius: 20px; background: rgba(178,58,52,0.1); color: var(--danger); font-weight: 600; }
+    .symptom-tag { font-size: 0.65rem; padding: 3px 10px; border-radius: 20px; background: rgba(255,107,122,0.1); color: var(--danger); font-weight: 600; }
     .entry-note { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
 
     /* Add Form */
@@ -88,7 +88,7 @@
       background: var(--bg); box-shadow: var(--shadow-in);
       border-radius: 12px; padding: 8px 12px; min-height: 44px; align-items: center;
     }
-    .tag-item { display: flex; align-items: center; gap: 4px; background: rgba(178,58,52,0.1); color: var(--danger); border-radius: 20px; padding: 3px 10px; font-size: 0.65rem; font-weight: 600; }
+    .tag-item { display: flex; align-items: center; gap: 4px; background: rgba(255,107,122,0.1); color: var(--danger); border-radius: 20px; padding: 3px 10px; font-size: 0.65rem; font-weight: 600; }
     .tag-item span { cursor: pointer; font-size: 0.8rem; opacity: 0.7; }
     .tag-input { border: none; background: transparent; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.82rem; color: var(--text-primary); min-width: 80px; flex: 1; }
     .tag-input:focus { outline: none; }
@@ -103,7 +103,7 @@
       cursor: pointer; transition: all 0.2s;
     }
     .mood-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-out); }
-    .mood-btn.active { border-color: var(--primary-dark); box-shadow: var(--shadow-out), 0 0 0 2px rgba(29,79,56,0.2); }
+    .mood-btn.active { border-color: var(--primary-dark); box-shadow: var(--shadow-out), 0 0 0 2px rgba(47,168,124,0.2); }
     .mood-emoji { font-size: 1.5rem; }
     .mood-label { font-size: 0.58rem; color: var(--text-muted); font-weight: 500; }
 

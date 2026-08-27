@@ -20,7 +20,7 @@
 
     /* Completeness bar */
     .completeness-track { height: 8px; background: rgba(255,255,255,0.2); border-radius: 8px; margin-top: 8px; overflow: hidden; }
-    .completeness-fill  { height: 100%; background: #2F6F4F; border-radius: 8px; transition: width 1s ease; }
+    .completeness-fill  { height: 100%; background: #4FD1A0; border-radius: 8px; transition: width 1s ease; }
 
     /* Mini risk cards 2×3 grid */
     .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -81,7 +81,7 @@
           <div style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1.8rem;" id="heroEmoji">👤</div>
         </div>
         <div style="margin-top:14px;font-size:0.72rem;color:rgba(255,255,255,0.7);margin-bottom:6px;">
-          Kelengkapan profil: <span id="heroCompleteness" style="font-weight:700;color:#2F6F4F;">0%</span>
+          Kelengkapan profil: <span id="heroCompleteness" style="font-weight:700;color:#4FD1A0;">0%</span>
         </div>
         <div class="completeness-track">
           <div class="completeness-fill" id="heroCFill"></div>
@@ -128,7 +128,7 @@
       <div class="section-header mt-24"><span class="section-title">Aksi Cepat</span></div>
       <div class="action-grid mt-8">
         <div class="action-btn" onclick="nav('health-profile.html')">
-          <ion-icon name="create-outline" style="color:#1D4F38;"></ion-icon>
+          <ion-icon name="create-outline" style="color:#2FA87C;"></ion-icon>
           <span>Update Profil</span>
         </div>
         <div class="action-btn" onclick="window.recalc()">
@@ -140,14 +140,14 @@
           <span>Semua Herbal</span>
         </div>
         <div class="action-btn" onclick="nav('consultation.html')">
-          <ion-icon name="chatbubbles-outline" style="color:#8F6018;"></ion-icon>
+          <ion-icon name="chatbubbles-outline" style="color:#FFB347;"></ion-icon>
           <span>Booking Dokter</span>
         </div>
       </div>
 
       <!-- Disclaimer -->
-      <div style="margin-top:20px;padding:12px 14px;background:rgba(178,58,52,0.06);border:1px solid rgba(178,58,52,0.2);border-radius:12px;font-size:0.7rem;color:var(--text-secondary);line-height:1.5;">
-        <span style="font-weight:700;color:#B23A34;">⚕ Disclaimer:</span>
+      <div style="margin-top:20px;padding:12px 14px;background:rgba(255,107,122,0.06);border:1px solid rgba(255,107,122,0.2);border-radius:12px;font-size:0.7rem;color:var(--text-secondary);line-height:1.5;">
+        <span style="font-weight:700;color:#FF6B7A;">⚕ Disclaimer:</span>
         Dashboard ini menggunakan model prediksi berbasis Framingham Risk Score &amp; FINDRISC. Bukan pengganti pemeriksaan medis profesional.
       </div>
     </div>
@@ -239,7 +239,7 @@ window.renderDashboard = async function(hp) {
   
   if (currentUserId) VDB.saveRiskScore(currentUserId, scores).catch(console.warn);
 
-  const BAR = { low: '#1D4F38', medium: '#8F6018', high: '#B23A34' };
+  const BAR = { low: '#2FA87C', medium: '#FFB347', high: '#FF6B7A' };
   const gridEl = document.getElementById('riskGrid');
   if (gridEl) {
     gridEl.innerHTML = models.map(m => {
@@ -280,9 +280,9 @@ window.renderDashboard = async function(hp) {
     if (listEl) {
       listEl.innerHTML = uniqueFactors.map(x =>
         `<span style="display:inline-block;padding:4px 10px;border-radius:20px;font-size:0.68rem;font-weight:600;background:${
-          x.cat === 'high' ? 'rgba(178,58,52,0.1)' : x.cat === 'medium' ? 'rgba(143,96,24,0.1)' : 'rgba(29,79,56,0.1)'
+          x.cat === 'high' ? 'rgba(255,107,122,0.1)' : x.cat === 'medium' ? 'rgba(255,179,71,0.1)' : 'rgba(47,168,124,0.1)'
         };color:${
-          x.cat === 'high' ? '#B23A34' : x.cat === 'medium' ? '#8F6018' : '#1D4F38'
+          x.cat === 'high' ? '#FF6B7A' : x.cat === 'medium' ? '#FFB347' : '#2FA87C'
         };margin:2px;">${x.f}</span>`
       ).join('');
     }
@@ -312,7 +312,7 @@ window.loadHerbalRecs = async function(conditions) {
   }
   wrap.innerHTML = results.slice(0, 4).map(f =>
     `<div class="herbal-mini" onclick="nav('herbal-formula.html?id=${f.id}')">
-      <div style="width:34px;height:34px;border-radius:10px;background:rgba(29,79,56,0.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">🌿</div>
+      <div style="width:34px;height:34px;border-radius:10px;background:rgba(47,168,124,0.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">🌿</div>
       <div style="flex:1;min-width:0;">
         <div style="font-size:0.6rem;color:var(--primary-dark);font-weight:700;text-transform:uppercase;">${f._cond}</div>
         <div style="font-weight:700;font-size:0.83rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${f.name}</div>
@@ -337,7 +337,7 @@ window.renderTrendChart = function(history) {
   const latest = history[0].scores || {};
   const diseases = ['diabetes', 'heart', 'hypertension', 'stroke', 'metabolic', 'sleep'];
   const labels = { diabetes:'Diabetes', heart:'Jantung', hypertension:'Hipertensi', stroke:'Stroke', metabolic:'Metabolik', sleep:'Tidur' };
-  const colors = { diabetes:'#B23A34', heart:'#0C6F78', hypertension:'#2C6E9B', stroke:'#8F6018', metabolic:'#1D4F38', sleep:'#56CCF2' };
+  const colors = { diabetes:'#FF6B7A', heart:'#37C7C2', hypertension:'#6FA8FF', stroke:'#FFB347', metabolic:'#2FA87C', sleep:'#56CCF2' };
 
   const rows = diseases
     .filter(d => latest[d])

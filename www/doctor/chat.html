@@ -18,7 +18,7 @@
     .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
     .nav-item.active { color: var(--info); font-weight: 700; position: relative; }
     .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--info); }
-    .nav-item.active ion-icon { color: var(--info); filter: drop-shadow(0 0 4px rgba(44,110,155,0.5)); }
+    .nav-item.active ion-icon { color: var(--info); filter: drop-shadow(0 0 4px rgba(111,168,255,0.5)); }
   </style>
 </head>
 <body>
@@ -145,11 +145,11 @@ async function loadConsultations(doctorId) {
     chatList.innerHTML = '';
 
     const gradients = [
-      'linear-gradient(135deg,#B23A34,#FF7B7B)',
-      'linear-gradient(135deg,#0C6F78,#2A9BA5)',
-      'linear-gradient(135deg,#1D4F38,#2F6F4F)',
-      'linear-gradient(135deg,#2C6E9B,#56CCF2)',
-      'linear-gradient(135deg,#8F6018,#F2C94C)'
+      'linear-gradient(135deg,#8F2F2A,#C04A44)',
+      'linear-gradient(135deg,#0E5F66,#17868F)',
+      'linear-gradient(135deg,#186045,#22815F)',
+      'linear-gradient(135deg,#245C82,#3A93C4)',
+      'linear-gradient(135deg,#FFB347,#F2C94C)'
     ];
 
     for (let i = 0; i < allConsults.length; i++) {
@@ -224,7 +224,7 @@ async function renderCompletedList(consults) {
     return;
   }
   chatList.innerHTML = '';
-  const gradients = ['linear-gradient(135deg,#B23A34,#FF7B7B)','linear-gradient(135deg,#0C6F78,#2A9BA5)','linear-gradient(135deg,#1D4F38,#2F6F4F)','linear-gradient(135deg,#2C6E9B,#56CCF2)','linear-gradient(135deg,#8F6018,#F2C94C)'];
+  const gradients = ['linear-gradient(135deg,#8F2F2A,#C04A44)','linear-gradient(135deg,#0E5F66,#17868F)','linear-gradient(135deg,#186045,#22815F)','linear-gradient(135deg,#245C82,#3A93C4)','linear-gradient(135deg,#FFB347,#F2C94C)'];
   for (let i = 0; i < consults.length; i++) {
     const c = consults[i];
     const patient = c.patientId ? await VDB.getUser(c.patientId) : null;

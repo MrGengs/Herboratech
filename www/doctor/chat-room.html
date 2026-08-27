@@ -19,7 +19,7 @@
     .chat-header-info { flex: 1; display: flex; flex-direction: column; gap: 1px; overflow: hidden; }
     .chat-header-name { font-size: 0.88rem; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .chat-header-status { font-size: 0.65rem; color: rgba(255,255,255,0.75); }
-    .status-dot { display: inline-block; width: 7px; height: 7px; background: #2F6F4F; border-radius: 50%; margin-right: 4px; }
+    .status-dot { display: inline-block; width: 7px; height: 7px; background: #4FD1A0; border-radius: 50%; margin-right: 4px; }
 
     /* Quick action bar */
     .quick-bar {
@@ -67,8 +67,8 @@
     .chat-timestamp { text-align: center; font-size: 0.6rem; color: var(--text-muted); margin: 10px 0 6px; }
 
     .chat-bubble { max-width: 78%; padding: 10px 14px; border-radius: 18px; font-size: 0.78rem; line-height: 1.5; position: relative; }
-    .chat-bubble.received { background: #fff; box-shadow: var(--shadow-out-sm); color: var(--text-secondary); border-bottom-left-radius: 4px; align-self: flex-start; }
-    .chat-bubble.sent { background: linear-gradient(135deg, #1D5DB5, #2C6E9B); color: #fff; border-bottom-right-radius: 4px; align-self: flex-end; box-shadow: 0 4px 12px rgba(44,110,155,0.35); }
+    .chat-bubble.received { background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); border-bottom-left-radius: 4px; align-self: flex-start; }
+    .chat-bubble.sent { background: linear-gradient(135deg, #1D5DB5, #6FA8FF); color: #fff; border-bottom-right-radius: 4px; align-self: flex-end; box-shadow: 0 4px 12px rgba(111,168,255,0.35); }
     .bubble-time { font-size: 0.58rem; margin-top: 4px; opacity: 0.65; }
     .bubble-time.sent { text-align: right; }
 
@@ -122,13 +122,13 @@
     .send-btn {
       width: 42px; height: 42px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #1D5DB5, #2C6E9B);
+      background: linear-gradient(135deg, #1D5DB5, #6FA8FF);
       border: none;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       color: #fff;
       font-size: 1.1rem;
-      box-shadow: 0 3px 10px rgba(44,110,155,0.4);
+      box-shadow: 0 3px 10px rgba(111,168,255,0.4);
       flex-shrink: 0;
     }
   </style>
@@ -139,7 +139,7 @@
   <!-- Header -->
   <header class="app-header" style="display:flex;align-items:center;gap:10px;padding:10px 14px;">
     <button class="neu-icon-btn" onclick="nav('chat.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
-    <div id="patientAvatar" style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#B23A34,#FF7B7B);display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:800;color:#fff;flex-shrink:0;">P</div>
+    <div id="patientAvatar" style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#8F2F2A,#C04A44);display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:800;color:#fff;flex-shrink:0;">P</div>
     <div class="chat-header-info">
       <div class="chat-header-name" id="patientName">Memuat...</div>
       <div class="chat-header-status"><span class="status-dot"></span>Online</div>
@@ -290,7 +290,7 @@
         });
 
         setTimeout(() => {
-          sparkline(document.getElementById('sidebar-spark'), [80,82,85,80,88,84,82,86,82], '#B23A34', 50);
+          sparkline(document.getElementById('sidebar-spark'), [80,82,85,80,88,84,82,86,82], '#FF6B7A', 50);
         }, 300);
       }
     } catch (e) {

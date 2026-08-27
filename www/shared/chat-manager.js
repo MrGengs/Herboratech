@@ -104,25 +104,25 @@ class VChatManager {
     if (msg.type === 'vital_share') {
       const v = msg.metadata?.vitals || {};
       return `<div class="chat-bubble ${msg.isMine ? 'sent' : 'received'}" style="padding:0;overflow:hidden;max-width:85%;">
-        <div style="background:rgba(29,79,56,0.1);border:1px solid rgba(29,79,56,0.3);border-radius:14px;padding:12px 14px;">
-          <div style="font-size:0.7rem;font-weight:700;color:#1D4F38;margin-bottom:6px;">📊 DATA VITAL SIGN</div>
+        <div style="background:rgba(47,168,124,0.1);border:1px solid rgba(47,168,124,0.3);border-radius:14px;padding:12px 14px;">
+          <div style="font-size:0.7rem;font-weight:700;color:#2FA87C;margin-bottom:6px;">📊 DATA VITAL SIGN</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:0.72rem;">
             <span>HR: <b>${v.hr || '-'} bpm</b></span>
             <span>SpO2: <b>${v.spo2 || '-'}%</b></span>
             <span>Suhu: <b>${v.temperature || '-'}°C</b></span>
             <span>HRV: <b>${v.hrv || '-'} ms</b></span>
           </div>
-          <div style="font-size:0.6rem;color:#8A8F82;margin-top:4px;text-align:right;">${timeStr}</div>
+          <div style="font-size:0.6rem;color:#64756B;margin-top:4px;text-align:right;">${timeStr}</div>
         </div>
       </div>`;
     }
 
     if (msg.type === 'prescription') {
       return `<div class="chat-bubble ${msg.isMine ? 'sent' : 'received'}" style="padding:0;overflow:hidden;max-width:85%;">
-        <div style="background:rgba(44,110,155,0.1);border:1px solid rgba(44,110,155,0.3);border-radius:14px;padding:12px 14px;cursor:pointer;">
-          <div style="font-size:0.7rem;font-weight:700;color:#2C6E9B;margin-bottom:4px;">📋 RESEP DIGITAL</div>
+        <div style="background:rgba(111,168,255,0.1);border:1px solid rgba(111,168,255,0.3);border-radius:14px;padding:12px 14px;cursor:pointer;">
+          <div style="font-size:0.7rem;font-weight:700;color:#6FA8FF;margin-bottom:4px;">📋 RESEP DIGITAL</div>
           <div style="font-size:0.78rem;">Lihat resep selengkapnya →</div>
-          <div style="font-size:0.6rem;color:#8A8F82;margin-top:4px;text-align:right;">${timeStr}</div>
+          <div style="font-size:0.6rem;color:#64756B;margin-top:4px;text-align:right;">${timeStr}</div>
         </div>
       </div>`;
     }

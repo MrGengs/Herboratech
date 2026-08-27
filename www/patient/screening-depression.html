@@ -79,8 +79,8 @@
     .phq-opt.selected { border-color: var(--primary-dep); background: rgba(74, 35, 90, 0.03); color: var(--primary-dep); }
 
     .crisis-box {
-      background: #B23A34; color: #fff; padding: 16px; border-radius: 16px;
-      margin-top: 20px; text-align: center; box-shadow: 0 8px 20px rgba(178,58,52,0.3);
+      background: #FF6B7A; color: #fff; padding: 16px; border-radius: 16px;
+      margin-top: 20px; text-align: center; box-shadow: 0 8px 20px rgba(255,107,122,0.3);
     }
   </style>
 </head>
@@ -215,7 +215,7 @@
       <div class="section">
         <h3 style="font-size:1rem;font-weight:800;margin-bottom:6px;">Pikiran Kritis</h3>
         <div class="neu-card" data-animate="up">
-          <p style="font-size:0.85rem;font-weight:700;margin-bottom:12px;color:#B23A34;">9. Berpikir bahwa lebih baik mati atau ingin melukai diri sendiri dengan cara apapun?</p>
+          <p style="font-size:0.85rem;font-weight:700;margin-bottom:12px;color:#FF6B7A;">9. Berpikir bahwa lebih baik mati atau ingin melukai diri sendiri dengan cara apapun?</p>
           <div class="phq-group" id="q9">
             <div class="phq-opt" onclick="selectPhq(this, 9, 0)">Tidak pernah</div>
             <div class="phq-opt" onclick="selectPhq(this, 9, 1)">Beberapa hari</div>
@@ -249,7 +249,7 @@
           <div id="crisis-resource" class="crisis-box" style="display:none;">
             <div style="font-weight:800;font-size:1rem;margin-bottom:8px;">⚠️ Bantuan Segera Tersedia</div>
             <div style="font-size:0.75rem;margin-bottom:12px;">Anda tidak sendirian. Jika Anda merasa ingin melukai diri, silakan hubungi hotline kesehatan mental atau tekan tombol di bawah.</div>
-            <button class="neu-btn neu-btn-light" style="width:100%;color:#B23A34;font-weight:800;" onclick="window.location.href='tel:119'">PANGGIL HOTLINE 119</button>
+            <button class="neu-btn neu-btn-light" style="width:100%;color:#FF6B7A;font-weight:800;" onclick="window.location.href='tel:119'">PANGGIL HOTLINE 119</button>
           </div>
 
           <!-- Recommendations -->
@@ -386,17 +386,17 @@
       if ((phqAnswers[9] || 0) > 0) { crisisBox.style.display = 'block'; }
 
       if (totalScore <= 4) {
-        resLevel.textContent = 'MINIMAL'; resLevel.style.color = '#1D4F38';
+        resLevel.textContent = 'MINIMAL'; resLevel.style.color = '#2FA87C';
         resDesc.textContent = 'Gejala depresi yang terdeteksi minimal atau tidak ada.';
       } else if (totalScore <= 9) {
         resLevel.textContent = 'RINGAN'; resLevel.style.color = '#F2C94C';
         resDesc.textContent = 'Ada gejala depresi ringan. Disarankan melakukan manajemen stres dan olahraga.';
       } else if (totalScore <= 14) {
-        resLevel.textContent = 'SEDANG'; resLevel.style.color = '#8F6018';
+        resLevel.textContent = 'SEDANG'; resLevel.style.color = '#FFB347';
         resDesc.textContent = 'Anda menunjukkan gejala depresi sedang. Disarankan konsultasi dengan psikolog.';
         recList.innerHTML = '<li>⚠️ Rujuk ke Psikolog atau Konselor.</li><li>Lakukan journaling rasa syukur setiap malam.</li><li>Pertahankan paparan sinar matahari pagi (15 menit).</li>';
       } else {
-        resLevel.textContent = 'BERAT'; resLevel.style.color = '#B23A34';
+        resLevel.textContent = 'BERAT'; resLevel.style.color = '#FF6B7A';
         resDesc.textContent = 'Anda menunjukkan gejala depresi yang signifikan. Sangat disarankan untuk segera mencari bantuan profesional.';
         recList.innerHTML = '<li>🆘 Segera konsultasi ke Psikiater atau Psikolog Klinis.</li><li>Jangan menunda pencarian bantuan profesional.</li><li>Informasikan kondisi Anda kepada keluarga terdekat.</li>';
         herbalName.textContent = 'Ashwagandha Standardized';

@@ -44,7 +44,7 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 30% 40%, rgba(29,79,56,0.12) 0%, transparent 60%),
+        radial-gradient(circle at 30% 40%, rgba(47,168,124,0.12) 0%, transparent 60%),
         radial-gradient(circle at 70% 60%, rgba(27,94,56,0.15) 0%, transparent 60%);
     }
 
@@ -220,14 +220,14 @@
     .vc-btn:hover { background: rgba(255,255,255,0.2); }
     .vc-btn:active { transform: scale(0.9); }
     .vc-btn.active { background: rgba(255,255,255,0.25); }
-    .vc-btn.muted { background: rgba(178,58,52,0.3); border-color: rgba(178,58,52,0.4); }
+    .vc-btn.muted { background: rgba(255,107,122,0.3); border-color: rgba(255,107,122,0.4); }
 
     .vc-btn-end {
       width: 64px; height: 64px;
-      background: linear-gradient(135deg, #B23A34, #FF3B3B);
+      background: linear-gradient(135deg, #FF6B7A, #FF3B3B);
       border: none;
       border-radius: 50%;
-      box-shadow: 0 6px 20px rgba(178,58,52,0.5);
+      box-shadow: 0 6px 20px rgba(255,107,122,0.5);
       color: #fff;
       font-size: 1.5rem;
       display: flex; align-items: center; justify-content: center;
@@ -253,7 +253,7 @@
       position: absolute;
       inset: -8px;
       border-radius: 50%;
-      border: 2px solid rgba(29,79,56,0.5);
+      border: 2px solid rgba(47,168,124,0.5);
       animation: pulse-ring 2s ease-out infinite;
     }
   </style>
@@ -287,7 +287,7 @@
   <div class="vc-top-overlay">
     <div class="vc-vitals">
       <div class="vc-vital-item">
-        <ion-icon name="heart-outline" style="color:#B23A34;"></ion-icon>
+        <ion-icon name="heart-outline" style="color:#FF6B7A;"></ion-icon>
         <span id="vc-hr">-- bpm</span>
       </div>
       <div class="vc-vital-item">
@@ -319,7 +319,7 @@
       <button class="vc-btn-end" onclick="endCall()">
         <ion-icon name="call-outline" style="transform:rotate(135deg);"></ion-icon>
       </button>
-      <span class="vc-btn-label" style="color:rgba(178,58,52,0.8);">Akhiri</span>
+      <span class="vc-btn-label" style="color:rgba(255,107,122,0.8);">Akhiri</span>
     </div>
     <div class="btn-wrap">
       <button class="vc-btn" onclick="showToast('Screen share tidak tersedia di prototype','info')">
@@ -468,7 +468,7 @@
 
     console.groupEnd();
   };
-  console.log('%c[VideoCall] Debug tool siap. Ketik vcDiag() di console untuk diagnosa.', 'color:#2F6F4F;font-weight:bold');
+  console.log('%c[VideoCall] Debug tool siap. Ketik vcDiag() di console untuk diagnosa.', 'color:#4FD1A0;font-weight:bold');
 
   document.addEventListener('DOMContentLoaded', async () => {
     const params    = new URLSearchParams(location.search);

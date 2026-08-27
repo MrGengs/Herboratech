@@ -13,12 +13,12 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="../shared/firebase.js"></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(47,111,79,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(79,209,160,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #2F6F4F !important; }
+    .sidebar-logo span { color: #4FD1A0 !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #2F6F4F; background: rgba(47,111,79,0.08); }
-    .sidebar-item.active { color: #2F6F4F !important; background: rgba(47,111,79,0.15); border-left: 3px solid #2F6F4F; }
+    .sidebar-item:hover { color: #4FD1A0; background: rgba(79,209,160,0.08); }
+    .sidebar-item.active { color: #4FD1A0 !important; background: rgba(79,209,160,0.15); border-left: 3px solid #4FD1A0; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
     @media (min-width: 768px) { .ml-dist-grid { grid-template-columns: 1fr 1fr !important; } }
 
@@ -46,7 +46,7 @@
       font-weight: 600;
       margin-bottom: 10px;
     }
-    .model-badge.active { background: rgba(29,79,56,0.12); color: #1D4F38; }
+    .model-badge.active { background: rgba(47,168,124,0.12); color: #2FA87C; }
     .param-row {
       display: flex; justify-content: space-between; align-items: center;
       padding: 5px 0;
@@ -71,9 +71,9 @@
       font-size: 0.65rem;
       font-weight: 700;
     }
-    .risk-pill.high { background: rgba(178,58,52,0.12); color: #B23A34; }
-    .risk-pill.medium { background: rgba(143,96,24,0.12); color: #8F6018; }
-    .risk-pill.low { background: rgba(29,79,56,0.12); color: #1D4F38; }
+    .risk-pill.high { background: rgba(255,107,122,0.12); color: #FF6B7A; }
+    .risk-pill.medium { background: rgba(255,179,71,0.12); color: #FFB347; }
+    .risk-pill.low { background: rgba(47,168,124,0.12); color: #2FA87C; }
 
     .refresh-btn {
       display: inline-flex; align-items: center; gap: 6px;
@@ -124,7 +124,7 @@
         <button class="refresh-btn" onclick="loadStats()">
           <ion-icon name="refresh-outline"></ion-icon> Refresh Data
         </button>
-        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#9B51E0,#2F6F4F)">A</div>
+        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#9B51E0,#4FD1A0)">A</div>
       </div>
     </div>
 
@@ -137,19 +137,19 @@
         <div class="sc-change" id="stat-profiles-sub" style="color:var(--text-muted)">Memuat...</div>
       </div>
       <div class="stat-card">
-        <div class="sc-icon" style="background:rgba(44,110,155,0.12);color:#2C6E9B">📊</div>
+        <div class="sc-icon" style="background:rgba(111,168,255,0.12);color:#6FA8FF">📊</div>
         <div class="sc-value" id="stat-scores">—</div>
         <div class="sc-label">Skor Dihitung</div>
         <div class="sc-change" id="stat-scores-sub" style="color:var(--text-muted)">Memuat...</div>
       </div>
       <div class="stat-card">
-        <div class="sc-icon" style="background:rgba(178,58,52,0.12);color:#B23A34">⚠️</div>
+        <div class="sc-icon" style="background:rgba(255,107,122,0.12);color:#FF6B7A">⚠️</div>
         <div class="sc-value" id="stat-highrisk">—</div>
         <div class="sc-label">Risiko Tinggi</div>
         <div class="sc-change" id="stat-highrisk-sub" style="color:var(--danger)">Memuat...</div>
       </div>
       <div class="stat-card">
-        <div class="sc-icon" style="background:rgba(29,79,56,0.12);color:#1D4F38">🧠</div>
+        <div class="sc-icon" style="background:rgba(47,168,124,0.12);color:#2FA87C">🧠</div>
         <div class="sc-value" id="stat-models">7</div>
         <div class="sc-label">Model Tersedia</div>
         <div class="sc-change up" id="stat-engine">Memuat...</div>
@@ -174,7 +174,7 @@
           <div class="param-row"><span class="param-key">Output</span><span class="param-val">0–100, 3 kategori</span></div>
         </div>
 
-        <div class="model-card" style="border-top-color:#2C6E9B;">
+        <div class="model-card" style="border-top-color:#6FA8FF;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Diabetes Tipe 2</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: FINDRISC Score</div>
@@ -184,7 +184,7 @@
           <div class="param-row"><span class="param-key">Gula darah</span><span class="param-val">Jika tersedia</span></div>
         </div>
 
-        <div class="model-card" style="border-top-color:#B23A34;">
+        <div class="model-card" style="border-top-color:#FF6B7A;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Penyakit Jantung</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: Framingham Risk Score</div>
@@ -194,7 +194,7 @@
           <div class="param-row"><span class="param-key">Output</span><span class="param-val">0–100, 10-year risk</span></div>
         </div>
 
-        <div class="model-card" style="border-top-color:#8F6018;">
+        <div class="model-card" style="border-top-color:#FFB347;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Hipertensi</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: JNC-8 / WHO-ISH</div>
@@ -204,7 +204,7 @@
           <div class="param-row"><span class="param-key">Garam tinggi</span><span class="param-val">+8 poin</span></div>
         </div>
 
-        <div class="model-card" style="border-top-color:#B23A34;">
+        <div class="model-card" style="border-top-color:#FF6B7A;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Stroke</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: ASCVD / AHA Stroke</div>
@@ -214,7 +214,7 @@
           <div class="param-row"><span class="param-key">Riwayat stroke</span><span class="param-val">+30 poin</span></div>
         </div>
 
-        <div class="model-card" style="border-top-color:#1D4F38;">
+        <div class="model-card" style="border-top-color:#2FA87C;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Kualitas Tidur</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: PSQI Adapted</div>
@@ -270,11 +270,11 @@
         <span style="font-weight:700;font-size:0.9rem;">Roadmap Model</span>
       </div>
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(29,79,56,0.07);border-left:3px solid #1D4F38;">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(47,168,124,0.07);border-left:3px solid #2FA87C;">
           <span style="font-size:1rem;">✅</span>
           <div><div style="font-weight:600;font-size:0.82rem;">v1.0 — Rule-based Models (Sekarang)</div><div style="font-size:0.7rem;color:var(--text-muted);">6 model klinis: IDF, FINDRISC, Framingham, JNC-8, ASCVD, PSQI</div></div>
         </div>
-        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(44,110,155,0.07);border-left:3px solid var(--info);">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(111,168,255,0.07);border-left:3px solid var(--info);">
           <span style="font-size:1rem;">✅</span>
           <div><div style="font-weight:600;font-size:0.82rem;">v2.0 — ML Proxy (Aktif via loadModels)</div><div style="font-size:0.7rem;color:var(--text-muted);">RandomForest proxy berbasis 280k baris data Kaggle — blending 60% ML + 40% rule-based</div></div>
         </div>
@@ -365,9 +365,9 @@
       const pctHigh   = Math.round(c.high   / c.total * 100);
       return `<tr>
         <td style="font-weight:600;">${DISEASE_LABELS[k]}</td>
-        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctLow}px;max-width:60px;background:#1D4F38;"></div><span style="font-size:0.68rem;color:#1D4F38;">${c.low}</span></div></td>
-        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctMedium}px;max-width:60px;background:#8F6018;"></div><span style="font-size:0.68rem;color:#8F6018;">${c.medium}</span></div></td>
-        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctHigh}px;max-width:60px;background:#B23A34;"></div><span style="font-size:0.68rem;color:#B23A34;">${c.high}</span></div></td>
+        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctLow}px;max-width:60px;background:#2FA87C;"></div><span style="font-size:0.68rem;color:#2FA87C;">${c.low}</span></div></td>
+        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctMedium}px;max-width:60px;background:#FFB347;"></div><span style="font-size:0.68rem;color:#FFB347;">${c.medium}</span></div></td>
+        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctHigh}px;max-width:60px;background:#FF6B7A;"></div><span style="font-size:0.68rem;color:#FF6B7A;">${c.high}</span></div></td>
       </tr>`;
     }).filter(Boolean).join('') ||
     `<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:16px;font-size:0.75rem;">Belum ada data cukup.</td></tr>`;
@@ -407,7 +407,7 @@
     document.getElementById('highrisk-tbody').innerHTML = highRisk
       .sort((a, b) => b.avg - a.avg)
       .map(h => {
-        const catColor = '#B23A34';
+        const catColor = '#FF6B7A';
         const disLabel = h.topDisease ? DISEASE_LABELS[h.topDisease[0]] || h.topDisease[0] : '—';
         return `<tr class="high-risk-row">
           <td>${nameMap[h.userId]}</td>
@@ -421,11 +421,11 @@
   async function loadMLModelStatus() {
     const ML_MODELS = [
       { key: 'metabolic',    label: 'Sindrom Metabolik', color: '#9B51E0' },
-      { key: 'diabetes',     label: 'Diabetes T2',       color: '#2C6E9B' },
-      { key: 'heart',        label: 'Jantung',           color: '#B23A34' },
-      { key: 'hypertension', label: 'Hipertensi',        color: '#8F6018' },
-      { key: 'stroke',       label: 'Stroke',            color: '#B23A34' },
-      { key: 'sleep',        label: 'Kualitas Tidur',    color: '#1D4F38' },
+      { key: 'diabetes',     label: 'Diabetes T2',       color: '#6FA8FF' },
+      { key: 'heart',        label: 'Jantung',           color: '#FF6B7A' },
+      { key: 'hypertension', label: 'Hipertensi',        color: '#FFB347' },
+      { key: 'stroke',       label: 'Stroke',            color: '#FF6B7A' },
+      { key: 'sleep',        label: 'Kualitas Tidur',    color: '#2FA87C' },
       { key: 'stress_wesad', label: 'Stres (WESAD GSR)', color: '#56CCF2' },
     ];
 

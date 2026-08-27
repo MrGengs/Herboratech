@@ -10,7 +10,7 @@
   <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
   <style>
     :root {
-      --ux-primary: #0C6F78;
+      --ux-primary: #37C7C2;
       --ux-dark: #4A42B0;
     }
     .app-header {
@@ -42,7 +42,7 @@
     .step-dot.current {
       background: linear-gradient(135deg, var(--ux-dark), var(--ux-primary));
       color: #fff; border-color: transparent;
-      box-shadow: 0 4px 12px rgba(12,111,120,0.4);
+      box-shadow: 0 4px 12px rgba(55,199,194,0.4);
       transform: scale(1.15);
     }
     .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
@@ -64,7 +64,7 @@
       background: linear-gradient(135deg, var(--ux-dark), var(--ux-primary));
       color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
       font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 6px 18px rgba(12,111,120,0.3);
+      box-shadow: 0 6px 18px rgba(55,199,194,0.3);
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
     .btn-proceed:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -88,16 +88,16 @@
       font-size: 0.78rem; font-weight: 500; color: var(--text-secondary);
       display: flex; align-items: center; gap: 10px;
     }
-    .likert-opt.selected { border-color: var(--ux-primary); background: rgba(12,111,120,0.05); color: var(--ux-dark); font-weight: 600; }
+    .likert-opt.selected { border-color: var(--ux-primary); background: rgba(55,199,194,0.05); color: var(--ux-dark); font-weight: 600; }
     .likert-opt .radio-circle {
       width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--shadow-dark);
       flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
     }
     .likert-opt.selected .radio-circle { border-color: var(--ux-primary); background: var(--ux-primary); }
-    .likert-opt.selected .radio-circle::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+    .likert-opt.selected .radio-circle::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bg); }
 
     .intro-card {
-      background: linear-gradient(135deg, rgba(12,111,120,0.08), rgba(12,111,120,0.02));
+      background: linear-gradient(135deg, rgba(55,199,194,0.08), rgba(55,199,194,0.02));
       border-left: 4px solid var(--ux-primary); border-radius: 14px; padding: 18px; margin-bottom: 16px;
     }
     .intro-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--ux-dark); margin-bottom: 8px; }
@@ -105,7 +105,7 @@
 
     .dimension-header {
       display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
-      padding: 12px 16px; background: rgba(12,111,120,0.06); border-radius: 12px;
+      padding: 12px 16px; background: rgba(55,199,194,0.06); border-radius: 12px;
     }
     .dimension-header ion-icon { font-size: 1.3rem; color: var(--ux-primary); }
     .dimension-header span { font-size: 0.88rem; font-weight: 700; color: var(--ux-dark); }
@@ -167,36 +167,36 @@
         <p>Kuesioner ini mengukur pengalaman Anda menggunakan aplikasi <strong>HerboraTech</strong> secara menyeluruh, mencakup 5 dimensi UX:</p>
       </div>
       <div class="neu-card-sm" style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;border-radius:10px;background:rgba(12,111,120,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(55,199,194,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
           <ion-icon name="eye-outline" style="color:var(--ux-primary);"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.82rem;">Visual Design</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Tampilan & estetika antarmuka</div></div>
       </div>
       <div class="neu-card-sm" style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;border-radius:10px;background:rgba(44,110,155,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
-          <ion-icon name="navigate-outline" style="color:#2C6E9B;"></ion-icon>
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(111,168,255,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+          <ion-icon name="navigate-outline" style="color:#6FA8FF;"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.82rem;">Navigasi & Interaksi</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Kemudahan navigasi & responsivitas</div></div>
       </div>
       <div class="neu-card-sm" style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;border-radius:10px;background:rgba(29,79,56,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
-          <ion-icon name="document-text-outline" style="color:#1D4F38;"></ion-icon>
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(47,168,124,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+          <ion-icon name="document-text-outline" style="color:#2FA87C;"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.82rem;">Konten & Informasi</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Kejelasan & relevansi informasi</div></div>
       </div>
       <div class="neu-card-sm" style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;border-radius:10px;background:rgba(143,96,24,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
-          <ion-icon name="happy-outline" style="color:#8F6018;"></ion-icon>
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,179,71,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+          <ion-icon name="happy-outline" style="color:#FFB347;"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.82rem;">Kepuasan Pengguna</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Tingkat kepuasan keseluruhan</div></div>
       </div>
       <div class="neu-card-sm" style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;border-radius:10px;background:rgba(178,58,52,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
-          <ion-icon name="shield-checkmark-outline" style="color:#B23A34;"></ion-icon>
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,107,122,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+          <ion-icon name="shield-checkmark-outline" style="color:#FF6B7A;"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.82rem;">Kepercayaan & Keamanan</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Rasa aman & percaya pada aplikasi</div></div>
       </div>
-      <div class="neu-card-sm" style="background:rgba(12,111,120,0.04);border:1px dashed rgba(12,111,120,0.3);">
+      <div class="neu-card-sm" style="background:rgba(55,199,194,0.04);border:1px dashed rgba(55,199,194,0.3);">
         <p style="font-size:0.75rem;color:var(--text-tertiary);text-align:center;margin:0;">
           <ion-icon name="time-outline" style="vertical-align:middle;"></ion-icon>
           Estimasi waktu: <strong>5-10 menit</strong> &bull; 20 pertanyaan + feedback
@@ -236,7 +236,7 @@
       <div style="height:16px"></div>
 
       <div class="dimension-header">
-        <ion-icon name="navigate-outline" style="color:#2C6E9B;"></ion-icon>
+        <ion-icon name="navigate-outline" style="color:#6FA8FF;"></ion-icon>
         <span>Navigasi & Interaksi</span>
       </div>
       <div class="likert-question" data-q="nav1">
@@ -266,7 +266,7 @@
   <div class="step-pane" data-step="3">
     <div class="section">
       <div class="dimension-header">
-        <ion-icon name="document-text-outline" style="color:#1D4F38;"></ion-icon>
+        <ion-icon name="document-text-outline" style="color:#2FA87C;"></ion-icon>
         <span>Konten & Informasi</span>
       </div>
       <div class="likert-question" data-q="ci1">
@@ -296,7 +296,7 @@
   <div class="step-pane" data-step="4">
     <div class="section">
       <div class="dimension-header">
-        <ion-icon name="happy-outline" style="color:#8F6018;"></ion-icon>
+        <ion-icon name="happy-outline" style="color:#FFB347;"></ion-icon>
         <span>Kepuasan Pengguna</span>
       </div>
       <div class="likert-question" data-q="sat1">
@@ -323,7 +323,7 @@
       <div style="height:16px"></div>
 
       <div class="dimension-header">
-        <ion-icon name="shield-checkmark-outline" style="color:#B23A34;"></ion-icon>
+        <ion-icon name="shield-checkmark-outline" style="color:#FF6B7A;"></ion-icon>
         <span>Kepercayaan & Keamanan</span>
       </div>
       <div class="likert-question" data-q="tr1">
@@ -395,28 +395,28 @@
           <div class="dim-bar"><div class="dim-bar-fill" id="bar-vd" style="width:0%;background:var(--ux-primary);"></div></div>
         </div>
         <div class="ux-dim-card">
-          <div class="dim-icon"><ion-icon name="navigate-outline" style="color:#2C6E9B;"></ion-icon></div>
+          <div class="dim-icon"><ion-icon name="navigate-outline" style="color:#6FA8FF;"></ion-icon></div>
           <div class="dim-name">Navigasi</div>
-          <div class="dim-score" id="dim-nav" style="color:#2C6E9B;">0%</div>
-          <div class="dim-bar"><div class="dim-bar-fill" id="bar-nav" style="width:0%;background:#2C6E9B;"></div></div>
+          <div class="dim-score" id="dim-nav" style="color:#6FA8FF;">0%</div>
+          <div class="dim-bar"><div class="dim-bar-fill" id="bar-nav" style="width:0%;background:#6FA8FF;"></div></div>
         </div>
         <div class="ux-dim-card">
-          <div class="dim-icon"><ion-icon name="document-text-outline" style="color:#1D4F38;"></ion-icon></div>
+          <div class="dim-icon"><ion-icon name="document-text-outline" style="color:#2FA87C;"></ion-icon></div>
           <div class="dim-name">Konten</div>
-          <div class="dim-score" id="dim-ci" style="color:#1D4F38;">0%</div>
-          <div class="dim-bar"><div class="dim-bar-fill" id="bar-ci" style="width:0%;background:#1D4F38;"></div></div>
+          <div class="dim-score" id="dim-ci" style="color:#2FA87C;">0%</div>
+          <div class="dim-bar"><div class="dim-bar-fill" id="bar-ci" style="width:0%;background:#2FA87C;"></div></div>
         </div>
         <div class="ux-dim-card">
-          <div class="dim-icon"><ion-icon name="happy-outline" style="color:#8F6018;"></ion-icon></div>
+          <div class="dim-icon"><ion-icon name="happy-outline" style="color:#FFB347;"></ion-icon></div>
           <div class="dim-name">Kepuasan</div>
-          <div class="dim-score" id="dim-sat" style="color:#8F6018;">0%</div>
-          <div class="dim-bar"><div class="dim-bar-fill" id="bar-sat" style="width:0%;background:#8F6018;"></div></div>
+          <div class="dim-score" id="dim-sat" style="color:#FFB347;">0%</div>
+          <div class="dim-bar"><div class="dim-bar-fill" id="bar-sat" style="width:0%;background:#FFB347;"></div></div>
         </div>
         <div class="ux-dim-card" style="grid-column: span 2;">
-          <div class="dim-icon"><ion-icon name="shield-checkmark-outline" style="color:#B23A34;"></ion-icon></div>
+          <div class="dim-icon"><ion-icon name="shield-checkmark-outline" style="color:#FF6B7A;"></ion-icon></div>
           <div class="dim-name">Kepercayaan & Keamanan</div>
-          <div class="dim-score" id="dim-tr" style="color:#B23A34;">0%</div>
-          <div class="dim-bar"><div class="dim-bar-fill" id="bar-tr" style="width:0%;background:#B23A34;"></div></div>
+          <div class="dim-score" id="dim-tr" style="color:#FF6B7A;">0%</div>
+          <div class="dim-bar"><div class="dim-bar-fill" id="bar-tr" style="width:0%;background:#FF6B7A;"></div></div>
         </div>
       </div>
 
@@ -526,10 +526,10 @@ function nextStep() {
 function calculateResults() {
   const dims = {
     vd: { keys: ['vd1','vd2','vd3','vd4'], total: 0, color: 'var(--ux-primary)' },
-    nav: { keys: ['nav1','nav2','nav3','nav4'], total: 0, color: '#2C6E9B' },
-    ci: { keys: ['ci1','ci2','ci3','ci4'], total: 0, color: '#1D4F38' },
-    sat: { keys: ['sat1','sat2','sat3','sat4'], total: 0, color: '#8F6018' },
-    tr: { keys: ['tr1','tr2','tr3','tr4'], total: 0, color: '#B23A34' }
+    nav: { keys: ['nav1','nav2','nav3','nav4'], total: 0, color: '#6FA8FF' },
+    ci: { keys: ['ci1','ci2','ci3','ci4'], total: 0, color: '#2FA87C' },
+    sat: { keys: ['sat1','sat2','sat3','sat4'], total: 0, color: '#FFB347' },
+    tr: { keys: ['tr1','tr2','tr3','tr4'], total: 0, color: '#FF6B7A' }
   };
 
   let grandTotal = 0;
@@ -551,20 +551,20 @@ function calculateResults() {
 
   if (overallPct >= 85) {
     chip.textContent = 'Excellent';
-    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(12,111,120,0.12);color:var(--ux-primary);';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(55,199,194,0.12);color:var(--ux-primary);';
     interp.innerHTML = '<strong style="color:var(--ux-primary);">Pengalaman pengguna luar biasa!</strong><br>Anda memberikan penilaian yang sangat tinggi terhadap UX HerboraTech. Aplikasi ini telah memberikan pengalaman yang memuaskan di semua dimensi.';
   } else if (overallPct >= 70) {
     chip.textContent = 'Baik';
-    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(29,79,56,0.12);color:#1D4F38;';
-    interp.innerHTML = '<strong style="color:#1D4F38;">Pengalaman pengguna baik.</strong><br>HerboraTech memberikan pengalaman yang positif secara keseluruhan. Beberapa area masih dapat ditingkatkan untuk mencapai level excellent.';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(47,168,124,0.12);color:#2FA87C;';
+    interp.innerHTML = '<strong style="color:#2FA87C;">Pengalaman pengguna baik.</strong><br>HerboraTech memberikan pengalaman yang positif secara keseluruhan. Beberapa area masih dapat ditingkatkan untuk mencapai level excellent.';
   } else if (overallPct >= 50) {
     chip.textContent = 'Cukup';
-    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(143,96,24,0.12);color:#8F6018;';
-    interp.innerHTML = '<strong style="color:#8F6018;">Pengalaman pengguna cukup.</strong><br>Ada beberapa aspek UX yang perlu diperbaiki. Perhatikan dimensi dengan skor terendah untuk prioritas perbaikan.';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(255,179,71,0.12);color:#FFB347;';
+    interp.innerHTML = '<strong style="color:#FFB347;">Pengalaman pengguna cukup.</strong><br>Ada beberapa aspek UX yang perlu diperbaiki. Perhatikan dimensi dengan skor terendah untuk prioritas perbaikan.';
   } else {
     chip.textContent = 'Perlu Perbaikan';
-    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(178,58,52,0.12);color:#B23A34;';
-    interp.innerHTML = '<strong style="color:#B23A34;">Pengalaman pengguna perlu perbaikan.</strong><br>Terdapat masalah signifikan pada beberapa aspek UX. Masukan Anda sangat berharga untuk perbaikan aplikasi.';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(255,107,122,0.12);color:#FF6B7A;';
+    interp.innerHTML = '<strong style="color:#FF6B7A;">Pengalaman pengguna perlu perbaikan.</strong><br>Terdapat masalah signifikan pada beberapa aspek UX. Masukan Anda sangat berharga untuk perbaikan aplikasi.';
   }
 
   // Find weakest dimension

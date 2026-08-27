@@ -12,7 +12,7 @@
     .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
     .app-header > div[style*="font-weight:700"] { color: #fff; }
-    .section-header .section-title { border-left: 3px solid #1D4F38; padding-left: 10px; }
+    .section-header .section-title { border-left: 3px solid #2FA87C; padding-left: 10px; }
 
     .hero-card {
       text-align: center;
@@ -22,7 +22,7 @@
       font-size: 4.5rem;
       line-height: 1;
       margin-bottom: 16px;
-      filter: drop-shadow(0 4px 12px rgba(29,79,56,0.25));
+      filter: drop-shadow(0 4px 12px rgba(47,168,124,0.25));
     }
     .plant-name {
       font-size: 1.4rem;
@@ -38,9 +38,9 @@
     .origin-chip {
       display: inline-block;
       margin-top: 12px;
-      background: rgba(29,79,56,0.12);
-      color: #1D4F38;
-      border: 1px solid rgba(29,79,56,0.3);
+      background: rgba(47,168,124,0.12);
+      color: #2FA87C;
+      border: 1px solid rgba(47,168,124,0.3);
       border-radius: 20px;
       padding: 4px 14px;
       font-size: 0.72rem;
@@ -50,15 +50,15 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: linear-gradient(135deg, rgba(29,79,56,0.15), rgba(47,111,79,0.1));
-      border: 1.5px solid rgba(29,79,56,0.35);
+      background: linear-gradient(135deg, rgba(47,168,124,0.15), rgba(79,209,160,0.1));
+      border: 1.5px solid rgba(47,168,124,0.35);
       border-radius: 14px;
       padding: 14px 18px;
     }
-    .evidence-badge ion-icon { font-size: 1.4rem; color: #1D4F38; }
+    .evidence-badge ion-icon { font-size: 1.4rem; color: #2FA87C; }
     .evidence-text { flex: 1; }
     .evidence-text .ev-label { font-size: 0.7rem; color: var(--text-tertiary); }
-    .evidence-text .ev-value { font-size: 0.92rem; font-weight: 700; color: #1D4F38; }
+    .evidence-text .ev-value { font-size: 0.92rem; font-weight: 700; color: #2FA87C; }
 
     .khasiat-list { display: flex; flex-direction: column; gap: 8px; }
     .khasiat-item {
@@ -73,7 +73,7 @@
     .khasiat-dot {
       width: 10px; height: 10px;
       border-radius: 50%;
-      background: #1D4F38;
+      background: #2FA87C;
       flex-shrink: 0;
     }
     .khasiat-item span { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
@@ -91,7 +91,7 @@
     .step-num {
       width: 34px; height: 34px;
       border-radius: 10px;
-      background: linear-gradient(135deg, #1A5C38, #1D4F38);
+      background: linear-gradient(135deg, #1A5C38, #2FA87C);
       color: #fff;
       font-size: 0.85rem;
       font-weight: 700;
@@ -114,24 +114,24 @@
       padding: 12px 16px;
     }
     .dosis-label { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
-    .dosis-value { font-size: 0.82rem; color: var(--primary-dark); font-weight: 700; background: rgba(29,79,56,0.1); padding: 4px 10px; border-radius: 8px; }
+    .dosis-value { font-size: 0.82rem; color: var(--primary-dark); font-weight: 700; background: rgba(47,168,124,0.1); padding: 4px 10px; border-radius: 8px; }
 
     .danger-card {
-      border: 2px solid #B23A34;
+      border: 2px solid #FF6B7A;
       border-radius: 16px;
       padding: 16px;
-      background: rgba(178,58,52,0.05);
+      background: rgba(255,107,122,0.05);
     }
     .danger-card .danger-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-    .danger-card .danger-header ion-icon { font-size: 1.2rem; color: #B23A34; }
-    .danger-card .danger-title { font-size: 0.88rem; font-weight: 700; color: #B23A34; }
+    .danger-card .danger-header ion-icon { font-size: 1.2rem; color: #FF6B7A; }
+    .danger-card .danger-title { font-size: 0.88rem; font-weight: 700; color: #FF6B7A; }
     .danger-card p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
 
     .warning-card {
       border: 2px solid var(--warning);
       border-radius: 16px;
       padding: 16px;
-      background: rgba(143,96,24,0.05);
+      background: rgba(255,179,71,0.05);
     }
     .warning-card .warning-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     .warning-card .warning-header ion-icon { font-size: 1.2rem; color: var(--warning); }
@@ -167,7 +167,7 @@
 <script src="../shared/app.js"></script>
 <script>
 const evLabel = { A: 'Tinggi', B: 'Sedang', C: 'Tradisional/Empiris' };
-const evColor = { A: '#1D4F38', B: '#8F6018', C: '#9B51E0' };
+const evColor = { A: '#2FA87C', B: '#FFB347', C: '#9B51E0' };
 const usageDesc = {
   rebus: 'Rebus rimpang/daun segar dalam air 15-20 menit, saring dan minum hangat.',
   seduh: 'Seduh serbuk/simplisia dalam air panas 90°C selama 5-10 menit.',
@@ -227,25 +227,25 @@ const usageDesc = {
 
     const contraHTML = (herb.contraindications || []).map(c =>
       `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:0.8rem;">
-        <span style="color:#B23A34;font-size:1rem;">•</span>
+        <span style="color:#FF6B7A;font-size:1rem;">•</span>
         <span>${c}</span>
       </div>`
     ).join('');
 
     const interactionHTML = (herb.drugInteractions || []).map(i => {
-      const sevColor = { ringan: '#8F6018', sedang: '#B23A34', berat: '#B00020' };
+      const sevColor = { ringan: '#FFB347', sedang: '#FF6B7A', berat: '#B00020' };
       return `<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;background:var(--bg);box-shadow:var(--shadow-out-sm);border-radius:10px;padding:10px 12px;">
         <ion-icon name="flask-outline" style="color:var(--warning);flex-shrink:0;margin-top:2px;"></ion-icon>
         <div>
           <div style="font-size:0.82rem;font-weight:700;">${i.drug}</div>
-          <div style="font-size:0.72rem;margin-top:2px;"><span style="color:${sevColor[i.severity]||'#8F6018'};font-weight:600;">[${i.severity}]</span> ${i.description}</div>
+          <div style="font-size:0.72rem;margin-top:2px;"><span style="color:${sevColor[i.severity]||'#FFB347'};font-weight:600;">[${i.severity}]</span> ${i.description}</div>
         </div>
       </div>`;
     }).join('');
 
     // Badge warna per tipe sumber
     const srcTypeLabel = { 'kemenkes':'Kemenkes RI', 'riset-ilmiah':'Riset Ilmiah', 'book-ocr':'Buku Herbal', 'monograph':'Monograf WHO' };
-    const srcTypeColor = { 'kemenkes':'#1D4F38', 'riset-ilmiah':'#2D9CDB', 'book-ocr':'#8F6018', 'monograph':'#9B51E0' };
+    const srcTypeColor = { 'kemenkes':'#2FA87C', 'riset-ilmiah':'#2D9CDB', 'book-ocr':'#FFB347', 'monograph':'#9B51E0' };
     const srcType = herb.sourceType || 'riset-ilmiah';
     const srcColor = srcTypeColor[srcType] || '#2D9CDB';
     const srcLabel = srcTypeLabel[srcType] || srcType;
@@ -290,7 +290,7 @@ const usageDesc = {
         <div class="plant-latin">${herb.latinName || ''}</div>
         ${herb.family ? `<div style="font-size:0.72rem;color:var(--text-tertiary);margin-top:2px;">Famili: ${herb.family}</div>` : ''}
         <span class="origin-chip"><ion-icon name="location-outline" style="vertical-align:middle;font-size:0.8rem;"></ion-icon> ${origins}</span>
-        ${herb.bpomStatus ? `<div style="margin-top:10px;"><span style="display:inline-block;background:#E8F5E9;color:#1D4F38;padding:3px 12px;border-radius:20px;font-size:0.7rem;font-weight:700;">BPOM: ${herb.bpomStatus}</span></div>` : ''}
+        ${herb.bpomStatus ? `<div style="margin-top:10px;"><span style="display:inline-block;background:#E8F5E9;color:#2FA87C;padding:3px 12px;border-radius:20px;font-size:0.7rem;font-weight:700;">BPOM: ${herb.bpomStatus}</span></div>` : ''}
       </div>
 
       <div class="evidence-badge mt-16" data-animate="up" data-delay="100" style="border-color:${color}33;background:linear-gradient(135deg,${color}18,${color}0a);">

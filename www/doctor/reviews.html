@@ -67,9 +67,9 @@
     .reply-form textarea:focus { outline: none; }
     .reply-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
     .badge-type { font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
-    .badge-chat { background: rgba(44,110,155,0.1); color: var(--info); }
-    .badge-video { background: rgba(12,111,120,0.1); color: var(--accent); }
-    .badge-integratif { background: rgba(47,111,79,0.12); color: var(--primary-dark); }
+    .badge-chat { background: rgba(111,168,255,0.1); color: var(--info); }
+    .badge-video { background: rgba(55,199,194,0.1); color: var(--accent); }
+    .badge-integratif { background: rgba(79,209,160,0.12); color: var(--primary-dark); }
   </style>
 </head>
 <body>
@@ -157,11 +157,11 @@ let currentDoctorId, reviewsLoaded = 0, allReviews = [];
 const REVIEWS_PER_PAGE = 5;
 
 const GRADIENTS = [
-  'linear-gradient(135deg,#2C6E9B,#56CCF2)',
-  'linear-gradient(135deg,#B23A34,#FF8E8E)',
-  'linear-gradient(135deg,#8F6018,#F2C94C)',
-  'linear-gradient(135deg,#0C6F78,#9C8FFF)',
-  'linear-gradient(135deg,#1D4F38,#52C76F)',
+  'linear-gradient(135deg,#245C82,#3A93C4)',
+  'linear-gradient(135deg,#FF6B7A,#FF8E8E)',
+  'linear-gradient(135deg,#FFB347,#F2C94C)',
+  'linear-gradient(135deg,#37C7C2,#9C8FFF)',
+  'linear-gradient(135deg,#2FA87C,#52C76F)',
   'linear-gradient(135deg,#FF6B6B,#FF8E53)',
 ];
 
@@ -234,7 +234,7 @@ function createReviewCard(review, index) {
   const badgeType = getConsultationType(review.consultType);
   const reviewDate = review.createdAt ? new Date(review.createdAt.toDate()).toLocaleDateString('id-ID') : 'Baru-baru ini';
   const replySection = review.doctorReply ? `
-    <div style="margin-top:10px;padding:10px;background:rgba(44,110,155,0.08);border-radius:8px;border-left:3px solid var(--info);">
+    <div style="margin-top:10px;padding:10px;background:rgba(111,168,255,0.08);border-radius:8px;border-left:3px solid var(--info);">
       <div style="font-size:0.72rem;font-weight:600;color:var(--info);margin-bottom:4px;">Balasan Anda:</div>
       <div style="font-size:0.75rem;color:var(--text-secondary);">${review.doctorReply}</div>
     </div>
@@ -260,7 +260,7 @@ function createReviewCard(review, index) {
           <textarea rows="3" placeholder="Tulis balasan untuk ulasan ini..."></textarea>
           <div class="reply-actions">
             <button class="neu-btn neu-btn-sm" onclick="toggleReply('r${review.id}')">Batal</button>
-            <button class="neu-btn neu-btn-sm" style="background:linear-gradient(135deg,#2C6E9B,#56CCF2);color:#fff;" onclick="sendReply('r${review.id}', '${review.id}')">Kirim</button>
+            <button class="neu-btn neu-btn-sm" style="background:linear-gradient(135deg,#245C82,#3A93C4);color:#fff;" onclick="sendReply('r${review.id}', '${review.id}')">Kirim</button>
           </div>
         </div>
       ` : ''}

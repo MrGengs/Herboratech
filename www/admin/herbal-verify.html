@@ -9,28 +9,28 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(47,111,79,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(79,209,160,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #2F6F4F !important; }
+    .sidebar-logo span { color: #4FD1A0 !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #2F6F4F; background: rgba(47,111,79,0.08); }
-    .sidebar-item.active { color: #2F6F4F !important; background: rgba(47,111,79,0.15); border-left: 3px solid #2F6F4F; }
+    .sidebar-item:hover { color: #4FD1A0; background: rgba(79,209,160,0.08); }
+    .sidebar-item.active { color: #4FD1A0 !important; background: rgba(79,209,160,0.15); border-left: 3px solid #4FD1A0; }
 
     .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
     .ftab { padding: 8px 18px; border-radius: 20px; border: none; background: var(--bg); box-shadow: var(--shadow-out-sm); font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; }
-    .ftab.active { background: linear-gradient(135deg, #1D4F38, #2F6F4F); color: #fff; box-shadow: none; }
+    .ftab.active { background: linear-gradient(135deg, #186045, #22815F); color: #fff; box-shadow: none; }
     .ftab .badge { background: rgba(255,255,255,0.3); color: #fff; padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; margin-left: 4px; }
 
     .submit-card { background: var(--bg); box-shadow: var(--shadow-out); border-radius: 20px; margin-bottom: 16px; overflow: hidden; }
     .submit-header { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
     .submit-meta { display: flex; align-items: center; gap: 12px; }
     .type-badge { padding: 3px 10px; border-radius: 10px; font-size: 0.72rem; font-weight: 700; }
-    .type-herbal { background: #E8F5E9; color: #1D4F38; }
+    .type-herbal { background: #E8F5E9; color: #2FA87C; }
     .type-formula { background: #E3F2FD; color: #2196F3; }
     .status-badge { padding: 3px 10px; border-radius: 10px; font-size: 0.72rem; font-weight: 700; }
-    .status-pending { background: #FFF3E0; color: #8F6018; }
-    .status-approved { background: #E8F5E9; color: #1D4F38; }
-    .status-rejected { background: #FFE5E5; color: #B23A34; }
+    .status-pending { background: #FFF3E0; color: #FFB347; }
+    .status-approved { background: #E8F5E9; color: #2FA87C; }
+    .status-rejected { background: #FFE5E5; color: #FF6B7A; }
 
     .submit-body { padding: 0 20px 20px; border-top: 1px solid var(--shadow-dark); display: none; }
     .submit-body.open { display: block; }
@@ -48,8 +48,8 @@
     ol.steps-list li { margin-bottom: 4px; }
 
     .action-bar { display: flex; gap: 10px; margin-top: 20px; }
-    .btn-approve { flex: 1; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, #1D4F38, #2F6F4F); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
-    .btn-reject { flex: 1; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, #B23A34, #FF8A8A); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+    .btn-approve { flex: 1; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, #186045, #22815F); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+    .btn-reject { flex: 1; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, #FF6B7A, #FF8A8A); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
     .btn-approve:disabled, .btn-reject:disabled { opacity: 0.5; cursor: not-allowed; }
     .rejection-note { width: 100%; margin-top: 8px; padding: 10px 14px; border-radius: 10px; border: none; background: var(--bg); box-shadow: var(--shadow-in); font-family: var(--font); font-size: 0.83rem; color: var(--text-primary); resize: vertical; min-height: 60px; display: none; }
     .show-reject-note { display: block !important; }
@@ -58,8 +58,8 @@
     .empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
 
     .evidence-badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
-    .ev-A { background: #E8F5E9; color: #1D4F38; }
-    .ev-B { background: #FFF3E0; color: #8F6018; }
+    .ev-A { background: #E8F5E9; color: #2FA87C; }
+    .ev-B { background: #FFF3E0; color: #FFB347; }
     .ev-C { background: #F3E5F5; color: #9B51E0; }
   </style>
 </head>
@@ -101,10 +101,10 @@
         Menunggu Verifikasi <span class="badge" id="count-pending">0</span>
       </button>
       <button class="ftab" id="tab-approved" onclick="filterSubmissions('approved')">
-        Disetujui <span class="badge" style="background:rgba(29,79,56,0.3);color:#1D4F38;" id="count-approved">0</span>
+        Disetujui <span class="badge" style="background:rgba(47,168,124,0.3);color:#2FA87C;" id="count-approved">0</span>
       </button>
       <button class="ftab" id="tab-rejected" onclick="filterSubmissions('rejected')">
-        Ditolak <span class="badge" style="background:rgba(178,58,52,0.3);color:#B23A34;" id="count-rejected">0</span>
+        Ditolak <span class="badge" style="background:rgba(255,107,122,0.3);color:#FF6B7A;" id="count-rejected">0</span>
       </button>
     </div>
 
@@ -179,8 +179,8 @@ function renderCard(sub) {
       <button class="btn-reject" onclick="toggleRejectNote('${sub.id}')">❌ Tolak</button>
     </div>
     <textarea class="rejection-note" id="reject-note-${sub.id}" placeholder="Alasan penolakan (wajib diisi sebelum tolak)..."></textarea>
-    <button id="confirm-reject-${sub.id}" style="display:none;width:100%;margin-top:8px;padding:10px;border-radius:10px;border:none;background:#B23A34;color:#fff;font-weight:700;cursor:pointer;" onclick="rejectSubmission('${sub.id}', this)">Konfirmasi Tolak</button>
-  ` : sub.status === 'rejected' && sub.rejectionNote ? `<div style="margin-top:12px;padding:10px;background:#FFE5E5;border-radius:10px;font-size:0.82rem;color:#B23A34;"><b>Catatan penolakan:</b> ${sub.rejectionNote}</div>` : '';
+    <button id="confirm-reject-${sub.id}" style="display:none;width:100%;margin-top:8px;padding:10px;border-radius:10px;border:none;background:#FF6B7A;color:#fff;font-weight:700;cursor:pointer;" onclick="rejectSubmission('${sub.id}', this)">Konfirmasi Tolak</button>
+  ` : sub.status === 'rejected' && sub.rejectionNote ? `<div style="margin-top:12px;padding:10px;background:#FFE5E5;border-radius:10px;font-size:0.82rem;color:#FF6B7A;"><b>Catatan penolakan:</b> ${sub.rejectionNote}</div>` : '';
 
   const detailContent = sub.type === 'herbal' ? renderHerbalDetail(sub) : renderFormulaDetail(sub);
 

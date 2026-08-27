@@ -13,21 +13,21 @@
     body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); overflow-x: hidden; }
 
     /* NAVBAR */
-    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(7,26,15,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(47,111,79,0.1); }
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(7,26,15,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(79,209,160,0.1); }
     .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; height: 68px; display: flex; align-items: center; gap: 36px; }
     .nav-logo { font-size: 1.45rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-decoration: none; }
-    .nav-logo span { color: #2F6F4F; }
+    .nav-logo span { color: #4FD1A0; }
     .nav-links { display: flex; gap: 28px; flex: 1; }
     .nav-links a { font-size: 0.875rem; color: rgba(255,255,255,0.65); text-decoration: none; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: #2F6F4F; }
-    .nav-cta { display: inline-flex; align-items: center; gap: 7px; background: linear-gradient(135deg,#1D4F38,#2F6F4F); color: #fff; font-size: 0.875rem; font-weight: 700; padding: 10px 24px; border-radius: 100px; text-decoration: none; box-shadow: 0 4px 20px rgba(47,111,79,0.3); transition: transform 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: #4FD1A0; }
+    .nav-cta { display: inline-flex; align-items: center; gap: 7px; background: linear-gradient(135deg,#186045,#22815F); color: #fff; font-size: 0.875rem; font-weight: 700; padding: 10px 24px; border-radius: 100px; text-decoration: none; box-shadow: 0 4px 20px rgba(79,209,160,0.3); transition: transform 0.2s; }
     .nav-cta:hover { transform: translateY(-2px); }
     @media (max-width: 800px) { .nav-links { display: none; } }
 
     /* HERO */
-    .page-hero { padding: 140px 24px 80px; background: linear-gradient(160deg,#040E07 0%,#071A0F 30%,#0D2B1A 55%,#1A5C38 85%,#1D4F38 100%); position: relative; overflow: hidden; text-align: center; }
+    .page-hero { padding: 140px 24px 80px; background: linear-gradient(160deg,#040E07 0%,#071A0F 30%,#0D2B1A 55%,#1A5C38 85%,#2FA87C 100%); position: relative; overflow: hidden; text-align: center; }
     .page-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; }
-    .hero-label { display:inline-block; font-size:0.72rem; font-weight:700; color:#2F6F4F; letter-spacing:0.12em; text-transform:uppercase; border:1px solid rgba(47,111,79,0.3); background:rgba(47,111,79,0.1); padding:5px 14px; border-radius:100px; margin-bottom:18px; }
+    .hero-label { display:inline-block; font-size:0.72rem; font-weight:700; color:#4FD1A0; letter-spacing:0.12em; text-transform:uppercase; border:1px solid rgba(79,209,160,0.3); background:rgba(79,209,160,0.1); padding:5px 14px; border-radius:100px; margin-bottom:18px; }
     .page-hero h1 { font-size:clamp(2rem,5vw,3.5rem); font-weight:800; color:#fff; letter-spacing:-2px; line-height:1.1; margin-bottom:16px; }
     .page-hero p { font-size:1rem; color:rgba(255,255,255,0.55); max-width:540px; margin:0 auto; line-height:1.75; }
 
@@ -43,7 +43,7 @@
     .section-dark2::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,0.025) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; }
 
     .section-tag { font-size:0.72rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:12px; }
-    .tag-green { color: var(--primary-dark); } .tag-white { color: #2F6F4F; }
+    .tag-green { color: var(--primary-dark); } .tag-white { color: #4FD1A0; }
     .section-title { font-size:clamp(1.6rem,3vw,2.4rem); font-weight:800; letter-spacing:-1px; line-height:1.15; margin-bottom:16px; }
     .on-dark { color:#fff; } .on-light { color:var(--text-primary); }
     .section-desc { font-size:0.93rem; line-height:1.75; }
@@ -53,55 +53,55 @@
     .novelty-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:48px; }
     @media (max-width:900px) { .novelty-grid { grid-template-columns:1fr; } }
 
-    .novelty-card { background:rgba(255,255,255,0.04); border:1px solid rgba(47,111,79,0.12); border-radius:24px; padding:36px 28px; backdrop-filter:blur(8px); position:relative; overflow:hidden; transition:transform 0.3s, box-shadow 0.3s; }
+    .novelty-card { background:rgba(255,255,255,0.04); border:1px solid rgba(79,209,160,0.12); border-radius:24px; padding:36px 28px; backdrop-filter:blur(8px); position:relative; overflow:hidden; transition:transform 0.3s, box-shadow 0.3s; }
     .novelty-card:hover { transform:translateY(-6px); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
     .novelty-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
-    .nc-green::before { background:linear-gradient(90deg,#1D4F38,#2F6F4F); }
+    .nc-green::before { background:linear-gradient(90deg,#2FA87C,#4FD1A0); }
     .nc-blue::before { background:linear-gradient(90deg,#1D5DB5,#56CCF2); }
     .nc-purple::before { background:linear-gradient(90deg,#4A43CC,#9B59B6); }
 
     .novelty-num { font-size:4rem; font-weight:900; color:rgba(255,255,255,0.04); line-height:1; margin-bottom:-16px; letter-spacing:-4px; }
     .novelty-icon { width:56px; height:56px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin-bottom:20px; }
-    .ni-green { background:rgba(47,111,79,0.15); color:#2F6F4F; }
+    .ni-green { background:rgba(79,209,160,0.15); color:#4FD1A0; }
     .ni-blue { background:rgba(86,204,242,0.15); color:#56CCF2; }
     .ni-purple { background:rgba(155,89,182,0.15); color:#BB8FCE; }
     .novelty-card h3 { font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:10px; }
     .novelty-card p { font-size:0.85rem; color:rgba(255,255,255,0.55); line-height:1.75; margin-bottom:16px; }
     .novelty-tag { display:inline-block; font-size:0.7rem; font-weight:700; padding:3px 10px; border-radius:100px; letter-spacing:0.06em; }
-    .nt-green { background:rgba(47,111,79,0.15); color:#2F6F4F; }
+    .nt-green { background:rgba(79,209,160,0.15); color:#4FD1A0; }
     .nt-blue { background:rgba(86,204,242,0.15); color:#56CCF2; }
     .nt-purple { background:rgba(155,89,182,0.15); color:#BB8FCE; }
 
     /* NOVELTY DETAIL LIST */
     .detail-list { list-style:none; margin-top:14px; display:flex; flex-direction:column; gap:8px; }
     .detail-list li { display:flex; align-items:flex-start; gap:10px; font-size:0.83rem; color:rgba(255,255,255,0.6); line-height:1.5; }
-    .detail-list li::before { content:'→'; color:#2F6F4F; flex-shrink:0; font-weight:700; margin-top:1px; }
+    .detail-list li::before { content:'→'; color:#4FD1A0; flex-shrink:0; font-weight:700; margin-top:1px; }
 
     /* SENSOR SECTION */
     .sensor-intro { display:grid; grid-template-columns:1fr 1.4fr; gap:48px; align-items:center; margin-bottom:64px; }
     @media (max-width:800px) { .sensor-intro { grid-template-columns:1fr; } }
 
-    .sensor-device { background:rgba(255,255,255,0.04); border:1px solid rgba(47,111,79,0.1); border-radius:28px; padding:40px; display:flex; flex-direction:column; align-items:center; gap:20px; }
-    .device-ring { width:140px; height:140px; border-radius:50%; background:rgba(47,111,79,0.06); border:2px solid rgba(47,111,79,0.2); display:flex; align-items:center; justify-content:center; font-size:3.5rem; position:relative; }
-    .device-ring::after { content:''; position:absolute; inset:-10px; border-radius:50%; border:1.5px solid rgba(47,111,79,0.1); animation:devicePulse 3s ease-in-out infinite; }
+    .sensor-device { background:rgba(255,255,255,0.04); border:1px solid rgba(79,209,160,0.1); border-radius:28px; padding:40px; display:flex; flex-direction:column; align-items:center; gap:20px; }
+    .device-ring { width:140px; height:140px; border-radius:50%; background:rgba(79,209,160,0.06); border:2px solid rgba(79,209,160,0.2); display:flex; align-items:center; justify-content:center; font-size:3.5rem; position:relative; }
+    .device-ring::after { content:''; position:absolute; inset:-10px; border-radius:50%; border:1.5px solid rgba(79,209,160,0.1); animation:devicePulse 3s ease-in-out infinite; }
     @keyframes devicePulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.1);opacity:0.4} }
     .device-name { font-size:1.1rem; font-weight:700; color:#fff; }
     .device-sub { font-size:0.8rem; color:rgba(255,255,255,0.4); }
     .device-badges { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
     .badge { font-size:0.7rem; font-weight:700; padding:4px 10px; border-radius:100px; }
-    .badge-green { background:rgba(47,111,79,0.15); color:#2F6F4F; border:1px solid rgba(47,111,79,0.2); }
+    .badge-green { background:rgba(79,209,160,0.15); color:#4FD1A0; border:1px solid rgba(79,209,160,0.2); }
     .badge-blue { background:rgba(86,204,242,0.15); color:#56CCF2; border:1px solid rgba(86,204,242,0.2); }
-    .badge-orange { background:rgba(143,96,24,0.15); color:#8F6018; border:1px solid rgba(143,96,24,0.2); }
+    .badge-orange { background:rgba(255,179,71,0.15); color:#FFB347; border:1px solid rgba(255,179,71,0.2); }
 
     .sensor-list { display:flex; flex-direction:column; gap:20px; }
     .sensor-item { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:18px; padding:24px; display:grid; grid-template-columns:auto 1fr; gap:18px; align-items:start; transition:border-color 0.2s; }
-    .sensor-item:hover { border-color:rgba(47,111,79,0.2); }
+    .sensor-item:hover { border-color:rgba(79,209,160,0.2); }
     .si-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
-    .si-green { background:rgba(47,111,79,0.15); }
-    .si-red { background:rgba(178,58,52,0.15); }
-    .si-orange { background:rgba(143,96,24,0.15); }
+    .si-green { background:rgba(79,209,160,0.15); }
+    .si-red { background:rgba(255,107,122,0.15); }
+    .si-orange { background:rgba(255,179,71,0.15); }
     .si-content h4 { font-size:0.95rem; font-weight:700; color:#fff; margin-bottom:4px; }
-    .si-model { font-size:0.72rem; color:#2F6F4F; font-weight:600; letter-spacing:0.06em; margin-bottom:8px; }
+    .si-model { font-size:0.72rem; color:#4FD1A0; font-weight:600; letter-spacing:0.06em; margin-bottom:8px; }
     .si-content p { font-size:0.82rem; color:rgba(255,255,255,0.5); line-height:1.65; }
     .si-specs { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
     .spec-tag { font-size:0.68rem; background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.4); border:1px solid rgba(255,255,255,0.07); padding:2px 8px; border-radius:6px; }
@@ -118,16 +118,16 @@
     .cta-section { background:linear-gradient(135deg,#040E07,#0D2B1A); padding:80px 24px; text-align:center; }
     .cta-section h2 { font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; color:#fff; letter-spacing:-1.5px; margin-bottom:16px; }
     .cta-section p { font-size:0.95rem; color:rgba(255,255,255,0.5); max-width:480px; margin:0 auto 36px; line-height:1.75; }
-    .btn-primary { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#1D4F38,#2F6F4F); color:#fff; font-size:1rem; font-weight:700; padding:14px 36px; border-radius:100px; text-decoration:none; box-shadow:0 8px 32px rgba(47,111,79,0.35); transition:transform 0.2s,box-shadow 0.2s; }
-    .btn-primary:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(47,111,79,0.45); }
+    .btn-primary { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#186045,#22815F); color:#fff; font-size:1rem; font-weight:700; padding:14px 36px; border-radius:100px; text-decoration:none; box-shadow:0 8px 32px rgba(79,209,160,0.35); transition:transform 0.2s,box-shadow 0.2s; }
+    .btn-primary:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(79,209,160,0.45); }
 
     /* FOOTER */
-    .site-footer { background:#040E07; border-top:1px solid rgba(47,111,79,0.08); padding:32px 24px; }
+    .site-footer { background:#040E07; border-top:1px solid rgba(79,209,160,0.08); padding:32px 24px; }
     .footer-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:32px; flex-wrap:wrap; }
-    .f-logo { font-size:1.2rem; font-weight:800; color:#fff; } .f-logo span { color:#2F6F4F; }
+    .f-logo { font-size:1.2rem; font-weight:800; color:#fff; } .f-logo span { color:#4FD1A0; }
     .f-links { display:flex; gap:20px; flex:1; flex-wrap:wrap; }
     .f-links a { font-size:0.82rem; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s; }
-    .f-links a:hover { color:#2F6F4F; }
+    .f-links a:hover { color:#4FD1A0; }
     .f-copy { font-size:0.78rem; color:rgba(255,255,255,0.25); margin-left:auto; }
 
     /* ANIMATIONS */
@@ -160,7 +160,7 @@
 </section>
 
 <!-- WAVE to light -->
-<div class="wave"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,36 C240,72 480,0 720,36 C960,72 1200,4 1440,40 L1440,72 L0,72 Z" fill="#F1EDE4"/></svg></div>
+<div class="wave"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,36 C240,72 480,0 720,36 C960,72 1200,4 1440,40 L1440,72 L0,72 Z" fill="#16201B"/></svg></div>
 
 <!-- DISEASE TARGETS (light) -->
 <section class="section-light">
@@ -262,7 +262,7 @@
 </section>
 
 <!-- WAVE to light (sensor section) -->
-<div class="wave" style="background:#071A0F"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,40 C360,0 720,72 1080,20 C1260,0 1380,50 1440,36 L1440,72 L0,72 Z" fill="#F1EDE4"/></svg></div>
+<div class="wave" style="background:#071A0F"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,40 C360,0 720,72 1080,20 C1260,0 1380,50 1440,36 L1440,72 L0,72 Z" fill="#16201B"/></svg></div>
 
 <!-- HARDWARE SENSOR (light) -->
 <section class="section-light">
@@ -346,8 +346,8 @@
     <h2 class="section-title on-dark" style="text-align:center;margin-bottom:40px" data-animate="up" data-delay="80">Dari Sensor ke Keputusan Klinis</h2>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px" data-animate="up" data-delay="120">
       <div style="text-align:center;padding:28px 16px">
-        <div style="width:64px;height:64px;border-radius:20px;background:rgba(47,111,79,0.12);border:1px solid rgba(47,111,79,0.2);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 16px">⌚</div>
-        <div style="font-size:0.8rem;color:#2F6F4F;font-weight:700;margin-bottom:6px">SENSOR</div>
+        <div style="width:64px;height:64px;border-radius:20px;background:rgba(79,209,160,0.12);border:1px solid rgba(79,209,160,0.2);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 16px">⌚</div>
+        <div style="font-size:0.8rem;color:#4FD1A0;font-weight:700;margin-bottom:6px">SENSOR</div>
         <div style="font-size:0.85rem;color:rgba(255,255,255,0.6);line-height:1.5">Data fisik diukur oleh 3 sensor wearable secara bersamaan</div>
       </div>
       <div style="text-align:center;padding:28px 16px">
@@ -361,8 +361,8 @@
         <div style="font-size:0.85rem;color:rgba(255,255,255,0.6);line-height:1.5">Model ML menganalisis pola data dan mengidentifikasi risiko penyakit</div>
       </div>
       <div style="text-align:center;padding:28px 16px">
-        <div style="width:64px;height:64px;border-radius:20px;background:rgba(143,96,24,0.12);border:1px solid rgba(143,96,24,0.2);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 16px">👨‍⚕️</div>
-        <div style="font-size:0.8rem;color:#8F6018;font-weight:700;margin-bottom:6px">DOKTER</div>
+        <div style="width:64px;height:64px;border-radius:20px;background:rgba(255,179,71,0.12);border:1px solid rgba(255,179,71,0.2);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 16px">👨‍⚕️</div>
+        <div style="font-size:0.8rem;color:#FFB347;font-weight:700;margin-bottom:6px">DOKTER</div>
         <div style="font-size:0.85rem;color:rgba(255,255,255,0.6);line-height:1.5">Laporan ringkas siap pakai untuk dokter membuat keputusan klinis</div>
       </div>
     </div>

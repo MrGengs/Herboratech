@@ -26,7 +26,7 @@
     .auth-bg::after {
       content:''; position:absolute; bottom:-100px; left:50%; transform:translateX(-50%);
       width:600px; height:600px; border-radius:50%;
-      background:radial-gradient(circle, rgba(47,111,79,0.07) 0%, transparent 70%);
+      background:radial-gradient(circle, rgba(79,209,160,0.07) 0%, transparent 70%);
     }
 
     /* MAIN */
@@ -34,7 +34,7 @@
 
     /* BACK LINK */
     .back-link { position:fixed; top:20px; left:20px; z-index:10; display:flex; align-items:center; gap:6px; color:rgba(255,255,255,0.5); font-size:0.82rem; font-weight:500; text-decoration:none; transition:color 0.2s; }
-    .back-link:hover { color:#2F6F4F; }
+    .back-link:hover { color:#4FD1A0; }
 
     /* CARD */
     .auth-card {
@@ -61,12 +61,12 @@
     .icon-wrap ion-icon { font-size:2.6rem; color:var(--primary-dark); }
     .icon-wrap .pulse-ring {
       position:absolute; inset:-8px; border-radius:36px;
-      border:2px solid rgba(47,111,79,0.35);
+      border:2px solid rgba(79,209,160,0.35);
       animation:pulseRing 2s ease-out infinite;
     }
     .icon-wrap .pulse-ring-2 {
       position:absolute; inset:-16px; border-radius:40px;
-      border:2px solid rgba(47,111,79,0.15);
+      border:2px solid rgba(79,209,160,0.15);
       animation:pulseRing 2s ease-out infinite 0.5s;
     }
     @keyframes pulseRing { 0%{opacity:1;transform:scale(1)} 100%{opacity:0;transform:scale(1.2)} }
@@ -86,7 +86,7 @@
       background:var(--bg);
       border:2px solid transparent;
       border-radius:14px;
-      box-shadow:inset 0 1px 3px rgba(20,55,38,0.12);
+      box-shadow:inset -3px -3px 8px var(--shadow-light), inset 4px 4px 10px var(--shadow-dark);
       font-size:1.5rem; font-weight:800;
       color:var(--text-primary);
       text-align:center;
@@ -97,15 +97,15 @@
     }
     .otp-box:focus {
       border-color:var(--primary-dark);
-      box-shadow:inset 0 1px 3px rgba(20,55,38,0.12), 0 0 0 3px rgba(29,79,56,0.18);
+      box-shadow:inset -3px -3px 8px var(--shadow-light), inset 4px 4px 10px var(--shadow-dark), 0 0 0 3px rgba(47,168,124,0.18);
     }
     .otp-box.filled {
-      border-color:rgba(29,79,56,0.4);
-      box-shadow:inset 0 1px 3px rgba(20,55,38,0.12);
+      border-color:rgba(47,168,124,0.4);
+      box-shadow:inset -3px -3px 8px var(--shadow-light), inset 4px 4px 10px var(--shadow-dark);
     }
     .otp-box.error {
       border-color:var(--danger);
-      box-shadow:inset 0 1px 3px rgba(20,55,38,0.12), 0 0 0 3px rgba(178,58,52,0.18);
+      box-shadow:inset -3px -3px 8px var(--shadow-light), inset 4px 4px 10px var(--shadow-dark), 0 0 0 3px rgba(255,107,122,0.18);
       animation:shake 0.4s ease;
     }
     @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
@@ -132,8 +132,8 @@
     .resend-btn.visible { display:inline-block; }
 
     /* SUBMIT BTN */
-    .btn-verify { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#1D4F38,#2F6F4F); color:#fff; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; box-shadow:0 6px 24px rgba(47,111,79,0.4); transition:transform 0.2s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:0.02em; }
-    .btn-verify:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(47,111,79,0.5); }
+    .btn-verify { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#186045,#22815F); color:#fff; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; box-shadow:0 6px 24px rgba(79,209,160,0.4); transition:transform 0.2s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:0.02em; }
+    .btn-verify:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(79,209,160,0.5); }
     .btn-verify:active { transform:translateY(0); }
     .btn-verify:disabled { opacity:0.55; cursor:not-allowed; transform:none; }
 
@@ -145,7 +145,7 @@
     /* PROGRESS DOTS */
     .otp-progress { display:flex; justify-content:center; gap:6px; margin-bottom:18px; }
     .otp-dot { width:8px; height:8px; border-radius:50%; background:var(--bg); box-shadow:var(--shadow-out-sm); transition:all 0.25s; }
-    .otp-dot.active { background:var(--primary-dark); box-shadow:0 2px 8px rgba(29,79,56,0.4); transform:scale(1.2); }
+    .otp-dot.active { background:var(--primary-dark); box-shadow:0 2px 8px rgba(47,168,124,0.4); transform:scale(1.2); }
 
     /* ECG decoration */
     .ecg-deco { position:fixed; bottom:30px; left:0; right:0; height:40px; opacity:0.15; pointer-events:none; overflow:hidden; }
@@ -161,8 +161,8 @@
 <!-- ECG decoration -->
 <div class="ecg-deco">
   <svg viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <polyline points="0,20 80,20 100,20 110,5 120,35 130,5 140,20 160,20 240,20 260,20 270,8 280,32 290,8 300,20 320,20 400,20 420,20 430,5 440,35 450,5 460,20 480,20 560,20 580,20 590,8 600,32 610,8 620,20 640,20 720,20 740,20 750,5 760,35 770,5 780,20 800,20 880,20 900,20 910,8 920,32 930,8 940,20 960,20 1040,20 1060,20 1070,5 1080,35 1090,5 1100,20 1120,20 1200,20 1220,20 1230,8 1240,32 1250,8 1260,20 1280,20 1360,20 1380,20 1390,5 1400,35 1410,5 1420,20 1440,20" fill="none" stroke="#2F6F4F" stroke-width="1.5"/>
-    <polyline points="1440,20 1520,20 1540,20 1550,5 1560,35 1570,5 1580,20 1600,20 1680,20 1700,20 1710,8 1720,32 1730,8 1740,20 1760,20 1840,20 1860,20 1870,5 1880,35 1890,5 1900,20 1920,20 2000,20 2020,20 2030,8 2040,32 2050,8 2060,20 2080,20 2160,20 2180,20 2190,5 2200,35 2210,5 2220,20 2240,20 2320,20 2340,20 2350,8 2360,32 2370,8 2380,20 2400,20 2440,20 2460,20 2470,5 2480,35 2490,5 2500,20 2520,20 2600,20 2620,20 2630,8 2640,32 2650,8 2660,20 2680,20 2760,20 2780,20 2790,5 2800,35 2810,5 2820,20 2840,20 2880,20" fill="none" stroke="#2F6F4F" stroke-width="1.5"/>
+    <polyline points="0,20 80,20 100,20 110,5 120,35 130,5 140,20 160,20 240,20 260,20 270,8 280,32 290,8 300,20 320,20 400,20 420,20 430,5 440,35 450,5 460,20 480,20 560,20 580,20 590,8 600,32 610,8 620,20 640,20 720,20 740,20 750,5 760,35 770,5 780,20 800,20 880,20 900,20 910,8 920,32 930,8 940,20 960,20 1040,20 1060,20 1070,5 1080,35 1090,5 1100,20 1120,20 1200,20 1220,20 1230,8 1240,32 1250,8 1260,20 1280,20 1360,20 1380,20 1390,5 1400,35 1410,5 1420,20 1440,20" fill="none" stroke="#4FD1A0" stroke-width="1.5"/>
+    <polyline points="1440,20 1520,20 1540,20 1550,5 1560,35 1570,5 1580,20 1600,20 1680,20 1700,20 1710,8 1720,32 1730,8 1740,20 1760,20 1840,20 1860,20 1870,5 1880,35 1890,5 1900,20 1920,20 2000,20 2020,20 2030,8 2040,32 2050,8 2060,20 2080,20 2160,20 2180,20 2190,5 2200,35 2210,5 2220,20 2240,20 2320,20 2340,20 2350,8 2360,32 2370,8 2380,20 2400,20 2440,20 2460,20 2470,5 2480,35 2490,5 2500,20 2520,20 2600,20 2620,20 2630,8 2640,32 2650,8 2660,20 2680,20 2760,20 2780,20 2790,5 2800,35 2810,5 2820,20 2840,20 2880,20" fill="none" stroke="#4FD1A0" stroke-width="1.5"/>
   </svg>
 </div>
 
