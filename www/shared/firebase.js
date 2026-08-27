@@ -175,14 +175,18 @@ window.VAuth = {
           try { await _auth.signInAnonymously(); } catch (e) { }
         }
         const uid = _auth.currentUser ? _auth.currentUser.uid : ('debug-uid-' + debugRole);
+        let savedDoc = {};
         try {
-          await _db.collection('users').doc(uid).set(
-            { uid, name: nameMap[debugRole] || debugRole, email: debugRole + '@debug.local', role: debugRole, isActive: true },
-            { merge: true }
-          );
+          const s = await _db.collection('users').doc(uid).get();
+          if (s.exists) {
+            savedDoc = s.data() || {};
+          } else {
+            savedDoc = { uid, name: nameMap[debugRole] || debugRole, email: debugRole + '@debug.local', role: debugRole, isActive: true };
+            await _db.collection('users').doc(uid).set(savedDoc, { merge: true });
+          }
         } catch (e) { }
         const mockUser = { uid, email: debugRole + '@debug.local', emailVerified: true, providerData: [] };
-        const mockProfile = { uid, name: nameMap[debugRole] || debugRole, email: mockUser.email, role: debugRole };
+        const mockProfile = { uid, name: nameMap[debugRole] || debugRole, email: mockUser.email, role: debugRole, ...savedDoc };
         const roleMatch = !expectedRole || expectedRole === debugRole ||
           (expectedRole === 'admin' && debugRole === 'super_admin');
         if (roleMatch) {
@@ -233,7 +237,10 @@ window.VDB = {
     return s.exists ? s.data() : null;
   },
   async updateUser(uid, data) {
-    await _db.collection('users').doc(uid).update({ ...data, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    if (window.__spaAuth && window.__spaAuth.profile && (window.__spaAuth.user?.uid === uid || window.__spaAuth.profile?.uid === uid)) {
+      Object.assign(window.__spaAuth.profile, data);
+    }
+    await _db.collection('users').doc(uid).set({ ...data, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
   },
   async getAllUsers(role = null) {
     let q = _db.collection('users');

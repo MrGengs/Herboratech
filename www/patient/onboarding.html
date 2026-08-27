@@ -359,7 +359,13 @@ function updateUI() {
 // Skip onboarding
 async function skipOnboarding() {
   try {
-    await VDB.updateUser(userData.uid, { onboardingDone: true });
+    if (userData && userData.uid) {
+      await VDB.updateUser(userData.uid, { onboardingDone: true });
+      localStorage.setItem('herboratech_onboarding_' + userData.uid, '1');
+    }
+    if (window.__spaAuth && window.__spaAuth.profile) {
+      window.__spaAuth.profile.onboardingDone = true;
+    }
     nav('home.html?welcome=1');
   } catch (e) {
     showToast('Gagal: ' + e.message, 'error');
@@ -369,12 +375,19 @@ async function skipOnboarding() {
 // Complete onboarding
 async function completeOnboarding() {
   try {
-    const dob = document.getElementById('dob').value;
-    const height = parseFloat(document.getElementById('height').value);
-    const weight = parseFloat(document.getElementById('weight').value);
+    const dobInput = document.getElementById('dob');
+    const dob = dobInput ? dobInput.value : '';
+    const heightEl = document.getElementById('height');
+    const weightEl = document.getElementById('weight');
+    const height = heightEl ? parseFloat(heightEl.value) || 170 : 170;
+    const weight = weightEl ? parseFloat(weightEl.value) || 70 : 70;
 
     if (!dob) {
-      showToast('Pilih tanggal lahir terlebih dahulu', 'warning');
+      // Jika user belum isi tanggal lahir, bawa kembali ke langkah 2
+      showToast('Mohon lengkapi tanggal lahir di langkah Informasi Dasar', 'warning');
+      currentStep = 2;
+      updateUI();
+      if (dobInput) dobInput.focus();
       return;
     }
 
@@ -383,27 +396,47 @@ async function completeOnboarding() {
       document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked')
     ).map(cb => cb.value);
 
-    // Save to Firestore
-    await VDB.updateUser(userData.uid, {
-      onboardingDone: true,
-      healthGoals,
-      monitoredConditions
-    });
+    const uid = userData?.uid || VFirebase?.auth?.currentUser?.uid || 'current_user';
 
-    await VDB.updatePatient(userData.uid, {
-      dob,
-      gender: selectedGender,
-      heightCm: height,
-      weightKg: weight
-    });
+    // Update local state immediately
+    if (window.__spaAuth && window.__spaAuth.profile) {
+      window.__spaAuth.profile.onboardingDone = true;
+    }
+    localStorage.setItem('herboratech_onboarding_' + uid, '1');
+
+    // Save to Firestore in background
+    if (uid && uid !== 'current_user') {
+      VDB.updateUser(uid, {
+        onboardingDone: true,
+        healthGoals,
+        monitoredConditions
+      }).catch(err => console.warn('[onboarding] updateUser non-critical error:', err));
+
+      VDB.updatePatient(uid, {
+        dob,
+        gender: selectedGender,
+        heightCm: height,
+        weightKg: weight
+      }).catch(err => console.warn('[onboarding] updatePatient non-critical error:', err));
+    }
 
     showToast('Selamat datang di HerboraTech! 🎉', 'success');
-    setTimeout(() => nav('home.html?welcome=1'), 1500);
+    setTimeout(() => nav('home.html?welcome=1'), 800);
   } catch (e) {
     showToast('Gagal: ' + e.message, 'error');
     console.error(e);
   }
 }
+
+// Expose handlers to window for mobile SPA compatibility
+window.nextStep = nextStep;
+window.prevStep = prevStep;
+window.selectGender = selectGender;
+window.toggleGoal = toggleGoal;
+window.updateHeight = updateHeight;
+window.updateWeight = updateWeight;
+window.skipOnboarding = skipOnboarding;
+window.completeOnboarding = completeOnboarding;
 </script>
 
 </body>

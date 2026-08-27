@@ -249,7 +249,9 @@
   const { user, profile } = await VAuth.guard('patient', 1);
 
   // Check if onboarding is complete
-  if (!profile.onboardingDone) {
+  const localOnboarding = user ? localStorage.getItem('herboratech_onboarding_' + user.uid) : null;
+  const isWelcome = window.location.search.includes('welcome') || window.location.hash.includes('welcome');
+  if (!profile.onboardingDone && !localOnboarding && !isWelcome) {
     nav('onboarding.html');
     return;
   }
