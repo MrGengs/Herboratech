@@ -147,7 +147,7 @@ async function loadConsultations(doctorId) {
     const gradients = [
       'linear-gradient(135deg,#C94A42,#E87B74)',
       'linear-gradient(135deg,#3FBE84,#0E7C46)',
-      'linear-gradient(135deg,#1DB56A,#0E7C46)',
+      'linear-gradient(135deg,#0E7C46,#0A5F35)',
       'linear-gradient(135deg,#2F7D56,#39C57F)',
       'linear-gradient(135deg,#B07D1E,#F2C94C)'
     ];
@@ -224,7 +224,7 @@ async function renderCompletedList(consults) {
     return;
   }
   chatList.innerHTML = '';
-  const gradients = ['linear-gradient(135deg,#C94A42,#E87B74)','linear-gradient(135deg,#3FBE84,#0E7C46)','linear-gradient(135deg,#1DB56A,#0E7C46)','linear-gradient(135deg,#2F7D56,#39C57F)','linear-gradient(135deg,#B07D1E,#F2C94C)'];
+  const gradients = ['linear-gradient(135deg,#C94A42,#E87B74)','linear-gradient(135deg,#3FBE84,#0E7C46)','linear-gradient(135deg,#0E7C46,#0A5F35)','linear-gradient(135deg,#2F7D56,#39C57F)','linear-gradient(135deg,#B07D1E,#F2C94C)'];
   for (let i = 0; i < consults.length; i++) {
     const c = consults[i];
     const patient = c.patientId ? await VDB.getUser(c.patientId) : null;

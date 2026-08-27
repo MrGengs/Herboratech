@@ -60,7 +60,7 @@
     .step-indicator { display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:24px; }
     .step-item { display:flex; flex-direction:column; align-items:center; gap:4px; flex:1; position:relative; }
     .step-dot { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700; z-index:1; }
-    .step-dot.active { background:linear-gradient(135deg,#1DB56A,#0E7C46); color:#fff; box-shadow:0 4px 14px rgba(14,124,70,0.4); }
+    .step-dot.active { background:linear-gradient(135deg,#0E7C46,#0A5F35); color:#fff; box-shadow:0 4px 14px rgba(14,124,70,0.4); }
     .step-dot.inactive { background:var(--bg); color:var(--text-secondary); box-shadow:var(--shadow-out-sm); }
     .step-label { font-size:0.67rem; font-weight:600; color:var(--text-secondary); white-space:nowrap; }
     .step-label.active { color:var(--primary-dark); }
@@ -106,7 +106,7 @@
     .checkbox-wrap { position:relative; flex-shrink:0; margin-top:2px; }
     .checkbox-wrap input[type="checkbox"] { opacity:0; position:absolute; inset:0; cursor:pointer; }
     .checkbox-custom { width:20px; height:20px; border-radius:6px; box-shadow:var(--shadow-in); background:var(--bg); display:flex; align-items:center; justify-content:center; font-size:0.7rem; color:transparent; transition:all 0.2s; pointer-events:none; }
-    .checkbox-wrap input:checked ~ .checkbox-custom { background:linear-gradient(135deg,#1DB56A,#0E7C46); color:#fff; box-shadow:0 2px 8px rgba(14,124,70,0.4); }
+    .checkbox-wrap input:checked ~ .checkbox-custom { background:linear-gradient(135deg,#0E7C46,#0A5F35); color:#fff; box-shadow:0 2px 8px rgba(14,124,70,0.4); }
     .checkbox-label { font-size:0.78rem; color:var(--text-secondary); line-height:1.5; }
     .checkbox-label a { color:var(--primary-dark); font-weight:600; text-decoration:none; }
 
@@ -116,7 +116,7 @@
     #auth-error ion-icon { font-size:1rem; flex-shrink:0; margin-top:1px; color:#C94A42; }
 
     /* SUBMIT BTN */
-    .btn-register { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#1DB56A,#0E7C46); color:#fff; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; box-shadow:0 6px 24px rgba(23,160,92,0.4); transition:transform 0.2s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:0.02em; }
+    .btn-register { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#0E7C46,#0A5F35); color:#fff; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; box-shadow:0 6px 24px rgba(23,160,92,0.4); transition:transform 0.2s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:0.02em; }
     .btn-register:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 32px rgba(23,160,92,0.5); }
     .btn-register:active { transform:translateY(0); }
     .btn-register:disabled { opacity:0.7; cursor:not-allowed; transform:none; }

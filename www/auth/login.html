@@ -14,9 +14,15 @@
     body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
 
     /* BG */
+    /* Latar terang dengan dua blob emerald, sama seperti hero landing
+       page. Sebelumnya gradien gelap penuh layar dengan strip EKG
+       beranimasi — bahasa visual lama yang sudah dibuang dari index. */
     .auth-bg {
       position: fixed; inset: 0; z-index: 0;
-      background: linear-gradient(160deg,#040E07 0%,#071A0F 40%,#0D2B1A 70%,#1A5C38 100%);
+      background:
+        radial-gradient(680px 680px at 12% -10%, rgba(23,160,92,0.16), transparent 62%),
+        radial-gradient(520px 520px at 92% 104%, rgba(143,211,172,0.26), transparent 64%),
+        var(--bg);
     }
     .auth-bg::before {
       content:''; position:absolute; inset:0;
@@ -33,17 +39,18 @@
     .auth-page { position:relative; z-index:1; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; }
 
     /* BACK LINK */
-    .back-link { position:fixed; top:20px; left:20px; z-index:10; display:flex; align-items:center; gap:6px; color:rgba(255,255,255,0.5); font-size:0.82rem; font-weight:500; text-decoration:none; transition:color 0.2s; }
-    .back-link:hover { color:#17A05C; }
+    .back-link { position:fixed; top:18px; left:18px; z-index:10; display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); font-size:0.82rem; font-weight:600; text-decoration:none; padding:8px 14px; border-radius:999px; background:var(--surface); border:1px solid rgba(16,24,40,0.10); box-shadow:var(--shadow-out-sm); transition:color 0.2s, border-color 0.2s; }
+    .back-link:hover { color:var(--primary-dark); border-color:rgba(23,160,92,0.35); }
 
     /* CARD */
     .auth-card {
-      background: rgba(221,239,230,0.97);
-      border-radius: 28px;
-      padding: 44px 40px;
+      background: var(--surface);
+      border: 1px solid rgba(16,24,40,0.10);
+      border-radius: 26px;
+      padding: 40px 34px;
       width: 100%;
-      max-width: 440px;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+      max-width: 430px;
+      box-shadow: var(--shadow-out-lg);
       animation: cardIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
     }
     @keyframes cardIn { from { opacity:0; transform:translateY(30px) scale(0.96); } to { opacity:1; transform:none; } }
@@ -51,7 +58,8 @@
 
     /* LOGO */
     .auth-logo { text-align:center; margin-bottom:28px; }
-    .logo-mark { width:60px; height:60px; border-radius:18px; background:linear-gradient(135deg,#0D2B1A,#0E7C46); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; box-shadow:0 8px 24px rgba(14,124,70,0.35); }
+    .logo-mark { width:60px; height:60px; margin:0 auto 12px; }
+    .logo-mark svg { width:60px; height:60px; display:block; border-radius:17px; box-shadow:0 8px 22px rgba(14,124,70,0.28); }
     .logo-mark ion-icon { font-size:2rem; color:#fff; }
     .auth-logo .brand { font-size:1.4rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; }
     .auth-logo .brand span { color:var(--primary-dark); }
@@ -78,7 +86,7 @@
     .forgot-link:hover { text-decoration:underline; }
 
     /* SUBMIT BTN */
-    .btn-login { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#1DB56A,#0E7C46); color:#fff; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; box-shadow:0 6px 24px rgba(23,160,92,0.4); transition:transform 0.2s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:0.02em; }
+    .btn-login { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#0E7C46,#0A5F35); color:#fff; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; box-shadow:0 6px 24px rgba(23,160,92,0.4); transition:transform 0.2s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:0.02em; }
     .btn-login:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 32px rgba(23,160,92,0.5); }
     .btn-login:active { transform:translateY(0); }
     .btn-login:disabled { opacity:0.7; cursor:not-allowed; transform:none; }
@@ -102,7 +110,7 @@
     .register-row a:hover { text-decoration:underline; }
 
     /* ECG decoration */
-    .ecg-deco { position:fixed; bottom:30px; left:0; right:0; height:40px; opacity:0.15; pointer-events:none; overflow:hidden; }
+    .ecg-deco { display:none; }
     .ecg-deco svg { width:200%; animation:ecgScroll 14s linear infinite; }
     @keyframes ecgScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
     @keyframes spin { to { transform:rotate(360deg); } }
@@ -132,7 +140,23 @@
 
     <!-- LOGO -->
     <div class="auth-logo">
-      <div class="logo-mark"><ion-icon name="pulse-outline"></ion-icon></div>
+      <div class="logo-mark">
+        <!-- Lambang HerboraTech: daun dengan garis EKG di dalamnya.
+             Sama dengan yang dipakai di landing page. -->
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="64" height="64" rx="17" fill="#0E7C46"/>
+          <clipPath id="leafClipLogin">
+            <path d="M16 50 C16 29 30.5 13.5 52 11.5 C50.5 34 36.5 50 16 50 Z"/>
+          </clipPath>
+          <g clip-path="url(#leafClipLogin)">
+            <rect width="64" height="64" fill="#FFFFFF"/>
+            <path d="M55 8 L14 62 L64 64 L64 0 Z" fill="#BCDECB"/>
+          </g>
+          <path d="M11.5 56.5 L19.5 47.5" stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round"/>
+          <path d="M23 39.5 H30 L33.2 30.5 L37.4 46 L40.2 37 H46.5" fill="none" stroke="#0E7C46"
+                stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
       <div class="brand">Herbora<span>Tech</span></div>
       <p>Platform Telemedisin AIoT Indonesia</p>
     </div>
