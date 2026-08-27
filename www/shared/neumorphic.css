@@ -28,12 +28,22 @@ ion-icon {
   --shadow-dark: #D3CCBC;
   --shadow-light: #FFFFFF;
   
-  /* Neumorphic Shadows */
-  --shadow-out: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
-  --shadow-out-sm: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
-  --shadow-out-lg: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
-  --shadow-in: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
-  --shadow-in-sm: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
+  /* Glass surfaces */
+  --glass:         rgba(255,255,255,0.55);
+  --glass-strong:  rgba(255,255,255,0.74);
+  --glass-soft:    rgba(255,255,255,0.38);
+  --glass-border:  rgba(255,255,255,0.65);
+  --glass-blur:    blur(16px) saturate(150%);
+  --glass-blur-sm: blur(10px) saturate(140%);
+
+  /* Shadows — glassmorphism: satu arah, lembut, tanpa bayangan terang
+     berlawanan. Bayangan ganda neumorfik dihapus karena kedalaman kini
+     datang dari transparansi dan blur, bukan dari efek timbul. */
+  --shadow-out: 0 8px 32px rgba(20,55,38,0.10), 0 2px 8px rgba(20,55,38,0.06);
+  --shadow-out-sm: 0 4px 16px rgba(20,55,38,0.08), 0 1px 4px rgba(20,55,38,0.05);
+  --shadow-out-lg: 0 16px 48px rgba(20,55,38,0.14), 0 4px 14px rgba(20,55,38,0.08);
+  --shadow-in: inset 0 1px 3px rgba(20,55,38,0.12);
+  --shadow-in-sm: inset 0 1px 2px rgba(20,55,38,0.09);
   
   /* Primary Green */
   --primary: #2F6F4F;
@@ -108,7 +118,16 @@ html {
 body {
   font-family: var(--font);
   color: var(--text-primary);
-  background: var(--bg);
+  /* Panel kaca perlu variasi warna di belakangnya; di atas warna rata,
+     backdrop-filter tidak menghasilkan apa pun yang terlihat. */
+  background:
+    radial-gradient(1100px 620px at 8% -8%, rgba(47,111,79,0.20), transparent 62%),
+    radial-gradient(900px 520px at 108% 6%, rgba(12,111,120,0.18), transparent 60%),
+    radial-gradient(820px 700px at 50% 116%, rgba(143,184,159,0.26), transparent 62%),
+    var(--bg);
+  /* background-attachment: fixed dihindari: bermasalah di Safari iOS,
+     dan ini aplikasi mobile-first. Gradien ikut menggulung, tetap mulus. */
+  background-repeat: no-repeat;
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
@@ -128,7 +147,7 @@ ul, ol { list-style: none; }
   width: var(--mobile-w);
   min-height: 100vh;
   margin: 0 auto;
-  background: var(--bg);
+  background: transparent;
   position: relative;
   overflow-x: hidden;
   padding-top: var(--header-h);
@@ -151,7 +170,10 @@ ul, ol { list-style: none; }
   width: 100%;
   max-width: var(--mobile-w);
   z-index: 100;
-  background: var(--bg);
+  background: var(--glass-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   padding: var(--sp-16) var(--sp-24);
   display: flex;
   align-items: center;
@@ -190,7 +212,10 @@ ul, ol { list-style: none; }
   color: var(--text-secondary);
   transition: all 0.25s ease;
   position: relative;
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
 }
 
 .neu-icon-btn:hover { color: var(--primary-dark); }
@@ -210,7 +235,10 @@ ul, ol { list-style: none; }
 
 /* — Card — */
 .neu-card {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-out);
   padding: var(--sp-24);
@@ -218,7 +246,10 @@ ul, ol { list-style: none; }
 }
 
 .neu-card-sm {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-md);
   box-shadow: var(--shadow-out-sm);
   padding: var(--sp-16);
@@ -226,14 +257,20 @@ ul, ol { list-style: none; }
 }
 
 .neu-card-flat {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-out);
   padding: var(--sp-20);
 }
 
 .neu-inset {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-md);
   box-shadow: var(--shadow-in);
   padding: var(--sp-16);
@@ -245,7 +282,7 @@ ul, ol { list-style: none; }
   border-radius: var(--r-lg);
   padding: var(--sp-24);
   color: var(--text-on-primary);
-  box-shadow: 6px 6px 16px rgba(29,79,56,0.3), -4px -4px 12px var(--shadow-light);
+  box-shadow: 0 12px 32px rgba(29,79,56,0.26);
   position: relative;
   overflow: hidden;
 }
@@ -272,7 +309,10 @@ ul, ol { list-style: none; }
   font-weight: 600;
   font-size: 0.875rem;
   transition: all 0.25s ease;
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-out-sm);
   color: var(--text-secondary);
 }
@@ -283,23 +323,23 @@ ul, ol { list-style: none; }
 .neu-btn-primary {
   background: var(--primary-gradient);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(29,79,56,0.35), -3px -3px 8px var(--shadow-light);
+  box-shadow: 0 8px 24px rgba(29,79,56,0.30);
   padding: var(--sp-12) var(--sp-32);
 }
 
-.neu-btn-primary:active { box-shadow: inset 3px 3px 6px rgba(20,55,38,0.4), inset -3px -3px 6px rgba(143,184,159,0.3); }
+.neu-btn-primary:active { box-shadow: inset 0 2px 6px rgba(20,55,38,0.35); }
 .neu-btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
 
 .neu-btn-accent {
   background: linear-gradient(135deg, #0C6F78, #2A9BA5);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(12,111,120,0.3), -3px -3px 8px var(--shadow-light);
+  box-shadow: 0 8px 24px rgba(12,111,120,0.28);
 }
 
 .neu-btn-danger {
   background: linear-gradient(135deg, #B23A34, #FF7B7B);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(178,58,52,0.3), -3px -3px 8px var(--shadow-light);
+  box-shadow: 0 8px 24px rgba(178,58,52,0.28);
 }
 
 .neu-btn-block { width: 100%; }
@@ -314,7 +354,10 @@ ul, ol { list-style: none; }
   border-radius: var(--r-full);
   font-size: 0.875rem;
   color: var(--text-primary);
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-in);
   transition: all 0.3s ease;
 }
@@ -325,7 +368,10 @@ ul, ol { list-style: none; }
 .neu-search {
   display: flex;
   align-items: center;
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-in);
   border-radius: var(--r-full);
   padding: 0 var(--sp-16);
@@ -401,7 +447,10 @@ ul, ol { list-style: none; }
   font-size: 0.72rem;
   font-weight: 600;
   box-shadow: var(--shadow-out-sm);
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
 }
 
 .neu-chip-primary { background: var(--primary-bg); color: var(--primary-darker); }
@@ -440,7 +489,10 @@ ul, ol { list-style: none; }
   border-radius: var(--r-full);
   box-shadow: var(--shadow-in-sm);
   overflow: hidden;
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
 }
 
 .neu-progress-fill {
@@ -461,7 +513,10 @@ ul, ol { list-style: none; }
   transform: translateX(-50%);
   width: var(--mobile-w);
   height: var(--nav-h);
-  background: var(--bg);
+  background: var(--glass-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   box-shadow: 0 -8px 20px rgba(200,208,231,0.5);
   display: flex;
   align-items: center;
@@ -639,7 +694,10 @@ ul, ol { list-style: none; }
   justify-content: center;
   font-size: 1.4rem;
   transition: all 0.25s ease;
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
 }
 
 .quick-item:active .qi-icon { box-shadow: var(--shadow-in-sm); transform: scale(0.95); }
@@ -667,7 +725,10 @@ ul, ol { list-style: none; }
   padding: var(--sp-16);
   position: relative;
   overflow: hidden;
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
 }
 
 .vital-card .v-icon { font-size: 1.4rem; margin-bottom: var(--sp-8); }
@@ -729,7 +790,10 @@ ul, ol { list-style: none; }
 .neu-tabs {
   display: flex;
   margin: 0 var(--sp-24);
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-full);
   box-shadow: var(--shadow-out-sm);
   padding: var(--sp-4);
@@ -781,7 +845,10 @@ ul, ol { list-style: none; }
 }
 
 .chat-bubble.received {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
   color: var(--text-primary);
   border-bottom-left-radius: 4px;
   box-shadow: var(--shadow-out-sm);
@@ -813,7 +880,10 @@ ul, ol { list-style: none; }
   justify-content: center;
   font-size: 1.1rem;
   flex-shrink: 0;
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
 }
 
 .notif-item .ni-content { flex: 1; }
@@ -882,7 +952,10 @@ ul, ol { list-style: none; }
   position: fixed;
   left: 0;
   top: 0;
-  background: #2A2E27;
+  background: rgba(42,46,39,0.82);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-right: 1px solid rgba(255,255,255,0.10);
   padding: var(--sp-24);
   display: flex;
   flex-direction: column;
@@ -923,7 +996,7 @@ ul, ol { list-style: none; }
   margin-left: 260px;
   padding: var(--sp-32);
   flex: 1;
-  background: var(--bg);
+  background: transparent;
   min-height: 100vh;
 }
 
@@ -947,7 +1020,10 @@ ul, ol { list-style: none; }
 }
 
 .stat-card {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-out);
   padding: var(--sp-24);
@@ -972,7 +1048,10 @@ ul, ol { list-style: none; }
 
 /* — Data Table — */
 .neu-table-wrap {
-  background: var(--bg);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-out);
   overflow: hidden;

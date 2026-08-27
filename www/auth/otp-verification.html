@@ -86,7 +86,7 @@
       background:var(--bg);
       border:2px solid transparent;
       border-radius:14px;
-      box-shadow:inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+      box-shadow:inset 0 1px 3px rgba(20,55,38,0.12);
       font-size:1.5rem; font-weight:800;
       color:var(--text-primary);
       text-align:center;
@@ -97,15 +97,15 @@
     }
     .otp-box:focus {
       border-color:var(--primary-dark);
-      box-shadow:inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light), 0 0 0 3px rgba(29,79,56,0.18);
+      box-shadow:inset 0 1px 3px rgba(20,55,38,0.12), 0 0 0 3px rgba(29,79,56,0.18);
     }
     .otp-box.filled {
       border-color:rgba(29,79,56,0.4);
-      box-shadow:inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+      box-shadow:inset 0 1px 3px rgba(20,55,38,0.12);
     }
     .otp-box.error {
       border-color:var(--danger);
-      box-shadow:inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light), 0 0 0 3px rgba(178,58,52,0.18);
+      box-shadow:inset 0 1px 3px rgba(20,55,38,0.12), 0 0 0 3px rgba(178,58,52,0.18);
       animation:shake 0.4s ease;
     }
     @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
