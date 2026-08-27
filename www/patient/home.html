@@ -10,185 +10,257 @@
   <script type="module" src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
   <style>
-    /* === HEADER: dark green gradient === */
+    /* ═══════════════════════════════════════════════
+       Beranda pasien — dirombak.
+
+       Susunan lama menaruh iklan tepat di bawah sapaan, lalu skor
+       kesehatan, menu cepat, perangkat, baru tanda vital. Alasan orang
+       membuka aplikasi ini justru yang terakhir.
+
+       Sekarang: skor kesehatan dan tanda vital naik ke atas, perangkat
+       menyusul, dan iklan turun ke bawah menu cepat. Gayanya mengikuti
+       landing page baru — datar, kartu putih di atas abu, aksen emerald.
+       ═══════════════════════════════════════════════ */
+
+    /* ── SAPAAN ── */
     .app-header {
-      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
-      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
-    }
-    .app-header .logo { color: #fff; }
-    .app-header .logo span { color: #17A05C; }
-    .app-header .neu-icon-btn {
-      background: rgba(255,255,255,0.12);
+      background: transparent;
       box-shadow: none;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: none;
+      position: static;
+      padding: 20px 20px 4px;
+      height: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .greet-time { font-size: 0.76rem; color: var(--text-tertiary); font-weight: 600; }
+    .greet-name { font-size: 1.32rem; font-weight: 800; letter-spacing: -0.6px; margin-top: 1px; }
 
-    /* === GREETING: subtle left accent === */
-    .section:has(h2) { position: relative; }
-
-    /* === SECTION TITLE: green left accent === */
-    .section-header .section-title {
-      border-left: 3px solid var(--primary-dark);
-      padding-left: 10px;
+    /* ── SKOR KESEHATAN: jangkar visual halaman ── */
+    .score-hero {
+      background: var(--surface);
+      border: 1px solid rgba(16,24,40,0.07);
+      border-radius: 22px;
+      box-shadow: var(--shadow-out);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
     }
-
-    /* === QUICK ACTIONS: colored icon bg pills === */
-    .qi-icon {
-      border-radius: 12px;
-      padding: 10px;
-      margin-bottom: 2px;
+    /* Cincin skor digambar dengan conic-gradient, tanpa SVG maupun pustaka.
+       Nilainya diatur lewat --pct dari JS bila kelak ingin dinamis. */
+    .score-ring {
+      --pct: 87;
+      width: 92px; height: 92px; border-radius: 50%;
+      background: conic-gradient(var(--primary) calc(var(--pct) * 1%), rgba(23,160,92,0.14) 0);
+      display: grid; place-items: center; flex-shrink: 0;
     }
-    /* Pastikan glyph terukur di dalam pill (ion-icon v7 kadang butuh ukuran eksplisit) */
-    .qi-icon ion-icon {
-      font-size: 1.4rem;
-      width: 1.4rem;
-      height: 1.4rem;
+    .score-ring-in {
+      width: 74px; height: 74px; border-radius: 50%;
+      background: var(--surface);
+      display: grid; place-items: center; line-height: 1;
     }
-
-    /* === VITAL CARDS: accent top border per type === */
-    .vital-grid .vital-card:nth-child(1) { border-top: 3px solid #C94A42; }
-    .vital-grid .vital-card:nth-child(2) { border-top: 3px solid #2F7D56; }
-    .vital-grid .vital-card:nth-child(3) { border-top: 3px solid #B07D1E; }
-    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #0E7C46; }
-
-    /* === BOTTOM NAV: bolder active === */
-    .nav-item.active {
-      color: var(--primary-dark);
-      font-weight: 700;
-      position: relative;
-    }
-    .nav-item.active::after {
-      content: '';
-      position: absolute;
-      bottom: 4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--primary-dark);
-    }
-    .nav-item.active ion-icon {
-      color: var(--primary-dark);
-      filter: drop-shadow(0 0 4px rgba(14,124,70,0.5));
+    .score-num { font-size: 1.72rem; font-weight: 800; letter-spacing: -1px; color: var(--primary-dark); }
+    .score-num small { font-size: 0.62rem; font-weight: 600; color: var(--text-tertiary); }
+    .score-label { font-size: 0.72rem; color: var(--text-tertiary); font-weight: 600; }
+    .score-title { font-size: 1rem; font-weight: 800; letter-spacing: -0.3px; margin: 2px 0 8px; }
+    .score-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.68rem; font-weight: 700;
+      padding: 4px 10px; border-radius: 999px;
+      background: rgba(23,160,92,0.12); color: var(--primary-dark);
     }
 
-    /* === AI INSIGHT: green accent === */
-    .section .neu-card[style*="border-left"] {
-      border-left-color: var(--primary-dark) !important;
+    /* ── TANDA VITAL ── */
+    .vital-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .vt {
+      background: var(--surface);
+      border: 1px solid rgba(16,24,40,0.07);
+      border-radius: 16px;
+      box-shadow: var(--shadow-out-sm);
+      padding: 14px;
+    }
+    .vt-top { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+    .vt-lab { font-size: 0.7rem; color: var(--text-tertiary); font-weight: 600; }
+    .vt-val { font-size: 1.34rem; font-weight: 800; letter-spacing: -0.7px; line-height: 1; }
+    .vt-val .u { font-size: 0.66rem; font-weight: 600; color: var(--text-tertiary); margin-left: 3px; }
+    .vt-spark { height: 26px; margin-top: 8px; }
+
+    /* ── PERANGKAT: baris tipis, bukan kartu besar ── */
+    .dev-strip {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface);
+      border: 1px solid rgba(16,24,40,0.07);
+      border-radius: 16px;
+      box-shadow: var(--shadow-out-sm);
+      padding: 12px 14px; cursor: pointer;
+      transition: border-color .2s ease;
+    }
+    .dev-strip:hover { border-color: rgba(23,160,92,0.32); }
+
+    /* ── MENU CEPAT: empat kolom, wadah ikon seragam ── */
+    .qa-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px 8px; }
+    .qa {
+      display: flex; flex-direction: column; align-items: center; gap: 7px;
+      cursor: pointer; text-align: center;
+    }
+    .qa-lab { font-size: 0.63rem; font-weight: 600; color: var(--text-secondary); line-height: 1.25; }
+    .qa:active .icon-box { transform: scale(0.92); }
+    .icon-box { transition: transform .16s ease; }
+
+    /* ── KARTU UMUM ── */
+    .flat-card {
+      background: var(--surface);
+      border: 1px solid rgba(16,24,40,0.07);
+      border-radius: 18px;
+      box-shadow: var(--shadow-out-sm);
+      padding: 16px;
     }
   </style>
 </head>
 <body>
-
 <div class="mobile-frame page-enter">
+
+  <!-- SAPAAN -->
   <header class="app-header">
-    <div class="logo">Herbora<span>Tech</span></div>
-    <div class="header-actions">
-      <button class="neu-icon-btn" onclick="nav('notification.html')"><ion-icon name="notifications-outline"></ion-icon><span class="badge"></span></button>
-      <button class="neu-icon-btn" onclick="nav('device.html')"><ion-icon name="bluetooth-outline"></ion-icon></button>
+    <div style="flex:1;min-width:0;">
+      <div class="greet-time" id="patient-greeting-time">Selamat Pagi</div>
+      <div class="greet-name" id="patient-greeting-name">Pasien</div>
     </div>
+    <button class="neu-icon-btn" onclick="nav('notification.html')" aria-label="Notifikasi">
+      <ion-icon name="notifications-outline"></ion-icon>
+      <span class="badge" style="display:none">0</span>
+    </button>
+    <button class="neu-icon-btn" onclick="nav('profile.html')" aria-label="Profil">
+      <ion-icon name="person-outline"></ion-icon>
+    </button>
   </header>
 
-  <div class="section" style="padding-bottom:0">
-    <p class="text-sm" id="patient-greeting-time" style="color:var(--text-tertiary)" data-animate="up">Selamat Pagi 👋</p>
-    <h2 id="patient-greeting-name" style="font-size:1.3rem;font-weight:700;margin-top:2px" data-animate="up" data-delay="50">Pengguna</h2>
-  </div>
-
-  <!-- CAROUSEL -->
-  <div class="section" style="padding-bottom:0">
-    <div class="neu-carousel" id="ads-carousel" data-animate="up" data-delay="100">
-      <div class="carousel-track" id="ads-track">
-        <div class="carousel-slide" style="padding:0;background:var(--bg-base);">
-          <img src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0;">
-        </div>
-      </div>
-      <div class="carousel-dots" id="ads-dots"><span class="dot active"></span></div>
-    </div>
-  </div>
-
-  <!-- HEALTH SCORE -->
-  <div class="section" style="padding-bottom:0">
-    <div class="neu-card-primary" data-animate="up" data-delay="150" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="nav('health-dashboard.html')">
-      <div>
-        <p style="font-size:0.75rem;opacity:0.85;">Health Score Hari Ini</p>
-        <p style="font-size:2.4rem;font-weight:800;margin:4px 0;"><span id="main-health-score">87</span><small style="font-size:1rem">/100</small></p>
-        <span id="score-change-label" style="background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:600;">→ Stabil</span>
-      </div>
-      <div style="width:80px;height:80px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;">
-        <ion-icon name="heart" style="font-size:2rem;animation:heartbeat 1.5s ease-in-out infinite;"></ion-icon>
-      </div>
-    </div>
-  </div>
-
-  <!-- QUICK ACTIONS -->
+  <!-- SKOR KESEHATAN -->
   <div class="section">
-    <div class="card-head" data-animate="up" data-delay="200">
-      <div class="card-head-text">
-        <div class="card-head-title">Menu Cepat</div>
-        <div class="card-head-sub">Akses fitur yang sering dipakai</div>
-      </div>
-    </div>
-    <div class="quick-grid" data-animate="up" data-delay="250">
-      <div class="quick-item" onclick="nav('health-dashboard.html')"><div class="qi-icon" style="color:#31A86C;background:rgba(49,168,108,0.1)"><ion-icon name="grid-outline"></ion-icon></div><span class="qi-label">Dashboard</span></div>
-      <div class="quick-item" onclick="nav('monitoring.html')"><div class="qi-icon" style="color:#C94A42;background:rgba(201,74,66,0.1)"><ion-icon name="pulse-outline"></ion-icon></div><span class="qi-label">Monitoring</span></div>
-      <div class="quick-item" onclick="nav('consultation.html')"><div class="qi-icon" style="color:#2F7D56;background:rgba(47,125,86,0.1)"><ion-icon name="chatbubbles-outline"></ion-icon></div><span class="qi-label">Konsultasi</span></div>
-      <div class="quick-item" onclick="nav('herbal.html')"><div class="qi-icon" style="color:#0E7C46;background:rgba(14,124,70,0.12)"><ion-icon name="leaf-outline"></ion-icon></div><span class="qi-label">Jamu</span></div>
-      <div class="quick-item" onclick="nav('health-profile.html')"><div class="qi-icon" style="color:#288557;background:rgba(40,133,87,0.12)"><ion-icon name="person-circle-outline"></ion-icon></div><span class="qi-label">Profil</span></div>
-      <div class="quick-item" onclick="nav('disease-risk.html')"><div class="qi-icon" style="color:#B07D1E;background:rgba(176,125,30,0.12)"><ion-icon name="shield-checkmark-outline"></ion-icon></div><span class="qi-label">Risk Score</span></div>
-      <div class="quick-item" onclick="nav('disease-encyclopedia.html')"><div class="qi-icon" style="color:#0E7C46;background:rgba(14,124,70,0.12)"><ion-icon name="book-outline"></ion-icon></div><span class="qi-label">Ensiklopedia</span></div>
-      <div class="quick-item" onclick="window.open('../slr-portal/index.html','_blank')"><div class="qi-icon" style="color:#0E7C46;background:rgba(14,124,70,0.12)"><ion-icon name="flask-outline"></ion-icon></div><span class="qi-label">Evidence Riset</span></div>
-      <div class="quick-item" onclick="nav('ai-chat.html')"><div class="qi-icon" style="color:#2F7D56;background:rgba(47,125,86,0.12)"><ion-icon name="sparkles-outline"></ion-icon></div><span class="qi-label">AI Health</span></div>
-      <div class="quick-item" onclick="showToast('SOS Emergency','error')"><div class="qi-icon" style="color:#fff;background:linear-gradient(135deg,#C94A42,#FF6B6B)"><ion-icon name="alert-circle-outline"></ion-icon></div><span class="qi-label">SOS</span></div>
-    </div>
-  </div>
-
-  <!-- SMARTWATCH CONNECTIVITY -->
-  <div class="section" style="padding-top:0">
-    <div class="neu-card" id="watch-card" style="display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.3s" onclick="toggleBLEConnection()" data-animate="up" data-delay="250">
-      <div id="watch-icon" style="width:56px;height:56px;border-radius:14px;background:var(--shadow-dark);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">⌚</div>
-      <div style="flex:1">
-        <div id="watch-name" style="font-weight:600;font-size:0.88rem;">HerboraTech Watch</div>
-        <div id="watch-status" style="font-size:0.72rem;color:var(--text-tertiary);">Tidak Terhubung</div>
-      </div>
-      <span id="watch-badge" class="neu-chip" style="background:rgba(201,74,66,0.12);color:#C94A42;">Hubungkan</span>
-    </div>
-  </div>
-
-  <!-- VITAL MINI -->
-  <div class="section" style="padding-top:0">
-    <!-- BLE Connection Alert -->
-    <div id="ble-alert-card-home" style="display:none;margin-bottom:16px;">
-      <div class="neu-card" style="background:linear-gradient(135deg,rgba(201,74,66,0.1),rgba(255,107,107,0.05));border-left:4px solid #C94A42;padding:16px;">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <ion-icon name="alert-circle-outline" style="font-size:1.4rem;color:#C94A42;flex-shrink:0;"></ion-icon>
-          <div style="flex:1;">
-            <div style="font-weight:600;color:var(--danger);font-size:0.88rem;">Perangkat Belum Terhubung</div>
-            <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:2px;">Hubungkan smartwatch untuk data real-time</div>
+    <div class="score-hero" data-animate="up" onclick="nav('health-dashboard.html')" style="cursor:pointer">
+      <div class="score-ring">
+        <div class="score-ring-in">
+          <div style="text-align:center">
+            <div class="score-num"><span id="main-health-score">87</span><small>/100</small></div>
+            <div class="score-label">Skor</div>
           </div>
-          <button class="neu-btn neu-btn-sm" style="padding:6px 12px;font-size:0.7rem;white-space:nowrap;flex-shrink:0;" onclick="toggleBLEConnection()">Hubungkan</button>
         </div>
       </div>
+      <div style="flex:1;min-width:0;">
+        <div class="greet-time">Kesehatan Anda</div>
+        <div class="score-title">Kondisi terpantau baik</div>
+        <span class="score-chip" id="score-change-label">
+          <ion-icon name="trending-up-outline"></ion-icon> Stabil
+        </span>
+      </div>
+      <ion-icon name="chevron-forward-outline" style="color:var(--text-muted);flex-shrink:0"></ion-icon>
     </div>
+  </div>
 
-    <div class="card-head" data-animate="up" data-delay="300">
+  <!-- TANDA VITAL -->
+  <div class="section" style="padding-top:0">
+    <div class="card-head" data-animate="up" data-delay="100">
       <div class="card-head-text">
         <div class="card-head-title">Tanda Vital Terkini</div>
         <div class="card-head-sub">Data terakhir dari perangkat Anda</div>
       </div>
       <a class="card-head-action" href="monitoring.html" aria-label="Lihat detail tanda vital"><ion-icon name="arrow-forward-outline"></ion-icon></a>
     </div>
-    <div class="vital-grid" id="vital-grid-home" data-animate="up" data-delay="350" style="transition:all 0.3s ease;">
-      <div class="vital-card"><div class="v-icon">❤️</div><div class="v-label">Detak Jantung</div><div class="v-value"><span id="hr-v">--</span> <span class="v-unit">bpm</span></div><div class="v-status normal">● --</div><div class="v-sparkline" id="hr-sp"></div></div>
-      <div class="vital-card"><div class="v-icon">🩸</div><div class="v-label">SpO2</div><div class="v-value"><span id="spo2-v">--</span> <span class="v-unit">%</span></div><div class="v-status normal">● --</div><div class="v-sparkline" id="spo2-sp"></div></div>
-      <div class="vital-card"><div class="v-icon">🌡️</div><div class="v-label">Suhu Tubuh</div><div class="v-value"><span id="temp-v">--</span> <span class="v-unit">°C</span></div><div class="v-status normal">● --</div></div>
-      <div class="vital-card"><div class="v-icon">🚶</div><div class="v-label">Langkah</div><div class="v-value"><span id="steps-v">0</span></div><div class="v-status">● --</div></div>
+
+    <div class="vital-grid" id="vital-grid-home" data-animate="up" data-delay="150" style="transition:all 0.3s ease;">
+      <div class="vt">
+        <div class="vt-top">
+          <div class="icon-box icon-box-sm" style="--ib:201,74,66"><ion-icon name="heart-outline"></ion-icon></div>
+          <div class="vt-lab">Detak Jantung</div>
+        </div>
+        <div class="vt-val"><span id="hr-v">--</span><span class="u">bpm</span></div>
+        <div class="vt-spark" id="hr-sp"></div>
+      </div>
+
+      <div class="vt">
+        <div class="vt-top">
+          <div class="icon-box icon-box-sm" style="--ib:23,160,92"><ion-icon name="water-outline"></ion-icon></div>
+          <div class="vt-lab">SpO&#8322;</div>
+        </div>
+        <div class="vt-val"><span id="spo2-v">--</span><span class="u">%</span></div>
+        <div class="vt-spark" id="spo2-sp"></div>
+      </div>
+
+      <div class="vt">
+        <div class="vt-top">
+          <div class="icon-box icon-box-sm" style="--ib:176,125,30"><ion-icon name="thermometer-outline"></ion-icon></div>
+          <div class="vt-lab">Suhu Tubuh</div>
+        </div>
+        <div class="vt-val"><span id="temp-v">--</span><span class="u">&deg;C</span></div>
+      </div>
+
+      <div class="vt">
+        <div class="vt-top">
+          <div class="icon-box icon-box-sm" style="--ib:14,124,70"><ion-icon name="walk-outline"></ion-icon></div>
+          <div class="vt-lab">Langkah</div>
+        </div>
+        <div class="vt-val"><span id="steps-v">0</span></div>
+      </div>
     </div>
   </div>
 
-  <!-- APPOINTMENT -->
+  <!-- PERANGKAT -->
+  <div class="section" style="padding-top:0">
+    <!-- BLE Connection Alert — isinya statis, JS hanya mengatur display -->
+    <div id="ble-alert-card-home" style="display:none;margin-bottom:12px;">
+      <div class="flat-card" style="border-left:3px solid var(--danger);display:flex;align-items:center;gap:12px;">
+        <div class="icon-box icon-box-sm" style="--ib:201,74,66"><ion-icon name="alert-circle-outline"></ion-icon></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;color:var(--danger);font-size:0.84rem;">Perangkat Belum Terhubung</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:2px;">Hubungkan smartwatch untuk data real-time</div>
+        </div>
+        <button class="neu-btn neu-btn-sm" style="padding:6px 13px;font-size:0.68rem;white-space:nowrap;flex-shrink:0;" onclick="toggleBLEConnection()">Hubungkan</button>
+      </div>
+    </div>
+
+    <div class="dev-strip" id="watch-card" data-animate="up" data-delay="200" onclick="toggleBLEConnection()">
+      <div class="icon-box" id="watch-icon" style="--ib:124,124,130"><ion-icon name="watch-outline"></ion-icon></div>
+      <div style="flex:1;min-width:0;">
+        <div id="watch-name" style="font-weight:700;font-size:0.86rem;">HerboraTech Watch</div>
+        <div id="watch-status" style="font-size:0.7rem;color:var(--text-tertiary);margin-top:1px;">Tidak Terhubung</div>
+      </div>
+      <span id="watch-badge" class="neu-chip" style="background:rgba(201,74,66,0.12);color:#C94A42;">Hubungkan</span>
+    </div>
+  </div>
+
+  <!-- MENU CEPAT -->
+  <div class="section" style="padding-top:0">
+    <div class="card-head" data-animate="up" data-delay="250">
+      <div class="card-head-text">
+        <div class="card-head-title">Menu Cepat</div>
+        <div class="card-head-sub">Akses fitur yang sering dipakai</div>
+      </div>
+    </div>
+    <div class="qa-grid" data-animate="up" data-delay="300">
+      <div class="qa" onclick="nav('health-dashboard.html')"><div class="icon-box" style="--ib:14,124,70"><ion-icon name="grid-outline"></ion-icon></div><span class="qa-lab">Dashboard</span></div>
+      <div class="qa" onclick="nav('monitoring.html')"><div class="icon-box" style="--ib:201,74,66"><ion-icon name="pulse-outline"></ion-icon></div><span class="qa-lab">Monitoring</span></div>
+      <div class="qa" onclick="nav('consultation.html')"><div class="icon-box" style="--ib:23,160,92"><ion-icon name="chatbubbles-outline"></ion-icon></div><span class="qa-lab">Konsultasi</span></div>
+      <div class="qa" onclick="nav('herbal.html')"><div class="icon-box" style="--ib:14,124,70"><ion-icon name="leaf-outline"></ion-icon></div><span class="qa-lab">Jamu</span></div>
+      <div class="qa" onclick="nav('health-profile.html')"><div class="icon-box" style="--ib:23,160,92"><ion-icon name="person-circle-outline"></ion-icon></div><span class="qa-lab">Profil</span></div>
+      <div class="qa" onclick="nav('disease-risk.html')"><div class="icon-box" style="--ib:176,125,30"><ion-icon name="shield-checkmark-outline"></ion-icon></div><span class="qa-lab">Risk Score</span></div>
+      <div class="qa" onclick="nav('disease-encyclopedia.html')"><div class="icon-box" style="--ib:14,124,70"><ion-icon name="book-outline"></ion-icon></div><span class="qa-lab">Ensiklopedia</span></div>
+      <div class="qa" onclick="nav('research-evidence.html')"><div class="icon-box" style="--ib:23,160,92"><ion-icon name="flask-outline"></ion-icon></div><span class="qa-lab">Evidence Riset</span></div>
+      <div class="qa" onclick="nav('ai-chat.html')"><div class="icon-box" style="--ib:14,124,70"><ion-icon name="sparkles-outline"></ion-icon></div><span class="qa-lab">AI Health</span></div>
+      <div class="qa" onclick="nav('emergency-contact.html')"><div class="icon-box" style="--ib:201,74,66"><ion-icon name="alert-circle-outline"></ion-icon></div><span class="qa-lab">SOS</span></div>
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <div class="section" style="padding-top:0">
+    <div class="neu-carousel" id="ads-carousel" data-animate="up" data-delay="350">
+      <div class="carousel-track" id="ads-track"></div>
+      <div class="carousel-dots" id="ads-dots"><span class="dot active"></span></div>
+    </div>
+  </div>
+
+  <!-- JADWAL KONSULTASI -->
   <div class="section" style="padding-top:0">
     <div class="card-head" data-animate="up" data-delay="400">
       <div class="card-head-text">
@@ -196,9 +268,12 @@
         <div class="card-head-sub">Janji temu Anda yang akan datang</div>
       </div>
     </div>
-    <div class="neu-card" id="upcoming-consultation" data-animate="up" data-delay="450" style="display:flex;gap:16px;align-items:center;cursor:pointer">
-      <div class="neu-avatar" style="background:linear-gradient(135deg,#2F7D56,#39C57F)"><ion-icon name="person" style="font-size:1.2rem"></ion-icon></div>
-      <div style="flex:1"><div style="font-weight:600;font-size:0.88rem;">Memuat...</div><div style="font-size:0.72rem;color:var(--text-tertiary);margin-top:2px;">-</div></div>
+    <div class="flat-card" id="upcoming-consultation" data-animate="up" data-delay="430" style="display:flex;gap:14px;align-items:center;cursor:pointer;">
+      <div class="icon-box" style="--ib:14,124,70"><ion-icon name="person-outline"></ion-icon></div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:700;font-size:0.86rem;">Memuat...</div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);margin-top:2px;">&nbsp;</div>
+      </div>
       <ion-icon name="chevron-forward-outline" style="color:var(--text-muted)"></ion-icon>
     </div>
   </div>
@@ -211,21 +286,19 @@
         <div class="card-head-sub">Bantu kami menilai aplikasi ini</div>
       </div>
     </div>
-    <div class="neu-card" data-animate="up" data-delay="480" style="cursor:pointer;padding:20px;background:linear-gradient(135deg,rgba(47,125,86,0.04),rgba(14,124,70,0.04));border:1px solid rgba(14,124,70,0.12);" onclick="nav('questionnaire.html')">
+    <div class="flat-card" data-animate="up" data-delay="480" onclick="nav('questionnaire.html')" style="cursor:pointer;">
       <div style="display:flex;align-items:center;gap:14px;">
-        <div style="width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#2F7D56,#0E7C46);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <ion-icon name="clipboard-outline" style="font-size:1.5rem;color:#fff;"></ion-icon>
+        <div class="icon-box" style="--ib:14,124,70"><ion-icon name="clipboard-outline"></ion-icon></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;font-size:0.88rem;">Isi Kuesioner Evaluasi</div>
+          <div style="font-size:0.7rem;color:var(--text-tertiary);margin-top:2px;">TAM + SUS + UX &bull; 46 pertanyaan &bull; 10&ndash;15 menit</div>
         </div>
-        <div style="flex:1;">
-          <div style="font-weight:700;font-size:0.92rem;color:var(--text-primary);">Isi Kuesioner Evaluasi</div>
-          <div style="font-size:0.72rem;color:var(--text-tertiary);margin-top:3px;">TAM + SUS + UX &bull; 46 pertanyaan &bull; 10-15 menit</div>
-        </div>
-        <ion-icon name="chevron-forward-outline" style="color:var(--text-muted);font-size:1.2rem;"></ion-icon>
+        <ion-icon name="chevron-forward-outline" style="color:var(--text-muted);font-size:1.1rem;"></ion-icon>
       </div>
       <div style="display:flex;gap:8px;margin-top:14px;">
-        <span style="flex:1;text-align:center;padding:6px 0;border-radius:8px;background:rgba(47,125,86,0.08);font-size:0.65rem;font-weight:600;color:#2F7D56;">TAM</span>
-        <span style="flex:1;text-align:center;padding:6px 0;border-radius:8px;background:rgba(14,124,70,0.08);font-size:0.65rem;font-weight:600;color:#0E7C46;">SUS</span>
-        <span style="flex:1;text-align:center;padding:6px 0;border-radius:8px;background:rgba(14,124,70,0.08);font-size:0.65rem;font-weight:600;color:#0E7C46;">UX</span>
+        <span style="flex:1;text-align:center;padding:6px 0;border-radius:9px;background:rgba(14,124,70,0.09);font-size:0.64rem;font-weight:700;color:var(--primary-dark);">TAM</span>
+        <span style="flex:1;text-align:center;padding:6px 0;border-radius:9px;background:rgba(14,124,70,0.09);font-size:0.64rem;font-weight:700;color:var(--primary-dark);">SUS</span>
+        <span style="flex:1;text-align:center;padding:6px 0;border-radius:9px;background:rgba(14,124,70,0.09);font-size:0.64rem;font-weight:700;color:var(--primary-dark);">UX</span>
       </div>
     </div>
   </div>
@@ -238,9 +311,9 @@
         <div class="card-head-sub">Ringkasan otomatis dari data Anda</div>
       </div>
     </div>
-    <div class="neu-card" data-animate="up" data-delay="550" style="border-left:4px solid var(--accent);padding-left:20px;">
-      <p id="ai-insight-text" style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;"><strong style="color:var(--accent);">Memuat insight...</strong></p>
-      <button class="neu-btn neu-btn-sm" style="margin-top:12px;" onclick="nav('health-dashboard.html')"><ion-icon name="analytics-outline"></ion-icon> Lihat Detail</button>
+    <div class="flat-card" data-animate="up" data-delay="530" style="display:flex;gap:13px;align-items:flex-start;">
+      <div class="icon-box icon-box-sm" style="--ib:23,160,92"><ion-icon name="sparkles-outline"></ion-icon></div>
+      <p id="ai-insight-text" style="flex:1;font-size:0.8rem;color:var(--text-secondary);line-height:1.6;margin:0;">Menganalisis data Anda&hellip;</p>
     </div>
   </div>
 
