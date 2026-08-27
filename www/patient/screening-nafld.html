@@ -10,12 +10,12 @@
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
     :root {
-      --primary-nafld: #2F80ED;
+      --primary-nafld: #2C6E9B;
       --primary-nafld-dark: #1B4F72;
     }
     .app-header {
       background: linear-gradient(135deg, var(--primary-nafld) 0%, #56CCF2 100%);
-      box-shadow: 0 2px 16px rgba(47, 128, 237, 0.25);
+      box-shadow: 0 2px 16px rgba(44, 110, 155, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
@@ -45,7 +45,7 @@
     .step-dot.current {
       background: linear-gradient(135deg, var(--primary-nafld), #56CCF2);
       color: #fff; border-color: transparent;
-      box-shadow: 0 4px 12px rgba(47,128,237,0.4);
+      box-shadow: 0 4px 12px rgba(44,110,155,0.4);
       transform: scale(1.15);
     }
     .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
@@ -67,7 +67,7 @@
       background: linear-gradient(135deg, var(--primary-nafld), #56CCF2);
       color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
       font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 6px 18px rgba(47,128,237,0.3);
+      box-shadow: 0 6px 18px rgba(44,110,155,0.3);
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
 
@@ -95,14 +95,14 @@
     }
     .radio-opt:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(47,128,237,0.2);
+      box-shadow: 0 4px 12px rgba(44,110,155,0.2);
     }
     .radio-opt:active { transform: scale(0.98); }
     .radio-opt.selected {
       background: linear-gradient(135deg, var(--primary-nafld), #56CCF2);
       color: #fff;
       border-color: var(--primary-nafld);
-      box-shadow: 0 4px 14px rgba(47,128,237,0.4);
+      box-shadow: 0 4px 14px rgba(44,110,155,0.4);
     }
   </style>
 </head>
@@ -262,7 +262,7 @@
             </ul>
           </div>
 
-          <div class="neu-card" style="margin-bottom:14px;background:rgba(47, 122, 74, 0.05);border-left:4px solid #2F7A4A;">
+          <div class="neu-card" style="margin-bottom:14px;background:rgba(29, 79, 56, 0.05);border-left:4px solid #1D4F38;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="font-size:1.2rem;">🌿</span>
               <span style="font-size:0.85rem;font-weight:800;color:#1A5C38;">Rekomendasi Herbal</span>
@@ -396,18 +396,18 @@
         fib4Val.textContent = fib4.toFixed(2);
         if (fib4 < 1.30) {
           badge.textContent = 'LOW RISK';
-          badge.style.background = '#2F7A4A1A'; badge.style.color = '#2F7A4A';
+          badge.style.background = '#1D4F381A'; badge.style.color = '#1D4F38';
           desc.textContent = 'Indeks FIB-4 Anda rendah. Hati Anda kemungkinan besar dalam kondisi sehat (tanpa fibrosis).';
         } else if (fib4 <= 2.67) {
           badge.textContent = 'INDETERMINATE';
-          badge.style.background = '#E09F3E1A'; badge.style.color = '#E09F3E';
+          badge.style.background = '#8F60181A'; badge.style.color = '#8F6018';
           desc.textContent = 'Hasil Anda berada di zona tengah. Perlu evaluasi medis lebih lanjut untuk memastikan kondisi fibrosis hati.';
           medList.innerHTML = '<li>Rujuk ke dokter penyakit dalam untuk pemeriksaan USG Abdomen.</li><li>Lakukan tes fungsi hati (ALT/AST) berkala.</li>';
           herbalName.textContent = 'Kapsul Meniran-Temulawak';
           herbalDesc.textContent = 'Kombinasi meniran dan temulawak membantu regenerasi sel hati dan modulasi sistem imun.';
         } else {
           badge.textContent = 'HIGH RISK';
-          badge.style.background = '#EB57571A'; badge.style.color = '#EB5757';
+          badge.style.background = '#B23A341A'; badge.style.color = '#B23A34';
           desc.textContent = 'Risiko kerusakan jaringan hati terdeteksi TINGGI. Segera konsultasikan dengan dokter Spesialis Gastroenterologi (Hepatologist).';
           medList.innerHTML = '<li>⚠️ Segera ke spesialis Hepatologi.</li><li>Lakukan pemeriksaan FibroScan untuk melihat tingkat kekakuan hati.</li><li>Wajib menurunkan berat badan 7-10% secara bertahap.</li>';
           herbalName.textContent = 'Standardized Silymarin';

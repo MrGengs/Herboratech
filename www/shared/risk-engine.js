@@ -15,9 +15,9 @@ window.RiskEngine = {
   },
 
   RISK_COLOR: {
-    low: '#2F7A4A',
-    medium: '#E09F3E',
-    high: '#EB5757'
+    low: '#1D4F38',
+    medium: '#8F6018',
+    high: '#B23A34'
   },
 
   RISK_LABEL_ID: {

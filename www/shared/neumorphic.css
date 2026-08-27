@@ -3,11 +3,11 @@
    Soft UI · Organic Health · AIoT Wellness
    
    Color palette inspired by neumorphic education UI:
-   - Background:  #EAEFE8 (soft blue-gray)
-   - Shadow dark:  #cbd4c6
+   - Background:  #F1EDE4 (soft blue-gray)
+   - Shadow dark:  #d3ccbc
    - Shadow light: #FFFFFF
-   - Primary:      #5BA672 (natural green)
-   - Accent:       #2A9D8F (soft purple for AI features)
+   - Primary:      #2F6F4F (natural green)
+   - Accent:       #0C6F78 (soft purple for AI features)
    ═══════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -23,9 +23,9 @@ ion-icon {
 /* ── CSS Variables ── */
 :root {
   /* Neumorphic Base */
-  --bg: #EAEFE8;
-  --bg-dark: #D6DDD2;
-  --shadow-dark: #CBD4C6;
+  --bg: #F1EDE4;
+  --bg-dark: #DED8CA;
+  --shadow-dark: #D3CCBC;
   --shadow-light: #FFFFFF;
   
   /* Neumorphic Shadows */
@@ -36,33 +36,33 @@ ion-icon {
   --shadow-in-sm: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
   
   /* Primary Green */
-  --primary: #5BA672;
-  --primary-dark: #2F7A4A;
-  --primary-darker: #23583A;
-  --primary-light: #9CC9A9;
-  --primary-bg: rgba(91,166,114,0.15);
-  --primary-gradient: linear-gradient(135deg, #5BA672 0%, #2F7A4A 100%);
+  --primary: #2F6F4F;
+  --primary-dark: #1D4F38;
+  --primary-darker: #143726;
+  --primary-light: #8FB89F;
+  --primary-bg: rgba(47,111,79,0.15);
+  --primary-gradient: linear-gradient(135deg, #2F6F4F 0%, #1D4F38 100%);
   
   /* Accent Purple (AI features) */
-  --accent: #2A9D8F;
-  --accent-light: #45B5A6;
-  --accent-bg: rgba(42,157,143,0.12);
+  --accent: #0C6F78;
+  --accent-light: #2A9BA5;
+  --accent-bg: rgba(12,111,120,0.12);
   
   /* Semantic */
-  --danger: #EB5757;
-  --danger-bg: rgba(235,87,87,0.12);
-  --warning: #E09F3E;
-  --warning-bg: rgba(224,159,62,0.12);
-  --info: #2F80ED;
-  --info-bg: rgba(47,128,237,0.12);
-  --success: #2F7A4A;
-  --success-bg: rgba(47,122,74,0.12);
+  --danger: #B23A34;
+  --danger-bg: rgba(178,58,52,0.12);
+  --warning: #8F6018;
+  --warning-bg: rgba(143,96,24,0.12);
+  --info: #2C6E9B;
+  --info-bg: rgba(44,110,155,0.12);
+  --success: #1D4F38;
+  --success-bg: rgba(29,79,56,0.12);
   
   /* Text - Accessible contrast ratios */
-  --text-primary: #2D3748;    /* 10.3:1 di atas --bg #EAEFE8 */
-  --text-secondary: #4A5568;  /* 6.5:1 */
-  --text-tertiary: #6B7B8D;   /* 3.7:1 - hanya lolos AA untuk teks besar, bukan 4.5:1 */
-  --text-muted: #8896A6;      /* decorative only */
+  --text-primary: #2A2E27;    /* 11.8:1 di atas --bg #F1EDE4 */
+  --text-secondary: #4A4F45;  /* 7.2:1 */
+  --text-tertiary: #6B7063;   /* 4.4:1 - lolos AA untuk teks besar; nyaris 4.5:1 */
+  --text-muted: #8A8F82;      /* decorative only */
   --text-on-primary: #FFFFFF;
   
   /* Spacing */
@@ -245,7 +245,7 @@ ul, ol { list-style: none; }
   border-radius: var(--r-lg);
   padding: var(--sp-24);
   color: var(--text-on-primary);
-  box-shadow: 6px 6px 16px rgba(47,122,74,0.3), -4px -4px 12px var(--shadow-light);
+  box-shadow: 6px 6px 16px rgba(29,79,56,0.3), -4px -4px 12px var(--shadow-light);
   position: relative;
   overflow: hidden;
 }
@@ -283,23 +283,23 @@ ul, ol { list-style: none; }
 .neu-btn-primary {
   background: var(--primary-gradient);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(47,122,74,0.35), -3px -3px 8px var(--shadow-light);
+  box-shadow: 4px 4px 10px rgba(29,79,56,0.35), -3px -3px 8px var(--shadow-light);
   padding: var(--sp-12) var(--sp-32);
 }
 
-.neu-btn-primary:active { box-shadow: inset 3px 3px 6px rgba(35,88,58,0.4), inset -3px -3px 6px rgba(156,201,169,0.3); }
+.neu-btn-primary:active { box-shadow: inset 3px 3px 6px rgba(20,55,38,0.4), inset -3px -3px 6px rgba(143,184,159,0.3); }
 .neu-btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
 
 .neu-btn-accent {
-  background: linear-gradient(135deg, #2A9D8F, #45B5A6);
+  background: linear-gradient(135deg, #0C6F78, #2A9BA5);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(42,157,143,0.3), -3px -3px 8px var(--shadow-light);
+  box-shadow: 4px 4px 10px rgba(12,111,120,0.3), -3px -3px 8px var(--shadow-light);
 }
 
 .neu-btn-danger {
-  background: linear-gradient(135deg, #EB5757, #FF7B7B);
+  background: linear-gradient(135deg, #B23A34, #FF7B7B);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(235,87,87,0.3), -3px -3px 8px var(--shadow-light);
+  box-shadow: 4px 4px 10px rgba(178,58,52,0.3), -3px -3px 8px var(--shadow-light);
 }
 
 .neu-btn-block { width: 100%; }
@@ -756,7 +756,7 @@ ul, ol { list-style: none; }
 .neu-tab.active {
   color: #fff;
   background: var(--primary-gradient);
-  box-shadow: 3px 3px 8px rgba(47,122,74,0.3);
+  box-shadow: 3px 3px 8px rgba(29,79,56,0.3);
 }
 
 /* ═══════════════════════════
@@ -777,7 +777,7 @@ ul, ol { list-style: none; }
   color: #fff;
   border-bottom-right-radius: 4px;
   margin-left: auto;
-  box-shadow: 3px 3px 8px rgba(47,122,74,0.25);
+  box-shadow: 3px 3px 8px rgba(29,79,56,0.25);
 }
 
 .chat-bubble.received {
@@ -882,7 +882,7 @@ ul, ol { list-style: none; }
   position: fixed;
   left: 0;
   top: 0;
-  background: #2D3748;
+  background: #2A2E27;
   padding: var(--sp-24);
   display: flex;
   flex-direction: column;
@@ -1001,7 +1001,7 @@ ul, ol { list-style: none; }
   border-bottom: 1px solid rgba(200,208,231,0.4);
 }
 
-.neu-table tbody tr:hover { background: rgba(91,166,114,0.05); }
+.neu-table tbody tr:hover { background: rgba(47,111,79,0.05); }
 
 /* ═══════════════════════════
    ANIMATIONS

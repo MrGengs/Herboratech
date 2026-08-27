@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(91,166,114,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(47,111,79,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #5BA672 !important; }
+    .sidebar-logo span { color: #2F6F4F !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #5BA672; background: rgba(91,166,114,0.08); }
-    .sidebar-item.active { color: #5BA672 !important; background: rgba(91,166,114,0.15); border-left: 3px solid #5BA672; }
+    .sidebar-item:hover { color: #2F6F4F; background: rgba(47,111,79,0.08); }
+    .sidebar-item.active { color: #2F6F4F !important; background: rgba(47,111,79,0.15); border-left: 3px solid #2F6F4F; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
 
     .detail-layout { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 24px; align-items: start; }
@@ -32,14 +32,14 @@
     .bar-chart-wrap { margin-top: 24px; }
     .bar-chart { display: flex; align-items: flex-end; gap: 10px; height: 140px; padding: 0 4px; }
     .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-    .bar { width: 100%; border-radius: 6px 6px 0 0; background: linear-gradient(180deg,#5BA672,#2F7A4A); min-height: 4px; transition: height 0.4s ease; box-shadow: var(--shadow-out-sm); }
+    .bar { width: 100%; border-radius: 6px 6px 0 0; background: linear-gradient(180deg,#2F6F4F,#1D4F38); min-height: 4px; transition: height 0.4s ease; box-shadow: var(--shadow-out-sm); }
     .bar-label { font-size: 0.7rem; color: var(--text-tertiary); }
     .bar-val { font-size: 0.7rem; font-weight: 700; color: var(--primary-dark); }
     .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 
     /* Banner preview */
     .banner-preview-card { border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-out); }
-    .banner-img { height: 160px; background: linear-gradient(135deg,#2A9D8F 0%,#2F80ED 50%,#56CCF2 100%); display: flex; align-items: center; justify-content: center; position: relative; }
+    .banner-img { height: 160px; background: linear-gradient(135deg,#0C6F78 0%,#2C6E9B 50%,#56CCF2 100%); display: flex; align-items: center; justify-content: center; position: relative; }
     .banner-img-text { position: absolute; text-align: center; color: #fff; }
     .banner-img-text h2 { font-size: 1.2rem; font-weight: 800; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
     .banner-img-text p { font-size: 0.8rem; opacity: 0.85; margin-top: 4px; }
@@ -81,7 +81,7 @@
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
         <h1>Detail Kampanye</h1>
         <span id="camp-title-topbar" style="font-size:1rem;font-weight:600;color:var(--text-secondary);">Memuat...</span>
-        <span class="neu-chip" id="status-chip" style="background:#E8F8F0;color:#2F7A4A;font-size:0.78rem;font-weight:600;">
+        <span class="neu-chip" id="status-chip" style="background:#E8F8F0;color:#1D4F38;font-size:0.78rem;font-weight:600;">
           <ion-icon name="ellipse" style="font-size:0.6rem;vertical-align:middle;margin-right:3px;"></ion-icon><span id="status-label">Aktif</span>
         </span>
       </div>
@@ -126,7 +126,7 @@
               <div style="font-weight:700;font-size:0.95rem;">Performa 7 Hari Terakhir</div>
               <div style="font-size:0.78rem;color:var(--text-tertiary);margin-top:2px;">Klik harian kampanye</div>
             </div>
-            <span class="neu-chip" style="font-size:0.72rem;background:rgba(91,166,114,0.1);color:var(--primary-dark);">14 – 20 Mar 2026</span>
+            <span class="neu-chip" style="font-size:0.72rem;background:rgba(47,111,79,0.1);color:var(--primary-dark);">14 – 20 Mar 2026</span>
           </div>
 
           <div class="bar-chart" id="bar-chart">
@@ -220,7 +220,7 @@
               <span style="font-weight:700;color:var(--primary-dark);">62.6%</span>
             </div>
             <div class="neu-progress">
-              <div class="neu-progress-fill" style="width:62.6%;background:linear-gradient(90deg,#2F7A4A,#5BA672)"></div>
+              <div class="neu-progress-fill" style="width:62.6%;background:linear-gradient(90deg,#1D4F38,#2F6F4F)"></div>
             </div>
             <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-top:4px;">
               <span>Rp 7,82 jt terpakai</span>
@@ -287,7 +287,7 @@ function formatCurrency(val) {
     const statusLabel = document.getElementById('status-label');
     const statusChip = document.getElementById('status-chip');
     const statusMap = {
-      active: { label: 'Aktif', bg: '#E8F8F0', color: '#2F7A4A' },
+      active: { label: 'Aktif', bg: '#E8F8F0', color: '#1D4F38' },
       closed: { label: 'Ditutup', bg: 'var(--warning-bg)', color: 'var(--warning)' },
       draft:  { label: 'Draft',  bg: 'var(--info-bg)',    color: 'var(--info)' }
     };
@@ -347,14 +347,14 @@ function formatCurrency(val) {
       const valLabel = document.createElement('div');
       valLabel.style.fontSize = '0.68rem';
       valLabel.style.fontWeight = '700';
-      valLabel.style.color = '#2F7A4A';
+      valLabel.style.color = '#1D4F38';
       valLabel.textContent = val;
 
       const bar = document.createElement('div');
       bar.style.width = '100%';
       bar.style.height = heightPct + '%';
       bar.style.borderRadius = '6px 6px 0 0';
-      bar.style.background = i === 5 || i === 6 ? 'linear-gradient(180deg,#5BA672,#2F7A4A)' : 'linear-gradient(180deg,#cbd4c6,#b0b9cc)';
+      bar.style.background = i === 5 || i === 6 ? 'linear-gradient(180deg,#2F6F4F,#1D4F38)' : 'linear-gradient(180deg,#d3ccbc,#b0b9cc)';
       bar.style.minHeight = '4px';
       bar.style.transition = 'height 0.5s ease';
 
@@ -366,7 +366,7 @@ function formatCurrency(val) {
       lbl.style.flex = '1';
       lbl.style.textAlign = 'center';
       lbl.style.fontSize = '0.7rem';
-      lbl.style.color = '#8896A6';
+      lbl.style.color = '#8A8F82';
       lbl.textContent = labels[i];
       labelsEl.appendChild(lbl);
     });

@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(91,166,114,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(47,111,79,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #5BA672 !important; }
+    .sidebar-logo span { color: #2F6F4F !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #5BA672; background: rgba(91,166,114,0.08); }
-    .sidebar-item.active { color: #5BA672 !important; background: rgba(91,166,114,0.15); border-left: 3px solid #5BA672; }
+    .sidebar-item:hover { color: #2F6F4F; background: rgba(47,111,79,0.08); }
+    .sidebar-item.active { color: #2F6F4F !important; background: rgba(47,111,79,0.15); border-left: 3px solid #2F6F4F; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
 
     .article-layout { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 24px; align-items: start; }
@@ -24,23 +24,23 @@
 
     .title-input { width: 100%; border: none; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 14px 18px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--text-primary); outline: none; box-sizing: border-box; }
 
-    .neu-select { width: 100%; border: none; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 12px 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: var(--text-primary); outline: none; box-sizing: border-box; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7B8D' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+    .neu-select { width: 100%; border: none; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 12px 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: var(--text-primary); outline: none; box-sizing: border-box; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7063' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
 
     .tags-input { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 14px; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); min-height: 46px; align-items: center; cursor: text; }
-    .tag-chip { background: rgba(91,166,114,0.15); color: var(--primary-dark); font-size: 0.78rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; }
+    .tag-chip { background: rgba(47,111,79,0.15); color: var(--primary-dark); font-size: 0.78rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; }
     .tag-chip span { cursor: pointer; opacity: 0.6; }
     .tag-chip span:hover { opacity: 1; }
     .tag-text-input { border: none; background: transparent; outline: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; color: var(--text-primary); min-width: 80px; }
 
     .wysiwyg-toolbar { display: flex; gap: 4px; padding: 10px 12px; border-radius: 12px 12px 0 0; box-shadow: var(--shadow-out-sm); background: var(--bg); flex-wrap: wrap; }
     .toolbar-btn { border: none; background: transparent; border-radius: 6px; padding: 5px 10px; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; font-family: 'Plus Jakarta Sans', sans-serif; }
-    .toolbar-btn:hover { background: rgba(91,166,114,0.12); color: var(--primary-dark); }
+    .toolbar-btn:hover { background: rgba(47,111,79,0.12); color: var(--primary-dark); }
     .toolbar-separator { width: 1px; background: var(--shadow-dark); margin: 2px 4px; }
 
     .content-textarea { width: 100%; border: none; border-radius: 0 0 12px 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; color: var(--text-primary); resize: vertical; min-height: 300px; outline: none; box-sizing: border-box; line-height: 1.7; }
 
-    .drop-zone { border: 2px dashed rgba(91,166,114,0.4); border-radius: 14px; overflow: hidden; cursor: pointer; }
-    .drop-zone-preview { height: 140px; background: linear-gradient(135deg,#5BA672 0%,#2F7A4A 60%,#1A7A40 100%); display: flex; align-items: center; justify-content: center; position: relative; }
+    .drop-zone { border: 2px dashed rgba(47,111,79,0.4); border-radius: 14px; overflow: hidden; cursor: pointer; }
+    .drop-zone-preview { height: 140px; background: linear-gradient(135deg,#2F6F4F 0%,#1D4F38 60%,#1A7A40 100%); display: flex; align-items: center; justify-content: center; position: relative; }
     .drop-zone-preview-text { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.5); color: #fff; font-size: 0.72rem; padding: 3px 8px; border-radius: 6px; }
     .drop-zone-footer { padding: 10px 14px; text-align: center; }
     .drop-zone-footer p { font-size: 0.78rem; color: var(--text-tertiary); }
@@ -60,7 +60,7 @@
     .status-step:last-child::before { display: none; }
     .status-dot { width: 24px; height: 24px; border-radius: 50%; margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; position: relative; z-index: 1; }
     .status-dot.done { background: var(--primary-dark); color: #fff; }
-    .status-dot.current { background: linear-gradient(135deg,#5BA672,#2F7A4A); color: #fff; box-shadow: 0 0 0 3px rgba(91,166,114,0.3); }
+    .status-dot.current { background: linear-gradient(135deg,#2F6F4F,#1D4F38); color: #fff; box-shadow: 0 0 0 3px rgba(47,111,79,0.3); }
     .status-dot.pending { background: var(--shadow-dark); color: var(--text-tertiary); }
     .status-label { font-size: 0.7rem; color: var(--text-tertiary); }
   </style>
@@ -92,7 +92,7 @@
     <div class="admin-topbar" data-animate="up">
       <div style="display:flex;align-items:center;gap:16px;">
         <h1>Edit Artikel</h1>
-        <span id="status-badge" class="neu-chip" style="background:#E8F8F0;color:#2F7A4A;font-size:0.78rem;font-weight:600;">
+        <span id="status-badge" class="neu-chip" style="background:#E8F8F0;color:#1D4F38;font-size:0.78rem;font-weight:600;">
           <ion-icon name="checkmark-circle" style="vertical-align:middle;margin-right:3px;"></ion-icon>Published
         </span>
       </div>
@@ -225,7 +225,7 @@ Berikut adalah 5 manfaat utama temulawak yang telah didukung oleh penelitian ilm
             <textarea class="excerpt-textarea">Temulawak mengandung curcumin dan xanthorrhizol yang terbukti bermanfaat untuk kesehatan hati, anti-inflamasi, dan meningkatkan daya tahan tubuh.</textarea>
           </div>
 
-          <div style="padding:12px;background:rgba(91,166,114,0.06);border-radius:10px;font-size:0.78rem;color:var(--text-tertiary);">
+          <div style="padding:12px;background:rgba(47,111,79,0.06);border-radius:10px;font-size:0.78rem;color:var(--text-tertiary);">
             <div style="font-weight:600;color:var(--text-secondary);margin-bottom:6px;">Statistik Artikel</div>
             <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>Views</span><span style="font-weight:600;color:var(--primary-dark);" id="stat-views">4,821</span></div>
             <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>Dibagikan</span><span style="font-weight:600;color:var(--primary-dark);" id="stat-shares">312</span></div>
@@ -284,7 +284,7 @@ function applyStatusUI(status) {
 
   if (status === 'published') {
     badge.style.background = '#E8F8F0';
-    badge.style.color = '#2F7A4A';
+    badge.style.color = '#1D4F38';
     badge.innerHTML = '<ion-icon name="checkmark-circle" style="vertical-align:middle;margin-right:3px;"></ion-icon>Published';
     stepDraft.className = 'status-dot done';
     stepDraft.innerHTML = '<ion-icon name="checkmark-outline" style="font-size:0.8rem;"></ion-icon>';
@@ -295,8 +295,8 @@ function applyStatusUI(status) {
     stepPublishedLabel.style.color = 'var(--primary-dark)';
     stepPublishedLabel.style.fontWeight = '600';
   } else if (status === 'review') {
-    badge.style.background = 'rgba(47,128,237,0.1)';
-    badge.style.color = '#2F80ED';
+    badge.style.background = 'rgba(44,110,155,0.1)';
+    badge.style.color = '#2C6E9B';
     badge.innerHTML = '<ion-icon name="time-outline" style="vertical-align:middle;margin-right:3px;"></ion-icon>Review';
     stepDraft.className = 'status-dot done';
     stepDraft.innerHTML = '<ion-icon name="checkmark-outline" style="font-size:0.8rem;"></ion-icon>';
@@ -305,8 +305,8 @@ function applyStatusUI(status) {
     stepPublished.className = 'status-dot pending';
   } else {
     // draft
-    badge.style.background = 'rgba(224,159,62,0.12)';
-    badge.style.color = '#E09F3E';
+    badge.style.background = 'rgba(143,96,24,0.12)';
+    badge.style.color = '#8F6018';
     badge.innerHTML = '<ion-icon name="document-outline" style="vertical-align:middle;margin-right:3px;"></ion-icon>Draft';
     stepDraft.className = 'status-dot current';
     stepDraft.innerHTML = '<ion-icon name="document-outline" style="font-size:0.8rem;"></ion-icon>';

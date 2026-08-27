@@ -53,10 +53,10 @@
       border-color: #1A5C38;
     }
     .step-dot.current {
-      background: linear-gradient(135deg, #2F7A4A, #5BA672);
+      background: linear-gradient(135deg, #1D4F38, #2F6F4F);
       color: #fff;
       border-color: transparent;
-      box-shadow: 0 4px 12px rgba(47,122,74,0.5);
+      box-shadow: 0 4px 12px rgba(29,79,56,0.5);
       transform: scale(1.12);
     }
     .step-line {
@@ -115,7 +115,7 @@
     }
     .doc-bubble-avatar {
       width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-      background: linear-gradient(135deg, #2F7A4A, #5BA672);
+      background: linear-gradient(135deg, #1D4F38, #2F6F4F);
       display: flex; align-items: center; justify-content: center;
       font-size: 0.75rem; font-weight: 800; color: #fff;
     }
@@ -184,7 +184,7 @@
       width: 100%;
       height: 6px;
       border-radius: 3px;
-      background: linear-gradient(to right, #5BA672 0%, #E09F3E 50%, #EB5757 100%);
+      background: linear-gradient(to right, #2F6F4F 0%, #8F6018 50%, #B23A34 100%);
       outline: none;
     }
     .pain-slider::-webkit-slider-thumb {
@@ -254,7 +254,7 @@
     }
     .btn-proceed {
       display: none;
-      background: linear-gradient(135deg, #2F7A4A, #5BA672);
+      background: linear-gradient(135deg, #1D4F38, #2F6F4F);
       color: #fff;
       border: none;
       width: 100%;
@@ -264,7 +264,7 @@
       font-size: 0.92rem;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 6px 18px rgba(47,122,74,0.4);
+      box-shadow: 0 6px 18px rgba(29,79,56,0.4);
       align-items: center; justify-content: center; gap: 8px;
     }
     .btn-proceed.show { display: flex; }
@@ -294,9 +294,9 @@
       transition: all 0.2s;
     }
     .check-box.checked {
-      background: linear-gradient(135deg, #2F7A4A, #5BA672);
+      background: linear-gradient(135deg, #1D4F38, #2F6F4F);
       border-color: transparent;
-      box-shadow: 0 3px 8px rgba(47,122,74,0.35);
+      box-shadow: 0 3px 8px rgba(29,79,56,0.35);
     }
     .check-box.checked::after {
       content: '✓';
@@ -364,7 +364,7 @@
           <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">Pusing dan sakit kepala sudah 3 hari, disertai mual ringan. Tidak ada demam. Tidur kurang nyenyak 2 minggu terakhir.</p>
         </div>
 
-        <div class="neu-card" style="margin-top:14px;background:var(--success-bg);border:1px solid rgba(47,122,74,0.2);" data-animate="up" data-delay="200">
+        <div class="neu-card" style="margin-top:14px;background:var(--success-bg);border:1px solid rgba(29,79,56,0.2);" data-animate="up" data-delay="200">
           <div style="display:flex;align-items:center;gap:8px;">
             <ion-icon name="time-outline" style="color:var(--primary-dark);font-size:1.2rem;"></ion-icon>
             <span style="font-size:0.78rem;color:var(--primary-dark);font-weight:600;">Dokter sedang mereview data Anda...</span>
@@ -417,7 +417,7 @@
       <div class="section">
         <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;" data-animate="up">Pemeriksaan Vital Sign</h3>
 
-        <div class="neu-card" style="background:var(--info-bg);border:1px solid rgba(47,128,237,0.2);margin-bottom:16px;" data-animate="up" data-delay="80">
+        <div class="neu-card" style="background:var(--info-bg);border:1px solid rgba(44,110,155,0.2);margin-bottom:16px;" data-animate="up" data-delay="80">
           <div style="display:flex;align-items:center;gap:10px;">
             <ion-icon name="watch-outline" style="font-size:1.5rem;color:var(--info);"></ion-icon>
             <div>
@@ -428,22 +428,22 @@
         </div>
 
         <div class="live-vital-grid" data-animate="up" data-delay="120">
-          <div class="live-vital-card" style="border-top:3px solid #EB5757;">
+          <div class="live-vital-card" style="border-top:3px solid #B23A34;">
             <div class="lvc-label">Detak Jantung</div>
             <div class="lvc-val" id="s3-hr">88</div>
             <div class="lvc-unit">bpm</div>
           </div>
-          <div class="live-vital-card" style="border-top:3px solid #2F80ED;">
+          <div class="live-vital-card" style="border-top:3px solid #2C6E9B;">
             <div class="lvc-label">SpO2</div>
             <div class="lvc-val" id="s3-spo2">97</div>
             <div class="lvc-unit">%</div>
           </div>
-          <div class="live-vital-card" style="border-top:3px solid #E09F3E;">
+          <div class="live-vital-card" style="border-top:3px solid #8F6018;">
             <div class="lvc-label">Suhu Tubuh</div>
             <div class="lvc-val" id="s3-temp">36.8</div>
             <div class="lvc-unit">°C</div>
           </div>
-          <div class="live-vital-card" style="border-top:3px solid #2F7A4A;">
+          <div class="live-vital-card" style="border-top:3px solid #1D4F38;">
             <div class="lvc-label">Laju Napas</div>
             <div class="lvc-val" id="s3-rr">16</div>
             <div class="lvc-unit">x/mnt</div>
@@ -456,7 +456,7 @@
             <span style="font-size:0.78rem;font-weight:700;color:var(--primary-dark);" id="timerDisplay">1:45 / 2:00</span>
           </div>
           <div class="neu-progress">
-            <div class="neu-progress-fill" id="timerBar" style="width:87%;background:linear-gradient(90deg,#2F7A4A,#5BA672);"></div>
+            <div class="neu-progress-fill" id="timerBar" style="width:87%;background:linear-gradient(90deg,#1D4F38,#2F6F4F);"></div>
           </div>
           <p style="font-size:0.68rem;color:var(--text-muted);margin-top:8px;">Minimal 2 menit untuk data HRV yang akurat</p>
         </div>
@@ -508,22 +508,22 @@
         <div class="body-diagram" data-animate="up" data-delay="140">
           <svg width="120" height="200" viewBox="0 0 120 200">
             <!-- Head -->
-            <circle cx="60" cy="25" r="20" fill="none" stroke="#4A5568" stroke-width="2"/>
+            <circle cx="60" cy="25" r="20" fill="none" stroke="#4A4F45" stroke-width="2"/>
             <!-- Neck -->
-            <rect x="53" y="44" width="14" height="10" fill="none" stroke="#4A5568" stroke-width="2" rx="3"/>
+            <rect x="53" y="44" width="14" height="10" fill="none" stroke="#4A4F45" stroke-width="2" rx="3"/>
             <!-- Body -->
-            <rect x="35" y="54" width="50" height="65" fill="none" stroke="#4A5568" stroke-width="2" rx="6"/>
+            <rect x="35" y="54" width="50" height="65" fill="none" stroke="#4A4F45" stroke-width="2" rx="6"/>
             <!-- Left arm -->
-            <rect x="18" y="56" width="16" height="50" fill="none" stroke="#4A5568" stroke-width="2" rx="6"/>
+            <rect x="18" y="56" width="16" height="50" fill="none" stroke="#4A4F45" stroke-width="2" rx="6"/>
             <!-- Right arm -->
-            <rect x="86" y="56" width="16" height="50" fill="none" stroke="#4A5568" stroke-width="2" rx="6"/>
+            <rect x="86" y="56" width="16" height="50" fill="none" stroke="#4A4F45" stroke-width="2" rx="6"/>
             <!-- Left leg -->
-            <rect x="38" y="120" width="18" height="65" fill="none" stroke="#4A5568" stroke-width="2" rx="6"/>
+            <rect x="38" y="120" width="18" height="65" fill="none" stroke="#4A4F45" stroke-width="2" rx="6"/>
             <!-- Right leg -->
-            <rect x="64" y="120" width="18" height="65" fill="none" stroke="#4A5568" stroke-width="2" rx="6"/>
+            <rect x="64" y="120" width="18" height="65" fill="none" stroke="#4A4F45" stroke-width="2" rx="6"/>
             <!-- Pain marker - head area -->
-            <circle cx="60" cy="25" r="8" fill="rgba(235,87,87,0.3)" stroke="#EB5757" stroke-width="1.5"/>
-            <text x="60" y="29" text-anchor="middle" font-size="8" fill="#EB5757" font-weight="bold">!</text>
+            <circle cx="60" cy="25" r="8" fill="rgba(178,58,52,0.3)" stroke="#B23A34" stroke-width="1.5"/>
+            <text x="60" y="29" text-anchor="middle" font-size="8" fill="#B23A34" font-weight="bold">!</text>
           </svg>
         </div>
 
@@ -550,7 +550,7 @@
       <div class="section">
         <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;" data-animate="up">Auskultasi</h3>
 
-        <div class="neu-card" style="background:var(--warning-bg);border:1px solid rgba(224,159,62,0.25);text-align:center;" data-animate="up" data-delay="80">
+        <div class="neu-card" style="background:var(--warning-bg);border:1px solid rgba(143,96,24,0.25);text-align:center;" data-animate="up" data-delay="80">
           <ion-icon name="ear-outline" style="font-size:2.5rem;color:var(--warning);"></ion-icon>
           <div style="font-size:0.88rem;font-weight:700;color:var(--warning);margin:8px 0 4px;">Memerlukan Digital Stethoscope</div>
           <p style="font-size:0.75rem;color:var(--text-tertiary);line-height:1.5;">Fitur auskultasi digital memerlukan aksesori digital stethoscope yang terhubung via Bluetooth. Tanpa perangkat ini, langkah ini dapat dilewati.</p>
@@ -662,7 +662,7 @@
         </div>
 
         <div id="doneState" style="display:none;">
-          <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#2F7A4A,#5BA672);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 24px rgba(47,122,74,0.4);">
+          <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#1D4F38,#2F6F4F);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 24px rgba(29,79,56,0.4);">
             <ion-icon name="checkmark-outline" style="font-size:2.5rem;color:#fff;"></ion-icon>
           </div>
           <h3 style="font-size:1.1rem;font-weight:800;color:var(--primary-dark);margin-bottom:8px;">Hasil Siap!</h3>

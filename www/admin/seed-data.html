@@ -13,13 +13,13 @@
     .seed-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
     .seed-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: var(--font); font-size: 0.9rem; font-weight: 700; cursor: pointer; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
     .seed-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .seed-btn.primary { background: linear-gradient(135deg, #2F7A4A, #5BA672); color: #fff; box-shadow: 0 4px 16px rgba(47,122,74,0.35); }
+    .seed-btn.primary { background: linear-gradient(135deg, #1D4F38, #2F6F4F); color: #fff; box-shadow: 0 4px 16px rgba(29,79,56,0.35); }
     .seed-btn.secondary { background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); }
     .seed-btn:hover:not(:disabled) { transform: translateY(-2px); }
     .log-area { background: #1a1a2e; border-radius: 12px; padding: 16px; margin-top: 20px; max-height: 300px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.75rem; line-height: 1.6; }
     .log-area .log-line { margin-bottom: 4px; }
-    .log-area .success { color: #5BA672; }
-    .log-area .error { color: #EB5757; }
+    .log-area .success { color: #2F6F4F; }
+    .log-area .error { color: #B23A34; }
     .log-area .info { color: #56CCF2; }
     .log-area .warn { color: #F2C94C; }
   </style>
@@ -32,7 +32,7 @@
     Halaman ini untuk memasukkan data demo ke Firestore. Gunakan untuk testing dan demo ke klien.
   </div>
 
-  <button class="seed-btn primary" id="seedAllBtn" onclick="seedAllAccounts()" style="background:linear-gradient(135deg,#2F7A4A,#5BA672);font-size:1rem;">
+  <button class="seed-btn primary" id="seedAllBtn" onclick="seedAllAccounts()" style="background:linear-gradient(135deg,#1D4F38,#2F6F4F);font-size:1rem;">
     🚀 SEED SEMUA AKUN DEMO (Admin + Dokter + Pasien)
   </button>
 
@@ -50,7 +50,7 @@
     Buat Sample Konsultasi
   </button>
 
-  <button class="seed-btn primary" id="seedHerbalBtn" onclick="seedHerbalDatabase()" style="background:linear-gradient(135deg,#2F7A4A,#1A5C38);">
+  <button class="seed-btn primary" id="seedHerbalBtn" onclick="seedHerbalDatabase()" style="background:linear-gradient(135deg,#1D4F38,#1A5C38);">
     🌿 Seed Database Jamu (12 tanaman + 5 formula berbasis riset)
   </button>
 
@@ -62,7 +62,7 @@
     👥 Seed Akun Tim Siswa + Super Admin Mentor
   </button>
 
-  <button class="seed-btn primary" id="seedGeminiKeysBtn" onclick="seedGeminiApiKeys()" style="background:linear-gradient(135deg,#2A9D8F,#A78BFA);">
+  <button class="seed-btn primary" id="seedGeminiKeysBtn" onclick="seedGeminiApiKeys()" style="background:linear-gradient(135deg,#0C6F78,#A78BFA);">
     🔑 Seed 10 Gemini API Keys
   </button>
 

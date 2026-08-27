@@ -11,18 +11,18 @@
   <style>
     .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
     .app-header .logo { color: #fff; }
-    .app-header .logo span { color: #5BA672; }
+    .app-header .logo span { color: #2F6F4F; }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
     .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
     .app-header > div[style*="font-weight:700"] { color: #fff; }
     .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
     .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
     .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
-    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(47,122,74,0.5)); }
-    .vital-grid .vital-card:nth-child(1) { border-top: 3px solid #EB5757; }
-    .vital-grid .vital-card:nth-child(2) { border-top: 3px solid #2F80ED; }
-    .vital-grid .vital-card:nth-child(3) { border-top: 3px solid #E09F3E; }
-    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #2F7A4A; }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(29,79,56,0.5)); }
+    .vital-grid .vital-card:nth-child(1) { border-top: 3px solid #B23A34; }
+    .vital-grid .vital-card:nth-child(2) { border-top: 3px solid #2C6E9B; }
+    .vital-grid .vital-card:nth-child(3) { border-top: 3px solid #8F6018; }
+    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #1D4F38; }
   </style>
 </head>
 <body>
@@ -48,9 +48,9 @@
   <div id="realtime" class="tab-panel">
     <!-- BLE Connection Alert -->
     <div id="ble-alert-card" class="section" style="display:none;padding-bottom:0;">
-      <div class="neu-card" style="background:linear-gradient(135deg,rgba(235,87,87,0.1),rgba(255,107,107,0.05));border-left:4px solid #EB5757;padding:16px;">
+      <div class="neu-card" style="background:linear-gradient(135deg,rgba(178,58,52,0.1),rgba(255,107,107,0.05));border-left:4px solid #B23A34;padding:16px;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <ion-icon name="alert-circle-outline" style="font-size:1.4rem;color:#EB5757;flex-shrink:0;"></ion-icon>
+          <ion-icon name="alert-circle-outline" style="font-size:1.4rem;color:#B23A34;flex-shrink:0;"></ion-icon>
           <div style="flex:1;">
             <div style="font-weight:600;color:var(--danger);font-size:0.88rem;">Perangkat Belum Terhubung</div>
             <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:2px;">Hubungkan smartwatch untuk monitoring real-time</div>
@@ -118,7 +118,7 @@
       <div class="section-header"><span class="section-title">🤖 Rekomendasi AI</span></div>
       <div class="neu-card" data-animate="up" data-delay="350" style="background:var(--accent-bg);border-left:4px solid var(--accent);">
         <p id="ai-recommendation-text" style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;"><strong style="color:var(--accent);">Hubungkan smartwatch Anda</strong> untuk mendapatkan rekomendasi AI berdasarkan data vital sign real-time.</p>
-        <button class="neu-btn-sm neu-btn-accent" style="margin-top:12px;font-size:0.72rem;padding:6px 16px;border-radius:20px;color:#fff;background:linear-gradient(135deg,#2A9D8F,#45B5A6);box-shadow:none;" onclick="nav('device.html')">Hubungkan Perangkat →</button>
+        <button class="neu-btn-sm neu-btn-accent" style="margin-top:12px;font-size:0.72rem;padding:6px 16px;border-radius:20px;color:#fff;background:linear-gradient(135deg,#0C6F78,#2A9BA5);box-shadow:none;" onclick="nav('device.html')">Hubungkan Perangkat →</button>
       </div>
     </div>
   </div>
@@ -300,7 +300,7 @@
     const g = document.getElementById('hr-gauge');
     if (g) {
       g.innerHTML = '';
-      if (v.hr && v.hr !== '--') createGauge(g, v.hr, 120, '#EB5757');
+      if (v.hr && v.hr !== '--') createGauge(g, v.hr, 120, '#B23A34');
     }
   };
 
@@ -321,10 +321,10 @@
       if (hist && hist.length > 0) {
         const lastHR = hist[hist.length - 1].hr;
         if (lastHR && !document.getElementById('hr-gauge').children.length) {
-          createGauge(document.getElementById('hr-gauge'), lastHR, 120, '#EB5757');
+          createGauge(document.getElementById('hr-gauge'), lastHR, 120, '#B23A34');
         }
         const hrData = hist.slice(-18).map(r => r.hr || 0);
-        if (hrData.length > 1) sparkline(document.getElementById('hr-chart'), hrData, '#EB5757', 50);
+        if (hrData.length > 1) sparkline(document.getElementById('hr-chart'), hrData, '#B23A34', 50);
       }
     } catch (e) {
       console.warn('Could not load initial chart data:', e);
@@ -369,7 +369,7 @@
           if (statEls[2]) statEls[2].textContent = max;
 
           // Draw chart
-          sparkline(document.getElementById('hist-chart'), hrData.slice(-20), '#2F7A4A', 80);
+          sparkline(document.getElementById('hist-chart'), hrData.slice(-20), '#1D4F38', 80);
         }
       } catch (e) {
         console.warn('History load failed:', e);
@@ -454,16 +454,16 @@
                 <span style="background:var(--success-bg);color:var(--success);padding:3px 12px;border-radius:20px;font-size:0.7rem;font-weight:600;">Baik</span>
               </div>
               <div style="display:flex;gap:4px;height:24px;border-radius:12px;overflow:hidden;">
-                <div style="flex:${deepPct};background:#2A9D8F;" title="Deep Sleep ${deepPct}%"></div>
-                <div style="flex:${lightPct};background:#45B5A6;" title="Light Sleep ${lightPct}%"></div>
+                <div style="flex:${deepPct};background:#0C6F78;" title="Deep Sleep ${deepPct}%"></div>
+                <div style="flex:${lightPct};background:#2A9BA5;" title="Light Sleep ${lightPct}%"></div>
                 <div style="flex:${remPct};background:#FFD54F;" title="REM ${remPct}%"></div>
-                <div style="flex:${awakePct};background:#EB5757;" title="Awake ${awakePct}%"></div>
+                <div style="flex:${awakePct};background:#B23A34;" title="Awake ${awakePct}%"></div>
               </div>
               <div style="display:flex;justify-content:space-around;margin-top:12px;font-size:0.65rem;">
-                <span style="color:#2A9D8F;">● Deep ${deepPct}%</span>
-                <span style="color:#45B5A6;">● Light ${lightPct}%</span>
+                <span style="color:#0C6F78;">● Deep ${deepPct}%</span>
+                <span style="color:#2A9BA5;">● Light ${lightPct}%</span>
                 <span style="color:#FFD54F;">● REM ${remPct}%</span>
-                <span style="color:#EB5757;">● Awake ${awakePct}%</span>
+                <span style="color:#B23A34;">● Awake ${awakePct}%</span>
               </div>
             `;
           }

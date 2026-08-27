@@ -12,20 +12,20 @@
     .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); color: #fff; }
     .grade-badge { padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-align: center; }
-    .grade-a { background: rgba(47,122,74,0.2); color: #2F7A4A; }
-    .grade-b { background: rgba(91,166,114,0.15); color: #2F7A4A; }
-    .grade-c { background: rgba(245,166,35,0.15); color: #E09F3E; }
+    .grade-a { background: rgba(29,79,56,0.2); color: #1D4F38; }
+    .grade-b { background: rgba(47,111,79,0.15); color: #1D4F38; }
+    .grade-c { background: rgba(245,166,35,0.15); color: #8F6018; }
     .domain-item { display: grid; grid-template-columns: 140px 1fr; gap: 12px; margin-bottom: 12px; }
     .domain-label { font-weight: 600; font-size: 0.75rem; color: var(--text-primary); }
-    .domain-value { font-size: 0.75rem; color: var(--text-secondary); padding: 8px; background: rgba(47,122,74,0.04); border-radius: 6px; }
+    .domain-value { font-size: 0.75rem; color: var(--text-secondary); padding: 8px; background: rgba(29,79,56,0.04); border-radius: 6px; }
     .safety-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.75rem; }
-    .safety-table td, .safety-table th { padding: 8px; border-bottom: 1px solid rgba(47,122,74,0.15); }
-    .safety-table th { background: rgba(47,122,74,0.08); font-weight: 600; }
-    .override-card { background: rgba(235,87,87,0.06); border-left: 4px solid #EB5757; padding: 12px; border-radius: 8px; margin-bottom: 12px; }
-    .recommended-badge { background: rgba(47,122,74,0.12); color: #2F7A4A; padding: 6px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
-    .adjunctive-badge { background: rgba(245,166,35,0.12); color: #E09F3E; padding: 6px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
-    .insufficient-badge { background: rgba(235,87,87,0.12); color: #EB5757; padding: 6px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
-    .overview-card { background: linear-gradient(135deg, rgba(47,122,74,0.08) 0%, rgba(91,166,114,0.04) 100%); border-left: 4px solid #2F7A4A; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
+    .safety-table td, .safety-table th { padding: 8px; border-bottom: 1px solid rgba(29,79,56,0.15); }
+    .safety-table th { background: rgba(29,79,56,0.08); font-weight: 600; }
+    .override-card { background: rgba(178,58,52,0.06); border-left: 4px solid #B23A34; padding: 12px; border-radius: 8px; margin-bottom: 12px; }
+    .recommended-badge { background: rgba(29,79,56,0.12); color: #1D4F38; padding: 6px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+    .adjunctive-badge { background: rgba(245,166,35,0.12); color: #8F6018; padding: 6px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+    .insufficient-badge { background: rgba(178,58,52,0.12); color: #B23A34; padding: 6px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+    .overview-card { background: linear-gradient(135deg, rgba(29,79,56,0.08) 0%, rgba(47,111,79,0.04) 100%); border-left: 4px solid #1D4F38; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
 
     @media (max-width: 480px) {
       .domain-item { grid-template-columns: 1fr; gap: 4px; }
@@ -54,15 +54,15 @@
 
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;">
       <div class="neu-card" style="padding:12px;">
-        <div style="font-size:1rem;font-weight:700;color:#2F7A4A;">18</div>
+        <div style="font-size:1rem;font-weight:700;color:#1D4F38;">18</div>
         <div style="font-size:0.7rem;color:var(--text-secondary);">Grade A/B Evidence</div>
       </div>
       <div class="neu-card" style="padding:12px;">
-        <div style="font-size:1rem;font-weight:700;color:#E09F3E;">7</div>
+        <div style="font-size:1rem;font-weight:700;color:#8F6018;">7</div>
         <div style="font-size:0.7rem;color:var(--text-secondary);">Herbal Categories</div>
       </div>
       <div class="neu-card" style="padding:12px;">
-        <div style="font-size:1rem;font-weight:700;color:#EB5757;">25</div>
+        <div style="font-size:1rem;font-weight:700;color:#B23A34;">25</div>
         <div style="font-size:0.7rem;color:var(--text-secondary);">Drug Interactions</div>
       </div>
     </div>
@@ -112,7 +112,7 @@
         </div>
       </div>
       <div class="override-card">
-        <strong style="color:#EB5757;">⚠️ Drug Interactions:</strong>
+        <strong style="color:#B23A34;">⚠️ Drug Interactions:</strong>
         <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
           • Enhanced effect with anticoagulants/antiplatelet drugs (monitor INR)<br>
           • Potentiates diabetes medications (risk hypoglycemia, dose adjustment)<br>
@@ -169,7 +169,7 @@
         </div>
       </div>
       <div class="override-card">
-        <strong style="color:#EB5757;">⚠️ Drug Interactions:</strong>
+        <strong style="color:#B23A34;">⚠️ Drug Interactions:</strong>
         <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
           • May enhance warfarin effect (monitor INR closely)<br>
           • Avoid with iron supplements (reduced absorption)<br>
@@ -225,7 +225,7 @@
         </div>
       </div>
       <div class="override-card">
-        <strong style="color:#EB5757;">⚠️ Drug Interactions:</strong>
+        <strong style="color:#B23A34;">⚠️ Drug Interactions:</strong>
         <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
           • Enhanced antiplatelet effect (combined with aspirin/NSAIDs)<br>
           • May increase warfarin effect (INR monitoring)<br>
@@ -282,7 +282,7 @@
         </div>
       </div>
       <div class="override-card">
-        <strong style="color:#EB5757;">⚠️ Drug Interactions:</strong>
+        <strong style="color:#B23A34;">⚠️ Drug Interactions:</strong>
         <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
           • Enhanced antiplatelet/anticoagulant effect (monitor bleeding risk)<br>
           • Mild GI effects (nausea, bloating in some individuals)<br>
@@ -304,7 +304,7 @@
         <strong>WHO Reference:</strong> Monographs Vol. 3 (2007) | <strong>RCTs:</strong> 8 studies | <strong>Note:</strong> Variable glucose response
       </div>
       <div class="override-card" style="margin-bottom:12px;">
-        <strong style="color:#EB5757;">⚠️ CAUTION — Contraindication Alert:</strong>
+        <strong style="color:#B23A34;">⚠️ CAUTION — Contraindication Alert:</strong>
         <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
           <strong>Coumarin-sensitive patients:</strong> Cassia cinnamon contains high coumarin (6-7 mg/tsp) which inhibits CYP2C9 → increased warfarin effect, bleeding risk.<br>
           <strong>Recommendation:</strong> Use Ceylon cinnamon only (0.004 mg coumarin/tsp) if patient on anticoagulants OR avoid entirely.
@@ -393,7 +393,7 @@
         </div>
       </div>
       <div class="override-card">
-        <strong style="color:#EB5757;">⚠️ Drug Interactions:</strong>
+        <strong style="color:#B23A34;">⚠️ Drug Interactions:</strong>
         <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
           • Additive BP-lowering effect (monitor BP if on antihypertensives)<br>
           • Possible interaction with anticoagulants (monitor INR)<br>
@@ -406,7 +406,7 @@
     </div>
 
     <!-- WHO ALIGNMENT SUMMARY -->
-    <div class="neu-card" style="padding:16px;background:rgba(47,122,74,0.04);border-left:3px solid #2F7A4A;">
+    <div class="neu-card" style="padding:16px;background:rgba(29,79,56,0.04);border-left:3px solid #1D4F38;">
       <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px;">🏥 WHO Integration & Clinical Recommendations</div>
       <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.8;">
         <strong>Key Insight:</strong> HerboraTech GRADE assessments are <strong>more stringent</strong> than WHO traditional use classifications. We require RCT evidence for metabolic disease recommendations.<br><br>

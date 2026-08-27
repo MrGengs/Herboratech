@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(91,166,114,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(47,111,79,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #5BA672 !important; }
+    .sidebar-logo span { color: #2F6F4F !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #5BA672; background: rgba(91,166,114,0.08); }
-    .sidebar-item.active { color: #5BA672 !important; background: rgba(91,166,114,0.15); border-left: 3px solid #5BA672; }
+    .sidebar-item:hover { color: #2F6F4F; background: rgba(47,111,79,0.08); }
+    .sidebar-item.active { color: #2F6F4F !important; background: rgba(47,111,79,0.15); border-left: 3px solid #2F6F4F; }
     .form-section { background: var(--bg); box-shadow: var(--shadow-out); border-radius: 20px; padding: 24px; margin-bottom: 20px; }
     .form-section h3 { font-size: 0.9rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; }
     .field-group { margin-bottom: 16px; }
@@ -33,8 +33,8 @@
     .btn-add-row { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 10px; border: none; background: var(--bg); box-shadow: var(--shadow-out-sm); font-size: 0.8rem; font-weight: 600; color: var(--primary-dark); cursor: pointer; margin-top: 8px; }
     .submit-bar { position: sticky; bottom: 0; background: var(--bg); padding: 16px 0; border-top: 1px solid var(--shadow-dark); display: flex; gap: 12px; }
     .badge-level { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
-    .badge-A { background: #E8F5E9; color: #2F7A4A; }
-    .badge-B { background: #FFF3E0; color: #E09F3E; }
+    .badge-A { background: #E8F5E9; color: #1D4F38; }
+    .badge-B { background: #FFF3E0; color: #8F6018; }
     .badge-C { background: #F3E5F5; color: #9B51E0; }
     @media (max-width: 640px) {
       .form-section [style*="grid-template-columns: 1fr 1fr"],
@@ -72,13 +72,13 @@
     <div class="admin-topbar" data-animate="up">
       <h1 style="border-left:4px solid var(--primary-dark);padding-left:12px;">Tambah Data Herbal</h1>
       <div class="header-actions">
-        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#2F7A4A,#5BA672)">A</div>
+        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#1D4F38,#2F6F4F)">A</div>
       </div>
     </div>
 
     <!-- Tab: Tanaman atau Formula -->
     <div style="display:flex;gap:10px;margin-bottom:24px;" data-animate="up" data-delay="50">
-      <button class="neu-btn" id="tab-herb-btn" onclick="switchTab('herb')" style="flex:1;background:linear-gradient(135deg,#2F7A4A,#5BA672);color:#fff;">🌿 Tambah Tanaman</button>
+      <button class="neu-btn" id="tab-herb-btn" onclick="switchTab('herb')" style="flex:1;background:linear-gradient(135deg,#1D4F38,#2F6F4F);color:#fff;">🌿 Tambah Tanaman</button>
       <button class="neu-btn" id="tab-formula-btn" onclick="switchTab('formula')" style="flex:1;">🧪 Tambah Formula</button>
     </div>
 
@@ -221,7 +221,7 @@
       </div>
 
       <div class="submit-bar">
-        <button class="neu-btn" onclick="submitHerbal()" style="flex:2;background:linear-gradient(135deg,#2F7A4A,#5BA672);color:#fff;font-weight:700;" id="submit-herb-btn">
+        <button class="neu-btn" onclick="submitHerbal()" style="flex:2;background:linear-gradient(135deg,#1D4F38,#2F6F4F);color:#fff;font-weight:700;" id="submit-herb-btn">
           📤 Kirim untuk Diverifikasi
         </button>
         <button class="neu-btn" onclick="clearHerbForm()" style="flex:1;">Reset</button>
@@ -301,7 +301,7 @@
       </div>
 
       <div class="submit-bar">
-        <button class="neu-btn" onclick="submitFormula()" style="flex:2;background:linear-gradient(135deg,#2F7A4A,#5BA672);color:#fff;font-weight:700;" id="submit-formula-btn">
+        <button class="neu-btn" onclick="submitFormula()" style="flex:2;background:linear-gradient(135deg,#1D4F38,#2F6F4F);color:#fff;font-weight:700;" id="submit-formula-btn">
           📤 Kirim untuk Diverifikasi
         </button>
         <button class="neu-btn" onclick="clearFormulaForm()" style="flex:1;">Reset</button>
@@ -332,10 +332,10 @@ function switchTab(tab) {
   document.getElementById('form-herb').style.display = tab === 'herb' ? '' : 'none';
   document.getElementById('form-formula').style.display = tab === 'formula' ? '' : 'none';
   document.getElementById('tab-herb-btn').style.cssText = tab === 'herb'
-    ? 'flex:1;background:linear-gradient(135deg,#2F7A4A,#5BA672);color:#fff;'
+    ? 'flex:1;background:linear-gradient(135deg,#1D4F38,#2F6F4F);color:#fff;'
     : 'flex:1;';
   document.getElementById('tab-formula-btn').style.cssText = tab === 'formula'
-    ? 'flex:1;background:linear-gradient(135deg,#2F7A4A,#5BA672);color:#fff;'
+    ? 'flex:1;background:linear-gradient(135deg,#1D4F38,#2F6F4F);color:#fff;'
     : 'flex:1;';
 }
 

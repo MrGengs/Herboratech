@@ -10,13 +10,13 @@
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
     :root {
-      --primary-enc: #2A9D8F;
+      --primary-enc: #0C6F78;
       --primary-enc-dark: #5A51D4;
     }
 
     .app-header {
       background: linear-gradient(135deg, var(--primary-enc) 0%, #8B7FFF 100%);
-      box-shadow: 0 2px 16px rgba(42, 157, 143, 0.25);
+      box-shadow: 0 2px 16px rgba(12, 111, 120, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
@@ -52,10 +52,10 @@
       border-left: 5px solid transparent;
     }
     .disease-card:active { transform: scale(0.98); }
-    .disease-card.dys { border-left-color: #E09F3E; }
-    .disease-card.hyp { border-left-color: #EB5757; }
-    .disease-card.naf { border-left-color: #2F80ED; }
-    .disease-card.met { border-left-color: #2F7A4A; }
+    .disease-card.dys { border-left-color: #8F6018; }
+    .disease-card.hyp { border-left-color: #B23A34; }
+    .disease-card.naf { border-left-color: #2C6E9B; }
+    .disease-card.met { border-left-color: #1D4F38; }
     .disease-card.obe { border-left-color: #A29BFE; }
     .disease-card.dia { border-left-color: #FF6B6B; }
     .disease-card.dep { border-left-color: #74B9FF; }
@@ -70,9 +70,9 @@
     .disease-summary { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
 
     .info-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; margin-right: 6px; }
-    .badge-papers { background: rgba(42,157,143,0.15); color: var(--primary-enc-dark); }
-    .badge-score { background: rgba(47,128,237,0.15); color: #1B4F72; }
-    .badge-evidence { background: rgba(47,122,74,0.15); color: #1A5C38; }
+    .badge-papers { background: rgba(12,111,120,0.15); color: var(--primary-enc-dark); }
+    .badge-score { background: rgba(44,110,155,0.15); color: #1B4F72; }
+    .badge-evidence { background: rgba(29,79,56,0.15); color: #1A5C38; }
 
     .expand-btn {
       background: transparent; border: none; color: var(--primary-enc); cursor: pointer;
@@ -99,7 +99,7 @@
     }
 
     .paper-item {
-      background: rgba(42,157,143,0.03); border-left: 3px solid var(--primary-enc);
+      background: rgba(12,111,120,0.03); border-left: 3px solid var(--primary-enc);
       padding: 12px; border-radius: 8px; margin-bottom: 10px; font-size: 0.8rem;
     }
     .paper-title { font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
@@ -109,8 +109,8 @@
       width: 100%; font-size: 0.8rem; border-collapse: collapse; margin-top: 10px;
     }
     .risk-table th, .risk-table td { padding: 8px; text-align: left; border-bottom: 1px solid var(--shadow-dark); }
-    .risk-table th { background: rgba(42,157,143,0.08); font-weight: 700; color: var(--text-primary); }
-    .risk-table tr:hover { background: rgba(42,157,143,0.03); }
+    .risk-table th { background: rgba(12,111,120,0.08); font-weight: 700; color: var(--text-primary); }
+    .risk-table tr:hover { background: rgba(12,111,120,0.03); }
 
     .section { padding: 0 0 20px; }
   </style>
@@ -315,7 +315,7 @@ let allDiseases = [...diseases];
 function getConceptualDiagram(diseaseId) {
   const diagrams = {
     'dys': `
-      <div style="background:rgba(224,159,62,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
+      <div style="background:rgba(143,96,24,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
         <div style="color:var(--primary-enc);font-weight:700;margin-bottom:10px;">📊 DYSLIPIDEMIA PATHOPHYSIOLOGY</div>
         <pre style="margin:0;white-space:pre-wrap;">
 GENETIC FACTORS (15-20%)
@@ -346,7 +346,7 @@ RISK STRATIFICATION
       </div>
     `,
     'hyp': `
-      <div style="background:rgba(235,87,87,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
+      <div style="background:rgba(178,58,52,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
         <div style="color:#C0392B;font-weight:700;margin-bottom:10px;">❤️ HYPERTENSION PATHOPHYSIOLOGY</div>
         <pre style="margin:0;white-space:pre-wrap;">
 SODIUM & VASCULAR FACTORS
@@ -386,7 +386,7 @@ RISK CATEGORIES
       </div>
     `,
     'naf': `
-      <div style="background:rgba(47,128,237,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
+      <div style="background:rgba(44,110,155,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
         <div style="color:#1B4F72;font-weight:700;margin-bottom:10px;">🔬 NAFLD PATHOPHYSIOLOGY & FIB-4 CASCADE</div>
         <pre style="margin:0;white-space:pre-wrap;">
 METABOLIC DYSFUNCTION (Root cause)
@@ -427,7 +427,7 @@ FIB-4 INTERPRETATION
       </div>
     `,
     'met': `
-      <div style="background:rgba(47,122,74,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
+      <div style="background:rgba(29,79,56,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
         <div style="color:#1A5C38;font-weight:700;margin-bottom:10px;">⚠️ METABOLIC SYNDROME CASCADE</div>
         <pre style="margin:0;white-space:pre-wrap;">
 PRIMARY DRIVER: INSULIN RESISTANCE
@@ -604,7 +604,7 @@ function renderDiseases(list) {
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
             ${d.biomarkers.map(b => `
-              <div style="background:rgba(42,157,143,0.08);padding:10px;border-radius:8px;font-size:0.8rem;color:var(--text-secondary);">✓ ${b}</div>
+              <div style="background:rgba(12,111,120,0.08);padding:10px;border-radius:8px;font-size:0.8rem;color:var(--text-secondary);">✓ ${b}</div>
             `).join('')}
           </div>
         </div>

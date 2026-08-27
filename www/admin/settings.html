@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(91,166,114,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(47,111,79,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #5BA672 !important; }
+    .sidebar-logo span { color: #2F6F4F !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #5BA672; background: rgba(91,166,114,0.08); }
-    .sidebar-item.active { color: #5BA672 !important; background: rgba(91,166,114,0.15); border-left: 3px solid #5BA672; }
+    .sidebar-item:hover { color: #2F6F4F; background: rgba(47,111,79,0.08); }
+    .sidebar-item.active { color: #2F6F4F !important; background: rgba(47,111,79,0.15); border-left: 3px solid #2F6F4F; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
 
     .admin-main { padding: 24px; }
@@ -760,7 +760,7 @@
       const key = document.getElementById('input-gemini-key').value.trim();
       const statusEl = document.getElementById('gemini-status');
       if (!key) {
-        statusEl.innerHTML = '<span style="color:#EB5757;">⚠️ Masukkan API key dulu</span>';
+        statusEl.innerHTML = '<span style="color:#B23A34;">⚠️ Masukkan API key dulu</span>';
         return;
       }
       statusEl.textContent = 'Testing...';
@@ -774,16 +774,16 @@
           }
         );
         if (res.ok) {
-          statusEl.innerHTML = '<span style="color:#2F7A4A;">✅ API key valid</span>';
+          statusEl.innerHTML = '<span style="color:#1D4F38;">✅ API key valid</span>';
           // Save key
           settings.geminiApiKey = key;
           saveSettings();
           showNotification('Gemini API key berhasil disimpan', 'success');
         } else {
-          statusEl.innerHTML = '<span style="color:#EB5757;">❌ Key tidak valid</span>';
+          statusEl.innerHTML = '<span style="color:#B23A34;">❌ Key tidak valid</span>';
         }
       } catch (e) {
-        statusEl.innerHTML = `<span style="color:#EB5757;">❌ ${e.message}</span>`;
+        statusEl.innerHTML = `<span style="color:#B23A34;">❌ ${e.message}</span>`;
       }
     }
 
@@ -791,7 +791,7 @@
     function loadGeminiSettings() {
       if (settings.geminiApiKey) {
         document.getElementById('input-gemini-key').value = settings.geminiApiKey;
-        document.getElementById('gemini-status').innerHTML = '<span style="color:#2F7A4A;">✅ Key tersimpan</span>';
+        document.getElementById('gemini-status').innerHTML = '<span style="color:#1D4F38;">✅ Key tersimpan</span>';
       }
     }
 
