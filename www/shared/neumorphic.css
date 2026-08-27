@@ -62,6 +62,12 @@ ion-icon {
   --info: #2F73B5;
   --info-bg: rgba(47,115,181,0.12);
   --success: #3A7A2A;
+
+  /* Ikon navigasi saat tidak aktif. Hijau teredam, bukan abu-abu.
+     Lebih terang dari --primary-dark agar keadaan aktif tetap terbaca;
+     keadaan aktif juga punya bar gradien dan scale 1.15, jadi tidak
+     bergantung pada warna saja. Kontras naik dari 3.03 ke 4.17. */
+  --nav-idle: #5E8749;
   --success-bg: rgba(58,122,42,0.12);
   
   /* Text - Accessible contrast ratios */
@@ -193,7 +199,7 @@ ul, ol { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-secondary);
+  color: var(--primary-dark);
   transition: all 0.25s ease;
   position: relative;
   background: var(--surface);
@@ -486,7 +492,7 @@ ul, ol { list-style: none; }
   align-items: center;
   gap: 3px;
   padding: var(--sp-8);
-  color: var(--text-muted);
+  color: var(--nav-idle);
   font-size: 0.6rem;
   font-weight: 500;
   transition: all 0.3s ease;
@@ -914,7 +920,7 @@ ul, ol { list-style: none; }
   gap: var(--sp-12);
   padding: var(--sp-12) var(--sp-16);
   border-radius: var(--r-sm);
-  color: rgba(255,255,255,0.5);
+  color: rgba(182,222,134,0.70);
   font-size: 0.85rem;
   font-weight: 500;
   transition: all 0.25s ease;
