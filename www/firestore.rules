@@ -3,11 +3,19 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // ═══════════════════════════════════════════════════════════════════════
-    //  DEV RULES — OPEN untuk development, GANTI sebelum production!
-    //  TODO: Ganti dengan production rules sebelum deploy ke publik
+    //  Akses hanya untuk pengguna yang sudah login.
+    //
+    //  apiKey Firebase bersifat publik (ada di dalam JS klien dan di repo),
+    //  jadi aturan inilah — bukan kunci — yang melindungi data. Tanpa ini
+    //  siapa pun bisa membaca dan menghapus seluruh rekam medis.
+    //
+    //  Ini BELUM aturan produksi: pengguna yang sudah login masih bisa
+    //  mengakses data pengguna lain. Sebelum dipakai dengan data pasien
+    //  sungguhan, ganti dengan aturan berbasis peran — pasien hanya datanya
+    //  sendiri, dokter hanya pasien yang ditugaskan, admin penuh.
     // ═══════════════════════════════════════════════════════════════════════
     match /{document=**} {
-      allow read, write: if true;
+      allow read, write: if request.auth != null;
     }
   }
 }

@@ -27,7 +27,7 @@ if (typeof FIREBASE_CONFIG === 'undefined') {
 
 // ─── CLOUD FUNCTIONS CONFIG ────────────────────────────────────────────────
 // Auto-detect project ID from FIREBASE_CONFIG
-const PROJECT_ID = FIREBASE_CONFIG.projectId || 'vitalora';
+const PROJECT_ID = FIREBASE_CONFIG.projectId || 'herboratech';
 const CF_REGION = 'us-central1';
 const CF_BASE = `https://${CF_REGION}-${PROJECT_ID}.cloudfunctions.net`;
 
