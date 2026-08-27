@@ -12,16 +12,16 @@
     /* === COLOR SCHEME === */
     :root {
       --q-tam: #2F73B5;
-      --q-tam-dark: #1A5276;
+      --q-tam-dark: #406E22;
       --q-sus: #3A7A2A;
       --q-sus-dark: #1B7A3D;
       --q-ux: #35803A;
-      --q-ux-dark: #4A42B0;
+      --q-ux-dark: #70A64C;
     }
 
     /* === HEADER === */
     .app-header {
-      background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+      background: linear-gradient(135deg, #222C1C 0%, #273A1A 50%, #315817 100%);
       box-shadow: 0 2px 16px rgba(0,0,0,0.25);
     }
     .app-header .neu-icon-btn {
@@ -192,7 +192,7 @@
     }
     .ds-bar-row {
       display: flex; align-items: center; gap: 10px; padding: 8px 0;
-      border-bottom: 1px solid rgba(200,208,231,0.5); font-size: 0.76rem;
+      border-bottom: 1px solid rgba(213,228,203,0.5); font-size: 0.76rem;
     }
     .ds-bar-row:last-child { border-bottom: none; }
     .ds-bar-label { min-width: 55px; font-weight: 500; color: var(--text-secondary); }
@@ -276,7 +276,7 @@
             <div style="font-size:0.58rem;color:var(--text-tertiary);">Sikap</div>
           </div>
           <div class="neu-card-sm" style="text-align:center;padding:14px 10px;">
-            <ion-icon name="rocket-outline" style="font-size:1.4rem;color:#9B51E0;"></ion-icon>
+            <ion-icon name="rocket-outline" style="font-size:1.4rem;color:#8DD35E;"></ion-icon>
             <div style="font-size:0.7rem;font-weight:600;margin-top:6px;">BI</div>
             <div style="font-size:0.58rem;color:var(--text-tertiary);">Niat Penggunaan</div>
           </div>
@@ -329,9 +329,9 @@
 
         <div style="height:14px"></div>
 
-        <div class="dimension-header" style="background:rgba(155,81,224,0.06);">
-          <ion-icon name="rocket-outline" style="color:#9B51E0;"></ion-icon>
-          <span style="color:#6C3483;">Behavioral Intention (BI)</span>
+        <div class="dimension-header" style="background:rgba(141,211,94,0.06);">
+          <ion-icon name="rocket-outline" style="color:#8DD35E;"></ion-icon>
+          <span style="color:#557C3B;">Behavioral Intention (BI)</span>
         </div>
         <div class="likert-question" data-q="bi1"><div class="q-number">1 / 4</div><div class="q-text">Saya berniat untuk terus menggunakan HerboraTech di masa depan.</div><div class="likert-options"></div></div>
         <div class="likert-question" data-q="bi2"><div class="q-number">2 / 4</div><div class="q-text">Saya akan merekomendasikan HerboraTech kepada keluarga dan teman.</div><div class="likert-options"></div></div>
@@ -552,7 +552,7 @@
         <div class="ds-bar-row"><span class="ds-bar-label">PU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-pu" style="width:0%;background:var(--q-tam);"></div></div><span class="ds-bar-val" style="color:var(--q-tam);" id="r-val-pu">0/20</span></div>
         <div class="ds-bar-row"><span class="ds-bar-label">PEOU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-peou" style="width:0%;background:#3A7A2A;"></div></div><span class="ds-bar-val" style="color:#3A7A2A;" id="r-val-peou">0/20</span></div>
         <div class="ds-bar-row"><span class="ds-bar-label">ATU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-atu" style="width:0%;background:#B07D1E;"></div></div><span class="ds-bar-val" style="color:#B07D1E;" id="r-val-atu">0/20</span></div>
-        <div class="ds-bar-row"><span class="ds-bar-label">BI</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-bi" style="width:0%;background:#9B51E0;"></div></div><span class="ds-bar-val" style="color:#9B51E0;" id="r-val-bi">0/20</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">BI</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-bi" style="width:0%;background:#8DD35E;"></div></div><span class="ds-bar-val" style="color:#8DD35E;" id="r-val-bi">0/20</span></div>
         <div id="tam-interp" style="margin-top:10px;font-size:0.76rem;color:var(--text-secondary);line-height:1.5;"></div>
       </div>
 
@@ -583,7 +583,7 @@
         <div id="ux-interp" style="margin-top:10px;font-size:0.76rem;color:var(--text-secondary);line-height:1.5;"></div>
       </div>
 
-      <button class="neu-btn neu-btn-block" style="margin-top:20px;background:linear-gradient(135deg,#1A1A2E,#0F3460);color:#fff;padding:14px;font-weight:700;" onclick="nav('home.html')">
+      <button class="neu-btn neu-btn-block" style="margin-top:20px;background:linear-gradient(135deg,#222C1C,#315817);color:#fff;padding:14px;font-weight:700;" onclick="nav('home.html')">
         <ion-icon name="home-outline"></ion-icon> Kembali ke Beranda
       </button>
     </div>
@@ -691,7 +691,7 @@ function updateBtnStyle() {
       btn.style.background = SECTION_COLORS[next].grad;
     } else {
       btn.innerHTML = 'Lihat Hasil Akhir <ion-icon name="trophy-outline"></ion-icon>';
-      btn.style.background = 'linear-gradient(135deg,#1A1A2E,#0F3460)';
+      btn.style.background = 'linear-gradient(135deg,#222C1C,#315817)';
     }
   } else if (sec === 'ux' && step === 5) {
     btn.innerHTML = 'Selesai & Lihat Hasil <ion-icon name="arrow-forward-outline"></ion-icon>';

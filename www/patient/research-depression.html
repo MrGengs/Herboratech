@@ -9,7 +9,7 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .app-header { background: linear-gradient(135deg, #4A235A 0%, #6A1B9A 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.15); }
+    .app-header { background: linear-gradient(135deg, #3A5528 0%, #508F26 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.15); }
     .app-header .logo { color: #fff; }
     .app-header .logo span { color: rgba(255,255,255,0.8); }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
@@ -22,27 +22,27 @@
     .grade-c { background: rgba(255, 152, 0, 0.2); color: #E65100; border: 2px solid #E65100; }
 
     .stat-box { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
-    .stat-item { background: rgba(74, 35, 90, 0.08); padding: 12px; border-radius: 12px; text-align: center; }
-    .stat-number { font-size: 1.5rem; font-weight: 700; color: #6A1B9A; }
+    .stat-item { background: rgba(58,85,40, 0.08); padding: 12px; border-radius: 12px; text-align: center; }
+    .stat-number { font-size: 1.5rem; font-weight: 700; color: #508F26; }
     .stat-label { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; }
 
     .timeline { position: relative; padding: 20px 0; }
     .timeline-item { display: flex; gap: 12px; margin-bottom: 16px; }
-    .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: #6A1B9A; flex-shrink: 0; margin-top: 4px; }
-    .timeline-content { padding-left: 8px; border-left: 2px solid #6A1B9A; padding-bottom: 12px; }
-    .timeline-year { font-size: 0.85rem; font-weight: 700; color: #6A1B9A; }
+    .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: #508F26; flex-shrink: 0; margin-top: 4px; }
+    .timeline-content { padding-left: 8px; border-left: 2px solid #508F26; padding-bottom: 12px; }
+    .timeline-year { font-size: 0.85rem; font-weight: 700; color: #508F26; }
     .timeline-event { font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px; }
 
-    .finding-card { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 8px 0; padding: 12px; background: rgba(74, 35, 90, 0.05); border-radius: 12px; border-left: 4px solid #6A1B9A; }
-    .finding-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #6A1B9A; }
+    .finding-card { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 8px 0; padding: 12px; background: rgba(58,85,40, 0.05); border-radius: 12px; border-left: 4px solid #508F26; }
+    .finding-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #508F26; }
     .finding-value { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-top: 4px; }
 
-    .paper-list-item { padding: 12px; margin: 8px 0; background: rgba(74, 35, 90, 0.08); border-radius: 8px; border-left: 3px solid #6A1B9A; }
+    .paper-list-item { padding: 12px; margin: 8px 0; background: rgba(58,85,40, 0.08); border-radius: 8px; border-left: 3px solid #508F26; }
     .paper-authors { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; }
     .paper-title { font-size: 0.85rem; font-weight: 700; margin: 4px 0; color: var(--text-primary); }
     .paper-meta { font-size: 0.7rem; color: var(--text-tertiary); display: flex; gap: 8px; flex-wrap: wrap; }
 
-    .prisma-box { background: linear-gradient(135deg, rgba(74, 35, 90, 0.1), rgba(106, 27, 154, 0.1)); border: 2px dashed #6A1B9A; padding: 16px; border-radius: 12px; margin: 16px 0; }
+    .prisma-box { background: linear-gradient(135deg, rgba(58,85,40, 0.1), rgba(80,143,38, 0.1)); border: 2px dashed #508F26; padding: 16px; border-radius: 12px; margin: 16px 0; }
   </style>
 </head>
 <body>
@@ -57,8 +57,8 @@
   <div class="section">
 
     <!-- Hero Card -->
-    <div class="neu-card" data-animate="up" style="background: linear-gradient(135deg, rgba(74, 35, 90, 0.08), rgba(106, 27, 154, 0.08)); border-left: 4px solid #6A1B9A;">
-      <div style="font-size: 0.75rem; font-weight: 700; color: #6A1B9A; text-transform: uppercase; margin-bottom: 8px;">
+    <div class="neu-card" data-animate="up" style="background: linear-gradient(135deg, rgba(58,85,40, 0.08), rgba(80,143,38, 0.08)); border-left: 4px solid #508F26;">
+      <div style="font-size: 0.75rem; font-weight: 700; color: #508F26; text-transform: uppercase; margin-bottom: 8px;">
         🔬 Berbasis Penelitian Ilmiah
       </div>
       <div style="font-size: 1rem; font-weight: 700; margin-bottom: 8px;">
@@ -132,7 +132,7 @@
       <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px;">🔍 Temuan Utama (Meta-Analysis)</div>
 
       <div style="margin: 12px 0;">
-        <div style="font-size: 0.85rem; font-weight: 700; color: #6A1B9A; margin-bottom: 8px;">PHQ-9 Gold Standard Performance</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #508F26; margin-bottom: 8px;">PHQ-9 Gold Standard Performance</div>
         <div class="finding-card">
           <div>
             <div class="finding-label">Sensitivitas</div>
@@ -143,24 +143,24 @@
             <div class="finding-value">85-92%</div>
           </div>
         </div>
-        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; padding: 8px; background: rgba(74, 35, 90, 0.05); border-radius: 8px;">
+        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; padding: 8px; background: rgba(58,85,40, 0.05); border-radius: 8px;">
           ✓ <strong>Gold Standard:</strong> PHQ-9 in T2DM patients (2019, BMC Psychiatry) — 90 citations<br>
           ✓ <strong>Efficacy:</strong> Outperforms single-question screening across populations
         </div>
       </div>
 
       <div style="margin: 16px 0; padding-top: 16px; border-top: 1px solid var(--shadow-dark);">
-        <div style="font-size: 0.85rem; font-weight: 700; color: #6A1B9A; margin-bottom: 8px;">PHQ-9 vs PHQ-2 Comparison</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #508F26; margin-bottom: 8px;">PHQ-9 vs PHQ-2 Comparison</div>
         <div style="display: grid; gap: 8px; font-size: 0.8rem;">
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(74, 35, 90, 0.05); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(58,85,40, 0.05); border-radius: 8px;">
             <span>🔹 PHQ-9 Sensitivity</span>
             <span style="font-weight: 700;">92%</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(74, 35, 90, 0.05); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(58,85,40, 0.05); border-radius: 8px;">
             <span>🔹 PHQ-2 Sensitivity</span>
             <span style="font-weight: 700;">73%</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(74, 35, 90, 0.05); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(58,85,40, 0.05); border-radius: 8px;">
             <span>🔹 PHQ-9 in Adolescents</span>
             <span style="font-weight: 700;">89%</span>
           </div>
@@ -171,7 +171,7 @@
       </div>
 
       <div style="margin: 16px 0; padding-top: 16px; border-top: 1px solid var(--shadow-dark);">
-        <div style="font-size: 0.85rem; font-weight: 700; color: #6A1B9A; margin-bottom: 8px;">Global Prevalence</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #508F26; margin-bottom: 8px;">Global Prevalence</div>
         <div class="finding-card">
           <div>
             <div class="finding-label">Global Depression</div>
@@ -186,9 +186,9 @@
     </div>
 
     <!-- Screening Tool Specification -->
-    <div class="neu-card" data-animate="up" data-delay="200" style="margin-top: 16px; border-left: 4px solid #6A1B9A;">
+    <div class="neu-card" data-animate="up" data-delay="200" style="margin-top: 16px; border-left: 4px solid #508F26;">
       <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px;">🧪 Spesifikasi Tool Screening (HERBORATECH)</div>
-      <div style="background: rgba(74, 35, 90, 0.05); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
+      <div style="background: rgba(58,85,40, 0.05); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
         <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">PHQ-9 Questionnaire (9 items)</div>
         <ul style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; padding-left: 20px; margin: 0;">
           <li>1. Little interest/pleasure in activities</li>
@@ -202,7 +202,7 @@
           <li>9. Suicidal ideation</li>
         </ul>
       </div>
-      <div style="font-size: 0.75rem; color: var(--text-secondary); padding: 8px; background: rgba(74, 35, 90, 0.05); border-radius: 8px;">
+      <div style="font-size: 0.75rem; color: var(--text-secondary); padding: 8px; background: rgba(58,85,40, 0.05); border-radius: 8px;">
         ✓ <strong>Validasi:</strong> PHQ-9 dari 20+ validation studies, gold standard untuk depression screening<br>
         ✓ <strong>Scoring:</strong> 0-27 scale (mild: 5-9, moderate: 10-14, moderately severe: 15-19, severe: 20-27)
       </div>
@@ -210,7 +210,7 @@
 
     <!-- PRISMA Compliance -->
     <div class="prisma-box" data-animate="up" data-delay="250">
-      <div style="font-size: 0.85rem; font-weight: 700; color: #6A1B9A; margin-bottom: 8px;">📋 PRISMA-2020 Compliance</div>
+      <div style="font-size: 0.85rem; font-weight: 700; color: #508F26; margin-bottom: 8px;">📋 PRISMA-2020 Compliance</div>
       <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6;">
         ✓ Protocol registered & documented<br>
         ✓ Search strategy: 3 queries, database: Consensus MCP<br>
@@ -273,8 +273,8 @@
         </div>
       </div>
 
-      <div style="text-align: center; margin-top: 12px; padding: 12px; background: rgba(74, 35, 90, 0.08); border-radius: 8px;">
-        <div style="font-size: 0.75rem; color: #6A1B9A; font-weight: 700;">+ 55 papers lebih lanjut</div>
+      <div style="text-align: center; margin-top: 12px; padding: 12px; background: rgba(58,85,40, 0.08); border-radius: 8px;">
+        <div style="font-size: 0.75rem; color: #508F26; font-weight: 700;">+ 55 papers lebih lanjut</div>
         <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 4px;">Lihat daftar lengkap di dokumentasi SLR</div>
       </div>
     </div>

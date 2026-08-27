@@ -167,7 +167,7 @@
 <script src="../shared/app.js"></script>
 <script>
 const evLabel = { A: 'Tinggi', B: 'Sedang', C: 'Tradisional/Empiris' };
-const evColor = { A: '#3A7A2A', B: '#B07D1E', C: '#9B51E0' };
+const evColor = { A: '#3A7A2A', B: '#B07D1E', C: '#8DD35E' };
 const usageDesc = {
   rebus: 'Rebus rimpang/daun segar dalam air 15-20 menit, saring dan minum hangat.',
   seduh: 'Seduh serbuk/simplisia dalam air panas 90°C selama 5-10 menit.',
@@ -245,9 +245,9 @@ const usageDesc = {
 
     // Badge warna per tipe sumber
     const srcTypeLabel = { 'kemenkes':'Kemenkes RI', 'riset-ilmiah':'Riset Ilmiah', 'book-ocr':'Buku Herbal', 'monograph':'Monograf WHO' };
-    const srcTypeColor = { 'kemenkes':'#3A7A2A', 'riset-ilmiah':'#2D9CDB', 'book-ocr':'#B07D1E', 'monograph':'#9B51E0' };
+    const srcTypeColor = { 'kemenkes':'#3A7A2A', 'riset-ilmiah':'#76CB3D', 'book-ocr':'#B07D1E', 'monograph':'#8DD35E' };
     const srcType = herb.sourceType || 'riset-ilmiah';
-    const srcColor = srcTypeColor[srcType] || '#2D9CDB';
+    const srcColor = srcTypeColor[srcType] || '#76CB3D';
     const srcLabel = srcTypeLabel[srcType] || srcType;
 
     const sourceBadgeHTML = `
@@ -280,7 +280,7 @@ const usageDesc = {
     }).join('');
 
     const compoundsHTML = (herb.activeCompounds || []).map(c =>
-      `<span style="display:inline-block;background:#E8EAF6;color:#3F51B5;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:600;margin:3px;">${c}</span>`
+      `<span style="display:inline-block;background:#EEF5E9;color:#70AA4A;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:600;margin:3px;">${c}</span>`
     ).join('');
 
     document.getElementById('detail-content').innerHTML = `

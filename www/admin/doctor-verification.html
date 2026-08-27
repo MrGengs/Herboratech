@@ -99,7 +99,7 @@ const AVATAR_GRADIENTS = [
   'linear-gradient(135deg,#2F73B5,#6BB6E8)',
   'linear-gradient(135deg,#C94A42,#FF8A80)',
   'linear-gradient(135deg,#7CC242,#4E9E33)',
-  'linear-gradient(135deg,#35803A,#8B85FF)',
+  'linear-gradient(135deg,#35803A,#BBE59F)',
   'linear-gradient(135deg,#B07D1E,#F2C94C)',
 ];
 
@@ -110,8 +110,8 @@ function getInitials(name) {
 const ROLE_NAMES = { patient: 'Pasien', doctor: 'Dokter', admin: 'Admin' };
 const ROLE_COLORS = {
   patient: 'linear-gradient(135deg,#7CC242,#4E9E33)',
-  doctor: 'linear-gradient(135deg,#1D5DB5,#56CCF2)',
-  admin: 'linear-gradient(135deg,#4A43CC,#9B59B6)'
+  doctor: 'linear-gradient(135deg,#1D5DB5,#99D96F)',
+  admin: 'linear-gradient(135deg,#7CC04F,#80AE61)'
 };
 
 function renderUserCard(user, index) {
@@ -150,7 +150,7 @@ function renderUserCard(user, index) {
         <div class="doc-preview-label">STR</div>
         <span class="doc-preview-link" onclick="showToast('Dokumen belum diupload','warning')">Lihat</span>
       </div>
-      <div class="doc-preview" style="background:linear-gradient(135deg,#35803A,#8B85FF);">
+      <div class="doc-preview" style="background:linear-gradient(135deg,#35803A,#BBE59F);">
         <div class="doc-preview-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
         <div class="doc-preview-label">SIP</div>
         <span class="doc-preview-link" onclick="showToast('Dokumen belum diupload','warning')">Lihat</span>

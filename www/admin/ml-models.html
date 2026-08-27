@@ -124,14 +124,14 @@
         <button class="refresh-btn" onclick="loadStats()">
           <ion-icon name="refresh-outline"></ion-icon> Refresh Data
         </button>
-        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#9B51E0,#6FBE3F)">A</div>
+        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#8DD35E,#6FBE3F)">A</div>
       </div>
     </div>
 
     <!-- Stat Cards -->
     <div class="stat-grid" data-animate="up" data-delay="100">
       <div class="stat-card">
-        <div class="sc-icon" style="background:rgba(155,81,224,0.12);color:#9B51E0">👤</div>
+        <div class="sc-icon" style="background:rgba(141,211,94,0.12);color:#8DD35E">👤</div>
         <div class="sc-value" id="stat-profiles">—</div>
         <div class="sc-label">Pengguna Ber-profil</div>
         <div class="sc-change" id="stat-profiles-sub" style="color:var(--text-muted)">Memuat...</div>
@@ -164,7 +164,7 @@
       </div>
       <div class="model-grid">
 
-        <div class="model-card" style="border-top-color:#9B51E0;">
+        <div class="model-card" style="border-top-color:#8DD35E;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Sindrom Metabolik</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: IDF / NCEP ATP III</div>
@@ -420,13 +420,13 @@
   // Load ML model metadata from /models/*/metadata.json
   async function loadMLModelStatus() {
     const ML_MODELS = [
-      { key: 'metabolic',    label: 'Sindrom Metabolik', color: '#9B51E0' },
+      { key: 'metabolic',    label: 'Sindrom Metabolik', color: '#8DD35E' },
       { key: 'diabetes',     label: 'Diabetes T2',       color: '#2F73B5' },
       { key: 'heart',        label: 'Jantung',           color: '#C94A42' },
       { key: 'hypertension', label: 'Hipertensi',        color: '#B07D1E' },
       { key: 'stroke',       label: 'Stroke',            color: '#C94A42' },
       { key: 'sleep',        label: 'Kualitas Tidur',    color: '#3A7A2A' },
-      { key: 'stress_wesad', label: 'Stres (WESAD GSR)', color: '#56CCF2' },
+      { key: 'stress_wesad', label: 'Stres (WESAD GSR)', color: '#99D96F' },
     ];
 
     let loadedCount = 0;

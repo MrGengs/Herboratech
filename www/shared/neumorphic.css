@@ -468,7 +468,7 @@ ul, ol { list-style: none; }
   width: var(--mobile-w);
   height: var(--nav-h);
   background: var(--surface);
-  box-shadow: 0 -8px 20px rgba(200,208,231,0.5);
+  box-shadow: 0 -8px 20px rgba(213,228,203,0.5);
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -1004,7 +1004,7 @@ ul, ol { list-style: none; }
   padding: var(--sp-16);
   font-size: 0.85rem;
   color: var(--text-secondary);
-  border-bottom: 1px solid rgba(200,208,231,0.4);
+  border-bottom: 1px solid rgba(213,228,203,0.4);
 }
 
 .neu-table tbody tr:hover { background: rgba(111,190,63,0.05); }

@@ -124,7 +124,7 @@
       border-radius: 100px; padding: 5px 14px; margin-bottom: 18px;
     }
     .badge-green { color: #6FBE3F; background: rgba(111,190,63,0.1); border: 1px solid rgba(111,190,63,0.22); }
-    .badge-blue  { color: #56CCF2; background: rgba(86,204,242,0.1);  border: 1px solid rgba(86,204,242,0.22); }
+    .badge-blue  { color: #99D96F; background: rgba(153,217,111,0.1);  border: 1px solid rgba(153,217,111,0.22); }
     .badge-gold  { color: #F2C94C; background: rgba(242,201,76,0.1);  border: 1px solid rgba(242,201,76,0.22); }
 
     .slide-num {
@@ -179,7 +179,7 @@
       font-size: 0.66rem; font-weight: 700; margin-bottom: 14px;
     }
     .rc-patient { background: rgba(58,122,42,0.14); color: #6FBE3F; border: 1px solid rgba(111,190,63,0.22); }
-    .rc-doctor  { background: rgba(47,115,181,0.14); color: #56CCF2; border: 1px solid rgba(86,204,242,0.22); }
+    .rc-doctor  { background: rgba(47,115,181,0.14); color: #99D96F; border: 1px solid rgba(153,217,111,0.22); }
     .rc-admin   { background: rgba(176,125,30,0.14);  color: #B07D1E; border: 1px solid rgba(176,125,30,0.22); }
 
     .s0-chips { display: flex; gap: 7px; margin-bottom: 24px; }
@@ -276,10 +276,10 @@
     .sensor-node {
       flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
       padding: 9px 4px; border-radius: 12px;
-      background: rgba(86,204,242,0.07); border: 1px solid rgba(86,204,242,0.15);
+      background: rgba(153,217,111,0.07); border: 1px solid rgba(153,217,111,0.15);
       font-size: 1rem;
     }
-    .sensor-node span { font-size: 0.58rem; color: rgba(86,204,242,0.7); font-weight: 600; }
+    .sensor-node span { font-size: 0.58rem; color: rgba(153,217,111,0.7); font-weight: 600; }
 
     .pipe-arrow {
       text-align: center; color: rgba(111,190,63,0.4); font-size: 1.2rem;
@@ -324,8 +324,8 @@
     .algo-row { display: flex; gap: 7px; margin-bottom: 18px; flex-wrap: wrap; }
     .algo-badge {
       padding: 4px 11px; border-radius: 100px; font-size: 0.63rem; font-weight: 700;
-      background: rgba(47,115,181,0.1); border: 1px solid rgba(86,204,242,0.18);
-      color: rgba(86,204,242,0.8);
+      background: rgba(47,115,181,0.1); border: 1px solid rgba(153,217,111,0.18);
+      color: rgba(153,217,111,0.8);
     }
 
     /* ══════════════════════════════════════════════════
@@ -640,10 +640,10 @@ const threeState = (function () {
   // ── Track definitions ────────────────────────────────────────────
   const TRACKS = [
     { id:'HR',   unit:'bpm', val:'74',   color:'#6FBE3F', rgb:'111,207,151', freq:1.25, type:'ecg',  phOff:0.55 },
-    { id:'SpO₂', unit:'%',   val:'96.2', color:'#56CCF2', rgb:'86,204,242',  freq:1.25, type:'spo2', phOff:0.20 },
+    { id:'SpO₂', unit:'%',   val:'96.2', color:'#99D96F', rgb:'86,204,242',  freq:1.25, type:'spo2', phOff:0.20 },
     { id:'HRV',  unit:'ms',  val:'52',   color:'#F2C94C', rgb:'242,201,76',  freq:0.09, type:'hrv',  phOff:0    },
     { id:'Temp', unit:'°C',  val:'36.8', color:'#B07D1E', rgb:'242,153,74',  freq:0.04, type:'temp', phOff:0    },
-    { id:'GSR',  unit:'µS',  val:'4.1',  color:'#BB86FC', rgb:'187,134,252', freq:0.11, type:'gsr',  phOff:0    },
+    { id:'GSR',  unit:'µS',  val:'4.1',  color:'#BAE59D', rgb:'187,134,252', freq:0.11, type:'gsr',  phOff:0    },
   ];
   const WIN = 10;  // seconds of history visible
   const ML  = 58;  // left margin px (labels)
