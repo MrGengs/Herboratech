@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" href="favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HerboraTech — AIoT Telemedicine Platform</title>
@@ -280,18 +281,25 @@
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
       <symbol id="mark" viewBox="0 0 64 64">
-        <rect width="64" height="64" rx="17" fill="#0E7C46"/>
-        <clipPath id="leafClip">
-          <path d="M16 50 C16 29 30.5 13.5 52 11.5 C50.5 34 36.5 50 16 50 Z"/>
-        </clipPath>
-        <g clip-path="url(#leafClip)">
-          <rect width="64" height="64" fill="#FFFFFF"/>
-          <path d="M55 8 L14 62 L64 64 L64 0 Z" fill="#BCDECB"/>
-        </g>
-        <path d="M11.5 56.5 L19.5 47.5" stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round"/>
-        <path d="M23 39.5 H30 L33.2 30.5 L37.4 46 L40.2 37 H46.5"
-              fill="none" stroke="#0E7C46" stroke-width="3.2"
-              stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="hbLeaf" x1="14" y1="47" x2="42" y2="21" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#4CAF6E"/>
+              <stop offset="1" stop-color="#22B5A6"/>
+            </linearGradient>
+          </defs>
+          <!-- tali atas & bawah -->
+          <path d="M25 5h14a2 2 0 0 1 2 2v7H23V7a2 2 0 0 1 2-2z" fill="#17395C"/>
+          <path d="M23 50h18v7a2 2 0 0 1-2 2H25a2 2 0 0 1-2-2z" fill="#17395C"/>
+          <!-- badan jam -->
+          <rect x="17.6" y="12.6" width="28.8" height="38.8" rx="9.4" fill="#FFFFFF" stroke="#17395C" stroke-width="3.2"/>
+          <!-- tombol samping -->
+          <rect x="47.4" y="26" width="3.2" height="8" rx="1.6" fill="#17395C"/>
+          <!-- daun besar dan daun kecil, keduanya tumbuh dari satu titik -->
+          <path d="M31 47c-1.5-9 1-19.5 8.5-25 2 10-1 21-8.5 25z" fill="url(#hbLeaf)"/>
+          <path d="M31 47c-5.5-5.5-11-8.5-17-8.5 3.5 7 10 10 17 8.5z" fill="url(#hbLeaf)"/>
+          <!-- busur sensor -->
+          <path d="M41.8 27.6a8.4 8.4 0 0 1-1.6 13.2" fill="none" stroke="#3FA3F0" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="42.4" cy="25.2" r="2.9" fill="#3FA3F0"/>
       </symbol>
     </defs>
   </svg>

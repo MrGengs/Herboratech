@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!--
+    Favicon HerboraTech. Versi disederhanakan dari lambang utama: busur
+    sensor dan tombol samping dihilangkan karena pada 16px keduanya hanya
+    jadi noda. Yang tersisa siluet jam dan daun — dua unsur yang masih
+    terbaca pada ukuran sekecil itu.
+  -->
+  <defs>
+    <linearGradient id="fLeaf" x1="12" y1="48" x2="44" y2="18" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4CAF6E"/>
+      <stop offset="1" stop-color="#22B5A6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="64" height="64" rx="14" fill="#17395C"/>
+
+  <!-- tali atas & bawah -->
+  <path d="M26 10h12a2 2 0 0 1 2 2v4H24v-4a2 2 0 0 1 2-2z" fill="#FFFFFF" opacity="0.92"/>
+  <path d="M24 48h16v4a2 2 0 0 1-2 2H26a2 2 0 0 1-2-2z" fill="#FFFFFF" opacity="0.92"/>
+
+  <!-- badan jam -->
+  <rect x="20" y="16" width="24" height="32" rx="8" fill="#FFFFFF"/>
+
+  <!-- daun -->
+  <path d="M32 43c-1.4-7.6.9-16.4 7.2-21 1.7 8.4-.8 17.7-7.2 21z" fill="url(#fLeaf)"/>
+  <path d="M32 43c-4.6-4.6-9.2-7.2-14.3-7.2 2.9 5.9 8.4 8.4 14.3 7.2z" fill="url(#fLeaf)"/>
+</svg>
