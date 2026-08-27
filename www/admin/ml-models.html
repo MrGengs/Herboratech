@@ -124,20 +124,20 @@
         <button class="refresh-btn" onclick="loadStats()">
           <ion-icon name="refresh-outline"></ion-icon> Refresh Data
         </button>
-        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#8DD35E,#6FBE3F)">A</div>
+        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#4B8424,#6FBE3F)">A</div>
       </div>
     </div>
 
     <!-- Stat Cards -->
     <div class="stat-grid" data-animate="up" data-delay="100">
       <div class="stat-card">
-        <div class="sc-icon" style="background:rgba(141,211,94,0.12);color:#8DD35E">👤</div>
+        <div class="sc-icon" style="background:rgba(75,132,36,0.12);color:#4B8424">👤</div>
         <div class="sc-value" id="stat-profiles">—</div>
         <div class="sc-label">Pengguna Ber-profil</div>
         <div class="sc-change" id="stat-profiles-sub" style="color:var(--text-muted)">Memuat...</div>
       </div>
       <div class="stat-card">
-        <div class="sc-icon" style="background:rgba(47,115,181,0.12);color:#2F73B5">📊</div>
+        <div class="sc-icon" style="background:rgba(76,124,44,0.12);color:#4C7C2C">📊</div>
         <div class="sc-value" id="stat-scores">—</div>
         <div class="sc-label">Skor Dihitung</div>
         <div class="sc-change" id="stat-scores-sub" style="color:var(--text-muted)">Memuat...</div>
@@ -164,7 +164,7 @@
       </div>
       <div class="model-grid">
 
-        <div class="model-card" style="border-top-color:#8DD35E;">
+        <div class="model-card" style="border-top-color:#4B8424;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Sindrom Metabolik</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: IDF / NCEP ATP III</div>
@@ -174,7 +174,7 @@
           <div class="param-row"><span class="param-key">Output</span><span class="param-val">0–100, 3 kategori</span></div>
         </div>
 
-        <div class="model-card" style="border-top-color:#2F73B5;">
+        <div class="model-card" style="border-top-color:#4C7C2C;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Diabetes Tipe 2</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: FINDRISC Score</div>
@@ -274,7 +274,7 @@
           <span style="font-size:1rem;">✅</span>
           <div><div style="font-weight:600;font-size:0.82rem;">v1.0 — Rule-based Models (Sekarang)</div><div style="font-size:0.7rem;color:var(--text-muted);">6 model klinis: IDF, FINDRISC, Framingham, JNC-8, ASCVD, PSQI</div></div>
         </div>
-        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(47,115,181,0.07);border-left:3px solid var(--info);">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(76,124,44,0.07);border-left:3px solid var(--info);">
           <span style="font-size:1rem;">✅</span>
           <div><div style="font-weight:600;font-size:0.82rem;">v2.0 — ML Proxy (Aktif via loadModels)</div><div style="font-size:0.7rem;color:var(--text-muted);">RandomForest proxy berbasis 280k baris data Kaggle — blending 60% ML + 40% rule-based</div></div>
         </div>
@@ -420,13 +420,13 @@
   // Load ML model metadata from /models/*/metadata.json
   async function loadMLModelStatus() {
     const ML_MODELS = [
-      { key: 'metabolic',    label: 'Sindrom Metabolik', color: '#8DD35E' },
-      { key: 'diabetes',     label: 'Diabetes T2',       color: '#2F73B5' },
+      { key: 'metabolic',    label: 'Sindrom Metabolik', color: '#4B8424' },
+      { key: 'diabetes',     label: 'Diabetes T2',       color: '#4C7C2C' },
       { key: 'heart',        label: 'Jantung',           color: '#C94A42' },
       { key: 'hypertension', label: 'Hipertensi',        color: '#B07D1E' },
       { key: 'stroke',       label: 'Stroke',            color: '#C94A42' },
       { key: 'sleep',        label: 'Kualitas Tidur',    color: '#3A7A2A' },
-      { key: 'stress_wesad', label: 'Stres (WESAD GSR)', color: '#99D96F' },
+      { key: 'stress_wesad', label: 'Stres (WESAD GSR)', color: '#86D154' },
     ];
 
     let loadedCount = 0;

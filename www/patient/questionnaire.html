@@ -11,17 +11,17 @@
   <style>
     /* === COLOR SCHEME === */
     :root {
-      --q-tam: #2F73B5;
-      --q-tam-dark: #406E22;
+      --q-tam: #4C7C2C;
+      --q-tam-dark: #33571B;
       --q-sus: #3A7A2A;
       --q-sus-dark: #1B7A3D;
       --q-ux: #35803A;
-      --q-ux-dark: #70A64C;
+      --q-ux-dark: #3D5A29;
     }
 
     /* === HEADER === */
     .app-header {
-      background: linear-gradient(135deg, #222C1C 0%, #273A1A 50%, #315817 100%);
+      background: linear-gradient(135deg, #171E13 0%, #192610 50%, #213A0F 100%);
       box-shadow: 0 2px 16px rgba(0,0,0,0.25);
     }
     .app-header .neu-icon-btn {
@@ -126,10 +126,10 @@
 
     /* TAM colors */
     .q-section[data-section="tam"] .q-number { color: var(--q-tam); }
-    .q-section[data-section="tam"] .likert-opt.selected { border-color: var(--q-tam); background: rgba(47,115,181,0.05); color: var(--q-tam-dark); font-weight: 600; }
+    .q-section[data-section="tam"] .likert-opt.selected { border-color: var(--q-tam); background: rgba(76,124,44,0.05); color: var(--q-tam-dark); font-weight: 600; }
     .q-section[data-section="tam"] .likert-opt.selected .radio-circle { border-color: var(--q-tam); background: var(--q-tam); }
     .q-section[data-section="tam"] .step-dot.past { background: var(--q-tam); border-color: var(--q-tam); }
-    .q-section[data-section="tam"] .step-dot.current { background: linear-gradient(135deg, var(--q-tam-dark), var(--q-tam)); box-shadow: 0 3px 10px rgba(47,115,181,0.35); }
+    .q-section[data-section="tam"] .step-dot.current { background: linear-gradient(135deg, var(--q-tam-dark), var(--q-tam)); box-shadow: 0 3px 10px rgba(76,124,44,0.35); }
     .q-section[data-section="tam"] .step-line.done { background: var(--q-tam); }
     .q-section[data-section="tam"] .step-title-text { color: var(--q-tam); }
 
@@ -192,7 +192,7 @@
     }
     .ds-bar-row {
       display: flex; align-items: center; gap: 10px; padding: 8px 0;
-      border-bottom: 1px solid rgba(213,228,203,0.5); font-size: 0.76rem;
+      border-bottom: 1px solid rgba(193,215,178,0.5); font-size: 0.76rem;
     }
     .ds-bar-row:last-child { border-bottom: none; }
     .ds-bar-label { min-width: 55px; font-weight: 500; color: var(--text-secondary); }
@@ -255,7 +255,7 @@
     <!-- TAM Step 1: Intro -->
     <div class="step-pane active" data-section="tam" data-step="1">
       <div class="section">
-        <div class="intro-card" style="background:linear-gradient(135deg,rgba(47,115,181,0.08),rgba(47,115,181,0.02));border-left:4px solid var(--q-tam);">
+        <div class="intro-card" style="background:linear-gradient(135deg,rgba(76,124,44,0.08),rgba(76,124,44,0.02));border-left:4px solid var(--q-tam);">
           <h3 style="color:var(--q-tam-dark);">Bagian 1: Technology Acceptance Model (TAM)</h3>
           <p>Mengukur tingkat penerimaan Anda terhadap teknologi HerboraTech melalui <strong>4 dimensi</strong>: Perceived Usefulness, Perceived Ease of Use, Attitude, dan Behavioral Intention.</p>
         </div>
@@ -276,12 +276,12 @@
             <div style="font-size:0.58rem;color:var(--text-tertiary);">Sikap</div>
           </div>
           <div class="neu-card-sm" style="text-align:center;padding:14px 10px;">
-            <ion-icon name="rocket-outline" style="font-size:1.4rem;color:#8DD35E;"></ion-icon>
+            <ion-icon name="rocket-outline" style="font-size:1.4rem;color:#4B8424;"></ion-icon>
             <div style="font-size:0.7rem;font-weight:600;margin-top:6px;">BI</div>
             <div style="font-size:0.58rem;color:var(--text-tertiary);">Niat Penggunaan</div>
           </div>
         </div>
-        <div class="neu-card-sm" style="margin-top:12px;background:rgba(47,115,181,0.04);border:1px dashed rgba(47,115,181,0.3);">
+        <div class="neu-card-sm" style="margin-top:12px;background:rgba(76,124,44,0.04);border:1px dashed rgba(76,124,44,0.3);">
           <p style="font-size:0.72rem;color:var(--text-tertiary);text-align:center;margin:0;">16 pertanyaan &bull; Skala Likert 1-5</p>
         </div>
       </div>
@@ -290,7 +290,7 @@
     <!-- TAM Step 2: PU -->
     <div class="step-pane" data-section="tam" data-step="2">
       <div class="section">
-        <div class="dimension-header" style="background:rgba(47,115,181,0.06);">
+        <div class="dimension-header" style="background:rgba(76,124,44,0.06);">
           <ion-icon name="bulb-outline" style="color:var(--q-tam);"></ion-icon>
           <span style="color:var(--q-tam-dark);">Perceived Usefulness (PU)</span>
         </div>
@@ -329,9 +329,9 @@
 
         <div style="height:14px"></div>
 
-        <div class="dimension-header" style="background:rgba(141,211,94,0.06);">
-          <ion-icon name="rocket-outline" style="color:#8DD35E;"></ion-icon>
-          <span style="color:#557C3B;">Behavioral Intention (BI)</span>
+        <div class="dimension-header" style="background:rgba(75,132,36,0.06);">
+          <ion-icon name="rocket-outline" style="color:#4B8424;"></ion-icon>
+          <span style="color:#395328;">Behavioral Intention (BI)</span>
         </div>
         <div class="likert-question" data-q="bi1"><div class="q-number">1 / 4</div><div class="q-text">Saya berniat untuk terus menggunakan HerboraTech di masa depan.</div><div class="likert-options"></div></div>
         <div class="likert-question" data-q="bi2"><div class="q-number">2 / 4</div><div class="q-text">Saya akan merekomendasikan HerboraTech kepada keluarga dan teman.</div><div class="likert-options"></div></div>
@@ -442,8 +442,8 @@
 
         <div style="height:14px"></div>
 
-        <div class="dimension-header" style="background:rgba(47,115,181,0.06);">
-          <ion-icon name="navigate-outline" style="color:#2F73B5;"></ion-icon>
+        <div class="dimension-header" style="background:rgba(76,124,44,0.06);">
+          <ion-icon name="navigate-outline" style="color:#4C7C2C;"></ion-icon>
           <span style="color:var(--q-tam-dark);">Navigasi & Interaksi</span>
         </div>
         <div class="likert-question" data-q="nav1"><div class="q-number">1 / 4</div><div class="q-text">Saya dapat menemukan fitur yang dibutuhkan dengan mudah.</div><div class="likert-options"></div></div>
@@ -552,7 +552,7 @@
         <div class="ds-bar-row"><span class="ds-bar-label">PU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-pu" style="width:0%;background:var(--q-tam);"></div></div><span class="ds-bar-val" style="color:var(--q-tam);" id="r-val-pu">0/20</span></div>
         <div class="ds-bar-row"><span class="ds-bar-label">PEOU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-peou" style="width:0%;background:#3A7A2A;"></div></div><span class="ds-bar-val" style="color:#3A7A2A;" id="r-val-peou">0/20</span></div>
         <div class="ds-bar-row"><span class="ds-bar-label">ATU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-atu" style="width:0%;background:#B07D1E;"></div></div><span class="ds-bar-val" style="color:#B07D1E;" id="r-val-atu">0/20</span></div>
-        <div class="ds-bar-row"><span class="ds-bar-label">BI</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-bi" style="width:0%;background:#8DD35E;"></div></div><span class="ds-bar-val" style="color:#8DD35E;" id="r-val-bi">0/20</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">BI</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-bi" style="width:0%;background:#4B8424;"></div></div><span class="ds-bar-val" style="color:#4B8424;" id="r-val-bi">0/20</span></div>
         <div id="tam-interp" style="margin-top:10px;font-size:0.76rem;color:var(--text-secondary);line-height:1.5;"></div>
       </div>
 
@@ -563,7 +563,7 @@
           <div style="font-size:2rem;font-weight:800;color:var(--q-sus);" id="r-sus-score">0</div>
           <div style="font-size:0.7rem;color:var(--text-tertiary);">dari 100 &bull; <span id="r-sus-grade">-</span></div>
         </div>
-        <div style="height:14px;border-radius:7px;overflow:hidden;background:linear-gradient(90deg,#C94A42 0%,#B07D1E 25%,#F2C94C 50%,#3A7A2A 75%,#2F73B5 100%);position:relative;">
+        <div style="height:14px;border-radius:7px;overflow:hidden;background:linear-gradient(90deg,#C94A42 0%,#B07D1E 25%,#F2C94C 50%,#3A7A2A 75%,#4C7C2C 100%);position:relative;">
           <div id="r-sus-marker" style="position:absolute;top:-2px;width:4px;height:18px;background:var(--text-primary);border-radius:2px;left:0%;transition:left 0.8s ease;"></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:0.58rem;color:var(--text-muted);margin-top:4px;">
@@ -576,14 +576,14 @@
       <div class="neu-card detail-section" style="margin-top:12px;">
         <div class="ds-title"><ion-icon name="sparkles-outline" style="color:var(--q-ux);"></ion-icon> UX — User Experience</div>
         <div class="ds-bar-row"><span class="ds-bar-label">Visual</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-vd" style="width:0%;background:var(--q-ux);"></div></div><span class="ds-bar-val" style="color:var(--q-ux);" id="r-val-vd">0%</span></div>
-        <div class="ds-bar-row"><span class="ds-bar-label">Navigasi</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-nav" style="width:0%;background:#2F73B5;"></div></div><span class="ds-bar-val" style="color:#2F73B5;" id="r-val-nav">0%</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">Navigasi</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-nav" style="width:0%;background:#4C7C2C;"></div></div><span class="ds-bar-val" style="color:#4C7C2C;" id="r-val-nav">0%</span></div>
         <div class="ds-bar-row"><span class="ds-bar-label">Konten</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-ci" style="width:0%;background:#3A7A2A;"></div></div><span class="ds-bar-val" style="color:#3A7A2A;" id="r-val-ci">0%</span></div>
         <div class="ds-bar-row"><span class="ds-bar-label">Kepuasan</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-sat" style="width:0%;background:#B07D1E;"></div></div><span class="ds-bar-val" style="color:#B07D1E;" id="r-val-sat">0%</span></div>
         <div class="ds-bar-row"><span class="ds-bar-label">Trust</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-tr" style="width:0%;background:#C94A42;"></div></div><span class="ds-bar-val" style="color:#C94A42;" id="r-val-tr">0%</span></div>
         <div id="ux-interp" style="margin-top:10px;font-size:0.76rem;color:var(--text-secondary);line-height:1.5;"></div>
       </div>
 
-      <button class="neu-btn neu-btn-block" style="margin-top:20px;background:linear-gradient(135deg,#222C1C,#315817);color:#fff;padding:14px;font-weight:700;" onclick="nav('home.html')">
+      <button class="neu-btn neu-btn-block" style="margin-top:20px;background:linear-gradient(135deg,#171E13,#213A0F);color:#fff;padding:14px;font-weight:700;" onclick="nav('home.html')">
         <ion-icon name="home-outline"></ion-icon> Kembali ke Beranda
       </button>
     </div>
@@ -691,7 +691,7 @@ function updateBtnStyle() {
       btn.style.background = SECTION_COLORS[next].grad;
     } else {
       btn.innerHTML = 'Lihat Hasil Akhir <ion-icon name="trophy-outline"></ion-icon>';
-      btn.style.background = 'linear-gradient(135deg,#222C1C,#315817)';
+      btn.style.background = 'linear-gradient(135deg,#171E13,#213A0F)';
     }
   } else if (sec === 'ux' && step === 5) {
     btn.innerHTML = 'Selesai & Lihat Hasil <ion-icon name="arrow-forward-outline"></ion-icon>';

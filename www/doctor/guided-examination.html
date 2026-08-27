@@ -13,7 +13,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="../shared/firebase.js"></script>
   <style>
-    .app-header { background: linear-gradient(135deg, #2A4A14 0%, #1D5DB5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header { background: linear-gradient(135deg, #182A0B 0%, #3C6B1C 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
     .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
     .app-header > div[style*="font-weight:700"] { color: #fff; }
@@ -46,7 +46,7 @@
       transition: all 0.25s;
     }
     .step-circle.done { background: var(--primary-dark); color: #fff; box-shadow: 0 3px 8px rgba(58,122,42,0.4); }
-    .step-circle.active { background: linear-gradient(135deg, #1D5DB5, #2F73B5); color: #fff; box-shadow: 0 3px 8px rgba(47,115,181,0.5); }
+    .step-circle.active { background: linear-gradient(135deg, #3C6B1C, #4C7C2C); color: #fff; box-shadow: 0 3px 8px rgba(76,124,44,0.5); }
     .step-circle.pending { background: var(--bg); color: var(--text-muted); box-shadow: var(--shadow-out-sm); }
     .step-label { font-size: 0.52rem; color: var(--text-muted); margin-top: 4px; text-align: center; }
     .step-label.active { color: var(--info); font-weight: 600; }
@@ -64,8 +64,8 @@
 
     /* Patient data read-only card */
     .patient-data-card {
-      background: rgba(47,115,181,0.07);
-      border: 1px solid rgba(47,115,181,0.2);
+      background: rgba(76,124,44,0.07);
+      border: 1px solid rgba(76,124,44,0.2);
       border-radius: 16px;
       padding: 14px 16px;
     }
@@ -199,7 +199,7 @@
           <div class="mini-vital"><div style="font-size:0.58rem;color:var(--text-muted);">Tidur Avg</div><div style="font-weight:700;font-size:0.95rem;color:var(--accent);">6.5</div><div style="font-size:0.55rem;color:var(--text-muted);">jam</div></div>
         </div>
         <div id="step1-chart" style="height:60px;margin-top:12px;"></div>
-        <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(47,115,181,0.15);">
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(76,124,44,0.15);">
           <div style="font-size:0.65rem;font-weight:600;color:var(--info);margin-bottom:4px;">Keluhan Utama</div>
           <div style="font-size:0.75rem;color:var(--text-secondary);">Pusing berulang terutama saat berdiri tiba-tiba sejak 3 hari. Kepala terasa berat.</div>
         </div>
@@ -248,7 +248,7 @@
             <div style="font-weight:700;font-size:1.1rem;color:var(--danger);"><span id="s3-hr">84</span></div>
             <div style="font-size:0.55rem;color:var(--text-muted);">bpm</div>
           </div>
-          <div class="mini-vital" style="border-top:3px solid #2F73B5;">
+          <div class="mini-vital" style="border-top:3px solid #4C7C2C;">
             <div style="font-size:0.58rem;color:var(--text-muted);">SpO2</div>
             <div style="font-weight:700;font-size:1.1rem;color:var(--info);"><span id="s3-spo2">96</span></div>
             <div style="font-size:0.55rem;color:var(--text-muted);">%</div>
@@ -290,7 +290,7 @@
     <div class="step-panel" id="panel-4">
       <div class="patient-data-card" data-animate="up">
         <div class="pd-label">Inspeksi Visual — Kamera Pasien</div>
-        <div style="background:#222C1C;border-radius:14px;height:120px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+        <div style="background:#171E13;border-radius:14px;height:120px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
           <div style="text-align:center;color:rgba(255,255,255,0.4);">
             <ion-icon name="videocam-outline" style="font-size:2.5rem;"></ion-icon>
             <div style="font-size:0.7rem;margin-top:6px;">Live Camera Feed</div>
@@ -322,23 +322,23 @@
         <!-- Simple body map SVG -->
         <svg viewBox="0 0 120 220" style="width:100%;max-width:160px;display:block;margin:0 auto;" fill="none">
           <!-- Body outline -->
-          <ellipse cx="60" cy="28" rx="22" ry="24" fill="#dde2dc" stroke="#CAD6C2" stroke-width="1.5"/>
+          <ellipse cx="60" cy="28" rx="22" ry="24" fill="#dde2dc" stroke="#BECCB4" stroke-width="1.5"/>
           <!-- Neck -->
-          <rect x="52" y="50" width="16" height="14" rx="4" fill="#dde2dc" stroke="#CAD6C2" stroke-width="1"/>
+          <rect x="52" y="50" width="16" height="14" rx="4" fill="#dde2dc" stroke="#BECCB4" stroke-width="1"/>
           <!-- Torso -->
-          <rect x="32" y="64" width="56" height="80" rx="14" fill="#dde2dc" stroke="#CAD6C2" stroke-width="1.5"/>
+          <rect x="32" y="64" width="56" height="80" rx="14" fill="#dde2dc" stroke="#BECCB4" stroke-width="1.5"/>
           <!-- Arms -->
-          <rect x="10" y="66" width="20" height="64" rx="8" fill="#dde2dc" stroke="#CAD6C2" stroke-width="1"/>
-          <rect x="90" y="66" width="20" height="64" rx="8" fill="#dde2dc" stroke="#CAD6C2" stroke-width="1"/>
+          <rect x="10" y="66" width="20" height="64" rx="8" fill="#dde2dc" stroke="#BECCB4" stroke-width="1"/>
+          <rect x="90" y="66" width="20" height="64" rx="8" fill="#dde2dc" stroke="#BECCB4" stroke-width="1"/>
           <!-- Legs -->
-          <rect x="32" y="146" width="24" height="70" rx="10" fill="#dde2dc" stroke="#CAD6C2" stroke-width="1"/>
-          <rect x="64" y="146" width="24" height="70" rx="10" fill="#dde2dc" stroke="#CAD6C2" stroke-width="1"/>
+          <rect x="32" y="146" width="24" height="70" rx="10" fill="#dde2dc" stroke="#BECCB4" stroke-width="1"/>
+          <rect x="64" y="146" width="24" height="70" rx="10" fill="#dde2dc" stroke="#BECCB4" stroke-width="1"/>
           <!-- Pain marker (head/neck area) -->
           <circle cx="60" cy="24" r="9" fill="rgba(201,74,66,0.4)" stroke="#C94A42" stroke-width="1.5"/>
           <text x="60" y="28" text-anchor="middle" font-size="9" fill="#C94A42">!</text>
         </svg>
         <div style="text-align:center;font-size:0.65rem;color:var(--danger);margin-top:6px;">🔴 Area yang ditandai: Kepala / Leher</div>
-        <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(47,115,181,0.15);">
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(76,124,44,0.15);">
           <div style="font-size:0.65rem;font-weight:600;color:var(--info);margin-bottom:4px;">Skala Nyeri Pasien</div>
           <div style="display:flex;align-items:center;gap:8px;font-size:0.75rem;">
             <span style="color:var(--primary-dark);">1</span>
@@ -360,7 +360,7 @@
         <div class="pd-label">Auskultasi — Audio Stream</div>
         <!-- Audio wave SVG -->
         <svg class="audio-wave" viewBox="0 0 300 50">
-          <polyline points="0,25 20,10 40,38 60,8 80,42 100,15 120,35 140,5 160,45 180,12 200,38 220,8 240,42 260,18 280,32 300,25" fill="none" stroke="#2F73B5" stroke-width="2" stroke-linecap="round"/>
+          <polyline points="0,25 20,10 40,38 60,8 80,42 100,15 120,35 140,5 160,45 180,12 200,38 220,8 240,42 260,18 280,32 300,25" fill="none" stroke="#4C7C2C" stroke-width="2" stroke-linecap="round"/>
         </svg>
         <div style="display:flex;justify-content:center;gap:12px;margin-top:8px;">
           <button class="neu-btn-sm" style="background:var(--info-bg);color:var(--info);font-size:0.7rem;" onclick="showToast('Merekam suara auskultasi','info')">
@@ -370,7 +370,7 @@
             <ion-icon name="play-outline" style="vertical-align:-2px;"></ion-icon> Putar
           </button>
         </div>
-        <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(47,115,181,0.15);font-size:0.7rem;color:var(--text-secondary);">
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(76,124,44,0.15);font-size:0.7rem;color:var(--text-secondary);">
           Titik auskultasi: Titik Aorta, Pulmonal, Trikuspidal, Mitral — gunakan panduan dokter
         </div>
       </div>
@@ -390,9 +390,9 @@
           <div><strong style="color:var(--text-primary);">2. Merasa sedih/tertekan:</strong> <span style="color:var(--primary-dark);">Tidak sama sekali (0)</span></div>
           <div><strong style="color:var(--text-primary);">3. Susah tidur:</strong> <span style="color:var(--warning);">Lebih dari separuh waktu (2)</span></div>
           <div><strong style="color:var(--text-primary);">4. Merasa lelah:</strong> <span style="color:var(--warning);">Beberapa hari (1)</span></div>
-          <div style="padding-top:8px;border-top:1px solid rgba(47,115,181,0.15);"><strong>Skor PHQ-9:</strong> <span style="color:var(--warning);font-weight:700;">4 (Minimal)</span></div>
+          <div style="padding-top:8px;border-top:1px solid rgba(76,124,44,0.15);"><strong>Skor PHQ-9:</strong> <span style="color:var(--warning);font-weight:700;">4 (Minimal)</span></div>
         </div>
-        <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(47,115,181,0.15);">
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(76,124,44,0.15);">
           <div style="display:flex;gap:16px;font-size:0.75rem;color:var(--text-secondary);">
             <div><strong style="color:var(--text-primary);">BB:</strong> 72 kg</div>
             <div><strong style="color:var(--text-primary);">Lingkar pinggang:</strong> 86 cm</div>
@@ -589,7 +589,7 @@
   simulateVital('s3-rr', 16, 2);
 
   setTimeout(() => {
-    sparkline(document.getElementById('step1-chart'), [80,82,85,80,88,84,82,86,83,82,80,85,82,82], '#2F73B5', 60);
+    sparkline(document.getElementById('step1-chart'), [80,82,85,80,88,84,82,86,83,82,80,85,82,82], '#4C7C2C', 60);
   }, 300);
 
   // Close ICD dropdown on outside click

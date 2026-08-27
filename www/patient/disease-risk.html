@@ -53,7 +53,7 @@
   <div id="risk-content" style="display:none;">
     <div class="section">
       <!-- Quick Access to Encyclopedia -->
-      <button class="neu-card" onclick="nav('disease-encyclopedia.html')" style="cursor:pointer;border:none;background:linear-gradient(135deg,#35803A 0%,#B8E49A 100%);color:#fff;padding:16px;text-align:center;margin-bottom:16px;" data-animate="up">
+      <button class="neu-card" onclick="nav('disease-encyclopedia.html')" style="cursor:pointer;border:none;background:linear-gradient(135deg,#35803A 0%,#5AA22B 100%);color:#fff;padding:16px;text-align:center;margin-bottom:16px;" data-animate="up">
         <div style="font-size:1.8rem;margin-bottom:8px;">📚</div>
         <div style="font-weight:800;margin-bottom:4px;">Ensiklopedia Penyakit</div>
         <div style="font-size:0.8rem;opacity:0.9;">Lihat dasar penelitian, algoritma risk scoring, dan landmark papers</div>
@@ -69,9 +69,9 @@
         <div id="completeness-row" style="display:none;margin-top:10px;">
           <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-secondary);margin-bottom:4px;">
             <span>Kelengkapan profil</span>
-            <span id="completenessVal" style="font-weight:700;color:#76CB3D;"></span>
+            <span id="completenessVal" style="font-weight:700;color:#5DA52C;"></span>
           </div>
-          <div class="neu-progress"><div id="completenessFill" class="neu-progress-fill" style="background:linear-gradient(90deg,#76CB3D,#99D96F);"></div></div>
+          <div class="neu-progress"><div id="completenessFill" class="neu-progress-fill" style="background:linear-gradient(90deg,#5DA52C,#86D154);"></div></div>
         </div>
       </div>
 
@@ -81,7 +81,7 @@
 
       <!-- Instruction banner when data is incomplete -->
       <div id="incomplete-data-banner" style="display:none;margin-top:20px;">
-        <div class="neu-card" style="background:linear-gradient(135deg,rgba(53,128,58,0.08),rgba(184,228,154,0.05));border-left:4px solid #35803A;">
+        <div class="neu-card" style="background:linear-gradient(135deg,rgba(53,128,58,0.08),rgba(90,162,43,0.05));border-left:4px solid #35803A;">
           <div style="display:flex;gap:12px;align-items:flex-start;">
             <ion-icon name="information-circle-outline" style="font-size:1.3rem;color:#35803A;flex-shrink:0;margin-top:2px;"></ion-icon>
             <div style="flex:1;">
@@ -152,22 +152,22 @@
         </div>
 
         <!-- NAFLD -->
-        <div class="neu-card" style="padding:16px;border-left:4px solid #2F73B5;">
+        <div class="neu-card" style="padding:16px;border-left:4px solid #4C7C2C;">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,115,181,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">💧</div>
+              <div style="width:40px;height:40px;border-radius:12px;background:rgba(76,124,44,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">💧</div>
               <div>
                 <div style="font-weight:800;font-size:0.9rem;">Skrining NAFLD</div>
                 <div style="font-size:0.7rem;color:var(--text-tertiary);">Analisis perlemakan hati & Indeks FIB-4</div>
               </div>
             </div>
-            <button class="neu-btn neu-btn-sm neu-btn-primary" onclick="nav('screening-nafld.html')" style="background:#2F73B5;box-shadow:0 4px 12px rgba(47,115,181,0.3);">Mulai</button>
+            <button class="neu-btn neu-btn-sm neu-btn-primary" onclick="nav('screening-nafld.html')" style="background:#4C7C2C;box-shadow:0 4px 12px rgba(76,124,44,0.3);">Mulai</button>
           </div>
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--shadow-dark);display:flex;justify-content:space-between;align-items:center;">
-            <a href="research-nafld.html" style="font-size:0.68rem;color:#2F73B5;font-weight:700;display:flex;align-items:center;gap:4px;text-decoration:none;">
+            <a href="research-nafld.html" style="font-size:0.68rem;color:#4C7C2C;font-weight:700;display:flex;align-items:center;gap:4px;text-decoration:none;">
               <ion-icon name="beaker-outline"></ion-icon> Lihat Dasar Penelitian (60+ Papers)
             </a>
-            <span style="font-size:0.6rem;background:rgba(47,115,181,0.1);color:#2F73B5;padding:2px 8px;border-radius:10px;font-weight:700;">Grade B</span>
+            <span style="font-size:0.6rem;background:rgba(76,124,44,0.1);color:#4C7C2C;padding:2px 8px;border-radius:10px;font-weight:700;">Grade B</span>
           </div>
         </div>
 
@@ -534,7 +534,7 @@ async function loadHerbalRec(topConditions) {
     const evStyle = {
       A: 'background:#E8F5E9;color:#3A7A2A;',
       B: 'background:#FFF3E0;color:#B07D1E;',
-      C: 'background:#ECF4E6;color:#8DD35E;'
+      C: 'background:#E1EED9;color:#4B8424;'
     };
 
     list.innerHTML = results.map(f => {

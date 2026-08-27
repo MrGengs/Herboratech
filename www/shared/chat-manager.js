@@ -119,8 +119,8 @@ class VChatManager {
 
     if (msg.type === 'prescription') {
       return `<div class="chat-bubble ${msg.isMine ? 'sent' : 'received'}" style="padding:0;overflow:hidden;max-width:85%;">
-        <div style="background:rgba(47,115,181,0.1);border:1px solid rgba(47,115,181,0.3);border-radius:14px;padding:12px 14px;cursor:pointer;">
-          <div style="font-size:0.7rem;font-weight:700;color:#2F73B5;margin-bottom:4px;">📋 RESEP DIGITAL</div>
+        <div style="background:rgba(76,124,44,0.1);border:1px solid rgba(76,124,44,0.3);border-radius:14px;padding:12px 14px;cursor:pointer;">
+          <div style="font-size:0.7rem;font-weight:700;color:#4C7C2C;margin-bottom:4px;">📋 RESEP DIGITAL</div>
           <div style="font-size:0.78rem;">Lihat resep selengkapnya →</div>
           <div style="font-size:0.6rem;color:#8C978E;margin-top:4px;text-align:right;">${timeStr}</div>
         </div>

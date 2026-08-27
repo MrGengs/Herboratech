@@ -156,7 +156,7 @@ function initTabs(selector) {
 
 // ── Toast Notification ──
 function showToast(msg, type = 'success') {
-  const colors = { success: '#3A7A2A', error: '#C94A42', warning: '#B07D1E', info: '#2F73B5' };
+  const colors = { success: '#3A7A2A', error: '#C94A42', warning: '#B07D1E', info: '#4C7C2C' };
   const toast = document.createElement('div');
   toast.style.cssText = `
     position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);

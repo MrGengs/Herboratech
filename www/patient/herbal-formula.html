@@ -51,7 +51,7 @@
       justify-content: space-between;
       padding: 12px 16px;
       background: var(--bg);
-      border-bottom: 1px solid rgba(213,228,203,0.5);
+      border-bottom: 1px solid rgba(193,215,178,0.5);
     }
     .ing-row:last-child { border-bottom: none; }
     .ing-row .ing-num { width: 24px; height: 24px; border-radius: 8px; background: rgba(58,122,42,0.12); color: #3A7A2A; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -159,7 +159,7 @@
 
     // Evidence level badge
     const evMap = { A: { color: '#3A7A2A', label: 'Evidence A — Terbukti Klinis' },
-                    B: { color: '#76CB3D', label: 'Evidence B — Riset Mendukung' },
+                    B: { color: '#5DA52C', label: 'Evidence B — Riset Mendukung' },
                     C: { color: '#B07D1E', label: 'Evidence C — Empiris Tradisional' } };
     const evInfo = evMap[formula.evidenceLevel] || null;
     const evBadge = evInfo
@@ -235,7 +235,7 @@
 
     // Tags
     const tagsHTML = (formula.tags || []).map(t =>
-      `<span style="background:rgba(153,217,111,0.1);color:#76CB3D;border-radius:12px;padding:2px 8px;font-size:0.7rem;font-weight:600;">#${t}</span>`
+      `<span style="background:rgba(134,209,84,0.1);color:#5DA52C;border-radius:12px;padding:2px 8px;font-size:0.7rem;font-weight:600;">#${t}</span>`
     ).join(' ');
 
     document.getElementById('formula-content').innerHTML = `
@@ -294,10 +294,10 @@
         ${(() => {
           const sr = formula.sourceRef || {};
           const refs = sr.references || [];
-          const srcTypeColor = { 'evidence-based':'#3A7A2A', 'book-ocr':'#B07D1E', 'kemenkes':'#3A7A2A', 'riset-ilmiah':'#76CB3D' };
+          const srcTypeColor = { 'evidence-based':'#3A7A2A', 'book-ocr':'#B07D1E', 'kemenkes':'#3A7A2A', 'riset-ilmiah':'#5DA52C' };
           const srcTypeLabel = { 'evidence-based':'Evidence-Based', 'book-ocr':'Buku Herbal (OCR)', 'kemenkes':'Kemenkes RI', 'riset-ilmiah':'Riset Ilmiah' };
           const st = sr.sourceType || (formula.source ? 'book-ocr' : 'evidence-based');
-          const sc = srcTypeColor[st] || '#76CB3D';
+          const sc = srcTypeColor[st] || '#5DA52C';
           const sl = srcTypeLabel[st] || st;
           const typeIcon = { book:'📖', monograph:'📗', pharmacopeia:'⚕️', 'government-guide':'🏛️', database:'🗄️', 'book-ocr':'📚' };
 

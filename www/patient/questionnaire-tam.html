@@ -10,12 +10,12 @@
   <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
   <style>
     :root {
-      --tam-primary: #2F73B5;
-      --tam-dark: #406E22;
+      --tam-primary: #4C7C2C;
+      --tam-dark: #33571B;
     }
     .app-header {
       background: linear-gradient(135deg, var(--tam-dark) 0%, var(--tam-primary) 100%);
-      box-shadow: 0 2px 16px rgba(64,110,34, 0.25);
+      box-shadow: 0 2px 16px rgba(51,87,27, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
@@ -44,7 +44,7 @@
     .step-dot.current {
       background: linear-gradient(135deg, var(--tam-dark), var(--tam-primary));
       color: #fff; border-color: transparent;
-      box-shadow: 0 4px 12px rgba(47,115,181,0.4);
+      box-shadow: 0 4px 12px rgba(76,124,44,0.4);
       transform: scale(1.15);
     }
     .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
@@ -66,7 +66,7 @@
       background: linear-gradient(135deg, var(--tam-dark), var(--tam-primary));
       color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
       font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 6px 18px rgba(47,115,181,0.3);
+      box-shadow: 0 6px 18px rgba(76,124,44,0.3);
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
     .btn-proceed:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -90,8 +90,8 @@
       font-size: 0.78rem; font-weight: 500; color: var(--text-secondary);
       display: flex; align-items: center; gap: 10px;
     }
-    .likert-opt:hover { border-color: rgba(47,115,181,0.3); }
-    .likert-opt.selected { border-color: var(--tam-primary); background: rgba(47,115,181,0.05); color: var(--tam-primary); font-weight: 600; }
+    .likert-opt:hover { border-color: rgba(76,124,44,0.3); }
+    .likert-opt.selected { border-color: var(--tam-primary); background: rgba(76,124,44,0.05); color: var(--tam-primary); font-weight: 600; }
     .likert-opt .radio-circle {
       width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--shadow-dark);
       flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
@@ -104,7 +104,7 @@
     }
 
     .intro-card {
-      background: linear-gradient(135deg, rgba(47,115,181,0.08), rgba(47,115,181,0.02));
+      background: linear-gradient(135deg, rgba(76,124,44,0.08), rgba(76,124,44,0.02));
       border-left: 4px solid var(--tam-primary); border-radius: 14px; padding: 18px; margin-bottom: 16px;
     }
     .intro-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--tam-dark); margin-bottom: 8px; }
@@ -130,7 +130,7 @@
 
     .dimension-header {
       display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
-      padding: 12px 16px; background: rgba(47,115,181,0.06); border-radius: 12px;
+      padding: 12px 16px; background: rgba(76,124,44,0.06); border-radius: 12px;
     }
     .dimension-header ion-icon { font-size: 1.3rem; color: var(--tam-primary); }
     .dimension-header span { font-size: 0.88rem; font-weight: 700; color: var(--tam-dark); }
@@ -162,7 +162,7 @@
         <p>Kuesioner ini bertujuan untuk mengukur tingkat penerimaan Anda terhadap teknologi aplikasi <strong>HerboraTech</strong>. Penilaian mencakup 4 dimensi utama:</p>
       </div>
       <div class="neu-card-sm" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
-        <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,115,181,0.1);display:flex;align-items:center;justify-content:center;">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(76,124,44,0.1);display:flex;align-items:center;justify-content:center;">
           <ion-icon name="bulb-outline" style="font-size:1.2rem;color:var(--tam-primary);"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.84rem;">Perceived Usefulness (PU)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Persepsi kegunaan aplikasi</div></div>
@@ -180,12 +180,12 @@
         <div><div style="font-weight:600;font-size:0.84rem;">Attitude Toward Using (ATU)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Sikap terhadap penggunaan</div></div>
       </div>
       <div class="neu-card-sm" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
-        <div style="width:40px;height:40px;border-radius:12px;background:rgba(141,211,94,0.1);display:flex;align-items:center;justify-content:center;">
-          <ion-icon name="rocket-outline" style="font-size:1.2rem;color:#8DD35E;"></ion-icon>
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(75,132,36,0.1);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="rocket-outline" style="font-size:1.2rem;color:#4B8424;"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.84rem;">Behavioral Intention (BI)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Niat untuk menggunakan</div></div>
       </div>
-      <div class="neu-card-sm" style="background:rgba(47,115,181,0.04);border:1px dashed rgba(47,115,181,0.3);">
+      <div class="neu-card-sm" style="background:rgba(76,124,44,0.04);border:1px dashed rgba(76,124,44,0.3);">
         <p style="font-size:0.75rem;color:var(--text-tertiary);text-align:center;margin:0;">
           <ion-icon name="time-outline" style="vertical-align:middle;"></ion-icon>
           Estimasi waktu: <strong>5-8 menit</strong> &bull; 16 pertanyaan
@@ -285,7 +285,7 @@
       <div style="height:16px"></div>
 
       <div class="dimension-header">
-        <ion-icon name="rocket-outline" style="color:#8DD35E;"></ion-icon>
+        <ion-icon name="rocket-outline" style="color:#4B8424;"></ion-icon>
         <span>Behavioral Intention (BI)</span>
       </div>
       <div class="likert-question" data-q="bi1">
@@ -341,8 +341,8 @@
           </div>
           <div class="rb-item">
             <span class="rb-label" style="min-width:60px;">BI</span>
-            <div class="rb-bar"><div class="rb-bar-fill" id="bar-bi" style="width:0%;background:linear-gradient(90deg,#557C3B,#8DD35E);"></div></div>
-            <span class="rb-value" id="score-bi" style="color:#8DD35E;">0/20</span>
+            <div class="rb-bar"><div class="rb-bar-fill" id="bar-bi" style="width:0%;background:linear-gradient(90deg,#395328,#4B8424);"></div></div>
+            <span class="rb-value" id="score-bi" style="color:#4B8424;">0/20</span>
           </div>
         </div>
       </div>

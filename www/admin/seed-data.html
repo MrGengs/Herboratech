@@ -16,11 +16,11 @@
     .seed-btn.primary { background: linear-gradient(135deg, #7CC242, #4E9E33); color: #fff; box-shadow: 0 4px 16px rgba(58,122,42,0.35); }
     .seed-btn.secondary { background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); }
     .seed-btn:hover:not(:disabled) { transform: translateY(-2px); }
-    .log-area { background: #222C1C; border-radius: 12px; padding: 16px; margin-top: 20px; max-height: 300px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.75rem; line-height: 1.6; }
+    .log-area { background: #171E13; border-radius: 12px; padding: 16px; margin-top: 20px; max-height: 300px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.75rem; line-height: 1.6; }
     .log-area .log-line { margin-bottom: 4px; }
     .log-area .success { color: #6FBE3F; }
     .log-area .error { color: #C94A42; }
-    .log-area .info { color: #99D96F; }
+    .log-area .info { color: #86D154; }
     .log-area .warn { color: #F2C94C; }
   </style>
 </head>
@@ -42,7 +42,7 @@
     Seed Data Dokter (Firestore only)
   </button>
 
-  <button class="seed-btn primary" id="seedDoctorsAuthBtn" onclick="seedDoctorsWithAuth()" style="background:linear-gradient(135deg,#1D5DB5,#99D96F);">
+  <button class="seed-btn primary" id="seedDoctorsAuthBtn" onclick="seedDoctorsWithAuth()" style="background:linear-gradient(135deg,#3C6B1C,#86D154);">
     Seed Dokter + Auth (bisa login)
   </button>
 
@@ -58,11 +58,11 @@
     📋 Seed 20 Resep Manual (Asam Urat, Batuk, Maag, Diabetes, Hipertensi, Kolesterol)
   </button>
 
-  <button class="seed-btn primary" id="seedTeamBtn" onclick="seedTeamAccounts()" style="background:linear-gradient(135deg,#599C2D,#9CDA72);">
+  <button class="seed-btn primary" id="seedTeamBtn" onclick="seedTeamAccounts()" style="background:linear-gradient(135deg,#305418,#508F26);">
     👥 Seed Akun Tim Siswa + Super Admin Mentor
   </button>
 
-  <button class="seed-btn primary" id="seedGeminiKeysBtn" onclick="seedGeminiApiKeys()" style="background:linear-gradient(135deg,#35803A,#BBE69F);">
+  <button class="seed-btn primary" id="seedGeminiKeysBtn" onclick="seedGeminiApiKeys()" style="background:linear-gradient(135deg,#35803A,#62AF2F);">
     🔑 Seed 10 Gemini API Keys
   </button>
 
@@ -70,7 +70,7 @@
     Clear Log
   </button>
 
-  <div style="margin-top:16px;background:#222C1C;border-radius:12px;padding:14px;font-size:0.75rem;color:#99D96F;font-family:monospace;line-height:1.8;">
+  <div style="margin-top:16px;background:#171E13;border-radius:12px;padding:14px;font-size:0.75rem;color:#86D154;font-family:monospace;line-height:1.8;">
     <div style="color:#F2C94C;font-weight:700;margin-bottom:6px;">📋 Akun Demo Setelah Seed:</div>
     <div>👑 Super Admin : mentor@herboratech.id / <b>mentor2024</b></div>
     <div>👤 Admin &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: admin@herboratech.id / <b>admin123</b></div>
@@ -78,7 +78,7 @@
     <div>👨‍⚕️ Dokter 2&nbsp;&nbsp;: andi.rahmanto@herboratech.id / <b>dokter123</b></div>
     <div>👨‍⚕️ Dokter 3&nbsp;&nbsp;: nadia.putri@herboratech.id / <b>dokter123</b></div>
     <div>🧑 Pasien &nbsp;&nbsp;&nbsp;&nbsp;: budi.santoso@herboratech.id / <b>pasien123</b></div>
-    <div style="color:#9CDA72;font-weight:700;margin-top:8px;">👥 Akun Tim Siswa (password: <b>siswa2024</b>)</div>
+    <div style="color:#508F26;font-weight:700;margin-top:8px;">👥 Akun Tim Siswa (password: <b>siswa2024</b>)</div>
     <div>helmi.widyatamaka@herboratech.id</div>
     <div>anisa.widad@herboratech.id</div>
     <div>laqif.abdurrahman@herboratech.id</div>

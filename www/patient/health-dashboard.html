@@ -132,11 +132,11 @@
           <span>Update Profil</span>
         </div>
         <div class="action-btn" onclick="window.recalc()">
-          <ion-icon name="refresh-circle-outline" style="color:#76CB3D;"></ion-icon>
+          <ion-icon name="refresh-circle-outline" style="color:#5DA52C;"></ion-icon>
           <span>Hitung Ulang</span>
         </div>
         <div class="action-btn" onclick="nav('herbal.html')">
-          <ion-icon name="leaf-outline" style="color:#8DD35E;"></ion-icon>
+          <ion-icon name="leaf-outline" style="color:#4B8424;"></ion-icon>
           <span>Semua Herbal</span>
         </div>
         <div class="action-btn" onclick="nav('consultation.html')">
@@ -337,7 +337,7 @@ window.renderTrendChart = function(history) {
   const latest = history[0].scores || {};
   const diseases = ['diabetes', 'heart', 'hypertension', 'stroke', 'metabolic', 'sleep'];
   const labels = { diabetes:'Diabetes', heart:'Jantung', hypertension:'Hipertensi', stroke:'Stroke', metabolic:'Metabolik', sleep:'Tidur' };
-  const colors = { diabetes:'#C94A42', heart:'#35803A', hypertension:'#2F73B5', stroke:'#B07D1E', metabolic:'#3A7A2A', sleep:'#99D96F' };
+  const colors = { diabetes:'#C94A42', heart:'#35803A', hypertension:'#4C7C2C', stroke:'#B07D1E', metabolic:'#3A7A2A', sleep:'#86D154' };
 
   const rows = diseases
     .filter(d => latest[d])

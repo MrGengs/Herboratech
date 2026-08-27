@@ -11,11 +11,11 @@
   <style>
     :root {
       --ux-primary: #35803A;
-      --ux-dark: #70A64C;
+      --ux-dark: #3D5A29;
     }
     .app-header {
       background: linear-gradient(135deg, var(--ux-dark) 0%, var(--ux-primary) 100%);
-      box-shadow: 0 2px 16px rgba(112,166,76, 0.25);
+      box-shadow: 0 2px 16px rgba(61,90,41, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
@@ -173,8 +173,8 @@
         <div><div style="font-weight:600;font-size:0.82rem;">Visual Design</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Tampilan & estetika antarmuka</div></div>
       </div>
       <div class="neu-card-sm" style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;border-radius:10px;background:rgba(47,115,181,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
-          <ion-icon name="navigate-outline" style="color:#2F73B5;"></ion-icon>
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(76,124,44,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+          <ion-icon name="navigate-outline" style="color:#4C7C2C;"></ion-icon>
         </div>
         <div><div style="font-weight:600;font-size:0.82rem;">Navigasi & Interaksi</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Kemudahan navigasi & responsivitas</div></div>
       </div>
@@ -236,7 +236,7 @@
       <div style="height:16px"></div>
 
       <div class="dimension-header">
-        <ion-icon name="navigate-outline" style="color:#2F73B5;"></ion-icon>
+        <ion-icon name="navigate-outline" style="color:#4C7C2C;"></ion-icon>
         <span>Navigasi & Interaksi</span>
       </div>
       <div class="likert-question" data-q="nav1">
@@ -395,10 +395,10 @@
           <div class="dim-bar"><div class="dim-bar-fill" id="bar-vd" style="width:0%;background:var(--ux-primary);"></div></div>
         </div>
         <div class="ux-dim-card">
-          <div class="dim-icon"><ion-icon name="navigate-outline" style="color:#2F73B5;"></ion-icon></div>
+          <div class="dim-icon"><ion-icon name="navigate-outline" style="color:#4C7C2C;"></ion-icon></div>
           <div class="dim-name">Navigasi</div>
-          <div class="dim-score" id="dim-nav" style="color:#2F73B5;">0%</div>
-          <div class="dim-bar"><div class="dim-bar-fill" id="bar-nav" style="width:0%;background:#2F73B5;"></div></div>
+          <div class="dim-score" id="dim-nav" style="color:#4C7C2C;">0%</div>
+          <div class="dim-bar"><div class="dim-bar-fill" id="bar-nav" style="width:0%;background:#4C7C2C;"></div></div>
         </div>
         <div class="ux-dim-card">
           <div class="dim-icon"><ion-icon name="document-text-outline" style="color:#3A7A2A;"></ion-icon></div>
@@ -526,7 +526,7 @@ function nextStep() {
 function calculateResults() {
   const dims = {
     vd: { keys: ['vd1','vd2','vd3','vd4'], total: 0, color: 'var(--ux-primary)' },
-    nav: { keys: ['nav1','nav2','nav3','nav4'], total: 0, color: '#2F73B5' },
+    nav: { keys: ['nav1','nav2','nav3','nav4'], total: 0, color: '#4C7C2C' },
     ci: { keys: ['ci1','ci2','ci3','ci4'], total: 0, color: '#3A7A2A' },
     sat: { keys: ['sat1','sat2','sat3','sat4'], total: 0, color: '#B07D1E' },
     tr: { keys: ['tr1','tr2','tr3','tr4'], total: 0, color: '#C94A42' }

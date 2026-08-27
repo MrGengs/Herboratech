@@ -14,7 +14,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
   <script src="../shared/firebase.js"></script>
   <style>
-    .app-header { background: linear-gradient(135deg, #2A4A14 0%, #1D5DB5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header { background: linear-gradient(135deg, #182A0B 0%, #3C6B1C 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
     .app-header > div[style*="font-weight:700"] { color: #fff; }
     .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
@@ -25,7 +25,7 @@
       position: absolute; bottom: 0; right: 0;
       width: 28px; height: 28px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #2F73B5, #1D5DB5);
+      background: linear-gradient(135deg, #4C7C2C, #3C6B1C);
       box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
       display: flex; align-items: center; justify-content: center;
       cursor: pointer;
@@ -51,14 +51,14 @@
     .neu-textarea-field:focus { outline: none; box-shadow: var(--shadow-in), 0 0 0 2px var(--info); }
 
     .edu-entry { display: flex; align-items: center; gap: 10px; background: var(--bg); border-radius: 12px; box-shadow: var(--shadow-out-sm); padding: 12px 14px; margin-bottom: 8px; }
-    .edu-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(47,115,181,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .edu-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(76,124,44,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .edu-text { flex: 1; }
     .edu-degree { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
     .edu-school { font-size: 0.68rem; color: var(--text-tertiary); }
     .edu-delete { color: var(--danger); font-size: 1.1rem; cursor: pointer; }
 
     .upload-area {
-      border: 2px dashed rgba(47,115,181,0.35);
+      border: 2px dashed rgba(76,124,44,0.35);
       border-radius: 14px;
       padding: 16px;
       text-align: center;
@@ -107,7 +107,7 @@
       <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="handlePhotoSelect(event)">
       <div class="avatar-wrapper">
         <img id="avatarImg" style="display:none;width:88px;height:88px;border-radius:50%;object-fit:cover;box-shadow:var(--shadow-out-sm);">
-        <div id="avatarGradient" class="neu-avatar-xl" style="background:linear-gradient(135deg,#2F73B5,#6BB6E8);font-size:1.4rem;">SW</div>
+        <div id="avatarGradient" class="neu-avatar-xl" style="background:linear-gradient(135deg,#4C7C2C,#6DC234);font-size:1.4rem;">SW</div>
         <div class="avatar-edit-badge" onclick="document.getElementById('photoInput').click()">
           <ion-icon name="camera-outline"></ion-icon>
         </div>

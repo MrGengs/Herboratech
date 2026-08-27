@@ -118,7 +118,7 @@
     }
     .sus-scale-bar {
       height: 16px; border-radius: 8px; overflow: hidden; position: relative;
-      background: linear-gradient(90deg, #C94A42 0%, #B07D1E 25%, #F2C94C 50%, #3A7A2A 75%, #2F73B5 100%);
+      background: linear-gradient(90deg, #C94A42 0%, #B07D1E 25%, #F2C94C 50%, #3A7A2A 75%, #4C7C2C 100%);
     }
     .sus-scale-marker {
       position: absolute; top: -6px; width: 4px; height: 28px; background: var(--text-primary);
@@ -180,8 +180,8 @@
       </div>
       <div class="neu-card-sm" style="margin-bottom:12px;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,115,181,0.1);display:flex;align-items:center;justify-content:center;">
-            <ion-icon name="analytics-outline" style="font-size:1.2rem;color:#2F73B5;"></ion-icon>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(76,124,44,0.1);display:flex;align-items:center;justify-content:center;">
+            <ion-icon name="analytics-outline" style="font-size:1.2rem;color:#4C7C2C;"></ion-icon>
           </div>
           <div>
             <div style="font-weight:600;font-size:0.84rem;">Skor SUS: 0 - 100</div>
@@ -430,7 +430,7 @@ function calculateResults() {
   const interp = document.getElementById('sus-interp-text');
 
   let grade, gradeColor, gradeBg;
-  if (susScore >= 85) { grade = 'A'; gradeColor = '#2F73B5'; gradeBg = 'rgba(47,115,181,0.12)'; }
+  if (susScore >= 85) { grade = 'A'; gradeColor = '#4C7C2C'; gradeBg = 'rgba(76,124,44,0.12)'; }
   else if (susScore >= 72) { grade = 'B'; gradeColor = '#3A7A2A'; gradeBg = 'rgba(58,122,42,0.12)'; }
   else if (susScore >= 68) { grade = 'C'; gradeColor = '#F2C94C'; gradeBg = 'rgba(242,201,76,0.15)'; }
   else if (susScore >= 51) { grade = 'D'; gradeColor = '#B07D1E'; gradeBg = 'rgba(176,125,30,0.12)'; }
