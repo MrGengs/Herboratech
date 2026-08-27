@@ -351,33 +351,44 @@ const HerboraTechRouter = (() => {
     while (i < src.length) {
       const c = src[i], c2 = src.substr(i, 2);
 
+      // Handle raw string content inside template literals `...`
+      if (tmpl.length && !tmpl[tmpl.length - 1].inExpr) {
+        if (c === _BS) { out += src.substr(i, 2); i += 2; continue; }
+        if (c2 === '${') {
+          tmpl[tmpl.length - 1].inExpr = true;
+          tmpl[tmpl.length - 1].depth = 0;
+          out += c2; i += 2; prevSig = '{'; continue;
+        }
+        if (c === '`') {
+          tmpl.pop(); out += c; i++; prevSig = '`'; continue;
+        }
+        out += c; i++; continue;
+      }
+
+      // Single-line comment
       if (c2 === '//') { const j = src.indexOf(_NL, i); const e = j === -1 ? src.length : j; out += src.slice(i, e); i = e; continue; }
+      // Multi-line comment
       if (c2 === '/*') { const j = src.indexOf('*/', i + 2); const e = j === -1 ? src.length : j + 2; out += src.slice(i, e); i = e; continue; }
 
+      // Quoted string literal
       if (c === '"' || c === "'") {
         let j = i + 1;
         while (j < src.length) {
           if (src[j] === _BS) { j += 2; continue; }
           if (src[j] === c) { j++; break; }
-          if (src[j] === _NL) break;   // string berkutip tak boleh lintas baris
+          if (src[j] === _NL) break;
           j++;
         }
         out += src.slice(i, j); i = j; prevSig = c; continue;
       }
 
-      if (tmpl.length) {
-        const top = tmpl[tmpl.length - 1];
-        if (!top.inExpr) {
-          if (c === _BS) { out += src.substr(i, 2); i += 2; continue; }
-          if (c2 === '${') { top.inExpr = true; top.depth = 0; out += c2; i += 2; continue; }
-          if (c === '`') { tmpl.pop(); out += c; i++; continue; }
-          out += c; i++; continue;
-        }
-        if (c === '{') top.depth++;
-        if (c === '}') { if (top.depth === 0) { top.inExpr = false; out += c; i++; continue; } top.depth--; }
+      // Template literal start (either at top-level or nested inside an expression)
+      if (c === '`') {
+        tmpl.push({ inExpr: false, depth: 0 });
+        out += c; i++; prevSig = '`'; continue;
       }
-      if (c === '`') { tmpl.push({ inExpr: false, depth: 0 }); out += c; i++; prevSig = c; continue; }
 
+      // Regex literal
       if (c === '/' && (prevSig === '' || '(,=:[!&|?{};+-*%~^<>'.indexOf(prevSig) !== -1)) {
         let j = i + 1, cls = false;
         while (j < src.length) {
@@ -392,11 +403,31 @@ const HerboraTechRouter = (() => {
         out += src.slice(i, j); i = j; prevSig = '/'; continue;
       }
 
-      if (c === '{') brace++; else if (c === '}') brace--;
-      else if (c === '(') paren++; else if (c === ')') paren--;
-      else if (c === '[') bracket++; else if (c === ']') bracket--;
+      // Braces & Depth Tracking
+      if (c === '{') {
+        if (tmpl.length && tmpl[tmpl.length - 1].inExpr) tmpl[tmpl.length - 1].depth++;
+        brace++;
+      } else if (c === '}') {
+        if (tmpl.length && tmpl[tmpl.length - 1].inExpr) {
+          if (tmpl[tmpl.length - 1].depth === 0) {
+            tmpl[tmpl.length - 1].inExpr = false;
+            out += c; i++; prevSig = '}'; continue;
+          }
+          tmpl[tmpl.length - 1].depth--;
+        }
+        brace--;
+      } else if (c === '(') {
+        paren++;
+      } else if (c === ')') {
+        paren--;
+      } else if (c === '[') {
+        bracket++;
+      } else if (c === ']') {
+        bracket--;
+      }
 
-      if (brace === 0 && paren === 0 && bracket === 0 && !tmpl.length && (c === 'l' || c === 'c')) {
+      // Top-level variable declaration: convert let/const to var
+      if (brace === 0 && paren === 0 && bracket === 0 && tmpl.length === 0 && (c === 'l' || c === 'c')) {
         const m = /^(let|const)([ \t\r\n]+[A-Za-z_$[{])/.exec(src.slice(i));
         const boundaryOk = prevSig === '' || !/[A-Za-z0-9_$.]/.test(prevSig);
         if (m && boundaryOk) {
@@ -412,11 +443,9 @@ const HerboraTechRouter = (() => {
       i++;
     }
 
-    if (brace !== 0 || paren !== 0 || bracket !== 0) {
-      // Fallback: simple regex-based let/const → var to avoid "already declared" errors.
-      // Not 100% accurate but prevents hard crashes on complex scripts.
+    if (brace !== 0 || paren !== 0 || bracket !== 0 || tmpl.length !== 0) {
       console.warn('[SPA Router] Pemindai kehilangan jejak kurung; pakai regex fallback.');
-      return src.replace(/^([ \t]*)(let|const)([ \t]+)/gm, '$1var$3');
+      return src.replace(/\b(let|const)\b/g, 'var');
     }
     return out;
   }
