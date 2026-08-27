@@ -3,7 +3,7 @@
    Soft UI · Organic Health · AIoT Wellness
    
    Color palette inspired by neumorphic education UI:
-   - Background:  #EFEFEF (soft blue-gray)
+   - Background:  #E7EAE8 (soft blue-gray)
    - Shadow dark:  #d6d6d6
    - Shadow light: #FFFFFF
    - Primary:      #17A05C (natural green)
@@ -23,7 +23,7 @@ ion-icon {
 /* ── CSS Variables ── */
 :root {
   /* Neumorphic Base */
-  --bg: #EFEFEF;
+  --bg: #E7EAE8;
   --bg-dark: #DFDFDF;
   --shadow-dark: #D6D6D6;
   --shadow-light: #FFFFFF;
@@ -31,15 +31,17 @@ ion-icon {
   /* Permukaan kartu. Di kit referensi kartu berwarna PUTIH di atas latar
      abu-abu muda, bukan sewarna latar. Beda nada inilah yang memberi
      kartu bentuk, bukan bayangannya saja. */
+  /* Kartu putih di atas latar --bg. Rasio pemisahannya hanya 1.21,
+     jadi bayangan yang menegaskan bentuk kartu, bukan beda warnanya. */
   --surface:      #FFFFFF;
   --surface-soft: #F7F9F8;
 
   /* Shadows — datar: satu arah, lembut */
-  --shadow-out: 0 2px 12px rgba(16,24,40,0.06), 0 1px 3px rgba(16,24,40,0.04);
-  --shadow-out-sm: 0 1px 6px rgba(16,24,40,0.05), 0 1px 2px rgba(16,24,40,0.03);
-  --shadow-out-lg: 0 8px 28px rgba(16,24,40,0.10), 0 2px 8px rgba(16,24,40,0.05);
-  --shadow-in: inset 0 0 0 1px rgba(16,24,40,0.09);
-  --shadow-in-sm: inset 0 0 0 1px rgba(16,24,40,0.07);
+  --shadow-out: 0 4px 16px rgba(16,24,40,0.10), 0 2px 5px rgba(16,24,40,0.06);
+  --shadow-out-sm: 0 2px 9px rgba(16,24,40,0.08), 0 1px 3px rgba(16,24,40,0.05);
+  --shadow-out-lg: 0 16px 40px rgba(16,24,40,0.16), 0 5px 12px rgba(16,24,40,0.08);
+  --shadow-in: inset 0 0 0 1px rgba(16,24,40,0.12);
+  --shadow-in-sm: inset 0 0 0 1px rgba(16,24,40,0.10);
   
   /* Primary Green */
   --primary: #17A05C;
@@ -72,8 +74,8 @@ ion-icon {
   
   /* Text - Accessible contrast ratios */
   --text-primary: #1C1C1E;    /* 15.4:1 di latar, 17.0:1 di kartu putih */
-  --text-secondary: #6B6B6F;  /* 4.6:1 di latar, 5.3:1 di kartu */
-  --text-tertiary: #7C7C82;   /* 3.6:1 di latar, 4.2:1 di kartu - AA teks besar */
+  --text-secondary: #5F5F64;  /* 5.2:1 di latar, 6.3:1 di kartu */
+  --text-tertiary: #74747A;   /* 3.8:1 di latar, 4.6:1 di kartu */
   --text-muted: #9E9EA4;      /* decorative only */
   --text-on-primary: #FFFFFF;
   
