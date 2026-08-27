@@ -9,10 +9,10 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
-    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
-    .app-header > div[style*="font-weight:700"] { color: #fff; }
-    .section-header .section-title { border-left: 3px solid #0E7C46; padding-left: 10px; }
+    .app-header { background: var(--surface); box-shadow: 0 1px 3px rgba(16,24,40,0.06); border-bottom: 1px solid rgba(16,24,40,0.08); }
+    .app-header .neu-icon-btn { background: var(--bg); box-shadow: none; color: var(--primary-dark); border: 1px solid rgba(16,24,40,0.08); }
+    .app-header > div[style*="font-weight:700"] { color: var(--text-primary); }
+    .section-header .section-title { border-left: none; padding-left: 0; }
 
     /* Year Filter Tabs */
     .year-tabs { display: flex; gap: 8px; }

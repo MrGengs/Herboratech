@@ -9,13 +9,18 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
-    .app-header .logo { color: #fff; }
-    .app-header .logo span { color: #17A05C; }
-    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
-    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
-    .app-header > div[style*="font-weight:700"] { color: #fff; }
-    .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
+    /* Header terang. Sebelumnya gradien hijau gelap peninggalan desain
+       lama; di atas kartu putih dan latar abu sekarang, kontrasnya jadi
+       terlalu keras dan tidak sekeluarga dengan halaman lain. */
+    .app-header { background: var(--surface); box-shadow: 0 1px 3px rgba(16,24,40,0.06); border-bottom: 1px solid rgba(16,24,40,0.08); }
+    .app-header .logo { color: var(--text-primary); }
+    .app-header .logo span { color: var(--primary-dark); }
+    .app-header .neu-icon-btn { background: var(--bg); box-shadow: none; color: var(--primary-dark); border: 1px solid rgba(16,24,40,0.08); }
+    .app-header .neu-icon-btn:active { background: rgba(23,160,92,0.14); }
+    .app-header > div[style*="font-weight:700"] { color: var(--text-primary); }
+    /* Garis aksen di kiri judul dibuang; gaya datar mengandalkan bobot
+       huruf dan jarak, bukan hiasan. */
+    .section-header .section-title { border-left: none; padding-left: 0; }
     .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
     .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
     .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(14,124,70,0.5)); }
@@ -97,7 +102,7 @@
 
     <!-- Activity -->
     <div class="section" style="padding-top:0">
-      <div class="section-header"><span class="section-title">🚶 Aktivitas Harian</span></div>
+      <div class="card-head"><div class="card-head-text"><div class="card-head-title">Aktivitas Harian</div><div class="card-head-sub">Langkah, jarak, dan kalori hari ini</div></div></div>
       <div class="neu-card" data-animate="up" data-delay="300">
         <div style="display:flex;justify-content:space-around;text-align:center;">
           <div><div id="steps-live" style="font-size:1.5rem;font-weight:800;color:var(--primary-dark);">0</div><div style="font-size:0.68rem;color:var(--text-muted);">Langkah</div></div>
@@ -115,7 +120,7 @@
 
     <!-- AI Recommendation -->
     <div class="section" style="padding-top:0">
-      <div class="section-header"><span class="section-title">🤖 Rekomendasi AI</span></div>
+      <div class="card-head"><div class="card-head-text"><div class="card-head-title">Rekomendasi AI</div><div class="card-head-sub">Saran otomatis dari pola vital Anda</div></div></div>
       <div class="neu-card" data-animate="up" data-delay="350" style="background:var(--accent-bg);border-left:4px solid var(--accent);">
         <p id="ai-recommendation-text" style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;"><strong style="color:var(--accent);">Hubungkan smartwatch Anda</strong> untuk mendapatkan rekomendasi AI berdasarkan data vital sign real-time.</p>
         <button class="neu-btn-sm neu-btn-accent" style="margin-top:12px;font-size:0.72rem;padding:6px 16px;border-radius:20px;color:#fff;background:linear-gradient(135deg,#3FBE84,#0E7C46);box-shadow:none;" onclick="nav('device.html')">Hubungkan Perangkat →</button>
