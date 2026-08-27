@@ -16,7 +16,7 @@
       box-shadow: 0 2px 16px rgba(0,0,0,0.25);
     }
     .app-header .logo { color: #fff; }
-    .app-header .logo span { color: #6FBE3F; }
+    .app-header .logo span { color: #17A05C; }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12);
       box-shadow: none;
@@ -49,9 +49,9 @@
 
     /* === VITAL CARDS: accent top border per type === */
     .vital-grid .vital-card:nth-child(1) { border-top: 3px solid #C94A42; }
-    .vital-grid .vital-card:nth-child(2) { border-top: 3px solid #4C7C2C; }
+    .vital-grid .vital-card:nth-child(2) { border-top: 3px solid #2F7D56; }
     .vital-grid .vital-card:nth-child(3) { border-top: 3px solid #B07D1E; }
-    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #3A7A2A; }
+    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #0E7C46; }
 
     /* === BOTTOM NAV: bolder active === */
     .nav-item.active {
@@ -72,7 +72,7 @@
     }
     .nav-item.active ion-icon {
       color: var(--primary-dark);
-      filter: drop-shadow(0 0 4px rgba(58,122,42,0.5));
+      filter: drop-shadow(0 0 4px rgba(14,124,70,0.5));
     }
 
     /* === AI INSIGHT: green accent === */
@@ -127,15 +127,15 @@
   <div class="section">
     <div class="section-header" data-animate="up" data-delay="200"><span class="section-title">Menu Cepat</span></div>
     <div class="quick-grid" data-animate="up" data-delay="250">
-      <div class="quick-item" onclick="nav('health-dashboard.html')"><div class="qi-icon" style="color:#5DA52C;background:rgba(93,165,44,0.1)"><ion-icon name="grid-outline"></ion-icon></div><span class="qi-label">Dashboard</span></div>
+      <div class="quick-item" onclick="nav('health-dashboard.html')"><div class="qi-icon" style="color:#31A86C;background:rgba(49,168,108,0.1)"><ion-icon name="grid-outline"></ion-icon></div><span class="qi-label">Dashboard</span></div>
       <div class="quick-item" onclick="nav('monitoring.html')"><div class="qi-icon" style="color:#C94A42;background:rgba(201,74,66,0.1)"><ion-icon name="pulse-outline"></ion-icon></div><span class="qi-label">Monitoring</span></div>
-      <div class="quick-item" onclick="nav('consultation.html')"><div class="qi-icon" style="color:#4C7C2C;background:rgba(76,124,44,0.1)"><ion-icon name="chatbubbles-outline"></ion-icon></div><span class="qi-label">Konsultasi</span></div>
-      <div class="quick-item" onclick="nav('herbal.html')"><div class="qi-icon" style="color:#3A7A2A;background:rgba(58,122,42,0.12)"><ion-icon name="leaf-outline"></ion-icon></div><span class="qi-label">Jamu</span></div>
-      <div class="quick-item" onclick="nav('health-profile.html')"><div class="qi-icon" style="color:#4B8424;background:rgba(75,132,36,0.12)"><ion-icon name="person-circle-outline"></ion-icon></div><span class="qi-label">Profil</span></div>
+      <div class="quick-item" onclick="nav('consultation.html')"><div class="qi-icon" style="color:#2F7D56;background:rgba(47,125,86,0.1)"><ion-icon name="chatbubbles-outline"></ion-icon></div><span class="qi-label">Konsultasi</span></div>
+      <div class="quick-item" onclick="nav('herbal.html')"><div class="qi-icon" style="color:#0E7C46;background:rgba(14,124,70,0.12)"><ion-icon name="leaf-outline"></ion-icon></div><span class="qi-label">Jamu</span></div>
+      <div class="quick-item" onclick="nav('health-profile.html')"><div class="qi-icon" style="color:#288557;background:rgba(40,133,87,0.12)"><ion-icon name="person-circle-outline"></ion-icon></div><span class="qi-label">Profil</span></div>
       <div class="quick-item" onclick="nav('disease-risk.html')"><div class="qi-icon" style="color:#B07D1E;background:rgba(176,125,30,0.12)"><ion-icon name="shield-checkmark-outline"></ion-icon></div><span class="qi-label">Risk Score</span></div>
-      <div class="quick-item" onclick="nav('disease-encyclopedia.html')"><div class="qi-icon" style="color:#35803A;background:rgba(53,128,58,0.12)"><ion-icon name="book-outline"></ion-icon></div><span class="qi-label">Ensiklopedia</span></div>
-      <div class="quick-item" onclick="window.open('../slr-portal/index.html','_blank')"><div class="qi-icon" style="color:#3A7A2A;background:rgba(58,122,42,0.12)"><ion-icon name="flask-outline"></ion-icon></div><span class="qi-label">Evidence Riset</span></div>
-      <div class="quick-item" onclick="nav('ai-chat.html')"><div class="qi-icon" style="color:#4C7C2C;background:rgba(76,124,44,0.12)"><ion-icon name="sparkles-outline"></ion-icon></div><span class="qi-label">AI Health</span></div>
+      <div class="quick-item" onclick="nav('disease-encyclopedia.html')"><div class="qi-icon" style="color:#0E7C46;background:rgba(14,124,70,0.12)"><ion-icon name="book-outline"></ion-icon></div><span class="qi-label">Ensiklopedia</span></div>
+      <div class="quick-item" onclick="window.open('../slr-portal/index.html','_blank')"><div class="qi-icon" style="color:#0E7C46;background:rgba(14,124,70,0.12)"><ion-icon name="flask-outline"></ion-icon></div><span class="qi-label">Evidence Riset</span></div>
+      <div class="quick-item" onclick="nav('ai-chat.html')"><div class="qi-icon" style="color:#2F7D56;background:rgba(47,125,86,0.12)"><ion-icon name="sparkles-outline"></ion-icon></div><span class="qi-label">AI Health</span></div>
       <div class="quick-item" onclick="showToast('SOS Emergency','error')"><div class="qi-icon" style="color:#fff;background:linear-gradient(135deg,#C94A42,#FF6B6B)"><ion-icon name="alert-circle-outline"></ion-icon></div><span class="qi-label">SOS</span></div>
     </div>
   </div>
@@ -181,7 +181,7 @@
   <div class="section" style="padding-top:0">
     <div class="section-header" data-animate="up" data-delay="400"><span class="section-title">Jadwal Konsultasi</span></div>
     <div class="neu-card" id="upcoming-consultation" data-animate="up" data-delay="450" style="display:flex;gap:16px;align-items:center;cursor:pointer">
-      <div class="neu-avatar" style="background:linear-gradient(135deg,#4C7C2C,#6DC234)"><ion-icon name="person" style="font-size:1.2rem"></ion-icon></div>
+      <div class="neu-avatar" style="background:linear-gradient(135deg,#2F7D56,#39C57F)"><ion-icon name="person" style="font-size:1.2rem"></ion-icon></div>
       <div style="flex:1"><div style="font-weight:600;font-size:0.88rem;">Memuat...</div><div style="font-size:0.72rem;color:var(--text-tertiary);margin-top:2px;">-</div></div>
       <ion-icon name="chevron-forward-outline" style="color:var(--text-muted)"></ion-icon>
     </div>
@@ -190,9 +190,9 @@
   <!-- KUESIONER EVALUASI -->
   <div class="section" style="padding-top:0">
     <div class="section-header" data-animate="up" data-delay="460"><span class="section-title">Kuesioner Evaluasi</span></div>
-    <div class="neu-card" data-animate="up" data-delay="480" style="cursor:pointer;padding:20px;background:linear-gradient(135deg,rgba(76,124,44,0.04),rgba(53,128,58,0.04));border:1px solid rgba(53,128,58,0.12);" onclick="nav('questionnaire.html')">
+    <div class="neu-card" data-animate="up" data-delay="480" style="cursor:pointer;padding:20px;background:linear-gradient(135deg,rgba(47,125,86,0.04),rgba(14,124,70,0.04));border:1px solid rgba(14,124,70,0.12);" onclick="nav('questionnaire.html')">
       <div style="display:flex;align-items:center;gap:14px;">
-        <div style="width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#4C7C2C,#35803A);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <div style="width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#2F7D56,#0E7C46);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
           <ion-icon name="clipboard-outline" style="font-size:1.5rem;color:#fff;"></ion-icon>
         </div>
         <div style="flex:1;">
@@ -202,9 +202,9 @@
         <ion-icon name="chevron-forward-outline" style="color:var(--text-muted);font-size:1.2rem;"></ion-icon>
       </div>
       <div style="display:flex;gap:8px;margin-top:14px;">
-        <span style="flex:1;text-align:center;padding:6px 0;border-radius:8px;background:rgba(76,124,44,0.08);font-size:0.65rem;font-weight:600;color:#4C7C2C;">TAM</span>
-        <span style="flex:1;text-align:center;padding:6px 0;border-radius:8px;background:rgba(58,122,42,0.08);font-size:0.65rem;font-weight:600;color:#3A7A2A;">SUS</span>
-        <span style="flex:1;text-align:center;padding:6px 0;border-radius:8px;background:rgba(53,128,58,0.08);font-size:0.65rem;font-weight:600;color:#35803A;">UX</span>
+        <span style="flex:1;text-align:center;padding:6px 0;border-radius:8px;background:rgba(47,125,86,0.08);font-size:0.65rem;font-weight:600;color:#2F7D56;">TAM</span>
+        <span style="flex:1;text-align:center;padding:6px 0;border-radius:8px;background:rgba(14,124,70,0.08);font-size:0.65rem;font-weight:600;color:#0E7C46;">SUS</span>
+        <span style="flex:1;text-align:center;padding:6px 0;border-radius:8px;background:rgba(14,124,70,0.08);font-size:0.65rem;font-weight:600;color:#0E7C46;">UX</span>
       </div>
     </div>
   </div>
@@ -290,7 +290,7 @@
   // Sparklines static seeds
   setTimeout(() => {
     sparkline(document.getElementById('hr-sp'), [72,75,78,74,80,77,78,82,79,78], '#C94A42');
-    sparkline(document.getElementById('spo2-sp'), [97,98,98,97,99,98,98,97,98,98], '#4C7C2C');
+    sparkline(document.getElementById('spo2-sp'), [97,98,98,97,99,98,98,97,98,98], '#2F7D56');
   }, 300);
 
   // Start VitalsManager — real-time buffer display + 1-min Firestore upload
@@ -337,7 +337,7 @@
     // Add BLE source indicator
     const sourceEl = document.querySelector('#vital-grid-home');
     if (sourceEl && v.source === 'ble') {
-      sourceEl.style.filter = 'drop-shadow(0 0 8px rgba(58,122,42,0.4))';
+      sourceEl.style.filter = 'drop-shadow(0 0 8px rgba(14,124,70,0.4))';
     } else if (sourceEl) {
       sourceEl.style.filter = 'none';
     }
@@ -356,14 +356,14 @@
 
     if (watchCard) {
       if (status.connected) {
-        watchIcon.style.background = 'linear-gradient(135deg, #7CC242, #4E9E33)';
+        watchIcon.style.background = 'linear-gradient(135deg, #1DB56A, #0E7C46)';
         watchIcon.style.animation = 'none';
         watchName.textContent = status.deviceName || 'HerboraTech Watch';
         watchStatus.textContent = '● Terhubung';
-        watchStatus.style.color = '#3A7A2A';
+        watchStatus.style.color = '#0E7C46';
         watchBadge.textContent = '● Terhubung';
-        watchBadge.style.background = 'rgba(58, 122, 42, 0.12)';
-        watchBadge.style.color = '#3A7A2A';
+        watchBadge.style.background = 'rgba(14, 124, 70, 0.12)';
+        watchBadge.style.color = '#0E7C46';
       } else {
         watchIcon.style.background = 'var(--shadow-dark)';
         watchIcon.style.animation = 'pulse 1.5s ease-in-out infinite';
@@ -462,8 +462,8 @@ async function loadUpcomingConsultation(uid) {
     // Generate initials for gradient avatar fallback
     const initials = doctorName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
     const avatarStyle = doctorPhoto
-      ? `<img src="${doctorPhoto}" alt="${doctorName}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#4C7C2C,#6DC234);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;\\'>${initials}</div>';">`
-      : `<div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#4C7C2C,#6DC234);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:0.8rem;">${initials}</div>`;
+      ? `<img src="${doctorPhoto}" alt="${doctorName}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#2F7D56,#39C57F);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;\\'>${initials}</div>';">`
+      : `<div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#2F7D56,#39C57F);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:0.8rem;">${initials}</div>`;
 
     card.onclick = () => nav(`chat-room.html?id=${consult.id}`);
     card.innerHTML = `<div style="width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;">${avatarStyle}</div><div style="flex:1"><div style="font-weight:600;font-size:0.88rem;">${doctorName}</div><div style="font-size:0.72rem;color:var(--text-tertiary);margin-top:2px;">${doctorSpecialty}</div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;"><span style="background:var(--info-bg);color:var(--info);padding:2px 8px;border-radius:20px;font-size:0.65rem;font-weight:600;">📅 ${timeStr}</span><span class="neu-chip" style="font-size:0.65rem;">${typeLabel}</span><span class="neu-chip-primary" style="font-size:0.65rem;">${consult.status === 'active' ? '● Aktif' : 'Terjadwal'}</span></div></div><ion-icon name="chevron-forward-outline" style="color:var(--text-muted)"></ion-icon>`;
@@ -493,7 +493,7 @@ async function loadVitalsAndScore(uid, vitals7) {
       const spo2Data = vitals.slice(-10).map(v => v.spo2 || 98);
       setTimeout(() => {
         if (hrData.length > 1) sparkline(document.getElementById('hr-sp'), hrData, '#C94A42');
-        if (spo2Data.length > 1) sparkline(document.getElementById('spo2-sp'), spo2Data, '#4C7C2C');
+        if (spo2Data.length > 1) sparkline(document.getElementById('spo2-sp'), spo2Data, '#2F7D56');
       }, 300);
       const healthScore = calculateHealthScore(avgHr, avgSpo2, avgTemp);
       updateHealthScoreDisplay(healthScore);

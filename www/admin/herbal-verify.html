@@ -9,27 +9,27 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,190,63,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(23,160,92,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #6FBE3F !important; }
+    .sidebar-logo span { color: #17A05C !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #6FBE3F; background: rgba(111,190,63,0.08); }
-    .sidebar-item.active { color: #6FBE3F !important; background: rgba(111,190,63,0.15); border-left: 3px solid #6FBE3F; }
+    .sidebar-item:hover { color: #17A05C; background: rgba(23,160,92,0.08); }
+    .sidebar-item.active { color: #17A05C !important; background: rgba(23,160,92,0.15); border-left: 3px solid #17A05C; }
 
     .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
     .ftab { padding: 8px 18px; border-radius: 20px; border: none; background: var(--bg); box-shadow: var(--shadow-out-sm); font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; }
-    .ftab.active { background: linear-gradient(135deg, #7CC242, #4E9E33); color: #fff; box-shadow: none; }
+    .ftab.active { background: linear-gradient(135deg, #1DB56A, #0E7C46); color: #fff; box-shadow: none; }
     .ftab .badge { background: rgba(255,255,255,0.3); color: #fff; padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; margin-left: 4px; }
 
     .submit-card { background: var(--bg); box-shadow: var(--shadow-out); border-radius: 20px; margin-bottom: 16px; overflow: hidden; }
     .submit-header { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
     .submit-meta { display: flex; align-items: center; gap: 12px; }
     .type-badge { padding: 3px 10px; border-radius: 10px; font-size: 0.72rem; font-weight: 700; }
-    .type-herbal { background: #E8F5E9; color: #3A7A2A; }
-    .type-formula { background: #E5F5D9; color: #5BA32B; }
+    .type-herbal { background: #E8F5EE; color: #0E7C46; }
+    .type-formula { background: #DEF6EA; color: #30A56A; }
     .status-badge { padding: 3px 10px; border-radius: 10px; font-size: 0.72rem; font-weight: 700; }
     .status-pending { background: #FFF3E0; color: #B07D1E; }
-    .status-approved { background: #E8F5E9; color: #3A7A2A; }
+    .status-approved { background: #E8F5EE; color: #0E7C46; }
     .status-rejected { background: #FFE5E5; color: #C94A42; }
 
     .submit-body { padding: 0 20px 20px; border-top: 1px solid var(--shadow-dark); display: none; }
@@ -41,14 +41,14 @@
     .detail-label { font-weight: 600; color: var(--text-secondary); min-width: 130px; flex-shrink: 0; }
     .detail-value { color: var(--text-primary); }
     .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag { background: var(--primary-bg, #E8F5E9); color: var(--primary-dark); padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
-    .tag.compound { background: #E3EEDC; color: #42642B; }
+    .tag { background: var(--primary-bg, #E8F5EE); color: var(--primary-dark); padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .tag.compound { background: #DEEFE6; color: #2E654A; }
     .tag.interaction { background: #FFF3E0; color: #E65100; }
     ol.steps-list { padding-left: 20px; font-size: 0.82rem; color: var(--text-primary); }
     ol.steps-list li { margin-bottom: 4px; }
 
     .action-bar { display: flex; gap: 10px; margin-top: 20px; }
-    .btn-approve { flex: 1; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, #7CC242, #4E9E33); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+    .btn-approve { flex: 1; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, #1DB56A, #0E7C46); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
     .btn-reject { flex: 1; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, #C94A42, #FF8A8A); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
     .btn-approve:disabled, .btn-reject:disabled { opacity: 0.5; cursor: not-allowed; }
     .rejection-note { width: 100%; margin-top: 8px; padding: 10px 14px; border-radius: 10px; border: none; background: var(--bg); box-shadow: var(--shadow-in); font-family: var(--font); font-size: 0.83rem; color: var(--text-primary); resize: vertical; min-height: 60px; display: none; }
@@ -58,9 +58,9 @@
     .empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
 
     .evidence-badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
-    .ev-A { background: #E8F5E9; color: #3A7A2A; }
+    .ev-A { background: #E8F5EE; color: #0E7C46; }
     .ev-B { background: #FFF3E0; color: #B07D1E; }
-    .ev-C { background: #E1EED9; color: #4B8424; }
+    .ev-C { background: #DCEEE5; color: #288557; }
   </style>
 </head>
 <body>
@@ -91,8 +91,8 @@
     <div class="admin-topbar" data-animate="up">
       <h1 style="border-left:4px solid var(--primary-dark);padding-left:12px;">Verifikasi Data Herbal</h1>
       <div class="header-actions">
-        <div style="font-size:0.75rem;padding:4px 12px;border-radius:20px;background:linear-gradient(135deg,#305418,#508F26);color:#fff;font-weight:700;">👑 Super Admin</div>
-        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#305418,#508F26);margin-left:8px;">S</div>
+        <div style="font-size:0.75rem;padding:4px 12px;border-radius:20px;background:linear-gradient(135deg,#1A5638,#2A915D);color:#fff;font-weight:700;">👑 Super Admin</div>
+        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#1A5638,#2A915D);margin-left:8px;">S</div>
       </div>
     </div>
 
@@ -101,7 +101,7 @@
         Menunggu Verifikasi <span class="badge" id="count-pending">0</span>
       </button>
       <button class="ftab" id="tab-approved" onclick="filterSubmissions('approved')">
-        Disetujui <span class="badge" style="background:rgba(58,122,42,0.3);color:#3A7A2A;" id="count-approved">0</span>
+        Disetujui <span class="badge" style="background:rgba(14,124,70,0.3);color:#0E7C46;" id="count-approved">0</span>
       </button>
       <button class="ftab" id="tab-rejected" onclick="filterSubmissions('rejected')">
         Ditolak <span class="badge" style="background:rgba(201,74,66,0.3);color:#C94A42;" id="count-rejected">0</span>

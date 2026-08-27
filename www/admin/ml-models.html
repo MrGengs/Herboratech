@@ -13,12 +13,12 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="../shared/firebase.js"></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,190,63,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(23,160,92,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #6FBE3F !important; }
+    .sidebar-logo span { color: #17A05C !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #6FBE3F; background: rgba(111,190,63,0.08); }
-    .sidebar-item.active { color: #6FBE3F !important; background: rgba(111,190,63,0.15); border-left: 3px solid #6FBE3F; }
+    .sidebar-item:hover { color: #17A05C; background: rgba(23,160,92,0.08); }
+    .sidebar-item.active { color: #17A05C !important; background: rgba(23,160,92,0.15); border-left: 3px solid #17A05C; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
     @media (min-width: 768px) { .ml-dist-grid { grid-template-columns: 1fr 1fr !important; } }
 
@@ -46,7 +46,7 @@
       font-weight: 600;
       margin-bottom: 10px;
     }
-    .model-badge.active { background: rgba(58,122,42,0.12); color: #3A7A2A; }
+    .model-badge.active { background: rgba(14,124,70,0.12); color: #0E7C46; }
     .param-row {
       display: flex; justify-content: space-between; align-items: center;
       padding: 5px 0;
@@ -73,7 +73,7 @@
     }
     .risk-pill.high { background: rgba(201,74,66,0.12); color: #C94A42; }
     .risk-pill.medium { background: rgba(176,125,30,0.12); color: #B07D1E; }
-    .risk-pill.low { background: rgba(58,122,42,0.12); color: #3A7A2A; }
+    .risk-pill.low { background: rgba(14,124,70,0.12); color: #0E7C46; }
 
     .refresh-btn {
       display: inline-flex; align-items: center; gap: 6px;
@@ -124,20 +124,20 @@
         <button class="refresh-btn" onclick="loadStats()">
           <ion-icon name="refresh-outline"></ion-icon> Refresh Data
         </button>
-        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#4B8424,#6FBE3F)">A</div>
+        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#288557,#17A05C)">A</div>
       </div>
     </div>
 
     <!-- Stat Cards -->
     <div class="stat-grid" data-animate="up" data-delay="100">
       <div class="stat-card">
-        <div class="sc-icon" style="background:rgba(75,132,36,0.12);color:#4B8424">👤</div>
+        <div class="sc-icon" style="background:rgba(40,133,87,0.12);color:#288557">👤</div>
         <div class="sc-value" id="stat-profiles">—</div>
         <div class="sc-label">Pengguna Ber-profil</div>
         <div class="sc-change" id="stat-profiles-sub" style="color:var(--text-muted)">Memuat...</div>
       </div>
       <div class="stat-card">
-        <div class="sc-icon" style="background:rgba(76,124,44,0.12);color:#4C7C2C">📊</div>
+        <div class="sc-icon" style="background:rgba(47,125,86,0.12);color:#2F7D56">📊</div>
         <div class="sc-value" id="stat-scores">—</div>
         <div class="sc-label">Skor Dihitung</div>
         <div class="sc-change" id="stat-scores-sub" style="color:var(--text-muted)">Memuat...</div>
@@ -149,7 +149,7 @@
         <div class="sc-change" id="stat-highrisk-sub" style="color:var(--danger)">Memuat...</div>
       </div>
       <div class="stat-card">
-        <div class="sc-icon" style="background:rgba(58,122,42,0.12);color:#3A7A2A">🧠</div>
+        <div class="sc-icon" style="background:rgba(14,124,70,0.12);color:#0E7C46">🧠</div>
         <div class="sc-value" id="stat-models">7</div>
         <div class="sc-label">Model Tersedia</div>
         <div class="sc-change up" id="stat-engine">Memuat...</div>
@@ -164,7 +164,7 @@
       </div>
       <div class="model-grid">
 
-        <div class="model-card" style="border-top-color:#4B8424;">
+        <div class="model-card" style="border-top-color:#288557;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Sindrom Metabolik</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: IDF / NCEP ATP III</div>
@@ -174,7 +174,7 @@
           <div class="param-row"><span class="param-key">Output</span><span class="param-val">0–100, 3 kategori</span></div>
         </div>
 
-        <div class="model-card" style="border-top-color:#4C7C2C;">
+        <div class="model-card" style="border-top-color:#2F7D56;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Diabetes Tipe 2</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: FINDRISC Score</div>
@@ -214,7 +214,7 @@
           <div class="param-row"><span class="param-key">Riwayat stroke</span><span class="param-val">+30 poin</span></div>
         </div>
 
-        <div class="model-card" style="border-top-color:#3A7A2A;">
+        <div class="model-card" style="border-top-color:#0E7C46;">
           <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
           <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Kualitas Tidur</div>
           <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: PSQI Adapted</div>
@@ -270,11 +270,11 @@
         <span style="font-weight:700;font-size:0.9rem;">Roadmap Model</span>
       </div>
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(58,122,42,0.07);border-left:3px solid #3A7A2A;">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(14,124,70,0.07);border-left:3px solid #0E7C46;">
           <span style="font-size:1rem;">✅</span>
           <div><div style="font-weight:600;font-size:0.82rem;">v1.0 — Rule-based Models (Sekarang)</div><div style="font-size:0.7rem;color:var(--text-muted);">6 model klinis: IDF, FINDRISC, Framingham, JNC-8, ASCVD, PSQI</div></div>
         </div>
-        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(76,124,44,0.07);border-left:3px solid var(--info);">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(47,125,86,0.07);border-left:3px solid var(--info);">
           <span style="font-size:1rem;">✅</span>
           <div><div style="font-weight:600;font-size:0.82rem;">v2.0 — ML Proxy (Aktif via loadModels)</div><div style="font-size:0.7rem;color:var(--text-muted);">RandomForest proxy berbasis 280k baris data Kaggle — blending 60% ML + 40% rule-based</div></div>
         </div>
@@ -365,7 +365,7 @@
       const pctHigh   = Math.round(c.high   / c.total * 100);
       return `<tr>
         <td style="font-weight:600;">${DISEASE_LABELS[k]}</td>
-        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctLow}px;max-width:60px;background:#3A7A2A;"></div><span style="font-size:0.68rem;color:#3A7A2A;">${c.low}</span></div></td>
+        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctLow}px;max-width:60px;background:#0E7C46;"></div><span style="font-size:0.68rem;color:#0E7C46;">${c.low}</span></div></td>
         <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctMedium}px;max-width:60px;background:#B07D1E;"></div><span style="font-size:0.68rem;color:#B07D1E;">${c.medium}</span></div></td>
         <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctHigh}px;max-width:60px;background:#C94A42;"></div><span style="font-size:0.68rem;color:#C94A42;">${c.high}</span></div></td>
       </tr>`;
@@ -420,13 +420,13 @@
   // Load ML model metadata from /models/*/metadata.json
   async function loadMLModelStatus() {
     const ML_MODELS = [
-      { key: 'metabolic',    label: 'Sindrom Metabolik', color: '#4B8424' },
-      { key: 'diabetes',     label: 'Diabetes T2',       color: '#4C7C2C' },
+      { key: 'metabolic',    label: 'Sindrom Metabolik', color: '#288557' },
+      { key: 'diabetes',     label: 'Diabetes T2',       color: '#2F7D56' },
       { key: 'heart',        label: 'Jantung',           color: '#C94A42' },
       { key: 'hypertension', label: 'Hipertensi',        color: '#B07D1E' },
       { key: 'stroke',       label: 'Stroke',            color: '#C94A42' },
-      { key: 'sleep',        label: 'Kualitas Tidur',    color: '#3A7A2A' },
-      { key: 'stress_wesad', label: 'Stres (WESAD GSR)', color: '#86D154' },
+      { key: 'sleep',        label: 'Kualitas Tidur',    color: '#0E7C46' },
+      { key: 'stress_wesad', label: 'Stres (WESAD GSR)', color: '#66D29C' },
     ];
 
     let loadedCount = 0;

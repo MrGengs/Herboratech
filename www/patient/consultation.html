@@ -11,15 +11,15 @@
   <style>
     .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
     .app-header .logo { color: #fff; }
-    .app-header .logo span { color: #6FBE3F; }
+    .app-header .logo span { color: #17A05C; }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
     .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
     .app-header > div[style*="font-weight:700"] { color: #fff; }
     .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
     .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
     .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
-    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(58,122,42,0.5)); }
-    .neu-chip.active-chip { background: var(--primary-gradient); color: #fff; box-shadow: 3px 3px 6px rgba(58,122,42,0.3); }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(14,124,70,0.5)); }
+    .neu-chip.active-chip { background: var(--primary-gradient); color: #fff; box-shadow: 3px 3px 6px rgba(14,124,70,0.3); }
     .neu-chip { cursor: pointer; transition: all 0.2s ease; }
     .neu-chip:hover:not(.active-chip) { background: var(--shadow-dark); }
     #doctorsList .neu-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
@@ -66,7 +66,7 @@
     <div id="doctorsList" style="margin-top:20px;display:flex;flex-direction:column;gap:16px;">
       <div class="neu-card" data-animate="up" data-delay="150" style="cursor:pointer;" onclick="showToast('Membuka profil dokter')">
         <div style="display:flex;gap:14px;">
-          <div class="neu-avatar-lg" style="background:linear-gradient(135deg,#4C7C2C,#6DC234)">SW</div>
+          <div class="neu-avatar-lg" style="background:linear-gradient(135deg,#2F7D56,#39C57F)">SW</div>
           <div style="flex:1">
             <div style="font-weight:700;font-size:0.9rem;">dr. Sarah Wijaya, Sp.PD</div>
             <div style="font-size:0.72rem;color:var(--text-tertiary);">Spesialis Penyakit Dalam</div>
@@ -99,7 +99,7 @@
 
       <div class="neu-card" data-animate="up" data-delay="250" style="cursor:pointer;">
         <div style="display:flex;gap:14px;">
-          <div class="neu-avatar-lg" style="background:linear-gradient(135deg,#5FAE4A,#35803A)">NP</div>
+          <div class="neu-avatar-lg" style="background:linear-gradient(135deg,#3FBE84,#0E7C46)">NP</div>
           <div style="flex:1">
             <div style="font-weight:700;font-size:0.9rem;">dr. Nadia Putri, M.Ked</div>
             <div style="font-size:0.72rem;color:var(--text-tertiary);">Dokter Umum</div>
@@ -114,11 +114,11 @@
 
   <!-- AI Consultation Tab -->
   <div class="section" id="tab-ai" style="display:none;">
-    <div class="neu-card" data-animate="up" style="background:linear-gradient(135deg,#35803A 0%,#5FAE4A 100%);color:#fff;text-align:center;padding:32px 24px;">
+    <div class="neu-card" data-animate="up" style="background:linear-gradient(135deg,#0E7C46 0%,#3FBE84 100%);color:#fff;text-align:center;padding:32px 24px;">
       <div style="font-size:3rem;margin-bottom:12px;">🤖</div>
       <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">AI Health Assistant</h3>
       <p style="font-size:0.8rem;opacity:0.9;margin-bottom:20px;">Konsultasi cepat dengan AI untuk gejala ringan dan pertanyaan kesehatan umum</p>
-      <button class="neu-btn" style="background:#fff;color:#35803A;font-weight:600;" onclick="nav('ai-consultation.html')">
+      <button class="neu-btn" style="background:#fff;color:#0E7C46;font-weight:600;" onclick="nav('ai-consultation.html')">
         <ion-icon name="chatbubble-ellipses-outline" style="margin-right:6px;"></ion-icon>
         Mulai Chat dengan AI
       </button>
@@ -309,10 +309,10 @@ function renderDoctors(doctors) {
   }
 
   const gradients = [
-    'linear-gradient(135deg,#4C7C2C,#6DC234)',
+    'linear-gradient(135deg,#2F7D56,#39C57F)',
     'linear-gradient(135deg,#C94A42,#E87B74)',
-    'linear-gradient(135deg,#5FAE4A,#35803A)',
-    'linear-gradient(135deg,#7CC242,#4E9E33)',
+    'linear-gradient(135deg,#3FBE84,#0E7C46)',
+    'linear-gradient(135deg,#1DB56A,#0E7C46)',
     'linear-gradient(135deg,#B07D1E,#F2C94C)'
   ];
 
@@ -414,7 +414,7 @@ async function loadActiveConsultations(patientId) {
       card.style.cssText = 'cursor:pointer;margin-bottom:12px;border-left:3px solid var(--primary-dark);';
       card.innerHTML = `
         <div style="display:flex;gap:12px;align-items:center;">
-          <div class="neu-avatar" style="background:linear-gradient(135deg,#7CC242,#4E9E33);width:44px;height:44px;font-size:0.85rem;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;border-radius:50%;">${initials}</div>
+          <div class="neu-avatar" style="background:linear-gradient(135deg,#1DB56A,#0E7C46);width:44px;height:44px;font-size:0.85rem;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;border-radius:50%;">${initials}</div>
           <div style="flex:1;">
             <div style="font-weight:700;font-size:0.88rem;">${doctorName}</div>
             <div style="font-size:0.72rem;color:var(--text-tertiary);">${consult.type === 'video' ? 'Video Call' : consult.type === 'integrative' ? 'Pemeriksaan Integratif' : 'Chat'}</div>

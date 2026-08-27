@@ -3,11 +3,11 @@
    Soft UI · Organic Health · AIoT Wellness
    
    Color palette inspired by neumorphic education UI:
-   - Background:  #EDEFEC (soft blue-gray)
-   - Shadow dark:  #c8d0c6
+   - Background:  #EFEFEF (soft blue-gray)
+   - Shadow dark:  #d6d6d6
    - Shadow light: #FFFFFF
-   - Primary:      #6FBE3F (natural green)
-   - Accent:       #35803A (soft purple for AI features)
+   - Primary:      #17A05C (natural green)
+   - Accent:       #0E7C46 (soft purple for AI features)
    ═══════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -23,16 +23,16 @@ ion-icon {
 /* ── CSS Variables ── */
 :root {
   /* Neumorphic Base */
-  --bg: #EDEFEC;
-  --bg-dark: #DDE2DC;
-  --shadow-dark: #C8D0C6;
+  --bg: #EFEFEF;
+  --bg-dark: #DFDFDF;
+  --shadow-dark: #D6D6D6;
   --shadow-light: #FFFFFF;
   
   /* Permukaan kartu. Di kit referensi kartu berwarna PUTIH di atas latar
      abu-abu muda, bukan sewarna latar. Beda nada inilah yang memberi
      kartu bentuk, bukan bayangannya saja. */
   --surface:      #FFFFFF;
-  --surface-soft: #F7F9F6;
+  --surface-soft: #F7F9F8;
 
   /* Neumorphic Shadows */
   --shadow-out: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
@@ -42,17 +42,17 @@ ion-icon {
   --shadow-in-sm: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
   
   /* Primary Green */
-  --primary: #6FBE3F;
-  --primary-dark: #3A7A2A;
-  --primary-darker: #2F6B22;
-  --primary-light: #B6DE86;
-  --primary-bg: rgba(111,190,63,0.15);
-  --primary-gradient: linear-gradient(135deg, #7CC242 0%, #4E9E33 100%);
+  --primary: #17A05C;
+  --primary-dark: #0E7C46;
+  --primary-darker: #0A5F35;
+  --primary-light: #8FD3AC;
+  --primary-bg: rgba(23,160,92,0.15);
+  --primary-gradient: linear-gradient(135deg, #1DB56A 0%, #0E7C46 100%);
   
   /* Accent Purple (AI features) */
-  --accent: #35803A;
-  --accent-light: #5FAE4A;
-  --accent-bg: rgba(53,128,58,0.12);
+  --accent: #0E7C46;
+  --accent-light: #3FBE84;
+  --accent-bg: rgba(14,124,70,0.12);
   
   /* Semantic */
   --danger: #C94A42;
@@ -61,20 +61,20 @@ ion-icon {
   --warning-bg: rgba(176,125,30,0.12);
   --info: #2F73B5;
   --info-bg: rgba(47,115,181,0.12);
-  --success: #3A7A2A;
+  --success: #0E7C46;
 
   /* Ikon navigasi saat tidak aktif. Hijau teredam, bukan abu-abu.
      Lebih terang dari --primary-dark agar keadaan aktif tetap terbaca;
      keadaan aktif juga punya bar gradien dan scale 1.15, jadi tidak
      bergantung pada warna saja. Kontras naik dari 3.03 ke 4.17. */
-  --nav-idle: #5E8749;
-  --success-bg: rgba(58,122,42,0.12);
+  --nav-idle: #3E8F66;
+  --success-bg: rgba(14,124,70,0.12);
   
   /* Text - Accessible contrast ratios */
-  --text-primary: #2F3A2F;    /* 10.3:1 di latar, 11.9:1 di kartu putih */
-  --text-secondary: #57635A;  /* 5.4:1 di latar, 6.3:1 di kartu */
-  --text-tertiary: #667367;   /* 4.5:1 di latar, 5.2:1 di kartu */
-  --text-muted: #8C978E;      /* decorative only */
+  --text-primary: #1C1C1E;    /* 15.4:1 di latar, 17.0:1 di kartu putih */
+  --text-secondary: #6B6B6F;  /* 4.6:1 di latar, 5.3:1 di kartu */
+  --text-tertiary: #7C7C82;   /* 3.6:1 di latar, 4.2:1 di kartu - AA teks besar */
+  --text-muted: #9E9EA4;      /* decorative only */
   --text-on-primary: #FFFFFF;
   
   /* Spacing */
@@ -257,7 +257,7 @@ ul, ol { list-style: none; }
   border-radius: var(--r-lg);
   padding: var(--sp-24);
   color: var(--text-on-primary);
-  box-shadow: 6px 6px 16px rgba(58,122,42,0.3), -4px -4px 12px var(--shadow-light);
+  box-shadow: 6px 6px 16px rgba(14,124,70,0.3), -4px -4px 12px var(--shadow-light);
   position: relative;
   overflow: hidden;
 }
@@ -295,17 +295,17 @@ ul, ol { list-style: none; }
 .neu-btn-primary {
   background: var(--primary-gradient);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(58,122,42,0.35), -3px -3px 8px var(--shadow-light);
+  box-shadow: 4px 4px 10px rgba(14,124,70,0.35), -3px -3px 8px var(--shadow-light);
   padding: var(--sp-12) var(--sp-32);
 }
 
-.neu-btn-primary:active { box-shadow: inset 3px 3px 6px rgba(47,107,34,0.4), inset -3px -3px 6px rgba(182,222,134,0.3); }
+.neu-btn-primary:active { box-shadow: inset 3px 3px 6px rgba(10,95,53,0.4), inset -3px -3px 6px rgba(143,211,172,0.3); }
 .neu-btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
 
 .neu-btn-accent {
-  background: linear-gradient(135deg, #5FAE4A, #35803A);
+  background: linear-gradient(135deg, #3FBE84, #0E7C46);
   color: #fff;
-  box-shadow: 4px 4px 10px rgba(53,128,58,0.3), -3px -3px 8px var(--shadow-light);
+  box-shadow: 4px 4px 10px rgba(14,124,70,0.3), -3px -3px 8px var(--shadow-light);
 }
 
 .neu-btn-danger {
@@ -474,7 +474,7 @@ ul, ol { list-style: none; }
   width: var(--mobile-w);
   height: var(--nav-h);
   background: var(--surface);
-  box-shadow: 0 -8px 20px rgba(193,215,178,0.5);
+  box-shadow: 0 -8px 20px rgba(182,216,199,0.5);
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -768,7 +768,7 @@ ul, ol { list-style: none; }
 .neu-tab.active {
   color: #fff;
   background: var(--primary-gradient);
-  box-shadow: 3px 3px 8px rgba(58,122,42,0.3);
+  box-shadow: 3px 3px 8px rgba(14,124,70,0.3);
 }
 
 /* ═══════════════════════════
@@ -789,7 +789,7 @@ ul, ol { list-style: none; }
   color: #fff;
   border-bottom-right-radius: 4px;
   margin-left: auto;
-  box-shadow: 3px 3px 8px rgba(58,122,42,0.25);
+  box-shadow: 3px 3px 8px rgba(14,124,70,0.25);
 }
 
 .chat-bubble.received {
@@ -894,7 +894,7 @@ ul, ol { list-style: none; }
   position: fixed;
   left: 0;
   top: 0;
-  background: #2F3A2F;
+  background: #1C1C1E;
   padding: var(--sp-24);
   display: flex;
   flex-direction: column;
@@ -920,7 +920,7 @@ ul, ol { list-style: none; }
   gap: var(--sp-12);
   padding: var(--sp-12) var(--sp-16);
   border-radius: var(--r-sm);
-  color: rgba(182,222,134,0.70);
+  color: rgba(143,211,172,0.70);
   font-size: 0.85rem;
   font-weight: 500;
   transition: all 0.25s ease;
@@ -1010,10 +1010,10 @@ ul, ol { list-style: none; }
   padding: var(--sp-16);
   font-size: 0.85rem;
   color: var(--text-secondary);
-  border-bottom: 1px solid rgba(193,215,178,0.4);
+  border-bottom: 1px solid rgba(182,216,199,0.4);
 }
 
-.neu-table tbody tr:hover { background: rgba(111,190,63,0.05); }
+.neu-table tbody tr:hover { background: rgba(23,160,92,0.05); }
 
 /* ═══════════════════════════
    ANIMATIONS

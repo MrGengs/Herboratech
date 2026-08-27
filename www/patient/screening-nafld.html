@@ -10,12 +10,12 @@
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
     :root {
-      --primary-nafld: #4C7C2C;
-      --primary-nafld-dark: #32541B;
+      --primary-nafld: #2F7D56;
+      --primary-nafld-dark: #1D5539;
     }
     .app-header {
-      background: linear-gradient(135deg, var(--primary-nafld) 0%, #86D154 100%);
-      box-shadow: 0 2px 16px rgba(76,124,44, 0.25);
+      background: linear-gradient(135deg, var(--primary-nafld) 0%, #66D29C 100%);
+      box-shadow: 0 2px 16px rgba(47,125,86, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
@@ -43,9 +43,9 @@
     }
     .step-dot.past { background: var(--primary-nafld); color: #fff; border-color: var(--primary-nafld); }
     .step-dot.current {
-      background: linear-gradient(135deg, var(--primary-nafld), #86D154);
+      background: linear-gradient(135deg, var(--primary-nafld), #66D29C);
       color: #fff; border-color: transparent;
-      box-shadow: 0 4px 12px rgba(76,124,44,0.4);
+      box-shadow: 0 4px 12px rgba(47,125,86,0.4);
       transform: scale(1.15);
     }
     .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
@@ -64,10 +64,10 @@
       border-top: 1px solid var(--shadow-dark); padding: 14px 20px; z-index: 30;
     }
     .btn-proceed {
-      background: linear-gradient(135deg, var(--primary-nafld), #86D154);
+      background: linear-gradient(135deg, var(--primary-nafld), #66D29C);
       color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
       font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 6px 18px rgba(76,124,44,0.3);
+      box-shadow: 0 6px 18px rgba(47,125,86,0.3);
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
 
@@ -95,14 +95,14 @@
     }
     .radio-opt:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(76,124,44,0.2);
+      box-shadow: 0 4px 12px rgba(47,125,86,0.2);
     }
     .radio-opt:active { transform: scale(0.98); }
     .radio-opt.selected {
-      background: linear-gradient(135deg, var(--primary-nafld), #86D154);
+      background: linear-gradient(135deg, var(--primary-nafld), #66D29C);
       color: #fff;
       border-color: var(--primary-nafld);
-      box-shadow: 0 4px 14px rgba(76,124,44,0.4);
+      box-shadow: 0 4px 14px rgba(47,125,86,0.4);
     }
   </style>
 </head>
@@ -262,7 +262,7 @@
             </ul>
           </div>
 
-          <div class="neu-card" style="margin-bottom:14px;background:rgba(58, 122, 42, 0.05);border-left:4px solid #3A7A2A;">
+          <div class="neu-card" style="margin-bottom:14px;background:rgba(14, 124, 70, 0.05);border-left:4px solid #0E7C46;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="font-size:1.2rem;">🌿</span>
               <span style="font-size:0.85rem;font-weight:800;color:#1A5C38;">Rekomendasi Herbal</span>
@@ -396,7 +396,7 @@
         fib4Val.textContent = fib4.toFixed(2);
         if (fib4 < 1.30) {
           badge.textContent = 'LOW RISK';
-          badge.style.background = '#3A7A2A1A'; badge.style.color = '#3A7A2A';
+          badge.style.background = '#0E7C461A'; badge.style.color = '#0E7C46';
           desc.textContent = 'Indeks FIB-4 Anda rendah. Hati Anda kemungkinan besar dalam kondisi sehat (tanpa fibrosis).';
         } else if (fib4 <= 2.67) {
           badge.textContent = 'INDETERMINATE';

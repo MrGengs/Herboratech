@@ -13,23 +13,23 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="../shared/firebase.js"></script>
   <style>
-    .app-header { background: linear-gradient(135deg, #182A0B 0%, #3C6B1C 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header { background: linear-gradient(135deg, #0C2B1C 0%, #1F6C46 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
     .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
     .app-header > div[style*="font-weight:700"] { color: #fff; }
     .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
 
     .vital-grid .vital-card:nth-child(1) { border-top: 3px solid #C94A42; }
-    .vital-grid .vital-card:nth-child(2) { border-top: 3px solid #4C7C2C; }
+    .vital-grid .vital-card:nth-child(2) { border-top: 3px solid #2F7D56; }
     .vital-grid .vital-card:nth-child(3) { border-top: 3px solid #B07D1E; }
-    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #3A7A2A; }
+    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #0E7C46; }
 
     .profile-hero {
-      background: linear-gradient(135deg, #182A0B, #3C6B1C);
+      background: linear-gradient(135deg, #0C2B1C, #1F6C46);
       border-radius: 20px;
       padding: 20px;
       color: #fff;
-      box-shadow: 0 6px 20px rgba(24,42,11,0.3);
+      box-shadow: 0 6px 20px rgba(12,43,28,0.3);
     }
     .profile-avatar-xl {
       width: 72px; height: 72px;
@@ -67,7 +67,7 @@
       background: var(--info);
       flex-shrink: 0;
       margin-top: 4px;
-      box-shadow: 0 0 0 3px rgba(76,124,44,0.2);
+      box-shadow: 0 0 0 3px rgba(47,125,86,0.2);
     }
     .timeline-line {
       position: absolute;
@@ -230,7 +230,7 @@
 
         <div class="timeline-item" data-animate="up" data-delay="150">
           <div style="position:relative;flex-shrink:0;">
-            <div class="timeline-dot" style="background:var(--primary-dark);box-shadow:0 0 0 3px rgba(58,122,42,0.2);"></div>
+            <div class="timeline-dot" style="background:var(--primary-dark);box-shadow:0 0 0 3px rgba(14,124,70,0.2);"></div>
           </div>
           <div class="neu-card-sm" style="flex:1;margin-bottom:0;">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;">
@@ -346,7 +346,7 @@
         ? 'linear-gradient(90deg,#C94A42,#FF7B7B)'
         : cat === 'medium'
           ? 'linear-gradient(90deg,#B07D1E,#FFD54F)'
-          : 'linear-gradient(90deg,#3A7A2A,#86D154)';
+          : 'linear-gradient(90deg,#0E7C46,#66D29C)';
       const catLabel = cat === 'high' ? '↑ Tinggi' : cat === 'medium' ? '↑ Sedang' : '↓ Rendah';
       const topFactors = (data.factors || []).slice(0, 2).join(', ') || info.fallbackFactors;
       return `<div class="neu-card-sm" data-animate="up" data-delay="${100 + i * 50}">
@@ -438,12 +438,12 @@
 
     setTimeout(() => {
       sparkline(document.getElementById('hr-spark'), [78,82,85,80,88,84,82,86,83,82], '#C94A42', 32);
-      sparkline(document.getElementById('spo2-spark'), [97,96,95,97,96,94,96,97,96,96], '#4C7C2C', 32);
+      sparkline(document.getElementById('spo2-spark'), [97,96,95,97,96,94,96,97,96,96], '#2F7D56', 32);
       sparkline(document.getElementById('temp-spark'), [36.5,36.7,36.8,36.6,36.9,36.8,36.7,36.8,36.8,36.8], '#B07D1E', 32);
-      sparkline(document.getElementById('step-spark'), [5200,4800,6100,3900,5500,4200,4800,4200,4200,4200], '#3A7A2A', 32);
-      sparkline(document.getElementById('trend-chart'), [80,82,79,85,88,84,82,86,83,82,80,85,82,82], '#4C7C2C', 70);
+      sparkline(document.getElementById('step-spark'), [5200,4800,6100,3900,5500,4200,4800,4200,4200,4200], '#0E7C46', 32);
+      sparkline(document.getElementById('trend-chart'), [80,82,79,85,88,84,82,86,83,82,80,85,82,82], '#2F7D56', 70);
       const overallScore = renderRiskScores(latestRisk);
-      const gaugeColor = overallScore >= 60 ? '#C94A42' : overallScore >= 30 ? '#B07D1E' : '#3A7A2A';
+      const gaugeColor = overallScore >= 60 ? '#C94A42' : overallScore >= 30 ? '#B07D1E' : '#0E7C46';
       createGauge(document.getElementById('risk-gauge'), overallScore, 100, gaugeColor);
     }, 300);
   })();

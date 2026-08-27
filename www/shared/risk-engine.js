@@ -15,7 +15,7 @@ window.RiskEngine = {
   },
 
   RISK_COLOR: {
-    low: '#3A7A2A',
+    low: '#0E7C46',
     medium: '#B07D1E',
     high: '#C94A42'
   },

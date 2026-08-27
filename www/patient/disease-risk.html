@@ -11,20 +11,20 @@
   <style>
     .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
     .app-header .logo { color: #fff; }
-    .app-header .logo span { color: #6FBE3F; }
+    .app-header .logo span { color: #17A05C; }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
     .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
     .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
     .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
     .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
-    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(58,122,42,0.5)); }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(14,124,70,0.5)); }
 
     .risk-card { background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 14px; padding: 14px 16px; }
     .risk-bar-wrap { height: 8px; background: var(--shadow-dark); border-radius: 8px; margin-top: 8px; overflow: hidden; }
     .risk-bar-fill { height: 100%; border-radius: 8px; transition: width 1s ease; width: 0%; }
     .factor-chip { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.68rem; background: rgba(176,125,30,0.1); color: #B07D1E; margin: 2px; font-weight: 600; }
     .factor-chip.high { background: rgba(201,74,66,0.1); color: #C94A42; }
-    .factor-chip.low  { background: rgba(58,122,42,0.1);  color: #3A7A2A; }
+    .factor-chip.low  { background: rgba(14,124,70,0.1);  color: #0E7C46; }
   </style>
 </head>
 <body>
@@ -53,7 +53,7 @@
   <div id="risk-content" style="display:none;">
     <div class="section">
       <!-- Quick Access to Encyclopedia -->
-      <button class="neu-card" onclick="nav('disease-encyclopedia.html')" style="cursor:pointer;border:none;background:linear-gradient(135deg,#35803A 0%,#5AA22B 100%);color:#fff;padding:16px;text-align:center;margin-bottom:16px;" data-animate="up">
+      <button class="neu-card" onclick="nav('disease-encyclopedia.html')" style="cursor:pointer;border:none;background:linear-gradient(135deg,#0E7C46 0%,#2FA46A 100%);color:#fff;padding:16px;text-align:center;margin-bottom:16px;" data-animate="up">
         <div style="font-size:1.8rem;margin-bottom:8px;">📚</div>
         <div style="font-weight:800;margin-bottom:4px;">Ensiklopedia Penyakit</div>
         <div style="font-size:0.8rem;opacity:0.9;">Lihat dasar penelitian, algoritma risk scoring, dan landmark papers</div>
@@ -69,9 +69,9 @@
         <div id="completeness-row" style="display:none;margin-top:10px;">
           <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-secondary);margin-bottom:4px;">
             <span>Kelengkapan profil</span>
-            <span id="completenessVal" style="font-weight:700;color:#5DA52C;"></span>
+            <span id="completenessVal" style="font-weight:700;color:#31A86C;"></span>
           </div>
-          <div class="neu-progress"><div id="completenessFill" class="neu-progress-fill" style="background:linear-gradient(90deg,#5DA52C,#86D154);"></div></div>
+          <div class="neu-progress"><div id="completenessFill" class="neu-progress-fill" style="background:linear-gradient(90deg,#31A86C,#66D29C);"></div></div>
         </div>
       </div>
 
@@ -81,11 +81,11 @@
 
       <!-- Instruction banner when data is incomplete -->
       <div id="incomplete-data-banner" style="display:none;margin-top:20px;">
-        <div class="neu-card" style="background:linear-gradient(135deg,rgba(53,128,58,0.08),rgba(90,162,43,0.05));border-left:4px solid #35803A;">
+        <div class="neu-card" style="background:linear-gradient(135deg,rgba(14,124,70,0.08),rgba(47,164,106,0.05));border-left:4px solid #0E7C46;">
           <div style="display:flex;gap:12px;align-items:flex-start;">
-            <ion-icon name="information-circle-outline" style="font-size:1.3rem;color:#35803A;flex-shrink:0;margin-top:2px;"></ion-icon>
+            <ion-icon name="information-circle-outline" style="font-size:1.3rem;color:#0E7C46;flex-shrink:0;margin-top:2px;"></ion-icon>
             <div style="flex:1;">
-              <div style="font-weight:700;color:#35803A;margin-bottom:6px;font-size:0.88rem;">Tingkatkan Akurasi Prediksi</div>
+              <div style="font-weight:700;color:#0E7C46;margin-bottom:6px;font-size:0.88rem;">Tingkatkan Akurasi Prediksi</div>
               <p style="font-size:0.78rem;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">
                 Untuk hasil yang lebih akurat, lakukan:
               </p>
@@ -147,74 +147,74 @@
             <a href="research-hypertension.html" style="font-size:0.68rem;color:#C94A42;font-weight:700;display:flex;align-items:center;gap:4px;text-decoration:none;">
               <ion-icon name="beaker-outline"></ion-icon> Lihat Dasar Penelitian (60+ Papers)
             </a>
-            <span style="font-size:0.6rem;background:rgba(58,122,42,0.1);color:#3A7A2A;padding:2px 8px;border-radius:10px;font-weight:700;">Grade A</span>
+            <span style="font-size:0.6rem;background:rgba(14,124,70,0.1);color:#0E7C46;padding:2px 8px;border-radius:10px;font-weight:700;">Grade A</span>
           </div>
         </div>
 
         <!-- NAFLD -->
-        <div class="neu-card" style="padding:16px;border-left:4px solid #4C7C2C;">
+        <div class="neu-card" style="padding:16px;border-left:4px solid #2F7D56;">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:40px;height:40px;border-radius:12px;background:rgba(76,124,44,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">💧</div>
+              <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,125,86,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">💧</div>
               <div>
                 <div style="font-weight:800;font-size:0.9rem;">Skrining NAFLD</div>
                 <div style="font-size:0.7rem;color:var(--text-tertiary);">Analisis perlemakan hati & Indeks FIB-4</div>
               </div>
             </div>
-            <button class="neu-btn neu-btn-sm neu-btn-primary" onclick="nav('screening-nafld.html')" style="background:#4C7C2C;box-shadow:0 4px 12px rgba(76,124,44,0.3);">Mulai</button>
+            <button class="neu-btn neu-btn-sm neu-btn-primary" onclick="nav('screening-nafld.html')" style="background:#2F7D56;box-shadow:0 4px 12px rgba(47,125,86,0.3);">Mulai</button>
           </div>
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--shadow-dark);display:flex;justify-content:space-between;align-items:center;">
-            <a href="research-nafld.html" style="font-size:0.68rem;color:#4C7C2C;font-weight:700;display:flex;align-items:center;gap:4px;text-decoration:none;">
+            <a href="research-nafld.html" style="font-size:0.68rem;color:#2F7D56;font-weight:700;display:flex;align-items:center;gap:4px;text-decoration:none;">
               <ion-icon name="beaker-outline"></ion-icon> Lihat Dasar Penelitian (60+ Papers)
             </a>
-            <span style="font-size:0.6rem;background:rgba(76,124,44,0.1);color:#4C7C2C;padding:2px 8px;border-radius:10px;font-weight:700;">Grade B</span>
+            <span style="font-size:0.6rem;background:rgba(47,125,86,0.1);color:#2F7D56;padding:2px 8px;border-radius:10px;font-weight:700;">Grade B</span>
           </div>
         </div>
 
         <!-- Metabolic Syndrome -->
-        <div class="neu-card" style="padding:16px;border-left:4px solid #35803A;">
+        <div class="neu-card" style="padding:16px;border-left:4px solid #0E7C46;">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:40px;height:40px;border-radius:12px;background:rgba(53,128,58,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">🔋</div>
+              <div style="width:40px;height:40px;border-radius:12px;background:rgba(14,124,70,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">🔋</div>
               <div>
                 <div style="font-weight:800;font-size:0.9rem;">Sindrom Metabolik</div>
                 <div style="font-size:0.7rem;color:var(--text-tertiary);">Evaluasi 5 kriteria IDF (Obesitas + Komorbid)</div>
               </div>
             </div>
-            <button class="neu-btn neu-btn-sm neu-btn-primary" onclick="nav('screening-metabolic-syndrome.html')" style="background:#35803A;box-shadow:0 4px 12px rgba(53,128,58,0.3);">Mulai</button>
+            <button class="neu-btn neu-btn-sm neu-btn-primary" onclick="nav('screening-metabolic-syndrome.html')" style="background:#0E7C46;box-shadow:0 4px 12px rgba(14,124,70,0.3);">Mulai</button>
           </div>
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--shadow-dark);display:flex;justify-content:space-between;align-items:center;">
-            <a href="research-metabolic-syndrome.html" style="font-size:0.68rem;color:#35803A;font-weight:700;display:flex;align-items:center;gap:4px;text-decoration:none;">
+            <a href="research-metabolic-syndrome.html" style="font-size:0.68rem;color:#0E7C46;font-weight:700;display:flex;align-items:center;gap:4px;text-decoration:none;">
               <ion-icon name="beaker-outline"></ion-icon> Lihat Dasar Penelitian (60+ Papers)
             </a>
-            <span style="font-size:0.6rem;background:rgba(53,128,58,0.1);color:#35803A;padding:2px 8px;border-radius:10px;font-weight:700;">Grade A</span>
+            <span style="font-size:0.6rem;background:rgba(14,124,70,0.1);color:#0E7C46;padding:2px 8px;border-radius:10px;font-weight:700;">Grade A</span>
           </div>
         </div>
 
         <!-- Obesity & Insulin Resistance -->
-        <div class="neu-card" style="padding:16px;border-left:4px solid #6FBE3F;">
+        <div class="neu-card" style="padding:16px;border-left:4px solid #17A05C;">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:40px;height:40px;border-radius:12px;background:rgba(111,190,63,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">⚖️</div>
+              <div style="width:40px;height:40px;border-radius:12px;background:rgba(23,160,92,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">⚖️</div>
               <div>
                 <div style="font-weight:800;font-size:0.9rem;">Obesitas & Insulin</div>
                 <div style="font-size:0.7rem;color:var(--text-tertiary);">Analisis HOMA-IR & Fleksibilitas Metabolik</div>
               </div>
             </div>
-            <button class="neu-btn neu-btn-sm neu-btn-primary" onclick="nav('screening-obesity-insulin.html')" style="background:#3A7A2A;box-shadow:0 4px 12px rgba(58,122,42,0.3);">Mulai</button>
+            <button class="neu-btn neu-btn-sm neu-btn-primary" onclick="nav('screening-obesity-insulin.html')" style="background:#0E7C46;box-shadow:0 4px 12px rgba(14,124,70,0.3);">Mulai</button>
           </div>
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--shadow-dark);display:flex;justify-content:space-between;align-items:center;">
-            <a href="research-insulin-resistance.html" style="font-size:0.68rem;color:#3A7A2A;font-weight:700;display:flex;align-items:center;gap:4px;text-decoration:none;">
+            <a href="research-insulin-resistance.html" style="font-size:0.68rem;color:#0E7C46;font-weight:700;display:flex;align-items:center;gap:4px;text-decoration:none;">
               <ion-icon name="beaker-outline"></ion-icon> Lihat Dasar Penelitian (120+ Papers)
             </a>
-            <span style="font-size:0.6rem;background:rgba(111,190,63,0.1);color:#3A7A2A;padding:2px 8px;border-radius:10px;font-weight:700;">Grade B</span>
+            <span style="font-size:0.6rem;background:rgba(23,160,92,0.1);color:#0E7C46;padding:2px 8px;border-radius:10px;font-weight:700;">Grade B</span>
           </div>
         </div>
 
       </div>
 
       <!-- Personalization Insights -->
-      <div id="personalization-section" style="display:none;margin-top:20px;padding:14px 16px;background:rgba(53,128,58,0.06);border-radius:14px;border-left:4px solid #35803A;">
+      <div id="personalization-section" style="display:none;margin-top:20px;padding:14px 16px;background:rgba(14,124,70,0.06);border-radius:14px;border-left:4px solid #0E7C46;">
         <div style="font-weight:700;font-size:0.88rem;color:var(--text-primary);margin-bottom:10px;">🎯 Faktor Personalisasi Anda</div>
         <div id="personalization-factors" style="font-size:0.78rem;color:var(--text-secondary);line-height:1.6;"></div>
         <div style="font-size:0.72rem;color:var(--text-tertiary);margin-top:8px;font-style:italic;">💡 Tip: Ubah gaya hidup & lingkungan sosial dapat menurunkan risiko 10-20%</div>
@@ -233,7 +233,7 @@
         <div style="margin-top:8px;">Memuat rekomendasi herbal...</div>
       </div>
       <div id="herbal-rec-list" style="display:flex;flex-direction:column;gap:12px;"></div>
-      <div id="herbal-rec-empty" style="display:none;padding:16px;background:rgba(58,122,42,0.06);border-radius:14px;text-align:center;font-size:0.8rem;color:var(--text-secondary);">
+      <div id="herbal-rec-empty" style="display:none;padding:16px;background:rgba(14,124,70,0.06);border-radius:14px;text-align:center;font-size:0.8rem;color:var(--text-secondary);">
         Belum ada resep herbal untuk kondisi risiko Anda. Seed database dahulu.
       </div>
 
@@ -289,7 +289,7 @@ const MODEL_META = {
   // Update ML status badge
   const mlBadge = document.getElementById('ml-status-badge');
   if (RiskEngine.modelsLoaded) {
-    mlBadge.innerHTML = '<span style="background:rgba(58,122,42,0.12);color:#3A7A2A;font-size:0.65rem;padding:4px 12px;border-radius:10px;font-weight:600;display:inline-block;">🧠 AI Aktif</span>';
+    mlBadge.innerHTML = '<span style="background:rgba(14,124,70,0.12);color:#0E7C46;font-size:0.65rem;padding:4px 12px;border-radius:10px;font-weight:600;display:inline-block;">🧠 AI Aktif</span>';
   } else {
     mlBadge.innerHTML = '<span style="background:rgba(176,125,30,0.12);color:#B07D1E;font-size:0.65rem;padding:4px 12px;border-radius:10px;font-weight:600;display:inline-block;">📊 Mode Rule-Based</span>';
   }
@@ -373,7 +373,7 @@ const MODEL_META = {
 
   // Render risk cards with Explainable AI enhancements
   const cards = document.querySelector('#risk-cards');
-  const BAR_COLOR = { low: '#3A7A2A', medium: '#B07D1E', high: '#C94A42' };
+  const BAR_COLOR = { low: '#0E7C46', medium: '#B07D1E', high: '#C94A42' };
 
   cards.innerHTML = models.map((m, idx) => {
     const s   = scores[m];
@@ -455,8 +455,8 @@ const MODEL_META = {
         </div>
 
         <!-- Actionable Insights -->
-        <div style="background:rgba(58,122,42,0.06);padding:10px;border-radius:10px;border-left:3px solid #3A7A2A;margin-bottom:12px;">
-          <div style="font-weight:700;font-size:0.78rem;color:#3A7A2A;margin-bottom:8px;">💡 Yang Bisa Dilakukan:</div>
+        <div style="background:rgba(14,124,70,0.06);padding:10px;border-radius:10px;border-left:3px solid #0E7C46;margin-bottom:12px;">
+          <div style="font-weight:700;font-size:0.78rem;color:#0E7C46;margin-bottom:8px;">💡 Yang Bisa Dilakukan:</div>
           <div style="font-size:0.7rem;color:var(--text-secondary);line-height:1.4;">
             • <strong>Kurangi ${s.factors[0]?.toLowerCase() || 'faktor risiko utama'}</strong> untuk turunkan skor ~${Math.round(s.score * 0.15)}-${Math.round(s.score * 0.25)} poin<br>
             • Konsultasi dengan dokter untuk rencana intervensi personal
@@ -532,21 +532,21 @@ async function loadHerbalRec(topConditions) {
     if (!results.length) { empty.style.display = ''; return; }
 
     const evStyle = {
-      A: 'background:#E8F5E9;color:#3A7A2A;',
+      A: 'background:#E8F5EE;color:#0E7C46;',
       B: 'background:#FFF3E0;color:#B07D1E;',
-      C: 'background:#E1EED9;color:#4B8424;'
+      C: 'background:#DCEEE5;color:#288557;'
     };
 
     list.innerHTML = results.map(f => {
       const ev = f.evidenceLevel || 'C';
       return `<div class="neu-card" style="cursor:pointer;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;" onclick="nav('herbal-formula.html?id=${f.id}')">
-        <div style="width:38px;height:38px;border-radius:12px;background:rgba(58,122,42,0.1);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;">${f.emoji || '🌿'}</div>
+        <div style="width:38px;height:38px;border-radius:12px;background:rgba(14,124,70,0.1);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;">${f.emoji || '🌿'}</div>
         <div style="flex:1;min-width:0;">
           <div style="font-size:0.6rem;font-weight:700;color:var(--primary-dark);text-transform:uppercase;">Untuk ${f._matchedCond}</div>
           <div style="font-weight:700;font-size:0.85rem;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${f.name || '—'}</div>
           <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:3px;">${f.frequency || f.dosage || ''}</div>
           <div style="display:flex;gap:6px;margin-top:6px;align-items:center;">
-            ${f.preparationType ? `<span style="background:rgba(58,122,42,0.1);color:#3A7A2A;border-radius:8px;padding:1px 6px;font-size:0.65rem;font-weight:700;">${f.preparationType}</span>` : ''}
+            ${f.preparationType ? `<span style="background:rgba(14,124,70,0.1);color:#0E7C46;border-radius:8px;padding:1px 6px;font-size:0.65rem;font-weight:700;">${f.preparationType}</span>` : ''}
             <span style="margin-left:auto;padding:2px 8px;border-radius:20px;font-size:0.6rem;font-weight:700;${evStyle[ev]}">ev.${ev}</span>
           </div>
         </div>

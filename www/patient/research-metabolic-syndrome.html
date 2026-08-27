@@ -9,17 +9,17 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .app-header { background: linear-gradient(135deg, #35803A 0%, #5CA52C 100%); }
+    .app-header { background: linear-gradient(135deg, #0E7C46 0%, #30A76C 100%); }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
     .app-header > div { color: #fff; }
     .evidence-grade { display: inline-block; padding: 8px 16px; border-radius: 20px; font-weight: 700; }
-    .grade-a { background: rgba(76, 175, 80, 0.2); color: #388E3C; border: 2px solid #388E3C; }
-    .stat-item { background: rgba(53, 128, 58, 0.08); padding: 12px; border-radius: 12px; text-align: center; }
-    .stat-number { font-size: 1.5rem; font-weight: 700; color: #35803A; }
-    .timeline-dot { background: #35803A; }
-    .timeline-content { border-left: 2px solid #35803A; }
-    .finding-card { background: rgba(53, 128, 58, 0.05); border-left: 4px solid #35803A; }
-    .paper-list-item { background: rgba(53, 128, 58, 0.08); border-left: 3px solid #35803A; }
+    .grade-a { background: rgba(78,173,125, 0.2); color: #3A8C63; border: 2px solid #3A8C63; }
+    .stat-item { background: rgba(14, 124, 70, 0.08); padding: 12px; border-radius: 12px; text-align: center; }
+    .stat-number { font-size: 1.5rem; font-weight: 700; color: #0E7C46; }
+    .timeline-dot { background: #0E7C46; }
+    .timeline-content { border-left: 2px solid #0E7C46; }
+    .finding-card { background: rgba(14, 124, 70, 0.05); border-left: 4px solid #0E7C46; }
+    .paper-list-item { background: rgba(14, 124, 70, 0.08); border-left: 3px solid #0E7C46; }
   </style>
 </head>
 <body>
@@ -33,8 +33,8 @@
 
   <div class="section">
 
-    <div class="neu-card" data-animate="up" style="background: linear-gradient(135deg, rgba(53, 128, 58, 0.08), rgba(92,165,44, 0.08)); border-left: 4px solid #35803A;">
-      <div style="font-size: 0.75rem; font-weight: 700; color: #35803A; text-transform: uppercase; margin-bottom: 8px;">🔬 Berbasis Penelitian Ilmiah</div>
+    <div class="neu-card" data-animate="up" style="background: linear-gradient(135deg, rgba(14, 124, 70, 0.08), rgba(48,167,108, 0.08)); border-left: 4px solid #0E7C46;">
+      <div style="font-size: 0.75rem; font-weight: 700; color: #0E7C46; text-transform: uppercase; margin-bottom: 8px;">🔬 Berbasis Penelitian Ilmiah</div>
       <div style="font-size: 1rem; font-weight: 700; margin-bottom: 8px;">Metabolic Syndrome (MetS)</div>
       <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6;">
         Screening ini didukung 60+ peer-reviewed papers (2,500+ citations) dengan landmark RCT: PREDIMED-Plus (304 citations). Fokus pada IDF diagnostic criteria dan lifestyle intervention efficacy.
@@ -60,16 +60,16 @@
     </div>
 
     <!-- XAI Section: Scoring Formula & Methodology -->
-    <div class="neu-card" data-animate="up" data-delay="100" style="margin-top: 16px; background: rgba(53, 128, 58, 0.04); border-left: 4px solid #35803A;">
+    <div class="neu-card" data-animate="up" data-delay="100" style="margin-top: 16px; background: rgba(14, 124, 70, 0.04); border-left: 4px solid #0E7C46;">
       <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px;">🧠 Explainable AI: Model Perhitungan</div>
 
-      <div style="font-size: 0.85rem; font-weight: 700; color: #35803A; margin-bottom: 8px;">Model Dasar:</div>
+      <div style="font-size: 0.85rem; font-weight: 700; color: #0E7C46; margin-bottom: 8px;">Model Dasar:</div>
       <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.6;">
         <strong>IDF Criteria (2006) + NCEP ATP III Adaptation</strong><br>
         Sindrom Metabolik adalah kumpulan kondisi metabolik dengan central obesity sebagai gate-keeper diagnosis. Ditandai kombinasi 3 dari 5 komponen: obesity, hypertension, hyperglycemia, elevated triglycerides, low HDL.
       </div>
 
-      <div style="font-size: 0.85rem; font-weight: 700; color: #35803A; margin-bottom: 8px;">📐 Formula Perhitungan (0-100):</div>
+      <div style="font-size: 0.85rem; font-weight: 700; color: #0E7C46; margin-bottom: 8px;">📐 Formula Perhitungan (0-100):</div>
       <div style="background: rgba(0,0,0,0.05); padding: 12px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--text-primary); overflow-x: auto; margin-bottom: 16px; line-height: 1.6;">
         Score = 0<br>
         IF BMI ≥ 30: +40 pts (Obesity)<br>
@@ -80,13 +80,13 @@
         <strong>Final Score = MIN(total, 100)</strong>
       </div>
 
-      <div style="font-size: 0.85rem; font-weight: 700; color: #35803A; margin-bottom: 8px;">⚖️ Bobot Faktor Risiko:</div>
+      <div style="font-size: 0.85rem; font-weight: 700; color: #0E7C46; margin-bottom: 8px;">⚖️ Bobot Faktor Risiko:</div>
       <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-bottom: 16px;">
         <thead>
-          <tr style="background: rgba(53, 128, 58, 0.1);">
+          <tr style="background: rgba(14, 124, 70, 0.1);">
             <th style="padding: 8px; text-align: left; font-weight: 700;">Faktor</th>
             <th style="padding: 8px; text-align: right; font-weight: 700;">Bobot</th>
-            <th style="padding: 8px; text-align: left; font-weight: 700; color: #35803A;">Kriteria IDF</th>
+            <th style="padding: 8px; text-align: left; font-weight: 700; color: #0E7C46;">Kriteria IDF</th>
           </tr>
         </thead>
         <tbody>
@@ -113,7 +113,7 @@
         </tbody>
       </table>
 
-      <div style="font-size: 0.8rem; color: var(--text-secondary); background: rgba(58, 122, 42, 0.08); padding: 10px; border-radius: 8px; border-left: 3px solid #3A7A2A;">
+      <div style="font-size: 0.8rem; color: var(--text-secondary); background: rgba(14, 124, 70, 0.08); padding: 10px; border-radius: 8px; border-left: 3px solid #0E7C46;">
         <strong>📚 Referensi Utama:</strong><br>
         Alberti KGMM, Zimmet P, Shaw J. <em>Nat Rev Dis Primers.</em> 2005. IDF Worldwide Definition of the Metabolic Syndrome (>2000 citations)<br>
         <strong>💡 Catatan:</strong> Skor ini informatif berbasis epidemiologi. Diagnosis klinis memerlukan konfirmasi dokter dengan lab tests (lipid, glucose profile).
@@ -126,28 +126,28 @@
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
-            <div style="font-size: 0.85rem; font-weight: 700; color: #35803A;">2015</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #0E7C46;">2015</div>
             <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;"><strong>IDF Criteria Standardized</strong></div>
           </div>
         </div>
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
-            <div style="font-size: 0.85rem; font-weight: 700; color: #35803A;">2016-2018</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #0E7C46;">2016-2018</div>
             <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;"><strong>PREDIMED-Plus Launch</strong> — Largest lifestyle intervention trial (5000+ participants)</div>
           </div>
         </div>
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
-            <div style="font-size: 0.85rem; font-weight: 700; color: #35803A;">2018-2020</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #0E7C46;">2018-2020</div>
             <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;"><strong>Mediterranean Diet Studies</strong> — Multiple RCTs validating lifestyle approach (300+ citations)</div>
           </div>
         </div>
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
-            <div style="font-size: 0.85rem; font-weight: 700; color: #35803A;">2023-2026</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #0E7C46;">2023-2026</div>
             <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;"><strong>Digital Health Integration</strong> — App-based monitoring & adherence support</div>
           </div>
         </div>
@@ -158,43 +158,43 @@
       <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px;">🔍 Temuan Utama (Meta-Analysis)</div>
 
       <div style="margin: 12px 0;">
-        <div style="font-size: 0.85rem; font-weight: 700; color: #35803A; margin-bottom: 8px;">PREDIMED-Plus: Mediterranean Diet + Lifestyle Intervention</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #0E7C46; margin-bottom: 8px;">PREDIMED-Plus: Mediterranean Diet + Lifestyle Intervention</div>
         <div class="finding-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <div>
-            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #35803A;">Weight Loss</div>
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #0E7C46;">Weight Loss</div>
             <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-top: 4px;">7-10 kg</div>
           </div>
           <div>
-            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #35803A;">CV Event Reduction</div>
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #0E7C46;">CV Event Reduction</div>
             <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-top: 4px;">25-30%</div>
           </div>
         </div>
-        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; padding: 8px; background: rgba(53, 128, 58, 0.05); border-radius: 8px;">
+        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; padding: 8px; background: rgba(14, 124, 70, 0.05); border-radius: 8px;">
           ✓ Citation: 304+ (Diabetes Care 2018, landmark trial)<br>
           ✓ N=6,874 participants, 3+ year follow-up
         </div>
       </div>
 
       <div style="margin: 16px 0; padding-top: 16px; border-top: 1px solid var(--shadow-dark);">
-        <div style="font-size: 0.85rem; font-weight: 700; color: #35803A; margin-bottom: 8px;">IDF Diagnostic Criteria (5 components, 3+ = MetS)</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #0E7C46; margin-bottom: 8px;">IDF Diagnostic Criteria (5 components, 3+ = MetS)</div>
         <div style="display: grid; gap: 8px; font-size: 0.8rem;">
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(53, 128, 58, 0.05); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(14, 124, 70, 0.05); border-radius: 8px;">
             <span>1️⃣ Central Obesity (WC)</span>
             <span style="font-weight: 700;">M ≥94, F ≥80 (cm)</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(53, 128, 58, 0.05); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(14, 124, 70, 0.05); border-radius: 8px;">
             <span>2️⃣ Triglycerides</span>
             <span style="font-weight: 700;">≥150 mg/dL</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(53, 128, 58, 0.05); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(14, 124, 70, 0.05); border-radius: 8px;">
             <span>3️⃣ HDL Cholesterol</span>
             <span style="font-weight: 700;">M <40, F <50 (mg/dL)</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(53, 128, 58, 0.05); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(14, 124, 70, 0.05); border-radius: 8px;">
             <span>4️⃣ Blood Pressure</span>
             <span style="font-weight: 700;">≥130/85 mmHg</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(53, 128, 58, 0.05); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(14, 124, 70, 0.05); border-radius: 8px;">
             <span>5️⃣ Fasting Glucose</span>
             <span style="font-weight: 700;">≥100 mg/dL</span>
           </div>
@@ -202,23 +202,23 @@
       </div>
 
       <div style="margin: 16px 0; padding-top: 16px; border-top: 1px solid var(--shadow-dark);">
-        <div style="font-size: 0.85rem; font-weight: 700; color: #35803A; margin-bottom: 8px;">Lifestyle Intervention Efficacy</div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #0E7C46; margin-bottom: 8px;">Lifestyle Intervention Efficacy</div>
         <div class="finding-card" style="display: grid; grid-template-columns: 1fr 1fr;">
           <div>
-            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #35803A;">MetS Remission</div>
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #0E7C46;">MetS Remission</div>
             <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-top: 4px;">40-50%</div>
           </div>
           <div>
-            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #35803A;">Duration</div>
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #0E7C46;">Duration</div>
             <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-top: 4px;">6-12 months</div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="neu-card" data-animate="up" data-delay="200" style="margin-top: 16px; border-left: 4px solid #35803A;">
+    <div class="neu-card" data-animate="up" data-delay="200" style="margin-top: 16px; border-left: 4px solid #0E7C46;">
       <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px;">🧪 Spesifikasi Tool Screening</div>
-      <div style="background: rgba(53, 128, 58, 0.05); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
+      <div style="background: rgba(14, 124, 70, 0.05); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
         <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">MetS Screening Questionnaire</div>
         <ul style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; padding-left: 20px; margin: 0;">
           <li><strong>Step 1:</strong> Central obesity assessment (waist circumference)</li>
@@ -229,7 +229,7 @@
           <li><strong>Step 6:</strong> IDF criteria assessment & management plan</li>
         </ul>
       </div>
-      <div style="font-size: 0.75rem; color: var(--text-secondary); padding: 8px; background: rgba(53, 128, 58, 0.05); border-radius: 8px;">
+      <div style="font-size: 0.75rem; color: var(--text-secondary); padding: 8px; background: rgba(14, 124, 70, 0.05); border-radius: 8px;">
         ✓ Based on IDF diagnostic framework<br>
         ✓ Integrated with PREDIMED-Plus lifestyle intervention protocol<br>
         ✓ Output: Component count, severity score, referral recommendation
@@ -240,8 +240,8 @@
       <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px;">📚 Landmark Papers: Metabolic Syndrome</div>
 
       <!-- Paper 1: PREDIMED-Plus -->
-      <div style="margin: 12px 0; padding: 12px; background: rgba(53, 128, 58, 0.05); border-radius: 12px; border-left: 3px solid #35803A; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/28363701')">
-        <div style="font-size: 0.75rem; font-weight: 700; color: #35803A; margin-bottom: 4px;">LANDMARK: PREDIMED-Plus Lifestyle Intervention</div>
+      <div style="margin: 12px 0; padding: 12px; background: rgba(14, 124, 70, 0.05); border-radius: 12px; border-left: 3px solid #0E7C46; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/28363701')">
+        <div style="font-size: 0.75rem; font-weight: 700; color: #0E7C46; margin-bottom: 4px;">LANDMARK: PREDIMED-Plus Lifestyle Intervention</div>
         <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">PREDIMED-Plus: The Effect of a Lifestyle Intervention Program with Mediterranean Diet on 12-Month Changes in Body Weight and Cardiovascular Risk Factors</div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">
           <strong>Toledo E, Hu FB, Estruch R, et al.</strong><br>
@@ -250,15 +250,15 @@
         <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.6;">
           <strong>Kontribusi:</strong> Landmark RCT demonstrasi Mediterranean diet + physical activity intervention achieves 7-10 kg weight loss, 25-30% CV event reduction, 40-50% MetS remission dalam 6-12 bulan. Gold standard untuk lifestyle intervention evidence.
         </div>
-        <div style="font-size: 0.75rem; color: #35803A; font-weight: 600;">
-          DOI: <a href="https://doi.org/10.2337/dc15-1521" target="_blank" style="color: #35803A; text-decoration: none; cursor: pointer;">10.2337/dc15-1521</a>
+        <div style="font-size: 0.75rem; color: #0E7C46; font-weight: 600;">
+          DOI: <a href="https://doi.org/10.2337/dc15-1521" target="_blank" style="color: #0E7C46; text-decoration: none; cursor: pointer;">10.2337/dc15-1521</a>
           <span style="margin-left: 12px;"> 🌟 2,500+ citations</span>
         </div>
       </div>
 
       <!-- Paper 2: IDF Definition -->
-      <div style="margin: 12px 0; padding: 12px; background: rgba(53, 128, 58, 0.05); border-radius: 12px; border-left: 3px solid #35803A; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/16192515')">
-        <div style="font-size: 0.75rem; font-weight: 700; color: #35803A; margin-bottom: 4px;">CLASSIC: IDF Metabolic Syndrome Definition</div>
+      <div style="margin: 12px 0; padding: 12px; background: rgba(14, 124, 70, 0.05); border-radius: 12px; border-left: 3px solid #0E7C46; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/16192515')">
+        <div style="font-size: 0.75rem; font-weight: 700; color: #0E7C46; margin-bottom: 4px;">CLASSIC: IDF Metabolic Syndrome Definition</div>
         <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">The Metabolic Syndrome - A New Worldwide Definition. Consensus of the IDF Epidemiology and Prevention Task Force</div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">
           <strong>Alberti KGMM, Zimmet P, Shaw J</strong><br>
@@ -267,15 +267,15 @@
         <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.6;">
           <strong>Kontribusi:</strong> Global IDF diagnostic criteria: central obesity (gate-keeper) + 2 of 4 components (BP, triglycerides, HDL, fasting glucose). Basis untuk semua screening tools worldwide. 2,000+ citations untuk MetS definition universalization.
         </div>
-        <div style="font-size: 0.75rem; color: #35803A; font-weight: 600;">
-          DOI: <a href="https://doi.org/10.1038/nrdp.2016.81" target="_blank" style="color: #35803A; text-decoration: none; cursor: pointer;">10.1038/nrdp.2016.81</a>
+        <div style="font-size: 0.75rem; color: #0E7C46; font-weight: 600;">
+          DOI: <a href="https://doi.org/10.1038/nrdp.2016.81" target="_blank" style="color: #0E7C46; text-decoration: none; cursor: pointer;">10.1038/nrdp.2016.81</a>
           <span style="margin-left: 12px;"> 🌟 2,000+ citations</span>
         </div>
       </div>
 
       <!-- Paper 3: Prevalence & Risk -->
-      <div style="margin: 12px 0; padding: 12px; background: rgba(53, 128, 58, 0.05); border-radius: 12px; border-left: 3px solid #35803A; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/27989900')">
-        <div style="font-size: 0.75rem; font-weight: 700; color: #35803A; margin-bottom: 4px;">META-ANALYSIS: Prevalence & Cardiovascular Risk</div>
+      <div style="margin: 12px 0; padding: 12px; background: rgba(14, 124, 70, 0.05); border-radius: 12px; border-left: 3px solid #0E7C46; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/27989900')">
+        <div style="font-size: 0.75rem; font-weight: 700; color: #0E7C46; margin-bottom: 4px;">META-ANALYSIS: Prevalence & Cardiovascular Risk</div>
         <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">Metabolic Syndrome and Risk of Cardiovascular Disease Worldwide: Meta-Analysis of Prospective Cohort Studies</div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">
           <strong>Mottillo S, Filion KB, Genest J, et al.</strong><br>
@@ -284,15 +284,15 @@
         <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.6;">
           <strong>Kontribusi:</strong> Meta-analysis demonstrasi MetS is independent predictor CVD risk (RR 1.65 untuk MI, 1.51 untuk stroke). Prevalence data global. Impact factor untuk screening justification.
         </div>
-        <div style="font-size: 0.75rem; color: #35803A; font-weight: 600;">
-          DOI: <a href="https://doi.org/10.1016/j.jacc.2009.12.053" target="_blank" style="color: #35803A; text-decoration: none; cursor: pointer;">10.1016/j.jacc.2009.12.053</a>
+        <div style="font-size: 0.75rem; color: #0E7C46; font-weight: 600;">
+          DOI: <a href="https://doi.org/10.1016/j.jacc.2009.12.053" target="_blank" style="color: #0E7C46; text-decoration: none; cursor: pointer;">10.1016/j.jacc.2009.12.053</a>
           <span style="margin-left: 12px;"> 🌟 2,141 citations</span>
         </div>
       </div>
 
       <!-- Paper 4: Insulin Resistance -->
-      <div style="margin: 12px 0; padding: 12px; background: rgba(53, 128, 58, 0.05); border-radius: 12px; border-left: 3px solid #35803A; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/18077794')">
-        <div style="font-size: 0.75rem; font-weight: 700; color: #35803A; margin-bottom: 4px;">MECHANISTIC: Insulin Resistance Central Pathway</div>
+      <div style="margin: 12px 0; padding: 12px; background: rgba(14, 124, 70, 0.05); border-radius: 12px; border-left: 3px solid #0E7C46; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/18077794')">
+        <div style="font-size: 0.75rem; font-weight: 700; color: #0E7C46; margin-bottom: 4px;">MECHANISTIC: Insulin Resistance Central Pathway</div>
         <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">Insulin Resistance as a Predictor of Age-Related Diseases and the Metabolic Syndrome</div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">
           <strong>Reaven GM, Lithell H, Landsberg L</strong><br>
@@ -301,15 +301,15 @@
         <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.6;">
           <strong>Kontribusi:</strong> Foundational paper describing insulin resistance sebagai core pathophysiology MetS. Links central obesity → dyslipidemia → hypertension → hyperglycemia. Educational basis untuk understanding factor interconnection.
         </div>
-        <div style="font-size: 0.75rem; color: #35803A; font-weight: 600;">
-          DOI: <a href="https://doi.org/10.1093/ajcn/64.3.437S" target="_blank" style="color: #35803A; text-decoration: none; cursor: pointer;">10.1093/ajcn/64.3.437S</a>
+        <div style="font-size: 0.75rem; color: #0E7C46; font-weight: 600;">
+          DOI: <a href="https://doi.org/10.1093/ajcn/64.3.437S" target="_blank" style="color: #0E7C46; text-decoration: none; cursor: pointer;">10.1093/ajcn/64.3.437S</a>
           <span style="margin-left: 12px;"> 🌟 3,200+ citations</span>
         </div>
       </div>
 
       <!-- Paper 5: Diagnosis Criteria Comparison -->
-      <div style="margin: 12px 0; padding: 12px; background: rgba(53, 128, 58, 0.05); border-radius: 12px; border-left: 3px solid #35803A; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/30275876')">
-        <div style="font-size: 0.75rem; font-weight: 700; color: #35803A; margin-bottom: 4px;">COMPARISON: Diagnostic Criteria (IDF vs WHO vs NCEP)</div>
+      <div style="margin: 12px 0; padding: 12px; background: rgba(14, 124, 70, 0.05); border-radius: 12px; border-left: 3px solid #0E7C46; cursor: pointer; transition: all 0.3s;" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/30275876')">
+        <div style="font-size: 0.75rem; font-weight: 700; color: #0E7C46; margin-bottom: 4px;">COMPARISON: Diagnostic Criteria (IDF vs WHO vs NCEP)</div>
         <div style="font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">Comparison of Diagnostic Criteria and Prevalence of Metabolic Syndrome: WHO vs NCEP-ATP III vs IDF in Asian and Hispanic Populations</div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">
           <strong>Saghir F, Zhou X, Dunn P, et al.</strong><br>
@@ -318,14 +318,14 @@
         <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.6;">
           <strong>Kontribusi:</strong> Demonstrates IDF criteria optimal untuk identifying high-risk individuals di Asian populations. Central obesity cutoff justification (M ≥94cm, F ≥80cm Asia). Evidence untuk localized screening adaptation.
         </div>
-        <div style="font-size: 0.75rem; color: #35803A; font-weight: 600;">
-          DOI: <a href="https://doi.org/10.1016/j.dsx.2018.08.034" target="_blank" style="color: #35803A; text-decoration: none; cursor: pointer;">10.1016/j.dsx.2018.08.034</a>
+        <div style="font-size: 0.75rem; color: #0E7C46; font-weight: 600;">
+          DOI: <a href="https://doi.org/10.1016/j.dsx.2018.08.034" target="_blank" style="color: #0E7C46; text-decoration: none; cursor: pointer;">10.1016/j.dsx.2018.08.034</a>
           <span style="margin-left: 12px;"> 🌟 84 citations</span>
         </div>
       </div>
 
-      <div style="text-align: center; margin-top: 16px; padding: 12px; background: rgba(53, 128, 58, 0.08); border-radius: 8px;">
-        <div style="font-size: 0.75rem; color: #35803A; font-weight: 700;">📖 Klik paper untuk buka di PubMed</div>
+      <div style="text-align: center; margin-top: 16px; padding: 12px; background: rgba(14, 124, 70, 0.08); border-radius: 8px;">
+        <div style="font-size: 0.75rem; color: #0E7C46; font-weight: 700;">📖 Klik paper untuk buka di PubMed</div>
         <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 4px;">55+ papers tersedia dalam database HerboraTech SLR</div>
       </div>
     </div>

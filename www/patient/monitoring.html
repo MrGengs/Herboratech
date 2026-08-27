@@ -11,18 +11,18 @@
   <style>
     .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
     .app-header .logo { color: #fff; }
-    .app-header .logo span { color: #6FBE3F; }
+    .app-header .logo span { color: #17A05C; }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
     .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
     .app-header > div[style*="font-weight:700"] { color: #fff; }
     .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
     .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
     .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
-    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(58,122,42,0.5)); }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(14,124,70,0.5)); }
     .vital-grid .vital-card:nth-child(1) { border-top: 3px solid #C94A42; }
-    .vital-grid .vital-card:nth-child(2) { border-top: 3px solid #4C7C2C; }
+    .vital-grid .vital-card:nth-child(2) { border-top: 3px solid #2F7D56; }
     .vital-grid .vital-card:nth-child(3) { border-top: 3px solid #B07D1E; }
-    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #3A7A2A; }
+    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #0E7C46; }
   </style>
 </head>
 <body>
@@ -118,7 +118,7 @@
       <div class="section-header"><span class="section-title">🤖 Rekomendasi AI</span></div>
       <div class="neu-card" data-animate="up" data-delay="350" style="background:var(--accent-bg);border-left:4px solid var(--accent);">
         <p id="ai-recommendation-text" style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;"><strong style="color:var(--accent);">Hubungkan smartwatch Anda</strong> untuk mendapatkan rekomendasi AI berdasarkan data vital sign real-time.</p>
-        <button class="neu-btn-sm neu-btn-accent" style="margin-top:12px;font-size:0.72rem;padding:6px 16px;border-radius:20px;color:#fff;background:linear-gradient(135deg,#5FAE4A,#35803A);box-shadow:none;" onclick="nav('device.html')">Hubungkan Perangkat →</button>
+        <button class="neu-btn-sm neu-btn-accent" style="margin-top:12px;font-size:0.72rem;padding:6px 16px;border-radius:20px;color:#fff;background:linear-gradient(135deg,#3FBE84,#0E7C46);box-shadow:none;" onclick="nav('device.html')">Hubungkan Perangkat →</button>
       </div>
     </div>
   </div>
@@ -369,7 +369,7 @@
           if (statEls[2]) statEls[2].textContent = max;
 
           // Draw chart
-          sparkline(document.getElementById('hist-chart'), hrData.slice(-20), '#3A7A2A', 80);
+          sparkline(document.getElementById('hist-chart'), hrData.slice(-20), '#0E7C46', 80);
         }
       } catch (e) {
         console.warn('History load failed:', e);
@@ -454,14 +454,14 @@
                 <span style="background:var(--success-bg);color:var(--success);padding:3px 12px;border-radius:20px;font-size:0.7rem;font-weight:600;">Baik</span>
               </div>
               <div style="display:flex;gap:4px;height:24px;border-radius:12px;overflow:hidden;">
-                <div style="flex:${deepPct};background:#35803A;" title="Deep Sleep ${deepPct}%"></div>
-                <div style="flex:${lightPct};background:#5FAE4A;" title="Light Sleep ${lightPct}%"></div>
+                <div style="flex:${deepPct};background:#0E7C46;" title="Deep Sleep ${deepPct}%"></div>
+                <div style="flex:${lightPct};background:#3FBE84;" title="Light Sleep ${lightPct}%"></div>
                 <div style="flex:${remPct};background:#FFD54F;" title="REM ${remPct}%"></div>
                 <div style="flex:${awakePct};background:#C94A42;" title="Awake ${awakePct}%"></div>
               </div>
               <div style="display:flex;justify-content:space-around;margin-top:12px;font-size:0.65rem;">
-                <span style="color:#35803A;">● Deep ${deepPct}%</span>
-                <span style="color:#5FAE4A;">● Light ${lightPct}%</span>
+                <span style="color:#0E7C46;">● Deep ${deepPct}%</span>
+                <span style="color:#3FBE84;">● Light ${lightPct}%</span>
                 <span style="color:#FFD54F;">● REM ${remPct}%</span>
                 <span style="color:#C94A42;">● Awake ${awakePct}%</span>
               </div>

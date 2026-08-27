@@ -20,7 +20,7 @@
 
     /* Completeness bar */
     .completeness-track { height: 8px; background: rgba(255,255,255,0.2); border-radius: 8px; margin-top: 8px; overflow: hidden; }
-    .completeness-fill  { height: 100%; background: #6FBE3F; border-radius: 8px; transition: width 1s ease; }
+    .completeness-fill  { height: 100%; background: #17A05C; border-radius: 8px; transition: width 1s ease; }
 
     /* Mini risk cards 2×3 grid */
     .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -81,7 +81,7 @@
           <div style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1.8rem;" id="heroEmoji">👤</div>
         </div>
         <div style="margin-top:14px;font-size:0.72rem;color:rgba(255,255,255,0.7);margin-bottom:6px;">
-          Kelengkapan profil: <span id="heroCompleteness" style="font-weight:700;color:#6FBE3F;">0%</span>
+          Kelengkapan profil: <span id="heroCompleteness" style="font-weight:700;color:#17A05C;">0%</span>
         </div>
         <div class="completeness-track">
           <div class="completeness-fill" id="heroCFill"></div>
@@ -128,15 +128,15 @@
       <div class="section-header mt-24"><span class="section-title">Aksi Cepat</span></div>
       <div class="action-grid mt-8">
         <div class="action-btn" onclick="nav('health-profile.html')">
-          <ion-icon name="create-outline" style="color:#3A7A2A;"></ion-icon>
+          <ion-icon name="create-outline" style="color:#0E7C46;"></ion-icon>
           <span>Update Profil</span>
         </div>
         <div class="action-btn" onclick="window.recalc()">
-          <ion-icon name="refresh-circle-outline" style="color:#5DA52C;"></ion-icon>
+          <ion-icon name="refresh-circle-outline" style="color:#31A86C;"></ion-icon>
           <span>Hitung Ulang</span>
         </div>
         <div class="action-btn" onclick="nav('herbal.html')">
-          <ion-icon name="leaf-outline" style="color:#4B8424;"></ion-icon>
+          <ion-icon name="leaf-outline" style="color:#288557;"></ion-icon>
           <span>Semua Herbal</span>
         </div>
         <div class="action-btn" onclick="nav('consultation.html')">
@@ -239,7 +239,7 @@ window.renderDashboard = async function(hp) {
   
   if (currentUserId) VDB.saveRiskScore(currentUserId, scores).catch(console.warn);
 
-  const BAR = { low: '#3A7A2A', medium: '#B07D1E', high: '#C94A42' };
+  const BAR = { low: '#0E7C46', medium: '#B07D1E', high: '#C94A42' };
   const gridEl = document.getElementById('riskGrid');
   if (gridEl) {
     gridEl.innerHTML = models.map(m => {
@@ -280,9 +280,9 @@ window.renderDashboard = async function(hp) {
     if (listEl) {
       listEl.innerHTML = uniqueFactors.map(x =>
         `<span style="display:inline-block;padding:4px 10px;border-radius:20px;font-size:0.68rem;font-weight:600;background:${
-          x.cat === 'high' ? 'rgba(201,74,66,0.1)' : x.cat === 'medium' ? 'rgba(176,125,30,0.1)' : 'rgba(58,122,42,0.1)'
+          x.cat === 'high' ? 'rgba(201,74,66,0.1)' : x.cat === 'medium' ? 'rgba(176,125,30,0.1)' : 'rgba(14,124,70,0.1)'
         };color:${
-          x.cat === 'high' ? '#C94A42' : x.cat === 'medium' ? '#B07D1E' : '#3A7A2A'
+          x.cat === 'high' ? '#C94A42' : x.cat === 'medium' ? '#B07D1E' : '#0E7C46'
         };margin:2px;">${x.f}</span>`
       ).join('');
     }
@@ -312,7 +312,7 @@ window.loadHerbalRecs = async function(conditions) {
   }
   wrap.innerHTML = results.slice(0, 4).map(f =>
     `<div class="herbal-mini" onclick="nav('herbal-formula.html?id=${f.id}')">
-      <div style="width:34px;height:34px;border-radius:10px;background:rgba(58,122,42,0.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">🌿</div>
+      <div style="width:34px;height:34px;border-radius:10px;background:rgba(14,124,70,0.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">🌿</div>
       <div style="flex:1;min-width:0;">
         <div style="font-size:0.6rem;color:var(--primary-dark);font-weight:700;text-transform:uppercase;">${f._cond}</div>
         <div style="font-weight:700;font-size:0.83rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${f.name}</div>
@@ -337,7 +337,7 @@ window.renderTrendChart = function(history) {
   const latest = history[0].scores || {};
   const diseases = ['diabetes', 'heart', 'hypertension', 'stroke', 'metabolic', 'sleep'];
   const labels = { diabetes:'Diabetes', heart:'Jantung', hypertension:'Hipertensi', stroke:'Stroke', metabolic:'Metabolik', sleep:'Tidur' };
-  const colors = { diabetes:'#C94A42', heart:'#35803A', hypertension:'#4C7C2C', stroke:'#B07D1E', metabolic:'#3A7A2A', sleep:'#86D154' };
+  const colors = { diabetes:'#C94A42', heart:'#0E7C46', hypertension:'#2F7D56', stroke:'#B07D1E', metabolic:'#0E7C46', sleep:'#66D29C' };
 
   const rows = diseases
     .filter(d => latest[d])

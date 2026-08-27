@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,190,63,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(23,160,92,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #6FBE3F !important; }
+    .sidebar-logo span { color: #17A05C !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #6FBE3F; background: rgba(111,190,63,0.08); }
-    .sidebar-item.active { color: #6FBE3F !important; background: rgba(111,190,63,0.15); border-left: 3px solid #6FBE3F; }
+    .sidebar-item:hover { color: #17A05C; background: rgba(23,160,92,0.08); }
+    .sidebar-item.active { color: #17A05C !important; background: rgba(23,160,92,0.15); border-left: 3px solid #17A05C; }
 
     .import-card { background: var(--bg); box-shadow: var(--shadow-out); border-radius: 20px; padding: 24px; margin-bottom: 20px; }
     .import-title { font-weight: 800; font-size: 1rem; color: var(--text-primary); margin-bottom: 6px; }
@@ -22,13 +22,13 @@
 
     .tab-bar { display: flex; gap: 8px; margin-bottom: 20px; }
     .tab-btn { padding: 8px 18px; border-radius: 10px; border: none; font-family: var(--font); font-size: 0.82rem; font-weight: 700; cursor: pointer; background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); transition: all 0.2s; }
-    .tab-btn.active { background: linear-gradient(135deg,#7CC242,#4E9E33); color: #fff; box-shadow: 0 4px 14px rgba(58,122,42,0.3); }
+    .tab-btn.active { background: linear-gradient(135deg,#1DB56A,#0E7C46); color: #fff; box-shadow: 0 4px 14px rgba(14,124,70,0.3); }
 
-    .json-textarea { width: 100%; height: 280px; border-radius: 12px; border: 1.5px solid var(--shadow-dark); background: #10180f; color: #6FBE3F; font-family: 'Consolas', monospace; font-size: 0.78rem; padding: 14px; resize: vertical; outline: none; line-height: 1.6; box-sizing: border-box; }
-    .json-textarea:focus { border-color: #6FBE3F; }
+    .json-textarea { width: 100%; height: 280px; border-radius: 12px; border: 1.5px solid var(--shadow-dark); background: #101814; color: #17A05C; font-family: 'Consolas', monospace; font-size: 0.78rem; padding: 14px; resize: vertical; outline: none; line-height: 1.6; box-sizing: border-box; }
+    .json-textarea:focus { border-color: #17A05C; }
 
     .drop-zone { border: 2px dashed var(--shadow-dark); border-radius: 14px; padding: 36px 20px; text-align: center; cursor: pointer; transition: all 0.2s; }
-    .drop-zone:hover, .drop-zone.drag-over { border-color: #6FBE3F; background: rgba(111,190,63,0.05); }
+    .drop-zone:hover, .drop-zone.drag-over { border-color: #17A05C; background: rgba(23,160,92,0.05); }
     .drop-zone ion-icon { font-size: 2.2rem; color: var(--text-secondary); }
     .drop-zone p { font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0 0; }
     .drop-zone small { font-size: 0.75rem; color: var(--text-tertiary); }
@@ -37,33 +37,33 @@
     .preview-box { background: var(--bg); box-shadow: var(--shadow-in); border-radius: 12px; padding: 14px; margin-top: 12px; }
     .preview-stat { display: flex; gap: 12px; flex-wrap: wrap; }
     .ps-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; }
-    .ps-chip.green { background: rgba(58,122,42,0.12); color: #3A7A2A; }
-    .ps-chip.blue { background: rgba(134,209,84,0.12); color: #5DA52C; }
+    .ps-chip.green { background: rgba(14,124,70,0.12); color: #0E7C46; }
+    .ps-chip.blue { background: rgba(102,210,156,0.12); color: #31A86C; }
     .ps-chip.orange { background: rgba(176,125,30,0.12); color: #B07D1E; }
     .ps-chip.red { background: rgba(201,74,66,0.12); color: #C94A42; }
 
     .import-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: var(--font); font-size: 0.9rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; transition: all 0.2s; }
-    .import-btn.primary { background: linear-gradient(135deg,#7CC242,#4E9E33); color: #fff; box-shadow: 0 4px 16px rgba(58,122,42,0.35); }
+    .import-btn.primary { background: linear-gradient(135deg,#1DB56A,#0E7C46); color: #fff; box-shadow: 0 4px 16px rgba(14,124,70,0.35); }
     .import-btn.secondary { background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); }
     .import-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .import-btn:hover:not(:disabled) { transform: translateY(-2px); }
 
     .progress-wrap { background: var(--shadow-dark); border-radius: 8px; height: 10px; margin: 10px 0; overflow: hidden; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, #3A7A2A, #6FBE3F); border-radius: 8px; transition: width 0.3s ease; width: 0%; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #0E7C46, #17A05C); border-radius: 8px; transition: width 0.3s ease; width: 0%; }
 
-    .log-area { background: #0d1f0d; border-radius: 12px; padding: 14px; max-height: 260px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.74rem; line-height: 1.7; margin-top: 14px; }
-    .log-line.success { color: #6FBE3F; }
+    .log-area { background: #0D1E16; border-radius: 12px; padding: 14px; max-height: 260px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.74rem; line-height: 1.7; margin-top: 14px; }
+    .log-line.success { color: #17A05C; }
     .log-line.error { color: #C94A42; }
-    .log-line.info { color: #86D154; }
+    .log-line.info { color: #66D29C; }
     .log-line.warn { color: #F2C94C; }
     .log-line.dim { color: rgba(255,255,255,0.3); }
 
-    .schema-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; padding: 3px 8px; border-radius: 6px; background: rgba(134,209,84,0.1); color: #86D154; font-family: monospace; }
+    .schema-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; padding: 3px 8px; border-radius: 6px; background: rgba(102,210,156,0.1); color: #66D29C; font-family: monospace; }
 
     .collection-toggle { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
     .ct-label { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); }
     .ct-opt { padding: 6px 14px; border-radius: 8px; border: 1.5px solid var(--shadow-dark); font-family: var(--font); font-size: 0.78rem; font-weight: 700; cursor: pointer; background: var(--bg); color: var(--text-secondary); transition: all 0.15s; }
-    .ct-opt.selected { border-color: #3A7A2A; color: #3A7A2A; background: rgba(58,122,42,0.08); }
+    .ct-opt.selected { border-color: #0E7C46; color: #0E7C46; background: rgba(14,124,70,0.08); }
   </style>
 </head>
 <body>
@@ -159,7 +159,7 @@ atau array langsung:
             <ion-icon name="search-outline"></ion-icon> Parse & Preview
           </button>
           <button class="import-btn primary" id="importBtn" onclick="startImport()" disabled
-                  style="background:linear-gradient(135deg,#40721E,#63B22F);margin-top:8px;">
+                  style="background:linear-gradient(135deg,#21744A,#34B574);margin-top:8px;">
             <ion-icon name="cloud-upload-outline"></ion-icon> Mulai Import ke Firestore
           </button>
           <button class="import-btn secondary" id="clearBtn" onclick="clearAll()">
@@ -626,8 +626,8 @@ atau array langsung:
     // Cleaning stats jika OCR
     if (cleanStats) {
       stats.innerHTML +=
-        `<div style="width:100%;margin-top:10px;padding:8px 10px;background:rgba(58,122,42,0.08);border-radius:10px;font-size:0.75rem;color:var(--text-secondary);">` +
-        `<span style="font-weight:700;color:#3A7A2A;">🧹 Cleaning OCR:</span> ` +
+        `<div style="width:100%;margin-top:10px;padding:8px 10px;background:rgba(14,124,70,0.08);border-radius:10px;font-size:0.75rem;color:var(--text-secondary);">` +
+        `<span style="font-weight:700;color:#0E7C46;">🧹 Cleaning OCR:</span> ` +
         `${cleanStats.dosageCleaned} dosage dibersihkan · ` +
         `${cleanStats.warnCleaned} warnings difilter · ` +
         `${cleanStats.prepReclassified} tipe direklasifikasi` +
@@ -638,16 +638,16 @@ atau array langsung:
     if (isTCMData) {
       const withMeridian = items.filter(f => f.tcmProperties?.meridianAffinity?.length > 0).length;
       stats.innerHTML +=
-        `<div style="width:100%;margin-top:10px;padding:8px 10px;background:rgba(134,209,84,0.08);border-radius:10px;font-size:0.75rem;color:var(--text-secondary);">` +
-        `<span style="font-weight:700;color:#5DA52C;">🌿 TCM Enrichment:</span> ` +
+        `<div style="width:100%;margin-top:10px;padding:8px 10px;background:rgba(102,210,156,0.08);border-radius:10px;font-size:0.75rem;color:var(--text-secondary);">` +
+        `<span style="font-weight:700;color:#31A86C;">🌿 TCM Enrichment:</span> ` +
         `${withMeridian}/${items.length} dengan data meridian · enrichmentPending=true` +
         `</div>`;
     }
 
     // List preview 20 item
       list.innerHTML = items.slice(0, 20).map(f => {
-        const evColor = f.evidenceLevel === 'A' ? '#3A7A2A' : f.evidenceLevel === 'B' ? '#5DA52C' : '#B07D1E';
-        const evBg    = f.evidenceLevel === 'A' ? 'rgba(58,122,42,0.12)' : f.evidenceLevel === 'B' ? 'rgba(134,209,84,0.12)' : 'rgba(176,125,30,0.12)';
+        const evColor = f.evidenceLevel === 'A' ? '#0E7C46' : f.evidenceLevel === 'B' ? '#31A86C' : '#B07D1E';
+        const evBg    = f.evidenceLevel === 'A' ? 'rgba(14,124,70,0.12)' : f.evidenceLevel === 'B' ? 'rgba(102,210,156,0.12)' : 'rgba(176,125,30,0.12)';
         const sub2    = isTCMData
           ? (f.tcmProperties?.flavor || []).join(', ')
           : (f.indications || []).slice(0,2).join(', ');

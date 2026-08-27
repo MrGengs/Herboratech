@@ -13,7 +13,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="../shared/firebase.js"></script>
   <style>
-    .app-header { background: linear-gradient(135deg, #182A0B 0%, #3C6B1C 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header { background: linear-gradient(135deg, #0C2B1C 0%, #1F6C46 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
     .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
     .app-header > div[style*="font-weight:700"] { color: #fff; }
@@ -82,8 +82,8 @@
       box-sizing: border-box;
     }
     .herbal-preview {
-      background: linear-gradient(135deg, rgba(111,190,63,0.12), rgba(58,122,42,0.08));
-      border: 1px solid rgba(58,122,42,0.25);
+      background: linear-gradient(135deg, rgba(23,160,92,0.12), rgba(14,124,70,0.08));
+      border: 1px solid rgba(14,124,70,0.25);
       border-radius: 16px;
       padding: 14px 16px;
     }
@@ -94,9 +94,9 @@
       border-radius: 18px;
       padding: 18px 20px;
       box-shadow: var(--shadow-out);
-      border-top: 6px solid #182A0B;
+      border-top: 6px solid #0C2B1C;
     }
-    .resep-header-line { height: 2px; background: linear-gradient(90deg, #182A0B, #3C6B1C); border-radius: 2px; margin: 8px 0 14px; }
+    .resep-header-line { height: 2px; background: linear-gradient(90deg, #0C2B1C, #1F6C46); border-radius: 2px; margin: 8px 0 14px; }
 
     /* Note textarea */
     .doc-note {
@@ -168,7 +168,7 @@
     <!-- Added medicines list -->
     <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;" id="med-list">
       <div class="med-row" data-animate="up" data-delay="150">
-        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#4C7C2C,#6DC234);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">💊</div>
+        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#2F7D56,#39C57F);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">💊</div>
         <div class="med-info">
           <div class="med-name">Paracetamol 500mg</div>
           <div class="med-detail">3×1 sesudah makan — 7 hari · 21 tablet</div>
@@ -176,7 +176,7 @@
         <button class="med-delete" onclick="removeMed(this)" title="Hapus">✕</button>
       </div>
       <div class="med-row" data-animate="up" data-delay="200" style="border-left-color:var(--primary-dark);">
-        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7CC242,#4E9E33);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🔴</div>
+        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#1DB56A,#0E7C46);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🔴</div>
         <div class="med-info">
           <div class="med-name">B-Complex</div>
           <div class="med-detail">1×1 pagi — 30 hari · 30 tablet</div>
@@ -226,7 +226,7 @@
       <div style="display:flex;justify-content:space-between;align-items:flex-start;">
         <div>
           <div style="font-size:0.62rem;color:var(--text-muted);letter-spacing:0.5px;">RESEP DIGITAL</div>
-          <div style="font-weight:800;font-size:1rem;color:#182A0B;">HerboraTech</div>
+          <div style="font-weight:800;font-size:1rem;color:#0C2B1C;">HerboraTech</div>
         </div>
         <div style="text-align:right;font-size:0.62rem;color:var(--text-muted);">
           <div>21 Mar 2026</div>
@@ -303,7 +303,7 @@
     row.className = 'med-row';
     row.style.animation = 'fadeInUp 0.3s ease';
     row.innerHTML = `
-      <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#5FAE4A,#35803A);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">💊</div>
+      <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#3FBE84,#0E7C46);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">💊</div>
       <div class="med-info">
         <div class="med-name">${name}</div>
         <div class="med-detail">${detail}</div>

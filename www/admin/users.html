@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,190,63,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(23,160,92,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #6FBE3F !important; }
+    .sidebar-logo span { color: #17A05C !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #6FBE3F; background: rgba(111,190,63,0.08); }
-    .sidebar-item.active { color: #6FBE3F !important; background: rgba(111,190,63,0.15); border-left: 3px solid #6FBE3F; }
+    .sidebar-item:hover { color: #17A05C; background: rgba(23,160,92,0.08); }
+    .sidebar-item.active { color: #17A05C !important; background: rgba(23,160,92,0.15); border-left: 3px solid #17A05C; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
     .filter-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
     .filter-tab { padding: 6px 16px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; cursor: pointer; border: none; background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); transition: all 0.2s; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -145,12 +145,12 @@ let _activeFilter = 'semua';
 // Avatar color palette based on first letter
 const AVATAR_COLORS = [
   'linear-gradient(135deg,#C94A42,#E87B74)',
-  'linear-gradient(135deg,#4C7C2C,#6DC234)',
-  'linear-gradient(135deg,#5FAE4A,#35803A)',
+  'linear-gradient(135deg,#2F7D56,#39C57F)',
+  'linear-gradient(135deg,#3FBE84,#0E7C46)',
   'linear-gradient(135deg,#B07D1E,#FFD54F)',
-  'linear-gradient(135deg,#6FBE3F,#3A7A2A)',
+  'linear-gradient(135deg,#17A05C,#0E7C46)',
   'linear-gradient(135deg,#F2C94C,#B07D1E)',
-  'linear-gradient(135deg,#C94A42,#4B8424)',
+  'linear-gradient(135deg,#C94A42,#288557)',
 ];
 
 function avatarColor(name) {

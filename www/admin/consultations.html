@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,190,63,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(23,160,92,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #6FBE3F !important; }
+    .sidebar-logo span { color: #17A05C !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #6FBE3F; background: rgba(111,190,63,0.08); }
-    .sidebar-item.active { color: #6FBE3F !important; background: rgba(111,190,63,0.15); border-left: 3px solid #6FBE3F; }
+    .sidebar-item:hover { color: #17A05C; background: rgba(23,160,92,0.08); }
+    .sidebar-item.active { color: #17A05C !important; background: rgba(23,160,92,0.15); border-left: 3px solid #17A05C; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
 
     .admin-main { padding: 24px; }
@@ -47,7 +47,7 @@
 
     .btn-export {
       padding: 0.75rem 1.5rem;
-      background: linear-gradient(135deg, #549528 0%, #4B6738 100%);
+      background: linear-gradient(135deg, #2C9762 0%, #3B6852 100%);
       color: white;
       border: none;
       border-radius: var(--radius);
@@ -56,7 +56,7 @@
       transition: all 0.3s ease;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    .btn-export:hover { box-shadow: 0 4px 16px rgba(84,149,40, 0.4); transform: translateY(-2px); }
+    .btn-export:hover { box-shadow: 0 4px 16px rgba(44,151,98, 0.4); transform: translateY(-2px); }
 
     .stat-grid {
       display: grid;
@@ -114,15 +114,15 @@
     }
 
     .status-pending { background: #fff3cd; color: #856404; }
-    .status-active { background: #DBECD0; color: #305517; }
-    .status-completed { background: #d4edda; color: #155724; }
+    .status-active { background: #D4EDE0; color: #195638; }
+    .status-completed { background: #D5ECE1; color: #175636; }
     .status-cancelled { background: #f8d7da; color: #721c24; }
 
     .type-badge {
       display: inline-block;
       padding: 0.25rem 0.75rem;
-      background: #E7F6DE;
-      color: #41741F;
+      background: #E2F6EC;
+      color: #22754C;
       border-radius: 12px;
       font-size: 0.85rem;
     }
@@ -138,10 +138,10 @@
     }
 
     .btn-view {
-      background: #E5F5D9;
-      color: #4A8323;
+      background: #DEF6EA;
+      color: #278456;
     }
-    .btn-view:hover { background: #BCE69F; }
+    .btn-view:hover { background: #AAE7C8; }
 
     .btn-cancel {
       background: #ffebee;
@@ -168,9 +168,9 @@
     }
 
     .pagination button.active {
-      background: #549528;
+      background: #2C9762;
       color: white;
-      border-color: #549528;
+      border-color: #2C9762;
     }
 
     .pagination button:hover:not(.active) { background: var(--bg-light); }
@@ -273,7 +273,7 @@
     }
 
     .timeline {
-      border-left: 3px solid #549528;
+      border-left: 3px solid #2C9762;
       padding-left: 1.5rem;
     }
 
@@ -290,7 +290,7 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: #549528;
+      background: #2C9762;
       border: 3px solid var(--bg-white);
     }
 
@@ -667,7 +667,7 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#5BA32B'};
+        background: ${type === 'success' ? '#4EAD7D' : type === 'error' ? '#f44336' : '#30A56A'};
         color: white;
         padding: 1rem 1.5rem;
         border-radius: 4px;

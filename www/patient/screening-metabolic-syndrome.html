@@ -10,12 +10,12 @@
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
     :root {
-      --primary-mets: #35803A;
-      --primary-mets-dark: #405A2E;
+      --primary-mets: #0E7C46;
+      --primary-mets-dark: #305B46;
     }
     .app-header {
-      background: linear-gradient(135deg, var(--primary-mets) 0%, #68BA31 100%);
-      box-shadow: 0 2px 16px rgba(53, 128, 58, 0.25);
+      background: linear-gradient(135deg, var(--primary-mets) 0%, #36BD79 100%);
+      box-shadow: 0 2px 16px rgba(14, 124, 70, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
@@ -43,9 +43,9 @@
     }
     .step-dot.past { background: var(--primary-mets); color: #fff; border-color: var(--primary-mets); }
     .step-dot.current {
-      background: linear-gradient(135deg, var(--primary-mets), #68BA31);
+      background: linear-gradient(135deg, var(--primary-mets), #36BD79);
       color: #fff; border-color: transparent;
-      box-shadow: 0 4px 12px rgba(53,128,58,0.4);
+      box-shadow: 0 4px 12px rgba(14,124,70,0.4);
       transform: scale(1.15);
     }
     .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 15px; min-width: 2px; }
@@ -64,10 +64,10 @@
       border-top: 1px solid var(--shadow-dark); padding: 14px 20px; z-index: 30;
     }
     .btn-proceed {
-      background: linear-gradient(135deg, var(--primary-mets), #68BA31);
+      background: linear-gradient(135deg, var(--primary-mets), #36BD79);
       color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
       font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 6px 18px rgba(53,128,58,0.3);
+      box-shadow: 0 6px 18px rgba(14,124,70,0.3);
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
 
@@ -77,7 +77,7 @@
       font-weight: 700; color: var(--text-secondary); margin: 4px;
     }
     .criteria-tag.met { background: rgba(201, 74, 66, 0.1); color: #C94A42; border: 1px solid rgba(201,74,66,0.2); }
-    .criteria-tag.not-met { background: rgba(58, 122, 42, 0.1); color: #3A7A2A; border: 1px solid rgba(58,122,42,0.2); }
+    .criteria-tag.not-met { background: rgba(14, 124, 70, 0.1); color: #0E7C46; border: 1px solid rgba(14,124,70,0.2); }
   </style>
 </head>
 <body>
@@ -271,7 +271,7 @@
             </ul>
           </div>
 
-          <div class="neu-card" style="margin-bottom:14px;background:rgba(53, 128, 58, 0.05);border-left:4px solid var(--primary-mets);">
+          <div class="neu-card" style="margin-bottom:14px;background:rgba(14, 124, 70, 0.05);border-left:4px solid var(--primary-mets);">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
               <span style="font-size:1.2rem;">🌿</span>
               <span style="font-size:0.85rem;font-weight:800;color:var(--primary-mets-dark);">Rekomendasi Herbal</span>
@@ -436,7 +436,7 @@
         desc.textContent = 'Anda didiagnosa memiliki Sindrom Metabolik berdasarkan kriteria IDF. Risiko penyakit jantung dan diabetes meningkat secara signifikan.';
       } else {
         badge.textContent = 'NEGATIF SINDROM METABOLIK';
-        badge.style.background = '#3A7A2A1A'; badge.style.color = '#3A7A2A';
+        badge.style.background = '#0E7C461A'; badge.style.color = '#0E7C46';
         desc.textContent = 'Kriteria diagnosis Sindrom Metabolik belum terpenuhi. Namun, perhatikan poin yang berwarna merah untuk pencegahan dini.';
       }
 

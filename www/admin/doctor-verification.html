@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,190,63,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(23,160,92,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #6FBE3F !important; }
+    .sidebar-logo span { color: #17A05C !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #6FBE3F; background: rgba(111,190,63,0.08); }
-    .sidebar-item.active { color: #6FBE3F !important; background: rgba(111,190,63,0.15); border-left: 3px solid #6FBE3F; }
+    .sidebar-item:hover { color: #17A05C; background: rgba(23,160,92,0.08); }
+    .sidebar-item.active { color: #17A05C !important; background: rgba(23,160,92,0.15); border-left: 3px solid #17A05C; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
 
     .doctor-cards-grid { display: flex; flex-direction: column; gap: 24px; margin-top: 24px; }
@@ -96,10 +96,10 @@
 <script src="../shared/app.js"></script>
 <script>
 const AVATAR_GRADIENTS = [
-  'linear-gradient(135deg,#4C7C2C,#6DC234)',
+  'linear-gradient(135deg,#2F7D56,#39C57F)',
   'linear-gradient(135deg,#C94A42,#FF8A80)',
-  'linear-gradient(135deg,#7CC242,#4E9E33)',
-  'linear-gradient(135deg,#35803A,#5DA52C)',
+  'linear-gradient(135deg,#1DB56A,#0E7C46)',
+  'linear-gradient(135deg,#0E7C46,#31A86C)',
   'linear-gradient(135deg,#B07D1E,#F2C94C)',
 ];
 
@@ -109,9 +109,9 @@ function getInitials(name) {
 
 const ROLE_NAMES = { patient: 'Pasien', doctor: 'Dokter', admin: 'Admin' };
 const ROLE_COLORS = {
-  patient: 'linear-gradient(135deg,#7CC242,#4E9E33)',
-  doctor: 'linear-gradient(135deg,#3C6B1C,#86D154)',
-  admin: 'linear-gradient(135deg,#3C6223,#5A7E41)'
+  patient: 'linear-gradient(135deg,#1DB56A,#0E7C46)',
+  doctor: 'linear-gradient(135deg,#1F6C46,#66D29C)',
+  admin: 'linear-gradient(135deg,#266345,#448062)'
 };
 
 function renderUserCard(user, index) {
@@ -145,12 +145,12 @@ function renderUserCard(user, index) {
     </div>
     ${user.requestedRole === 'doctor' ? `
     <div class="doc-documents">
-      <div class="doc-preview" style="background:linear-gradient(135deg,#6FBE3F,#3A7A2A);">
+      <div class="doc-preview" style="background:linear-gradient(135deg,#17A05C,#0E7C46);">
         <div class="doc-preview-icon"><ion-icon name="document-text-outline"></ion-icon></div>
         <div class="doc-preview-label">STR</div>
         <span class="doc-preview-link" onclick="showToast('Dokumen belum diupload','warning')">Lihat</span>
       </div>
-      <div class="doc-preview" style="background:linear-gradient(135deg,#35803A,#5DA52C);">
+      <div class="doc-preview" style="background:linear-gradient(135deg,#0E7C46,#31A86C);">
         <div class="doc-preview-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
         <div class="doc-preview-label">SIP</div>
         <span class="doc-preview-link" onclick="showToast('Dokumen belum diupload','warning')">Lihat</span>

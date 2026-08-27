@@ -62,10 +62,10 @@
   const DISEASES = [
     { id: 'dyslipidemia', label: 'Dyslipidemia', icon: '🧬', color: '#B07D1E' },
     { id: 'hypertension', label: 'Hipertensi', icon: '💓', color: '#C94A42' },
-    { id: 'nafld', label: 'NAFLD (Hati)', icon: '💧', color: '#4C7C2C' },
-    { id: 'metabolic_syndrome', label: 'Sindrom Metabolik', icon: '🔋', color: '#35803A' },
-    { id: 'obesity_insulin', label: 'Resistensi Insulin', icon: '⚖️', color: '#3A7A2A' },
-    { id: 'depression', label: 'Depresi (PHQ-9)', icon: '🧠', color: '#5A7E41' },
+    { id: 'nafld', label: 'NAFLD (Hati)', icon: '💧', color: '#2F7D56' },
+    { id: 'metabolic_syndrome', label: 'Sindrom Metabolik', icon: '🔋', color: '#0E7C46' },
+    { id: 'obesity_insulin', label: 'Resistensi Insulin', icon: '⚖️', color: '#0E7C46' },
+    { id: 'depression', label: 'Depresi (PHQ-9)', icon: '🧠', color: '#448062' },
     { id: 'stress', label: 'Stres', icon: '😰', color: '#E67E22' }
   ];
 
@@ -87,7 +87,7 @@
           records.forEach(r => {
             const date = r.timestamp ? r.timestamp.toDate().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Baru saja';
             const risk = r.riskLevel || 'UNKNOWN';
-            let riskColor = '#3A7A2A';
+            let riskColor = '#0E7C46';
             if (risk.includes('HIGH') || risk.includes('BERAT') || risk.includes('POSITIF') || risk.includes('TINGGI')) riskColor = '#C94A42';
             else if (risk.includes('MODERATE') || risk.includes('SEDANG') || risk.includes('INDETERMINATE') || risk.includes('ELEVATED')) riskColor = '#B07D1E';
 

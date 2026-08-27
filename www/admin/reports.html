@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,190,63,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(23,160,92,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #6FBE3F !important; }
+    .sidebar-logo span { color: #17A05C !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #6FBE3F; background: rgba(111,190,63,0.08); }
-    .sidebar-item.active { color: #6FBE3F !important; background: rgba(111,190,63,0.15); border-left: 3px solid #6FBE3F; }
+    .sidebar-item:hover { color: #17A05C; background: rgba(23,160,92,0.08); }
+    .sidebar-item.active { color: #17A05C !important; background: rgba(23,160,92,0.15); border-left: 3px solid #17A05C; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
 
     .admin-main { padding: 24px; }
@@ -56,7 +56,7 @@
     .btn-report {
       display: inline-block;
       padding: 0.75rem 1.5rem;
-      background: linear-gradient(135deg, #549528 0%, #4B6738 100%);
+      background: linear-gradient(135deg, #2C9762 0%, #3B6852 100%);
       color: white;
       border: none;
       border-radius: 6px;
@@ -98,8 +98,8 @@
 
     .filter-input:focus, .filter-select:focus {
       outline: none;
-      border-color: #549528;
-      box-shadow: 0 0 0 3px rgba(84,149,40, 0.1);
+      border-color: #2C9762;
+      box-shadow: 0 0 0 3px rgba(44,151,98, 0.1);
     }
 
     .action-buttons {
@@ -110,7 +110,7 @@
 
     .btn-generate {
       padding: 0.75rem 1.5rem;
-      background: linear-gradient(135deg, #549528 0%, #4B6738 100%);
+      background: linear-gradient(135deg, #2C9762 0%, #3B6852 100%);
       color: white;
       border: none;
       border-radius: 6px;
@@ -181,7 +181,7 @@
       text-align: center;
     }
 
-    .stat-number { font-size: 1.5rem; font-weight: 700; color: #549528; }
+    .stat-number { font-size: 1.5rem; font-weight: 700; color: #2C9762; }
     .stat-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
 
     .modal {
@@ -247,7 +247,7 @@
       transition: all 0.3s ease;
     }
 
-    .format-option:hover { border-color: #549528; background: rgba(84,149,40, 0.05); }
+    .format-option:hover { border-color: #2C9762; background: rgba(44,151,98, 0.05); }
 
     .format-option input[type="radio"] {
       margin-right: 1rem;
@@ -269,7 +269,7 @@
       width: 24px;
       height: 24px;
       border: 3px solid var(--border-light);
-      border-top-color: #549528;
+      border-top-color: #2C9762;
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin-right: 0.5rem;
@@ -849,7 +849,7 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#5BA32B'};
+        background: ${type === 'success' ? '#4EAD7D' : type === 'error' ? '#f44336' : '#30A56A'};
         color: white;
         padding: 1rem 1.5rem;
         border-radius: 4px;

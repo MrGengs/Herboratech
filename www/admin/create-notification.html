@@ -9,12 +9,12 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,190,63,0.1); }
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(23,160,92,0.1); }
     .sidebar-logo { color: #fff !important; }
-    .sidebar-logo span { color: #6FBE3F !important; }
+    .sidebar-logo span { color: #17A05C !important; }
     .sidebar-item { color: rgba(255,255,255,0.6); }
-    .sidebar-item:hover { color: #6FBE3F; background: rgba(111,190,63,0.08); }
-    .sidebar-item.active { color: #6FBE3F !important; background: rgba(111,190,63,0.15); border-left: 3px solid #6FBE3F; }
+    .sidebar-item:hover { color: #17A05C; background: rgba(23,160,92,0.08); }
+    .sidebar-item.active { color: #17A05C !important; background: rgba(23,160,92,0.15); border-left: 3px solid #17A05C; }
     .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
 
     .form-layout { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 24px; align-items: start; }
@@ -23,8 +23,8 @@
     .form-label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 8px; }
     .form-textarea { width: 100%; border-radius: 12px; border: none; box-shadow: var(--shadow-in); background: var(--bg); padding: 12px 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: var(--text-primary); resize: vertical; min-height: 100px; outline: none; box-sizing: border-box; }
 
-    .drop-zone { border: 2px dashed rgba(111,190,63,0.4); border-radius: 14px; padding: 32px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--bg); }
-    .drop-zone:hover { border-color: var(--primary-dark); background: rgba(111,190,63,0.04); }
+    .drop-zone { border: 2px dashed rgba(23,160,92,0.4); border-radius: 14px; padding: 32px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--bg); }
+    .drop-zone:hover { border-color: var(--primary-dark); background: rgba(23,160,92,0.04); }
     .drop-zone ion-icon { font-size: 2.5rem; color: var(--primary-dark); }
     .drop-zone p { font-size: 0.85rem; color: var(--text-tertiary); margin-top: 8px; }
 
@@ -32,7 +32,7 @@
     @media (min-width: 480px) { .audience-cards { grid-template-columns: repeat(2, 1fr); } }
     .audience-card { border-radius: 12px; box-shadow: var(--shadow-out-sm); padding: 14px; cursor: pointer; transition: all 0.2s; position: relative; }
     .audience-card input[type="radio"] { position: absolute; opacity: 0; }
-    .audience-card.selected { box-shadow: 0 0 0 2px var(--primary-dark), var(--shadow-out-sm); background: rgba(111,190,63,0.06); }
+    .audience-card.selected { box-shadow: 0 0 0 2px var(--primary-dark), var(--shadow-out-sm); background: rgba(23,160,92,0.06); }
     .audience-card-icon { font-size: 1.4rem; color: var(--primary-dark); margin-bottom: 6px; }
     .audience-card-label { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
     .audience-card-sub { font-size: 0.72rem; color: var(--text-tertiary); }
@@ -44,7 +44,7 @@
     .check-item input { accent-color: var(--primary-dark); width: 16px; height: 16px; }
 
     .preview-card { border-radius: 16px; box-shadow: var(--shadow-out); overflow: hidden; }
-    .preview-banner { height: 100px; background: linear-gradient(135deg,#6FBE3F,#3A7A2A); display: flex; align-items: center; justify-content: center; }
+    .preview-banner { height: 100px; background: linear-gradient(135deg,#17A05C,#0E7C46); display: flex; align-items: center; justify-content: center; }
     .preview-banner ion-icon { font-size: 2.5rem; color: rgba(255,255,255,0.5); }
     .preview-body { padding: 16px; }
     .preview-app-name { font-size: 0.7rem; color: var(--text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
@@ -188,7 +188,7 @@
           <div style="font-weight:700;margin-bottom:16px;font-size:0.9rem;">Preview Notifikasi</div>
           <div style="background:#1C1C1E;border-radius:16px;padding:16px;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-              <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#6FBE3F,#3A7A2A);display:flex;align-items:center;justify-content:center;">
+              <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#17A05C,#0E7C46);display:flex;align-items:center;justify-content:center;">
                 <ion-icon name="heart-outline" style="color:#fff;font-size:1rem;"></ion-icon>
               </div>
               <span style="color:rgba(255,255,255,0.6);font-size:0.72rem;font-weight:600;">HERBORATECH</span>
@@ -197,7 +197,7 @@
             <div id="preview-title-display" style="color:#fff;font-weight:700;font-size:0.9rem;margin-bottom:4px;">Judul Notifikasi</div>
             <div id="preview-body-display" style="color:rgba(255,255,255,0.65);font-size:0.78rem;line-height:1.5;">Isi pesan notifikasi akan tampil di sini...</div>
           </div>
-          <div style="margin-top:16px;padding:12px;background:rgba(111,190,63,0.06);border-radius:10px;font-size:0.78rem;color:var(--text-tertiary);">
+          <div style="margin-top:16px;padding:12px;background:rgba(23,160,92,0.06);border-radius:10px;font-size:0.78rem;color:var(--text-tertiary);">
             <ion-icon name="information-circle-outline" style="color:var(--info);vertical-align:middle;margin-right:4px;"></ion-icon>
             Preview diperbarui secara real-time
           </div>

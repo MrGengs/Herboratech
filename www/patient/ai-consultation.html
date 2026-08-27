@@ -13,7 +13,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="../shared/firebase.js"></script>
   <style>
-    .app-header { background: linear-gradient(135deg, #15220B 0%, #3C6223 100%); box-shadow: 0 2px 20px rgba(60,98,35,0.4); }
+    .app-header { background: linear-gradient(135deg, #0C2317 0%, #266345 100%); box-shadow: 0 2px 20px rgba(38,99,69,0.4); }
     .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.15); }
     /* Judul header: anak langsung adalah wrapper flex, bukan div ber-font-weight — pakai descendant */
     .app-header div[style*="font-weight:700"] { color: #fff; }
@@ -30,8 +30,8 @@
     }
 
     .intro-card {
-      background: linear-gradient(135deg, rgba(60,98,35,0.08), rgba(53,128,58,0.05));
-      border: 1px solid rgba(53,128,58,0.2);
+      background: linear-gradient(135deg, rgba(38,99,69,0.08), rgba(14,124,70,0.05));
+      border: 1px solid rgba(14,124,70,0.2);
       border-radius: 16px;
       padding: 16px;
       margin-bottom: 16px;
@@ -41,9 +41,9 @@
     }
     .ai-avatar-sm {
       width: 36px; height: 36px; border-radius: 12px;
-      background: linear-gradient(135deg, #3C6223, #35803A);
+      background: linear-gradient(135deg, #266345, #0E7C46);
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; box-shadow: 0 3px 10px rgba(53,128,58,0.4);
+      flex-shrink: 0; box-shadow: 0 3px 10px rgba(14,124,70,0.4);
     }
     .intro-text { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
 
@@ -77,7 +77,7 @@
       max-width: 82%;
     }
     .bubble-user {
-      background: linear-gradient(135deg, #3C6223, #35803A);
+      background: linear-gradient(135deg, #266345, #0E7C46);
       border-radius: 14px 14px 0 14px;
       padding: 11px 14px;
       font-size: 0.8rem;
@@ -85,7 +85,7 @@
       line-height: 1.6;
       max-width: 82%;
       align-self: flex-end;
-      box-shadow: 0 3px 12px rgba(53,128,58,0.3);
+      box-shadow: 0 3px 12px rgba(14,124,70,0.3);
     }
     .chat-timestamp {
       font-size: 0.58rem;
@@ -94,9 +94,9 @@
     }
 
     .ai-assessment-card {
-      border: 2px solid rgba(53,128,58,0.3);
+      border: 2px solid rgba(14,124,70,0.3);
       border-radius: 16px;
-      background: linear-gradient(135deg, rgba(60,98,35,0.05), rgba(53,128,58,0.03));
+      background: linear-gradient(135deg, rgba(38,99,69,0.05), rgba(14,124,70,0.03));
       padding: 16px;
     }
     .assessment-title { font-size: 0.82rem; font-weight: 700; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
@@ -104,7 +104,7 @@
     .assessment-diagnosis { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 4px; }
     .confidence-bar-track { height: 6px; background: var(--bg); box-shadow: var(--shadow-in); border-radius: 3px; overflow: hidden; margin-top: 4px; }
     .confidence-bar-fill { height: 100%; border-radius: 3px; }
-    .assessment-rec { font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(53,128,58,0.15); }
+    .assessment-rec { font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(14,124,70,0.15); }
 
     /* Layout — fullscreen chat, no bottom nav */
     .mobile-frame {
@@ -128,7 +128,7 @@
       background: var(--bg);
       padding: 10px 16px;
       padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-      border-top: 1px solid rgba(193,215,178,0.4);
+      border-top: 1px solid rgba(182,216,199,0.4);
       display: flex; gap: 8px; align-items: center;
     }
     .chat-input-wrap {
@@ -148,10 +148,10 @@
     .chat-input-wrap input::placeholder { color: var(--text-muted); }
     .send-btn {
       width: 38px; height: 38px; border-radius: 50%;
-      background: linear-gradient(135deg, #3C6223, #35803A);
+      background: linear-gradient(135deg, #266345, #0E7C46);
       border: none; display: flex; align-items: center; justify-content: center;
       cursor: pointer; flex-shrink: 0;
-      box-shadow: 0 3px 10px rgba(53,128,58,0.4);
+      box-shadow: 0 3px 10px rgba(14,124,70,0.4);
     }
     .send-btn ion-icon { color: #fff; font-size: 1rem; }
     .send-btn:active { transform: scale(0.94); }
@@ -199,7 +199,7 @@
       <button class="neu-btn neu-btn-primary neu-btn-block" onclick="startQuickCheck()" style="margin-bottom:8px;">
         <ion-icon name="flash-outline"></ion-icon> Quick Symptom Check (2-3 menit)
       </button>
-      <button class="neu-btn neu-btn-accent neu-btn-block" onclick="startDetailedAssessment()" style="background:linear-gradient(135deg,#15220B,#3C6223);color:#fff;">
+      <button class="neu-btn neu-btn-accent neu-btn-block" onclick="startDetailedAssessment()" style="background:linear-gradient(135deg,#0C2317,#266345);color:#fff;">
         <ion-icon name="clipboard-outline"></ion-icon> Detailed Assessment (5-7 menit)
       </button>
     </div>
@@ -220,7 +220,7 @@
         <div class="vital-mini-label">SpO2</div>
       </div>
       <div class="vital-mini-card">
-        <div class="vital-mini-icon" style="color:var(--warning);">&#437720;&#65039;</div>
+        <div class="vital-mini-icon" style="color:var(--warning);">&#23794E;&#65039;</div>
         <div class="vital-mini-val" id="tempVal">--</div>
         <div class="vital-mini-label">Suhu C</div>
       </div>
@@ -230,13 +230,13 @@
     <div class="chat-area" id="chatArea" data-animate="up" data-delay="120"></div>
 
     <!-- Loading Indicator -->
-    <div id="loadingIndicator" style="display:none;margin-top:12px;padding:12px;background:rgba(53,128,58,0.1);border-radius:12px;border:1px solid rgba(53,128,58,0.2);text-align:center;">
+    <div id="loadingIndicator" style="display:none;margin-top:12px;padding:12px;background:rgba(14,124,70,0.1);border-radius:12px;border:1px solid rgba(14,124,70,0.2);text-align:center;">
       <ion-icon name="hourglass-outline" style="color:var(--accent);animation:spin 2s linear infinite;"></ion-icon>
       <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Analisis AI sedang berjalan...</div>
     </div>
 
     <!-- Refer Button -->
-    <button class="neu-btn neu-btn-accent neu-btn-block" id="referBtn" data-animate="up" data-delay="200" onclick="nav('consultation.html')" style="background:linear-gradient(135deg,#15220B,#3C6223);display:none;">
+    <button class="neu-btn neu-btn-accent neu-btn-block" id="referBtn" data-animate="up" data-delay="200" onclick="nav('consultation.html')" style="background:linear-gradient(135deg,#0C2317,#266345);display:none;">
       <ion-icon name="person-outline"></ion-icon> Rujuk ke Dokter Manusia
     </button>
 
@@ -327,7 +327,7 @@ function showNoKeyBanner() {
   const area = document.getElementById('chatArea');
   area.innerHTML = `
     <div style="margin:20px 0;padding:20px;border-radius:16px;background:var(--bg);box-shadow:var(--shadow-out);text-align:center;">
-      <div style="font-size:2rem;margin-bottom:10px;">&#129302;</div>
+      <div style="font-size:2rem;margin-bottom:10px;">&#109251;</div>
       <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">Fitur AI Belum Aktif</div>
       <p style="font-size:0.78rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;">
         API Key belum dikonfigurasi. Silakan konsultasi langsung dengan dokter.
@@ -662,12 +662,12 @@ function displayAssessmentCard(assessment) {
   const div = document.createElement('div');
   div.className = 'chat-bubble-ai';
 
-  const urgencyColor = assessment.urgency === 'tinggi' ? '#C94A42' : assessment.urgency === 'sedang' ? '#B07D1E' : '#6FBE3F';
-  const urgencyBg = assessment.urgency === 'tinggi' ? 'rgba(201,74,66,0.1)' : assessment.urgency === 'sedang' ? 'rgba(176,125,30,0.1)' : 'rgba(111,190,63,0.1)';
+  const urgencyColor = assessment.urgency === 'tinggi' ? '#C94A42' : assessment.urgency === 'sedang' ? '#B07D1E' : '#17A05C';
+  const urgencyBg = assessment.urgency === 'tinggi' ? 'rgba(201,74,66,0.1)' : assessment.urgency === 'sedang' ? 'rgba(176,125,30,0.1)' : 'rgba(23,160,92,0.1)';
 
   let differentialHTML = '';
   if (assessment.differential && assessment.differential.length > 0) {
-    differentialHTML = '<div style="margin-top:8px;border-top:1px solid rgba(53,128,58,0.15);padding-top:8px;"><strong style="font-size:0.78rem;">Diagnosis Alternatif:</strong>';
+    differentialHTML = '<div style="margin-top:8px;border-top:1px solid rgba(14,124,70,0.15);padding-top:8px;"><strong style="font-size:0.78rem;">Diagnosis Alternatif:</strong>';
     assessment.differential.forEach(d => {
       differentialHTML += `<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:4px;">${escHtml(d.name)} (${d.probability}%)</div>`;
     });
