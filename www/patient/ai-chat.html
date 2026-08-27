@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+  <title>HerboraTech — AI Health Assistant</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+  <style>
+    .app-header {
+      background: linear-gradient(135deg, #0C2352 0%, #1D5DB5 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12);
+      box-shadow: none; color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .ai-header-info { display: flex; align-items: center; gap: 10px; flex: 1; }
+    .ai-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, #2F80ED, #56CCF2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; border: 2px solid rgba(255,255,255,0.3);
+    }
+    .ai-name { font-size: 0.88rem; font-weight: 700; color: #fff; line-height: 1.2; }
+    .ai-status { font-size: 0.65rem; color: #56CCF2; font-weight: 600; }
+
+    /* Layout — override mobile-frame untuk fullscreen chat */
+    .mobile-frame {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh; /* dynamic viewport: handles mobile keyboard */
+      overflow: hidden;
+      padding-bottom: 0 !important; /* hapus padding bottom-nav default */
+    }
+
+    /* Chat area */
+    .chat-area {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 16px 16px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: var(--bg);
+      overscroll-behavior: contain;
+    }
+
+    /* Bubbles */
+    .bubble-wrap { display: flex; align-items: flex-end; gap: 8px; }
+    .bubble-wrap.user { flex-direction: row-reverse; }
+
+    .bubble-avatar-sm {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 800; color: #fff;
+    }
+
+    .bubble {
+      max-width: 75%; padding: 10px 14px;
+      border-radius: 18px; font-size: 0.82rem; line-height: 1.55;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-out-sm);
+    }
+    .bubble.ai {
+      background: var(--bg);
+      border-bottom-left-radius: 4px;
+    }
+    .bubble.user {
+      background: linear-gradient(135deg, #1D5DB5, #2F80ED);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .bubble-time { font-size: 0.58rem; color: var(--text-muted); margin-top: 4px; padding: 0 4px; }
+
+    .chat-timestamp {
+      text-align: center; font-size: 0.62rem;
+      color: var(--text-muted); margin: 8px 0;
+    }
+
+    /* Thinking indicator */
+    .thinking-dots { display: inline-flex; gap: 4px; padding: 10px 14px; }
+    .thinking-dots span {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--text-muted);
+      animation: blink 1.2s infinite;
+    }
+    .thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink { 0%,80%,100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
+
+    /* Quick chips */
+    .chips-bar {
+      display: flex; gap: 8px; padding: 8px 16px;
+      overflow-x: auto; scrollbar-width: none;
+      border-top: 1px solid var(--shadow-dark);
+    }
+    .chips-bar::-webkit-scrollbar { display: none; }
+    .chip {
+      flex-shrink: 0; padding: 6px 14px; border-radius: 20px;
+      background: var(--bg); box-shadow: var(--shadow-out-sm);
+      font-size: 0.72rem; font-weight: 500; color: var(--info);
+      cursor: pointer; border: 1px solid rgba(47,128,237,0.2);
+      white-space: nowrap; transition: all 0.15s;
+    }
+    .chip:active { box-shadow: var(--shadow-in); }
+
+    /* Input bar */
+    .chat-input-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+      background: var(--bg);
+      border-top: 1px solid var(--shadow-dark);
+      flex-shrink: 0;
+    }
+
+    /* Chips bar */
+    .chips-bar {
+      flex-shrink: 0;
+    }
+    .chat-text-input {
+      flex: 1; border: none; background: var(--bg);
+      box-shadow: var(--shadow-in); border-radius: 24px;
+      padding: 10px 16px; font-family: var(--font);
+      font-size: 0.82rem; color: var(--text-primary); outline: none;
+    }
+    .chat-text-input::placeholder { color: var(--text-muted); }
+    .chat-action-btn {
+      width: 40px; height: 40px; border-radius: 50%; border: none;
+      background: var(--bg); box-shadow: var(--shadow-out-sm);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-secondary); font-size: 1.1rem;
+      transition: box-shadow 0.15s;
+    }
+    .chat-action-btn:active { box-shadow: var(--shadow-in); }
+    .chat-action-btn.send {
+      background: linear-gradient(135deg, #1D5DB5, #2F80ED);
+      color: #fff; box-shadow: 0 3px 10px rgba(47,128,237,0.4);
+    }
+    .chat-action-btn.send:disabled { background: var(--bg); color: var(--text-muted); box-shadow: var(--shadow-out-sm); }
+
+    /* No-key banner */
+    .no-key-card {
+      margin: 20px 16px; padding: 20px; border-radius: 16px;
+      background: var(--bg); box-shadow: var(--shadow-out);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div class="ai-header-info">
+      <div class="ai-avatar">&#129504;</div>
+      <div>
+        <div class="ai-name">HerboraTech AI</div>
+        <div class="ai-status">&#9679; Online 24/7</div>
+      </div>
+    </div>
+    <button class="neu-icon-btn" onclick="clearChat()"><ion-icon name="trash-outline"></ion-icon></button>
+  </header>
+
+  <!-- CHAT AREA -->
+  <div class="chat-area" id="chatArea"></div>
+
+  <!-- QUICK CHIPS -->
+  <div class="chips-bar" id="chipsBar">
+    <div class="chip" onclick="sendChip(this)">&#128138; Sakit kepala</div>
+    <div class="chip" onclick="sendChip(this)">&#127807; Herbal diabetes</div>
+    <div class="chip" onclick="sendChip(this)">&#128564; Susah tidur</div>
+    <div class="chip" onclick="sendChip(this)">&#129728; Gejala maag</div>
+    <div class="chip" onclick="sendChip(this)">&#129656; Tekanan darah tinggi</div>
+    <div class="chip" onclick="sendChip(this)">&#127939; Tips olahraga</div>
+  </div>
+
+  <!-- INPUT -->
+  <div class="chat-input-bar">
+    <input type="text" class="chat-text-input" id="msgInput"
+      placeholder="Tanya seputar kesehatan..."
+      onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); sendMessage(); }">
+    <button class="chat-action-btn send" id="sendBtn" onclick="sendMessage()">
+      <ion-icon name="send-outline"></ion-icon>
+    </button>
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/gemini-keys.js"></script>
+<script>
+  // ── Konfigurasi ─────────────────────────────────────────────────────────
+  const API_KEYS = window.GEMINI_API_KEYS || [];
+  let currentKeyIndex = 0;
+
+  const SYSTEM_PROMPT = `Kamu adalah HerboraTech AI, asisten kesehatan yang ramah dan berpengetahuan.
+Selalu jawab dalam Bahasa Indonesia yang mudah dipahami oleh masyarakat umum.
+Berikan informasi kesehatan yang berguna, namun selalu ingatkan pengguna untuk berkonsultasi ke dokter untuk diagnosis resmi.
+Jika ditanya tentang tanaman herbal, berikan informasi manfaat, cara pakai, dosis umum, dan kontraindikasi.
+Jangan memberikan diagnosis pasti atau meresepkan obat. Jawaban maksimal 3-4 kalimat kecuali diminta detail.
+Jika pengguna terlihat darurat (nyeri dada, sesak napas berat, kehilangan kesadaran), segera sarankan panggil darurat.`;
+
+  // ── State ────────────────────────────────────────────────────────────────
+  let chatHistory = [];
+  let userInitials = 'P';
+  let isLoading = false;
+
+  // ── Init ─────────────────────────────────────────────────────────────────
+  (async () => {
+    try {
+      const { user, profile } = await VAuth.guard('patient', 1);
+      userInitials = (profile.name || 'Pengguna').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+    } catch(e) { /* guest mode ok */ }
+
+    if (API_KEYS.length === 0) {
+      showNoKeyBanner();
+      return;
+    }
+
+    showWelcome();
+  })();
+
+  function showNoKeyBanner() {
+    const chatArea = document.getElementById('chatArea');
+    document.getElementById('chipsBar').style.display = 'none';
+    document.querySelector('.chat-input-bar').style.display = 'none';
+    chatArea.innerHTML = `
+      <div class="no-key-card" data-animate="up">
+        <div style="font-size:2rem;margin-bottom:10px;">&#129302;</div>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">Fitur AI Chat Belum Aktif</div>
+        <p style="font-size:0.78rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;">
+          Untuk mengaktifkan, admin perlu menambahkan Gemini API Key di konfigurasi aplikasi.
+          Sementara itu, Anda bisa berkonsultasi langsung dengan dokter.
+        </p>
+        <button class="neu-btn-primary" style="width:100%;" onclick="nav('consultation.html')">
+          <ion-icon name="person-outline" style="vertical-align:-2px;margin-right:6px;"></ion-icon>
+          Cari Dokter
+        </button>
+      </div>`;
+  }
+
+  function showWelcome() {
+    const greeting = getTimeGreeting();
+    appendAIBubble(`${greeting}! Saya HerboraTech AI, asisten kesehatan Anda. Saya bisa membantu menjawab pertanyaan seputar kesehatan, herbal, gejala penyakit, dan tips gaya hidup sehat. Ada yang bisa saya bantu?`);
+  }
+
+  function getTimeGreeting() {
+    const h = new Date().getHours();
+    if (h < 12) return 'Selamat pagi';
+    if (h < 15) return 'Selamat siang';
+    if (h < 18) return 'Selamat sore';
+    return 'Selamat malam';
+  }
+
+  // ── Send ─────────────────────────────────────────────────────────────────
+  function sendChip(el) {
+    const text = el.textContent.replace(/^[^\s]+\s/, '');
+    document.getElementById('msgInput').value = text;
+    sendMessage();
+  }
+
+  async function sendMessage() {
+    if (isLoading) return;
+    const input = document.getElementById('msgInput');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+
+    appendUserBubble(text);
+    chatHistory.push({ role: 'user', text });
+
+    isLoading = true;
+    document.getElementById('sendBtn').disabled = true;
+    const thinkingId = appendThinking();
+
+    try {
+      const reply = await askGeminiWithFailover(text, chatHistory.slice(0, -1));
+      removeThinking(thinkingId);
+      appendAIBubble(reply);
+      chatHistory.push({ role: 'ai', text: reply });
+      if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+    } catch (e) {
+      removeThinking(thinkingId);
+      appendAIBubble('Maaf, semua layanan AI sedang sibuk. Silakan coba lagi dalam beberapa saat.');
+      console.error('[AI chat]', e);
+    } finally {
+      isLoading = false;
+      document.getElementById('sendBtn').disabled = false;
+    }
+  }
+
+  /**
+   * Try calling Gemini API with automatic key rotation on failure.
+   * If a key returns 429 (rate limit) or 403, rotate to the next key and retry.
+   */
+  async function askGeminiWithFailover(userMessage, history) {
+    let lastError = null;
+
+    for (let attempt = 0; attempt < API_KEYS.length; attempt++) {
+      const keyIndex = (currentKeyIndex + attempt) % API_KEYS.length;
+      const apiKey = API_KEYS[keyIndex];
+
+      try {
+        const reply = await callGeminiAPI(userMessage, history, apiKey);
+        // Success — update currentKeyIndex to this working key for next call
+        currentKeyIndex = keyIndex;
+        return reply;
+      } catch (e) {
+        lastError = e;
+        const status = e.status || 0;
+        // Only retry on rate limit (429) or quota/auth errors (403)
+        if (status === 429 || status === 403) {
+          console.warn(`Key #${keyIndex + 1} hit limit (HTTP ${status}), trying next key...`);
+          continue;
+        }
+        // For other errors (network, 500, etc.), don't burn through all keys
+        throw e;
+      }
+    }
+
+    // All keys exhausted
+    // Advance to the next key for the next user attempt
+    currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
+    throw lastError || new Error('Semua API key telah mencapai batas.');
+  }
+
+  async function callGeminiAPI(userMessage, history, apiKey) {
+    const contents = [];
+    history.forEach(m => {
+      contents.push({ role: m.role === 'ai' ? 'model' : 'user', parts: [{ text: m.text }] });
+    });
+    contents.push({ role: 'user', parts: [{ text: userMessage }] });
+
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+          contents,
+          generationConfig: { maxOutputTokens: 512, temperature: 0.7 }
+        })
+      }
+    );
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      const error = new Error(err.error?.message || `HTTP ${res.status}`);
+      error.status = res.status;
+      throw error;
+    }
+
+    const data = await res.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text
+      || 'Maaf, saya tidak dapat memproses pertanyaan tersebut saat ini.';
+  }
+
+  // ── Render helpers ───────────────────────────────────────────────────────
+  function appendUserBubble(text) {
+    const chatArea = document.getElementById('chatArea');
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <div class="bubble-wrap user">
+        <div>
+          <div class="bubble user">${escHtml(text)}</div>
+          <div class="bubble-time" style="text-align:right;">${timeStr}</div>
+        </div>
+        <div class="bubble-avatar-sm" style="background:linear-gradient(135deg,#27AE60,#6FCF97);">${userInitials}</div>
+      </div>`;
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }
+
+  function appendAIBubble(text) {
+    const chatArea = document.getElementById('chatArea');
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+    const div = document.createElement('div');
+    const formatted = escHtml(text)
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br>');
+    div.innerHTML = `
+      <div class="bubble-wrap ai">
+        <div class="bubble-avatar-sm" style="background:linear-gradient(135deg,#2F80ED,#56CCF2);font-size:0.9rem;">&#129504;</div>
+        <div>
+          <div class="bubble ai">${formatted}</div>
+          <div class="bubble-time">${timeStr}</div>
+        </div>
+      </div>`;
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+    return div;
+  }
+
+  function appendThinking() {
+    const chatArea = document.getElementById('chatArea');
+    const id = 'thinking-' + Date.now();
+    const div = document.createElement('div');
+    div.id = id;
+    div.innerHTML = `
+      <div class="bubble-wrap ai">
+        <div class="bubble-avatar-sm" style="background:linear-gradient(135deg,#2F80ED,#56CCF2);font-size:0.9rem;">&#129504;</div>
+        <div class="bubble ai" style="padding:4px 6px;">
+          <div class="thinking-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>`;
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+    return id;
+  }
+
+  function removeThinking(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+  }
+
+  function clearChat() {
+    chatHistory = [];
+    document.getElementById('chatArea').innerHTML = '';
+    showWelcome();
+  }
+
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+</body>
+</html>

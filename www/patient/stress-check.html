@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Cek Stres</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .mobile-frame { padding-bottom: 100px; }
+    .app-header { background: linear-gradient(135deg, #6C63FF 0%, #8B83FF 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.15); padding: 1rem; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header h1 { color: #fff; margin: 0; }
+
+    .hero-section { text-align: center; padding: 2rem 1rem; background: rgba(108, 99, 255, 0.06); margin-bottom: 1.5rem; }
+    .hero-icon { font-size: 3rem; color: #6C63FF; }
+    .hero-title { font-size: 1.3rem; font-weight: 800; color: var(--text-primary); margin: 1rem 0 0.5rem; }
+    .hero-sub { font-size: 0.85rem; color: var(--text-secondary); }
+
+    .question-card { background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 14px; padding: 1.5rem; margin-bottom: 1rem; }
+    .question-label { font-weight: 700; font-size: 0.95rem; color: var(--text-primary); margin-bottom: 1rem; }
+    .question-scale { font-size: 0.75rem; color: var(--text-secondary); display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+
+    .slider-range { width: 100%; height: 6px; border-radius: 3px; background: var(--shadow-dark); outline: none; -webkit-appearance: none; appearance: none; }
+    .slider-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #6C63FF; cursor: pointer; box-shadow: 0 2px 8px rgba(108, 99, 255, 0.3); }
+    .slider-range::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #6C63FF; cursor: pointer; box-shadow: 0 2px 8px rgba(108, 99, 255, 0.3); border: none; }
+
+    .slider-value { display: block; text-align: center; font-weight: 700; font-size: 1.2rem; color: #6C63FF; margin-top: 0.5rem; }
+
+    .button-group-horizontal { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-toggle { flex: 1; min-width: 70px; padding: 0.75rem; border: 2px solid var(--shadow-dark); border-radius: 10px; background: var(--bg); color: var(--text-secondary); font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .btn-toggle.active { background: #6C63FF; color: #fff; border-color: #6C63FF; }
+    .btn-toggle:active { transform: scale(0.95); }
+
+    .result-card { display: none; background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 14px; padding: 2rem 1rem; margin-bottom: 1rem; text-align: center; }
+    .result-card.show { display: block; }
+
+    .gauge-container { width: 140px; height: 140px; margin: 1rem auto; }
+    .result-label { font-size: 1rem; font-weight: 800; margin-top: 1rem; margin-bottom: 0.5rem; }
+    .result-subtext { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5; }
+
+    .herb-recs { background: rgba(39, 174, 96, 0.06); border: 1px solid rgba(39, 174, 96, 0.2); border-radius: 10px; padding: 1rem; margin-top: 1rem; text-align: left; }
+    .herb-recs-title { font-weight: 700; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 0.75rem; }
+    .herb-recs-item { font-size: 0.75rem; color: var(--text-secondary); padding: 0.5rem 0; }
+
+    .button-group-result { display: flex; gap: 8px; margin-top: 1.5rem; }
+    .btn-primary, .btn-secondary { flex: 1; padding: 0.75rem; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-primary { background: #6C63FF; color: #fff; }
+    .btn-primary:active { transform: scale(0.95); }
+    .btn-secondary { background: var(--shadow-dark); color: var(--text-secondary); }
+    .btn-secondary:active { transform: scale(0.95); }
+
+    .submit-btn { width: 100%; padding: 1rem; border: none; background: linear-gradient(135deg, #6C63FF, #8B83FF); color: #fff; font-weight: 700; font-size: 1rem; border-radius: 12px; cursor: pointer; margin-top: 1.5rem; transition: all 0.2s; }
+    .submit-btn:active { transform: scale(0.98); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <h1 style="flex: 1; text-align: center;">Cek Level Stres</h1>
+    <div style="width: 40px;"></div>
+  </header>
+
+  <div class="hero-section">
+    <div class="hero-icon"><ion-icon name="brain-outline"></ion-icon></div>
+    <div class="hero-title">Cek Level Stres Anda</div>
+    <div class="hero-sub">Jawab 5 pertanyaan singkat — hanya 1 menit</div>
+  </div>
+
+  <div class="section" id="questions-section">
+    <!-- Q1: Tingkat Kegelisahan -->
+    <div class="question-card">
+      <div class="question-label">1. Tingkat Kegelisahan</div>
+      <div class="question-scale">
+        <span>Sangat Tenang</span>
+        <span>Sangat Gelisah</span>
+      </div>
+      <input type="range" id="anxiety" class="slider-range" min="1" max="10" value="5" oninput="updateValue(this)">
+      <div class="slider-value" id="anxietyVal">5</div>
+    </div>
+
+    <!-- Q2: Detak Jantung -->
+    <div class="question-card">
+      <div class="question-label">2. Detak Jantung</div>
+      <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:1rem;">Apakah jantung Anda terasa berdebar lebih cepat dari biasa?</div>
+      <div class="button-group-horizontal">
+        <button class="btn-toggle" onclick="selectHeartRace(this, 'Tidak')">Tidak</button>
+        <button class="btn-toggle" onclick="selectHeartRace(this, 'Kadang')">Kadang</button>
+        <button class="btn-toggle" onclick="selectHeartRace(this, 'Ya')">Ya</button>
+      </div>
+      <input type="hidden" id="heartRace" value="">
+    </div>
+
+    <!-- Q3: Fokus & Konsentrasi -->
+    <div class="question-card">
+      <div class="question-label">3. Fokus & Konsentrasi</div>
+      <div class="question-scale">
+        <span>Sulit Fokus</span>
+        <span>Sangat Fokus</span>
+      </div>
+      <input type="range" id="focus" class="slider-range" min="1" max="5" value="3" oninput="updateValue(this)">
+      <div class="slider-value" id="focusVal">3</div>
+    </div>
+
+    <!-- Q4: Kualitas Tidur -->
+    <div class="question-card">
+      <div class="question-label">4. Kualitas Tidur Semalam</div>
+      <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:1rem;">Berapa jam Anda tidur semalam?</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input type="number" id="sleepHours" class="neu-input-field" min="0" max="12" value="6" step="0.5" style="flex:1;padding:0.75rem;">
+        <span style="font-weight:700;color:var(--text-secondary);">jam</span>
+      </div>
+    </div>
+
+    <!-- Q5: Level Energi -->
+    <div class="question-card">
+      <div class="question-label">5. Level Energi Hari Ini</div>
+      <div class="question-scale">
+        <span>Sangat Lelah</span>
+        <span>Sangat Berenergi</span>
+      </div>
+      <input type="range" id="energy" class="slider-range" min="1" max="5" value="3" oninput="updateValue(this)">
+      <div class="slider-value" id="energyVal">3</div>
+    </div>
+
+    <button class="submit-btn" onclick="analyzeStress()">
+      <ion-icon name="analytics-outline" style="margin-right:8px;"></ion-icon> Analisis Stres Saya
+    </button>
+  </div>
+
+  <!-- Result Card -->
+  <div class="result-card" id="result-section">
+    <div class="gauge-container" id="stress-gauge"></div>
+    <div class="result-label" id="result-label">—</div>
+    <div class="result-subtext" id="result-subtext">—</div>
+
+    <div class="herb-recs" id="herb-recs">
+      <div class="herb-recs-title">🌿 Rekomendasi Herbal</div>
+      <div id="herb-list"></div>
+    </div>
+
+    <div class="button-group-result">
+      <button class="btn-primary" onclick="saveResult()">
+        <ion-icon name="save-outline" style="margin-right:6px;"></ion-icon> Simpan
+      </button>
+      <button class="btn-secondary" onclick="resetForm()">
+        <ion-icon name="refresh-outline" style="margin-right:6px;"></ion-icon> Ulang
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+let currentUser = null;
+let stressResult = null;
+const HERBAL_RECS = {
+  high: ['Ashwagandha', 'Lavender', 'Chamomile'],
+  medium: ['Peppermint', 'Lemon Balm', 'Passionflower'],
+  low: ['Green Tea', 'Mint', 'Ginger']
+};
+
+(async () => {
+  try {
+    const { user } = await VAuth.guard('patient', 1);
+    currentUser = user;
+  } catch(e) {
+    nav('home.html');
+  }
+})();
+
+function updateValue(input) {
+  const id = input.id;
+  const val = input.value;
+  if (id === 'anxiety') document.getElementById('anxietyVal').textContent = val;
+  if (id === 'focus') document.getElementById('focusVal').textContent = val;
+  if (id === 'energy') document.getElementById('energyVal').textContent = val;
+}
+
+function selectHeartRace(btn, value) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('heartRace').value = value;
+}
+
+function calculateStressScore({ anxiety, heartRace, focus, sleepHours, energy }) {
+  let score = 0;
+
+  // Anxiety (0-40 poin): tinggi = stres tinggi
+  score += (parseInt(anxiety) / 10) * 40;
+
+  // Heart racing (0-15 poin)
+  if (heartRace === 'Ya') score += 15;
+  else if (heartRace === 'Kadang') score += 7;
+
+  // Focus (0-20 poin): fokus buruk = stres tinggi (terbalik)
+  score += ((5 - parseInt(focus)) / 4) * 20;
+
+  // Sleep (0-15 poin): kurang tidur = stres lebih tinggi
+  const sleep = parseFloat(sleepHours);
+  if (sleep < 6) score += 15;
+  else if (sleep < 7) score += 8;
+  else if (sleep > 9) score += 5;
+
+  // Energy (0-10 poin): energi rendah = stres lebih tinggi (terbalik)
+  score += ((5 - parseInt(energy)) / 4) * 10;
+
+  return Math.round(Math.min(100, Math.max(0, score)));
+}
+
+async function analyzeStress() {
+  const inputs = {
+    anxiety: document.getElementById('anxiety').value,
+    heartRace: document.getElementById('heartRace').value,
+    focus: document.getElementById('focus').value,
+    sleepHours: parseFloat(document.getElementById('sleepHours').value),
+    energy: document.getElementById('energy').value
+  };
+
+  if (!inputs.heartRace) {
+    showToast('Pilih jawaban untuk pertanyaan "Detak Jantung"', 'error');
+    return;
+  }
+
+  const score = calculateStressScore(inputs);
+  const category = score > 65 ? 'high' : score > 35 ? 'medium' : 'low';
+  const labels = {
+    low: 'Rendah',
+    medium: 'Sedang',
+    high: 'Tinggi'
+  };
+  const messages = {
+    low: 'Anda dalam kondisi santai 😊',
+    medium: 'Ada sedikit tekanan. Istirahat yuk 😐',
+    high: 'Stres tinggi. Prioritaskan istirahat! 😟'
+  };
+
+  // Save result for later save
+  stressResult = { score, category, inputs };
+
+  // Show result
+  document.getElementById('questions-section').style.display = 'none';
+  document.getElementById('result-section').classList.add('show');
+
+  // Render gauge
+  setTimeout(() => {
+    createGauge(document.getElementById('stress-gauge'), score, 100,
+      category === 'high' ? '#EB5757' : category === 'medium' ? '#F2994A' : '#27AE60');
+  }, 100);
+
+  document.getElementById('result-label').textContent = 'Stres ' + labels[category] + ' — ' + score + '/100';
+  document.getElementById('result-label').style.color =
+    category === 'high' ? '#EB5757' : category === 'medium' ? '#F2994A' : '#27AE60';
+
+  document.getElementById('result-subtext').textContent = messages[category];
+
+  // Rekomendasi herbal
+  const herbs = HERBAL_RECS[category];
+  document.getElementById('herb-list').innerHTML = herbs
+    .map(h => `<div class="herb-recs-item">✓ ${h}</div>`)
+    .join('');
+}
+
+async function saveResult() {
+  if (!stressResult || !currentUser) return;
+
+  try {
+    showToast('Menyimpan hasil...', 'info');
+    await VDB.db.collection('users').doc(currentUser.uid)
+      .collection('riskScores').doc('stress_check')
+      .set({
+        score: stressResult.score,
+        category: stressResult.category,
+        inputs: stressResult.inputs,
+        calculatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        calculatedWith: 'stress-proxy-v1.0'
+      });
+    showToast('Hasil stres berhasil disimpan! 💾', 'success');
+    setTimeout(() => nav('home.html'), 1500);
+  } catch(e) {
+    showToast('Gagal menyimpan: ' + e.message, 'error');
+  }
+}
+
+function resetForm() {
+  document.getElementById('anxiety').value = 5;
+  document.getElementById('focus').value = 3;
+  document.getElementById('energy').value = 3;
+  document.getElementById('sleepHours').value = 6;
+  document.getElementById('heartRace').value = '';
+  document.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+
+  updateValue(document.getElementById('anxiety'));
+  updateValue(document.getElementById('focus'));
+  updateValue(document.getElementById('energy'));
+
+  document.getElementById('questions-section').style.display = '';
+  document.getElementById('result-section').classList.remove('show');
+  stressResult = null;
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SLR Protocol — HerboraTech</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12);
+      box-shadow: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+
+    .section-header .section-title {
+      border-left: 3px solid var(--primary-dark);
+      padding-left: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('index.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;color:#fff;">SLR Protocol</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section" data-animate="up">
+    <div class="section-header"><span class="section-title">Overview</span></div>
+    <div class="neu-card" style="padding:16px;border-left:4px solid var(--primary-dark);">
+      <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;margin:0;">
+        PRISMA-2020 compliant systematic literature review protocol for screening 15 metabolic diseases. 1,020+ papers identified, 15 landmark papers included (Grade A-B).
+      </p>
+    </div>
+  </div>
+
+  <div class="section" data-animate="up" data-delay="50">
+    <div class="section-header"><span class="section-title">Research Questions</span></div>
+    <div class="neu-card" style="padding:16px;">
+      <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.7;">
+        <div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">Primary Questions:</strong></div>
+        <ul style="margin:0;padding-left:20px;">
+          <li>Pathophysiological pathways and risk factor cascades?</li>
+          <li>Most sensitive/specific biomarkers for screening?</li>
+          <li>Evidence-based risk stratification algorithms?</li>
+          <li>Landmark epidemiological studies & prevalence?</li>
+          <li>Evidence-based clinical cutoff points?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" data-animate="up" data-delay="100">
+    <div class="section-header"><span class="section-title">Inclusion Criteria</span></div>
+    <div class="neu-card" style="padding:16px;">
+      <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.7;">
+        <div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">Study Design:</strong> RCTs, cohorts, case-control, systematic reviews, meta-analyses</div>
+        <div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">Population:</strong> Adults ≥18 years with or at risk for 15 target diseases</div>
+        <div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">Outcomes:</strong> Biomarker definition, risk prediction, diagnostic criteria, prevalence, incidence</div>
+        <div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">Publication:</strong> Peer-reviewed journal articles & published guidelines (WHO, ADA, ESC)</div>
+        <div><strong style="color:var(--text-primary);">Time:</strong> 1995-2026 (emphasis on landmark trials & recent reviews)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" data-animate="up" data-delay="150">
+    <div class="section-header"><span class="section-title">Target Diseases (15)</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        1. Dyslipidemia
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        2. Hypertension
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        3. NAFLD
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        4. Metabolic Syndrome
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        5. Obesity & IR
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        6. Type 2 Diabetes
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        7. CKD
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        8. Depression
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        9. CAD Risk
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        10. Stroke Risk
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        11. Atrial Fibrillation
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        12. Sleep Apnea
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        13. Thyroid Disorders
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        14. PCOS
+      </div>
+      <div class="neu-card" style="padding:12px;border-left:3px solid var(--primary-dark);font-size:0.8rem;">
+        15. Gout
+      </div>
+    </div>
+  </div>
+
+  <div class="section" data-animate="up" data-delay="200">
+    <div class="section-header"><span class="section-title">Search Strategy</span></div>
+    <div class="neu-card" style="padding:16px;">
+      <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.7;">
+        <div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">Databases:</strong> PubMed, Cochrane, Web of Science, Scopus, Clinical Guidelines</div>
+        <div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">Filters:</strong> 1995-2026, English, Journal articles & guidelines</div>
+        <div style="margin-bottom:12px;"><strong style="color:var(--text-primary);">Example Search:</strong></div>
+        <div style="background:var(--bg);padding:10px;border-radius:8px;font-size:0.75rem;font-family:monospace;">
+          (disease_name) AND (screening OR diagnosis OR risk assessment) AND (sensitivity OR specificity OR AUROC OR validation)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-bottom:20px;" data-animate="up" data-delay="250">
+    <div class="section-header"><span class="section-title">PRISMA Checklist</span></div>
+    <div class="neu-card" style="padding:16px;border-left:4px solid var(--primary-dark);background:linear-gradient(135deg,rgba(39,174,96,0.08),rgba(27,174,96,0.04));">
+      <p style="font-size:0.8rem;color:var(--text-secondary);margin:0;">
+        ✅ All 27 PRISMA-2020 items documented and verified. Title identifies SLR. PROSPERO registration (if applicable). All methods transparent.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script src="../shared/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Daftar</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { font-family: 'Poppins', sans-serif; background: var(--bg); overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* BG */
+    .auth-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background: linear-gradient(160deg,#040E07 0%,#071A0F 40%,#0D2B1A 70%,#1A5C38 100%);
+    }
+    .auth-bg::before {
+      content:''; position:absolute; inset:0;
+      background-image:radial-gradient(circle,rgba(255,255,255,0.025) 1px,transparent 1px);
+      background-size:28px 28px;
+    }
+    .auth-bg::after {
+      content:''; position:absolute; bottom:-100px; left:50%; transform:translateX(-50%);
+      width:600px; height:600px; border-radius:50%;
+      background:radial-gradient(circle, rgba(111,207,151,0.07) 0%, transparent 70%);
+    }
+
+    /* MAIN */
+    .auth-page { position:relative; z-index:1; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; }
+
+    /* BACK LINK */
+    .back-link { position:fixed; top:20px; left:20px; z-index:10; display:flex; align-items:center; gap:6px; color:rgba(255,255,255,0.5); font-size:0.82rem; font-weight:500; text-decoration:none; transition:color 0.2s; }
+    .back-link:hover { color:#6FCF97; }
+
+    /* CARD */
+    .auth-card {
+      background: rgba(228,235,245,0.97);
+      border-radius: 28px;
+      padding: 40px 40px;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+      animation: cardIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes cardIn { from { opacity:0; transform:translateY(30px) scale(0.96); } to { opacity:1; transform:none; } }
+    @media (max-width: 500px) { .auth-card { padding: 32px 24px; border-radius: 24px; } }
+
+    /* LOGO */
+    .auth-logo { text-align:center; margin-bottom:22px; }
+    .logo-mark { width:52px; height:52px; border-radius:16px; background:linear-gradient(135deg,#0D2B1A,#27AE60); display:flex; align-items:center; justify-content:center; margin:0 auto 10px; box-shadow:0 8px 24px rgba(39,174,96,0.35); }
+    .logo-mark ion-icon { font-size:1.7rem; color:#fff; }
+    .auth-logo .brand { font-size:1.3rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.5px; }
+    .auth-logo .brand span { color:var(--primary-dark); }
+
+    /* STEP INDICATOR */
+    .step-indicator { display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:24px; }
+    .step-item { display:flex; flex-direction:column; align-items:center; gap:4px; flex:1; position:relative; }
+    .step-dot { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700; z-index:1; }
+    .step-dot.active { background:linear-gradient(135deg,#27AE60,#6FCF97); color:#fff; box-shadow:0 4px 14px rgba(39,174,96,0.4); }
+    .step-dot.inactive { background:var(--bg); color:var(--text-secondary); box-shadow:var(--shadow-out-sm); }
+    .step-label { font-size:0.67rem; font-weight:600; color:var(--text-secondary); white-space:nowrap; }
+    .step-label.active { color:var(--primary-dark); }
+    .step-line { flex:1; height:2px; background:rgba(0,0,0,0.08); margin:0 6px; align-self:flex-start; margin-top:16px; }
+    .step-line.done { background:linear-gradient(90deg,#27AE60,#6FCF97); }
+
+    /* FORM */
+    .form-group { margin-bottom:14px; }
+    .form-label { display:block; font-size:0.77rem; font-weight:600; color:var(--text-secondary); margin-bottom:6px; letter-spacing:0.02em; }
+    .input-wrap { position:relative; }
+    .input-wrap ion-icon.input-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-secondary); font-size:1rem; pointer-events:none; }
+    .neu-input { width:100%; background:var(--bg); border:none; border-radius:12px; padding:12px 14px 12px 40px; font-size:0.875rem; color:var(--text-primary); box-shadow:var(--shadow-in); font-family:'Poppins',sans-serif; outline:none; transition:box-shadow 0.2s; }
+    .neu-input:focus { box-shadow:var(--shadow-in), 0 0 0 2px rgba(39,174,96,0.25); }
+    .neu-input::placeholder { color:var(--text-secondary); opacity:0.6; }
+    .pw-toggle { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:var(--text-secondary); font-size:1rem; padding:4px; }
+
+    /* FORM GRID */
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    @media (max-width: 420px) { .form-row { grid-template-columns:1fr; } }
+
+    /* ROLE PICKER */
+    .role-label { font-size:0.75rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px; }
+    .role-picker { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
+    .role-pick-card { background:var(--bg); border-radius:14px; box-shadow:var(--shadow-out-sm); padding:14px 12px; display:flex; align-items:center; gap:12px; cursor:pointer; border:2px solid transparent; transition:all 0.2s; user-select:none; }
+    .role-pick-card:hover { transform:translateY(-2px); }
+    .role-pick-card.selected { border-color:var(--primary-dark); background:linear-gradient(135deg, rgba(39,174,96,0.06), rgba(111,207,151,0.04)); }
+    .role-pick-card.selected .rp-icon { background:linear-gradient(135deg,#0D2B1A,#27AE60); color:#fff; }
+    .role-pick-card.selected.dokter-card { border-color:#1D5DB5; }
+    .role-pick-card.selected.dokter-card .rp-icon { background:linear-gradient(135deg,#0C2352,#1D5DB5); color:#fff; }
+    .rp-icon { width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; transition:all 0.2s; }
+    .rp-icon.green { background:rgba(39,174,96,0.1); color:var(--primary-dark); }
+    .rp-icon.blue { background:rgba(29,93,181,0.1); color:#1D5DB5; }
+    .rp-info { display:flex; flex-direction:column; }
+    .rp-title { font-size:0.83rem; font-weight:700; color:var(--text-primary); }
+    .rp-sub { font-size:0.68rem; color:var(--text-secondary); }
+    .rp-radio { width:16px; height:16px; border-radius:50%; border:2px solid var(--shadow-dark); margin-left:auto; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+    .role-pick-card.selected .rp-radio { border-color:var(--primary-dark); background:var(--primary-dark); }
+    .role-pick-card.selected .rp-radio::after { content:''; width:6px; height:6px; border-radius:50%; background:#fff; }
+    .role-pick-card.selected.dokter-card .rp-radio { border-color:#1D5DB5; background:#1D5DB5; }
+
+    /* CHECKBOX */
+    .checkbox-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:20px; }
+    .checkbox-wrap { position:relative; flex-shrink:0; margin-top:2px; }
+    .checkbox-wrap input[type="checkbox"] { opacity:0; position:absolute; inset:0; cursor:pointer; }
+    .checkbox-custom { width:20px; height:20px; border-radius:6px; box-shadow:var(--shadow-in); background:var(--bg); display:flex; align-items:center; justify-content:center; font-size:0.7rem; color:transparent; transition:all 0.2s; pointer-events:none; }
+    .checkbox-wrap input:checked ~ .checkbox-custom { background:linear-gradient(135deg,#27AE60,#6FCF97); color:#fff; box-shadow:0 2px 8px rgba(39,174,96,0.4); }
+    .checkbox-label { font-size:0.78rem; color:var(--text-secondary); line-height:1.5; }
+    .checkbox-label a { color:var(--primary-dark); font-weight:600; text-decoration:none; }
+
+    /* ERROR BOX */
+    #auth-error { display:none; background:rgba(235,87,87,0.08); border:1px solid rgba(235,87,87,0.25); border-radius:10px; padding:10px 14px; margin-bottom:16px; font-size:0.8rem; color:#C0392B; font-weight:500; line-height:1.5; }
+    #auth-error.show { display:flex; align-items:flex-start; gap:8px; }
+    #auth-error ion-icon { font-size:1rem; flex-shrink:0; margin-top:1px; color:#EB5757; }
+
+    /* SUBMIT BTN */
+    .btn-register { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#27AE60,#6FCF97); color:#fff; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; font-family:'Poppins',sans-serif; box-shadow:0 6px 24px rgba(111,207,151,0.4); transition:transform 0.2s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; letter-spacing:0.02em; }
+    .btn-register:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 32px rgba(111,207,151,0.5); }
+    .btn-register:active { transform:translateY(0); }
+    .btn-register:disabled { opacity:0.7; cursor:not-allowed; transform:none; }
+
+    /* GOOGLE BTN */
+    .btn-google { width:100%; padding:12px; border-radius:12px; background:var(--bg); box-shadow:var(--shadow-out); font-size:0.85rem; font-weight:600; color:var(--text-primary); border:none; cursor:pointer; font-family:'Poppins',sans-serif; display:flex; align-items:center; justify-content:center; gap:8px; transition:transform 0.2s; margin-bottom:14px; }
+    .btn-google:hover:not(:disabled) { transform:translateY(-2px); }
+    .btn-google:disabled { opacity:0.7; cursor:not-allowed; }
+
+    /* FOOTER LINK */
+    .auth-footer { text-align:center; margin-top:18px; }
+    .auth-footer p { font-size:0.82rem; color:var(--text-secondary); }
+    .auth-footer a { color:var(--primary-dark); font-weight:700; text-decoration:none; }
+    .auth-footer a:hover { text-decoration:underline; }
+
+    /* ECG decoration */
+    .ecg-deco { position:fixed; bottom:30px; left:0; right:0; height:40px; opacity:0.15; pointer-events:none; overflow:hidden; }
+    .ecg-deco svg { width:200%; animation:ecgScroll 14s linear infinite; }
+    @keyframes ecgScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* Section title */
+    .section-title { font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:4px; }
+    .section-sub { font-size:0.82rem; color:var(--text-secondary); margin-bottom:22px; }
+
+    @keyframes spin { to { transform:rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<!-- BG -->
+<div class="auth-bg"></div>
+
+<!-- ECG decoration -->
+<div class="ecg-deco">
+  <svg viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="0,20 80,20 100,20 110,5 120,35 130,5 140,20 160,20 240,20 260,20 270,8 280,32 290,8 300,20 320,20 400,20 420,20 430,5 440,35 450,5 460,20 480,20 560,20 580,20 590,8 600,32 610,8 620,20 640,20 720,20 740,20 750,5 760,35 770,5 780,20 800,20 880,20 900,20 910,8 920,32 930,8 940,20 960,20 1040,20 1060,20 1070,5 1080,35 1090,5 1100,20 1120,20 1200,20 1220,20 1230,8 1240,32 1250,8 1260,20 1280,20 1360,20 1380,20 1390,5 1400,35 1410,5 1420,20 1440,20" fill="none" stroke="#6FCF97" stroke-width="1.5"/>
+    <polyline points="1440,20 1520,20 1540,20 1550,5 1560,35 1570,5 1580,20 1600,20 1680,20 1700,20 1710,8 1720,32 1730,8 1740,20 1760,20 1840,20 1860,20 1870,5 1880,35 1890,5 1900,20 1920,20 2000,20 2020,20 2030,8 2040,32 2050,8 2060,20 2080,20 2160,20 2180,20 2190,5 2200,35 2210,5 2220,20 2240,20 2320,20 2340,20 2350,8 2360,32 2370,8 2380,20 2400,20 2440,20 2460,20 2470,5 2480,35 2490,5 2500,20 2520,20 2600,20 2620,20 2630,8 2640,32 2650,8 2660,20 2680,20 2760,20 2780,20 2790,5 2800,35 2810,5 2820,20 2840,20 2880,20" fill="none" stroke="#6FCF97" stroke-width="1.5"/>
+  </svg>
+</div>
+
+<!-- BACK LINK -->
+<a href="login.html" class="back-link">
+  <ion-icon name="arrow-back-outline"></ion-icon> Kembali ke Masuk
+</a>
+
+<!-- AUTH PAGE -->
+<main class="auth-page">
+  <div class="auth-card">
+
+    <!-- LOGO -->
+    <div class="auth-logo" data-animate="up" data-delay="0">
+      <div class="logo-mark"><ion-icon name="pulse-outline"></ion-icon></div>
+      <div class="brand">Herbora<span>Tech</span></div>
+    </div>
+
+    <!-- STEP INDICATOR -->
+    <div class="step-indicator" data-animate="up" data-delay="60">
+      <div class="step-item">
+        <div class="step-dot active">1</div>
+        <div class="step-label active">Data Diri</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot inactive">2</div>
+        <div class="step-label">Verifikasi</div>
+      </div>
+    </div>
+
+    <!-- TITLE -->
+    <div data-animate="up" data-delay="100">
+      <div class="section-title">Buat Akun Baru</div>
+      <div class="section-sub">Isi data diri Anda untuk memulai</div>
+    </div>
+
+    <!-- ERROR BOX -->
+    <div id="auth-error">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <span id="auth-error-text"></span>
+    </div>
+
+    <!-- FORM -->
+    <div data-animate="up" data-delay="140">
+      <div class="form-group">
+        <label class="form-label">Nama Lengkap</label>
+        <div class="input-wrap">
+          <ion-icon name="person-outline" class="input-icon"></ion-icon>
+          <input type="text" class="neu-input" id="nameInput" placeholder="Masukkan nama lengkap" autocomplete="name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <div class="input-wrap">
+          <ion-icon name="mail-outline" class="input-icon"></ion-icon>
+          <input type="email" class="neu-input" id="emailInput" placeholder="email@contoh.com" autocomplete="email">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">No. HP</label>
+        <div class="input-wrap">
+          <ion-icon name="call-outline" class="input-icon"></ion-icon>
+          <input type="tel" class="neu-input" id="phoneInput" placeholder="08xx-xxxx-xxxx" autocomplete="tel">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label">Password</label>
+          <div class="input-wrap">
+            <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+            <input type="password" class="neu-input" id="pwInput" placeholder="Min. 6 karakter" autocomplete="new-password">
+            <button class="pw-toggle" onclick="togglePw('pwInput','pwIcon1')" type="button">
+              <ion-icon name="eye-outline" id="pwIcon1"></ion-icon>
+            </button>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label">Konfirmasi Password</label>
+          <div class="input-wrap">
+            <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+            <input type="password" class="neu-input" id="pwConfirmInput" placeholder="Ulangi password" autocomplete="new-password">
+            <button class="pw-toggle" onclick="togglePw('pwConfirmInput','pwIcon2')" type="button">
+              <ion-icon name="eye-outline" id="pwIcon2"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROLE PICKER -->
+    <div data-animate="up" data-delay="200" style="margin-top:16px;">
+      <p class="role-label">Daftar sebagai</p>
+      <div class="role-picker">
+        <div class="role-pick-card selected pasien-card" id="pick-pasien" onclick="selectRole('pasien')">
+          <div class="rp-icon green"><ion-icon name="person-outline"></ion-icon></div>
+          <div class="rp-info">
+            <div class="rp-title">Pasien</div>
+            <div class="rp-sub">Patient Portal</div>
+          </div>
+          <div class="rp-radio" id="radio-pasien"></div>
+        </div>
+        <div class="role-pick-card dokter-card" id="pick-dokter" onclick="selectRole('dokter')">
+          <div class="rp-icon blue"><ion-icon name="medkit-outline"></ion-icon></div>
+          <div class="rp-info">
+            <div class="rp-title">Dokter</div>
+            <div class="rp-sub">Doctor Portal</div>
+          </div>
+          <div class="rp-radio" id="radio-dokter"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHECKBOX -->
+    <div class="checkbox-row" data-animate="up" data-delay="240">
+      <label class="checkbox-wrap">
+        <input type="checkbox" id="agreeCheck">
+        <div class="checkbox-custom"><ion-icon name="checkmark-outline"></ion-icon></div>
+      </label>
+      <div class="checkbox-label">
+        Saya setuju dengan <a href="#" onclick="showToastMsg('Dokumen akan segera tersedia')">Syarat &amp; Ketentuan</a> dan <a href="#" onclick="showToastMsg('Dokumen akan segera tersedia')">Kebijakan Privasi</a> HerboraTech
+      </div>
+    </div>
+
+    <!-- GOOGLE REGISTER -->
+    <button class="btn-google" id="googleBtn" onclick="doGoogleRegister()" data-animate="up" data-delay="260">
+      <span style="font-size:1.1rem;font-weight:900;color:#EA4335;">G</span> Daftar dengan Google
+    </button>
+
+    <!-- SUBMIT -->
+    <button class="btn-register" id="registerBtn" onclick="doRegister()" data-animate="up" data-delay="280">
+      <ion-icon name="person-add-outline"></ion-icon>
+      <span>Daftar Sekarang</span>
+    </button>
+
+    <!-- FOOTER -->
+    <div class="auth-footer" data-animate="up" data-delay="320">
+      <p>Sudah punya akun? <a href="login.html">Masuk</a></p>
+    </div>
+
+  </div>
+</main>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+  let selectedRole = 'pasien';
+
+  function selectRole(role) {
+    selectedRole = role;
+    document.querySelectorAll('.role-pick-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('pick-' + role).classList.add('selected');
+  }
+
+  function togglePw(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon  = document.getElementById(iconId);
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.setAttribute('name', 'eye-off-outline');
+    } else {
+      input.type = 'password';
+      icon.setAttribute('name', 'eye-outline');
+    }
+  }
+
+  function showToastMsg(msg, type) {
+    if (typeof showToast === 'function') showToast(msg, type || 'info');
+    else alert(msg);
+  }
+
+  function showError(msg) {
+    const box  = document.getElementById('auth-error');
+    const text = document.getElementById('auth-error-text');
+    text.textContent = msg;
+    box.classList.add('show');
+  }
+
+  function hideError() {
+    document.getElementById('auth-error').classList.remove('show');
+  }
+
+  function setLoading(loading) {
+    const btn       = document.getElementById('registerBtn');
+    const googleBtn = document.getElementById('googleBtn');
+    if (loading) {
+      btn.innerHTML = '<ion-icon name="reload-outline" style="animation:spin 0.8s linear infinite"></ion-icon><span>Mendaftar...</span>';
+      btn.disabled       = true;
+      googleBtn.disabled = true;
+    } else {
+      btn.innerHTML = '<ion-icon name="person-add-outline"></ion-icon><span>Daftar Sekarang</span>';
+      btn.disabled       = false;
+      googleBtn.disabled = false;
+    }
+  }
+
+  function getErrorMessage(code) {
+    const map = {
+      'auth/email-already-in-use': 'Email sudah terdaftar. Silakan gunakan email lain.',
+      'auth/weak-password':        'Password minimal 6 karakter.',
+      'auth/invalid-email':        'Format email tidak valid.',
+      'auth/too-many-requests':    'Terlalu banyak percobaan. Coba lagi nanti.',
+    };
+    return map[code] || 'Terjadi kesalahan. Silakan coba lagi.';
+  }
+
+  async function doRegister() {
+    const name   = document.getElementById('nameInput').value.trim();
+    const email  = document.getElementById('emailInput').value.trim();
+    const phone  = document.getElementById('phoneInput').value.trim();
+    const pw     = document.getElementById('pwInput').value;
+    const pwConf = document.getElementById('pwConfirmInput').value;
+    const agreed = document.getElementById('agreeCheck').checked;
+    hideError();
+
+    if (!name)            { showError('Masukkan nama lengkap Anda.'); return; }
+    if (!email)           { showError('Masukkan alamat email Anda.'); return; }
+    if (!phone)           { showError('Masukkan nomor HP Anda.'); return; }
+    if (pw.length < 6)    { showError('Password minimal 6 karakter.'); return; }
+    if (pw !== pwConf)    { showError('Konfirmasi password tidak cocok.'); return; }
+    if (!agreed)          { showError('Setujui Syarat & Ketentuan terlebih dahulu.'); return; }
+
+    // Map UI role → Firestore role
+    const roleMap = { pasien: 'patient', dokter: 'doctor' };
+    const firestoreRole = roleMap[selectedRole] || 'patient';
+
+    setLoading(true);
+    try {
+      await VAuth.register(name, email, pw, firestoreRole);
+      showToastMsg('Akun berhasil dibuat! Selamat datang 🎉', 'success');
+      setTimeout(() => { window.location.href = 'welcome.html'; }, 1200);
+    } catch (err) {
+      setLoading(false);
+      showError(getErrorMessage(err.code));
+    }
+  }
+
+  async function doGoogleRegister() {
+    hideError();
+    const roleMap = { pasien: 'patient', dokter: 'doctor' };
+    const firestoreRole = roleMap[selectedRole] || 'patient';
+
+    const googleBtn = document.getElementById('googleBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    googleBtn.disabled   = true;
+    registerBtn.disabled = true;
+    googleBtn.innerHTML  = '<ion-icon name="reload-outline" style="animation:spin 0.8s linear infinite"></ion-icon> Memuat...';
+
+    try {
+      const { user, role } = await VAuth.loginGoogle(firestoreRole);
+      showToastMsg('Berhasil masuk dengan Google!', 'success');
+      VAuth.redirectByRole(role, 1);
+    } catch (err) {
+      googleBtn.innerHTML  = '<span style="font-size:1.1rem;font-weight:900;color:#EA4335;">G</span> Daftar dengan Google';
+      googleBtn.disabled   = false;
+      registerBtn.disabled = false;
+      if (err.code !== 'auth/popup-closed-by-user') {
+        showError(getErrorMessage(err.code));
+      }
+    }
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') doRegister(); });
+</script>
+</body>
+</html>

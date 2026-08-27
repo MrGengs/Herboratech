@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Model Risiko Kesehatan</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+    @media (min-width: 768px) { .ml-dist-grid { grid-template-columns: 1fr 1fr !important; } }
+
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .model-card {
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow-out);
+      border-top: 3px solid transparent;
+      transition: box-shadow 0.2s;
+    }
+    .model-card:hover { box-shadow: var(--shadow-hover); }
+    .model-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--primary-bg);
+      color: var(--primary-dark);
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .model-badge.active { background: rgba(39,174,96,0.12); color: #27AE60; }
+    .param-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--shadow-dark);
+      font-size: 0.72rem;
+    }
+    .param-row:last-child { border-bottom: none; }
+    .param-key { color: var(--text-muted); }
+    .param-val { font-weight: 600; color: var(--text-secondary); }
+
+    .dist-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+    .dist-table th { text-align: left; font-size: 0.68rem; color: var(--text-muted); padding: 8px 10px; font-weight: 600; background: var(--shadow-dark); }
+    .dist-table td { padding: 10px; border-bottom: 1px solid var(--shadow-dark); }
+    .dist-table tr:last-child td { border-bottom: none; }
+    .dist-bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .dist-bar { height: 6px; border-radius: 3px; min-width: 2px; transition: width 0.4s; }
+
+    .risk-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+    .risk-pill.high { background: rgba(235,87,87,0.12); color: #EB5757; }
+    .risk-pill.medium { background: rgba(242,153,74,0.12); color: #F2994A; }
+    .risk-pill.low { background: rgba(39,174,96,0.12); color: #27AE60; }
+
+    .refresh-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--bg);
+      border: 1px solid var(--shadow-dark);
+      border-radius: 10px;
+      padding: 7px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      cursor: pointer;
+      box-shadow: var(--shadow-out-sm);
+      transition: box-shadow 0.15s;
+    }
+    .refresh-btn:active { box-shadow: var(--shadow-in); }
+
+    .high-risk-row td:first-child { font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item active" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar" data-animate="up">
+      <h1>Model Risiko Kesehatan</h1>
+      <div class="header-actions">
+        <button class="refresh-btn" onclick="loadStats()">
+          <ion-icon name="refresh-outline"></ion-icon> Refresh Data
+        </button>
+        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#9B51E0,#6FCF97)">A</div>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="stat-grid" data-animate="up" data-delay="100">
+      <div class="stat-card">
+        <div class="sc-icon" style="background:rgba(155,81,224,0.12);color:#9B51E0">👤</div>
+        <div class="sc-value" id="stat-profiles">—</div>
+        <div class="sc-label">Pengguna Ber-profil</div>
+        <div class="sc-change" id="stat-profiles-sub" style="color:var(--text-muted)">Memuat...</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-icon" style="background:rgba(47,128,237,0.12);color:#2F80ED">📊</div>
+        <div class="sc-value" id="stat-scores">—</div>
+        <div class="sc-label">Skor Dihitung</div>
+        <div class="sc-change" id="stat-scores-sub" style="color:var(--text-muted)">Memuat...</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-icon" style="background:rgba(235,87,87,0.12);color:#EB5757">⚠️</div>
+        <div class="sc-value" id="stat-highrisk">—</div>
+        <div class="sc-label">Risiko Tinggi</div>
+        <div class="sc-change" id="stat-highrisk-sub" style="color:var(--danger)">Memuat...</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-icon" style="background:rgba(39,174,96,0.12);color:#27AE60">🧠</div>
+        <div class="sc-value" id="stat-models">7</div>
+        <div class="sc-label">Model Tersedia</div>
+        <div class="sc-change up" id="stat-engine">Memuat...</div>
+      </div>
+    </div>
+
+    <!-- Model Cards -->
+    <div style="margin-top:28px;" data-animate="up" data-delay="200">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <h2 style="font-size:0.95rem;font-weight:700;margin:0;">Status Model</h2>
+        <span style="font-size:0.72rem;color:var(--text-muted);">Engine: risk-engine.js v1.0 • Basis: rule-based + clinical guidelines</span>
+      </div>
+      <div class="model-grid">
+
+        <div class="model-card" style="border-top-color:#9B51E0;">
+          <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Sindrom Metabolik</div>
+          <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: IDF / NCEP ATP III</div>
+          <div class="param-row"><span class="param-key">Kriteria utama</span><span class="param-val">Lingkar pinggang</span></div>
+          <div class="param-row"><span class="param-key">BMI threshold</span><span class="param-val">25 (Asia)</span></div>
+          <div class="param-row"><span class="param-key">Komponen</span><span class="param-val">5 kriteria IDF</span></div>
+          <div class="param-row"><span class="param-key">Output</span><span class="param-val">0–100, 3 kategori</span></div>
+        </div>
+
+        <div class="model-card" style="border-top-color:#2F80ED;">
+          <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Diabetes Tipe 2</div>
+          <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: FINDRISC Score</div>
+          <div class="param-row"><span class="param-key">Faktor utama</span><span class="param-val">BMI + riwayat keluarga</span></div>
+          <div class="param-row"><span class="param-key">Bobot BMI</span><span class="param-val">3–5 poin</span></div>
+          <div class="param-row"><span class="param-key">Range skor</span><span class="param-val">0–26 FINDRISC</span></div>
+          <div class="param-row"><span class="param-key">Gula darah</span><span class="param-val">Jika tersedia</span></div>
+        </div>
+
+        <div class="model-card" style="border-top-color:#EB5757;">
+          <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Penyakit Jantung</div>
+          <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: Framingham Risk Score</div>
+          <div class="param-row"><span class="param-key">Faktor utama</span><span class="param-val">Umur + gender</span></div>
+          <div class="param-row"><span class="param-key">Kolesterol LDL</span><span class="param-val">Jika tersedia</span></div>
+          <div class="param-row"><span class="param-key">Multiplier merokok</span><span class="param-val">1.3×</span></div>
+          <div class="param-row"><span class="param-key">Output</span><span class="param-val">0–100, 10-year risk</span></div>
+        </div>
+
+        <div class="model-card" style="border-top-color:#F2994A;">
+          <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Hipertensi</div>
+          <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: JNC-8 / WHO-ISH</div>
+          <div class="param-row"><span class="param-key">Faktor utama</span><span class="param-val">Tekanan darah (SBP)</span></div>
+          <div class="param-row"><span class="param-key">SBP ≥140</span><span class="param-val">+35 poin</span></div>
+          <div class="param-row"><span class="param-key">Stres kerja</span><span class="param-val">+10 poin</span></div>
+          <div class="param-row"><span class="param-key">Garam tinggi</span><span class="param-val">+8 poin</span></div>
+        </div>
+
+        <div class="model-card" style="border-top-color:#EB5757;">
+          <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Stroke</div>
+          <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: ASCVD / AHA Stroke</div>
+          <div class="param-row"><span class="param-key">Faktor utama</span><span class="param-val">Umur + hipertensi</span></div>
+          <div class="param-row"><span class="param-key">Usia &gt;60</span><span class="param-val">+20 poin</span></div>
+          <div class="param-row"><span class="param-key">Multiplier DM</span><span class="param-val">×1.2</span></div>
+          <div class="param-row"><span class="param-key">Riwayat stroke</span><span class="param-val">+30 poin</span></div>
+        </div>
+
+        <div class="model-card" style="border-top-color:#27AE60;">
+          <span class="model-badge active"><ion-icon name="checkmark-circle-outline"></ion-icon> Aktif</span>
+          <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Kualitas Tidur</div>
+          <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:12px;">Basis: PSQI Adapted</div>
+          <div class="param-row"><span class="param-key">Faktor utama</span><span class="param-val">Jam tidur + kualitas</span></div>
+          <div class="param-row"><span class="param-key">Optimal</span><span class="param-val">7–8 jam / malam</span></div>
+          <div class="param-row"><span class="param-key">BMI obesitas</span><span class="param-val">+15 poin</span></div>
+          <div class="param-row"><span class="param-key">Stres kronik</span><span class="param-val">+10 poin</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Risk Distribution + High Risk Users -->
+    <div style="display:grid;grid-template-columns:1fr;gap:24px;margin-top:28px;" class="ml-dist-grid" data-animate="up" data-delay="300">
+
+      <!-- Distribution -->
+      <div class="neu-card-flat">
+        <div style="padding:18px 20px 12px;border-bottom:1px solid var(--shadow-dark);">
+          <span style="font-weight:700;font-size:0.9rem;">Distribusi Risiko</span>
+          <span style="font-size:0.68rem;color:var(--text-muted);display:block;margin-top:2px;">50 skor terakhir dari semua pengguna</span>
+        </div>
+        <div style="padding:16px 20px;">
+          <table class="dist-table">
+            <thead><tr><th>Penyakit</th><th>Rendah</th><th>Sedang</th><th>Tinggi</th></tr></thead>
+            <tbody id="dist-tbody">
+              <tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">Memuat...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- High Risk Users -->
+      <div class="neu-card-flat">
+        <div style="padding:18px 20px 12px;border-bottom:1px solid var(--shadow-dark);">
+          <span style="font-weight:700;font-size:0.9rem;">Pengguna Risiko Tinggi</span>
+          <span style="font-size:0.68rem;color:var(--text-muted);display:block;margin-top:2px;">Skor rata-rata ≥ 60</span>
+        </div>
+        <div style="padding:8px 0;">
+          <table class="dist-table">
+            <thead><tr><th>Pengguna</th><th>Skor Rata-rata</th><th>Penyakit Utama</th></tr></thead>
+            <tbody id="highrisk-tbody">
+              <tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:20px;">Memuat...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Future Roadmap -->
+    <div class="neu-card-flat" style="margin-top:24px;" data-animate="up" data-delay="400">
+      <div style="padding:18px 20px 12px;border-bottom:1px solid var(--shadow-dark);">
+        <span style="font-weight:700;font-size:0.9rem;">Roadmap Model</span>
+      </div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(39,174,96,0.07);border-left:3px solid #27AE60;">
+          <span style="font-size:1rem;">✅</span>
+          <div><div style="font-weight:600;font-size:0.82rem;">v1.0 — Rule-based Models (Sekarang)</div><div style="font-size:0.7rem;color:var(--text-muted);">6 model klinis: IDF, FINDRISC, Framingham, JNC-8, ASCVD, PSQI</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(47,128,237,0.07);border-left:3px solid var(--info);">
+          <span style="font-size:1rem;">✅</span>
+          <div><div style="font-weight:600;font-size:0.82rem;">v2.0 — ML Proxy (Aktif via loadModels)</div><div style="font-size:0.7rem;color:var(--text-muted);">RandomForest proxy berbasis 280k baris data Kaggle — blending 60% ML + 40% rule-based</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:var(--shadow-dark);border-left:3px solid var(--warning);">
+          <span style="font-size:1rem;">🔮</span>
+          <div><div style="font-weight:600;font-size:0.82rem;">v3.0 — Personalized Longitudinal Model (Future)</div><div style="font-size:0.7rem;color:var(--text-muted);">Trend skor dari waktu ke waktu + integrasi data lab + vitals real-time</div></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+  const DISEASE_LABELS = {
+    diabetes: 'Diabetes', hypertension: 'Hipertensi', heart: 'Jantung',
+    stroke: 'Stroke', metabolic: 'Metabolik', sleep: 'Tidur'
+  };
+
+  async function loadStats() {
+    const db = firebase.firestore();
+
+    // Profile count
+    try {
+      const profileSnap = await db.collection('userHealthProfile').get();
+      document.getElementById('stat-profiles').textContent = profileSnap.size;
+      document.getElementById('stat-profiles-sub').textContent = 'profil kesehatan aktif';
+    } catch(e) {
+      document.getElementById('stat-profiles').textContent = '—';
+    }
+
+    // Risk scores via collectionGroup
+    try {
+      const scoresSnap = await db.collectionGroup('riskScores')
+        .orderBy('calculatedAt', 'desc').limit(50).get();
+
+      const scoreDocs = scoresSnap.docs;
+      document.getElementById('stat-scores').textContent = scoreDocs.length;
+      document.getElementById('stat-scores-sub').textContent = `${scoreDocs.length} perhitungan (50 terakhir)`;
+
+      // Count high-risk (overall >= 60)
+      const highRiskDocs = scoreDocs.filter(d => {
+        const s = d.data().scores || {};
+        const vals = Object.values(s).map(v => v.score || 0);
+        return vals.length && (vals.reduce((a, b) => a + b, 0) / vals.length) >= 60;
+      });
+      document.getElementById('stat-highrisk').textContent = highRiskDocs.length;
+      document.getElementById('stat-highrisk-sub').textContent =
+        highRiskDocs.length > 0 ? `perlu perhatian klinis` : 'tidak ada risiko tinggi';
+
+      renderDistribution(scoreDocs);
+      renderHighRisk(scoreDocs, db);
+    } catch(e) {
+      console.warn('riskScores collectionGroup query failed:', e);
+      document.getElementById('stat-scores').textContent = '—';
+      document.getElementById('stat-highrisk').textContent = '—';
+      document.getElementById('dist-tbody').innerHTML =
+        `<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:16px;font-size:0.75rem;">Belum ada data atau index belum tersedia.</td></tr>`;
+      document.getElementById('highrisk-tbody').innerHTML =
+        `<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:16px;font-size:0.75rem;">Belum ada data.</td></tr>`;
+    }
+  }
+
+  function renderDistribution(scoreDocs) {
+    const keys = ['diabetes', 'hypertension', 'heart', 'stroke', 'metabolic', 'sleep'];
+    const counts = {};
+    keys.forEach(k => { counts[k] = { low: 0, medium: 0, high: 0, total: 0 }; });
+
+    scoreDocs.forEach(d => {
+      const scores = d.data().scores || {};
+      keys.forEach(k => {
+        if (scores[k]) {
+          const cat = scores[k].category || (scores[k].score >= 60 ? 'high' : scores[k].score >= 30 ? 'medium' : 'low');
+          counts[k][cat]++;
+          counts[k].total++;
+        }
+      });
+    });
+
+    const tbody = document.getElementById('dist-tbody');
+    const totalDocs = scoreDocs.length || 1;
+    tbody.innerHTML = keys.map(k => {
+      const c = counts[k];
+      if (!c.total) return '';
+      const pctLow    = Math.round(c.low    / c.total * 100);
+      const pctMedium = Math.round(c.medium / c.total * 100);
+      const pctHigh   = Math.round(c.high   / c.total * 100);
+      return `<tr>
+        <td style="font-weight:600;">${DISEASE_LABELS[k]}</td>
+        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctLow}px;max-width:60px;background:#27AE60;"></div><span style="font-size:0.68rem;color:#27AE60;">${c.low}</span></div></td>
+        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctMedium}px;max-width:60px;background:#F2994A;"></div><span style="font-size:0.68rem;color:#F2994A;">${c.medium}</span></div></td>
+        <td><div class="dist-bar-wrap"><div class="dist-bar" style="width:${pctHigh}px;max-width:60px;background:#EB5757;"></div><span style="font-size:0.68rem;color:#EB5757;">${c.high}</span></div></td>
+      </tr>`;
+    }).filter(Boolean).join('') ||
+    `<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:16px;font-size:0.75rem;">Belum ada data cukup.</td></tr>`;
+  }
+
+  async function renderHighRisk(scoreDocs, db) {
+    const highRisk = [];
+    for (const doc of scoreDocs) {
+      const data = doc.data();
+      const scores = data.scores || {};
+      const vals = Object.values(scores).map(v => v.score || 0);
+      if (!vals.length) continue;
+      const avg = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
+      if (avg < 60) continue;
+      // Get top disease
+      const topDisease = Object.entries(scores).sort((a, b) => b[1].score - a[1].score)[0];
+      // Get userId from path: userHealthProfile/{userId}/riskScores/{docId}
+      const userId = doc.ref.parent.parent.id;
+      highRisk.push({ userId, avg, topDisease });
+    }
+
+    if (!highRisk.length) {
+      document.getElementById('highrisk-tbody').innerHTML =
+        `<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:20px;font-size:0.75rem;">Tidak ada pengguna dengan risiko tinggi saat ini.</td></tr>`;
+      return;
+    }
+
+    // Load names
+    const nameMap = {};
+    await Promise.all(highRisk.map(async h => {
+      try {
+        const u = await VDB.getUser(h.userId);
+        nameMap[h.userId] = u ? (u.name || 'Pengguna') : h.userId.substring(0, 8) + '…';
+      } catch(e) { nameMap[h.userId] = h.userId.substring(0, 8) + '…'; }
+    }));
+
+    document.getElementById('highrisk-tbody').innerHTML = highRisk
+      .sort((a, b) => b.avg - a.avg)
+      .map(h => {
+        const catColor = '#EB5757';
+        const disLabel = h.topDisease ? DISEASE_LABELS[h.topDisease[0]] || h.topDisease[0] : '—';
+        return `<tr class="high-risk-row">
+          <td>${nameMap[h.userId]}</td>
+          <td><span class="risk-pill high">${h.avg}%</span></td>
+          <td style="font-size:0.72rem;color:var(--text-secondary);">${disLabel}</td>
+        </tr>`;
+      }).join('');
+  }
+
+  // Load ML model metadata from /models/*/metadata.json
+  async function loadMLModelStatus() {
+    const ML_MODELS = [
+      { key: 'metabolic',    label: 'Sindrom Metabolik', color: '#9B51E0' },
+      { key: 'diabetes',     label: 'Diabetes T2',       color: '#2F80ED' },
+      { key: 'heart',        label: 'Jantung',           color: '#EB5757' },
+      { key: 'hypertension', label: 'Hipertensi',        color: '#F2994A' },
+      { key: 'stroke',       label: 'Stroke',            color: '#EB5757' },
+      { key: 'sleep',        label: 'Kualitas Tidur',    color: '#27AE60' },
+      { key: 'stress_wesad', label: 'Stres (WESAD GSR)', color: '#56CCF2' },
+    ];
+
+    let loadedCount = 0;
+    const metaResults = await Promise.allSettled(
+      ML_MODELS.map(m => fetch(`/models/${m.key}/metadata.json`).then(r => r.ok ? r.json() : null))
+    );
+
+    // Inject ML metadata into model cards (update border color + add accuracy badge)
+    ML_MODELS.forEach((m, i) => {
+      const meta = metaResults[i].status === 'fulfilled' ? metaResults[i].value : null;
+      if (meta) {
+        loadedCount++;
+        // Find model card by label and inject accuracy
+        const cards = document.querySelectorAll('.model-card');
+        cards.forEach(card => {
+          const labelEl = card.querySelector('[style*="font-size:0.9rem"]');
+          if (labelEl && labelEl.textContent.trim() === m.label) {
+            const badge = card.querySelector('.model-badge');
+            if (badge) {
+              badge.innerHTML = `<ion-icon name="checkmark-circle-outline"></ion-icon> ML v${meta.version} · ${(meta.accuracy * 100).toFixed(1)}%`;
+            }
+          }
+        });
+      }
+    });
+
+    const engineLabel = loadedCount === ML_MODELS.length
+      ? 'ML-Hybrid v2.0 ✅' : loadedCount > 0
+      ? `${loadedCount}/${ML_MODELS.length} model dimuat` : 'Rule-based v1.0';
+    document.getElementById('stat-models').textContent = loadedCount > 0 ? loadedCount : 7;
+    document.getElementById('stat-engine').textContent = engineLabel;
+    document.getElementById('stat-engine').className = 'sc-change ' + (loadedCount > 0 ? 'up' : '');
+  }
+
+  (async () => {
+    const { profile: _vp } = await VAuth.guard('admin', 1);
+    if (_vp && _vp.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+    const adminName = firebase.auth().currentUser?.displayName || 'Admin';
+    document.getElementById('admin-avatar').textContent = adminName.charAt(0).toUpperCase();
+    await Promise.all([loadStats(), loadMLModelStatus()]);
+  })();
+</script>
+</body>
+</html>

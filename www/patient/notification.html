@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Notifikasi</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #6FCF97; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
+    .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(39,174,96,0.5)); }
+
+    /* Unread styling */
+    .notif-item.unread {
+      background: rgba(39,174,96,0.06);
+      border-left: 3px solid var(--primary-dark);
+    }
+    .notif-item.unread .ni-title {
+      font-weight: 700;
+    }
+
+    /* Badge in header */
+    .badge-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #EB5757;
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      position: absolute;
+      top: -2px;
+      right: -2px;
+    }
+
+    /* Empty state */
+    .notif-empty {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+    }
+    .notif-empty ion-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      display: block;
+      opacity: 0.35;
+    }
+    .notif-empty p {
+      font-size: 0.82rem;
+    }
+
+    /* Notif list container */
+    #notifList {
+      margin-top: 16px;
+    }
+
+    /* Unread badge in header button */
+    .header-btn-wrap {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;color:#fff;">Notifikasi <span id="headerBadge" style="display:none;background:#EB5757;color:#fff;font-size:0.6rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle;"></span></div>
+    <button class="neu-icon-btn" onclick="markAllRead()" title="Tandai semua dibaca"><ion-icon name="checkmark-done-outline"></ion-icon></button>
+  </header>
+
+  <div class="section" style="padding-bottom:0">
+    <div class="neu-tabs" id="notifTabs">
+      <div class="neu-tab active" onclick="filterNotifs('all', this)">Semua</div>
+      <div class="neu-tab" onclick="filterNotifs('health', this)">Kesehatan</div>
+      <div class="neu-tab" onclick="filterNotifs('schedule', this)">Jadwal</div>
+      <div class="neu-tab" onclick="filterNotifs('system', this)">Sistem</div>
+    </div>
+  </div>
+
+  <div id="notifList">
+    <div class="notif-empty">
+      <ion-icon name="notifications-off-outline"></ion-icon>
+      <p>Memuat notifikasi...</p>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item" href="monitoring.html">
+      <ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span>
+    </a>
+    <a class="nav-item" href="consultation.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span>
+    </a>
+    <a class="nav-item" href="herbal.html">
+      <ion-icon name="leaf-outline"></ion-icon><span>Jamu</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/chat-manager.js"></script>
+<script src="../shared/webrtc-manager.js"></script>
+<script>
+  let allNotifs = [];
+  let currentFilter = 'all';
+  let currentUserId = null;
+
+  // Icon map for notification types
+  const TYPE_ICON = {
+    health:   { icon: 'alert-circle-outline',    color: 'var(--danger)',       bg: 'var(--danger-bg)' },
+    ai:       { icon: 'sparkles-outline',         color: 'var(--accent)',       bg: 'var(--accent-bg)' },
+    schedule: { icon: 'calendar-outline',         color: 'var(--info)',         bg: 'var(--info-bg)' },
+    herbal:   { icon: 'leaf-outline',             color: 'var(--primary-dark)', bg: 'var(--primary-bg)' },
+    system:   { icon: 'information-circle-outline', color: 'var(--text-tertiary)', bg: 'rgba(107,123,141,0.1)' },
+    default:  { icon: 'notifications-outline',   color: 'var(--primary-dark)', bg: 'var(--primary-bg)' }
+  };
+
+  function getTypeIcon(type) {
+    return TYPE_ICON[type] || TYPE_ICON.default;
+  }
+
+  function relativeTime(date) {
+    if (!date) return '';
+    const ts = date.toDate ? date.toDate() : (date instanceof Date ? date : new Date(date));
+    const diff = Math.floor((Date.now() - ts) / 1000);
+    if (diff < 60)   return 'Baru saja';
+    if (diff < 3600) return Math.floor(diff / 60) + ' menit lalu';
+    if (diff < 86400) return Math.floor(diff / 3600) + ' jam lalu';
+    const days = Math.floor(diff / 86400);
+    if (days < 7)   return days + ' hari lalu';
+    return ts.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+  }
+
+  function filterCategoryMatch(notif, filter) {
+    if (filter === 'all') return true;
+    // Map filter tabs to types stored in Firestore
+    const filterMap = {
+      health:   ['health', 'ai', 'vital', 'anomaly'],
+      schedule: ['schedule', 'reminder', 'appointment'],
+      system:   ['system', 'info', 'update']
+    };
+    const types = filterMap[filter] || [filter];
+    return types.includes(notif.type);
+  }
+
+  function renderNotifications(notifs) {
+    allNotifs = notifs;
+    displayFiltered();
+  }
+
+  function displayFiltered() {
+    const listEl = document.getElementById('notifList');
+    const filtered = allNotifs.filter(n => filterCategoryMatch(n, currentFilter));
+    const unreadCount = allNotifs.filter(n => !n.read).length;
+
+    // Update header badge
+    const badge = document.getElementById('headerBadge');
+    if (unreadCount > 0) {
+      badge.style.display = 'inline';
+      badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+    } else {
+      badge.style.display = 'none';
+    }
+
+    if (filtered.length === 0) {
+      listEl.innerHTML = `
+        <div class="notif-empty">
+          <ion-icon name="notifications-off-outline"></ion-icon>
+          <p>Tidak ada notifikasi</p>
+        </div>`;
+      return;
+    }
+
+    let html = '';
+    filtered.forEach(notif => {
+      const { icon, color, bg } = getTypeIcon(notif.type);
+      const timeStr = relativeTime(notif.timestamp);
+      const unreadClass = notif.read ? '' : ' unread';
+      html += `
+        <div class="notif-item${unreadClass}" data-id="${notif.id}" onclick="handleNotifClick(this, '${notif.id}')">
+          <div class="ni-icon" style="color:${color};background:${bg}">
+            <ion-icon name="${icon}"></ion-icon>
+          </div>
+          <div class="ni-content">
+            <div class="ni-title">${escapeHtml(notif.title || 'Notifikasi')}</div>
+            <div class="ni-text">${escapeHtml(notif.body || '')}</div>
+            <div class="ni-time">${timeStr}</div>
+          </div>
+        </div>`;
+    });
+    listEl.innerHTML = html;
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;');
+  }
+
+  async function handleNotifClick(el, notifId) {
+    if (el.classList.contains('unread') && currentUserId) {
+      el.classList.remove('unread');
+      // Mark as read locally too
+      const n = allNotifs.find(x => x.id === notifId);
+      if (n) n.read = true;
+      // Update badge
+      const unreadCount = allNotifs.filter(x => !x.read).length;
+      const badge = document.getElementById('headerBadge');
+      if (unreadCount > 0) {
+        badge.style.display = 'inline';
+        badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+      } else {
+        badge.style.display = 'none';
+      }
+      try {
+        await VDB.markNotificationRead(currentUserId, notifId);
+      } catch (e) {
+        // non-blocking
+      }
+    }
+  }
+
+  function filterNotifs(filter, tabEl) {
+    currentFilter = filter;
+    // Update active tab
+    document.querySelectorAll('#notifTabs .neu-tab').forEach(t => t.classList.remove('active'));
+    if (tabEl) tabEl.classList.add('active');
+    displayFiltered();
+  }
+
+  async function markAllRead() {
+    if (!currentUserId) return;
+    const unread = allNotifs.filter(n => !n.read);
+    if (unread.length === 0) {
+      showToast('Semua sudah dibaca', 'info');
+      return;
+    }
+    // Mark all locally
+    allNotifs.forEach(n => { n.read = true; });
+    displayFiltered();
+    // Mark all in Firestore
+    try {
+      await Promise.all(unread.map(n => VDB.markNotificationRead(currentUserId, n.id)));
+      showToast('Semua notifikasi ditandai dibaca', 'success');
+    } catch (e) {
+      showToast('Gagal memperbarui status baca', 'error');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const { user } = await VAuth.guard('patient', 1);
+    currentUserId = user.uid;
+
+    // Subscribe real-time notifications
+    VDB.subscribeNotifications(user.uid, renderNotifications);
+  });
+</script>
+
+</body>
+</html>

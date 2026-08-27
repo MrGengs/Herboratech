@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Kontak</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background: var(--bg); overflow-x: hidden; }
+
+    /* NAVBAR */
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(7,26,15,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(111,207,151,0.1); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; height: 68px; display: flex; align-items: center; gap: 36px; }
+    .nav-logo { font-size: 1.45rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-decoration: none; }
+    .nav-logo span { color: #6FCF97; }
+    .nav-links { display: flex; gap: 28px; flex: 1; }
+    .nav-links a { font-size: 0.875rem; color: rgba(255,255,255,0.65); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: #6FCF97; }
+    .nav-cta { display: inline-flex; align-items: center; gap: 7px; background: linear-gradient(135deg,#27AE60,#6FCF97); color: #fff; font-size: 0.875rem; font-weight: 700; padding: 10px 24px; border-radius: 100px; text-decoration: none; box-shadow: 0 4px 20px rgba(111,207,151,0.3); transition: transform 0.2s; }
+    .nav-cta:hover { transform: translateY(-2px); }
+    @media (max-width: 800px) { .nav-links { display: none; } }
+
+    /* HERO */
+    .page-hero { padding: 140px 24px 80px; background: linear-gradient(160deg,#040E07 0%,#071A0F 30%,#0D2B1A 55%,#1A5C38 85%,#27AE60 100%); position: relative; overflow: hidden; text-align: center; }
+    .page-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; }
+    .hero-label { display:inline-block; font-size:0.72rem; font-weight:700; color:#6FCF97; letter-spacing:0.12em; text-transform:uppercase; border:1px solid rgba(111,207,151,0.3); background:rgba(111,207,151,0.1); padding:5px 14px; border-radius:100px; margin-bottom:18px; }
+    .page-hero h1 { font-size:clamp(2rem,5vw,3.5rem); font-weight:800; color:#fff; letter-spacing:-2px; line-height:1.1; margin-bottom:16px; }
+    .page-hero p { font-size:1rem; color:rgba(255,255,255,0.55); max-width:520px; margin:0 auto; line-height:1.75; }
+
+    /* WAVE */
+    .wave { line-height:0; } .wave svg { display:block; width:100%; }
+
+    /* LAYOUT */
+    .container { max-width:1100px; margin:0 auto; padding:0 24px; }
+    .section-light { background:var(--bg); padding:80px 24px; }
+    .section-dark { background:#071A0F; padding:80px 24px; position:relative; overflow:hidden; }
+    .section-dark::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,0.025) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; }
+
+    .section-tag { font-size:0.72rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:12px; }
+    .tag-green { color: var(--primary-dark); }
+
+    /* CONTACT SPLIT */
+    .contact-split { display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:start; }
+    @media (max-width:860px) { .contact-split { grid-template-columns:1fr; gap:48px; } }
+
+    /* CONTACT FORM */
+    .contact-form-card { background:var(--bg); border-radius:24px; box-shadow:var(--shadow-out); padding:40px; }
+    .form-title { font-size:1.2rem; font-weight:700; color:var(--text-primary); margin-bottom:6px; }
+    .form-sub { font-size:0.85rem; color:var(--text-secondary); margin-bottom:28px; }
+    .form-group { margin-bottom:20px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+    @media (max-width:500px) { .form-row { grid-template-columns:1fr; } }
+    .form-label { display:block; font-size:0.78rem; font-weight:600; color:var(--text-secondary); margin-bottom:8px; letter-spacing:0.03em; }
+    .neu-input { width:100%; background:var(--bg); border:none; border-radius:12px; padding:13px 16px; font-size:0.875rem; color:var(--text-primary); box-shadow:var(--shadow-in); font-family:'Poppins',sans-serif; outline:none; transition:box-shadow 0.2s; }
+    .neu-input:focus { box-shadow:var(--shadow-in), 0 0 0 2px rgba(111,207,151,0.3); }
+    .neu-input::placeholder { color:var(--text-secondary); opacity:0.6; }
+    textarea.neu-input { resize:vertical; min-height:120px; }
+    select.neu-input { cursor:pointer; }
+
+    .form-topic { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+    .topic-btn { padding:6px 14px; border-radius:100px; font-size:0.75rem; font-weight:600; border:1px solid rgba(39,174,96,0.3); color:var(--text-secondary); background:var(--bg); cursor:pointer; box-shadow:var(--shadow-out); transition:all 0.2s; }
+    .topic-btn.selected, .topic-btn:hover { background:linear-gradient(135deg,#27AE60,#6FCF97); color:#fff; border-color:transparent; box-shadow:0 4px 16px rgba(111,207,151,0.3); }
+
+    .btn-submit { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#27AE60,#6FCF97); color:#fff; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; font-family:'Poppins',sans-serif; box-shadow:0 6px 24px rgba(111,207,151,0.35); transition:transform 0.2s,box-shadow 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:8px; }
+    .btn-submit:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(111,207,151,0.45); }
+    .btn-submit:active { transform:translateY(0); }
+
+    /* CONTACT INFO */
+    .info-stack { display:flex; flex-direction:column; gap:20px; }
+    .info-card { background:var(--bg); border-radius:18px; box-shadow:var(--shadow-out); padding:22px; display:flex; align-items:start; gap:16px; transition:transform 0.2s; }
+    .info-card:hover { transform:translateX(4px); }
+    .info-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+    .ii-green { background:rgba(39,174,96,0.1); }
+    .ii-blue { background:rgba(29,93,181,0.1); }
+    .ii-orange { background:rgba(242,153,74,0.1); }
+    .ii-purple { background:rgba(74,67,204,0.1); }
+    .info-label { font-size:0.72rem; font-weight:700; color:var(--primary-dark); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:3px; }
+    .info-value { font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:2px; }
+    .info-sub { font-size:0.8rem; color:var(--text-secondary); }
+
+    /* SOCIAL LINKS */
+    .social-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+    .social-btn { display:flex; align-items:center; gap:8px; padding:10px 18px; border-radius:12px; background:var(--bg); box-shadow:var(--shadow-out); font-size:0.82rem; font-weight:600; color:var(--text-primary); text-decoration:none; transition:transform 0.2s,box-shadow 0.2s; }
+    .social-btn:hover { transform:translateY(-2px); box-shadow:var(--shadow-out), 0 4px 16px rgba(111,207,151,0.2); color:var(--primary-dark); }
+    .social-btn ion-icon { font-size:1.1rem; }
+
+    /* MAP PLACEHOLDER */
+    .map-placeholder { background:linear-gradient(135deg,#0D2B1A,#1A5C38); border-radius:20px; height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; margin-top:20px; border:1px solid rgba(111,207,151,0.15); }
+    .map-placeholder p { font-size:0.82rem; color:rgba(255,255,255,0.5); }
+
+    /* FAQ DARK SECTION */
+    .faq-list { display:flex; flex-direction:column; gap:12px; margin-top:48px; }
+    .faq-item { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:16px; overflow:hidden; cursor:pointer; transition:border-color 0.2s; }
+    .faq-item:hover { border-color:rgba(111,207,151,0.2); }
+    .faq-q { padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .faq-q span { font-size:0.9rem; font-weight:600; color:#fff; }
+    .faq-chevron { font-size:1rem; color:rgba(255,255,255,0.4); transition:transform 0.3s; }
+    .faq-item.open .faq-chevron { transform:rotate(180deg); }
+    .faq-a { padding:0 24px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s; }
+    .faq-item.open .faq-a { max-height:200px; padding:0 24px 20px; }
+    .faq-a p { font-size:0.85rem; color:rgba(255,255,255,0.5); line-height:1.7; }
+
+    /* CTA */
+    .cta-section { background:linear-gradient(135deg,#040E07,#0D2B1A); padding:80px 24px; text-align:center; }
+    .cta-section h2 { font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; color:#fff; letter-spacing:-1.5px; margin-bottom:16px; }
+    .cta-section p { font-size:0.95rem; color:rgba(255,255,255,0.5); max-width:480px; margin:0 auto 36px; line-height:1.75; }
+    .btn-primary { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#27AE60,#6FCF97); color:#fff; font-size:1rem; font-weight:700; padding:14px 36px; border-radius:100px; text-decoration:none; box-shadow:0 8px 32px rgba(111,207,151,0.35); transition:transform 0.2s,box-shadow 0.2s; }
+    .btn-primary:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(111,207,151,0.45); }
+
+    /* FOOTER */
+    .site-footer { background:#040E07; border-top:1px solid rgba(111,207,151,0.08); padding:32px 24px; }
+    .footer-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:32px; flex-wrap:wrap; }
+    .f-logo { font-size:1.2rem; font-weight:800; color:#fff; } .f-logo span { color:#6FCF97; }
+    .f-links { display:flex; gap:20px; flex:1; flex-wrap:wrap; }
+    .f-links a { font-size:0.82rem; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s; }
+    .f-links a:hover { color:#6FCF97; }
+    .f-copy { font-size:0.78rem; color:rgba(255,255,255,0.25); margin-left:auto; }
+
+    /* ANIMATIONS */
+    [data-animate] { opacity:0; transform:translateY(24px); transition:opacity 0.6s ease, transform 0.6s ease; }
+    [data-animate].visible { opacity:1; transform:translateY(0); }
+
+    /* SUCCESS STATE */
+    .form-success { display:none; text-align:center; padding:40px 20px; }
+    .form-success.show { display:block; }
+    .success-icon { font-size:3rem; margin-bottom:16px; }
+    .form-success h3 { font-size:1.2rem; font-weight:700; color:var(--text-primary); margin-bottom:8px; }
+    .form-success p { font-size:0.87rem; color:var(--text-secondary); }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Herbora<span>Tech</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Beranda</a>
+      <a href="about.html">Tentang</a>
+      <a href="features.html">Fitur</a>
+      <a href="how-it-works.html">Cara Kerja</a>
+      <a href="contact.html" class="active">Kontak</a>
+    </div>
+    <a href="../auth/login.html" class="nav-cta"><ion-icon name="rocket-outline"></ion-icon> Try HerboraTech</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-label" data-animate="up">Hubungi Kami</div>
+  <h1 data-animate="up" data-delay="80">Ada Pertanyaan?<br>Kami Siap Membantu</h1>
+  <p data-animate="up" data-delay="160">Tim HerboraTech siap menjawab pertanyaan Anda — baik soal produk, kemitraan, atau menjadi dokter mitra kami.</p>
+</section>
+
+<!-- WAVE -->
+<div class="wave"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,36 C240,72 480,0 720,36 C960,72 1200,4 1440,40 L1440,72 L0,72 Z" fill="#E4EBF5"/></svg></div>
+
+<!-- CONTACT MAIN (light) -->
+<section class="section-light">
+  <div class="container">
+    <div class="contact-split">
+
+      <!-- FORM -->
+      <div data-animate="up">
+        <div class="contact-form-card">
+          <div id="formContent">
+            <p class="form-title">Kirim Pesan</p>
+            <p class="form-sub">Kami akan merespons dalam 1×24 jam kerja</p>
+
+            <div class="form-group">
+              <label class="form-label">Topik</label>
+              <div class="form-topic">
+                <button class="topic-btn selected" onclick="selectTopic(this)">Informasi Produk</button>
+                <button class="topic-btn" onclick="selectTopic(this)">Menjadi Dokter Mitra</button>
+                <button class="topic-btn" onclick="selectTopic(this)">Kerjasama / Partnership</button>
+                <button class="topic-btn" onclick="selectTopic(this)">Investasi</button>
+                <button class="topic-btn" onclick="selectTopic(this)">Lainnya</button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label class="form-label">Nama Lengkap *</label>
+                <input type="text" class="neu-input" placeholder="Ahmad Fauzi">
+              </div>
+              <div>
+                <label class="form-label">Email *</label>
+                <input type="email" class="neu-input" placeholder="email@example.com">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Nomor WhatsApp (opsional)</label>
+              <input type="tel" class="neu-input" placeholder="+62 812 3456 7890">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Pesan *</label>
+              <textarea class="neu-input" placeholder="Ceritakan lebih lanjut tentang pertanyaan Anda..."></textarea>
+            </div>
+
+            <button class="btn-submit" onclick="submitForm()">
+              <ion-icon name="send-outline"></ion-icon> Kirim Pesan
+            </button>
+          </div>
+
+          <div class="form-success" id="formSuccess">
+            <div class="success-icon">✅</div>
+            <h3>Pesan Terkirim!</h3>
+            <p>Terima kasih telah menghubungi kami. Tim HerboraTech akan membalas pesan Anda dalam 1×24 jam kerja.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- INFO -->
+      <div data-animate="up" data-delay="140">
+        <p class="section-tag tag-green" style="margin-bottom:8px">Informasi Kontak</p>
+        <h2 style="font-size:1.6rem;font-weight:800;color:var(--text-primary);letter-spacing:-1px;margin-bottom:32px">Cara Lain<br>Menghubungi Kami</h2>
+
+        <div class="info-stack">
+          <div class="info-card">
+            <div class="info-icon ii-green">📧</div>
+            <div>
+              <div class="info-label">Email</div>
+              <div class="info-value">hello@herboratech.id</div>
+              <div class="info-sub">Respons dalam 1×24 jam kerja</div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-icon ii-green">💬</div>
+            <div>
+              <div class="info-label">WhatsApp</div>
+              <div class="info-value">+62 812-3456-7890</div>
+              <div class="info-sub">Senin–Jumat, 08.00–17.00 WIB</div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-icon ii-blue">🏢</div>
+            <div>
+              <div class="info-label">Kantor</div>
+              <div class="info-value">Jl. Teknologi No. 42</div>
+              <div class="info-sub">Jakarta Selatan, DKI Jakarta 12345</div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-icon ii-orange">🕐</div>
+            <div>
+              <div class="info-label">Jam Operasional</div>
+              <div class="info-value">Senin–Jumat: 08.00–17.00</div>
+              <div class="info-sub">Sabtu: 09.00–13.00 WIB</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOCIAL -->
+        <p style="font-size:0.78rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.1em;margin:28px 0 12px">Ikuti Kami</p>
+        <div class="social-row">
+          <a href="#" class="social-btn"><ion-icon name="logo-instagram"></ion-icon> Instagram</a>
+          <a href="#" class="social-btn"><ion-icon name="logo-twitter"></ion-icon> Twitter</a>
+          <a href="#" class="social-btn"><ion-icon name="logo-linkedin"></ion-icon> LinkedIn</a>
+          <a href="#" class="social-btn"><ion-icon name="logo-youtube"></ion-icon> YouTube</a>
+        </div>
+
+        <!-- MAP placeholder -->
+        <div class="map-placeholder">
+          <div style="font-size:2rem">📍</div>
+          <p>Jakarta Selatan, Indonesia</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WAVE to dark -->
+<div class="wave"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,20 C360,72 720,0 1080,50 C1260,72 1380,20 1440,36 L1440,72 L0,72 Z" fill="#071A0F"/></svg></div>
+
+<!-- FAQ (dark) -->
+<section class="section-dark">
+  <div class="container">
+    <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#6FCF97;margin-bottom:12px" data-animate="up">FAQ</p>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;letter-spacing:-1px;color:#fff;margin-bottom:8px" data-animate="up" data-delay="80">Pertanyaan yang<br>Sering Diajukan</h2>
+    <p style="font-size:0.93rem;color:rgba(255,255,255,0.5);max-width:420px;margin-bottom:0" data-animate="up" data-delay="140">Tidak menemukan jawaban yang dicari? Hubungi kami langsung.</p>
+
+    <div class="faq-list" data-animate="up" data-delay="160">
+      <div class="faq-item open">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Apakah HerboraTech tersedia di seluruh Indonesia?</span>
+          <ion-icon name="chevron-down-outline" class="faq-chevron"></ion-icon>
+        </div>
+        <div class="faq-a"><p>Ya, layanan konsultasi dokter dan monitoring digital tersedia di seluruh Indonesia. Untuk perangkat sensor wearable, saat ini pengiriman tersedia di Jawa dan Bali dengan rencana ekspansi ke seluruh nusantara pada Q3 2026.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Berapa biaya berlangganan HerboraTech?</span>
+          <ion-icon name="chevron-down-outline" class="faq-chevron"></ion-icon>
+        </div>
+        <div class="faq-a"><p>HerboraTech menawarkan paket Dasar (gratis) untuk monitoring mandiri, paket Pro (Rp 99.000/bulan) dengan akses konsultasi dokter tak terbatas, dan paket Premium (Rp 199.000/bulan) termasuk perangkat wearable. Coba gratis 3 bulan dengan mendaftar sekarang.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Bagaimana cara menjadi dokter mitra HerboraTech?</span>
+          <ion-icon name="chevron-down-outline" class="faq-chevron"></ion-icon>
+        </div>
+        <div class="faq-a"><p>Daftar melalui portal dokter, unggah STR dan SIP aktif, dan tim verifikasi kami akan memproses pendaftaran dalam 3–5 hari kerja. Dokter mitra mendapat akses dashboard lengkap, sistem jadwal otomatis, dan pembayaran transparan.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Seberapa akurat sensor wearable HerboraTech?</span>
+          <ion-icon name="chevron-down-outline" class="faq-chevron"></ion-icon>
+        </div>
+        <div class="faq-a"><p>Sensor kami menggunakan komponen medical-grade: MAX30102 dengan akurasi SpO2 ±1% dan HR ±1 BPM, MLX90614 dengan akurasi suhu ±0.5°C, dan MPU6050 untuk IMU 6-DOF. Data dikalibrasi otomatis oleh firmware sebelum dikirim ke aplikasi.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE to CTA -->
+<div class="wave" style="background:#071A0F"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,36 C480,72 960,0 1440,36 L1440,72 L0,72 Z" fill="#040E07"/></svg></div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2 data-animate="up">Mulai Perjalanan Sehat Anda</h2>
+    <p data-animate="up" data-delay="80">Bergabung dengan ribuan pengguna yang sudah merasakan manfaat HerboraTech. Daftar sekarang, gratis.</p>
+    <a href="../auth/login.html" class="btn-primary" data-animate="up" data-delay="160"><ion-icon name="rocket-outline"></ion-icon> Try HerboraTech</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="f-logo">Herbora<span>Tech</span></div>
+    <div class="f-links">
+      <a href="../index.html">Beranda</a>
+      <a href="about.html">Tentang</a>
+      <a href="features.html">Fitur</a>
+      <a href="how-it-works.html">Cara Kerja</a>
+    </div>
+    <span class="f-copy">© 2026 HerboraTech</span>
+  </div>
+</footer>
+
+<script src="../shared/app.js"></script>
+<script>
+  // Scroll animations
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { const d = e.target.dataset.delay||0; setTimeout(()=>e.target.classList.add('visible'),+d); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('[data-animate]').forEach(el => obs.observe(el));
+
+  // Topic selection
+  function selectTopic(btn) {
+    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  // Form submit (mock)
+  function submitForm() {
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  }
+
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

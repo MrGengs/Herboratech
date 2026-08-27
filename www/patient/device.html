@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Perangkat</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    body { background: var(--bg); }
+    .mobile-frame { max-width: 480px; margin: 0 auto; }
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); max-width: 480px; }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #6FCF97; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
+    .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(39,174,96,0.5)); }
+
+    .section { padding: 20px; margin-bottom: 8px; }
+    .section-header { margin-bottom: 12px; }
+    .mt-16 { margin-top: 16px; }
+    .mt-24 { margin-top: 24px; }
+
+    /* BLE Scanner Styles */
+    .ble-status-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ble-status-card.connected {
+      border-left: 4px solid var(--primary-dark);
+    }
+
+    .ble-status-card.disconnected {
+      border-left: 4px solid var(--danger);
+    }
+
+    .ble-status-card.scanning {
+      border-left: 4px solid var(--warning);
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .status-indicator.connected {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .status-indicator.disconnected {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+
+    .status-indicator.scanning {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .status-indicator.connected .status-dot {
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+
+    .status-indicator.scanning .status-dot {
+      animation: pulse-dot 0.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    /* Scan Button */
+    .scan-btn {
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 16px;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .scan-btn.scanning {
+      background: linear-gradient(135deg, var(--warning), #FFB347);
+      color: white;
+    }
+
+    .scan-btn ion-icon {
+      font-size: 1.4rem;
+    }
+
+    .scan-btn.scanning ion-icon {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Device List */
+    .device-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .device-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+    }
+
+    .device-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-out);
+    }
+
+    .device-item.selected {
+      border: 2px solid var(--primary-dark);
+      background: var(--primary-bg);
+    }
+
+    .device-item.connected {
+      border: 2px solid var(--primary-dark);
+      background: linear-gradient(135deg, rgba(39,174,96,0.08), rgba(111,207,151,0.05));
+    }
+
+    .device-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .device-icon.connected {
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      box-shadow: 0 4px 12px rgba(39,174,96,0.3);
+    }
+
+    .device-icon.disconnected {
+      background: var(--shadow-dark);
+    }
+
+    .device-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .device-name {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .device-id {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-family: 'SF Mono', Monaco, monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .device-meta {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .rssi-indicator {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 16px;
+    }
+
+    .rssi-bar {
+      width: 4px;
+      background: var(--shadow-dark);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .rssi-bar.active {
+      background: var(--primary-dark);
+    }
+
+    .rssi-bar:nth-child(1) { height: 4px; }
+    .rssi-bar:nth-child(2) { height: 7px; }
+    .rssi-bar:nth-child(3) { height: 10px; }
+    .rssi-bar:nth-child(4) { height: 14px; }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px 16px;
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
+
+    .empty-state-text {
+      font-size: 0.88rem;
+      color: var(--text-tertiary);
+      margin-bottom: 4px;
+    }
+
+    .empty-state-hint {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Data Display */
+    .data-display {
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow-in);
+      padding: 14px;
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+      font-size: 0.78rem;
+      min-height: 100px;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    .data-display:empty::before {
+      content: 'Belum ada data...';
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .data-entry {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--shadow-dark);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .data-entry:last-child {
+      border-bottom: none;
+    }
+
+    .data-timestamp {
+      font-size: 0.65rem;
+      color: var(--info);
+    }
+
+    .data-value {
+      color: var(--primary-dark);
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    /* Log Area */
+    .log-area {
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow-in);
+      padding: 12px;
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 0.7rem;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+
+    .log-entry {
+      padding: 4px 0;
+      display: flex;
+      gap: 8px;
+      line-height: 1.4;
+    }
+
+    .log-time {
+      color: var(--text-muted);
+      flex-shrink: 0;
+      font-size: 0.65rem;
+    }
+
+    .log-message {
+      color: var(--text-secondary);
+    }
+
+    .log-entry.info .log-message { color: var(--info); }
+    .log-entry.success .log-message { color: var(--success); }
+    .log-entry.error .log-message { color: var(--danger); }
+    .log-entry.warning .log-message { color: var(--warning); }
+
+    /* Action Buttons */
+    .action-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .action-row .neu-btn {
+      padding: 12px 16px;
+      font-size: 0.82rem;
+    }
+
+    /* Toggle Row */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(200,208,231,0.3);
+    }
+
+    .toggle-row:last-child {
+      border-bottom: none;
+    }
+
+    .toggle-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .toggle-hint {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Browser Warning */
+    .browser-warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .browser-warning ion-icon {
+      font-size: 1.4rem;
+      color: var(--warning);
+      flex-shrink: 0;
+    }
+
+    .browser-warning-text {
+      flex: 1;
+    }
+
+    .browser-warning-title {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--warning);
+      margin-bottom: 2px;
+    }
+
+    .browser-warning-desc {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+    }
+
+    /* Live Vitals Preview */
+    .vitals-preview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .vital-mini {
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow-out-sm);
+      padding: 12px;
+      text-align: center;
+    }
+
+    .vital-mini-icon {
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+
+    .vital-mini-value {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .vital-mini-label {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Connection Card Actions */
+    .connection-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .connection-actions .neu-btn {
+      flex: 1;
+      justify-content: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .section { padding: 16px; }
+      .mobile-frame { max-width: 100%; }
+      .vitals-preview { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;">Perangkat Saya</div>
+    <button class="neu-icon-btn" id="refreshBtn" onclick="refreshStatus()"><ion-icon name="refresh-outline"></ion-icon></button>
+  </header>
+
+  <!-- Browser Warning -->
+  <div class="section" id="browserWarningSection" style="display:none;padding-bottom:0;">
+    <div class="browser-warning">
+      <ion-icon name="warning-outline"></ion-icon>
+      <div class="browser-warning-text">
+        <div class="browser-warning-title">Browser Tidak Didukung</div>
+        <div class="browser-warning-desc">Web Bluetooth API memerlukan Chrome atau Edge pada HTTPS atau localhost.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connection Status -->
+  <div class="section" style="padding-bottom:0;">
+    <div class="section-header" data-animate="up"><span class="section-title">Status Koneksi</span></div>
+    <div class="neu-card ble-status-card disconnected" id="statusCard" data-animate="up" data-delay="100">
+      <div style="display:flex;gap:14px;align-items:center;">
+        <div id="deviceIconMain" class="device-icon disconnected">⌚</div>
+        <div style="flex:1;">
+          <div id="deviceNameMain" style="font-weight:700;font-size:0.95rem;">Tidak Terhubung</div>
+          <div id="deviceIdMain" style="font-size:0.7rem;color:var(--text-tertiary);margin-top:2px;">Tekan "Scan" untuk mencari perangkat</div>
+        </div>
+        <span id="statusBadge" class="status-indicator disconnected">
+          <span class="status-dot"></span>
+          <span id="statusText">Offline</span>
+        </span>
+      </div>
+
+      <!-- Live Vitals Preview (shown when connected) -->
+      <div id="vitalsPreview" class="vitals-preview" style="display:none;">
+        <div class="vital-mini">
+          <div class="vital-mini-icon">❤️</div>
+          <div class="vital-mini-value" id="liveHR">--</div>
+          <div class="vital-mini-label">BPM</div>
+        </div>
+        <div class="vital-mini">
+          <div class="vital-mini-icon">🩸</div>
+          <div class="vital-mini-value" id="liveSpO2">--</div>
+          <div class="vital-mini-label">SpO2 %</div>
+        </div>
+        <div class="vital-mini">
+          <div class="vital-mini-icon">🌡️</div>
+          <div class="vital-mini-value" id="liveTemp">--</div>
+          <div class="vital-mini-label">°C</div>
+        </div>
+      </div>
+
+      <!-- Connection Actions -->
+      <div id="connectionActions" class="connection-actions" style="display:none;">
+        <button class="neu-btn neu-btn-danger" onclick="disconnectDevice()">
+          <ion-icon name="close-circle-outline"></ion-icon> Putuskan
+        </button>
+        <button class="neu-btn" onclick="readCharacteristic()">
+          <ion-icon name="download-outline"></ion-icon> Baca Data
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scan Section -->
+  <div class="section" style="padding-bottom:0;">
+    <button id="scanBtn" class="neu-btn-primary scan-btn" onclick="startScan()">
+      <ion-icon name="bluetooth-outline"></ion-icon>
+      <span id="scanBtnText">Scan Perangkat HerboraTech</span>
+    </button>
+
+    <div style="margin-top:14px;">
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Auto-reconnect</div>
+          <div class="toggle-hint">Hubungkan ulang otomatis jika terputus</div>
+        </div>
+        <div class="neu-switch">
+          <input type="checkbox" id="autoReconnect" checked>
+          <label for="autoReconnect"></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Discovered Devices -->
+  <div class="section" style="padding-bottom:0;">
+    <div class="section-header"><span class="section-title">Perangkat Ditemukan</span><span id="deviceCount" style="font-size:0.72rem;color:var(--text-muted);">0</span></div>
+    <div id="deviceList" class="device-list">
+      <div class="empty-state">
+        <div class="empty-state-icon">📡</div>
+        <div class="empty-state-text">Belum ada perangkat</div>
+        <div class="empty-state-hint">Tekan "Scan" untuk mencari HerboraTech Watch</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Received Data -->
+  <div class="section" style="padding-bottom:0;">
+    <div class="section-header">
+      <span class="section-title">📊 Data Diterima</span>
+      <button class="neu-btn neu-btn-sm" onclick="clearDataDisplay()" style="padding:4px 10px;font-size:0.68rem;">Clear</button>
+    </div>
+    <div id="dataDisplay" class="data-display"></div>
+  </div>
+
+  <!-- Event Log -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">📋 Log Aktivitas</span>
+      <button class="neu-btn neu-btn-sm" onclick="clearLog()" style="padding:4px 10px;font-size:0.68rem;">Clear</button>
+    </div>
+    <div id="logArea" class="log-area"></div>
+  </div>
+
+  <!-- Sensor Configuration (shown when connected) -->
+  <div class="section" id="sensorConfigSection" style="display:none;">
+    <div class="section-header"><span class="section-title">⚙️ Konfigurasi Sensor</span></div>
+    <div style="display:flex;flex-direction:column;gap:8px;" data-animate="up">
+      <div class="neu-card-sm" style="display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="font-weight:600;font-size:0.82rem;">MAX30102 (HR/PPG)</div><div style="font-size:0.65rem;color:var(--text-muted);">Sampling rate: 100Hz</div></div>
+        <div class="neu-switch"><input type="checkbox" id="s1" checked><label for="s1"></label></div>
+      </div>
+      <div class="neu-card-sm" style="display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="font-weight:600;font-size:0.82rem;">MPU6050 (IMU)</div><div style="font-size:0.65rem;color:var(--text-muted);">Sampling rate: 50Hz</div></div>
+        <div class="neu-switch"><input type="checkbox" id="s2" checked><label for="s2"></label></div>
+      </div>
+      <div class="neu-card-sm" style="display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="font-weight:600;font-size:0.82rem;">MLX90614 (Suhu)</div><div style="font-size:0.65rem;color:var(--text-muted);">Sampling rate: 1Hz</div></div>
+        <div class="neu-switch"><input type="checkbox" id="s3" checked><label for="s3"></label></div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item" href="monitoring.html">
+      <ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span>
+    </a>
+    <a class="nav-item" href="consultation.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span>
+    </a>
+    <a class="nav-item" href="herbal.html">
+      <ion-icon name="leaf-outline"></ion-icon><span>Jamu</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script src="../shared/ble-manager.js"></script>
+<script>
+// State
+let isConnected = false;
+let isScanning = false;
+let _unsubBLE = null;
+
+// DOM Elements
+const scanBtn = document.getElementById('scanBtn');
+const scanBtnText = document.getElementById('scanBtnText');
+const statusCard = document.getElementById('statusCard');
+const statusBadge = document.getElementById('statusBadge');
+const statusText = document.getElementById('statusText');
+const deviceIconMain = document.getElementById('deviceIconMain');
+const deviceNameMain = document.getElementById('deviceNameMain');
+const deviceIdMain = document.getElementById('deviceIdMain');
+const deviceList = document.getElementById('deviceList');
+const deviceCount = document.getElementById('deviceCount');
+const dataDisplay = document.getElementById('dataDisplay');
+const logArea = document.getElementById('logArea');
+const vitalsPreview = document.getElementById('vitalsPreview');
+const connectionActions = document.getElementById('connectionActions');
+const sensorConfigSection = document.getElementById('sensorConfigSection');
+const browserWarningSection = document.getElementById('browserWarningSection');
+const autoReconnectToggle = document.getElementById('autoReconnect');
+
+// Auth Guard
+(async () => {
+  const { user, profile } = await VAuth.guard('patient', 1);
+})();
+
+// Check browser support
+function checkBrowserSupport() {
+  if (!navigator.bluetooth) {
+    browserWarningSection.style.display = 'block';
+    scanBtn.disabled = true;
+    scanBtn.style.opacity = '0.5';
+    log('Web Bluetooth API tidak didukung', 'error');
+    return false;
+  }
+  return true;
+}
+
+// Log function
+function log(message, type = 'info') {
+  const time = new Date().toLocaleTimeString('id-ID');
+  const entry = document.createElement('div');
+  entry.className = `log-entry ${type}`;
+  entry.innerHTML = `<span class="log-time">[${time}]</span><span class="log-message">${message}</span>`;
+  logArea.appendChild(entry);
+  logArea.scrollTop = logArea.scrollHeight;
+
+  // Keep only last 50 entries
+  while (logArea.children.length > 50) {
+    logArea.removeChild(logArea.firstChild);
+  }
+}
+
+// Update connection status UI
+function updateConnectionStatus(status) {
+  statusCard.className = `neu-card ble-status-card ${status}`;
+  statusBadge.className = `status-indicator ${status}`;
+
+  const labels = {
+    disconnected: 'Offline',
+    scanning: 'Scanning...',
+    connected: 'Online'
+  };
+
+  statusText.textContent = labels[status];
+
+  if (status === 'connected') {
+    deviceIconMain.className = 'device-icon connected';
+    vitalsPreview.style.display = 'grid';
+    connectionActions.style.display = 'flex';
+    sensorConfigSection.style.display = 'block';
+  } else if (status === 'disconnected') {
+    deviceIconMain.className = 'device-icon disconnected';
+    vitalsPreview.style.display = 'none';
+    connectionActions.style.display = 'none';
+    sensorConfigSection.style.display = 'none';
+
+    deviceNameMain.textContent = 'Tidak Terhubung';
+    deviceIdMain.textContent = 'Tekan "Scan" untuk mencari perangkat';
+  } else if (status === 'scanning') {
+    deviceNameMain.textContent = 'Mencari perangkat...';
+    deviceIdMain.textContent = 'Mohon tunggu...';
+  }
+
+  isConnected = status === 'connected';
+}
+
+// Subscribe to BLEManager data for UI updates
+function subscribeBLEData() {
+  if (_unsubBLE) _unsubBLE(); // Remove previous subscription
+  _unsubBLE = BLEManager.onData((data) => {
+    // Update live vitals preview
+    if (data.hr) document.getElementById('liveHR').textContent = data.hr;
+    if (data.spo2) document.getElementById('liveSpO2').textContent = Math.round(data.spo2);
+    if (data.temp != null) {
+      document.getElementById('liveTemp').textContent = typeof data.temp === 'number' ? data.temp.toFixed(1) : data.temp;
+    }
+
+    // Display in data area
+    const time = new Date().toLocaleTimeString('id-ID');
+    const entry = document.createElement('div');
+    entry.className = 'data-entry';
+    entry.innerHTML = `
+      <span class="data-timestamp">[${time}]</span>
+      <span class="data-value">HR: ${data.hr || '--'} | SpO2: ${data.spo2 || '--'} | Suhu: ${data.temp != null ? (typeof data.temp === 'number' ? data.temp.toFixed(1) : data.temp) : '--'}°C | Steps: ${data.steps || 0}</span>
+    `;
+    dataDisplay.appendChild(entry);
+    dataDisplay.scrollTop = dataDisplay.scrollHeight;
+
+    // Keep only last 30 entries
+    while (dataDisplay.children.length > 30) {
+      dataDisplay.removeChild(dataDisplay.firstChild);
+    }
+
+    log(`Data diterima: HR=${data.hr} SpO2=${data.spo2} Suhu=${data.temp} Steps=${data.steps}`, 'success');
+  });
+}
+
+// Display device in list
+function displayDevice(name, id) {
+  const existingEmpty = deviceList.querySelector('.empty-state');
+  if (existingEmpty) {
+    deviceList.innerHTML = '';
+  }
+
+  const deviceItem = document.createElement('div');
+  deviceItem.className = 'device-item connected';
+
+  deviceItem.innerHTML = `
+    <div class="device-icon connected">⌚</div>
+    <div class="device-info">
+      <div class="device-name">${name || 'HerboraTech Watch'}</div>
+      <div class="device-id">${id ? id.substring(0, 20) + '...' : 'Connected'}</div>
+      <div class="device-meta">
+        <div class="rssi-indicator">
+          <div class="rssi-bar active"></div>
+          <div class="rssi-bar active"></div>
+          <div class="rssi-bar active"></div>
+          <div class="rssi-bar"></div>
+        </div>
+        <span class="neu-chip" style="font-size:0.6rem;">BLE 5.0</span>
+      </div>
+    </div>
+    <ion-icon name="checkmark-circle" style="color:var(--primary-dark);font-size:1.2rem;"></ion-icon>
+  `;
+
+  deviceList.appendChild(deviceItem);
+  deviceCount.textContent = deviceList.querySelectorAll('.device-item').length;
+}
+
+// Start BLE scan — uses BLEManager singleton
+async function startScan() {
+  if (!checkBrowserSupport()) return;
+
+  try {
+    isScanning = true;
+    scanBtn.classList.add('scanning');
+    scanBtn.disabled = true;
+    scanBtnText.textContent = 'Scanning...';
+    updateConnectionStatus('scanning');
+    log('Memulai scan BLE...', 'info');
+
+    // Use BLEManager for connection (handles scan, connect, notifications)
+    const success = await BLEManager.connect();
+
+    if (success) {
+      const status = BLEManager.getStatus();
+      log(`Perangkat ditemukan: ${status.deviceName}`, 'success');
+      log('GATT server terhubung', 'success');
+      log('Service & Characteristic ditemukan', 'success');
+      log('Notifications aktif', 'success');
+
+      // Update UI
+      deviceNameMain.textContent = status.deviceName || 'HerboraTech Watch';
+      deviceIdMain.textContent = `ID: ${status.deviceId?.substring(0, 17) || '...'}`;
+      updateConnectionStatus('connected');
+      showToast('Perangkat terhubung!', 'success');
+
+      // Display device in list
+      displayDevice(status.deviceName, status.deviceId);
+
+      // Subscribe to live data
+      subscribeBLEData();
+    } else {
+      log('Koneksi gagal atau dibatalkan', 'warning');
+      updateConnectionStatus('disconnected');
+    }
+
+  } catch (error) {
+    log(`Scan error: ${error.message}`, 'error');
+    updateConnectionStatus('disconnected');
+  } finally {
+    isScanning = false;
+    scanBtn.classList.remove('scanning');
+    scanBtn.disabled = false;
+    scanBtnText.textContent = 'Scan Perangkat HerboraTech';
+  }
+}
+
+// Disconnect from device — uses BLEManager
+async function disconnectDevice() {
+  try {
+    await BLEManager.disconnect();
+    if (_unsubBLE) { _unsubBLE(); _unsubBLE = null; }
+    log('Terputus oleh pengguna', 'info');
+  } catch (error) {
+    log(`Disconnect error: ${error.message}`, 'error');
+  }
+  updateConnectionStatus('disconnected');
+
+  // Update device list UI
+  document.querySelectorAll('.device-item').forEach(item => {
+    item.classList.remove('connected');
+    const icon = item.querySelector('.device-icon');
+    if (icon) { icon.classList.remove('connected'); icon.classList.add('disconnected'); }
+  });
+}
+
+// Read characteristic value (manual read)
+async function readCharacteristic() {
+  const status = BLEManager.getStatus();
+  if (!status.connected) {
+    showToast('Tidak terhubung', 'warning');
+    return;
+  }
+
+  // Trigger a fresh data display from last known data
+  const lastData = status.lastData;
+  if (lastData) {
+    const time = new Date().toLocaleTimeString('id-ID');
+    const entry = document.createElement('div');
+    entry.className = 'data-entry';
+    entry.innerHTML = `<span class="data-timestamp">[${time}] READ:</span> <span class="data-value">HR: ${lastData.hr || '--'} | SpO2: ${lastData.spo2 || '--'} | Suhu: ${lastData.temp != null ? lastData.temp : '--'}°C | Steps: ${lastData.steps || 0}</span>`;
+    dataDisplay.appendChild(entry);
+    dataDisplay.scrollTop = dataDisplay.scrollHeight;
+    log('Data terakhir dibaca', 'success');
+    showToast('Data berhasil dibaca', 'success');
+  } else {
+    showToast('Belum ada data dari perangkat', 'info');
+  }
+}
+
+// Clear data display
+function clearDataDisplay() {
+  dataDisplay.innerHTML = '';
+}
+
+// Clear log
+function clearLog() {
+  logArea.innerHTML = '';
+}
+
+// Refresh status
+function refreshStatus() {
+  const status = BLEManager.getStatus();
+  log('Status diperbarui', 'info');
+
+  if (status.connected) {
+    updateConnectionStatus('connected');
+    deviceNameMain.textContent = status.deviceName || 'HerboraTech Watch';
+    deviceIdMain.textContent = `ID: ${status.deviceId?.substring(0, 17) || '...'}`;
+    showToast('Perangkat terhubung', 'success');
+  } else {
+    updateConnectionStatus('disconnected');
+  }
+}
+
+// Poll BLEManager status to detect disconnection
+setInterval(() => {
+  const status = BLEManager.getStatus();
+  const wasConnected = isConnected;
+
+  if (wasConnected && !status.connected) {
+    log('Perangkat terputus', 'warning');
+    updateConnectionStatus('disconnected');
+    showToast('Perangkat terputus', 'warning');
+
+    // Auto-reconnect
+    if (autoReconnectToggle.checked) {
+      log('Mencoba reconnect otomatis...', 'info');
+      setTimeout(async () => {
+        const ok = await BLEManager.connect();
+        if (ok) {
+          const s = BLEManager.getStatus();
+          deviceNameMain.textContent = s.deviceName || 'HerboraTech Watch';
+          deviceIdMain.textContent = `ID: ${s.deviceId?.substring(0, 17) || '...'}`;
+          updateConnectionStatus('connected');
+          subscribeBLEData();
+          log('Reconnect berhasil!', 'success');
+        }
+      }, 2000);
+    }
+  }
+}, 3000);
+
+// Initialize
+checkBrowserSupport();
+log('BLE Scanner diinisialisasi', 'info');
+log('Mencari perangkat dengan prefix: "HerboraTech"', 'info');
+
+// Check if BLEManager is already connected (e.g. from another page)
+if (window.BLEManager) {
+  const status = BLEManager.getStatus();
+  if (status.connected) {
+    updateConnectionStatus('connected');
+    deviceNameMain.textContent = status.deviceName || 'HerboraTech Watch';
+    deviceIdMain.textContent = `ID: ${status.deviceId?.substring(0, 17) || '...'}`;
+    displayDevice(status.deviceName, status.deviceId);
+    log('Terhubung dari sesi sebelumnya', 'success');
+    subscribeBLEData();
+  }
+}
+</script>
+
+</body>
+</html>

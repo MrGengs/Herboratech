@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Profil Dokter</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12);
+      box-shadow: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .page-title {
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    /* Hero */
+    .doctor-hero {
+      background: linear-gradient(160deg, #0D2B1A 0%, #1A5C38 60%, #E4EBF5 100%);
+      padding: 24px 20px 36px;
+      text-align: center;
+    }
+    .neu-avatar-xl {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 auto 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .doctor-hero .doc-name {
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .specialty-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .doc-stars {
+      margin-top: 8px;
+      color: #F2C94C;
+      font-size: 0.82rem;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      gap: 12px;
+      padding: 0 16px;
+      margin-top: -18px;
+    }
+    .stat-mini {
+      flex: 1;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 14px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+    .stat-mini .s-val {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+    .stat-mini .s-lbl {
+      font-size: 0.62rem;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    /* Tabs */
+    .neu-tabs {
+      display: flex;
+      background: var(--bg);
+      box-shadow: var(--shadow-in);
+      border-radius: 14px;
+      padding: 4px;
+      gap: 4px;
+      margin: 20px 16px 0;
+    }
+    .neu-tab {
+      flex: 1;
+      padding: 9px 6px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      font-family: var(--font);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .neu-tab.active {
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(39,174,96,0.35);
+    }
+
+    /* Tab panes */
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* Date pills */
+    .date-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 4px 2px 8px;
+      scrollbar-width: none;
+    }
+    .date-scroll::-webkit-scrollbar { display: none; }
+    .date-pill {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 52px;
+      padding: 10px 6px;
+      border-radius: 14px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .date-pill.active {
+      border-color: var(--primary-dark);
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      box-shadow: 0 4px 12px rgba(39,174,96,0.35);
+      color: #fff;
+    }
+    .date-pill .dp-day { font-size: 0.62rem; font-weight: 600; color: inherit; opacity: 0.8; }
+    .date-pill .dp-date { font-size: 1rem; font-weight: 800; color: inherit; margin: 2px 0; }
+    .date-pill.active .dp-day,
+    .date-pill.active .dp-date { color: #fff; }
+
+    /* Time slots */
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .time-slot {
+      padding: 10px 6px;
+      border-radius: 12px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .time-slot.active {
+      border-color: var(--primary-dark);
+      color: var(--primary-dark);
+      background: var(--success-bg);
+    }
+    .time-slot.unavailable {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    /* Review card */
+    .review-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .review-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .review-stars { color: #F2C94C; font-size: 0.75rem; }
+    .review-date { font-size: 0.65rem; color: var(--text-muted); }
+    .review-text { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.55; }
+
+    /* Sticky bottom */
+    .sticky-bottom-bar {
+      position: sticky;
+      bottom: 0;
+      background: var(--bg);
+      border-top: 1px solid var(--shadow-dark);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      z-index: 50;
+    }
+    .price-label { font-size: 0.72rem; color: var(--text-tertiary); }
+    .price-value { font-size: 1.15rem; font-weight: 800; color: var(--primary-dark); }
+
+    /* Edu list */
+    .edu-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .edu-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--success-bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--primary-dark);
+    }
+    .str-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--info-bg);
+      color: var(--info);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: 1px solid rgba(47,128,237,0.2);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('consultation.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="page-title">Profil Dokter</div>
+    <button class="neu-icon-btn" style="background:rgba(255,255,255,0.12);box-shadow:none;color:#fff;border:1px solid rgba(255,255,255,0.1)">
+      <ion-icon name="share-social-outline"></ion-icon>
+    </button>
+  </header>
+
+  <!-- HERO -->
+  <div class="doctor-hero">
+    <img id="doctorPhoto" style="display:none;width:90px;height:90px;border-radius:50%;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,0.3);margin:0 auto 14px;" data-animate="scale">
+    <div id="doctorAvatarGradient" class="neu-avatar-xl" data-animate="scale">SW</div>
+    <div class="doc-name" data-animate="up" data-delay="80">dr. Sarah Wijaya, Sp.PD</div>
+    <div data-animate="up" data-delay="120">
+      <span class="specialty-badge"><ion-icon name="medical-outline"></ion-icon> Spesialis Penyakit Dalam</span>
+    </div>
+    <div class="doc-stars" data-animate="up" data-delay="160">★★★★★ 4.9 · RS Medicore Jakarta</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row" data-animate="up" data-delay="200">
+    <div class="stat-mini">
+      <div class="s-val">8</div>
+      <div class="s-lbl">Tahun Pengalaman</div>
+    </div>
+    <div class="stat-mini">
+      <div class="s-val">238</div>
+      <div class="s-lbl">Pasien Ditangani</div>
+    </div>
+    <div class="stat-mini">
+      <div class="s-val">⭐4.9</div>
+      <div class="s-lbl">Rating Ulasan</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="neu-tabs" data-animate="up" data-delay="260">
+    <button class="neu-tab active" onclick="switchTab('tentang')">Tentang</button>
+    <button class="neu-tab" onclick="switchTab('jadwal')">Jadwal</button>
+    <button class="neu-tab" onclick="switchTab('ulasan')">Ulasan</button>
+  </div>
+
+  <!-- TAB: Tentang -->
+  <div id="tab-tentang" class="tab-pane active">
+    <div class="section">
+      <div class="neu-card" data-animate="up" data-delay="100">
+        <p style="font-size:0.83rem;color:var(--text-secondary);line-height:1.7;">
+          dr. Sarah Wijaya adalah spesialis penyakit dalam yang berpengalaman lebih dari 8 tahun. Beliau memiliki keahlian khusus dalam penanganan penyakit metabolik, hipertensi, dan diabetes mellitus. Menggabungkan pendekatan konvensional dengan terapi integratif berbasis herbal untuk hasil yang optimal.
+        </p>
+      </div>
+
+      <div class="neu-card" style="margin-top:14px;" data-animate="up" data-delay="160">
+        <div style="font-weight:700;font-size:0.9rem;margin-bottom:14px;color:var(--text-primary);">Pendidikan</div>
+        <div class="edu-item">
+          <div class="edu-icon"><ion-icon name="school-outline"></ion-icon></div>
+          <div>
+            <div style="font-size:0.82rem;font-weight:600;color:var(--text-primary);">S1 Kedokteran — Universitas Indonesia</div>
+            <div style="font-size:0.72rem;color:var(--text-tertiary);">2010 – 2016</div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-icon"><ion-icon name="ribbon-outline"></ion-icon></div>
+          <div>
+            <div style="font-size:0.82rem;font-weight:600;color:var(--text-primary);">Sp.PD — Universitas Gadjah Mada</div>
+            <div style="font-size:0.72rem;color:var(--text-tertiary);">2017 – 2021</div>
+          </div>
+        </div>
+        <div style="margin-top:6px;">
+          <span class="str-badge"><ion-icon name="checkmark-circle-outline"></ion-icon> STR No. 4523/2022 · Aktif</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Jadwal -->
+  <div id="tab-jadwal" class="tab-pane">
+    <div class="section">
+      <div class="neu-card" data-animate="up" data-delay="100">
+        <div style="font-weight:700;font-size:0.9rem;margin-bottom:14px;">Pilih Tanggal</div>
+        <div class="date-scroll">
+          <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">SEN</span><span class="dp-date">24</span></div>
+          <div class="date-pill active" onclick="selectDate(this)"><span class="dp-day">SEL</span><span class="dp-date">25</span></div>
+          <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">RAB</span><span class="dp-date">26</span></div>
+          <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">KAM</span><span class="dp-date">27</span></div>
+          <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">JUM</span><span class="dp-date">28</span></div>
+          <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">SAB</span><span class="dp-date">29</span></div>
+          <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">MIN</span><span class="dp-date">30</span></div>
+        </div>
+      </div>
+      <div class="neu-card" style="margin-top:14px;" data-animate="up" data-delay="160">
+        <div style="font-weight:700;font-size:0.9rem;margin-bottom:14px;">Pilih Waktu</div>
+        <div class="slot-grid">
+          <div class="time-slot unavailable">08:00</div>
+          <div class="time-slot active" onclick="selectSlot(this)">09:00</div>
+          <div class="time-slot" onclick="selectSlot(this)">10:00</div>
+          <div class="time-slot" onclick="selectSlot(this)">11:00</div>
+          <div class="time-slot unavailable">13:00</div>
+          <div class="time-slot" onclick="selectSlot(this)">14:00</div>
+          <div class="time-slot" onclick="selectSlot(this)">15:00</div>
+          <div class="time-slot" onclick="selectSlot(this)">16:00</div>
+          <div class="time-slot unavailable">17:00</div>
+        </div>
+        <p style="font-size:0.68rem;color:var(--text-muted);margin-top:12px;">⬤ Abu-abu: slot sudah terisi</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Ulasan -->
+  <div id="tab-ulasan" class="tab-pane">
+    <div class="section">
+      <div class="review-card" data-animate="up" data-delay="100">
+        <div class="review-header">
+          <div class="neu-avatar" style="background:linear-gradient(135deg,#2F80ED,#56CCF2);width:38px;height:38px;font-size:0.8rem;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;border-radius:50%;">AF</div>
+          <div style="flex:1">
+            <div style="font-size:0.83rem;font-weight:700;color:var(--text-primary);">Ahmad Fauzi</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-date">15 Mar 2026</div>
+        </div>
+        <p class="review-text">Dokter sangat sabar menjelaskan kondisi saya. Pemeriksaan integratif sangat membantu, hasilnya detail sekali. Sangat direkomendasikan!</p>
+      </div>
+
+      <div class="review-card" data-animate="up" data-delay="160">
+        <div class="review-header">
+          <div class="neu-avatar" style="background:linear-gradient(135deg,#F2994A,#F2C94C);width:38px;height:38px;font-size:0.8rem;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;border-radius:50%;">RP</div>
+          <div style="flex:1">
+            <div style="font-size:0.83rem;font-weight:700;color:var(--text-primary);">Rina Pertiwi</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-date">10 Mar 2026</div>
+        </div>
+        <p class="review-text">Konsultasi video call sangat nyaman. Rekomendasi herbalnya juga manjur. Terima kasih dok!</p>
+      </div>
+
+      <div class="review-card" data-animate="up" data-delay="220">
+        <div class="review-header">
+          <div class="neu-avatar" style="background:linear-gradient(135deg,#6C63FF,#8B83FF);width:38px;height:38px;font-size:0.8rem;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;border-radius:50%;">BK</div>
+          <div style="flex:1">
+            <div style="font-size:0.83rem;font-weight:700;color:var(--text-primary);">Budi Kurniawan</div>
+            <div class="review-stars">★★★★<span style="color:var(--text-muted)">★</span></div>
+          </div>
+          <div class="review-date">5 Mar 2026</div>
+        </div>
+        <p class="review-text">Penjelasan diagnosa sangat jelas dan mudah dipahami. Saya lebih paham kondisi kesehatan saya sekarang.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKY BOTTOM BAR -->
+  <div class="sticky-bottom-bar">
+    <div>
+      <div class="price-label">Tarif konsultasi</div>
+      <div class="price-value">Rp 150.000<small style="font-size:0.7rem;font-weight:500;color:var(--text-tertiary);"> / sesi</small></div>
+    </div>
+    <button class="neu-btn neu-btn-primary" style="flex:1;" onclick="nav('booking.html' + (_ddDoctorId ? '?doctor=' + _ddDoctorId : ''))">
+      <ion-icon name="calendar-outline"></ion-icon> Buat Janji
+    </button>
+  </div>
+
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  let _ddDoctorId = null;
+
+  (async () => {
+    try {
+      await VAuth.guard('patient', 1);
+
+      const doctorId = new URLSearchParams(location.search).get('id');
+      _ddDoctorId = doctorId;
+
+      if (!doctorId) return; // keep mock data
+
+      const doctor = await VDB.getUser(doctorId);
+      if (!doctor) return; // keep mock data
+
+      // Name
+      const docNameEl = document.querySelector('.doc-name');
+      if (docNameEl) docNameEl.textContent = doctor.name || 'Dokter';
+
+      // Avatar photo or initials
+      const photoEl = document.getElementById('doctorPhoto');
+      const avatarGradientEl = document.getElementById('doctorAvatarGradient');
+      if (doctor.photoURL) {
+        photoEl.src = doctor.photoURL;
+        photoEl.style.display = 'block';
+        avatarGradientEl.style.display = 'none';
+      } else {
+        avatarGradientEl.style.display = 'block';
+        photoEl.style.display = 'none';
+        const initials = (doctor.name || 'D').split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+        avatarGradientEl.textContent = initials;
+      }
+
+      // Specialty badge
+      const specBadge = document.querySelector('.specialty-badge');
+      if (specBadge && doctor.specialty) {
+        specBadge.innerHTML = '<ion-icon name="medical-outline"></ion-icon> ' + doctor.specialty;
+      }
+
+      // Rating & hospital in doc-stars
+      const starsEl = document.querySelector('.doc-stars');
+      if (starsEl) {
+        const rating = doctor.rating || '4.9';
+        const hospital = doctor.hospital || '';
+        starsEl.textContent = '★★★★★ ' + rating + (hospital ? ' · ' + hospital : '');
+      }
+
+      // Update stats row
+      const statMinis = document.querySelectorAll('.stat-mini');
+      if (statMinis.length >= 3) {
+        const yearsExp = doctor.yearsExperience || '8';
+        const patientCount = doctor.patientCount || '238';
+        const ratingVal = doctor.rating || '4.9';
+        statMinis[0].querySelector('.s-val').textContent = yearsExp;
+        statMinis[1].querySelector('.s-val').textContent = patientCount;
+        statMinis[2].querySelector('.s-val').textContent = '⭐' + ratingVal;
+      }
+
+      // Update bio (tentang tab)
+      const bioCard = document.querySelector('#tab-tentang .neu-card p');
+      if (bioCard && doctor.bio) {
+        bioCard.textContent = doctor.bio;
+      }
+
+      // Update price
+      const priceVal = document.querySelector('.price-value');
+      if (priceVal && doctor.consultationFee) {
+        const chatFee = doctor.consultationFee.chat || 150000;
+        priceVal.innerHTML = 'Rp ' + (chatFee / 1000) + '.000<small style="font-size:0.7rem;font-weight:500;color:var(--text-tertiary);"> / sesi</small>';
+      }
+
+    } catch (e) {
+      console.error('[doctor-detail] error:', e);
+      // keep mock data
+    }
+  })();
+
+  function switchTab(name) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.neu-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+  function selectDate(el) {
+    document.querySelectorAll('.date-pill').forEach(d => d.classList.remove('active'));
+    el.classList.add('active');
+  }
+  function selectSlot(el) {
+    document.querySelectorAll('.time-slot:not(.unavailable)').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+  }
+</script>
+</body>
+</html>

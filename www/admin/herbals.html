@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Kelola Herbal</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+
+    .filter-bar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .search-input { flex: 1; min-width: 160px; padding: 10px 16px; border-radius: 10px; border: 2px solid var(--shadow-dark); background: var(--bg); font-size: 0.9rem; }
+    .search-input:focus { outline: none; border-color: #27AE60; }
+
+    .filter-select { padding: 10px 16px; border-radius: 10px; border: 2px solid var(--shadow-dark); background: var(--bg); font-size: 0.9rem; cursor: pointer; }
+    .filter-select:focus { outline: none; border-color: #27AE60; }
+
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th { background: var(--bg); padding: 12px; text-align: left; font-weight: 700; font-size: 0.85rem; color: var(--text-secondary); border-bottom: 2px solid var(--shadow-dark); }
+    .data-table td { padding: 14px 12px; border-bottom: 1px solid var(--shadow-dark); font-size: 0.9rem; }
+    .data-table tr:hover { background: rgba(111, 207, 151, 0.03); }
+
+    .table-action-btn { padding: 6px 12px; margin-right: 8px; border-radius: 8px; border: none; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+    .btn-edit { background: rgba(45, 156, 219, 0.1); color: #2D9CDB; }
+    .btn-edit:hover { background: rgba(45, 156, 219, 0.2); }
+    .btn-delete { background: rgba(235, 87, 87, 0.1); color: #EB5757; }
+    .btn-delete:hover { background: rgba(235, 87, 87, 0.2); }
+
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: var(--bg); border-radius: 20px; box-shadow: var(--shadow-out); padding: 32px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; }
+    .modal-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; color: var(--text-primary); }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border-radius: 10px; border: 2px solid var(--shadow-dark); background: white; font-family: inherit; font-size: 0.9rem; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #27AE60; }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    .modal-actions { display: flex; gap: 12px; margin-top: 24px; justify-content: flex-end; }
+    .modal-actions button { padding: 10px 20px; border-radius: 10px; border: none; font-weight: 600; cursor: pointer; }
+    .modal-actions .btn-cancel { background: var(--shadow-dark); color: var(--text-primary); }
+    .modal-actions .btn-save { background: linear-gradient(135deg, #27AE60, #6FCF97); color: white; }
+
+    .empty-state { text-align: center; padding: 40px; color: var(--text-secondary); }
+    .empty-icon { font-size: 3rem; margin-bottom: 16px; }
+
+    .pagination { display: flex; gap: 8px; justify-content: center; margin-top: 24px; }
+    .pagination button { padding: 8px 12px; border-radius: 8px; border: 2px solid var(--shadow-dark); background: var(--bg); color: var(--text-primary); cursor: pointer; }
+    .pagination button.active { background: #27AE60; color: white; border-color: #27AE60; }
+    .pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .evidence-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; }
+    .ev-a { background: rgba(39, 174, 96, 0.15); color: #27AE60; }
+    .ev-b { background: rgba(45, 156, 219, 0.15); color: #2D9CDB; }
+    .ev-c { background: rgba(242, 153, 74, 0.15); color: #F2994A; }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item active" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar" data-animate="up">
+      <h1>Kelola Herbal</h1>
+      <div class="header-actions">
+        <button class="neu-btn-primary neu-btn-sm" onclick="nav('herbal-submit.html')">
+          <ion-icon name="add-outline"></ion-icon> Tambah Herbal
+        </button>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" data-animate="up" data-delay="100">
+      <input type="text" class="search-input" id="searchInput" placeholder="Cari nama atau nama latin..." oninput="filterTable()">
+      <select class="filter-select" id="evidenceFilter" onchange="filterTable()">
+        <option value="">Semua Evidence Level</option>
+        <option value="A">A (Tertinggi)</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+      </select>
+      <select class="filter-select" id="categoryFilter" onchange="filterTable()">
+        <option value="">Semua Kategori</option>
+        <option value="antiinflamasi">Anti-inflamasi</option>
+        <option value="metabolisme">Metabolisme</option>
+        <option value="kardiovaskular">Kardiovaskular</option>
+        <option value="pencernaan">Pencernaan</option>
+        <option value="imun">Imunitas</option>
+        <option value="dermatologi">Dermatologi</option>
+        <option value="diuretik">Diuretik</option>
+        <option value="lainnya">Lainnya</option>
+      </select>
+    </div>
+
+    <!-- Data Table -->
+    <div class="neu-card" data-animate="up" data-delay="150" style="padding: 0; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+      <table class="data-table" id="herbalsTable">
+        <thead>
+          <tr>
+            <th style="width: 20%;">Nama</th>
+            <th style="width: 20%;">Nama Latin</th>
+            <th style="width: 15%;">Kategori</th>
+            <th style="width: 10%;">Evidence</th>
+            <th style="width: 10%;">Studi</th>
+            <th style="width: 25%;">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="herbalsBody">
+          <tr><td colspan="6" style="text-align: center; padding: 40px;">Memuat data...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="emptyState" style="display: none;">
+      <div class="empty-state">
+        <div class="empty-icon">🌿</div>
+        <p>Tidak ada herbal yang sesuai dengan filter</p>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
+  </main>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal-box">
+    <div class="modal-title">Edit Herbal</div>
+    <form onsubmit="saveHerbal(event)">
+      <div class="form-group">
+        <label>Nama</label>
+        <input type="text" id="editName" required>
+      </div>
+      <div class="form-group">
+        <label>Nama Latin</label>
+        <input type="text" id="editLatin">
+      </div>
+      <div class="form-group">
+        <label>Kategori</label>
+        <select id="editCategory">
+          <option value="antiinflamasi">Anti-inflamasi</option>
+          <option value="metabolisme">Metabolisme</option>
+          <option value="kardiovaskular">Kardiovaskular</option>
+          <option value="pencernaan">Pencernaan</option>
+          <option value="imun">Imunitas</option>
+          <option value="dermatologi">Dermatologi</option>
+          <option value="diuretik">Diuretik</option>
+          <option value="lainnya">Lainnya</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Evidence Level</label>
+        <select id="editEvidence">
+          <option value="A">A (Tertinggi)</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Manfaat (satu per baris)</label>
+        <textarea id="editBenefits"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Kontraindikasi (satu per baris)</label>
+        <textarea id="editContraindications"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Jumlah Studi</label>
+        <input type="number" id="editStudyCount" min="0">
+      </div>
+      <div class="form-group">
+        <label>Status BPOM</label>
+        <input type="text" id="editBPOMStatus">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" onclick="closeEditModal()">Batal</button>
+        <button type="submit" class="btn-save">Simpan Perubahan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal-box">
+    <div class="modal-title" style="color: #EB5757;">Hapus Herbal?</div>
+    <p style="color: var(--text-secondary); margin-bottom: 24px;">
+      Apakah Anda yakin ingin menghapus herbal <strong id="deleteHerbalName"></strong>? Tindakan ini tidak dapat dibatalkan.
+    </p>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeDeleteModal()">Batal</button>
+      <button class="btn-delete table-action-btn" onclick="confirmDelete()">Hapus Herbal</button>
+    </div>
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+
+<script>
+let herbals = [];
+let filteredHerbals = [];
+let currentPage = 1;
+const itemsPerPage = 15;
+let editingId = null;
+let deletingId = null;
+
+const ITEMS_PER_PAGE = 15;
+
+(async () => {
+  const { profile: _vp } = await VAuth.guard('admin', 1);
+  if (_vp && _vp.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+  await loadHerbals();
+})();
+
+async function loadHerbals() {
+  try {
+    const snap = await VFirebase.db.collection('herbals')
+      .orderBy('name', 'asc')
+      .get();
+
+    herbals = snap.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    currentPage = 1;
+    filterTable();
+  } catch (e) {
+    console.error('Error loading herbals:', e);
+    showToast('Gagal memuat data herbal', 'error');
+  }
+}
+
+function filterTable() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const evidence = document.getElementById('evidenceFilter').value;
+  const category = document.getElementById('categoryFilter').value;
+
+  filteredHerbals = herbals.filter(h => {
+    const nameMatch = (h.name || '').toLowerCase().includes(search) ||
+                     (h.latinName || '').toLowerCase().includes(search);
+    const evidenceMatch = !evidence || (h.evidenceLevel === evidence);
+    const categoryMatch = !category || (h.categories || []).includes(category);
+
+    return nameMatch && evidenceMatch && categoryMatch;
+  });
+
+  currentPage = 1;
+  renderTable();
+  updatePagination();
+}
+
+function renderTable() {
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+  const pageItems = filteredHerbals.slice(start, end);
+
+  const tbody = document.getElementById('herbalsBody');
+  const emptyState = document.getElementById('emptyState');
+
+  if (pageItems.length === 0) {
+    tbody.innerHTML = '';
+    emptyState.style.display = 'block';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+
+  tbody.innerHTML = pageItems.map(h => `
+    <tr>
+      <td><strong>${h.name || '—'}</strong></td>
+      <td style="font-size: 0.85rem; color: var(--text-secondary);">${h.latinName || '—'}</td>
+      <td><span style="font-size: 0.8rem;">${(h.categories || []).join(', ') || '—'}</span></td>
+      <td><span class="evidence-badge ev-${h.evidenceLevel || 'C'}">${h.evidenceLevel || 'C'}</span></td>
+      <td style="text-align: center;">${h.studyCount || 0}</td>
+      <td>
+        <button class="table-action-btn btn-edit" onclick="openEditModal('${h.id}')">
+          <ion-icon name="pencil-outline" style="font-size: 0.9rem;"></ion-icon> Edit
+        </button>
+        <button class="table-action-btn btn-delete" onclick="openDeleteModal('${h.id}', '${(h.name || '').replace(/'/g, "\\'")}')">
+          <ion-icon name="trash-outline" style="font-size: 0.9rem;"></ion-icon> Hapus
+        </button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function updatePagination() {
+  const totalPages = Math.ceil(filteredHerbals.length / ITEMS_PER_PAGE);
+  const paginationEl = document.getElementById('pagination');
+
+  if (totalPages <= 1) {
+    paginationEl.innerHTML = '';
+    return;
+  }
+
+  let html = '';
+  if (currentPage > 1) {
+    html += `<button onclick="goToPage(${currentPage - 1})"><ion-icon name="chevron-back-outline"></ion-icon></button>`;
+  }
+
+  for (let i = 1; i <= totalPages; i++) {
+    html += `<button class="${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+  }
+
+  if (currentPage < totalPages) {
+    html += `<button onclick="goToPage(${currentPage + 1})"><ion-icon name="chevron-forward-outline"></ion-icon></button>`;
+  }
+
+  paginationEl.innerHTML = html;
+}
+
+function goToPage(page) {
+  currentPage = page;
+  renderTable();
+  updatePagination();
+}
+
+function openEditModal(id) {
+  editingId = id;
+  const herbal = herbals.find(h => h.id === id);
+  if (!herbal) return;
+
+  document.getElementById('editName').value = herbal.name || '';
+  document.getElementById('editLatin').value = herbal.latinName || '';
+  document.getElementById('editCategory').value = (herbal.categories || [])[0] || '';
+  document.getElementById('editEvidence').value = herbal.evidenceLevel || 'B';
+  document.getElementById('editBenefits').value = (herbal.benefits || [])
+    .map(b => typeof b === 'string' ? b : b.name)
+    .join('\n');
+  document.getElementById('editContraindications').value = (herbal.contraindications || []).join('\n');
+  document.getElementById('editStudyCount').value = herbal.studyCount || 0;
+  document.getElementById('editBPOMStatus').value = herbal.bpomStatus || '';
+
+  document.getElementById('editModal').classList.add('open');
+}
+
+function closeEditModal() {
+  document.getElementById('editModal').classList.remove('open');
+  editingId = null;
+}
+
+async function saveHerbal(e) {
+  e.preventDefault();
+
+  if (!editingId) return;
+
+  try {
+    const updates = {
+      name: document.getElementById('editName').value,
+      latinName: document.getElementById('editLatin').value,
+      categories: [document.getElementById('editCategory').value],
+      evidenceLevel: document.getElementById('editEvidence').value,
+      benefits: document.getElementById('editBenefits').value
+        .split('\n')
+        .filter(b => b.trim())
+        .map(b => ({ name: b.trim() })),
+      contraindications: document.getElementById('editContraindications').value
+        .split('\n')
+        .filter(c => c.trim()),
+      studyCount: parseInt(document.getElementById('editStudyCount').value) || 0,
+      bpomStatus: document.getElementById('editBPOMStatus').value,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    await VFirebase.db.collection('herbals').doc(editingId).update(updates);
+
+    showToast('Herbal berhasil diperbarui', 'success');
+    closeEditModal();
+    await loadHerbals();
+  } catch (e) {
+    showToast('Gagal: ' + e.message, 'error');
+  }
+}
+
+function openDeleteModal(id, name) {
+  deletingId = id;
+  document.getElementById('deleteHerbalName').textContent = name;
+  document.getElementById('deleteModal').classList.add('open');
+}
+
+function closeDeleteModal() {
+  document.getElementById('deleteModal').classList.remove('open');
+  deletingId = null;
+}
+
+async function confirmDelete() {
+  if (!deletingId) return;
+
+  try {
+    await VFirebase.db.collection('herbals').doc(deletingId).delete();
+    showToast('Herbal berhasil dihapus', 'success');
+    closeDeleteModal();
+    await loadHerbals();
+  } catch (e) {
+    showToast('Gagal menghapus: ' + e.message, 'error');
+  }
+}
+</script>
+
+</body>
+</html>

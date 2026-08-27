@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Verifikasi Email</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { font-family: 'Poppins', sans-serif; background: var(--bg); overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* BG */
+    .auth-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background: linear-gradient(160deg,#040E07 0%,#071A0F 40%,#0D2B1A 70%,#1A5C38 100%);
+    }
+    .auth-bg::before {
+      content:''; position:absolute; inset:0;
+      background-image:radial-gradient(circle,rgba(255,255,255,0.025) 1px,transparent 1px);
+      background-size:28px 28px;
+    }
+    .auth-bg::after {
+      content:''; position:absolute; bottom:-100px; left:50%; transform:translateX(-50%);
+      width:600px; height:600px; border-radius:50%;
+      background:radial-gradient(circle, rgba(111,207,151,0.07) 0%, transparent 70%);
+    }
+
+    /* MAIN */
+    .auth-page { position:relative; z-index:1; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; }
+
+    /* CARD */
+    .auth-card {
+      background: rgba(228,235,245,0.97);
+      border-radius: 28px;
+      padding: 44px 40px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+      animation: cardIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+      text-align: center;
+    }
+    @keyframes cardIn { from { opacity:0; transform:translateY(30px) scale(0.96); } to { opacity:1; transform:none; } }
+    @media (max-width: 480px) { .auth-card { padding: 32px 24px; border-radius: 24px; } }
+
+    /* EMAIL ICON */
+    .icon-wrap {
+      width:96px; height:96px; border-radius:30px;
+      background:var(--bg); box-shadow:var(--shadow-out);
+      display:flex; align-items:center; justify-content:center;
+      margin:0 auto 24px; position:relative;
+    }
+    .icon-wrap ion-icon { font-size:2.8rem; color:var(--primary-dark); }
+    .icon-wrap::after {
+      content:''; position:absolute; inset:-4px; border-radius:34px;
+      border:2px dashed rgba(39,174,96,0.25);
+      animation: dashedRotate 12s linear infinite;
+    }
+    @keyframes dashedRotate { to { transform: rotate(360deg); } }
+
+    /* BADGE pulse */
+    .badge-dot {
+      position:absolute; top:-4px; right:-4px;
+      width:20px; height:20px; border-radius:50%;
+      background:linear-gradient(135deg,#27AE60,#6FCF97);
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 0 0 3px rgba(228,235,245,0.97);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    .badge-dot ion-icon { font-size:0.65rem; color:#fff; }
+    @keyframes pulse {
+      0%,100% { box-shadow:0 0 0 3px rgba(228,235,245,0.97), 0 0 0 5px rgba(111,207,151,0.3); }
+      50%      { box-shadow:0 0 0 3px rgba(228,235,245,0.97), 0 0 0 9px rgba(111,207,151,0.0); }
+    }
+
+    /* TITLES */
+    .auth-title { font-size:1.5rem; font-weight:800; color:var(--text-primary); margin-bottom:8px; letter-spacing:-0.3px; }
+    .auth-sub { font-size:0.85rem; color:var(--text-secondary); margin-bottom:10px; line-height:1.6; }
+    .email-display {
+      display:inline-block; background:rgba(39,174,96,0.08); border:1px solid rgba(39,174,96,0.2);
+      border-radius:10px; padding:6px 14px; font-size:0.85rem; font-weight:700;
+      color:var(--primary-dark); margin-bottom:28px; letter-spacing:0.02em;
+    }
+
+    /* AUTO CHECK INDICATOR */
+    .auto-check-row {
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      font-size:0.75rem; color:var(--text-secondary); margin-bottom:24px;
+    }
+    .auto-dot {
+      width:8px; height:8px; border-radius:50%; background:var(--primary-dark);
+      animation: blink 1.2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    /* BUTTONS */
+    .btn-verified {
+      width:100%; padding:14px; border-radius:14px;
+      background:linear-gradient(135deg,#27AE60,#6FCF97); color:#fff;
+      font-size:0.95rem; font-weight:700; border:none; cursor:pointer;
+      font-family:'Poppins',sans-serif; box-shadow:0 6px 24px rgba(111,207,151,0.4);
+      transition:transform 0.2s,box-shadow 0.2s;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      letter-spacing:0.02em; margin-bottom:12px;
+    }
+    .btn-verified:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 32px rgba(111,207,151,0.5); }
+    .btn-verified:active { transform:translateY(0); }
+    .btn-verified:disabled { opacity:0.7; cursor:not-allowed; transform:none; }
+
+    .btn-resend {
+      width:100%; padding:12px; border-radius:12px;
+      background:var(--bg); box-shadow:var(--shadow-out);
+      font-size:0.85rem; font-weight:600; color:var(--text-secondary);
+      border:none; cursor:pointer; font-family:'Poppins',sans-serif;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      transition:transform 0.2s; margin-bottom:20px;
+    }
+    .btn-resend:hover:not(:disabled) { transform:translateY(-2px); color:var(--primary-dark); }
+    .btn-resend:disabled { opacity:0.6; cursor:not-allowed; }
+
+    /* DIVIDER */
+    .divider { height:1px; background:rgba(0,0,0,0.07); margin-bottom:20px; }
+
+    /* FOOTER */
+    .auth-footer { font-size:0.78rem; color:var(--text-secondary); }
+    .auth-footer a { color:var(--primary-dark); font-weight:700; text-decoration:none; }
+    .auth-footer a:hover { text-decoration:underline; }
+
+    /* LOADING SCREEN */
+    #loading-screen {
+      position:fixed; inset:0; z-index:100;
+      background:linear-gradient(160deg,#040E07 0%,#071A0F 40%,#0D2B1A 70%,#1A5C38 100%);
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+    }
+    .loading-spinner {
+      width:48px; height:48px; border-radius:50%;
+      border:3px solid rgba(111,207,151,0.2);
+      border-top-color:#6FCF97;
+      animation:spin 0.8s linear infinite;
+    }
+    #loading-screen p { color:rgba(255,255,255,0.6); font-size:0.85rem; font-family:'Poppins',sans-serif; }
+
+    /* ECG decoration */
+    .ecg-deco { position:fixed; bottom:30px; left:0; right:0; height:40px; opacity:0.15; pointer-events:none; overflow:hidden; }
+    .ecg-deco svg { width:200%; animation:ecgScroll 14s linear infinite; }
+    @keyframes ecgScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    @keyframes spin { to { transform:rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<!-- LOADING SCREEN (shown while checking auth state) -->
+<div id="loading-screen">
+  <div class="loading-spinner"></div>
+  <p>Memeriksa status akun...</p>
+</div>
+
+<!-- BG -->
+<div class="auth-bg"></div>
+
+<!-- ECG decoration -->
+<div class="ecg-deco">
+  <svg viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="0,20 80,20 100,20 110,5 120,35 130,5 140,20 160,20 240,20 260,20 270,8 280,32 290,8 300,20 320,20 400,20 420,20 430,5 440,35 450,5 460,20 480,20 560,20 580,20 590,8 600,32 610,8 620,20 640,20 720,20 740,20 750,5 760,35 770,5 780,20 800,20 880,20 900,20 910,8 920,32 930,8 940,20 960,20 1040,20 1060,20 1070,5 1080,35 1090,5 1100,20 1120,20 1200,20 1220,20 1230,8 1240,32 1250,8 1260,20 1280,20 1360,20 1380,20 1390,5 1400,35 1410,5 1420,20 1440,20" fill="none" stroke="#6FCF97" stroke-width="1.5"/>
+    <polyline points="1440,20 1520,20 1540,20 1550,5 1560,35 1570,5 1580,20 1600,20 1680,20 1700,20 1710,8 1720,32 1730,8 1740,20 1760,20 1840,20 1860,20 1870,5 1880,35 1890,5 1900,20 1920,20 2000,20 2020,20 2030,8 2040,32 2050,8 2060,20 2080,20 2160,20 2180,20 2190,5 2200,35 2210,5 2220,20 2240,20 2320,20 2340,20 2350,8 2360,32 2370,8 2380,20 2400,20 2440,20 2460,20 2470,5 2480,35 2490,5 2500,20 2520,20 2600,20 2620,20 2630,8 2640,32 2650,8 2660,20 2680,20 2760,20 2780,20 2790,5 2800,35 2810,5 2820,20 2840,20 2880,20" fill="none" stroke="#6FCF97" stroke-width="1.5"/>
+  </svg>
+</div>
+
+<!-- AUTH PAGE (hidden until auth check completes) -->
+<main class="auth-page" id="main-content" style="display:none;">
+  <div class="auth-card">
+
+    <!-- EMAIL ICON -->
+    <div class="icon-wrap">
+      <ion-icon name="mail-unread-outline"></ion-icon>
+      <div class="badge-dot"><ion-icon name="time-outline"></ion-icon></div>
+    </div>
+
+    <!-- TITLES -->
+    <div class="auth-title">Cek Email Anda</div>
+    <div class="auth-sub">Kami telah mengirim link verifikasi ke</div>
+    <div class="email-display" id="userEmailDisplay">memuat...</div>
+
+    <!-- AUTO CHECK INDICATOR -->
+    <div class="auto-check-row">
+      <div class="auto-dot"></div>
+      <span>Memeriksa otomatis setiap 5 detik...</span>
+    </div>
+
+    <!-- SUDAH VERIFIKASI BTN -->
+    <button class="btn-verified" id="checkBtn" onclick="doCheckVerified()">
+      <ion-icon name="shield-checkmark-outline"></ion-icon>
+      <span id="checkBtnText">Sudah Verifikasi</span>
+    </button>
+
+    <!-- KIRIM ULANG BTN -->
+    <button class="btn-resend" id="resendBtn" onclick="doResend()">
+      <ion-icon name="refresh-outline"></ion-icon>
+      <span id="resendBtnText">Kirim Ulang Email</span>
+    </button>
+
+    <div class="divider"></div>
+
+    <!-- FOOTER -->
+    <div class="auth-footer">
+      Email salah? <a href="register.html">Daftar ulang</a> &nbsp;·&nbsp;
+      <a href="login.html">Kembali ke Masuk</a>
+    </div>
+
+  </div>
+</main>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+  let autoCheckInterval = null;
+  let resendCooldown    = false;
+
+  function showToastMsg(msg, type) {
+    if (typeof showToast === 'function') showToast(msg, type || 'info');
+    else alert(msg);
+  }
+
+  // Mask email: user@gmail.com → user@g****.com
+  function maskEmail(email) {
+    if (!email) return '';
+    const [local, domain] = email.split('@');
+    if (!domain) return email;
+    const domainParts = domain.split('.');
+    const domainName  = domainParts[0];
+    const maskedDomain = domainName.charAt(0) + '****.' + domainParts.slice(1).join('.');
+    return local + '@' + maskedDomain;
+  }
+
+  function hideLoading() {
+    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById('main-content').style.display   = 'flex';
+  }
+
+  async function checkAndRedirect(user) {
+    if (user.emailVerified) {
+      clearInterval(autoCheckInterval);
+      showToastMsg('Email terverifikasi! Mengalihkan...', 'success');
+      const profile = await VAuth.getProfile(user.uid);
+      VAuth.redirectByRole(profile?.role || 'patient', 1);
+      return true;
+    }
+    return false;
+  }
+
+  async function doCheckVerified() {
+    const btn  = document.getElementById('checkBtn');
+    const text = document.getElementById('checkBtnText');
+    btn.disabled = true;
+    btn.innerHTML = '<ion-icon name="reload-outline" style="animation:spin 0.8s linear infinite"></ion-icon><span>Memeriksa...</span>';
+
+    try {
+      const user = firebase.auth().currentUser;
+      if (!user) { window.location.href = 'login.html'; return; }
+      await user.reload();
+      const refreshed = firebase.auth().currentUser;
+      const redirected = await checkAndRedirect(refreshed);
+      if (!redirected) {
+        showToastMsg('Email belum diverifikasi. Cek inbox dan klik link verifikasi.', 'warning');
+        btn.innerHTML = '<ion-icon name="shield-checkmark-outline"></ion-icon><span id="checkBtnText">Sudah Verifikasi</span>';
+        btn.disabled  = false;
+      }
+    } catch (err) {
+      btn.innerHTML = '<ion-icon name="shield-checkmark-outline"></ion-icon><span id="checkBtnText">Sudah Verifikasi</span>';
+      btn.disabled  = false;
+      showToastMsg('Gagal memeriksa status. Coba lagi.', 'error');
+    }
+  }
+
+  async function doResend() {
+    if (resendCooldown) return;
+    const btn  = document.getElementById('resendBtn');
+    const text = document.getElementById('resendBtnText');
+    btn.disabled = true;
+    btn.innerHTML = '<ion-icon name="reload-outline" style="animation:spin 0.8s linear infinite"></ion-icon><span>Mengirim...</span>';
+
+    try {
+      await VAuth.resendVerification();
+      showToastMsg('Email verifikasi telah dikirim ulang. Cek inbox Anda.', 'success');
+      resendCooldown = true;
+
+      // Cooldown 60 seconds
+      let seconds = 60;
+      const countdown = setInterval(() => {
+        seconds--;
+        btn.innerHTML = '<ion-icon name="time-outline"></ion-icon><span>Kirim ulang dalam ' + seconds + 's</span>';
+        if (seconds <= 0) {
+          clearInterval(countdown);
+          btn.innerHTML    = '<ion-icon name="refresh-outline"></ion-icon><span>Kirim Ulang Email</span>';
+          btn.disabled     = false;
+          resendCooldown   = false;
+        }
+      }, 1000);
+    } catch (err) {
+      btn.innerHTML  = '<ion-icon name="refresh-outline"></ion-icon><span>Kirim Ulang Email</span>';
+      btn.disabled   = false;
+      resendCooldown = false;
+      if (err.code === 'auth/too-many-requests') {
+        showToastMsg('Terlalu banyak permintaan. Tunggu beberapa menit.', 'error');
+      } else {
+        showToastMsg('Gagal mengirim email. Coba lagi.', 'error');
+      }
+    }
+  }
+
+  // ── Auth state check on page load ──────────────────────────────────────────
+  firebase.auth().onAuthStateChanged(async (user) => {
+    if (!user) {
+      // Not logged in → redirect to login
+      window.location.href = 'login.html';
+      return;
+    }
+
+    // Google users are considered verified
+    const isGoogle = user.providerData.some(p => p.providerId === 'google.com');
+    if (user.emailVerified || isGoogle) {
+      // Already verified → redirect right away
+      const profile = await VAuth.getProfile(user.uid);
+      VAuth.redirectByRole(profile?.role || 'patient', 1);
+      return;
+    }
+
+    // Show page
+    document.getElementById('userEmailDisplay').textContent = maskEmail(user.email);
+    hideLoading();
+
+    // Auto-check every 5 seconds
+    autoCheckInterval = setInterval(async () => {
+      try {
+        await firebase.auth().currentUser.reload();
+        const refreshed = firebase.auth().currentUser;
+        if (refreshed && refreshed.emailVerified) {
+          clearInterval(autoCheckInterval);
+          showToastMsg('Email berhasil diverifikasi! Mengalihkan...', 'success');
+          const profile = await VAuth.getProfile(refreshed.uid);
+          VAuth.redirectByRole(profile?.role || 'patient', 1);
+        }
+      } catch (e) {
+        // silently ignore network errors during auto-check
+      }
+    }, 5000);
+  });
+</script>
+</body>
+</html>

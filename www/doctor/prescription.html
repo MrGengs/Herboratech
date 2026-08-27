@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Buat Resep Digital</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0C2352 0%, #1D5DB5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
+
+    /* Search with dropdown */
+    .search-wrap { position: relative; }
+    .drug-search {
+      width: 100%;
+      background: var(--bg);
+      border: none;
+      outline: none;
+      border-radius: 14px;
+      padding: 12px 14px 12px 42px;
+      box-shadow: var(--shadow-in);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.78rem;
+      color: var(--text-primary);
+      box-sizing: border-box;
+    }
+    .search-icon-pos { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1rem; }
+    .drug-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0; right: 0;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      z-index: 10;
+      overflow: hidden;
+      display: none;
+    }
+    .drug-item { padding: 10px 16px; font-size: 0.75rem; cursor: pointer; color: var(--text-secondary); border-bottom: 1px solid #f5f5f5; display: flex; justify-content: space-between; align-items: center; }
+    .drug-item:hover { background: var(--info-bg); color: var(--info); }
+    .drug-item .drug-category { font-size: 0.6rem; color: var(--text-muted); }
+
+    /* Medicine row */
+    .med-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg);
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-out-sm);
+      border-left: 3px solid var(--info);
+    }
+    .med-info { flex: 1; }
+    .med-name { font-weight: 700; font-size: 0.82rem; color: var(--text-primary); }
+    .med-detail { font-size: 0.65rem; color: var(--text-tertiary); margin-top: 2px; }
+    .med-delete { background: var(--danger-bg); color: var(--danger); border: none; border-radius: 8px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; font-size: 0.9rem; }
+
+    /* Herbal section */
+    .neu-select {
+      width: 100%;
+      background: var(--bg);
+      border: none;
+      outline: none;
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-in);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.78rem;
+      color: var(--text-primary);
+      appearance: none;
+      box-sizing: border-box;
+    }
+    .herbal-preview {
+      background: linear-gradient(135deg, rgba(111,207,151,0.12), rgba(39,174,96,0.08));
+      border: 1px solid rgba(39,174,96,0.25);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    /* Preview resep */
+    .resep-preview {
+      background: #fff;
+      border-radius: 18px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow-out);
+      border-top: 6px solid #0C2352;
+    }
+    .resep-header-line { height: 2px; background: linear-gradient(90deg, #0C2352, #1D5DB5); border-radius: 2px; margin: 8px 0 14px; }
+
+    /* Note textarea */
+    .doc-note {
+      width: 100%;
+      min-height: 70px;
+      background: var(--bg);
+      border: none;
+      outline: none;
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-in);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      color: var(--text-primary);
+      resize: none;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('chat-room.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;">Buat Resep Digital</div>
+    <div style="width:42px;"></div>
+  </header>
+
+  <div class="section">
+    <!-- Patient info mini -->
+    <div class="neu-card-sm" data-animate="up" style="display:flex;gap:12px;align-items:center;border-left:3px solid var(--info);">
+      <div class="neu-avatar-sm" style="background:linear-gradient(135deg,#EB5757,#FF7B7B);">AF</div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;">Ahmad Fauzi</div>
+        <div style="font-size:0.67rem;color:var(--text-tertiary);">L, 34th · Alergi: Penisilin · G44.2 Tension Headache</div>
+      </div>
+    </div>
+
+    <!-- OBAT Section -->
+    <div class="section-header mt-20" data-animate="up" data-delay="80"><span class="section-title">💊 Obat</span></div>
+
+    <div class="search-wrap" data-animate="up" data-delay="100">
+      <ion-icon name="search-outline" class="search-icon-pos"></ion-icon>
+      <input class="drug-search" id="drug-search" placeholder="Cari obat..." oninput="filterDrugs()" autocomplete="off">
+      <div class="drug-dropdown" id="drug-dropdown">
+        <div class="drug-item" onclick="addDrug('Paracetamol 500mg','3×1 — 7 hari')">
+          <div><div>Paracetamol 500mg</div><div class="drug-category">Analgesik/Antipiretik</div></div>
+          <ion-icon name="add-circle-outline" style="color:var(--info);font-size:1.1rem;"></ion-icon>
+        </div>
+        <div class="drug-item" onclick="addDrug('Ibuprofen 400mg','3×1 — 5 hari')">
+          <div><div>Ibuprofen 400mg</div><div class="drug-category">NSAID</div></div>
+          <ion-icon name="add-circle-outline" style="color:var(--info);font-size:1.1rem;"></ion-icon>
+        </div>
+        <div class="drug-item" onclick="addDrug('B-Complex','1×1 — 30 hari')">
+          <div><div>B-Complex</div><div class="drug-category">Vitamin</div></div>
+          <ion-icon name="add-circle-outline" style="color:var(--info);font-size:1.1rem;"></ion-icon>
+        </div>
+        <div class="drug-item" onclick="addDrug('Flunarizine 5mg','1×1 malam — 14 hari')">
+          <div><div>Flunarizine 5mg</div><div class="drug-category">Anti-vertigo</div></div>
+          <ion-icon name="add-circle-outline" style="color:var(--info);font-size:1.1rem;"></ion-icon>
+        </div>
+        <div class="drug-item" onclick="addDrug('Betahistine 6mg','3×1 — 10 hari')">
+          <div><div>Betahistine 6mg</div><div class="drug-category">Anti-vertigo</div></div>
+          <ion-icon name="add-circle-outline" style="color:var(--info);font-size:1.1rem;"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Added medicines list -->
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;" id="med-list">
+      <div class="med-row" data-animate="up" data-delay="150">
+        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#2F80ED,#56CCF2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">💊</div>
+        <div class="med-info">
+          <div class="med-name">Paracetamol 500mg</div>
+          <div class="med-detail">3×1 sesudah makan — 7 hari · 21 tablet</div>
+        </div>
+        <button class="med-delete" onclick="removeMed(this)" title="Hapus">✕</button>
+      </div>
+      <div class="med-row" data-animate="up" data-delay="200" style="border-left-color:var(--primary-dark);">
+        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#27AE60,#6FCF97);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🔴</div>
+        <div class="med-info">
+          <div class="med-name">B-Complex</div>
+          <div class="med-detail">1×1 pagi — 30 hari · 30 tablet</div>
+        </div>
+        <button class="med-delete" onclick="removeMed(this)" title="Hapus">✕</button>
+      </div>
+    </div>
+
+    <button class="neu-btn" style="width:100%;margin-top:10px;font-size:0.78rem;color:var(--info);" onclick="showToast('Tambah obat baru ke resep','info')">
+      <ion-icon name="add-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon>+ Tambah Obat
+    </button>
+
+    <!-- HERBAL Section -->
+    <div class="section-header mt-20" data-animate="up" data-delay="250"><span class="section-title">🌿 Rekomendasi Herbal</span></div>
+
+    <div data-animate="up" data-delay="280">
+      <select class="neu-select" id="herbal-select" onchange="updateHerbal()">
+        <option value="">Pilih formula jamu...</option>
+        <option value="cabe-puyang">Cabe Puyang — Nyeri & Kelelahan</option>
+        <option value="kunyit-asam" selected>Kunyit Asam — Anti-inflamasi</option>
+        <option value="beras-kencur">Beras Kencur — Stamina & Pusing</option>
+      </select>
+    </div>
+
+    <div class="herbal-preview mt-12" data-animate="up" data-delay="300" id="herbal-preview">
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:1.6rem;">🌿</span>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:0.85rem;color:var(--primary-dark);">Kunyit Asam</div>
+          <div style="font-size:0.68rem;color:var(--text-tertiary);margin-bottom:8px;">Anti-inflamasi, redakan ketegangan kepala</div>
+          <div style="font-size:0.72rem;color:var(--text-secondary);line-height:1.7;">
+            <span style="font-weight:600;">Bahan:</span> Kunyit segar 20g + Asam jawa 10g + Air 400ml<br>
+            <span style="font-weight:600;">Cara:</span> Rebus hingga 200ml, saring, minum hangat<br>
+            <span style="font-weight:600;">Dosis:</span> 2× sehari, pagi & sore sesudah makan
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Catatan untuk pasien -->
+    <div class="section-header mt-20" data-animate="up" data-delay="340"><span class="section-title">📝 Catatan untuk Pasien</span></div>
+    <textarea class="doc-note" data-animate="up" data-delay="360">Minum obat sesuai anjuran. Hindari begadang dan stres berlebih. Istirahat cukup 7-8 jam/malam. Jika pusing berlanjut atau memburuk dalam 3 hari, segera konsultasi kembali. Jamu kunyit asam diminum selang-seling dengan obat.</textarea>
+
+    <!-- Preview Resep -->
+    <div class="section-header mt-20" data-animate="up" data-delay="400"><span class="section-title">👁️ Preview Resep</span></div>
+    <div class="resep-preview" data-animate="up" data-delay="420">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <div style="font-size:0.62rem;color:var(--text-muted);letter-spacing:0.5px;">RESEP DIGITAL</div>
+          <div style="font-weight:800;font-size:1rem;color:#0C2352;">HerboraTech</div>
+        </div>
+        <div style="text-align:right;font-size:0.62rem;color:var(--text-muted);">
+          <div>21 Mar 2026</div>
+          <div>No: RX-20260321-001</div>
+        </div>
+      </div>
+      <div class="resep-header-line"></div>
+
+      <div style="margin-bottom:10px;">
+        <div style="font-size:0.65rem;color:var(--text-muted);">Dokter</div>
+        <div style="font-size:0.8rem;font-weight:700;color:var(--text-primary);">dr. Sarah Wijaya, Sp.PD</div>
+        <div style="font-size:0.65rem;color:var(--text-tertiary);">SIP: 44312/2022 · HerboraTech Digital Health</div>
+      </div>
+
+      <div style="background:var(--bg);border-radius:12px;padding:10px 14px;margin-bottom:10px;">
+        <div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:4px;">Pasien</div>
+        <div style="font-size:0.8rem;font-weight:700;color:var(--text-primary);">Ahmad Fauzi</div>
+        <div style="font-size:0.65rem;color:var(--text-tertiary);">L, 34 th · Alergi: Penisilin</div>
+      </div>
+
+      <div style="font-size:0.65rem;font-weight:700;color:var(--text-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Resep</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="border-left:2px solid var(--info);padding-left:10px;">
+          <div style="font-weight:600;font-size:0.78rem;">1. Paracetamol 500mg</div>
+          <div style="font-size:0.65rem;color:var(--text-tertiary);">3×1 sesudah makan — 7 hari (21 tablet)</div>
+        </div>
+        <div style="border-left:2px solid var(--primary-dark);padding-left:10px;">
+          <div style="font-weight:600;font-size:0.78rem;">2. B-Complex</div>
+          <div style="font-size:0.65rem;color:var(--text-tertiary);">1×1 pagi — 30 hari (30 tablet)</div>
+        </div>
+        <div style="border-left:2px solid var(--primary);padding-left:10px;">
+          <div style="font-weight:600;font-size:0.78rem;">🌿 Jamu: Kunyit Asam</div>
+          <div style="font-size:0.65rem;color:var(--text-tertiary);">2× sehari pagi & sore</div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;padding-top:10px;border-top:1px solid #eee;font-size:0.65rem;color:var(--text-muted);">
+        Tanda tangan digital · dr. Sarah Wijaya, Sp.PD
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button class="neu-btn-primary neu-btn-block mt-20" data-animate="up" data-delay="450" onclick="kirimResep()">
+      <ion-icon name="send-outline" style="vertical-align:-2px;margin-right:6px;"></ion-icon>
+      Kirim Resep ke Pasien
+    </button>
+
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+  // ── Firebase Auth Guard ──────────────────────────────────────────────────
+  let _rxUser = null;
+  const _rxPatientId = new URLSearchParams(location.search).get('patient') ||
+                       new URLSearchParams(location.search).get('id');
+
+  (async () => {
+    const { user } = await VAuth.guard('doctor', 1);
+    _rxUser = user;
+  })();
+
+  function filterDrugs() {
+    const val = document.getElementById('drug-search').value;
+    document.getElementById('drug-dropdown').style.display = val.length > 0 ? 'block' : 'none';
+  }
+
+  function addDrug(name, detail) {
+    document.getElementById('drug-search').value = '';
+    document.getElementById('drug-dropdown').style.display = 'none';
+    const list = document.getElementById('med-list');
+    const row = document.createElement('div');
+    row.className = 'med-row';
+    row.style.animation = 'fadeInUp 0.3s ease';
+    row.innerHTML = `
+      <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#6C63FF,#8B83FF);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">💊</div>
+      <div class="med-info">
+        <div class="med-name">${name}</div>
+        <div class="med-detail">${detail}</div>
+      </div>
+      <button class="med-delete" onclick="removeMed(this)" title="Hapus">✕</button>
+    `;
+    list.appendChild(row);
+    showToast(name + ' ditambahkan ke resep', 'success');
+  }
+
+  function removeMed(btn) {
+    btn.closest('.med-row').remove();
+    showToast('Obat dihapus dari resep', 'info');
+  }
+
+  function updateHerbal() {
+    const val = document.getElementById('herbal-select').value;
+    const preview = document.getElementById('herbal-preview');
+    const herbals = {
+      'cabe-puyang': {
+        icon: '🌶️', name: 'Cabe Puyang',
+        desc: 'Pereda nyeri otot, pegal, dan kelelahan',
+        content: '<span style="font-weight:600;">Bahan:</span> Cabe jawa 5g + Puyang 10g + Air 300ml<br><span style="font-weight:600;">Cara:</span> Rebus 15 menit, saring, minum hangat<br><span style="font-weight:600;">Dosis:</span> 2× sehari'
+      },
+      'kunyit-asam': {
+        icon: '🌿', name: 'Kunyit Asam',
+        desc: 'Anti-inflamasi, redakan ketegangan kepala',
+        content: '<span style="font-weight:600;">Bahan:</span> Kunyit segar 20g + Asam jawa 10g + Air 400ml<br><span style="font-weight:600;">Cara:</span> Rebus hingga 200ml, saring, minum hangat<br><span style="font-weight:600;">Dosis:</span> 2× sehari, pagi & sore'
+      },
+      'beras-kencur': {
+        icon: '🌾', name: 'Beras Kencur',
+        desc: 'Stamina, mengurangi pusing dan mual',
+        content: '<span style="font-weight:600;">Bahan:</span> Beras sangrai 30g + Kencur 15g + Air 500ml<br><span style="font-weight:600;">Cara:</span> Blender, saring, tambah gula aren<br><span style="font-weight:600;">Dosis:</span> 1× sehari pagi'
+      }
+    };
+    if (val && herbals[val]) {
+      const h = herbals[val];
+      preview.innerHTML = `
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="font-size:1.6rem;">${h.icon}</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:0.85rem;color:var(--primary-dark);">${h.name}</div>
+            <div style="font-size:0.68rem;color:var(--text-tertiary);margin-bottom:8px;">${h.desc}</div>
+            <div style="font-size:0.72rem;color:var(--text-secondary);line-height:1.7;">${h.content}</div>
+          </div>
+        </div>`;
+      preview.style.display = 'block';
+    } else {
+      preview.innerHTML = '';
+    }
+  }
+
+  async function kirimResep() {
+    if (!_rxUser) { showToast('Sesi tidak valid', 'error'); return; }
+
+    // Collect medications from the med-list
+    const medRows = document.querySelectorAll('#med-list .med-row');
+    const medications = Array.from(medRows).map(row => {
+      const name   = row.querySelector('.med-name')   ? row.querySelector('.med-name').textContent.trim() : '';
+      const detail = row.querySelector('.med-detail') ? row.querySelector('.med-detail').textContent.trim() : '';
+      return { name, detail };
+    });
+
+    // Collect herbal selection
+    const herbalSelect = document.getElementById('herbal-select');
+    const herbalValue  = herbalSelect ? herbalSelect.value : '';
+
+    // Collect notes
+    const notesEl = document.querySelector('.doc-note');
+    const notes   = notesEl ? notesEl.value.trim() : '';
+
+    try {
+      await VDB.createMedicalRecord({
+        patientId:   _rxPatientId || 'unknown',
+        doctorId:    _rxUser.uid,
+        type:        'prescription',
+        medications,
+        herbal:      herbalValue,
+        notes
+      });
+      showToast('Resep berhasil disimpan', 'success');
+    } catch (err) {
+      showToast('Gagal menyimpan resep', 'error');
+      console.error(err);
+    }
+  }
+
+  // Close dropdown on outside click
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-wrap')) {
+      document.getElementById('drug-dropdown').style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>

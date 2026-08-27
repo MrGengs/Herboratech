@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Detail Artikel</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid #27AE60; padding-left: 10px; }
+
+    .hero-image {
+      background: linear-gradient(135deg, #0D3A1E 0%, #1A7A3A 100%);
+      border-radius: 20px;
+      padding: 32px 24px;
+      position: relative;
+      overflow: hidden;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .hero-image::before {
+      content: '🩺';
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 4rem;
+      opacity: 0.2;
+    }
+    .hero-image .article-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.4;
+      position: relative;
+      z-index: 1;
+    }
+
+    .article-chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .author-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0D2B1A, #27AE60);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-out-sm);
+      flex-shrink: 0;
+    }
+    .author-info .author-name { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+    .author-info .author-date { font-size: 0.72rem; color: var(--text-tertiary); }
+
+    .article-body h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 20px 0 8px;
+      padding-left: 10px;
+      border-left: 3px solid #27AE60;
+    }
+    .article-body p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin: 0 0 12px;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+    }
+    .action-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .action-btn:active { box-shadow: var(--shadow-in); }
+    .action-btn ion-icon { font-size: 1.1rem; }
+
+    .related-card {
+      display: flex;
+      gap: 12px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 14px;
+      padding: 12px;
+      cursor: pointer;
+    }
+    .related-thumb {
+      width: 70px; height: 70px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    .related-info { flex: 1; }
+    .related-info .rel-title { font-size: 0.78rem; font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+    .related-info .rel-meta { font-size: 0.68rem; color: var(--text-tertiary); margin-top: 4px; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('news.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;">Artikel</div>
+    <div style="width:42px;"></div>
+  </header>
+
+  <div class="section" style="padding-bottom: 80px;">
+
+    <!-- Hero Image -->
+    <div class="hero-image" data-animate="up">
+      <div class="article-title">Pentingnya Monitoring Tekanan Darah Harian untuk Cegah Komplikasi Hipertensi</div>
+    </div>
+
+    <!-- Chips & Meta -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;" data-animate="up" data-delay="100">
+      <div class="article-chips">
+        <span class="neu-chip-primary" style="font-size:0.68rem;">Kesehatan</span>
+        <span class="neu-chip" style="font-size:0.68rem;display:flex;align-items:center;gap:4px;">
+          <ion-icon name="time-outline"></ion-icon> 5 menit
+        </span>
+      </div>
+    </div>
+
+    <!-- Author Row -->
+    <div class="author-row mt-16" data-animate="up" data-delay="150">
+      <div class="author-avatar">IK</div>
+      <div class="author-info">
+        <div class="author-name">dr. Indra Kusuma, Sp.JP</div>
+        <div class="author-date">15 Mar 2026 · Spesialis Jantung & Pembuluh Darah</div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="height:1px;background:rgba(200,208,231,0.6);margin:20px 0;" data-animate="up" data-delay="200"></div>
+
+    <!-- Article Body -->
+    <div class="article-body" data-animate="up" data-delay="250">
+      <p>Tekanan darah tinggi atau hipertensi sering disebut sebagai "silent killer" karena kondisi ini jarang menimbulkan gejala yang terasa namun diam-diam merusak organ vital tubuh. Monitoring tekanan darah secara rutin setiap hari menjadi langkah krusial dalam manajemen hipertensi yang efektif dan pencegahan komplikasi berbahaya.</p>
+
+      <h3>Mengapa Pemantauan Harian Penting?</h3>
+      <p>Tekanan darah dapat berfluktuasi sepanjang hari dipengaruhi oleh aktivitas fisik, stres, pola makan, dan waktu istirahat. Dengan memantau secara konsisten, pasien dan dokter mendapatkan gambaran yang lebih akurat tentang pola tekanan darah dibandingkan pengukuran sesekali di klinik. Data harian membantu mendeteksi fenomena "white coat hypertension" dan "masked hypertension" yang sulit teridentifikasi dalam satu kali pemeriksaan.</p>
+
+      <h3>Kapan dan Bagaimana Cara Mengukur?</h3>
+      <p>Waktu terbaik untuk mengukur tekanan darah adalah pagi hari sebelum makan dan minum obat, serta malam hari sebelum tidur. Pastikan Anda telah beristirahat minimal 5 menit dalam posisi duduk tenang. Ukur pada lengan yang sama setiap kali, hindari mengukur setelah berolahraga, merokok, atau mengonsumsi kafein dalam 30 menit terakhir. Catat hasil pengukuran beserta kondisi saat itu dalam jurnal kesehatan atau aplikasi monitoring.</p>
+
+      <p>Dengan teknologi sensor IoT yang terintegrasi dalam platform HerboraTech, pemantauan tekanan darah kini dapat dilakukan secara otomatis dan hasilnya langsung tersinkronisasi ke catatan medis Anda. Dokter dapat memantau tren secara real-time dan memberikan penyesuaian terapi lebih cepat bila diperlukan. Konsistensi adalah kunci — jadikan pengukuran tekanan darah sebagai rutinitas harian seperti halnya menyikat gigi.</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-row mt-20" data-animate="up" data-delay="300">
+      <button class="action-btn" onclick="showToast('Artikel dibagikan','success')">
+        <ion-icon name="share-social-outline"></ion-icon>
+        Bagikan
+      </button>
+      <button class="action-btn" onclick="showToast('Artikel disimpan','success')">
+        <ion-icon name="bookmark-outline"></ion-icon>
+        Simpan
+      </button>
+    </div>
+
+    <!-- Related Articles -->
+    <div class="section-header mt-28" data-animate="up" data-delay="350">
+      <div class="section-title">Artikel Terkait</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;" data-animate="up" data-delay="400">
+      <div class="related-card" onclick="showToast('Membuka artikel...','info')">
+        <div class="related-thumb" style="background:linear-gradient(135deg,#0D3A1E,#1A7A3A);">💊</div>
+        <div class="related-info">
+          <div class="rel-title">Obat Hipertensi: Kapan Harus Mulai dan Bagaimana Mengelolanya?</div>
+          <div class="rel-meta">dr. Sari Dewi · 10 Mar 2026 · 4 menit</div>
+        </div>
+      </div>
+      <div class="related-card" onclick="showToast('Membuka artikel...','info')">
+        <div class="related-thumb" style="background:linear-gradient(135deg,#1A3A5C,#2F80ED);">🥗</div>
+        <div class="related-info">
+          <div class="rel-title">Diet DASH: Pola Makan Terbukti Turunkan Tekanan Darah Secara Alami</div>
+          <div class="rel-meta">Nutr. Maya · 8 Mar 2026 · 6 menit</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+(async () => {
+  try {
+    await VAuth.guard('patient', 1);
+
+    const id = new URLSearchParams(location.search).get('id');
+    if (!id) return; // keep static content as fallback
+
+    const snap = await VDB.db.collection('articles').doc(id).get();
+    if (!snap.exists) return; // keep static content
+
+    const article = snap.data();
+
+    // Title
+    const titleEl = document.querySelector('.article-title');
+    if (titleEl && article.title) titleEl.textContent = article.title;
+
+    // Category chip
+    const chipEl = document.querySelector('.neu-chip-primary');
+    if (chipEl && article.category) chipEl.textContent = article.category;
+
+    // Author
+    const authorNameEl = document.querySelector('.author-name');
+    if (authorNameEl && article.author) authorNameEl.textContent = article.author;
+
+    // Date
+    const authorDateEl = document.querySelector('.author-date');
+    if (authorDateEl && article.publishedAt) {
+      const d = article.publishedAt.toDate ? article.publishedAt.toDate() : new Date(article.publishedAt);
+      authorDateEl.textContent = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    // Article body content
+    const bodyEl = document.querySelector('.article-body');
+    if (bodyEl && article.content) {
+      bodyEl.innerHTML = '<p>' + article.content.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') + '</p>';
+    }
+
+  } catch (e) {
+    console.error('[news-detail] error:', e);
+    // keep static fallback, don't show error toast for auth redirects
+  }
+})();
+</script>
+</body>
+</html>

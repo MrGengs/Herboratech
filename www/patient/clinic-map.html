@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Klinik Terdekat</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D3320 0%, #1A6B3A 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+
+    .map-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 200px;
+      background: linear-gradient(160deg, #4CAF7D 0%, #2E7D52 25%, #388E5A 50%, #3A9E60 65%, #2D6B45 80%, #1B4A30 100%);
+      box-shadow: var(--shadow-out);
+    }
+    .map-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .map-road-h {
+      position: absolute;
+      height: 5px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 4px;
+    }
+    .map-road-v {
+      position: absolute;
+      width: 5px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 4px;
+    }
+    .map-pin {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+    .map-pin .pin-label {
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      font-size: 0.56rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 8px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .map-pin .pin-icon { font-size: 1.5rem; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
+    .map-user-dot {
+      position: absolute;
+      width: 14px; height: 14px;
+      background: var(--info);
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 5px rgba(47,128,237,0.25);
+    }
+    .map-scale {
+      position: absolute;
+      bottom: 10px; right: 12px;
+      font-size: 0.55rem;
+      color: rgba(255,255,255,0.7);
+      background: rgba(0,0,0,0.35);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .filter-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+    .filter-chips::-webkit-scrollbar { display: none; }
+    .filter-chip {
+      flex-shrink: 0;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: var(--shadow-out-sm);
+      background: var(--bg);
+      color: var(--text-secondary);
+      border: none;
+      transition: all 0.2s;
+    }
+    .filter-chip.active {
+      background: linear-gradient(135deg, #1A6B3A, #27AE60);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(39,174,96,0.35);
+    }
+
+    .clinic-card { display: flex; flex-direction: column; gap: 10px; }
+    .clinic-row { display: flex; gap: 10px; align-items: center; }
+    .clinic-distance {
+      background: var(--info-bg);
+      color: var(--info);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .clinic-bpjs {
+      background: var(--success-bg);
+      color: var(--success);
+      font-size: 0.6rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+    .clinic-actions { display: flex; gap: 8px; margin-top: 4px; }
+    .btn-nav {
+      flex: 1;
+      padding: 8px 0;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #1A6B3A, #27AE60);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(39,174,96,0.3);
+    }
+    .btn-daftar {
+      flex: 1;
+      padding: 8px 0;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: var(--bg);
+      color: var(--info);
+      border: none;
+      cursor: pointer;
+      box-shadow: var(--shadow-out-sm);
+    }
+
+    .rujukan-card {
+      background: linear-gradient(135deg, #E8F5E9, #F1F8E9);
+      border: 1px solid rgba(39,174,96,0.25);
+      border-radius: 18px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow-out-sm);
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('examination-result.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;">Klinik Terdekat</div>
+    <button class="neu-icon-btn" onclick="showToast('Lokasi diperbarui','info')"><ion-icon name="locate-outline"></ion-icon></button>
+  </header>
+
+  <div class="section" style="padding-bottom:0">
+    <!-- Mock Map -->
+    <div class="map-card" data-animate="scale">
+      <div class="map-grid"></div>
+      <!-- Roads horizontal -->
+      <div class="map-road-h" style="top:40%;left:0;right:0;"></div>
+      <div class="map-road-h" style="top:70%;left:0;right:0;opacity:0.6;"></div>
+      <div class="map-road-h" style="top:20%;left:10%;right:20%;opacity:0.4;"></div>
+      <!-- Roads vertical -->
+      <div class="map-road-v" style="left:30%;top:0;bottom:0;"></div>
+      <div class="map-road-v" style="left:65%;top:0;bottom:0;opacity:0.6;"></div>
+      <!-- User dot -->
+      <div class="map-user-dot" style="top:38%;left:47%;transform:translate(-50%,-50%);"></div>
+      <!-- Pin 1: Klinik HerboraTech Sudirman -->
+      <div class="map-pin" style="top:15%;left:25%;">
+        <span class="pin-icon">📍</span>
+        <div class="pin-label">HerboraTech Sudirman</div>
+      </div>
+      <!-- Pin 2: RS Medistra -->
+      <div class="map-pin" style="top:55%;left:62%;">
+        <span class="pin-icon">📍</span>
+        <div class="pin-label">RS Medistra</div>
+      </div>
+      <!-- Pin 3: Puskesmas Setiabudi -->
+      <div class="map-pin" style="top:65%;left:20%;">
+        <span class="pin-icon">📍</span>
+        <div class="pin-label">Puskesmas Setiabudi</div>
+      </div>
+      <div class="map-scale">500m</div>
+    </div>
+
+    <!-- Filter Chips -->
+    <div class="filter-chips mt-16" data-animate="up" data-delay="100">
+      <button class="filter-chip active" onclick="setFilter(this)">Semua</button>
+      <button class="filter-chip" onclick="setFilter(this)">Spesialis</button>
+      <button class="filter-chip" onclick="setFilter(this)">BPJS</button>
+      <button class="filter-chip" onclick="setFilter(this)">Buka 24 Jam</button>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:16px;">
+    <div class="section-header" data-animate="up" data-delay="150"><span class="section-title">Hasil Terdekat</span><span class="section-link">3 klinik</span></div>
+
+    <!-- Clinic 1 -->
+    <div class="neu-card" data-animate="up" data-delay="200" style="border-top:3px solid #27AE60;">
+      <div class="clinic-card">
+        <div class="clinic-row">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#27AE60,#6FCF97);display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:var(--shadow-out-sm);flex-shrink:0;">🏥</div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text-primary);">Klinik HerboraTech Sudirman</div>
+            <div style="font-size:0.68rem;color:var(--text-tertiary);margin-top:2px;">Jl. Sudirman No. 45, Jakarta Selatan</div>
+          </div>
+          <span class="clinic-distance">0.8 km</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <span style="font-size:0.68rem;color:var(--warning);">⭐ 4.8</span>
+          <span style="font-size:0.65rem;color:var(--text-muted);">|</span>
+          <span style="font-size:0.68rem;color:var(--text-tertiary);"><ion-icon name="time-outline" style="font-size:0.7rem;vertical-align:-1px;"></ion-icon> 08:00–20:00</span>
+          <span class="clinic-bpjs">BPJS ✓</span>
+          <span style="background:var(--info-bg);color:var(--info);font-size:0.6rem;font-weight:600;padding:2px 7px;border-radius:10px;">Spesialis</span>
+        </div>
+        <div class="clinic-actions">
+          <button class="btn-nav" onclick="showToast('Membuka navigasi…','info')"><ion-icon name="navigate-outline" style="vertical-align:-2px;font-size:0.85rem;"></ion-icon> Navigasi</button>
+          <button class="btn-daftar" onclick="showToast('Fitur pendaftaran online segera hadir','info')">Daftar Online</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clinic 2 -->
+    <div class="neu-card" data-animate="up" data-delay="280" style="border-top:3px solid var(--info);">
+      <div class="clinic-card">
+        <div class="clinic-row">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#2F80ED,#56CCF2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:var(--shadow-out-sm);flex-shrink:0;">🏨</div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text-primary);">RS Medistra</div>
+            <div style="font-size:0.68rem;color:var(--text-tertiary);margin-top:2px;">Jl. Gatot Subroto Kav. 59, Jakarta Selatan</div>
+          </div>
+          <span class="clinic-distance">2.1 km</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <span style="font-size:0.68rem;color:var(--warning);">⭐ 4.6</span>
+          <span style="font-size:0.65rem;color:var(--text-muted);">|</span>
+          <span style="font-size:0.68rem;color:var(--text-tertiary);"><ion-icon name="time-outline" style="font-size:0.7rem;vertical-align:-1px;"></ion-icon> 24 jam</span>
+          <span style="background:var(--warning-bg);color:var(--warning);font-size:0.6rem;font-weight:600;padding:2px 7px;border-radius:10px;">24 Jam</span>
+        </div>
+        <div class="clinic-actions">
+          <button class="btn-nav" onclick="showToast('Membuka navigasi…','info')"><ion-icon name="navigate-outline" style="vertical-align:-2px;font-size:0.85rem;"></ion-icon> Navigasi</button>
+          <button class="btn-daftar" onclick="showToast('Fitur pendaftaran online segera hadir','info')">Daftar Online</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clinic 3 -->
+    <div class="neu-card" data-animate="up" data-delay="360" style="border-top:3px solid var(--primary);">
+      <div class="clinic-card">
+        <div class="clinic-row">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#6FCF97,#A8E6C1);display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:var(--shadow-out-sm);flex-shrink:0;">🏪</div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text-primary);">Puskesmas Setiabudi</div>
+            <div style="font-size:0.68rem;color:var(--text-tertiary);margin-top:2px;">Jl. Setiabudi Raya No. 12, Jakarta Selatan</div>
+          </div>
+          <span class="clinic-distance">1.4 km</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <span style="font-size:0.68rem;color:var(--warning);">⭐ 4.2</span>
+          <span style="font-size:0.65rem;color:var(--text-muted);">|</span>
+          <span style="font-size:0.68rem;color:var(--text-tertiary);"><ion-icon name="time-outline" style="font-size:0.7rem;vertical-align:-1px;"></ion-icon> 08:00–16:00</span>
+          <span class="clinic-bpjs">BPJS ✓</span>
+        </div>
+        <div class="clinic-actions">
+          <button class="btn-nav" onclick="showToast('Membuka navigasi…','info')"><ion-icon name="navigate-outline" style="vertical-align:-2px;font-size:0.85rem;"></ion-icon> Navigasi</button>
+          <button class="btn-daftar" onclick="showToast('Fitur pendaftaran online segera hadir','info')">Daftar Online</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rujukan Card -->
+    <div class="rujukan-card" data-animate="up" data-delay="440">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#27AE60,#6FCF97);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">📄</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text-primary);">Surat Rujukan Tersedia</div>
+            <span style="background:var(--success-bg);color:var(--success);font-size:0.6rem;font-weight:700;padding:2px 8px;border-radius:10px;">Aktif</span>
+          </div>
+          <div style="font-size:0.68rem;color:var(--text-tertiary);margin-top:2px;">dr. Sarah Wijaya, Sp.PD · 21 Mar 2026</div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.6);border-radius:12px;padding:10px 12px;margin-bottom:12px;">
+        <div style="font-size:0.7rem;color:var(--text-secondary);line-height:1.6;">
+          <strong>Pasien:</strong> <span id="userName">Ahmad Fauzi</span> &nbsp;|&nbsp; <strong>Dx:</strong> Tension Headache<br>
+          <strong>Rujuk ke:</strong> Poliklinik Neurologi
+        </div>
+      </div>
+      <button class="neu-btn-primary neu-btn-block" style="font-size:0.8rem;padding:10px;" onclick="showToast('Membuka surat rujukan…','info')">
+        <ion-icon name="document-text-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon>
+        Lihat Surat Rujukan
+      </button>
+    </div>
+
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+(async () => {
+  const { user, profile } = await VAuth.guard('patient', 1);
+  const nameEl = document.getElementById('userName') || document.querySelector('[data-user-name]');
+  if (nameEl) nameEl.textContent = profile.name;
+})();
+
+  function setFilter(el) {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    showToast('Filter: ' + el.textContent, 'info');
+  }
+</script>
+</body>
+</html>

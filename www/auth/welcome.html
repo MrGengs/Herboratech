@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Selamat Datang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100dvh; overflow: hidden; font-family: 'Poppins', sans-serif; background: #040E07; }
+
+    /* ══════════════════════════════════════════════════
+       THREE.JS CANVAS
+    ══════════════════════════════════════════════════ */
+    #three-canvas { position: fixed; inset: 0; z-index: 0; display: block; }
+
+    .vignette {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 55%, transparent 25%, rgba(4,14,7,0.75) 70%, rgba(4,14,7,0.97) 100%);
+    }
+
+    /* ══════════════════════════════════════════════════
+       CHROME (Logo, Skip, Dots) — always visible
+    ══════════════════════════════════════════════════ */
+    .chrome {
+      position: fixed; inset: 0; z-index: 20;
+      pointer-events: none;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 24px 28px 28px;
+    }
+    .chrome-top { display: flex; justify-content: space-between; align-items: center; }
+    .brand {
+      font-size: 1.35rem; font-weight: 800; color: #fff; letter-spacing: -0.5px;
+      text-shadow: 0 0 40px rgba(111,207,151,0.4);
+      opacity: 0; transform: translateY(-14px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .brand span { color: #6FCF97; }
+    .brand.vis { opacity: 1; transform: translateY(0); }
+
+    .skip-btn {
+      pointer-events: all; cursor: pointer;
+      font-size: 0.75rem; font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px; padding: 6px 16px;
+      transition: all 0.25s; font-family: 'Poppins', sans-serif;
+    }
+    .skip-btn:hover { color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.1); }
+
+    .chrome-bottom { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+
+    /* Dot navigation */
+    .dots { display: flex; gap: 8px; pointer-events: all; }
+    .dot {
+      width: 8px; height: 8px; border-radius: 100px;
+      background: rgba(255,255,255,0.18); cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dot.active { width: 28px; background: #6FCF97; }
+
+    /* Arrow nav row */
+    .nav-row {
+      display: flex; align-items: center; gap: 16px;
+      pointer-events: all;
+    }
+    .nav-btn {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1px solid rgba(111,207,151,0.2);
+      background: rgba(4,14,7,0.5);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      color: rgba(255,255,255,0.5); cursor: pointer; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s; font-family: 'Poppins', sans-serif;
+    }
+    .nav-btn:hover:not(:disabled) { border-color: rgba(111,207,151,0.5); color: #6FCF97; background: rgba(111,207,151,0.1); }
+    .nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+    /* ══════════════════════════════════════════════════
+       SLIDES CONTAINER
+    ══════════════════════════════════════════════════ */
+    .slides-wrap {
+      position: fixed; inset: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      padding: 80px 20px 100px;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute; width: 100%; max-width: 500px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 20px;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, opacity;
+    }
+    .slide.state-center { transform: translateX(0);    opacity: 1;  pointer-events: all; }
+    .slide.state-left   { transform: translateX(-110%); opacity: 0; pointer-events: none; }
+    .slide.state-right  { transform: translateX(110%);  opacity: 0; pointer-events: none; }
+
+    /* ── Glass card ── */
+    .card {
+      background: rgba(4,14,7,0.6);
+      backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(111,207,151,0.14);
+      border-radius: 28px;
+      width: 100%; max-width: 460px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(111,207,151,0.06), inset 0 1px 0 rgba(255,255,255,0.05);
+      overflow: hidden;
+    }
+    .card-body { padding: 36px 36px 28px; }
+    @media (max-width: 480px) { .card-body { padding: 28px 22px 22px; } }
+    @media (max-height: 680px) { .card-body { padding: 22px 24px 18px; } }
+
+    /* ══════════════════════════════════════════════════
+       SHARED TYPOGRAPHY
+    ══════════════════════════════════════════════════ */
+    .badge-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      border-radius: 100px; padding: 5px 14px; margin-bottom: 18px;
+    }
+    .badge-green { color: #6FCF97; background: rgba(111,207,151,0.1); border: 1px solid rgba(111,207,151,0.22); }
+    .badge-blue  { color: #56CCF2; background: rgba(86,204,242,0.1);  border: 1px solid rgba(86,204,242,0.22); }
+    .badge-gold  { color: #F2C94C; background: rgba(242,201,76,0.1);  border: 1px solid rgba(242,201,76,0.22); }
+
+    .slide-num {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 6px;
+    }
+    .slide-title {
+      font-size: 1.55rem; font-weight: 800; color: #fff;
+      letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 10px;
+    }
+    .slide-title span { color: #6FCF97; }
+    .slide-sub {
+      font-size: 0.8rem; color: rgba(255,255,255,0.4);
+      line-height: 1.7; margin-bottom: 22px;
+    }
+
+    /* CTA button */
+    .cta-btn {
+      width: 100%; padding: 13px 20px; border-radius: 100px; border: none;
+      background: linear-gradient(135deg, #1A5C38, #27AE60 50%, #6FCF97);
+      color: #fff; font-family: 'Poppins', sans-serif; font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 6px 28px rgba(39,174,96,0.4); transition: transform 0.25s, box-shadow 0.25s;
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(39,174,96,0.5); }
+    .cta-btn .arrow { transition: transform 0.3s; }
+    .cta-btn:hover .arrow { transform: translateX(5px); }
+    @keyframes pulse-glow {
+      0%,100% { box-shadow: 0 6px 28px rgba(39,174,96,0.4), 0 0 0 0 rgba(111,207,151,0.3); }
+      55%      { box-shadow: 0 6px 28px rgba(39,174,96,0.4), 0 0 0 9px rgba(111,207,151,0); }
+    }
+
+    /* ══════════════════════════════════════════════════
+       SLIDE 0 — WELCOME
+    ══════════════════════════════════════════════════ */
+    .s0-name {
+      font-size: 2rem; font-weight: 800; letter-spacing: -1.2px; line-height: 1.05;
+      background: linear-gradient(135deg, #fff 0%, #a8edca 55%, #6FCF97 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      min-height: 2.4rem; display: flex; align-items: center; margin-bottom: 6px;
+    }
+    .cursor {
+      display: inline-block; width: 3px; height: 0.95em; background: #6FCF97;
+      border-radius: 2px; margin-left: 3px; vertical-align: bottom; flex-shrink: 0;
+      animation: blink 0.85s step-end infinite;
+    }
+    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+    .role-chip {
+      display: inline-block; padding: 3px 12px; border-radius: 100px;
+      font-size: 0.66rem; font-weight: 700; margin-bottom: 14px;
+    }
+    .rc-patient { background: rgba(39,174,96,0.14); color: #6FCF97; border: 1px solid rgba(111,207,151,0.22); }
+    .rc-doctor  { background: rgba(47,128,237,0.14); color: #56CCF2; border: 1px solid rgba(86,204,242,0.22); }
+    .rc-admin   { background: rgba(242,153,74,0.14);  color: #F2994A; border: 1px solid rgba(242,153,74,0.22); }
+
+    .s0-chips { display: flex; gap: 7px; margin-bottom: 24px; }
+    .s0-chip {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 11px 6px; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(111,207,151,0.1); border-radius: 14px;
+      font-size: 0.66rem; color: rgba(255,255,255,0.45); font-weight: 500;
+      transition: all 0.3s;
+    }
+    .s0-chip:hover { background: rgba(111,207,151,0.08); border-color: rgba(111,207,151,0.2); color: #6FCF97; }
+    .s0-chip .ci { font-size: 1.25rem; }
+
+    /* ══════════════════════════════════════════════════
+       SLIDE 1 — HERBAL
+    ══════════════════════════════════════════════════ */
+    .herb-hero {
+      background: linear-gradient(135deg, rgba(39,174,96,0.12), rgba(27,94,32,0.08));
+      border: 1px solid rgba(111,207,151,0.15); border-radius: 18px;
+      padding: 18px; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .herb-icon-wrap {
+      width: 56px; height: 56px; border-radius: 16px; flex-shrink: 0;
+      background: rgba(111,207,151,0.12); border: 1px solid rgba(111,207,151,0.2);
+      display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+      animation: float-icon 3s ease-in-out infinite;
+    }
+    @keyframes float-icon { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+    .herb-hero-text h3 { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .herb-hero-text p  { font-size: 0.73rem; color: rgba(255,255,255,0.4); line-height: 1.5; }
+
+    /* Comparison grid */
+    .compare-header {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      margin-bottom: 6px; padding: 0 4px;
+    }
+    .ch-label { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    .ch-label:first-child { color: rgba(255,255,255,0.25); }
+    .ch-label:nth-child(2) { color: #6FCF97; text-align: center; }
+    .ch-label:last-child  { color: rgba(255,255,255,0.25); text-align: center; }
+
+    .compare-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      align-items: center; padding: 8px 10px; border-radius: 10px;
+      margin-bottom: 4px; background: rgba(255,255,255,0.02);
+      transition: background 0.2s;
+    }
+    .compare-row:hover { background: rgba(111,207,151,0.05); }
+    .cr-feature { font-size: 0.76rem; color: rgba(255,255,255,0.6); font-weight: 500; }
+    .cr-herboratech { text-align: center; }
+    .cr-other    { text-align: center; }
+    .check-yes  { font-size: 0.95rem; }
+    .check-no   { font-size: 0.85rem; color: rgba(255,255,255,0.2); }
+
+    /* Cert badges */
+    .cert-row { display: flex; gap: 7px; margin: 16px 0; justify-content: center; flex-wrap: wrap; }
+    .cert-badge {
+      display: flex; align-items: center; gap: 5px;
+      padding: 5px 12px; border-radius: 100px;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.5);
+    }
+    .cert-badge .cert-dot { width: 6px; height: 6px; border-radius: 50%; background: #6FCF97; }
+
+    /* Evidence level mini cards */
+    .ev-row { display: flex; gap: 7px; margin-bottom: 18px; }
+    .ev-card {
+      flex: 1; background: rgba(255,255,255,0.03); border-radius: 12px;
+      padding: 10px 8px; text-align: center;
+      border: 1px solid rgba(255,255,255,0.07); transition: all 0.3s;
+    }
+    .ev-card:hover { transform: translateY(-2px); background: rgba(255,255,255,0.06); }
+    .ev-emoji { font-size: 1.2rem; line-height: 1; }
+    .ev-name  { font-size: 0.65rem; color: rgba(255,255,255,0.55); margin: 3px 0; font-weight: 500; }
+    .ev-badge {
+      display: inline-block; padding: 1px 7px; border-radius: 20px;
+      font-size: 0.6rem; font-weight: 700;
+    }
+    .ev-A { background: rgba(39,174,96,0.25); color: #6FCF97; }
+    .ev-B { background: rgba(242,153,74,0.2); color: #F2994A; }
+
+    /* ══════════════════════════════════════════════════
+       SLIDE 2 — AIoT
+    ══════════════════════════════════════════════════ */
+    /* Sensor pipeline */
+    .pipeline { margin-bottom: 20px; }
+
+    .sensor-row {
+      display: flex; gap: 6px; justify-content: center; margin-bottom: 10px;
+    }
+    .sensor-node {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 9px 4px; border-radius: 12px;
+      background: rgba(86,204,242,0.07); border: 1px solid rgba(86,204,242,0.15);
+      font-size: 1rem;
+    }
+    .sensor-node span { font-size: 0.58rem; color: rgba(86,204,242,0.7); font-weight: 600; }
+
+    .pipe-arrow {
+      text-align: center; color: rgba(111,207,151,0.4); font-size: 1.2rem;
+      margin: 2px 0; animation: pipe-pulse 2s ease-in-out infinite;
+    }
+    @keyframes pipe-pulse { 0%,100% { opacity:0.4; transform:scaleY(1); } 50% { opacity:1; transform:scaleY(1.1); } }
+
+    .ai-box {
+      background: linear-gradient(135deg, rgba(39,174,96,0.12), rgba(47,128,237,0.1));
+      border: 1px solid rgba(111,207,151,0.22); border-radius: 14px;
+      padding: 12px 16px; text-align: center; margin: 2px 0;
+      position: relative; overflow: hidden;
+    }
+    .ai-box::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(111,207,151,0.06), transparent);
+      transform: translateX(-100%);
+      animation: ai-scan 2.5s linear infinite;
+    }
+    @keyframes ai-scan { to { transform: translateX(100%); } }
+    .ai-box h4 { font-size: 0.8rem; font-weight: 700; color: #6FCF97; margin-bottom: 2px; }
+    .ai-box p  { font-size: 0.67rem; color: rgba(255,255,255,0.4); }
+
+    .risk-row { display: flex; gap: 6px; margin: 4px 0; }
+    .risk-chip {
+      flex: 1; text-align: center; padding: 7px 4px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; font-size: 0.65rem; color: rgba(255,255,255,0.5);
+    }
+    .risk-chip .ri { font-size: 0.9rem; display: block; margin-bottom: 2px; }
+
+    .action-box {
+      background: rgba(39,174,96,0.08); border: 1px solid rgba(111,207,151,0.15);
+      border-radius: 12px; padding: 10px 14px;
+      display: flex; align-items: center; gap: 10px; margin: 4px 0;
+    }
+    .action-box .ab-icon { font-size: 1.2rem; }
+    .action-box p { font-size: 0.72rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
+    .action-box strong { color: rgba(255,255,255,0.75); font-weight: 600; }
+
+    /* Algo badges */
+    .algo-row { display: flex; gap: 7px; margin-bottom: 18px; flex-wrap: wrap; }
+    .algo-badge {
+      padding: 4px 11px; border-radius: 100px; font-size: 0.63rem; font-weight: 700;
+      background: rgba(47,128,237,0.1); border: 1px solid rgba(86,204,242,0.18);
+      color: rgba(86,204,242,0.8);
+    }
+
+    /* ══════════════════════════════════════════════════
+       SLIDE 3 — GET STARTED
+    ══════════════════════════════════════════════════ */
+    .s3-top {
+      text-align: center; margin-bottom: 24px;
+    }
+    .s3-icon-wrap {
+      width: 72px; height: 72px; border-radius: 22px;
+      background: linear-gradient(135deg, rgba(39,174,96,0.2), rgba(111,207,151,0.1));
+      border: 1px solid rgba(111,207,151,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; margin: 0 auto 16px;
+      animation: float-icon 3.5s ease-in-out infinite;
+    }
+
+    .ready-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+    .ready-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(111,207,151,0.1); border-radius: 14px;
+      transition: all 0.3s;
+    }
+    .ready-row:hover { background: rgba(111,207,151,0.06); border-color: rgba(111,207,151,0.2); }
+    .ready-icon {
+      width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .ri-green  { background: rgba(39,174,96,0.15); }
+    .ri-blue   { background: rgba(47,128,237,0.15); }
+    .ri-purple { background: rgba(108,99,255,0.15); }
+    .ready-text h5 { font-size: 0.82rem; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    .ready-text p  { font-size: 0.7rem; color: rgba(255,255,255,0.38); line-height: 1.4; }
+
+    .s3-footnote {
+      text-align: center; font-size: 0.68rem; color: rgba(255,255,255,0.2);
+      margin-top: 12px; line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Health data waveform background -->
+<canvas id="three-canvas"></canvas>
+<div class="vignette"></div>
+
+<!-- ═══════════════ CHROME ═══════════════ -->
+<div class="chrome">
+  <div class="chrome-top">
+    <div class="brand" id="brand">Herbora<span>Tech</span></div>
+    <button class="skip-btn" onclick="skipToPortal()">Lewati</button>
+  </div>
+  <div class="chrome-bottom">
+    <div class="dots" id="dots">
+      <div class="dot active" onclick="goToSlide(0)"></div>
+      <div class="dot" onclick="goToSlide(1)"></div>
+      <div class="dot" onclick="goToSlide(2)"></div>
+      <div class="dot" onclick="goToSlide(3)"></div>
+    </div>
+    <div class="nav-row">
+      <button class="nav-btn" id="nav-prev" onclick="prevSlide()" disabled>←</button>
+      <button class="nav-btn" id="nav-next" onclick="nextSlide()">→</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SLIDES ═══════════════ -->
+<div class="slides-wrap">
+
+  <!-- ── SLIDE 0: Welcome ── -->
+  <div class="slide state-center" id="slide-0">
+    <div class="card">
+      <div class="card-body">
+        <div class="badge-pill badge-green">🌿 Platform Telemedisin AIoT</div>
+        <div style="font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">Selamat Datang,</div>
+        <div class="s0-name" id="s0-name"><span class="cursor" id="cursor"></span></div>
+        <div id="role-chip-slot" style="margin-bottom:14px;"></div>
+        <p class="slide-sub" style="margin-bottom:20px;">
+          Platform pertama Indonesia yang menggabungkan sensor IoT real-time,
+          kecerdasan buatan, dan herbal medicine berbasis riset ilmiah.
+        </p>
+        <div class="s0-chips" id="s0-chips">
+          <div class="s0-chip"><span class="ci">🫀</span><span>Monitor Vitals</span></div>
+          <div class="s0-chip"><span class="ci">🩺</span><span>Konsultasi</span></div>
+          <div class="s0-chip"><span class="ci">🌿</span><span>Herbal Riset</span></div>
+        </div>
+        <button class="cta-btn" onclick="nextSlide()">
+          Jelajahi Keunggulan <span class="arrow">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 1: Herbal ── -->
+  <div class="slide state-right" id="slide-1">
+    <div class="card">
+      <div class="card-body">
+        <div class="slide-num">Keunggulan 01 / 02</div>
+        <div class="slide-title"><span>Herbal</span> Medicine<br>Berbasis Riset</div>
+        <p class="slide-sub" style="margin-bottom:16px;">
+          Bukan sekadar warisan nenek moyang. Setiap rekomendasi herbal
+          didasarkan pada uji klinis, monograf WHO, dan regulasi BPOM RI.
+        </p>
+
+        <!-- Hero herb card -->
+        <div class="herb-hero">
+          <div class="herb-icon-wrap">🌿</div>
+          <div class="herb-hero-text">
+            <h3>12+ Tanaman Tervalidasi</h3>
+            <p>Satu-satunya platform yang mengintegrasikan rekomendasi herbal
+              dengan data sensor IoT real-time Anda</p>
+          </div>
+        </div>
+
+        <!-- Evidence level preview -->
+        <div class="ev-row">
+          <div class="ev-card">
+            <div class="ev-emoji">🫚</div>
+            <div class="ev-name">Jahe Merah</div>
+            <span class="ev-badge ev-A">Level A</span>
+          </div>
+          <div class="ev-card">
+            <div class="ev-emoji">🟡</div>
+            <div class="ev-name">Temulawak</div>
+            <span class="ev-badge ev-A">Level A</span>
+          </div>
+          <div class="ev-card">
+            <div class="ev-emoji">🍃</div>
+            <div class="ev-name">Sambiloto</div>
+            <span class="ev-badge ev-A">Level A</span>
+          </div>
+          <div class="ev-card">
+            <div class="ev-emoji">🌺</div>
+            <div class="ev-name">Rosella</div>
+            <span class="ev-badge ev-B">Level B</span>
+          </div>
+        </div>
+
+        <!-- Comparison table -->
+        <div class="compare-header">
+          <span class="ch-label">Fitur</span>
+          <span class="ch-label">HerboraTech</span>
+          <span class="ch-label">Lainnya</span>
+        </div>
+        <div class="compare-row">
+          <span class="cr-feature">Evidence-based</span>
+          <span class="cr-herboratech check-yes">✅</span>
+          <span class="cr-other check-no">✗</span>
+        </div>
+        <div class="compare-row">
+          <span class="cr-feature">WHO Monographs</span>
+          <span class="cr-herboratech check-yes">✅</span>
+          <span class="cr-other check-no">✗</span>
+        </div>
+        <div class="compare-row">
+          <span class="cr-feature">Terintegrasi IoT</span>
+          <span class="cr-herboratech check-yes">✅</span>
+          <span class="cr-other check-no">✗</span>
+        </div>
+        <div class="compare-row">
+          <span class="cr-feature">Referensi PMID</span>
+          <span class="cr-herboratech check-yes">✅</span>
+          <span class="cr-other check-no">✗</span>
+        </div>
+
+        <!-- Cert badges -->
+        <div class="cert-row">
+          <div class="cert-badge"><span class="cert-dot"></span> BPOM RI</div>
+          <div class="cert-badge"><span class="cert-dot"></span> WHO Monographs</div>
+          <div class="cert-badge"><span class="cert-dot"></span> FOHAI Kemenkes</div>
+          <div class="cert-badge"><span class="cert-dot"></span> PubMed Refs</div>
+        </div>
+
+        <button class="cta-btn" onclick="nextSlide()">
+          Lihat Integrasi AIoT <span class="arrow">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 2: AIoT ── -->
+  <div class="slide state-right" id="slide-2">
+    <div class="card">
+      <div class="card-body">
+        <div class="slide-num">Keunggulan 02 / 02</div>
+        <div class="slide-title">AIoT <span>Prediksi</span><br>Sebelum Sakit</div>
+        <p class="slide-sub" style="margin-bottom:16px;">
+          Sensor wearable BLE mengukur 5 tanda vital setiap detik.
+          AI menganalisis pola untuk memprediksi risiko penyakit —
+          bukan sekadar mencatat, tapi mencegah.
+        </p>
+
+        <!-- Pipeline visualization -->
+        <div class="pipeline">
+          <!-- Sensors -->
+          <div class="sensor-row">
+            <div class="sensor-node">🫀<span>HR</span></div>
+            <div class="sensor-node">💨<span>SpO₂</span></div>
+            <div class="sensor-node">🌡️<span>Suhu</span></div>
+            <div class="sensor-node">⚡<span>HRV</span></div>
+            <div class="sensor-node">🧠<span>GSR</span></div>
+          </div>
+          <div class="pipe-arrow">↓ upload tiap 60s</div>
+          <!-- AI Engine -->
+          <div class="ai-box">
+            <h4>🤖 AI Risk Engine</h4>
+            <p>Framingham Risk Score · FINDRISC · IEEE 11073 PHD</p>
+          </div>
+          <div class="pipe-arrow">↓ kalkulasi real-time</div>
+          <!-- Risk outputs -->
+          <div class="risk-row">
+            <div class="risk-chip"><span class="ri">❤️</span>Kardio</div>
+            <div class="risk-chip"><span class="ri">🍬</span>Diabetes</div>
+            <div class="risk-chip"><span class="ri">🩸</span>Hipertensi</div>
+            <div class="risk-chip"><span class="ri">😴</span>Apnea</div>
+          </div>
+          <div class="pipe-arrow">↓ rekomendasi personal</div>
+          <!-- Action -->
+          <div class="action-box">
+            <span class="ab-icon">🎯</span>
+            <p><strong>Rekomendasi terstruktur</strong> — konsultasi dokter,
+              ramuan herbal yang tepat, dan panduan gaya hidup</p>
+          </div>
+        </div>
+
+        <!-- Algorithm badges -->
+        <div class="algo-row">
+          <span class="algo-badge">Framingham Score</span>
+          <span class="algo-badge">FINDRISC 2003</span>
+          <span class="algo-badge">ESC HRV Guidelines</span>
+          <span class="algo-badge">WHO mHealth 2019</span>
+        </div>
+
+        <button class="cta-btn" onclick="nextSlide()">
+          Saya Siap Memulai <span class="arrow">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 3: Get Started ── -->
+  <div class="slide state-right" id="slide-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="s3-top">
+          <div class="s3-icon-wrap">🚀</div>
+          <div class="slide-title" style="text-align:center;">Anda Siap<br><span>Memulai!</span></div>
+          <p class="slide-sub" style="text-align:center;">
+            HerboraTech hadir sebagai mitra kesehatan preventif Anda —
+            dari deteksi dini hingga rekomendasi terstruktur.
+          </p>
+        </div>
+
+        <div class="ready-list">
+          <div class="ready-row">
+            <div class="ready-icon ri-green">🌿</div>
+            <div class="ready-text">
+              <h5>Database Herbal Berbasis Riset</h5>
+              <p>12+ tanaman · Level evidence A/B/C · Referensi WHO & BPOM</p>
+            </div>
+          </div>
+          <div class="ready-row">
+            <div class="ready-icon ri-blue">🔬</div>
+            <div class="ready-text">
+              <h5>AIoT Real-time Health Monitor</h5>
+              <p>5 sensor vitals · AI risk prediction · Algoritma Framingham</p>
+            </div>
+          </div>
+          <div class="ready-row">
+            <div class="ready-icon ri-purple">🩺</div>
+            <div class="ready-text">
+              <h5>Telemedisin Terstruktur</h5>
+              <p>Konsultasi · Guided examination · Resep & rujukan digital</p>
+            </div>
+          </div>
+        </div>
+
+        <button class="cta-btn" id="final-cta" onclick="proceedToPortal()">
+          Mulai Perjalanan Sehat <span class="arrow">→</span>
+        </button>
+        <p class="s3-footnote">
+          Platform kesehatan preventif pertama<br>yang mengintegrasikan IoT · AI · Herbal · Telemedisin
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /slides-wrap -->
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+
+<script>
+// ════════════════════════════════════════════════════════════
+//  CANVAS 2D — Animated health data waveforms (ECG, SpO₂, HRV, Temp, GSR)
+// ════════════════════════════════════════════════════════════
+const threeState = (function () {
+  const canvas = document.getElementById('three-canvas');
+  const ctx    = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // ── Track definitions ────────────────────────────────────────────
+  const TRACKS = [
+    { id:'HR',   unit:'bpm', val:'74',   color:'#6FCF97', rgb:'111,207,151', freq:1.25, type:'ecg',  phOff:0.55 },
+    { id:'SpO₂', unit:'%',   val:'96.2', color:'#56CCF2', rgb:'86,204,242',  freq:1.25, type:'spo2', phOff:0.20 },
+    { id:'HRV',  unit:'ms',  val:'52',   color:'#F2C94C', rgb:'242,201,76',  freq:0.09, type:'hrv',  phOff:0    },
+    { id:'Temp', unit:'°C',  val:'36.8', color:'#F2994A', rgb:'242,153,74',  freq:0.04, type:'temp', phOff:0    },
+    { id:'GSR',  unit:'µS',  val:'4.1',  color:'#BB86FC', rgb:'187,134,252', freq:0.11, type:'gsr',  phOff:0    },
+  ];
+  const WIN = 10;  // seconds of history visible
+  const ML  = 58;  // left margin px (labels)
+  const MR  = 74;  // right margin px (values)
+
+  // ── Gaussian helper ──────────────────────────────────────────────
+  function g(x, mu, s, a) { return Math.exp(-0.5 * Math.pow((x - mu) / s, 2)) * a; }
+
+  // ── Waveform generators (fully deterministic) ────────────────────
+  function ecgAt(ph) {
+    const x = ((ph % 1) + 1) % 1;
+    return g(x,0.10,0.025,0.18) - g(x,0.22,0.012,0.12)
+         + g(x,0.25,0.008,1.00) - g(x,0.285,0.013,0.14)
+         + g(x,0.46,0.045,0.30);
+  }
+  function spo2At(ph) {
+    const x   = ((ph % 1) + 1) % 1;
+    const rise  = x < 0.18 ? Math.sin(x / 0.18 * Math.PI) * 0.90 : 0;
+    const decay = x >= 0.2  ? Math.exp(-(x - 0.2) * 5.5)  * 0.90 : 0;
+    return rise + decay + g(x, 0.55, 0.04, 0.20);
+  }
+  function hrvAt(t) {
+    return (Math.sin(t*0.09*Math.PI*2)*0.45 + Math.sin(t*0.23*Math.PI*2)*0.28
+          + Math.sin(t*0.41*Math.PI*2)*0.18) * 0.78;
+  }
+  function tempAt(t) {
+    return (Math.sin(t*0.04*Math.PI*2)*0.55 + Math.sin(t*0.11*Math.PI*2)*0.20) * 0.65;
+  }
+  function gsrAt(t) {
+    return (Math.sin(t*0.12*Math.PI*2)*0.40
+          + Math.exp(-Math.pow(((t % 9) - 4.5) * 0.6, 2)) * 0.65) * 0.78;
+  }
+  function smpl(tr, t_sec) {
+    const ph = t_sec * tr.freq + tr.phOff;
+    switch (tr.type) {
+      case 'ecg':  return ecgAt(ph);
+      case 'spo2': return spo2At(ph);
+      case 'hrv':  return hrvAt(t_sec);
+      case 'temp': return tempAt(t_sec);
+      case 'gsr':  return gsrAt(t_sec);
+    }
+    return 0;
+  }
+
+  // ── Slide-reactive state ─────────────────────────────────────────
+  const SL = [
+    { spd:1.0, amp:1.0, op:0.46, gr:0.055 }, // 0 welcome
+    { spd:0.7, amp:0.8, op:0.28, gr:0.030 }, // 1 herbal — calm
+    { spd:1.5, amp:1.2, op:0.68, gr:0.100 }, // 2 AIoT  — energetic
+    { spd:1.0, amp:1.0, op:0.72, gr:0.080 }, // 3 ready
+  ];
+  const cur = { spd:1.0, amp:1.0, op:0.46, gr:0.055 };
+  let tgt = SL[0];
+  const L = (a, b, k) => a + (b - a) * k;
+
+  let now    = 5;
+  let lastTs = performance.now();
+
+  (function loop(ts) {
+    requestAnimationFrame(loop);
+    const dt = Math.min((ts - lastTs) / 1000, 0.05);
+    lastTs = ts;
+    now += dt * cur.spd;
+    cur.spd = L(cur.spd, tgt.spd, 0.03);
+    cur.amp = L(cur.amp, tgt.amp, 0.03);
+    cur.op  = L(cur.op,  tgt.op,  0.025);
+    cur.gr  = L(cur.gr,  tgt.gr,  0.025);
+
+    const W  = canvas.width;
+    const H  = canvas.height;
+    const UW = W - ML - MR;
+    const TH = H / TRACKS.length;
+
+    // Background
+    ctx.fillStyle = '#040E07';
+    ctx.fillRect(0, 0, W, H);
+
+    // Dotted grid
+    ctx.save();
+    ctx.strokeStyle = `rgba(111,207,151,${cur.gr})`;
+    ctx.lineWidth = 0.5;
+    ctx.setLineDash([1, 5]);
+    ctx.beginPath();
+    const GW = 64, GH = 50;
+    for (let x = ML % GW; x < W; x += GW) { ctx.moveTo(x, 0); ctx.lineTo(x, H); }
+    for (let y = 0; y < H; y += GH)        { ctx.moveTo(0, y); ctx.lineTo(W, y); }
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    TRACKS.forEach((tr, i) => {
+      const y0  = i * TH;
+      const mid = y0 + TH * 0.5;
+      const amp = TH * 0.38 * cur.amp;
+
+      // Track separator line
+      ctx.save();
+      ctx.strokeStyle = `rgba(${tr.rgb},${cur.gr * 2.5})`;
+      ctx.lineWidth = 0.5;
+      ctx.beginPath(); ctx.moveTo(0, y0); ctx.lineTo(W, y0); ctx.stroke();
+      ctx.restore();
+
+      // Left label + unit
+      ctx.save();
+      ctx.font = 'bold 10px Poppins,sans-serif';
+      ctx.fillStyle = `rgba(${tr.rgb},${cur.op * 0.82})`;
+      ctx.textAlign = 'left';
+      ctx.fillText(tr.id, 8, mid - 4);
+      ctx.font = '500 8px Poppins,sans-serif';
+      ctx.fillStyle = `rgba(${tr.rgb},${cur.op * 0.38})`;
+      ctx.fillText(tr.unit, 8, mid + 8);
+      ctx.restore();
+
+      // Right value
+      ctx.save();
+      ctx.font = 'bold 13px Poppins,sans-serif';
+      ctx.fillStyle = `rgba(${tr.rgb},${cur.op})`;
+      ctx.textAlign = 'right';
+      ctx.fillText(tr.val, W - 8, mid + 4);
+      ctx.font = '500 8px Poppins,sans-serif';
+      ctx.fillStyle = `rgba(${tr.rgb},${cur.op * 0.42})`;
+      ctx.fillText(tr.unit, W - 8, mid + 15);
+      ctx.restore();
+
+      // Fade gradient: old data (left) fades out, new data (right) is bright
+      const fgr = ctx.createLinearGradient(ML, 0, ML + UW, 0);
+      fgr.addColorStop(0,    `rgba(${tr.rgb},0)`);
+      fgr.addColorStop(0.10, `rgba(${tr.rgb},${cur.op * 0.18})`);
+      fgr.addColorStop(0.40, `rgba(${tr.rgb},${cur.op * 0.55})`);
+      fgr.addColorStop(0.75, `rgba(${tr.rgb},${cur.op})`);
+      fgr.addColorStop(1,    `rgba(${tr.rgb},${cur.op})`);
+
+      // Waveform path
+      ctx.save();
+      ctx.beginPath();
+      for (let px = 0; px <= UW; px += 2) {
+        const t_sec = now - (UW - px) / UW * WIN;
+        const s = smpl(tr, t_sec);
+        const x = ML + px;
+        const y = mid - s * amp;
+        px === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.shadowColor = tr.color;
+      ctx.shadowBlur  = 7;
+      ctx.strokeStyle = fgr;
+      ctx.lineWidth   = 1.8;
+      ctx.stroke();
+      ctx.restore();
+
+      // Leading-edge glow dot
+      ctx.save();
+      const s0 = smpl(tr, now);
+      ctx.shadowColor = tr.color;
+      ctx.shadowBlur  = 18;
+      ctx.fillStyle   = tr.color;
+      ctx.globalAlpha = cur.op * 0.95;
+      ctx.beginPath();
+      ctx.arc(ML + UW, mid - s0 * amp, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+
+    // Right-edge vertical sweep glow
+    const sg = ctx.createLinearGradient(ML + UW - 28, 0, ML + UW, 0);
+    sg.addColorStop(0, 'rgba(111,207,151,0)');
+    sg.addColorStop(1, `rgba(111,207,151,${cur.gr * 1.6})`);
+    ctx.fillStyle = sg;
+    ctx.fillRect(ML + UW - 28, 0, 28, H);
+
+  })(performance.now());
+
+  return { setSlide: n => { tgt = SL[n] || SL[0]; } };
+})();
+
+// ════════════════════════════════════════════════════════════
+//  ONBOARDING LOGIC
+// ════════════════════════════════════════════════════════════
+let currentSlide = 0;
+const TOTAL_SLIDES = 4;
+let userRole = 'patient';
+
+function goToSlide(n) {
+  if (n === currentSlide) return;
+  const dir = n > currentSlide ? 'left' : 'right';
+  const from = document.getElementById('slide-' + currentSlide);
+  const to   = document.getElementById('slide-' + n);
+
+  from.classList.remove('state-center');
+  from.classList.add(dir === 'left' ? 'state-left' : 'state-right');
+  to.classList.remove(dir === 'left' ? 'state-right' : 'state-left');
+  to.classList.add('state-center');
+
+  currentSlide = n;
+  updateChrome();
+  threeState.setSlide(n);
+}
+
+function nextSlide() { if (currentSlide < TOTAL_SLIDES - 1) goToSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) goToSlide(currentSlide - 1); }
+
+function updateChrome() {
+  // Dots
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+  // Buttons
+  document.getElementById('nav-prev').disabled = currentSlide === 0;
+  document.getElementById('nav-next').disabled = currentSlide === TOTAL_SLIDES - 1;
+}
+
+// ── Touch / swipe ──
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 55) { dx < 0 ? nextSlide() : prevSlide(); }
+}, { passive: true });
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft')  prevSlide();
+});
+
+// ── Typing effect ──
+function typeWriter(el, text, speed) {
+  return new Promise(resolve => {
+    const cursor = document.getElementById('cursor');
+    el.innerHTML = ''; if (cursor) el.appendChild(cursor);
+    let i = 0;
+    const tick = setInterval(() => {
+      if (i < text.length) {
+        el.insertBefore(document.createTextNode(text[i++]), cursor);
+      } else {
+        clearInterval(tick);
+        setTimeout(() => { if (cursor) { cursor.style.animation='none'; cursor.style.opacity='0'; } resolve(); }, 500);
+      }
+    }, speed || 70);
+  });
+}
+
+// ── Portal redirect ──
+function proceedToPortal() {
+  const map = { patient:'../patient/index.html#home', doctor:'../doctor/home.html', admin:'../admin/home.html', super_admin:'../admin/home.html' };
+  const card = document.querySelector('#slide-3 .card');
+  if (card) { card.style.transition='all .5s ease'; card.style.opacity='0'; card.style.transform='translateY(-16px) scale(.97)'; }
+  setTimeout(() => { window.location.href = map[userRole] || '../patient/index.html#home'; }, 480);
+}
+function skipToPortal() { proceedToPortal(); }
+
+// ── Role-specific features ──
+const FEATURES = {
+  patient:     [{ci:'🫀',l:'Monitor Vitals'},{ci:'🩺',l:'Konsultasi'},{ci:'🌿',l:'Herbal Riset'}],
+  doctor:      [{ci:'🩺',l:'Kelola Pasien'},{ci:'📋',l:'Rekam Medis'},{ci:'💊',l:'Resep'}],
+  admin:       [{ci:'👥',l:'Kelola User'},{ci:'📊',l:'Dashboard'},{ci:'🌿',l:'Database'}],
+  super_admin: [{ci:'🛡️',l:'Verifikasi'},{ci:'🌿',l:'Database'},{ci:'📊',l:'Analytics'}],
+};
+const ROLE_LABELS = { patient:'👤 Pasien', doctor:'👨‍⚕️ Dokter', admin:'⚙️ Admin', super_admin:'👑 Super Admin' };
+const ROLE_CLASS  = { patient:'rc-patient', doctor:'rc-doctor', admin:'rc-admin', super_admin:'rc-admin' };
+
+// ── Init ──
+(async function init() {
+  setTimeout(() => document.getElementById('brand').classList.add('vis'), 120);
+
+  VFirebase.auth.onAuthStateChanged(async (user) => {
+    if (!user) { window.location.href = 'login.html'; return; }
+
+    try {
+      const profile = await VDB.getUser(user.uid);
+      const fullName = profile?.name || user.displayName || 'Pengguna Baru';
+      userRole = profile?.role || 'patient';
+
+      // Role chip
+      document.getElementById('role-chip-slot').innerHTML =
+        `<div class="role-chip ${ROLE_CLASS[userRole]||'rc-patient'}">${ROLE_LABELS[userRole]||'👤 Pengguna'}</div>`;
+
+      // Feature chips per role
+      const chips = (FEATURES[userRole] || FEATURES.patient).map(f =>
+        `<div class="s0-chip"><span class="ci">${f.ci}</span><span>${f.l}</span></div>`).join('');
+      document.getElementById('s0-chips').innerHTML = chips;
+
+      // Typing effect
+      await new Promise(r => setTimeout(r, 500));
+      await typeWriter(document.getElementById('s0-name'), fullName.split(' ').slice(0, 2).join(' '));
+    } catch(e) {
+      document.getElementById('s0-name').textContent = '';
+    }
+  });
+})();
+</script>
+</body>
+</html>

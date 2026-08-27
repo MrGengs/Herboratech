@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Detail Tanaman</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid #27AE60; padding-left: 10px; }
+
+    .hero-card {
+      text-align: center;
+      padding: 32px 24px 24px;
+    }
+    .hero-emoji {
+      font-size: 4.5rem;
+      line-height: 1;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 4px 12px rgba(39,174,96,0.25));
+    }
+    .plant-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+    .plant-latin {
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      font-style: italic;
+      margin-top: 4px;
+    }
+    .origin-chip {
+      display: inline-block;
+      margin-top: 12px;
+      background: rgba(39,174,96,0.12);
+      color: #27AE60;
+      border: 1px solid rgba(39,174,96,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .evidence-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(39,174,96,0.15), rgba(111,207,151,0.1));
+      border: 1.5px solid rgba(39,174,96,0.35);
+      border-radius: 14px;
+      padding: 14px 18px;
+    }
+    .evidence-badge ion-icon { font-size: 1.4rem; color: #27AE60; }
+    .evidence-text { flex: 1; }
+    .evidence-text .ev-label { font-size: 0.7rem; color: var(--text-tertiary); }
+    .evidence-text .ev-value { font-size: 0.92rem; font-weight: 700; color: #27AE60; }
+
+    .khasiat-list { display: flex; flex-direction: column; gap: 8px; }
+    .khasiat-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+    .khasiat-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #27AE60;
+      flex-shrink: 0;
+    }
+    .khasiat-item span { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+    .step-cards { display: flex; flex-direction: column; gap: 10px; }
+    .step-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .step-num {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1A5C38, #27AE60);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-info .step-title { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+    .step-info .step-desc { font-size: 0.72rem; color: var(--text-tertiary); margin-top: 2px; }
+
+    .dosis-cards { display: flex; flex-direction: column; gap: 8px; }
+    .dosis-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+    .dosis-label { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+    .dosis-value { font-size: 0.82rem; color: var(--primary-dark); font-weight: 700; background: rgba(39,174,96,0.1); padding: 4px 10px; border-radius: 8px; }
+
+    .danger-card {
+      border: 2px solid #EB5757;
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(235,87,87,0.05);
+    }
+    .danger-card .danger-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .danger-card .danger-header ion-icon { font-size: 1.2rem; color: #EB5757; }
+    .danger-card .danger-title { font-size: 0.88rem; font-weight: 700; color: #EB5757; }
+    .danger-card p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+    .warning-card {
+      border: 2px solid var(--warning);
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(242,153,74,0.05);
+    }
+    .warning-card .warning-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .warning-card .warning-header ion-icon { font-size: 1.2rem; color: var(--warning); }
+    .warning-card .warning-title { font-size: 0.88rem; font-weight: 700; color: var(--warning); }
+    .warning-card p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('herbal.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;">Detail Tanaman</div>
+    <button class="neu-icon-btn">
+      <ion-icon name="bookmark-outline"></ion-icon>
+    </button>
+  </header>
+
+  <div class="section" style="padding-bottom: 100px;" id="detail-content">
+    <!-- Loading state -->
+    <div style="text-align:center;padding:60px 20px;color:var(--text-muted);">
+      <ion-icon name="leaf-outline" style="font-size:3rem;"></ion-icon>
+      <div style="margin-top:12px;font-size:0.85rem;">Memuat detail tanaman...</div>
+    </div>
+  </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+const evLabel = { A: 'Tinggi', B: 'Sedang', C: 'Tradisional/Empiris' };
+const evColor = { A: '#27AE60', B: '#F2994A', C: '#9B51E0' };
+const usageDesc = {
+  rebus: 'Rebus rimpang/daun segar dalam air 15-20 menit, saring dan minum hangat.',
+  seduh: 'Seduh serbuk/simplisia dalam air panas 90°C selama 5-10 menit.',
+  kapsul: 'Minum kapsul ekstrak standar sesuai dosis label produk.',
+  ekstrak: 'Larutkan ekstrak cair dalam air atau konsumsi langsung sesuai dosis.',
+  jus: 'Parut/blender bagian tanaman segar, peras, saring, minum segera.',
+  tetes: 'Teteskan tincture ke dalam air minum sesuai dosis anjuran.'
+};
+
+(async () => {
+  await VAuth.guard('patient', 1);
+
+  const id = new URLSearchParams(location.search).get('id');
+  if (!id) { nav('herbal.html'); return; }
+
+  try {
+    const herb = await VDB.getHerbal(id);
+    if (!herb) { nav('herbal.html'); return; }
+
+    document.title = 'HerboraTech — ' + herb.name;
+
+    const ev = herb.evidenceLevel || 'C';
+    const color = evColor[ev];
+    const origins = (herb.origin || []).join(', ') || 'Indonesia';
+    const studyCount = herb.studyCount || 0;
+
+    const benefitsHTML = (herb.benefits || []).map(b =>
+      `<div class="khasiat-item">
+        <div class="khasiat-dot"></div>
+        <div>
+          <span style="font-size:0.85rem;font-weight:600;color:var(--text-primary);">${b.name}</span>
+          ${b.mechanism ? `<div style="font-size:0.72rem;color:var(--text-tertiary);margin-top:2px;">${b.mechanism}</div>` : ''}
+        </div>
+      </div>`
+    ).join('');
+
+    const usageMethods = herb.usageMethods || [];
+    const usageHTML = usageMethods.map((m, i) =>
+      `<div class="step-card">
+        <div class="step-num">${i+1}</div>
+        <div class="step-info">
+          <div class="step-title">${m.charAt(0).toUpperCase() + m.slice(1)}</div>
+          <div class="step-desc">${usageDesc[m] || ''}</div>
+        </div>
+      </div>`
+    ).join('');
+
+    const dosageHTML = (herb.dosage || []).map(d =>
+      `<div class="dosis-row">
+        <div>
+          <div class="dosis-label">${d.condition}</div>
+          <div style="font-size:0.7rem;color:var(--text-tertiary);">${d.duration || ''}</div>
+        </div>
+        <div class="dosis-value">${d.dose}</div>
+      </div>`
+    ).join('');
+
+    const contraHTML = (herb.contraindications || []).map(c =>
+      `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:0.8rem;">
+        <span style="color:#EB5757;font-size:1rem;">•</span>
+        <span>${c}</span>
+      </div>`
+    ).join('');
+
+    const interactionHTML = (herb.drugInteractions || []).map(i => {
+      const sevColor = { ringan: '#F2994A', sedang: '#EB5757', berat: '#B00020' };
+      return `<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;background:var(--bg);box-shadow:var(--shadow-out-sm);border-radius:10px;padding:10px 12px;">
+        <ion-icon name="flask-outline" style="color:var(--warning);flex-shrink:0;margin-top:2px;"></ion-icon>
+        <div>
+          <div style="font-size:0.82rem;font-weight:700;">${i.drug}</div>
+          <div style="font-size:0.72rem;margin-top:2px;"><span style="color:${sevColor[i.severity]||'#F2994A'};font-weight:600;">[${i.severity}]</span> ${i.description}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    // Badge warna per tipe sumber
+    const srcTypeLabel = { 'kemenkes':'Kemenkes RI', 'riset-ilmiah':'Riset Ilmiah', 'book-ocr':'Buku Herbal', 'monograph':'Monograf WHO' };
+    const srcTypeColor = { 'kemenkes':'#27AE60', 'riset-ilmiah':'#2D9CDB', 'book-ocr':'#F2994A', 'monograph':'#9B51E0' };
+    const srcType = herb.sourceType || 'riset-ilmiah';
+    const srcColor = srcTypeColor[srcType] || '#2D9CDB';
+    const srcLabel = srcTypeLabel[srcType] || srcType;
+
+    const sourceBadgeHTML = `
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+        <span style="background:${srcColor}18;color:${srcColor};padding:3px 12px;border-radius:20px;font-size:0.68rem;font-weight:700;">
+          📋 ${srcLabel}
+        </span>
+        ${herb.source ? `<span style="font-size:0.72rem;color:var(--text-tertiary);">${herb.source}</span>` : ''}
+      </div>`;
+
+    // Support both schema lama (author/journal/pmid) dan schema baru (title/publisher/year/url)
+    const refsHTML = (herb.references || []).map(r => {
+      if (r.author) {
+        // Schema lama — PubMed style
+        return `<div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:6px;line-height:1.5;padding:10px 14px;background:var(--bg);box-shadow:var(--shadow-out-sm);border-radius:12px;">
+          <div style="font-weight:600;margin-bottom:2px;">📄 ${r.author} (${r.year || ''})</div>
+          <div style="font-style:italic;color:var(--text-tertiary);">${r.journal || ''}</div>
+          ${r.pmid ? `<div style="margin-top:4px;"><a href="https://pubmed.ncbi.nlm.nih.gov/${r.pmid}" target="_blank" style="color:var(--primary-dark);font-size:0.7rem;">PubMed: ${r.pmid} ↗</a></div>` : ''}
+        </div>`;
+      } else {
+        // Schema baru — book/monograph/database style
+        const typeIcon = { book:'📖', monograph:'📗', pharmacopeia:'⚕️', 'government-guide':'🏛️', database:'🗄️', 'book-ocr':'📚' };
+        const icon = typeIcon[r.type] || '📋';
+        return `<div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:6px;line-height:1.5;padding:10px 14px;background:var(--bg);box-shadow:var(--shadow-out-sm);border-radius:12px;">
+          <div style="font-weight:600;margin-bottom:2px;">${icon} ${r.title || ''}</div>
+          <div style="color:var(--text-tertiary);">${r.publisher || ''}${r.year ? ` · ${r.year}` : ''}${r.isbn ? ` · ISBN ${r.isbn}` : ''}</div>
+          ${r.url ? `<div style="margin-top:4px;"><a href="${r.url}" target="_blank" style="color:var(--primary-dark);font-size:0.7rem;">${r.url} ↗</a></div>` : ''}
+        </div>`;
+      }
+    }).join('');
+
+    const compoundsHTML = (herb.activeCompounds || []).map(c =>
+      `<span style="display:inline-block;background:#E8EAF6;color:#3F51B5;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:600;margin:3px;">${c}</span>`
+    ).join('');
+
+    document.getElementById('detail-content').innerHTML = `
+      <div class="neu-card hero-card" data-animate="up">
+        <div class="hero-emoji">${herb.emoji || '🌿'}</div>
+        <div class="plant-name">${herb.name}</div>
+        <div class="plant-latin">${herb.latinName || ''}</div>
+        ${herb.family ? `<div style="font-size:0.72rem;color:var(--text-tertiary);margin-top:2px;">Famili: ${herb.family}</div>` : ''}
+        <span class="origin-chip"><ion-icon name="location-outline" style="vertical-align:middle;font-size:0.8rem;"></ion-icon> ${origins}</span>
+        ${herb.bpomStatus ? `<div style="margin-top:10px;"><span style="display:inline-block;background:#E8F5E9;color:#27AE60;padding:3px 12px;border-radius:20px;font-size:0.7rem;font-weight:700;">BPOM: ${herb.bpomStatus}</span></div>` : ''}
+      </div>
+
+      <div class="evidence-badge mt-16" data-animate="up" data-delay="100" style="border-color:${color}33;background:linear-gradient(135deg,${color}18,${color}0a);">
+        <ion-icon name="ribbon-outline" style="color:${color};"></ion-icon>
+        <div class="evidence-text">
+          <div class="ev-label">Level Bukti Ilmiah</div>
+          <div class="ev-value" style="color:${color};">${evLabel[ev]} — ${studyCount} Studi Klinis</div>
+        </div>
+        <span style="background:${color}22;color:${color};padding:3px 10px;border-radius:20px;font-size:0.65rem;font-weight:700;">Level ${ev}</span>
+      </div>
+
+      ${compoundsHTML ? `
+      <div class="section-header mt-24" data-animate="up" data-delay="120"><div class="section-title">Senyawa Aktif</div></div>
+      <div data-animate="up" data-delay="140">${compoundsHTML}</div>` : ''}
+
+      ${benefitsHTML ? `
+      <div class="section-header mt-24" data-animate="up" data-delay="150"><div class="section-title">Khasiat</div></div>
+      <div class="khasiat-list" data-animate="up" data-delay="200">${benefitsHTML}</div>` : ''}
+
+      ${usageHTML ? `
+      <div class="section-header mt-24" data-animate="up" data-delay="250"><div class="section-title">Cara Penggunaan</div></div>
+      <div class="step-cards" data-animate="up" data-delay="300">${usageHTML}</div>` : ''}
+
+      ${dosageHTML ? `
+      <div class="section-header mt-24" data-animate="up" data-delay="350"><div class="section-title">Dosis per Kondisi</div></div>
+      <div class="dosis-cards" data-animate="up" data-delay="400">${dosageHTML}</div>` : ''}
+
+      ${contraHTML ? `
+      <div class="section-header mt-24" data-animate="up" data-delay="450"><div class="section-title">Kontraindikasi</div></div>
+      <div class="danger-card" data-animate="up" data-delay="500">
+        <div class="danger-header"><ion-icon name="warning-outline"></ion-icon><div class="danger-title">Perhatian Penting</div></div>
+        ${contraHTML}
+      </div>` : ''}
+
+      ${interactionHTML ? `
+      <div class="section-header mt-24" data-animate="up" data-delay="550"><div class="section-title">Interaksi Obat</div></div>
+      <div class="warning-card" data-animate="up" data-delay="600">
+        <div class="warning-header"><ion-icon name="flask-outline"></ion-icon><div class="warning-title">Interaksi Potensial</div></div>
+        ${interactionHTML}
+      </div>` : ''}
+
+      <div class="section-header mt-24" data-animate="up" data-delay="650"><div class="section-title">Sumber & Referensi</div></div>
+      <div data-animate="up" data-delay="680">
+        ${sourceBadgeHTML}
+        ${refsHTML || `<div style="font-size:0.78rem;color:var(--text-tertiary);padding:10px 0;">Tidak ada referensi tambahan.</div>`}
+      </div>
+
+      <button class="neu-btn-primary neu-btn-block mt-24" data-animate="up" data-delay="700" onclick="showToast('${herb.name} ditambahkan ke tracker','success')">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        Tambah ke Tracker
+      </button>
+    `;
+
+    // Re-run animations for dynamically inserted elements
+    document.querySelectorAll('[data-animate]').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(16px)';
+      const delay = parseInt(el.dataset.delay || 0);
+      setTimeout(() => {
+        el.style.transition = 'all 0.4s ease';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, delay + 50);
+    });
+
+  } catch (e) {
+    document.getElementById('detail-content').innerHTML =
+      '<div style="text-align:center;padding:60px 20px;color:var(--text-muted);">Gagal memuat data. <a href="herbal.html">Kembali</a></div>';
+  }
+})();
+</script>
+</body>
+</html>

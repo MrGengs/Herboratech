@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Dokter — Notifikasi</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0C2352 0%, #1D5DB5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #56CCF2; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
+    .nav-item.active { color: var(--info); font-weight: 700; position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--info); }
+    .nav-item.active ion-icon { color: var(--info); filter: drop-shadow(0 0 4px rgba(47,128,237,0.5)); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;">Notifikasi</div>
+    <div style="width:42px"></div>
+  </header>
+  <div id="notif-container" style="margin-top:8px;">
+    <!-- Fallback hardcoded notifications shown until Firebase loads -->
+    <div class="notif-item unread" data-animate="up"><div class="ni-icon" style="color:var(--danger);background:var(--danger-bg)"><ion-icon name="alert-circle-outline"></ion-icon></div><div class="ni-content"><div class="ni-title">⚠️ Patient Alert: Ahmad Fauzi</div><div class="ni-text">SpO2 turun ke 93%. Anomali terdeteksi.</div><div class="ni-time">15 menit lalu</div></div></div>
+    <div class="notif-item unread" data-animate="up" data-delay="50"><div class="ni-icon" style="color:var(--info);background:var(--info-bg)"><ion-icon name="chatbubble-outline"></ion-icon></div><div class="ni-content"><div class="ni-title">💬 Konsultasi Baru</div><div class="ni-text">Ahmad Fauzi ingin konsultasi Video Call.</div><div class="ni-time">30 menit lalu</div></div></div>
+    <div class="notif-item" data-animate="up" data-delay="100"><div class="ni-icon" style="color:var(--primary-dark);background:var(--primary-bg)"><ion-icon name="checkmark-circle-outline"></ion-icon></div><div class="ni-content"><div class="ni-title">✅ Follow-up Selesai</div><div class="ni-text">Dewi Sartika telah konfirmasi minum obat.</div><div class="ni-time">2 jam lalu</div></div></div>
+  </div>
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item" href="patients.html">
+      <ion-icon name="people-outline"></ion-icon><span>Pasien</span>
+    </a>
+    <a class="nav-item" href="chat.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Chat</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+function relativeTime(ts) {
+  const now = Date.now();
+  let ms;
+  if (ts && ts.toDate) ms = ts.toDate().getTime();
+  else if (ts) ms = new Date(ts).getTime();
+  else return '';
+  const diff = Math.floor((now - ms) / 1000);
+  if (diff < 60) return `${diff} detik lalu`;
+  if (diff < 3600) return `${Math.floor(diff / 60)} menit lalu`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)} jam lalu`;
+  return `${Math.floor(diff / 86400)} hari lalu`;
+}
+
+function getNotifIcon(type) {
+  const icons = {
+    alert: { icon: 'alert-circle-outline', color: 'var(--danger)', bg: 'var(--danger-bg)' },
+    consultation: { icon: 'chatbubble-outline', color: 'var(--info)', bg: 'var(--info-bg)' },
+    followup: { icon: 'checkmark-circle-outline', color: 'var(--primary-dark)', bg: 'var(--primary-bg)' },
+    system: { icon: 'information-circle-outline', color: 'var(--text-secondary)', bg: 'var(--shadow-dark)' },
+  };
+  return icons[type] || icons.system;
+}
+
+function markAsRead(notifId) {
+  VFirebase.db.collection('notifications').doc(notifId).update({ read: true }).catch(() => {});
+}
+
+function renderNotifications(notifications) {
+  const container = document.getElementById('notif-container');
+  if (!notifications || notifications.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:0.85rem;">Tidak ada notifikasi</div>';
+    return;
+  }
+  container.innerHTML = '';
+  notifications.forEach((n, i) => {
+    const iconInfo = getNotifIcon(n.type);
+    const isUnread = !n.read;
+    const item = document.createElement('div');
+    item.className = 'notif-item' + (isUnread ? ' unread' : '');
+    item.setAttribute('data-animate', 'up');
+    item.setAttribute('data-delay', String(i * 50));
+    item.style.cursor = 'pointer';
+    item.innerHTML = `
+      <div class="ni-icon" style="color:${iconInfo.color};background:${iconInfo.bg}">
+        <ion-icon name="${iconInfo.icon}"></ion-icon>
+      </div>
+      <div class="ni-content">
+        <div class="ni-title">${n.title || 'Notifikasi'}</div>
+        <div class="ni-text">${n.body || n.message || ''}</div>
+        <div class="ni-time">${relativeTime(n.createdAt)}</div>
+      </div>
+    `;
+    if (isUnread && n.id) {
+      item.addEventListener('click', () => {
+        item.classList.remove('unread');
+        markAsRead(n.id);
+      });
+    }
+    container.appendChild(item);
+  });
+}
+
+VAuth.guard('doctor', 1).then(({ user }) => {
+  VDB.subscribeNotifications(user.uid, (notifications) => {
+    renderNotifications(notifications);
+  });
+});
+</script>
+
+</body>
+</html>

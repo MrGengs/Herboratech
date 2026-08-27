@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Surat Rujukan</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0C2352 0%, #1D5DB5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
+
+    /* Patient readonly card */
+    .patient-readonly {
+      background: rgba(47,128,237,0.07);
+      border: 1px solid rgba(47,128,237,0.2);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+    .pr-row { display: flex; gap: 8px; margin-bottom: 4px; font-size: 0.75rem; }
+    .pr-label { color: var(--text-muted); min-width: 120px; flex-shrink: 0; }
+    .pr-value { color: var(--text-primary); font-weight: 600; }
+
+    /* Faskes radio cards */
+    .faskes-card {
+      position: relative;
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow-out-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+    .faskes-card input[type="radio"] { position: absolute; opacity: 0; }
+    .faskes-card:has(input:checked) {
+      border-color: var(--info);
+      box-shadow: var(--shadow-in-sm), 0 0 0 2px rgba(47,128,237,0.15);
+      background: var(--info-bg);
+    }
+    .faskes-icon { font-size: 1.5rem; margin-bottom: 6px; }
+    .faskes-name { font-weight: 700; font-size: 0.82rem; color: var(--text-primary); }
+    .faskes-desc { font-size: 0.65rem; color: var(--text-tertiary); margin-top: 2px; }
+    .faskes-checked {
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 18px; height: 18px;
+      background: var(--info);
+      border-radius: 50%;
+      display: none;
+      align-items: center; justify-content: center;
+      font-size: 0.65rem; color: #fff;
+    }
+    .faskes-card:has(input:checked) .faskes-checked { display: flex; }
+
+    /* Urgency chips */
+    .urgency-chips { display: flex; gap: 10px; }
+    .urgency-chip {
+      flex: 1;
+      padding: 9px 0;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-out-sm);
+      background: var(--bg);
+      color: var(--text-secondary);
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .urgency-chip.active-elektif { border-color: var(--primary-dark); color: var(--primary-dark); box-shadow: var(--shadow-in-sm); background: var(--primary-bg); }
+    .urgency-chip.active-segera { border-color: var(--warning); color: var(--warning); box-shadow: var(--shadow-in-sm); background: var(--warning-bg); }
+    .urgency-chip.active-darurat { border-color: var(--danger); color: var(--danger); box-shadow: var(--shadow-in-sm); background: var(--danger-bg); }
+
+    /* Textarea */
+    .doc-note {
+      width: 100%;
+      min-height: 80px;
+      background: var(--bg);
+      border: none;
+      outline: none;
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-in);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      color: var(--text-primary);
+      resize: none;
+      box-sizing: border-box;
+    }
+
+    /* Preview surat rujukan */
+    .surat-preview {
+      background: #fff;
+      border-radius: 18px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow-out);
+    }
+    .surat-header-band {
+      background: linear-gradient(135deg, #0C2352, #1D5DB5);
+      margin: -18px -20px 16px;
+      padding: 16px 20px;
+      border-radius: 18px 18px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .surat-divider { height: 1px; background: #eee; margin: 12px 0; }
+    .surat-field { margin-bottom: 8px; font-size: 0.75rem; }
+    .surat-field .sf-label { font-size: 0.62rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
+    .surat-field .sf-value { color: var(--text-primary); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('chat-room.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;">Surat Rujukan</div>
+    <div style="width:42px;"></div>
+  </header>
+
+  <div class="section">
+
+    <!-- Patient readonly info -->
+    <div class="section-header" data-animate="up"><span class="section-title">Informasi Pasien</span></div>
+    <div class="patient-readonly" data-animate="up" data-delay="80">
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+        <div class="neu-avatar-sm" style="background:linear-gradient(135deg,#EB5757,#FF7B7B);">AF</div>
+        <div>
+          <div style="font-weight:700;font-size:0.88rem;">Ahmad Fauzi</div>
+          <div style="font-size:0.65rem;color:var(--text-tertiary);">Laki-laki · 34 tahun · Gol. Darah A</div>
+        </div>
+        <span style="margin-left:auto;background:var(--success-bg);color:var(--success);font-size:0.6rem;font-weight:600;padding:2px 8px;border-radius:10px;">BPJS Aktif</span>
+      </div>
+      <div class="pr-row"><span class="pr-label">No. BPJS</span><span class="pr-value">0001234567</span></div>
+      <div class="pr-row"><span class="pr-label">NIK</span><span class="pr-value">3174012501920001</span></div>
+      <div class="pr-row"><span class="pr-label">Diagnosis</span><span class="pr-value">G44.2 — Tension-type Headache</span></div>
+      <div class="pr-row"><span class="pr-label">Alergi</span><span class="pr-value" style="color:var(--danger);">Penisilin</span></div>
+    </div>
+
+    <!-- Diagnosis & alasan -->
+    <div class="section-header mt-20" data-animate="up" data-delay="120"><span class="section-title">Diagnosis & Alasan Rujuk</span></div>
+    <textarea class="doc-note" data-animate="up" data-delay="140">Pasien dengan tension-type headache kronis, HRV rendah, dan pusing posisional berulang. Perlu evaluasi lebih lanjut oleh spesialis neurologi untuk menyingkirkan patologi intrakranial. Serta pemeriksaan Dix-Hallpike untuk konfirmasi BPPV.</textarea>
+
+    <!-- Faskes tujuan -->
+    <div class="section-header mt-20" data-animate="up" data-delay="160"><span class="section-title">Faskes Tujuan</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;" data-animate="up" data-delay="180">
+      <label class="faskes-card">
+        <input type="radio" name="faskes" value="poli" checked>
+        <div class="faskes-checked">✓</div>
+        <div class="faskes-icon">🏥</div>
+        <div class="faskes-name">Poliklinik Spesialis</div>
+        <div class="faskes-desc">Neurologi, Paru, dll.</div>
+      </label>
+      <label class="faskes-card">
+        <input type="radio" name="faskes" value="rs">
+        <div class="faskes-checked">✓</div>
+        <div class="faskes-icon">🏨</div>
+        <div class="faskes-name">RS Umum</div>
+        <div class="faskes-desc">Rawat jalan/inap</div>
+      </label>
+      <label class="faskes-card">
+        <input type="radio" name="faskes" value="lab">
+        <div class="faskes-checked">✓</div>
+        <div class="faskes-icon">🔬</div>
+        <div class="faskes-name">Laboratorium</div>
+        <div class="faskes-desc">Pemeriksaan darah, dll.</div>
+      </label>
+    </div>
+
+    <!-- Tingkat urgensi -->
+    <div class="section-header mt-20" data-animate="up" data-delay="220"><span class="section-title">Tingkat Urgensi</span></div>
+    <div class="urgency-chips" data-animate="up" data-delay="240">
+      <button class="urgency-chip active-elektif" id="chip-elektif" onclick="setUrgency('elektif')">Elektif</button>
+      <button class="urgency-chip" id="chip-segera" onclick="setUrgency('segera')">Segera</button>
+      <button class="urgency-chip" id="chip-darurat" onclick="setUrgency('darurat')">Darurat</button>
+    </div>
+
+    <!-- Catatan klinis -->
+    <div class="section-header mt-20" data-animate="up" data-delay="280"><span class="section-title">Catatan Klinis Tambahan</span></div>
+    <textarea class="doc-note" data-animate="up" data-delay="300">Pasien kooperatif, kondisi stabil. Tidak ada red flag neurologis. Disarankan pemeriksaan MRI Kepala jika diperlukan oleh spesialis tujuan. Mohon evaluasi dan tatalaksana lanjutan.</textarea>
+
+    <!-- Preview Surat Rujukan -->
+    <div class="section-header mt-20" data-animate="up" data-delay="340"><span class="section-title">👁️ Preview Surat Rujukan</span></div>
+    <div class="surat-preview" data-animate="up" data-delay="360">
+      <div class="surat-header-band">
+        <div style="width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">🏥</div>
+        <div>
+          <div style="font-weight:800;font-size:0.95rem;color:#fff;">HERBORATECH</div>
+          <div style="font-size:0.6rem;color:rgba(255,255,255,0.7);">Platform Telemedisin AIoT · info@herboratech.id</div>
+        </div>
+        <div style="margin-left:auto;text-align:right;font-size:0.6rem;color:rgba(255,255,255,0.7);">
+          <div>No: SRJ-20260321-001</div>
+          <div>21 Mar 2026</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-weight:800;font-size:0.88rem;color:var(--text-primary);margin-bottom:14px;text-transform:uppercase;letter-spacing:1px;">Surat Rujukan</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+        <div class="surat-field">
+          <div class="sf-label">Dokter Perujuk</div>
+          <div class="sf-value">dr. Sarah Wijaya, Sp.PD</div>
+        </div>
+        <div class="surat-field">
+          <div class="sf-label">Tanggal</div>
+          <div class="sf-value">21 Maret 2026</div>
+        </div>
+        <div class="surat-field">
+          <div class="sf-label">SIP</div>
+          <div class="sf-value">44312/2022</div>
+        </div>
+        <div class="surat-field">
+          <div class="sf-label">Faskes Asal</div>
+          <div class="sf-value">HerboraTech Digital Health</div>
+        </div>
+      </div>
+
+      <div class="surat-divider"></div>
+
+      <div style="font-size:0.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Data Pasien</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+        <div class="surat-field">
+          <div class="sf-label">Nama</div>
+          <div class="sf-value">Ahmad Fauzi</div>
+        </div>
+        <div class="surat-field">
+          <div class="sf-label">No. BPJS</div>
+          <div class="sf-value">0001234567</div>
+        </div>
+        <div class="surat-field">
+          <div class="sf-label">Usia / JK</div>
+          <div class="sf-value">34 th / Laki-laki</div>
+        </div>
+        <div class="surat-field">
+          <div class="sf-label">Alergi</div>
+          <div class="sf-value" style="color:var(--danger);">Penisilin</div>
+        </div>
+      </div>
+
+      <div class="surat-divider"></div>
+
+      <div style="font-size:0.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Diagnosis & Rujukan</div>
+      <div class="surat-field">
+        <div class="sf-label">Diagnosis Kerja</div>
+        <div class="sf-value">G44.2 — Tension-type Headache</div>
+      </div>
+      <div class="surat-field">
+        <div class="sf-label">Dirujuk ke</div>
+        <div class="sf-value">Poliklinik Neurologi</div>
+      </div>
+      <div class="surat-field">
+        <div class="sf-label">Urgensi</div>
+        <div class="sf-value" id="preview-urgensi" style="color:var(--primary-dark);">Elektif</div>
+      </div>
+
+      <div style="margin-top:12px;font-size:0.72rem;color:var(--text-secondary);line-height:1.6;background:var(--bg);border-radius:12px;padding:10px 12px;">
+        Pasien dengan tension-type headache kronis dan pusing posisional berulang. Perlu evaluasi spesialis neurologi.
+      </div>
+
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #eee;display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:0.65rem;color:var(--text-muted);">Tanda tangan digital</div>
+        <div style="font-size:0.65rem;color:var(--info);font-weight:600;">Terverifikasi ✓</div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button class="neu-btn-primary neu-btn-block mt-20" data-animate="up" data-delay="400" onclick="kirimRujukan()">
+      <ion-icon name="send-outline" style="vertical-align:-2px;margin-right:6px;"></ion-icon>
+      Kirim Surat Rujukan
+    </button>
+
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+  // ── Firebase Auth Guard ──────────────────────────────────────────────────
+  let _rujukUser = null;
+  const _rujukPatientId = new URLSearchParams(location.search).get('patient') ||
+                          new URLSearchParams(location.search).get('id');
+
+  (async () => {
+    const { user } = await VAuth.guard('doctor', 1);
+    _rujukUser = user;
+  })();
+
+  let activeUrgency = 'elektif';
+
+  function setUrgency(type) {
+    // Reset all chips
+    ['elektif','segera','darurat'].forEach(t => {
+      const chip = document.getElementById('chip-' + t);
+      chip.className = 'urgency-chip';
+    });
+    // Set active
+    document.getElementById('chip-' + type).classList.add('active-' + type);
+    activeUrgency = type;
+
+    const labels = { elektif: 'Elektif', segera: 'Segera', darurat: 'Darurat' };
+    const colors = { elektif: 'var(--primary-dark)', segera: 'var(--warning)', darurat: 'var(--danger)' };
+    const el = document.getElementById('preview-urgensi');
+    el.textContent = labels[type];
+    el.style.color = colors[type];
+  }
+
+  async function kirimRujukan() {
+    if (!_rujukUser) { showToast('Sesi tidak valid', 'error'); return; }
+
+    // Collect faskes tujuan
+    const faskesEl  = document.querySelector('input[name="faskes"]:checked');
+    const referralTo = faskesEl ? faskesEl.value : '';
+
+    // Collect diagnosis/reason text
+    const reasonTextareas = document.querySelectorAll('.doc-note');
+    const reason          = reasonTextareas[0] ? reasonTextareas[0].value.trim() : '';
+    const clinicalNotes   = reasonTextareas[1] ? reasonTextareas[1].value.trim() : '';
+
+    try {
+      await VDB.createMedicalRecord({
+        patientId:    _rujukPatientId || 'unknown',
+        doctorId:     _rujukUser.uid,
+        type:         'referral',
+        referralTo,
+        urgency:      activeUrgency,
+        reason,
+        clinicalNotes
+      });
+      showToast('Rujukan berhasil dibuat', 'success');
+    } catch (err) {
+      showToast('Gagal membuat rujukan', 'error');
+      console.error(err);
+    }
+  }
+</script>
+</body>
+</html>

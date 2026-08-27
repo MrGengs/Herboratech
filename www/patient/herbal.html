@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Jamu & Herbal</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #6FCF97; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
+    .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(39,174,96,0.5)); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <div style="width:42px"></div>
+    <div style="font-size:1.05rem;font-weight:700;">Jamu & Herbal</div>
+    <button class="neu-icon-btn" onclick="focusSearchInput()"><ion-icon name="search-outline"></ion-icon></button>
+  </header>
+
+  <div class="section" style="padding-bottom:0">
+    <div class="neu-tabs">
+      <div class="neu-tab active" onclick="switchTab(0)">Katalog</div>
+      <div class="neu-tab" onclick="switchTab(1)">Formula</div>
+      <div class="neu-tab" onclick="switchTab(2)">Rekomendasi AI</div>
+      <div class="neu-tab" onclick="switchTab(3)">Tracker</div>
+    </div>
+  </div>
+
+  <!-- ── TAB 0: Katalog Tanaman ─────────────────────────────────────────── -->
+  <div id="pane-katalog" class="section">
+    <div class="neu-search" data-animate="up"><ion-icon name="search-outline"></ion-icon><input id="search-herbal" placeholder="Cari tanaman obat..."></div>
+
+    <div id="filter-chips" style="display:flex;gap:8px;margin-top:16px;overflow-x:auto;scrollbar-width:none;" data-animate="up" data-delay="100">
+      <span class="neu-chip cat-chip active-chip" style="background:var(--primary-gradient);color:#fff;cursor:pointer;white-space:nowrap;" data-cat="semua" onclick="filterCat('semua',this)">Semua</span>
+      <span class="neu-chip cat-chip" style="cursor:pointer;white-space:nowrap;" data-cat="pencernaan" onclick="filterCat('pencernaan',this)">Pencernaan</span>
+      <span class="neu-chip cat-chip" style="cursor:pointer;white-space:nowrap;" data-cat="imunitas" onclick="filterCat('imunitas',this)">Imunitas</span>
+      <span class="neu-chip cat-chip" style="cursor:pointer;white-space:nowrap;" data-cat="antiinflamasi" onclick="filterCat('antiinflamasi',this)">Anti-inflamasi</span>
+      <span class="neu-chip cat-chip" style="cursor:pointer;white-space:nowrap;" data-cat="metabolisme" onclick="filterCat('metabolisme',this)">Metabolisme</span>
+      <span class="neu-chip cat-chip" style="cursor:pointer;white-space:nowrap;" data-cat="relaksasi" onclick="filterCat('relaksasi',this)">Relaksasi</span>
+    </div>
+
+    <div id="herbals-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;">
+      <div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text-muted);">
+        <ion-icon name="leaf-outline" style="font-size:2rem;"></ion-icon>
+        <div style="margin-top:8px;font-size:0.83rem;">Memuat database jamu...</div>
+      </div>
+    </div>
+
+    <div class="neu-card mt-24" style="text-align:center;">
+      <ion-icon name="warning-outline" style="font-size:2rem;color:var(--warning);"></ion-icon>
+      <div style="font-weight:700;font-size:0.88rem;margin-top:8px;">Cek Interaksi Herbal-Obat</div>
+      <p style="font-size:0.72rem;color:var(--text-tertiary);margin-top:4px;">Pastikan herbal yang Anda konsumsi aman dengan obat yang sedang diminum</p>
+      <button class="neu-btn neu-btn-sm" style="margin-top:12px;" onclick="nav('ai-consultation.html')">Cek Sekarang</button>
+    </div>
+  </div>
+
+  <!-- ── TAB 1: Formula Resep ───────────────────────────────────────────── -->
+  <div id="pane-formula" class="section" style="display:none;">
+    <div class="neu-search"><ion-icon name="search-outline"></ion-icon><input id="search-formula" placeholder="Cari resep atau kondisi..."></div>
+
+    <!-- Filter baris 1: cara pakai -->
+    <div style="display:flex;gap:8px;margin-top:14px;overflow-x:auto;scrollbar-width:none;">
+      <span class="neu-chip type-chip type-active" style="background:var(--primary-gradient);color:#fff;cursor:pointer;white-space:nowrap;" onclick="filterType('semua',this)">Semua</span>
+      <span class="neu-chip type-chip" style="cursor:pointer;white-space:nowrap;" onclick="filterType('diminum',this)">💊 Diminum</span>
+      <span class="neu-chip type-chip" style="cursor:pointer;white-space:nowrap;" onclick="filterType('topikal',this)">🩹 Pemakaian Luar</span>
+    </div>
+
+    <!-- Filter baris 2: kategori -->
+    <div style="display:flex;gap:8px;margin-top:8px;overflow-x:auto;scrollbar-width:none;">
+      <span class="neu-chip fcat-chip fcat-active" style="background:rgba(39,174,96,0.12);color:#27AE60;cursor:pointer;white-space:nowrap;font-weight:700;" onclick="filterFCat('semua',this)">Semua Kondisi</span>
+      <span class="neu-chip fcat-chip" style="cursor:pointer;white-space:nowrap;" onclick="filterFCat('pencernaan',this)">Pencernaan</span>
+      <span class="neu-chip fcat-chip" style="cursor:pointer;white-space:nowrap;" onclick="filterFCat('imunitas',this)">Imunitas</span>
+      <span class="neu-chip fcat-chip" style="cursor:pointer;white-space:nowrap;" onclick="filterFCat('metabolisme',this)">Metabolisme</span>
+      <span class="neu-chip fcat-chip" style="cursor:pointer;white-space:nowrap;" onclick="filterFCat('kardiovaskular',this)">Kardiovaskular</span>
+      <span class="neu-chip fcat-chip" style="cursor:pointer;white-space:nowrap;" onclick="filterFCat('antiinflamasi',this)">Anti-inflamasi</span>
+      <span class="neu-chip fcat-chip" style="cursor:pointer;white-space:nowrap;" onclick="filterFCat('dermatologi',this)">Kulit</span>
+    </div>
+
+    <!-- Medical disclaimer -->
+    <div style="margin-top:14px;padding:10px 14px;background:rgba(235,87,87,0.06);border:1px solid rgba(235,87,87,0.2);border-radius:12px;font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">
+      <span style="font-weight:700;color:#EB5757;">⚕ Disclaimer:</span>
+      Resep herbal ini bersifat edukatif. Selalu konsultasikan dengan dokter sebelum menggunakannya, terutama jika sedang mengonsumsi obat-obatan.
+    </div>
+
+    <div id="formulas-list" style="margin-top:16px;display:flex;flex-direction:column;gap:12px;">
+      <div style="text-align:center;padding:40px 0;color:var(--text-muted);">
+        <ion-icon name="document-text-outline" style="font-size:2rem;"></ion-icon>
+        <div style="margin-top:8px;font-size:0.83rem;">Memuat resep...</div>
+      </div>
+    </div>
+
+    <div id="load-more-wrap" style="display:none;margin-top:12px;">
+      <button class="neu-btn neu-btn-block" id="load-more-btn" onclick="loadMoreFormulas()">
+        <ion-icon name="chevron-down-outline"></ion-icon> Muat Lebih Banyak
+      </button>
+    </div>
+
+    <div id="formula-count" style="text-align:center;font-size:0.75rem;color:var(--text-tertiary);margin-top:10px;"></div>
+  </div>
+
+  <!-- ── TAB 2: Rekomendasi AI (AI Herbal Advisor Chat) ───────────────── -->
+  <div id="pane-ai" class="section" style="display:none;padding-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <ion-icon name="sparkles-outline" style="font-size:1.5rem;color:#9B51E0;"></ion-icon>
+      <div style="font-weight:700;font-size:0.95rem;">Herbal Advisor AI</div>
+      <span style="margin-left:auto;font-size:0.7rem;color:var(--text-tertiary);">Powered by Gemini</span>
+    </div>
+
+    <!-- Chat area -->
+    <div id="herbal-chat-box" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;max-height:400px;overflow-y:auto;padding:12px;background:rgba(39,174,96,0.04);border-radius:16px;">
+      <div class="chat-bubble received" style="margin-bottom:8px;">
+        <div style="font-size:0.85rem;line-height:1.5;">Halo! 👋 Saya AI Herbal Advisor. Ceritakan kondisi kesehatan atau keluhan Anda, dan saya akan merekomendasikan ramuan herbal yang aman dan terbukti berdasarkan database HerboraTech.</div>
+      </div>
+    </div>
+
+    <!-- Input section -->
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <div style="flex:1;">
+        <input id="herbal-input" type="text" class="neu-input" placeholder="Keluhan atau kondisi kesehatan..." style="width:100%;">
+      </div>
+      <button class="neu-icon-btn" onclick="sendHerbalQuery()" style="width:44px;height:44px;flex-shrink:0;">
+        <ion-icon name="send-outline"></ion-icon>
+      </button>
+    </div>
+
+    <!-- Response area -->
+    <div id="herbal-response" style="display:none;">
+      <div style="border-top:1px solid rgba(39,174,96,0.2);padding-top:16px;margin-top:12px;">
+        <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px;">📋 Rekomendasi Herbal:</div>
+        <div id="herbs-recommendation" style="display:flex;flex-direction:column;gap:12px;"></div>
+      </div>
+
+      <div style="margin-top:16px;padding:12px;background:rgba(235,87,87,0.06);border-left:3px solid rgba(235,87,87,0.3);border-radius:8px;font-size:0.75rem;color:var(--text-secondary);line-height:1.5;">
+        <div style="font-weight:700;color:#EB5757;margin-bottom:4px;">⚠️ Penting:</div>
+        <div>AI Herbal Advisor memberikan rekomendasi berdasarkan pengetahuan umum. Selalu konsultasikan dengan dokter atau ahli herbal sebelum menggunakan ramuan baru, terutama jika sedang minum obat lain.</div>
+      </div>
+    </div>
+
+    <!-- Loading indicator -->
+    <div id="herbal-loading" style="display:none;text-align:center;padding:20px;">
+      <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px;">⏳ Memproses rekomendasi...</div>
+      <div style="width:40px;height:40px;margin:0 auto;border:3px solid rgba(39,174,96,0.2);border-top-color:#27AE60;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .herb-card {
+      background: linear-gradient(135deg, rgba(39,174,96,0.08) 0%, rgba(111,207,151,0.04) 100%);
+      border-left: 3px solid #27AE60;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+    }
+    .herb-card > div:first-child {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #27AE60;
+      margin-bottom: 6px;
+    }
+    .herb-compound {
+      display: inline-block;
+      background: rgba(39,174,96,0.12);
+      color: #27AE60;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      margin: 2px 2px 2px 0;
+    }
+    .herb-grade {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+    .herb-grade-A {
+      background: #E8F5E9;
+      color: #27AE60;
+    }
+    .herb-grade-B {
+      background: #FFF3E0;
+      color: #F2994A;
+    }
+    .herb-grade-C {
+      background: #F3E5F5;
+      color: #9B51E0;
+    }
+    .herb-grade-D {
+      background: #FFEBEE;
+      color: #EB5757;
+    }
+  </style>
+
+  <!-- ── TAB 3: Tracker (placeholder) ─────────────────────────────────── -->
+  <div id="pane-tracker" class="section" style="display:none;">
+    <div class="neu-card" style="text-align:center;padding:40px 20px;">
+      <ion-icon name="calendar-outline" style="font-size:3rem;color:#2D9CDB;"></ion-icon>
+      <div style="font-weight:700;font-size:1rem;margin-top:12px;">Tracker Konsumsi Jamu</div>
+      <p style="font-size:0.78rem;color:var(--text-secondary);margin-top:8px;line-height:1.6;">Catat jadwal konsumsi ramuan herbal Anda dan pantau progres pemulihan.</p>
+      <button class="neu-btn-primary mt-16" onclick="nav('health-journal.html')">
+        <ion-icon name="journal-outline"></ion-icon> Buka Health Journal
+      </button>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item" href="monitoring.html">
+      <ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span>
+    </a>
+    <a class="nav-item" href="consultation.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span>
+    </a>
+    <a class="nav-item active" href="herbal.html">
+      <ion-icon name="leaf-outline"></ion-icon><span>Jamu</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+let allHerbals = [];
+let allFormulas = [];
+let formulaLastDoc = null;
+let formulaHasMore = false;
+let formulaTypeFilter = 'semua'; // semua / diminum / topikal
+let formulaCatFilter  = 'semua';
+let formulaSearchQ    = '';
+const FORMULA_PAGE = 20;
+
+const evStyle = { A:'background:#E8F5E9;color:#27AE60;', B:'background:#FFF3E0;color:#F2994A;', C:'background:#F3E5F5;color:#9B51E0;' };
+const prepLabel = { rebus:'Rebus', seduh:'Seduh', tumbuk:'Tumbuk', tempel:'Tempel', mandi:'Mandi', peras:'Peras', olesan:'Olesan' };
+
+// ── Tab switching ──────────────────────────────────────────────────────────
+const PANES = ['pane-katalog','pane-formula','pane-ai','pane-tracker'];
+function switchTab(idx) {
+  document.querySelectorAll('.neu-tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  PANES.forEach((p,i) => document.getElementById(p).style.display = i===idx ? '' : 'none');
+  if (idx === 1 && allFormulas.length === 0) loadFormulas(true);
+}
+
+// ── Herbal (Katalog) tab ───────────────────────────────────────────────────
+function renderHerbals(list) {
+  const grid = document.getElementById('herbals-grid');
+  if (!list.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text-muted);font-size:0.83rem;">Tidak ada tanaman ditemukan.</div>';
+    return;
+  }
+  grid.innerHTML = list.map(h => {
+    const cats = (h.categories || []).slice(0, 2).join(', ');
+    const ev = h.evidenceLevel || 'C';
+    return `<div class="neu-card-sm" style="cursor:pointer;text-align:center;" onclick="nav('herbal-detail.html?id=${h.id}')">
+      <div style="font-size:2.5rem;margin-bottom:8px;">${h.emoji || '🌿'}</div>
+      <div style="font-weight:700;font-size:0.82rem;">${h.name}</div>
+      <div style="font-size:0.68rem;color:var(--text-tertiary);margin-top:4px;font-style:italic;">${h.latinName || ''}</div>
+      <div style="font-size:0.68rem;color:var(--text-tertiary);margin-top:2px;">${cats}</div>
+      <span style="display:inline-block;margin-top:8px;padding:2px 10px;border-radius:20px;font-size:0.6rem;font-weight:700;${evStyle[ev]}">Level ${ev}</span>
+    </div>`;
+  }).join('');
+}
+
+function filterCat(cat, el) {
+  document.querySelectorAll('.cat-chip').forEach(c => { c.classList.remove('active-chip'); c.style.cssText = 'cursor:pointer;white-space:nowrap;'; });
+  el.classList.add('active-chip'); el.style.cssText = 'background:var(--primary-gradient);color:#fff;cursor:pointer;white-space:nowrap;';
+  const filtered = cat === 'semua' ? allHerbals : allHerbals.filter(h => (h.categories || []).includes(cat));
+  renderHerbals(filtered);
+}
+
+document.getElementById('search-herbal').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  renderHerbals(!q ? allHerbals : allHerbals.filter(h =>
+    (h.name||'').toLowerCase().includes(q) || (h.latinName||'').toLowerCase().includes(q) || (h.categories||[]).some(c=>c.includes(q))
+  ));
+});
+
+// ── Formula tab ────────────────────────────────────────────────────────────
+function renderFormulas(list, append = false) {
+  const container = document.getElementById('formulas-list');
+  if (!append) container.innerHTML = '';
+  if (!list.length && !append) {
+    container.innerHTML = '<div style="text-align:center;padding:30px 0;color:var(--text-muted);font-size:0.83rem;">Tidak ada resep ditemukan.</div>';
+    return;
+  }
+  list.forEach(f => {
+    const ev = f.evidenceLevel || 'C';
+    const inds = (f.indications || []).slice(0, 3).map(i => i.replace(/-/g,' ')).join(' · ');
+    const prep = prepLabel[f.preparationType] || f.preparationType || '';
+    const topicalBadge = f.isTopical
+      ? `<span style="background:rgba(255,179,0,0.12);color:#E65100;border-radius:8px;padding:1px 6px;font-size:0.65rem;font-weight:700;">Luar</span>`
+      : `<span style="background:rgba(86,204,242,0.12);color:#0277BD;border-radius:8px;padding:1px 6px;font-size:0.65rem;font-weight:700;">Minum</span>`;
+    const div = document.createElement('div');
+    div.className = 'neu-card';
+    div.style.cssText = 'cursor:pointer;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;';
+    div.onclick = () => nav('herbal-formula.html?id=' + f.id);
+    div.innerHTML = `
+      <div style="width:40px;height:40px;border-radius:12px;background:rgba(39,174,96,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">${f.emoji || '🌿'}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:700;font-size:0.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${f.name || '—'}</div>
+        <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:3px;line-height:1.4;">${inds || f.category || ''}</div>
+        <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;align-items:center;">
+          ${topicalBadge}
+          ${prep ? `<span style="background:rgba(39,174,96,0.1);color:#27AE60;border-radius:8px;padding:1px 6px;font-size:0.65rem;font-weight:700;">${prep}</span>` : ''}
+          <span style="margin-left:auto;padding:2px 8px;border-radius:20px;font-size:0.6rem;font-weight:700;${evStyle[ev]}">ev.${ev}</span>
+        </div>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+async function loadFormulas(reset = false) {
+  if (reset) { allFormulas = []; formulaLastDoc = null; formulaHasMore = false; }
+  const container = document.getElementById('formulas-list');
+  const loadMoreWrap = document.getElementById('load-more-wrap');
+  const countEl = document.getElementById('formula-count');
+
+  container.innerHTML = '<div style="text-align:center;padding:30px 0;color:var(--text-muted);font-size:0.83rem;"><ion-icon name="hourglass-outline"></ion-icon> Memuat resep...</div>';
+
+  try {
+    let result;
+    if (formulaCatFilter !== 'semua') {
+      result = await VDB.getHerbalFormulasPage(FORMULA_PAGE, formulaLastDoc, formulaCatFilter);
+    } else {
+      result = await VDB.getHerbalFormulasPage(FORMULA_PAGE, formulaLastDoc);
+    }
+
+    allFormulas = reset ? result.formulas : [...allFormulas, ...result.formulas];
+    formulaLastDoc = result.lastDoc;
+    formulaHasMore = result.hasMore;
+
+    applyFormulaFilters(reset ? false : true);
+
+    loadMoreWrap.style.display = formulaHasMore ? '' : 'none';
+    countEl.textContent = allFormulas.length + (formulaHasMore ? '+' : '') + ' resep dimuat';
+  } catch(e) {
+    container.innerHTML = '<div style="text-align:center;padding:30px 0;color:var(--text-muted);font-size:0.83rem;">Gagal memuat resep. Coba lagi.</div>';
+  }
+}
+
+function applyFormulaFilters(append = false) {
+  let list = allFormulas;
+  if (formulaTypeFilter === 'diminum')  list = list.filter(f => !f.isTopical);
+  if (formulaTypeFilter === 'topikal') list = list.filter(f =>  f.isTopical);
+  if (formulaSearchQ) {
+    const q = formulaSearchQ.toLowerCase();
+    list = list.filter(f =>
+      (f.name||'').toLowerCase().includes(q) ||
+      (f.indications||[]).some(i => i.includes(q)) ||
+      (f.tags||[]).some(t => t.includes(q))
+    );
+  }
+  renderFormulas(list, append);
+}
+
+function filterType(type, el) {
+  document.querySelectorAll('.type-chip').forEach(c => { c.classList.remove('type-active'); c.style.cssText = 'cursor:pointer;white-space:nowrap;'; });
+  el.classList.add('type-active'); el.style.cssText = 'background:var(--primary-gradient);color:#fff;cursor:pointer;white-space:nowrap;';
+  formulaTypeFilter = type;
+  applyFormulaFilters();
+}
+
+function filterFCat(cat, el) {
+  document.querySelectorAll('.fcat-chip').forEach(c => { c.classList.remove('fcat-active'); c.style.cssText = 'cursor:pointer;white-space:nowrap;'; });
+  el.classList.add('fcat-active'); el.style.cssText = 'background:rgba(39,174,96,0.12);color:#27AE60;cursor:pointer;white-space:nowrap;font-weight:700;';
+  formulaCatFilter = cat;
+  loadFormulas(true);
+}
+
+document.getElementById('search-formula').addEventListener('input', function() {
+  formulaSearchQ = this.value.toLowerCase().trim();
+  applyFormulaFilters();
+});
+
+// ── Search button handler ──────────────────────────────────────────────────
+function focusSearchInput() {
+  const currentTab = document.querySelector('.neu-tab.active');
+  if (currentTab.textContent.includes('Katalog')) {
+    document.getElementById('search-herbal').focus();
+    document.getElementById('search-herbal').select();
+  } else if (currentTab.textContent.includes('Formula')) {
+    document.getElementById('search-formula').focus();
+    document.getElementById('search-formula').select();
+  }
+}
+
+async function loadMoreFormulas() {
+  if (!formulaHasMore) return;
+  document.getElementById('load-more-btn').disabled = true;
+  await loadFormulas(false);
+  document.getElementById('load-more-btn').disabled = false;
+}
+
+// ── AI Herbal Advisor ──────────────────────────────────────────────────────
+let currentUser = null;
+let herbalChatHistory = [];
+
+async function initHerbalAdvisor() {
+  try {
+    currentUser = await VDB.getUser();
+  } catch (e) {
+    console.error('Failed to load user profile:', e);
+  }
+}
+
+async function sendHerbalQuery() {
+  const input = document.getElementById('herbal-input');
+  const query = input.value.trim();
+
+  if (!query) return;
+  if (!currentUser) {
+    showToast('Profil pengguna tidak dimuat. Coba reload halaman.', 'error');
+    return;
+  }
+
+  // Add user message to chat
+  const chatBox = document.getElementById('herbal-chat-box');
+  const userMsgDiv = document.createElement('div');
+  userMsgDiv.className = 'chat-bubble sent';
+  userMsgDiv.innerHTML = `<div style="font-size:0.85rem;line-height:1.5;">${query}</div>`;
+  chatBox.appendChild(userMsgDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  // Clear input
+  input.value = '';
+
+  // Show loading
+  document.getElementById('herbal-loading').style.display = '';
+  document.getElementById('herbal-response').style.display = 'none';
+
+  try {
+    // Get condition from query or ask AI to detect
+    const condition = query.toLowerCase().includes('diabetes') ? 'diabetes' :
+                      query.toLowerCase().includes('tensi') || query.toLowerCase().includes('tekanan darah') ? 'hypertension' :
+                      query.toLowerCase().includes('kolesterol') ? 'cholesterol' :
+                      query.toLowerCase().includes('berat') || query.toLowerCase().includes('diet') ? 'weight-management' :
+                      'general-wellness';
+
+    // Call Cloud Function
+    const response = await fetch(
+      CLOUD_FUNCTIONS.herbalAdvisor,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userProfile: {
+            age: currentUser.dateOfBirth ? new Date().getFullYear() - new Date(currentUser.dateOfBirth).getFullYear() : 30,
+            gender: currentUser.gender || 'M',
+            currentMedications: currentUser.currentMedications || [],
+            allergies: currentUser.allergies || []
+          },
+          condition: condition,
+          query: query,
+          userId: currentUser.uid
+        })
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    // Add AI response to chat
+    const aiMsgDiv = document.createElement('div');
+    aiMsgDiv.className = 'chat-bubble received';
+    aiMsgDiv.innerHTML = `<div style="font-size:0.85rem;line-height:1.5;">Berdasarkan keluhan Anda, berikut rekomendasi herbal yang mungkin membantu:</div>`;
+    chatBox.appendChild(aiMsgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Display recommendations
+    renderHerbalRecommendations(result);
+
+    document.getElementById('herbal-loading').style.display = 'none';
+    document.getElementById('herbal-response').style.display = '';
+
+  } catch (error) {
+    console.error('Herbal Advisor Error:', error);
+
+    document.getElementById('herbal-loading').style.display = 'none';
+
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'chat-bubble received';
+    errorDiv.style.borderLeft = '3px solid #EB5757';
+    errorDiv.innerHTML = `<div style="font-size:0.85rem;color:#EB5757;line-height:1.5;">⚠️ Maaf, terjadi kesalahan saat memproses rekomendasi. Silakan coba lagi.</div>`;
+    chatBox.appendChild(errorDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    showToast('Gagal memproses rekomendasi. Periksa koneksi internet.', 'error');
+  }
+}
+
+function renderHerbalRecommendations(data) {
+  const container = document.getElementById('herbs-recommendation');
+  container.innerHTML = '';
+
+  // Parse response if it's JSON string
+  let herbsData = data;
+  if (typeof data === 'string') {
+    try {
+      herbsData = JSON.parse(data);
+    } catch (e) {
+      herbsData = data;
+    }
+  }
+
+  // Handle both direct object and wrapper object
+  const herbs = herbsData.herbs || (Array.isArray(herbsData) ? herbsData : [herbsData]);
+
+  if (!herbs || herbs.length === 0) {
+    container.innerHTML = '<div style="color:var(--text-secondary);font-size:0.8rem;">Tidak ada rekomendasi herbal tersedia untuk kondisi ini.</div>';
+    return;
+  }
+
+  herbs.forEach((herb, idx) => {
+    const gradeClass = `herb-grade-${herb.gradeEvidence || 'C'}`;
+    const compoundsHtml = (herb.compounds || [])
+      .slice(0, 3)
+      .map(c => `<span class="herb-compound">${c}</span>`)
+      .join('');
+
+    const html = `
+      <div class="herb-card">
+        <div>
+          ${idx + 1}. ${herb.name || herb.jamuName || 'Herbal'}
+          ${herb.jamuName && herb.name !== herb.jamuName ? `<br><span style="font-size:0.75rem;color:var(--text-secondary);font-weight:400;">${herb.jamuName}</span>` : ''}
+        </div>
+
+        ${herb.latinName ? `<div style="font-size:0.75rem;color:var(--text-tertiary);font-style:italic;margin-bottom:6px;">${herb.latinName}</div>` : ''}
+
+        ${compoundsHtml ? `<div style="margin:6px 0;">${compoundsHtml}</div>` : ''}
+
+        <div style="margin-top:6px;">
+          <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:4px;">
+            <strong>Dosis:</strong> ${herb.dosage || '—'}
+          </div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:4px;">
+            <strong>Cara:</strong> ${herb.preparation || '—'}
+          </div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);">
+            <strong>Durasi:</strong> ${herb.durationWeeks ? herb.durationWeeks + ' minggu' : '—'}
+          </div>
+        </div>
+
+        <span class="herb-grade ${gradeClass}">Level Bukti ${herb.gradeEvidence || 'C'}</span>
+
+        ${herb.interactions && herb.interactions.length > 0 ? `
+          <div style="margin-top:8px;padding:8px;background:rgba(235,87,87,0.08);border-radius:6px;border-left:2px solid #EB5757;">
+            <div style="font-size:0.7rem;font-weight:700;color:#EB5757;margin-bottom:4px;">⚠️ Interaksi Obat:</div>
+            <div style="font-size:0.7rem;color:#EB5757;">${herb.interactions.join(', ')}</div>
+          </div>
+        ` : ''}
+
+        ${herb.warnings && herb.warnings.length > 0 ? `
+          <div style="margin-top:8px;font-size:0.7rem;color:var(--text-secondary);">
+            <strong>Catatan:</strong> ${herb.warnings.join('; ')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    container.innerHTML += html;
+  });
+
+  // Add BPOM note
+  if (herbsData.bpomApproved) {
+    container.innerHTML += `
+      <div style="margin-top:12px;padding:10px;background:rgba(39,174,96,0.08);border-radius:8px;font-size:0.75rem;color:#27AE60;">
+        ✅ Herbal yang direkomendasikan telah melalui verifikasi BPOM (Badan Pengawas Obat dan Makanan).
+      </div>
+    `;
+  }
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+(async () => {
+  await VAuth.guard('patient', 1);
+
+  // Init herbal advisor
+  await initHerbalAdvisor();
+
+  // Setup input enter key
+  document.getElementById('herbal-input').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendHerbalQuery();
+  });
+
+  try {
+    allHerbals = await VDB.getHerbals();
+    renderHerbals(allHerbals);
+  } catch (e) {
+    document.getElementById('herbals-grid').innerHTML =
+      '<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text-muted);font-size:0.83rem;">Gagal memuat data. Coba lagi.</div>';
+  }
+})();
+</script>
+
+</body>
+</html>

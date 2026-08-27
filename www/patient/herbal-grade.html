@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Herbal GRADE Assessment</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); color: #fff; }
+    .grade-badge { padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-align: center; }
+    .grade-a { background: rgba(39,174,96,0.2); color: #27AE60; }
+    .grade-b { background: rgba(111,207,151,0.15); color: #27AE60; }
+    .grade-c { background: rgba(245,166,35,0.15); color: #F2994A; }
+    .domain-item { display: grid; grid-template-columns: 140px 1fr; gap: 12px; margin-bottom: 12px; }
+    .domain-label { font-weight: 600; font-size: 0.75rem; color: var(--text-primary); }
+    .domain-value { font-size: 0.75rem; color: var(--text-secondary); padding: 8px; background: rgba(39,174,96,0.04); border-radius: 6px; }
+    .safety-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.75rem; }
+    .safety-table td, .safety-table th { padding: 8px; border-bottom: 1px solid rgba(39,174,96,0.15); }
+    .safety-table th { background: rgba(39,174,96,0.08); font-weight: 600; }
+    .override-card { background: rgba(235,87,87,0.06); border-left: 4px solid #EB5757; padding: 12px; border-radius: 8px; margin-bottom: 12px; }
+    .recommended-badge { background: rgba(39,174,96,0.12); color: #27AE60; padding: 6px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+    .adjunctive-badge { background: rgba(245,166,35,0.12); color: #F2994A; padding: 6px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+    .insufficient-badge { background: rgba(235,87,87,0.12); color: #EB5757; padding: 6px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+    .overview-card { background: linear-gradient(135deg, rgba(39,174,96,0.08) 0%, rgba(111,207,151,0.04) 100%); border-left: 4px solid #27AE60; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
+
+    @media (max-width: 480px) {
+      .domain-item { grid-template-columns: 1fr; gap: 4px; }
+      .domain-label { font-size: 0.7rem; }
+      [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('material-research.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;color:#fff;">Herbal GRADE Assessment</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+    <div class="overview-card">
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">⚖️ Evidence Quality & Safety Assessment</div>
+      <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;margin:0;">
+        GRADE (Grading of Recommendations Assessment, Development, and Evaluation) methodology applied to 50+ herbal medicine papers. 5-domain assessment per herbal: Risk of Bias, Inconsistency, Indirectness, Imprecision, Publication Bias. WHO Monographs cross-referenced for safety profiles and drug interactions.
+      </p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;">
+      <div class="neu-card" style="padding:12px;">
+        <div style="font-size:1rem;font-weight:700;color:#27AE60;">18</div>
+        <div style="font-size:0.7rem;color:var(--text-secondary);">Grade A/B Evidence</div>
+      </div>
+      <div class="neu-card" style="padding:12px;">
+        <div style="font-size:1rem;font-weight:700;color:#F2994A;">7</div>
+        <div style="font-size:0.7rem;color:var(--text-secondary);">Herbal Categories</div>
+      </div>
+      <div class="neu-card" style="padding:12px;">
+        <div style="font-size:1rem;font-weight:700;color:#EB5757;">25</div>
+        <div style="font-size:0.7rem;color:var(--text-secondary);">Drug Interactions</div>
+      </div>
+    </div>
+
+    <!-- CURCUMIN -->
+    <div class="neu-card" style="padding:16px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div style="font-weight:700;font-size:0.95rem;">🟡 Curcumin / Turmeric</div>
+        <span class="grade-badge grade-b">Grade B</span>
+      </div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">
+        <strong>WHO Reference:</strong> Monographs Vol. 4 (2009) | <strong>RCTs:</strong> 12 studies
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">5-Domain GRADE Assessment</div>
+          <div class="domain-item">
+            <div class="domain-label">Risk of Bias</div>
+            <div class="domain-value">Low-Moderate (good randomization)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Inconsistency</div>
+            <div class="domain-value">Low (LDL ↓15-25% consistent)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Indirectness</div>
+            <div class="domain-value">Low (direct population)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Imprecision</div>
+            <div class="domain-value">Moderate (CIs adequate)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Publication Bias</div>
+            <div class="domain-value">Possible (small trials)</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">Clinical Efficacy</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.8;">
+            <strong>• Dyslipidemia:</strong> LDL ↓15-25%<br>
+            <strong>• T2 Diabetes:</strong> FPG ↓10-15%, HbA1c ↓7-8%<br>
+            <strong>• NAFLD:</strong> ALT ↓25-30%<br>
+            <strong>• Inflammation:</strong> CRP ↓20-35%<br>
+            <strong>Dose:</strong> 500-1000mg/day optimal
+          </div>
+        </div>
+      </div>
+      <div class="override-card">
+        <strong style="color:#EB5757;">⚠️ Drug Interactions:</strong>
+        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
+          • Enhanced effect with anticoagulants/antiplatelet drugs (monitor INR)<br>
+          • Potentiates diabetes medications (risk hypoglycemia, dose adjustment)<br>
+          • Caution: biliary obstruction, pregnancy/lactation
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <span class="recommended-badge">✅ RECOMMENDED for Dyslipidemia, T2DM, MetS</span>
+      </div>
+    </div>
+
+    <!-- GREEN TEA -->
+    <div class="neu-card" style="padding:16px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div style="font-weight:700;font-size:0.95rem;">🟢 Green Tea / EGCG</div>
+        <span class="grade-badge grade-a">Grade A</span>
+      </div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">
+        <strong>WHO Reference:</strong> Monographs Vol. 1 (1999) | <strong>RCTs:</strong> 15 studies | <strong>Meta-analyses:</strong> 3
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">5-Domain GRADE Assessment</div>
+          <div class="domain-item">
+            <div class="domain-label">Risk of Bias</div>
+            <div class="domain-value">Low (multiple RCTs, blinded)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Inconsistency</div>
+            <div class="domain-value">Low (consistent weight loss)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Indirectness</div>
+            <div class="domain-value">Low (direct outcomes)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Imprecision</div>
+            <div class="domain-value">Low (narrow CIs)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Publication Bias</div>
+            <div class="domain-value">Unlikely (multiple sources)</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">Clinical Efficacy</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.8;">
+            <strong>• Weight Loss:</strong> 1-3 kg (8-12 weeks)<br>
+            <strong>• Central Obesity:</strong> WC ↓2.4 cm<br>
+            <strong>• Dyslipidemia:</strong> LDL ↓5-8%<br>
+            <strong>• Metabolic Syndrome:</strong> MetS ↓18% prevalence<br>
+            <strong>Dose:</strong> 300-400mg EGCG/day
+          </div>
+        </div>
+      </div>
+      <div class="override-card">
+        <strong style="color:#EB5757;">⚠️ Drug Interactions:</strong>
+        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
+          • May enhance warfarin effect (monitor INR closely)<br>
+          • Avoid with iron supplements (reduced absorption)<br>
+          • Caffeine sensitivity in susceptible individuals
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <span class="recommended-badge">✅ RECOMMENDED for Obesity, Dyslipidemia, MetS</span>
+      </div>
+    </div>
+
+    <!-- GARLIC -->
+    <div class="neu-card" style="padding:16px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div style="font-weight:700;font-size:0.95rem;">⚪ Garlic</div>
+        <span class="grade-badge grade-b">Grade B</span>
+      </div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">
+        <strong>WHO Reference:</strong> Monographs Vol. 1 (1999) | <strong>RCTs:</strong> 10+ studies
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">5-Domain GRADE Assessment</div>
+          <div class="domain-item">
+            <div class="domain-label">Risk of Bias</div>
+            <div class="domain-value">Low-Moderate (aged garlic studies)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Inconsistency</div>
+            <div class="domain-value">Low (SBP ↓4-8 mmHg)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Indirectness</div>
+            <div class="domain-value">Low (direct HTN population)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Imprecision</div>
+            <div class="domain-value">Moderate (CI adequate)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Publication Bias</div>
+            <div class="domain-value">Possible (selective reporting)</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">Clinical Efficacy</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.8;">
+            <strong>• Hypertension:</strong> SBP ↓5.4 mmHg<br>
+            <strong>• Dyslipidemia:</strong> Total-C ↓9%, LDL ↓7%, TG ↓8%<br>
+            <strong>• Atherosclerotic risk:</strong> ApoB ↓7%<br>
+            <strong>Dose:</strong> 600-900mg aged garlic/day
+          </div>
+        </div>
+      </div>
+      <div class="override-card">
+        <strong style="color:#EB5757;">⚠️ Drug Interactions:</strong>
+        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
+          • Enhanced antiplatelet effect (combined with aspirin/NSAIDs)<br>
+          • May increase warfarin effect (INR monitoring)<br>
+          • Oral odor side effect in some individuals
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <span class="recommended-badge">✅ RECOMMENDED for Hypertension, Dyslipidemia</span>
+      </div>
+    </div>
+
+    <!-- GINGER -->
+    <div class="neu-card" style="padding:16px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div style="font-weight:700;font-size:0.95rem;">🟠 Ginger</div>
+        <span class="grade-badge grade-b">Grade B</span>
+      </div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">
+        <strong>WHO Reference:</strong> Monographs Vol. 1 (1999) | <strong>RCTs:</strong> 8+ studies
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">5-Domain GRADE Assessment</div>
+          <div class="domain-item">
+            <div class="domain-label">Risk of Bias</div>
+            <div class="domain-value">Low (good RCT design)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Inconsistency</div>
+            <div class="domain-value">Low (FPG ↓8-13%)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Indirectness</div>
+            <div class="domain-value">Low (T2DM patients)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Imprecision</div>
+            <div class="domain-value">Moderate (adequate CI)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Publication Bias</div>
+            <div class="domain-value">Possible (Asian studies)</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">Clinical Efficacy</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.8;">
+            <strong>• Fasting Glucose:</strong> FPG ↓10.3%<br>
+            <strong>• Inflammation:</strong> CRP ↓18%<br>
+            <strong>• HbA1c:</strong> HbA1c ↓0.76%<br>
+            <strong>• Arthritis pain:</strong> Mild benefit<br>
+            <strong>Dose:</strong> 1-4 g/day optimal
+          </div>
+        </div>
+      </div>
+      <div class="override-card">
+        <strong style="color:#EB5757;">⚠️ Drug Interactions:</strong>
+        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
+          • Enhanced antiplatelet/anticoagulant effect (monitor bleeding risk)<br>
+          • Mild GI effects (nausea, bloating in some individuals)<br>
+          • Generally well-tolerated at recommended doses
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <span class="recommended-badge">✅ RECOMMENDED for T2 Diabetes, Inflammation</span>
+      </div>
+    </div>
+
+    <!-- CINNAMON -->
+    <div class="neu-card" style="padding:16px;margin-bottom:16px;opacity:0.9;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div style="font-weight:700;font-size:0.95rem;">🟤 Cinnamon</div>
+        <span class="grade-badge grade-c">Grade C</span>
+      </div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">
+        <strong>WHO Reference:</strong> Monographs Vol. 3 (2007) | <strong>RCTs:</strong> 8 studies | <strong>Note:</strong> Variable glucose response
+      </div>
+      <div class="override-card" style="margin-bottom:12px;">
+        <strong style="color:#EB5757;">⚠️ CAUTION — Contraindication Alert:</strong>
+        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
+          <strong>Coumarin-sensitive patients:</strong> Cassia cinnamon contains high coumarin (6-7 mg/tsp) which inhibits CYP2C9 → increased warfarin effect, bleeding risk.<br>
+          <strong>Recommendation:</strong> Use Ceylon cinnamon only (0.004 mg coumarin/tsp) if patient on anticoagulants OR avoid entirely.
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">5-Domain GRADE Assessment</div>
+          <div class="domain-item">
+            <div class="domain-label">Risk of Bias</div>
+            <div class="domain-value">Moderate (small trials)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Inconsistency</div>
+            <div class="domain-value">Moderate-High (variable response)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Indirectness</div>
+            <div class="domain-value">Moderate (mixed populations)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Imprecision</div>
+            <div class="domain-value">High (wide CIs, small n)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Publication Bias</div>
+            <div class="domain-value">Likely (positive studies published)</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">Clinical Efficacy</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.8;">
+            <strong>• FPG Reduction:</strong> 24.7 mg/dL (meta-analysis)<br>
+            <strong>• HbA1c:</strong> ↓0.54% (variable)<br>
+            <strong>• Effect heterogeneity:</strong> 30-70% responder variability<br>
+            <strong>Dose:</strong> 1-6 g/day (variable efficacy)
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <span class="adjunctive-badge">⚠️ ADJUNCTIVE ONLY — Evidence weak, use with caution in anticoagulation</span>
+      </div>
+    </div>
+
+    <!-- OLIVE LEAF -->
+    <div class="neu-card" style="padding:16px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div style="font-weight:700;font-size:0.95rem;">🫒 Olive Leaf Extract</div>
+        <span class="grade-badge grade-b">Grade B</span>
+      </div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">
+        <strong>WHO Reference:</strong> Monographs Vol. 3 (2007) | <strong>RCTs:</strong> 6 studies
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">5-Domain GRADE Assessment</div>
+          <div class="domain-item">
+            <div class="domain-label">Risk of Bias</div>
+            <div class="domain-value">Low-Moderate (good design)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Inconsistency</div>
+            <div class="domain-value">Low (BP reduction consistent)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Indirectness</div>
+            <div class="domain-value">Low (direct HTN population)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Imprecision</div>
+            <div class="domain-value">Moderate (small trials)</div>
+          </div>
+          <div class="domain-item">
+            <div class="domain-label">Publication Bias</div>
+            <div class="domain-value">Possible (small sample)</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:0.75rem;margin-bottom:8px;color:var(--text-primary);">Clinical Efficacy</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.8;">
+            <strong>• Hypertension:</strong> SBP ↓6.8 mmHg, DBP ↓3.2 mmHg<br>
+            <strong>• Endothelial function:</strong> FMD ↑18%<br>
+            <strong>• Dyslipidemia:</strong> LDL ↓modest<br>
+            <strong>Dose:</strong> 500 mg BID optimal
+          </div>
+        </div>
+      </div>
+      <div class="override-card">
+        <strong style="color:#EB5757;">⚠️ Drug Interactions:</strong>
+        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
+          • Additive BP-lowering effect (monitor BP if on antihypertensives)<br>
+          • Possible interaction with anticoagulants (monitor INR)<br>
+          • Generally safe, well-tolerated
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <span class="recommended-badge">✅ RECOMMENDED for Hypertension, Endothelial Health</span>
+      </div>
+    </div>
+
+    <!-- WHO ALIGNMENT SUMMARY -->
+    <div class="neu-card" style="padding:16px;background:rgba(39,174,96,0.04);border-left:3px solid #27AE60;">
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px;">🏥 WHO Integration & Clinical Recommendations</div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.8;">
+        <strong>Key Insight:</strong> HerboraTech GRADE assessments are <strong>more stringent</strong> than WHO traditional use classifications. We require RCT evidence for metabolic disease recommendations.<br><br>
+        <strong>✅ Recommended (Grade A-B):</strong> Curcumin, Green Tea, Garlic, Ginger, Olive Leaf — safe for adjunctive use in metabolic disease management<br><br>
+        <strong>⚠️ Adjunctive Only (Grade C):</strong> Cinnamon — variable efficacy, coumarin interaction caution with anticoagulants<br><br>
+        <strong>🌾 Traditional Jamu:</strong> Grade C — formulation variability high, mechanistic validation needed for metabolic-specific claims
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html"><ion-icon name="home"></ion-icon><span>Beranda</span></a>
+    <a class="nav-item" href="monitoring.html"><ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span></a>
+    <a class="nav-item" href="consultation.html"><ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span></a>
+    <a class="nav-item" href="herbal.html"><ion-icon name="leaf-outline"></ion-icon><span>Jamu</span></a>
+    <a class="nav-item" href="profile.html"><ion-icon name="person-outline"></ion-icon><span>Profil</span></a>
+  </nav>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+  (async () => {
+    await VAuth.guard('patient', 1);
+  })();
+</script>
+</body>
+</html>

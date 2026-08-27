@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Notifikasi</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item active" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar" data-animate="up"><h1>Manajemen Notifikasi</h1><div class="header-actions"><button class="neu-btn-primary" onclick="nav('create-notification.html')"><ion-icon name="add-outline"></ion-icon> Buat Notifikasi</button></div></div>
+
+    <div class="stat-grid" data-animate="up" data-delay="100">
+      <div class="stat-card"><div class="sc-icon" style="background:var(--primary-bg);color:var(--primary-dark)">📤</div><div class="sc-value" id="total-sent">—</div><div class="sc-label">Total Broadcast</div></div>
+      <div class="stat-card"><div class="sc-icon" style="background:var(--info-bg);color:var(--info)">👁️</div><div class="sc-value" id="unread-count">—</div><div class="sc-label">Notif Saya (Unread)</div></div>
+      <div class="stat-card"><div class="sc-icon" style="background:var(--accent-bg);color:var(--accent)">🔔</div><div class="sc-value" id="scheduled-count">—</div><div class="sc-label">Terjadwal</div></div>
+    </div>
+
+    <div class="neu-table-wrap mt-24" data-animate="up" data-delay="200">
+      <div style="padding:20px;"><span style="font-weight:700;">Riwayat Broadcast Notifikasi</span></div>
+      <table class="neu-table">
+        <thead><tr><th>Judul</th><th>Isi Pesan</th><th>Target</th><th>Waktu</th><th>Aksi</th></tr></thead>
+        <tbody id="notif-tbody">
+          <tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:20px;">Memuat data...</td></tr>
+        </tbody>
+      </table>
+    </div>
+</main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+let _currentUser = null;
+
+async function deleteNotif(id) {
+  if (!confirm('Hapus broadcast notifikasi ini?')) return;
+  try {
+    await VFirebase.db.collection('broadcastNotifications').doc(id).delete();
+    showToast('Notifikasi dihapus.', 'success');
+    loadBroadcasts();
+  } catch (e) {
+    showToast('Gagal menghapus: ' + e.message, 'error');
+  }
+}
+
+function formatTs(ts) {
+  if (!ts) return '—';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+
+async function loadBroadcasts() {
+  const tbody = document.getElementById('notif-tbody');
+  try {
+    const snap = await VFirebase.db.collection('broadcastNotifications')
+      .orderBy('createdAt', 'desc')
+      .get();
+
+    document.getElementById('total-sent').textContent = snap.size;
+
+    if (snap.empty) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:20px;">Belum ada broadcast dikirim</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = snap.docs.map(doc => {
+      const n = doc.data();
+      const target = n.target || 'Semua';
+      return `<tr>
+        <td style="font-weight:600;">${n.title || '—'}</td>
+        <td style="font-size:0.82rem;color:var(--text-secondary);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${n.body || '—'}</td>
+        <td><span class="neu-chip-primary" style="font-size:0.65rem;">${target}</span></td>
+        <td style="font-size:0.78rem;color:var(--text-tertiary);">${formatTs(n.createdAt)}</td>
+        <td><button class="neu-btn-sm neu-btn" style="font-size:0.68rem;color:var(--danger);" onclick="deleteNotif('${doc.id}')">Hapus</button></td>
+      </tr>`;
+    }).join('');
+  } catch (e) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--danger);padding:20px;">Gagal memuat: ' + e.message + '</td></tr>';
+  }
+}
+
+async function loadScheduled() {
+  try {
+    const snap = await VFirebase.db.collection('scheduledNotifications').get();
+    document.getElementById('scheduled-count').textContent = snap.size;
+  } catch (e) {
+    document.getElementById('scheduled-count').textContent = '—';
+  }
+}
+
+(async () => {
+  const { user, profile } = await VAuth.guard('admin', 1);
+  if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+  _currentUser = user;
+
+  // Load own unread count
+  try {
+    const unread = await VDB.getUnreadCount(user.uid);
+    document.getElementById('unread-count').textContent = unread;
+  } catch (e) {
+    document.getElementById('unread-count').textContent = '—';
+  }
+
+  // Subscribe to admin's own notifications (live badge update)
+  VDB.subscribeNotifications(user.uid, (notifs) => {
+    const unread = notifs.filter(n => !n.read).length;
+    document.getElementById('unread-count').textContent = unread;
+  });
+
+  await loadBroadcasts();
+  await loadScheduled();
+})();
+</script>
+</body>
+</html>

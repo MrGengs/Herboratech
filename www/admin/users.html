@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Users</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+    .filter-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .filter-tab { padding: 6px 16px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; cursor: pointer; border: none; background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); transition: all 0.2s; font-family: 'Poppins', sans-serif; }
+    .filter-tab.active { background: var(--primary-dark); color: #fff; box-shadow: none; }
+
+    /* Modal */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; }
+    .modal-overlay.show { display:flex; }
+    .modal-box { background:var(--bg); border-radius:24px; padding:36px 32px; width:100%; max-width:460px; box-shadow:0 24px 60px rgba(0,0,0,0.25); animation:modalIn 0.25s ease both; }
+    @keyframes modalIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+    .modal-title { font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+    .modal-field { margin-bottom:16px; }
+    .modal-field label { font-size:0.78rem; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:6px; }
+    .modal-field select { width:100%; padding:12px 16px; border-radius:12px; border:none; background:var(--bg); box-shadow:var(--shadow-in); font-family:'Poppins',sans-serif; font-size:0.88rem; color:var(--text-primary); outline:none; cursor:pointer; }
+    .modal-actions { display:flex; gap:10px; margin-top:24px; }
+    .modal-actions button { flex:1; }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item active" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar" data-animate="up">
+      <h1>Manajemen Users</h1>
+      <div class="header-actions">
+        <a href="doctor-verification.html" class="neu-btn" id="pendingBtn" style="text-decoration:none;display:none;">
+          <ion-icon name="hourglass-outline" style="color:var(--warning);"></ion-icon>
+          <span id="pendingCount">0</span> Menunggu Verifikasi
+        </a>
+        <button class="neu-btn-primary" onclick="openAddUser()"><ion-icon name="add-outline"></ion-icon> Tambah User</button>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:16px;margin-bottom:16px;" data-animate="up" data-delay="100">
+      <div class="neu-search" style="flex:1;">
+        <ion-icon name="search-outline"></ion-icon>
+        <input id="search-input" placeholder="Cari user..." oninput="filterUsers()">
+      </div>
+    </div>
+
+    <div class="filter-tabs" data-animate="up" data-delay="120">
+      <button class="filter-tab active" onclick="setFilter('semua', this)">Semua</button>
+      <button class="filter-tab" onclick="setFilter('patient', this)">Pasien</button>
+      <button class="filter-tab" onclick="setFilter('doctor', this)">Dokter</button>
+      <button class="filter-tab" onclick="setFilter('admin', this)">Admin</button>
+    </div>
+
+    <div class="neu-table-wrap" data-animate="up" data-delay="150">
+      <table class="neu-table">
+        <thead><tr><th>Nama</th><th>Email</th><th>Role</th><th>Status</th><th>Bergabung</th><th>Aksi</th></tr></thead>
+        <tbody id="users-tbody">
+          <tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:20px;">Memuat data...</td></tr>
+        </tbody>
+      </table>
+    </div>
+</main>
+</div>
+
+<!-- Modal Tambah User -->
+<div class="modal-overlay" id="addUserModal">
+  <div class="modal-box">
+    <div class="modal-title"><ion-icon name="person-add-outline" style="color:var(--primary-dark);font-size:1.3rem;"></ion-icon> Tambah User Baru</div>
+
+    <div class="modal-field">
+      <label>Nama Lengkap *</label>
+      <input class="neu-input" id="newName" placeholder="Nama lengkap user" style="width:100%;">
+    </div>
+    <div class="modal-field">
+      <label>Email *</label>
+      <input class="neu-input" id="newEmail" type="email" placeholder="email@contoh.com" style="width:100%;">
+    </div>
+    <div class="modal-field">
+      <label>Password *</label>
+      <input class="neu-input" id="newPassword" type="password" placeholder="Min. 6 karakter" style="width:100%;">
+    </div>
+    <div class="modal-field">
+      <label>Role</label>
+      <select id="newRole">
+        <option value="patient">Pasien</option>
+        <option value="doctor">Dokter</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+
+    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">
+      <ion-icon name="information-circle-outline" style="vertical-align:middle;"></ion-icon>
+      User akan dibuat langsung di Firebase Auth. Email verifikasi akan dikirim otomatis.
+    </p>
+
+    <div class="modal-actions">
+      <button class="neu-btn" onclick="closeAddUser()">Batal</button>
+      <button class="neu-btn-primary" id="saveUserBtn" onclick="saveNewUser()">
+        <ion-icon name="checkmark-outline"></ion-icon> Simpan
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+let _allUsers    = [];
+let _activeFilter = 'semua';
+
+// Avatar color palette based on first letter
+const AVATAR_COLORS = [
+  'linear-gradient(135deg,#EB5757,#FF7B7B)',
+  'linear-gradient(135deg,#2F80ED,#56CCF2)',
+  'linear-gradient(135deg,#6C63FF,#8B83FF)',
+  'linear-gradient(135deg,#F2994A,#FFD54F)',
+  'linear-gradient(135deg,#6FCF97,#27AE60)',
+  'linear-gradient(135deg,#F2C94C,#F2994A)',
+  'linear-gradient(135deg,#EB5757,#9B51E0)',
+];
+
+function avatarColor(name) {
+  const idx = (name || 'A').charCodeAt(0) % AVATAR_COLORS.length;
+  return AVATAR_COLORS[idx];
+}
+
+function getInitials(name) {
+  if (!name) return '?';
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+function roleChip(role) {
+  switch (role) {
+    case 'doctor':  return '<span class="neu-chip-info" style="font-size:0.65rem;background:var(--info-bg);color:var(--info);">Dokter</span>';
+    case 'admin':   return '<span class="neu-chip-accent" style="font-size:0.65rem;">Admin</span>';
+    default:        return '<span class="neu-chip-primary" style="font-size:0.65rem;">Pasien</span>';
+  }
+}
+
+function statusBadge(isActive) {
+  return isActive !== false
+    ? '<span style="color:var(--success);font-weight:600;font-size:0.78rem;">● Aktif</span>'
+    : '<span style="color:var(--text-muted);font-weight:600;font-size:0.78rem;">● Nonaktif</span>';
+}
+
+function formatDate(ts) {
+  if (!ts) return '—';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+function renderUsers(list) {
+  const tbody = document.getElementById('users-tbody');
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:20px;">Tidak ada user ditemukan</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(u => {
+    const initials = getInitials(u.name);
+    const color    = avatarColor(u.name);
+    return `<tr
+      data-name="${(u.name || '').toLowerCase()}"
+      data-email="${(u.email || '').toLowerCase()}"
+      data-role="${u.role || 'patient'}">
+      <td style="display:flex;align-items:center;gap:10px;">
+        <div class="neu-avatar-sm" style="background:${color};flex-shrink:0;">${initials}</div>
+        <span style="font-weight:600;">${u.name || '—'}</span>
+      </td>
+      <td style="font-size:0.82rem;color:var(--text-secondary);">${u.email || '—'}</td>
+      <td>${roleChip(u.role)}</td>
+      <td>${statusBadge(u.isActive)}</td>
+      <td style="font-size:0.78rem;color:var(--text-tertiary);">${formatDate(u.createdAt)}</td>
+      <td><a class="neu-btn-sm neu-btn" style="font-size:0.68rem;text-decoration:none;" href="user-detail.html?uid=${u.uid}">Detail →</a></td>
+    </tr>`;
+  }).join('');
+}
+
+function getFilteredUsers() {
+  const q = (document.getElementById('search-input').value || '').toLowerCase();
+  return _allUsers.filter(u => {
+    const roleMatch = _activeFilter === 'semua' || u.role === _activeFilter;
+    const searchMatch = !q
+      || (u.name  || '').toLowerCase().includes(q)
+      || (u.email || '').toLowerCase().includes(q);
+    return roleMatch && searchMatch;
+  });
+}
+
+function filterUsers() {
+  renderUsers(getFilteredUsers());
+}
+
+function setFilter(role, btn) {
+  _activeFilter = role;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  filterUsers();
+}
+
+function openAddUser() {
+  document.getElementById('newName').value = '';
+  document.getElementById('newEmail').value = '';
+  document.getElementById('newPassword').value = '';
+  document.getElementById('newRole').value = 'patient';
+  document.getElementById('addUserModal').classList.add('show');
+}
+
+function closeAddUser() {
+  document.getElementById('addUserModal').classList.remove('show');
+}
+
+// Tutup modal jika klik overlay
+document.getElementById('addUserModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAddUser();
+});
+
+async function saveNewUser() {
+  const name     = document.getElementById('newName').value.trim();
+  const email    = document.getElementById('newEmail').value.trim();
+  const password = document.getElementById('newPassword').value;
+  const role     = document.getElementById('newRole').value;
+
+  if (!name)  { showToast('Nama tidak boleh kosong', 'warning'); return; }
+  if (!email) { showToast('Email tidak boleh kosong', 'warning'); return; }
+  if (password.length < 6) { showToast('Password minimal 6 karakter', 'warning'); return; }
+
+  const btn = document.getElementById('saveUserBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<ion-icon name="reload-outline" style="animation:spin 0.8s linear infinite"></ion-icon> Menyimpan...';
+
+  try {
+    // Simpan admin saat ini sebelum createUser (createUser akan auto-login sebagai user baru)
+    const adminUser = VFirebase.auth.currentUser;
+
+    const cred = await VFirebase.auth.createUserWithEmailAndPassword(email, password);
+    await cred.user.updateProfile({ displayName: name });
+    await VFirebase.db.collection('users').doc(cred.user.uid).set({
+      uid: cred.user.uid, name, email, role,
+      photoURL: null, isActive: true,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    if (role === 'patient') {
+      await VFirebase.db.collection('patients').doc(cred.user.uid).set({
+        uid: cred.user.uid, dob: null, gender: null, bloodType: null,
+        weight: null, height: null, allergies: [], familyHistory: [], assignedDoctors: []
+      });
+    }
+    await cred.user.sendEmailVerification();
+
+    // Sign kembali sebagai admin
+    await VFirebase.auth.signOut();
+    // Note: admin perlu login ulang — re-login otomatis tidak bisa dari client SDK
+    // Tampilkan pesan dan minta admin login ulang
+    showToast('User berhasil dibuat! Anda akan diarahkan ke halaman login untuk masuk ulang.', 'success');
+    closeAddUser();
+
+    // Refresh list dulu sebelum redirect
+    setTimeout(async () => {
+      _allUsers = await VDB.getAllUsers().catch(() => _allUsers);
+      renderUsers(_allUsers);
+      // Redirect login agar admin bisa sign-in kembali
+      setTimeout(() => { window.location.href = '../auth/login.html'; }, 2500);
+    }, 800);
+
+  } catch(e) {
+    showToast('Gagal membuat user: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<ion-icon name="checkmark-outline"></ion-icon> Simpan';
+  }
+}
+
+(async () => {
+  const { profile } = await VAuth.guard('admin', 1);
+  if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+
+  const tbody = document.getElementById('users-tbody');
+  try {
+    _allUsers = await VDB.getAllUsers();
+    renderUsers(_allUsers);
+
+    // Check pending approvals
+    const pendingCount = _allUsers.filter(u => u.roleStatus === 'pending').length;
+    if (pendingCount > 0) {
+      document.getElementById('pendingCount').textContent = pendingCount;
+      document.getElementById('pendingBtn').style.display = 'flex';
+    }
+  } catch (e) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--danger);padding:20px;">Gagal memuat: ' + e.message + '</td></tr>';
+  }
+})();
+</script>
+</body>
+</html>

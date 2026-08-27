@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Atur Jadwal</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0C2352 0%, #1D5DB5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
+
+    .day-card { background: var(--bg); border-radius: 16px; box-shadow: var(--shadow-out-sm); padding: 16px; margin-bottom: 12px; }
+    .day-card.inactive { opacity: 0.6; }
+    .day-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .day-name { font-weight: 700; font-size: 0.9rem; color: var(--text-primary); }
+    .time-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .time-row label { font-size: 0.72rem; color: var(--text-tertiary); min-width: 28px; }
+    .time-input { flex: 1; padding: 7px 10px; border-radius: 8px; border: none; background: var(--bg); box-shadow: var(--shadow-in); font-family: 'Poppins', sans-serif; font-size: 0.8rem; color: var(--text-primary); }
+    .time-input:focus { outline: none; box-shadow: var(--shadow-in), 0 0 0 2px var(--info); }
+    .neu-select { width: 100%; padding: 8px 12px; border-radius: 10px; border: none; background: var(--bg); box-shadow: var(--shadow-in); font-family: 'Poppins', sans-serif; font-size: 0.82rem; color: var(--text-primary); appearance: none; -webkit-appearance: none; cursor: pointer; }
+    .neu-select:focus { outline: none; }
+    .rest-block { display: flex; align-items: center; gap: 8px; background: var(--bg); border-radius: 10px; box-shadow: var(--shadow-in); padding: 8px 12px; margin-bottom: 6px; font-size: 0.8rem; color: var(--text-secondary); }
+    .rest-block ion-icon { color: var(--danger); cursor: pointer; }
+    .add-rest-btn { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--info); font-weight: 600; cursor: pointer; padding: 4px 0; border: none; background: none; font-family: 'Poppins', sans-serif; }
+    .global-config { background: var(--bg); border-radius: 16px; box-shadow: var(--shadow-out-sm); padding: 16px; margin-bottom: 20px; }
+    .config-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .config-label { font-size: 0.75rem; color: var(--text-tertiary); margin-bottom: 5px; font-weight: 500; }
+    .neu-number-input { width: 100%; padding: 8px 12px; border-radius: 10px; border: none; background: var(--bg); box-shadow: var(--shadow-in); font-family: 'Poppins', sans-serif; font-size: 0.82rem; color: var(--text-primary); text-align: center; box-sizing: border-box; }
+    .neu-number-input:focus { outline: none; }
+    .day-time-disabled { pointer-events: none; opacity: 0.4; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('profile.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;">Atur Jadwal</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+
+    <!-- Global Config -->
+    <div class="section-header" data-animate="up">
+      <div class="section-title">Pengaturan Umum</div>
+    </div>
+    <div class="global-config" data-animate="up" data-delay="50">
+      <div class="config-row">
+        <div>
+          <div class="config-label">Durasi per Slot</div>
+          <select class="neu-select" id="slotDuration">
+            <option value="15">15 menit</option>
+            <option value="30" selected>30 menit</option>
+            <option value="45">45 menit</option>
+            <option value="60">60 menit</option>
+          </select>
+        </div>
+        <div>
+          <div class="config-label">Maks Pasien / Slot</div>
+          <input type="number" class="neu-number-input" id="maxPatients" value="1" min="1" max="10">
+        </div>
+      </div>
+    </div>
+
+    <!-- Schedule Per Day -->
+    <div class="section-header" data-animate="up">
+      <div class="section-title">Jadwal Mingguan</div>
+    </div>
+
+    <!-- Monday -->
+    <div class="day-card" id="card-mon" data-animate="up" data-delay="100">
+      <div class="day-header">
+        <div class="day-name">Senin</div>
+        <label class="neu-switch">
+          <input type="checkbox" id="toggle-mon" checked onchange="toggleDay('mon')">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="times-mon">
+        <div class="time-row">
+          <label>Mulai</label>
+          <input type="time" class="time-input" value="08:00">
+          <label style="min-width:20px;">—</label>
+          <input type="time" class="time-input" value="17:00">
+        </div>
+        <div id="rest-mon" style="margin-top:8px;"></div>
+        <button class="add-rest-btn" onclick="addRestBlock('mon')"><ion-icon name="add-circle-outline"></ion-icon> Tambah Blok Istirahat</button>
+      </div>
+    </div>
+
+    <!-- Tuesday -->
+    <div class="day-card" id="card-tue" data-animate="up" data-delay="120">
+      <div class="day-header">
+        <div class="day-name">Selasa</div>
+        <label class="neu-switch">
+          <input type="checkbox" id="toggle-tue" checked onchange="toggleDay('tue')">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="times-tue">
+        <div class="time-row">
+          <label>Mulai</label>
+          <input type="time" class="time-input" value="08:00">
+          <label style="min-width:20px;">—</label>
+          <input type="time" class="time-input" value="17:00">
+        </div>
+        <div id="rest-tue" style="margin-top:8px;"></div>
+        <button class="add-rest-btn" onclick="addRestBlock('tue')"><ion-icon name="add-circle-outline"></ion-icon> Tambah Blok Istirahat</button>
+      </div>
+    </div>
+
+    <!-- Wednesday -->
+    <div class="day-card" id="card-wed" data-animate="up" data-delay="140">
+      <div class="day-header">
+        <div class="day-name">Rabu</div>
+        <label class="neu-switch">
+          <input type="checkbox" id="toggle-wed" checked onchange="toggleDay('wed')">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="times-wed">
+        <div class="time-row">
+          <label>Mulai</label>
+          <input type="time" class="time-input" value="08:00">
+          <label style="min-width:20px;">—</label>
+          <input type="time" class="time-input" value="17:00">
+        </div>
+        <div id="rest-wed" style="margin-top:8px;"></div>
+        <button class="add-rest-btn" onclick="addRestBlock('wed')"><ion-icon name="add-circle-outline"></ion-icon> Tambah Blok Istirahat</button>
+      </div>
+    </div>
+
+    <!-- Thursday -->
+    <div class="day-card" id="card-thu" data-animate="up" data-delay="160">
+      <div class="day-header">
+        <div class="day-name">Kamis</div>
+        <label class="neu-switch">
+          <input type="checkbox" id="toggle-thu" checked onchange="toggleDay('thu')">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="times-thu">
+        <div class="time-row">
+          <label>Mulai</label>
+          <input type="time" class="time-input" value="08:00">
+          <label style="min-width:20px;">—</label>
+          <input type="time" class="time-input" value="17:00">
+        </div>
+        <div id="rest-thu" style="margin-top:8px;"></div>
+        <button class="add-rest-btn" onclick="addRestBlock('thu')"><ion-icon name="add-circle-outline"></ion-icon> Tambah Blok Istirahat</button>
+      </div>
+    </div>
+
+    <!-- Friday -->
+    <div class="day-card" id="card-fri" data-animate="up" data-delay="180">
+      <div class="day-header">
+        <div class="day-name">Jumat</div>
+        <label class="neu-switch">
+          <input type="checkbox" id="toggle-fri" checked onchange="toggleDay('fri')">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="times-fri">
+        <div class="time-row">
+          <label>Mulai</label>
+          <input type="time" class="time-input" value="08:00">
+          <label style="min-width:20px;">—</label>
+          <input type="time" class="time-input" value="17:00">
+        </div>
+        <div id="rest-fri" style="margin-top:8px;"></div>
+        <button class="add-rest-btn" onclick="addRestBlock('fri')"><ion-icon name="add-circle-outline"></ion-icon> Tambah Blok Istirahat</button>
+      </div>
+    </div>
+
+    <!-- Saturday -->
+    <div class="day-card" id="card-sat" data-animate="up" data-delay="200">
+      <div class="day-header">
+        <div class="day-name">Sabtu</div>
+        <label class="neu-switch">
+          <input type="checkbox" id="toggle-sat" checked onchange="toggleDay('sat')">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="times-sat">
+        <div class="time-row">
+          <label>Mulai</label>
+          <input type="time" class="time-input" value="08:00">
+          <label style="min-width:20px;">—</label>
+          <input type="time" class="time-input" value="12:00">
+        </div>
+        <div id="rest-sat" style="margin-top:8px;"></div>
+        <button class="add-rest-btn" onclick="addRestBlock('sat')"><ion-icon name="add-circle-outline"></ion-icon> Tambah Blok Istirahat</button>
+      </div>
+    </div>
+
+    <!-- Sunday -->
+    <div class="day-card inactive" id="card-sun" data-animate="up" data-delay="220">
+      <div class="day-header">
+        <div class="day-name">Minggu</div>
+        <label class="neu-switch">
+          <input type="checkbox" id="toggle-sun" onchange="toggleDay('sun')">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="times-sun" class="day-time-disabled">
+        <div class="time-row">
+          <label>Mulai</label>
+          <input type="time" class="time-input" value="08:00">
+          <label style="min-width:20px;">—</label>
+          <input type="time" class="time-input" value="17:00">
+        </div>
+        <div id="rest-sun" style="margin-top:8px;"></div>
+        <button class="add-rest-btn" onclick="addRestBlock('sun')"><ion-icon name="add-circle-outline"></ion-icon> Tambah Blok Istirahat</button>
+      </div>
+    </div>
+
+    <button class="neu-btn neu-btn-primary neu-btn-block mt-24" data-animate="up" data-delay="240" onclick="saveSchedule()">
+      <ion-icon name="checkmark-circle-outline"></ion-icon> Simpan Jadwal
+    </button>
+
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+  // ── Firebase Auth Guard + Load Schedule ─────────────────────────────────
+  let _scheduleUser = null;
+
+  (async () => {
+    const { user } = await VAuth.guard('doctor', 1);
+    _scheduleUser = user;
+
+    // Try to load schedule from Firestore
+    try {
+      const snap = await VFirebase.db.collection('doctors').doc(user.uid).get();
+      const data = snap.exists ? snap.data() : null;
+      if (data && data.schedule) {
+        const saved = data.schedule;
+        const days = ['mon','tue','wed','thu','fri','sat','sun'];
+        days.forEach(day => {
+          if (!saved[day]) return;
+          const toggle = document.getElementById('toggle-' + day);
+          const times  = document.querySelectorAll('#times-' + day + ' > .time-row .time-input');
+          if (toggle) { toggle.checked = saved[day].active; toggleDay(day); }
+          if (times[0]) times[0].value = saved[day].start || '08:00';
+          if (times[1]) times[1].value = saved[day].end || '17:00';
+          if (saved[day].restBlocks && saved[day].restBlocks.length) {
+            saved[day].restBlocks.forEach(rb => {
+              addRestBlock(day);
+              const restContainer = document.getElementById('rest-' + day);
+              const blocks = restContainer.querySelectorAll('.rest-block');
+              const lastBlock = blocks[blocks.length - 1];
+              const restTimes = lastBlock.querySelectorAll('.time-input');
+              if (restTimes[0]) restTimes[0].value = rb.start;
+              if (restTimes[1]) restTimes[1].value = rb.end;
+            });
+          }
+        });
+        if (data.slotDuration) document.getElementById('slotDuration').value = data.slotDuration;
+        if (data.maxPatients) document.getElementById('maxPatients').value = data.maxPatients;
+      }
+    } catch (err) {
+      // No schedule data yet, keep mock defaults
+      console.log('[Schedule] No saved schedule, using defaults');
+    }
+  })();
+
+  function toggleDay(day) {
+    const checked = document.getElementById('toggle-' + day).checked;
+    const card = document.getElementById('card-' + day);
+    const times = document.getElementById('times-' + day);
+    if (checked) {
+      card.classList.remove('inactive');
+      times.classList.remove('day-time-disabled');
+    } else {
+      card.classList.add('inactive');
+      times.classList.add('day-time-disabled');
+    }
+  }
+
+  function addRestBlock(day) {
+    const container = document.getElementById('rest-' + day);
+    const div = document.createElement('div');
+    div.className = 'rest-block';
+    div.innerHTML = `<ion-icon name="moon-outline" style="color:var(--warning);"></ion-icon>
+      <span style="font-size:0.75rem;color:var(--text-tertiary);">Istirahat</span>
+      <input type="time" class="time-input" value="12:00" style="flex:1;">
+      <span style="font-size:0.75rem;color:var(--text-tertiary);">—</span>
+      <input type="time" class="time-input" value="13:00" style="flex:1;">
+      <ion-icon name="close-circle-outline" onclick="this.parentElement.remove()" style="font-size:1.2rem;"></ion-icon>`;
+    container.appendChild(div);
+  }
+
+  async function saveSchedule() {
+    if (!_scheduleUser) { showToast('Sesi tidak valid', 'error'); return; }
+
+    const days = ['mon','tue','wed','thu','fri','sat','sun'];
+    const schedule = {};
+    days.forEach(day => {
+      const toggle = document.getElementById('toggle-' + day);
+      const times  = document.querySelectorAll('#times-' + day + ' > .time-row .time-input');
+      // Collect rest blocks
+      const restBlocks = [];
+      const restContainer = document.getElementById('rest-' + day);
+      if (restContainer) {
+        restContainer.querySelectorAll('.rest-block').forEach(block => {
+          const restTimes = block.querySelectorAll('.time-input');
+          if (restTimes[0] && restTimes[1]) {
+            restBlocks.push({ start: restTimes[0].value, end: restTimes[1].value });
+          }
+        });
+      }
+      schedule[day] = {
+        active: toggle ? toggle.checked : false,
+        start:  times[0] ? times[0].value : '08:00',
+        end:    times[1] ? times[1].value : '17:00',
+        restBlocks
+      };
+    });
+
+    const slotDuration = document.getElementById('slotDuration');
+    const maxPatients  = document.getElementById('maxPatients');
+
+    try {
+      await VFirebase.db.collection('doctors').doc(_scheduleUser.uid).set({
+        schedule,
+        slotDuration: slotDuration ? parseInt(slotDuration.value) : 30,
+        maxPatients:  maxPatients  ? parseInt(maxPatients.value)  : 1,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+      showToast('Jadwal berhasil disimpan!', 'success');
+    } catch (err) {
+      showToast('Gagal menyimpan jadwal', 'error');
+      console.error(err);
+    }
+  }
+</script>
+</body>
+</html>

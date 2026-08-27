@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Tentang Kami</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background: var(--bg); overflow-x: hidden; }
+
+    /* NAVBAR */
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(7,26,15,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(111,207,151,0.1); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; height: 68px; display: flex; align-items: center; gap: 36px; }
+    .nav-logo { font-size: 1.45rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-decoration: none; }
+    .nav-logo span { color: #6FCF97; }
+    .nav-links { display: flex; gap: 28px; flex: 1; }
+    .nav-links a { font-size: 0.875rem; color: rgba(255,255,255,0.65); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: #6FCF97; }
+    .nav-cta { display: inline-flex; align-items: center; gap: 7px; background: linear-gradient(135deg,#27AE60,#6FCF97); color: #fff; font-size: 0.875rem; font-weight: 700; padding: 10px 24px; border-radius: 100px; text-decoration: none; box-shadow: 0 4px 20px rgba(111,207,151,0.3); transition: transform 0.2s; }
+    .nav-cta:hover { transform: translateY(-2px); }
+    @media (max-width: 800px) { .nav-links { display: none; } }
+
+    /* HERO */
+    .page-hero { padding: 140px 24px 80px; background: linear-gradient(160deg,#040E07 0%,#071A0F 30%,#0D2B1A 55%,#1A5C38 85%,#27AE60 100%); position: relative; overflow: hidden; text-align: center; }
+    .page-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; }
+    .hero-label { display:inline-block; font-size:0.72rem; font-weight:700; color:#6FCF97; letter-spacing:0.12em; text-transform:uppercase; border:1px solid rgba(111,207,151,0.3); background:rgba(111,207,151,0.1); padding:5px 14px; border-radius:100px; margin-bottom:18px; }
+    .page-hero h1 { font-size:clamp(2rem,5vw,3.5rem); font-weight:800; color:#fff; letter-spacing:-2px; line-height:1.1; margin-bottom:16px; }
+    .page-hero p { font-size:1rem; color:rgba(255,255,255,0.55); max-width:520px; margin:0 auto; line-height:1.75; }
+
+    /* WAVE */
+    .wave { line-height:0; } .wave svg { display:block; width:100%; }
+
+    /* LAYOUT */
+    .container { max-width:1100px; margin:0 auto; padding:0 24px; }
+    .section-light { background:var(--bg); padding:80px 24px; }
+    .section-dark { background:#0D2B1A; padding:80px 24px; position:relative; overflow:hidden; }
+    .section-dark::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,0.025) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; }
+
+    .section-tag { font-size:0.72rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:12px; }
+    .tag-green { color: var(--primary-dark); } .tag-white { color: #6FCF97; }
+    .section-title { font-size:clamp(1.6rem,3vw,2.4rem); font-weight:800; letter-spacing:-1px; line-height:1.15; margin-bottom:16px; }
+    .on-dark { color:#fff; } .on-light { color:var(--text-primary); }
+    .section-desc { font-size:0.93rem; line-height:1.75; }
+    .desc-dark { color:rgba(255,255,255,0.5); } .desc-light { color:var(--text-secondary); }
+
+    /* MISSION VISION */
+    .mv-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+    @media (max-width:700px) { .mv-grid { grid-template-columns:1fr; } }
+    .mv-card { background:var(--bg); border-radius:20px; box-shadow:var(--shadow-out); padding:32px; }
+    .mv-icon { font-size:2rem; margin-bottom:14px; }
+    .mv-card h3 { font-size:1.05rem; font-weight:700; color:var(--text-primary); margin-bottom:10px; }
+    .mv-card p { font-size:0.87rem; color:var(--text-secondary); line-height:1.7; }
+    .mv-accent { border-top:3px solid var(--primary-dark); }
+    .mv-accent2 { border-top:3px solid var(--accent); }
+
+    /* VALUES */
+    .values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:48px; }
+    @media (max-width:750px) { .values-grid { grid-template-columns:1fr; } }
+    .glass-card { background:rgba(255,255,255,0.05); border:1px solid rgba(111,207,151,0.14); border-radius:20px; padding:28px; backdrop-filter:blur(8px); transition:transform 0.3s,background 0.3s; }
+    .glass-card:hover { transform:translateY(-5px); background:rgba(255,255,255,0.08); }
+    .glass-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:18px; font-size:1.4rem; }
+    .gi-green { background:rgba(111,207,151,0.15); color:#6FCF97; }
+    .gi-blue { background:rgba(47,128,237,0.15); color:#56CCF2; }
+    .gi-purple { background:rgba(108,99,255,0.15); color:#9B8EFF; }
+    .gi-orange { background:rgba(242,153,74,0.15); color:#F2994A; }
+    .gi-red { background:rgba(235,87,87,0.15); color:#EB5757; }
+    .gi-teal { background:rgba(39,174,96,0.15); color:#27AE60; }
+    .glass-card h3 { font-size:1rem; font-weight:700; color:#fff; margin-bottom:8px; }
+    .glass-card p { font-size:0.82rem; color:rgba(255,255,255,0.5); line-height:1.65; }
+
+    /* STORY */
+    .story-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+    @media (max-width:700px) { .story-grid { grid-template-columns:1fr; } }
+    .story-visual { background:var(--bg); border-radius:24px; box-shadow:var(--shadow-out); padding:32px; display:flex; flex-direction:column; gap:16px; }
+    .story-stat-row { display:flex; gap:16px; }
+    .story-stat { background:var(--bg); border-radius:16px; box-shadow:var(--shadow-out-sm); padding:16px; flex:1; text-align:center; }
+    .story-stat .num { font-size:1.6rem; font-weight:800; color:var(--primary-dark); }
+    .story-stat .lbl { font-size:0.72rem; color:var(--text-tertiary); }
+    .timeline-item { display:flex; gap:14px; align-items:flex-start; }
+    .tl-dot { width:10px; height:10px; border-radius:50%; background:var(--primary-dark); margin-top:5px; flex-shrink:0; }
+    .tl-content h4 { font-size:0.85rem; font-weight:700; color:var(--text-primary); margin-bottom:3px; }
+    .tl-content p { font-size:0.78rem; color:var(--text-tertiary); }
+    .tl-line { width:1px; height:20px; background:var(--shadow-dark); margin-left:4px; }
+
+    /* TEAM */
+    .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:48px; }
+    @media (max-width:900px) { .team-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:480px) { .team-grid { grid-template-columns:1fr; } }
+    .team-card { background:rgba(255,255,255,0.04); border:1px solid rgba(111,207,151,0.1); border-radius:20px; padding:28px 20px; text-align:center; transition:transform 0.3s; }
+    .team-card:hover { transform:translateY(-5px); background:rgba(255,255,255,0.07); }
+    .team-avatar { width:72px; height:72px; border-radius:50%; margin:0 auto 14px; display:flex; align-items:center; justify-content:center; font-size:1.8rem; border:2px solid rgba(111,207,151,0.2); }
+    .team-name { font-size:0.95rem; font-weight:700; color:#fff; margin-bottom:4px; }
+    .team-role { font-size:0.75rem; color:#6FCF97; font-weight:600; margin-bottom:8px; }
+    .team-desc { font-size:0.75rem; color:rgba(255,255,255,0.4); line-height:1.55; }
+
+    /* CTA */
+    .cta-section { background:linear-gradient(145deg,#0D2B1A,#1A5C38); padding:80px 24px; text-align:center; position:relative; overflow:hidden; }
+    .cta-section::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:30px 30px; pointer-events:none; }
+    .cta-section h2 { font-size:clamp(1.6rem,3vw,2.4rem); font-weight:800; color:#fff; letter-spacing:-1px; margin-bottom:12px; position:relative; z-index:1; }
+    .cta-section p { font-size:0.93rem; color:rgba(255,255,255,0.5); max-width:400px; margin:0 auto 32px; line-height:1.7; position:relative; z-index:1; }
+    .btn-primary { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#27AE60,#6FCF97); color:#fff; font-size:1rem; font-weight:700; padding:14px 34px; border-radius:100px; text-decoration:none; box-shadow:0 8px 32px rgba(111,207,151,0.4); transition:transform 0.2s; position:relative; z-index:1; }
+    .btn-primary:hover { transform:translateY(-3px); }
+
+    /* FOOTER */
+    .site-footer { background:#040E07; padding:40px 24px 24px; border-top:1px solid rgba(111,207,151,0.08); }
+    .footer-inner { max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+    .f-logo { font-size:1.2rem; font-weight:800; color:#fff; } .f-logo span { color:#6FCF97; }
+    .f-links { display:flex; gap:20px; }
+    .f-links a { font-size:0.82rem; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s; }
+    .f-links a:hover { color:#6FCF97; }
+    .f-copy { font-size:0.72rem; color:rgba(255,255,255,0.25); }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Herbora<span>Tech</span></a>
+    <div class="nav-links">
+      <a href="../index.html">Beranda</a>
+      <a href="about.html" class="active">Tentang</a>
+      <a href="features.html">Fitur</a>
+      <a href="how-it-works.html">Cara Kerja</a>
+      <a href="contact.html">Kontak</a>
+    </div>
+    <a href="../auth/login.html" class="nav-cta"><ion-icon name="rocket-outline"></ion-icon> Try HerboraTech</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-label" data-animate="up">Tentang HerboraTech</div>
+  <h1 data-animate="up" data-delay="80">Masa Depan Kesehatan<br>Ada di Sini</h1>
+  <p data-animate="up" data-delay="160">Kami membangun platform telemedisin yang bukan sekadar menghubungkan pasien dan dokter — tapi mencegah penyakit sebelum terjadi.</p>
+</section>
+
+<!-- WAVE to light -->
+<div class="wave"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,36 C240,72 480,0 720,36 C960,72 1200,4 1440,40 L1440,72 L0,72 Z" fill="#E4EBF5"/></svg></div>
+
+<!-- MISSION & VISION -->
+<section class="section-light">
+  <div class="container">
+    <p class="section-tag tag-green" style="text-align:center" data-animate="up">Landasan Kami</p>
+    <h2 class="section-title on-light" style="text-align:center;margin-bottom:40px" data-animate="up" data-delay="80">Visi & Misi</h2>
+    <div class="mv-grid">
+      <div class="mv-card mv-accent" data-animate="up" data-delay="100">
+        <div class="mv-icon">🌿</div>
+        <h3>Visi</h3>
+        <p>Menjadi platform telemedisin AIoT terdepan di Asia Tenggara yang mengintegrasikan teknologi sensor wearable, kecerdasan buatan, dan kearifan lokal herbal Indonesia untuk menciptakan generasi yang lebih sehat secara preventif.</p>
+      </div>
+      <div class="mv-card mv-accent2" data-animate="up" data-delay="200">
+        <div class="mv-icon">🎯</div>
+        <h3>Misi</h3>
+        <p>Menghadirkan akses kesehatan berkualitas tinggi yang terjangkau dan terpersonalisasi untuk setiap individu Indonesia — dengan menggabungkan deteksi dini berbasis data sensor, konsultasi dokter remote yang terstruktur, dan rekomendasi herbal berbasis bukti ilmiah.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE to dark -->
+<div class="wave"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,20 C360,72 720,0 1080,50 C1260,72 1380,20 1440,36 L1440,72 L0,72 Z" fill="#0D2B1A"/></svg></div>
+
+<!-- VALUES -->
+<section class="section-dark">
+  <div class="container">
+    <p class="section-tag tag-white" data-animate="up">Nilai Kami</p>
+    <h2 class="section-title on-dark" data-animate="up" data-delay="80">Yang Kami Percayai</h2>
+    <div class="values-grid">
+      <div class="glass-card" data-animate="up" data-delay="100">
+        <div class="glass-icon gi-green"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
+        <h3>Preemptive Care</h3>
+        <p>Mencegah lebih baik daripada mengobati. Kami percaya data sensor real-time dapat mengidentifikasi risiko penyakit sebelum gejala muncul.</p>
+      </div>
+      <div class="glass-card" data-animate="up" data-delay="180">
+        <div class="glass-icon gi-blue"><ion-icon name="analytics-outline"></ion-icon></div>
+        <h3>Data-Driven</h3>
+        <p>Setiap rekomendasi kami didukung oleh data objektif dari sensor wearable — bukan hanya keluhan subjektif pasien semata.</p>
+      </div>
+      <div class="glass-card" data-animate="up" data-delay="260">
+        <div class="glass-icon gi-teal"><ion-icon name="leaf-outline"></ion-icon></div>
+        <h3>Kearifan Lokal</h3>
+        <p>Herbal medicine Indonesia memiliki basis empiris yang kuat. Kami mengintegrasikannya dengan AI untuk rekomendasi yang tepat dan aman.</p>
+      </div>
+      <div class="glass-card" data-animate="up" data-delay="100">
+        <div class="glass-icon gi-purple"><ion-icon name="people-outline"></ion-icon></div>
+        <h3>Inklusif</h3>
+        <p>Layanan kesehatan berkualitas seharusnya dapat diakses oleh semua lapisan masyarakat, dari kota hingga daerah terpencil.</p>
+      </div>
+      <div class="glass-card" data-animate="up" data-delay="180">
+        <div class="glass-icon gi-orange"><ion-icon name="lock-closed-outline"></ion-icon></div>
+        <h3>Privasi Pertama</h3>
+        <p>Data kesehatan adalah data paling sensitif. Kami menerapkan enkripsi end-to-end dan kepatuhan penuh terhadap UU PDP Indonesia.</p>
+      </div>
+      <div class="glass-card" data-animate="up" data-delay="260">
+        <div class="glass-icon gi-red"><ion-icon name="pulse-outline"></ion-icon></div>
+        <h3>Inovasi Berkelanjutan</h3>
+        <p>Teknologi kesehatan terus berkembang. Kami berkomitmen untuk selalu berada di garis terdepan inovasi AIoT telemedicine.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE to light -->
+<div class="wave" style="background:#0D2B1A"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,50 C200,10 500,72 800,30 C1000,8 1250,60 1440,20 L1440,72 L0,72 Z" fill="#E4EBF5"/></svg></div>
+
+<!-- STORY -->
+<section class="section-light">
+  <div class="container">
+    <div class="story-grid">
+      <div data-animate="right">
+        <p class="section-tag tag-green">Cerita Kami</p>
+        <h2 class="section-title on-light">Lahir dari<br>Kebutuhan Nyata</h2>
+        <p class="section-desc desc-light" style="margin-bottom:20px;">
+          HerboraTech lahir dari satu pertanyaan sederhana: mengapa orang harus menunggu sakit dulu sebelum berkonsultasi dengan dokter? Platform telemedisin yang ada sudah membantu aksesibilitas, tapi belum ada yang mengintegrasikan data sensor objektif dari perangkat wearable dengan sistem diagnostik AI.
+        </p>
+        <p class="section-desc desc-light">
+          Kami menggabungkan keahlian di bidang embedded systems, machine learning, dan kedokteran untuk membangun ekosistem kesehatan digital yang pertama di Indonesia — yang tidak hanya reaktif terhadap penyakit, tapi proaktif dalam mencegahnya.
+        </p>
+      </div>
+      <div class="story-visual" data-animate="up" data-delay="100">
+        <div class="story-stat-row">
+          <div class="story-stat">
+            <div class="num">2024</div>
+            <div class="lbl">Tahun Berdiri</div>
+          </div>
+          <div class="story-stat">
+            <div class="num">6</div>
+            <div class="lbl">Tim Inti</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px;">
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <h4>Jan 2024 — Ide & Riset</h4>
+              <p>Penelitian kebutuhan sistem dan studi literatur sensor AIoT untuk kesehatan</p>
+            </div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <h4>Jun 2024 — Prototipe Hardware</h4>
+              <p>Pengembangan modul sensor MPU6050 + MAX30102 + MLX90614 pertama</p>
+            </div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <h4>Des 2024 — Platform Alpha</h4>
+              <p>Integrasi sensor dengan sistem AI prediksi risiko penyakit kronis</p>
+            </div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <h4>Mar 2026 — Launch v1.0</h4>
+              <p>Platform HerboraTech resmi diluncurkan dengan 3 portal terintegrasi</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE to dark -->
+<div class="wave"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,36 C300,4 600,72 900,20 C1100,0 1300,60 1440,36 L1440,72 L0,72 Z" fill="#0D2B1A"/></svg></div>
+
+<!-- TEAM -->
+<section class="section-dark">
+  <div class="container">
+    <p class="section-tag tag-white" data-animate="up">Tim</p>
+    <h2 class="section-title on-dark" data-animate="up" data-delay="80">Orang-Orang di Balik HerboraTech</h2>
+    <div class="team-grid">
+      <div class="team-card" data-animate="up" data-delay="100">
+        <div class="team-avatar" style="background:rgba(111,207,151,0.15)">👩‍💻</div>
+        <div class="team-name">Helmi Widyatamaka P. S.</div>
+        <div class="team-role">Frontend Developer</div>
+        <div class="team-desc">Membangun antarmuka pasien dan dokter dengan desain neumorphic yang responsif dan aksesibel</div>
+      </div>
+      <div class="team-card" data-animate="up" data-delay="160">
+        <div class="team-avatar" style="background:rgba(47,128,237,0.15)">👩‍🎨</div>
+        <div class="team-name">Anisa Widad</div>
+        <div class="team-role">UI/UX Designer</div>
+        <div class="team-desc">Merancang pengalaman pengguna yang intuitif dan estetis untuk seluruh portal platform HerboraTech</div>
+      </div>
+      <div class="team-card" data-animate="up" data-delay="220">
+        <div class="team-avatar" style="background:rgba(108,99,255,0.15)">👨‍🔬</div>
+        <div class="team-name">Laqif Abdurrahman Haris</div>
+        <div class="team-role">IoT & Hardware Engineer</div>
+        <div class="team-desc">Mengembangkan modul sensor BLE (PPG, suhu, GSR) dan integrasi protokol IEEE 11073 PHD</div>
+      </div>
+      <div class="team-card" data-animate="up" data-delay="280">
+        <div class="team-avatar" style="background:rgba(242,153,74,0.15)">👩‍💼</div>
+        <div class="team-name">Anyaila Wahyu</div>
+        <div class="team-role">Backend & Firebase Dev</div>
+        <div class="team-desc">Merancang arsitektur Firestore, sistem autentikasi, dan real-time data pipeline untuk vitals monitoring</div>
+      </div>
+      <div class="team-card" data-animate="up" data-delay="340">
+        <div class="team-avatar" style="background:rgba(39,174,96,0.15)">🌿</div>
+        <div class="team-name">Nayla Norcelita Widodo</div>
+        <div class="team-role">Herbal Research Lead</div>
+        <div class="team-desc">Mengkurasi database jamu berbasis bukti ilmiah (BPOM, WHO Monographs, FOHAI Kemenkes RI)</div>
+      </div>
+      <div class="team-card" data-animate="up" data-delay="400">
+        <div class="team-avatar" style="background:rgba(155,81,224,0.15)">👨‍💻</div>
+        <div class="team-name">Arham Zulfagar P.</div>
+        <div class="team-role">Full Stack Developer</div>
+        <div class="team-desc">Mengintegrasikan WebRTC video call, sistem AI consultation, dan algoritma prediksi risiko penyakit</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE to CTA -->
+<div class="wave" style="background:#0D2B1A"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,36 C480,72 960,0 1440,36 L1440,72 L0,72 Z" fill="#0D2B1A"/></svg></div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2 data-animate="up">Bergabunglah dengan Kami</h2>
+    <p data-animate="up" data-delay="80">Jadilah bagian dari revolusi kesehatan preventif Indonesia. Coba HerboraTech sekarang — gratis.</p>
+    <a href="../auth/login.html" class="btn-primary" data-animate="up" data-delay="160"><ion-icon name="rocket-outline"></ion-icon> Try HerboraTech</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="f-logo">Herbora<span>Tech</span></div>
+    <div class="f-links">
+      <a href="../index.html">Beranda</a>
+      <a href="features.html">Fitur</a>
+      <a href="how-it-works.html">Cara Kerja</a>
+      <a href="contact.html">Kontak</a>
+    </div>
+    <span class="f-copy">© 2026 HerboraTech</span>
+  </div>
+</footer>
+
+<script src="../shared/app.js"></script>
+</body>
+</html>

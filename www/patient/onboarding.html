@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Onboarding</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    body { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); min-height: 100vh; }
+    .onboarding-container { max-width: 600px; margin: 0 auto; padding: 20px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+
+    .progress-step { display: flex; align-items: center; justify-content: center; margin-bottom: 40px; }
+    .step-indicator { display: flex; gap: 12px; align-items: center; }
+    .step-dot { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: #fff; background: rgba(111, 207, 151, 0.3); transition: all 0.3s; }
+    .step-dot.active { background: #27AE60; box-shadow: 0 0 20px rgba(39, 174, 96, 0.4); }
+    .step-dot.done { background: #27AE60; }
+    .step-line { width: 20px; height: 2px; background: rgba(111, 207, 151, 0.3); transition: all 0.3s; }
+    .step-line.active { background: #27AE60; }
+
+    .card-container { background: white; border-radius: 24px; padding: 32px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); min-height: 400px; display: flex; flex-direction: column; }
+
+    .step-title { font-size: 1.8rem; font-weight: 700; color: #2D3748; margin-bottom: 12px; text-align: center; }
+    .step-subtitle { font-size: 1rem; color: #4A5568; text-align: center; margin-bottom: 28px; line-height: 1.5; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: #2D3748; margin-bottom: 8px; }
+    .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #E4EBF5; background: #F5F9FF; font-family: inherit; font-size: 1rem; transition: all 0.3s; }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: #27AE60; background: #fff; }
+
+    .range-container { margin-bottom: 24px; }
+    .range-label { display: flex; justify-content: space-between; font-size: 0.85rem; color: #4A5568; margin-bottom: 8px; }
+    input[type="range"] { width: 100%; height: 8px; border-radius: 5px; background: #E4EBF5; outline: none; -webkit-appearance: none; appearance: none; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #27AE60; cursor: pointer; box-shadow: 0 2px 8px rgba(39, 174, 96, 0.4); }
+    input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: #27AE60; cursor: pointer; border: none; box-shadow: 0 2px 8px rgba(39, 174, 96, 0.4); }
+
+    .gender-selector { display: flex; gap: 12px; }
+    .gender-btn { flex: 1; padding: 12px; border: 2px solid #E4EBF5; border-radius: 12px; background: #F5F9FF; font-size: 0.95rem; font-weight: 600; color: #4A5568; cursor: pointer; transition: all 0.3s; }
+    .gender-btn.active { border-color: #27AE60; background: rgba(39, 174, 96, 0.1); color: #27AE60; }
+
+    .chip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+    .chip { padding: 14px; border: 2px solid #E4EBF5; border-radius: 14px; background: #F5F9FF; text-align: center; cursor: pointer; transition: all 0.3s; }
+    .chip:hover { border-color: #27AE60; }
+    .chip.selected { border-color: #27AE60; background: rgba(39, 174, 96, 0.1); box-shadow: 0 0 0 2px #27AE60; }
+    .chip-icon { font-size: 1.8rem; margin-bottom: 6px; }
+    .chip-label { font-size: 0.75rem; font-weight: 600; color: #2D3748; margin-top: 4px; }
+
+    .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+    .checkbox-item { display: flex; align-items: center; padding: 12px; border-radius: 10px; cursor: pointer; transition: all 0.3s; }
+    .checkbox-item:hover { background: #F5F9FF; }
+    .checkbox-item input[type="checkbox"] { width: 20px; height: 20px; margin-right: 12px; cursor: pointer; accent-color: #27AE60; }
+    .checkbox-item label { margin: 0; cursor: pointer; flex: 1; }
+
+    .bmi-display { background: linear-gradient(135deg, #27AE60, #6FCF97); color: white; padding: 16px; border-radius: 12px; text-align: center; margin-bottom: 16px; }
+    .bmi-value { font-size: 2rem; font-weight: 700; }
+    .bmi-label { font-size: 0.9rem; opacity: 0.9; }
+
+    .button-group { display: flex; gap: 12px; margin-top: 32px; }
+    .neu-btn { flex: 1; padding: 12px; border-radius: 12px; border: none; font-family: inherit; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+    .neu-btn.primary { background: linear-gradient(135deg, #27AE60, #6FCF97); color: white; box-shadow: 0 4px 16px rgba(39, 174, 96, 0.3); }
+    .neu-btn.primary:hover:not(:disabled) { transform: translateY(-2px); }
+    .neu-btn.secondary { background: #E4EBF5; color: #2D3748; }
+    .neu-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .step-content { display: none; flex: 1; }
+    .step-content.active { display: flex; flex-direction: column; }
+
+    .intro-icon { font-size: 4rem; text-align: center; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<div class="onboarding-container">
+
+  <!-- Progress Indicator -->
+  <div class="progress-step">
+    <div class="step-indicator">
+      <div class="step-dot active" id="dot-1">1</div>
+      <div class="step-line" id="line-1"></div>
+      <div class="step-dot" id="dot-2">2</div>
+      <div class="step-line" id="line-2"></div>
+      <div class="step-dot" id="dot-3">3</div>
+      <div class="step-line" id="line-3"></div>
+      <div class="step-dot" id="dot-4">4</div>
+    </div>
+  </div>
+
+  <!-- Main Card -->
+  <div class="card-container">
+
+    <!-- STEP 1 — Sapaan -->
+    <div class="step-content active" id="step-1">
+      <div class="intro-icon">🌿</div>
+      <h2 class="step-title" id="greeting">Halo!</h2>
+      <p class="step-subtitle">Sebelum mulai, bantu kami mengenal Anda. Hanya 1 menit.</p>
+      <div style="flex: 1;"></div>
+      <div class="button-group">
+        <button class="neu-btn primary" onclick="nextStep()">Ayo Mulai →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 — Info Dasar -->
+    <div class="step-content" id="step-2">
+      <h2 class="step-title">Info Dasar</h2>
+      <p class="step-subtitle">Informasi untuk memahami kondisi kesehatan Anda</p>
+
+      <div class="form-group">
+        <label>Tanggal Lahir</label>
+        <input type="date" id="dob" required>
+      </div>
+
+      <div class="form-group">
+        <label>Jenis Kelamin</label>
+        <div class="gender-selector">
+          <button class="gender-btn active" onclick="selectGender(this, 'M')">Laki-laki</button>
+          <button class="gender-btn" onclick="selectGender(this, 'F')">Perempuan</button>
+        </div>
+      </div>
+
+      <div class="range-container">
+        <div class="range-label"><span>Tinggi Badan (cm)</span><span id="height-val">170</span></div>
+        <input type="range" id="height" min="140" max="200" value="170" oninput="updateHeight()">
+      </div>
+
+      <div class="range-container">
+        <div class="range-label"><span>Berat Badan (kg)</span><span id="weight-val">70</span></div>
+        <input type="range" id="weight" min="40" max="130" value="70" oninput="updateWeight()">
+      </div>
+
+      <div class="bmi-display">
+        <div class="bmi-value" id="bmi-value">24.1</div>
+        <div class="bmi-label">BMI (Normal)</div>
+      </div>
+
+      <div class="button-group" style="margin-top: 20px;">
+        <button class="neu-btn secondary" onclick="prevStep()">← Kembali</button>
+        <button class="neu-btn primary" onclick="nextStep()">Lanjut →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 — Tujuan Kesehatan -->
+    <div class="step-content" id="step-3">
+      <h2 class="step-title">Tujuan Kesehatan</h2>
+      <p class="step-subtitle">Pilih maksimal 3 tujuan (minimal 1)</p>
+
+      <div class="chip-grid" id="health-goals-grid">
+        <div class="chip" onclick="toggleGoal(this, 'monitor')">
+          <div class="chip-icon">🎯</div>
+          <div class="chip-label">Pantau Kesehatan Rutin</div>
+        </div>
+        <div class="chip" onclick="toggleGoal(this, 'manage')">
+          <div class="chip-icon">💊</div>
+          <div class="chip-label">Kelola Kondisi Kronis</div>
+        </div>
+        <div class="chip" onclick="toggleGoal(this, 'explore')">
+          <div class="chip-icon">🌿</div>
+          <div class="chip-label">Eksplorasi Herbal & Jamu</div>
+        </div>
+        <div class="chip" onclick="toggleGoal(this, 'lifestyle')">
+          <div class="chip-icon">🏃</div>
+          <div class="chip-label">Perbaiki Gaya Hidup</div>
+        </div>
+        <div class="chip" onclick="toggleGoal(this, 'consult')">
+          <div class="chip-icon">🩺</div>
+          <div class="chip-label">Konsultasi Dokter Mudah</div>
+        </div>
+        <div class="chip" onclick="toggleGoal(this, 'prevent')">
+          <div class="chip-icon">🧠</div>
+          <div class="chip-label">Cegah Penyakit Lebih Awal</div>
+        </div>
+        <div class="chip" onclick="toggleGoal(this, 'sleep')">
+          <div class="chip-icon">😴</div>
+          <div class="chip-label">Perbaiki Kualitas Tidur</div>
+        </div>
+        <div class="chip" onclick="toggleGoal(this, 'weight')">
+          <div class="chip-icon">⚖️</div>
+          <div class="chip-label">Turunkan/Naikkan Berat Badan</div>
+        </div>
+      </div>
+
+      <div style="flex: 1;"></div>
+      <div class="button-group" style="margin-top: 20px;">
+        <button class="neu-btn secondary" onclick="prevStep()">← Kembali</button>
+        <button class="neu-btn primary" onclick="nextStep()" id="btn-step3">Lanjut →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 — Kondisi yang Dipantau -->
+    <div class="step-content" id="step-4">
+      <h2 class="step-title">Kondisi yang Dipantau</h2>
+      <p class="step-subtitle">Pilih kondisi yang ingin Anda pantau (opsional)</p>
+
+      <div class="checkbox-group">
+        <div class="checkbox-item" onclick="if(event.target.tagName!=='INPUT'){this.querySelector('input').click()}">
+          <input type="checkbox" id="cond-diabetes" value="Diabetes">
+          <label for="cond-diabetes">Diabetes / Gula Darah</label>
+        </div>
+        <div class="checkbox-item" onclick="if(event.target.tagName!=='INPUT'){this.querySelector('input').click()}">
+          <input type="checkbox" id="cond-hypertension" value="Hipertensi">
+          <label for="cond-hypertension">Hipertensi / Tekanan Darah</label>
+        </div>
+        <div class="checkbox-item" onclick="if(event.target.tagName!=='INPUT'){this.querySelector('input').click()}">
+          <input type="checkbox" id="cond-cholesterol" value="Kolesterol">
+          <label for="cond-cholesterol">Kolesterol Tinggi</label>
+        </div>
+        <div class="checkbox-item" onclick="if(event.target.tagName!=='INPUT'){this.querySelector('input').click()}">
+          <input type="checkbox" id="cond-gout" value="Asam Urat">
+          <label for="cond-gout">Asam Urat</label>
+        </div>
+        <div class="checkbox-item" onclick="if(event.target.tagName!=='INPUT'){this.querySelector('input').click()}">
+          <input type="checkbox" id="cond-heart" value="Jantung">
+          <label for="cond-heart">Penyakit Jantung</label>
+        </div>
+        <div class="checkbox-item" onclick="if(event.target.tagName!=='INPUT'){this.querySelector('input').click()}">
+          <input type="checkbox" id="cond-gerd" value="Maag">
+          <label for="cond-gerd">Maag / GERD</label>
+        </div>
+        <div class="checkbox-item" onclick="if(event.target.tagName!=='INPUT'){this.querySelector('input').click()}">
+          <input type="checkbox" id="cond-obesity" value="Obesitas">
+          <label for="cond-obesity">Obesitas / Berat Badan</label>
+        </div>
+      </div>
+
+      <div style="flex: 1;"></div>
+      <div class="button-group" style="margin-top: 20px;">
+        <button class="neu-btn secondary" onclick="skipOnboarding()">Lewati</button>
+        <button class="neu-btn primary" onclick="completeOnboarding()">Selesai & Mulai →</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+
+<script>
+let currentStep = 1;
+let selectedGender = 'M';
+let healthGoals = [];
+let monitoredConditions = [];
+let userData = {};
+
+// Update on page load
+(async () => {
+  const { user, profile } = await VAuth.guard('patient', 1);
+  userData = { uid: user.uid, user, profile };
+
+  // Set greeting with user name
+  const greeting = document.getElementById('greeting');
+  greeting.textContent = `Halo, ${profile.name || 'Pengguna'}!`;
+})();
+
+// Height range
+function updateHeight() {
+  const val = document.getElementById('height').value;
+  document.getElementById('height-val').textContent = val;
+  updateBMI();
+}
+
+// Weight range
+function updateWeight() {
+  const val = document.getElementById('weight').value;
+  document.getElementById('weight-val').textContent = val;
+  updateBMI();
+}
+
+// Calculate BMI
+function updateBMI() {
+  const height = parseFloat(document.getElementById('height').value) / 100;
+  const weight = parseFloat(document.getElementById('weight').value);
+  const bmi = (weight / (height * height)).toFixed(1);
+
+  const bmiVal = document.getElementById('bmi-value');
+  bmiVal.textContent = bmi;
+
+  let category = 'Normal';
+  if (bmi < 18.5) category = 'Kurus';
+  else if (bmi < 25) category = 'Normal';
+  else if (bmi < 30) category = 'Kelebihan Berat';
+  else category = 'Obesitas';
+
+  document.querySelector('.bmi-label').textContent = `BMI (${category})`;
+}
+
+// Gender selection
+function selectGender(btn, gender) {
+  document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedGender = gender;
+}
+
+// Health goals toggle
+function toggleGoal(chip, value) {
+  if (healthGoals.includes(value)) {
+    healthGoals = healthGoals.filter(g => g !== value);
+    chip.classList.remove('selected');
+  } else {
+    if (healthGoals.length < 3) {
+      healthGoals.push(value);
+      chip.classList.add('selected');
+    }
+  }
+
+  // Update button state
+  const btn = document.getElementById('btn-step3');
+  btn.disabled = healthGoals.length === 0;
+}
+
+// Navigate steps
+function nextStep() {
+  if (currentStep === 3 && healthGoals.length === 0) {
+    showToast('Pilih minimal 1 tujuan kesehatan', 'warning');
+    return;
+  }
+
+  currentStep++;
+  updateUI();
+}
+
+function prevStep() {
+  currentStep--;
+  updateUI();
+}
+
+function updateUI() {
+  // Hide all steps
+  document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+  document.getElementById(`step-${currentStep}`).classList.add('active');
+
+  // Update progress
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    const line = document.getElementById(`line-${i}`);
+
+    if (i < currentStep) {
+      dot.classList.add('done');
+      dot.classList.remove('active');
+      if (line) line.classList.add('active');
+    } else if (i === currentStep) {
+      dot.classList.remove('done');
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active', 'done');
+      if (line) line.classList.remove('active');
+    }
+  }
+
+  // Initialize step 2 calculation
+  if (currentStep === 2) updateBMI();
+}
+
+// Skip onboarding
+async function skipOnboarding() {
+  try {
+    await VDB.updateUser(userData.uid, { onboardingDone: true });
+    nav('home.html?welcome=1');
+  } catch (e) {
+    showToast('Gagal: ' + e.message, 'error');
+  }
+}
+
+// Complete onboarding
+async function completeOnboarding() {
+  try {
+    const dob = document.getElementById('dob').value;
+    const height = parseFloat(document.getElementById('height').value);
+    const weight = parseFloat(document.getElementById('weight').value);
+
+    if (!dob) {
+      showToast('Pilih tanggal lahir terlebih dahulu', 'warning');
+      return;
+    }
+
+    // Collect monitored conditions
+    monitoredConditions = Array.from(
+      document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked')
+    ).map(cb => cb.value);
+
+    // Save to Firestore
+    await VDB.updateUser(userData.uid, {
+      onboardingDone: true,
+      healthGoals,
+      monitoredConditions
+    });
+
+    await VDB.updatePatient(userData.uid, {
+      dob,
+      gender: selectedGender,
+      heightCm: height,
+      weightKg: weight
+    });
+
+    showToast('Selamat datang di HerboraTech! 🎉', 'success');
+    setTimeout(() => nav('home.html?welcome=1'), 1500);
+  } catch (e) {
+    showToast('Gagal: ' + e.message, 'error');
+    console.error(e);
+  }
+}
+</script>
+
+</body>
+</html>

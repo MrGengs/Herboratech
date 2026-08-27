@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Material Research</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12);
+      box-shadow: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+
+    .section-header .section-title {
+      border-left: 3px solid var(--primary-dark);
+      padding-left: 10px;
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .portal-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 14px;
+      padding: 16px;
+      border-left: 4px solid var(--primary-dark);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .portal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-out);
+    }
+
+    .portal-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .portal-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .portal-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .portal-badge {
+      display: inline-block;
+      background: rgba(39, 174, 96, 0.12);
+      color: var(--primary-dark);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    .tabs-container {
+      display: flex;
+      gap: 8px;
+      padding: 0 20px 16px;
+      border-bottom: 1px solid var(--shadow-dark);
+      overflow-x: auto;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      padding: 8px 14px;
+      border: none;
+      background: transparent;
+      font-family: var(--font);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      color: var(--primary-dark);
+      border-bottom-color: var(--primary-dark);
+    }
+
+    .stat-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      border-top: 3px solid var(--primary-dark);
+    }
+
+    .stat-number {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('../index.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;color:#fff;">Material Research</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="showTab('disease')">Disease SLR</button>
+    <button class="tab-btn" onclick="showTab('herbal')">Herbal SLR</button>
+    <button class="tab-btn" onclick="showTab('combined')">Integrated</button>
+  </div>
+
+  <!-- DISEASE SLR TAB -->
+  <div id="disease-tab" class="tab-content">
+    <div class="section" data-animate="up">
+      <div class="section-header"><span class="section-title">Disease Research</span></div>
+      <div class="neu-card" style="padding:16px;border-left:4px solid var(--primary-dark);">
+        <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;margin:0;">
+          <strong>PRISMA-2020</strong> systematic review of 15 landmark papers across 5 metabolic diseases. Grade A-B quality evidence with 30+ data elements per study.
+        </p>
+      </div>
+    </div>
+
+    <div class="section" data-animate="up" data-delay="50">
+      <div class="portal-grid">
+        <div class="stat-card">
+          <div class="stat-number">1,020+</div>
+          <div class="stat-label">Papers Found</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">15</div>
+          <div class="stat-label">Landmarks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">13A+2B</div>
+          <div class="stat-label">Grades</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label">Diseases</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" data-animate="up" data-delay="100">
+      <div class="portal-grid">
+        <div class="portal-card" onclick="nav('../slr-portal/protocol.html')">
+          <div class="portal-icon">📋</div>
+          <div class="portal-title">SLR Protocol</div>
+          <div class="portal-desc">PRISMA-2020 with research questions, inclusion/exclusion, search strategy, checklist</div>
+          <span class="portal-badge">PROTOCOL</span>
+        </div>
+
+        <div class="portal-card" onclick="nav('../slr-portal/extraction.html')">
+          <div class="portal-icon">📊</div>
+          <div class="portal-title">Data Extraction</div>
+          <div class="portal-desc">30+ data elements from 15 papers with DOI links to originals</div>
+          <span class="portal-badge">DATA</span>
+        </div>
+
+        <div class="portal-card" onclick="nav('../slr-portal/grade.html')">
+          <div class="portal-icon">⭐</div>
+          <div class="portal-title">GRADE Assessment</div>
+          <div class="portal-desc">Quality ratings across 5 domains: Risk, Consistency, Directness, Precision, Bias</div>
+          <span class="portal-badge">QUALITY</span>
+        </div>
+
+        <div class="portal-card" onclick="nav('../slr-portal/gaps.html')">
+          <div class="portal-icon">🔍</div>
+          <div class="portal-title">Gap Analysis</div>
+          <div class="portal-desc">5 major gaps with severity & strategic roadmap for innovation</div>
+          <span class="portal-badge">GAPS</span>
+        </div>
+
+        <div class="portal-card" onclick="nav('../slr-portal/presentation.html')">
+          <div class="portal-icon">📺</div>
+          <div class="portal-title">Presentation</div>
+          <div class="portal-desc">20-slide professional presentation on methodology & evidence</div>
+          <span class="portal-badge">SLIDES</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERBAL SLR TAB -->
+  <div id="herbal-tab" class="tab-content hidden">
+    <div class="section" data-animate="up">
+      <div class="section-header"><span class="section-title">Herbal Medicine</span></div>
+      <div class="neu-card" style="padding:16px;border-left:4px solid var(--primary-dark);">
+        <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;margin:0;">
+          Evidence-based review of 50+ herbal papers across 7 remedies. Indonesian context included. All claims linked to DOI sources.
+        </p>
+      </div>
+    </div>
+
+    <div class="section" data-animate="up" data-delay="50">
+      <div class="portal-grid">
+        <div class="stat-card">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">Herbal Papers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">7</div>
+          <div class="stat-label">Remedies</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">18+</div>
+          <div class="stat-label">RCTs Grade B</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">DOI Linked</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" data-animate="up" data-delay="100">
+      <div class="portal-grid">
+        <div class="portal-card" onclick="nav('herbal-protocol.html')">
+          <div class="portal-icon">🌿</div>
+          <div class="portal-title">Herbal Protocol</div>
+          <div class="portal-desc">Herbal SLR protocol with categories, dosage, safety & Indonesian context</div>
+          <span class="portal-badge">PROTOCOL</span>
+        </div>
+
+        <div class="portal-card" onclick="nav('herbal-extraction.html')">
+          <div class="portal-icon">📋</div>
+          <div class="portal-title">Herbal Data</div>
+          <div class="portal-desc">Extraction from 50+ studies: curcumin (12), green tea (15), garlic (10), ginger (8)...</div>
+          <span class="portal-badge">DATA</span>
+        </div>
+
+        <div class="portal-card" onclick="nav('herbal-grade.html')">
+          <div class="portal-icon">✅</div>
+          <div class="portal-title">Herbal GRADE</div>
+          <div class="portal-desc">Quality assessment: Curcumin/Green Tea/Garlic/Ginger Grade B | Cinnamon Grade C</div>
+          <span class="portal-badge">QUALITY</span>
+        </div>
+
+        <div class="portal-card" onclick="nav('herbal-formulas.html')">
+          <div class="portal-icon">💚</div>
+          <div class="portal-title">Herbal Formulas</div>
+          <div class="portal-desc">Traditional Indonesian Jamu formulas with ingredients, grades & clinical dosages</div>
+          <span class="portal-badge">FORMULAS</span>
+        </div>
+
+        <div class="portal-card" onclick="nav('herbal-presentation.html')">
+          <div class="portal-icon">🎯</div>
+          <div class="portal-title">Presentation</div>
+          <div class="portal-desc">20-slide on herbal evidence, mechanisms, applications & safety guidelines</div>
+          <span class="portal-badge">SLIDES</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTEGRATED TAB -->
+  <div id="combined-tab" class="tab-content hidden">
+    <div class="section" data-animate="up">
+      <div class="section-header"><span class="section-title">Integrated Evidence</span></div>
+      <div class="neu-card" style="padding:16px;border-left:4px solid var(--primary-dark);">
+        <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;margin:0;">
+          Combined disease + herbal SLR for comprehensive evidence-based screening and management with pharmaceutical & herbal interventions.
+        </p>
+      </div>
+    </div>
+
+    <div class="section" data-animate="up" data-delay="50">
+      <div class="portal-grid">
+        <div class="portal-card">
+          <div class="portal-icon">💛</div>
+          <div class="portal-title">Dyslipidemia</div>
+          <div class="portal-desc">INTERHEART (AUROC 0.87) + Curcumin LDL ↓22%, Garlic ↓15%, Olive Leaf ↓10%</div>
+          <span class="portal-badge">3 HERBS</span>
+        </div>
+
+        <div class="portal-card">
+          <div class="portal-icon">❤️</div>
+          <div class="portal-title">Hypertension</div>
+          <div class="portal-desc">ACC/AHA BP targets + Garlic SBP ↓4-8mmHg, Olive Leaf ↓5-7mmHg</div>
+          <span class="portal-badge">2 HERBS</span>
+        </div>
+
+        <div class="portal-card">
+          <div class="portal-icon">🏥</div>
+          <div class="portal-title">NAFLD</div>
+          <div class="portal-desc">FIB-4 index (AUROC 0.81) + Ginger ALT ↓22%, Curcumin inflammation ↓35%</div>
+          <span class="portal-badge">2 HERBS</span>
+        </div>
+
+        <div class="portal-card">
+          <div class="portal-icon">📈</div>
+          <div class="portal-title">Metabolic Syndrome</div>
+          <div class="portal-desc">IDF criteria + Green Tea weight ↓2.5kg, Curcumin multi-benefit</div>
+          <span class="portal-badge">3 HERBS</span>
+        </div>
+
+        <div class="portal-card">
+          <div class="portal-icon">🩺</div>
+          <div class="portal-title">Type 2 Diabetes</div>
+          <div class="portal-desc">HbA1c ≥6.5% + Cinnamon FPG ↓13%, Curcumin ↓12%, Ginger ↓8%</div>
+          <span class="portal-badge">3 HERBS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" style="padding-top:0;" data-animate="up" data-delay="100">
+      <div class="neu-card" style="padding:16px;border-left:4px solid var(--primary-dark);background:linear-gradient(135deg,rgba(39,174,96,0.08),rgba(27,174,96,0.04));">
+        <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;margin:0;">
+          <strong>Implementation:</strong> Pharmaceutical algorithms + GRADE B herbal evidence + drug-herb interaction checker. Every claim shows effect size (%) with clickable DOI to peer-reviewed source.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:20px;"></div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+function showTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tab + '-tab').classList.remove('hidden');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

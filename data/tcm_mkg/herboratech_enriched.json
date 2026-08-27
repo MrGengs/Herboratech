@@ -1,0 +1,1225 @@
+{
+  "metadata": {
+    "generatedAt": "2026-03-22",
+    "generatedBy": "Claude Desktop — Tugas B filter_indonesian_herbs",
+    "source": "TCM-MKG v1.0",
+    "doi": "10.5281/zenodo.13763953",
+    "license": "CC BY-NC 4.0",
+    "totalHerbs": 32,
+    "description": "Indonesian herbs matched from TCM-MKG database. Use to enrich herbals_profiles.json with TCM pharmacological data."
+  },
+  "herbs": [
+    {
+      "id": "dringo",
+      "name": "Dringo",
+      "latinName": "Acorus calamus",
+      "tcmIds": [
+        "CHP00059"
+      ],
+      "tcmNames": [
+        "Drug SweetfIag",
+        "白菖",
+        "bai chang"
+      ],
+      "speciesVariants": [
+        "Acorus calamus"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent",
+          "Bitter"
+        ],
+        "nature": [
+          "Warm therapeutic"
+        ],
+        "meridianAffinity": [],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "bawang-putih",
+      "name": "Bawang Putih",
+      "latinName": "Allium sativum",
+      "tcmIds": [
+        "CHP03248",
+        "CHP00557"
+      ],
+      "tcmNames": [
+        "Allium sativum L",
+        "青蒜",
+        "qing suan",
+        "Bulbus Allii",
+        "大蒜",
+        "da suan"
+      ],
+      "speciesVariants": [
+        "Allium sativum"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent"
+        ],
+        "nature": [
+          "Warm therapeutic"
+        ],
+        "meridianAffinity": [
+          "Large intestine",
+          "Stomach",
+          "Spleen",
+          "Lung"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "lidah-buaya",
+      "name": "Lidah Buaya",
+      "latinName": "Aloe vera",
+      "tcmIds": [
+        "CHP02444",
+        "CHP02445",
+        "CHP02446",
+        "CHP02443"
+      ],
+      "tcmNames": [
+        "Aloe vera",
+        "芦荟根",
+        "lu hui gen",
+        "芦荟花",
+        "lu hui hua",
+        "芦荟叶",
+        "lu hui ye",
+        "Aloe",
+        "芦荟",
+        "lu hui"
+      ],
+      "speciesVariants": [
+        "Aloe vera"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Sweet",
+          "Bitter",
+          "Astringent"
+        ],
+        "nature": [
+          "Cool therapeutic",
+          "Cold therapeutic"
+        ],
+        "meridianAffinity": [
+          "Stomach",
+          "Spleen",
+          "Bladder",
+          "Lung",
+          "Large intestine",
+          "Liver"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "lengkuas",
+      "name": "Lengkuas",
+      "latinName": "Alpinia galanga",
+      "tcmIds": [
+        "CHP01414"
+      ],
+      "tcmNames": [
+        "Galanga galangal fruit",
+        "红豆蔻",
+        "hong dou kou"
+      ],
+      "speciesVariants": [
+        "Alpinia galanga"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent"
+        ],
+        "nature": [
+          "Warm therapeutic"
+        ],
+        "meridianAffinity": [
+          "Spleen",
+          "Lung"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "sambiloto",
+      "name": "Sambiloto",
+      "latinName": "Andrographis paniculata",
+      "tcmIds": [
+        "CHP00422"
+      ],
+      "tcmNames": [
+        "all-grass of Common Androgrphis",
+        "穿心莲",
+        "chuan xin lian"
+      ],
+      "speciesVariants": [
+        "Andrographis paniculata"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Bitter"
+        ],
+        "nature": [
+          "Cold therapeutic"
+        ],
+        "meridianAffinity": [
+          "Large intestine",
+          "Lung",
+          "Heart",
+          "Bladder"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "seledri",
+      "name": "Seledri",
+      "latinName": "Apium graveolens",
+      "tcmIds": [
+        "CHP01350"
+      ],
+      "tcmNames": [
+        "Wildcelery",
+        "旱芹",
+        "han qin"
+      ],
+      "speciesVariants": [
+        "Apium graveolens"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Sweet",
+          "Bitter"
+        ],
+        "nature": [
+          "Cool therapeutic"
+        ],
+        "meridianAffinity": [],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "sembung",
+      "name": "Sembung",
+      "latinName": "Blumea balsamifera",
+      "tcmIds": [
+        "CHP00012",
+        "CHP00011"
+      ],
+      "tcmNames": [
+        "Blumea balsamifera",
+        "艾纳香根",
+        "ai na xiang gen",
+        "Balsamiferous Blumea",
+        "艾纳香",
+        "ai na xiang"
+      ],
+      "speciesVariants": [
+        "Blumea balsamifera"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent",
+          "Bitter"
+        ],
+        "nature": [
+          "Warm therapeutic"
+        ],
+        "meridianAffinity": [],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "pepaya",
+      "name": "Pepaya",
+      "latinName": "Carica papaya",
+      "tcmIds": [
+        "CHP00987",
+        "CHP00988"
+      ],
+      "tcmNames": [
+        "Papaya Fruit",
+        "番木瓜",
+        "fan mu gua",
+        "Papaya Leaf",
+        "番木瓜叶",
+        "fan mu gua ye"
+      ],
+      "speciesVariants": [
+        "Carica papaya"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Sweet"
+        ],
+        "nature": [
+          "Neutral therapeutic"
+        ],
+        "meridianAffinity": [
+          "Spleen",
+          "Liver"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "pegagan",
+      "name": "Pegagan",
+      "latinName": "Centella asiatica",
+      "tcmIds": [
+        "CHP01809"
+      ],
+      "tcmNames": [
+        "Asiatic Pennywort Herb",
+        "积雪草",
+        "ji xue cao"
+      ],
+      "speciesVariants": [
+        "Centella asiatica"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent",
+          "Bitter"
+        ],
+        "nature": [
+          "Cold therapeutic"
+        ],
+        "meridianAffinity": [
+          "Spleen",
+          "Lung",
+          "Kidney",
+          "Bladder"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "temu-ireng",
+      "name": "Temu Ireng",
+      "latinName": "Curcuma aeruginosa",
+      "tcmIds": [
+        "CHP00948"
+      ],
+      "tcmNames": [
+        "Zedoray Rhizome",
+        "莪术",
+        "e shu"
+      ],
+      "speciesVariants": [
+        "Curcuma wenyujin",
+        "Curcuma aeruginosa"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent",
+          "Bitter"
+        ],
+        "nature": [
+          "Warm therapeutic"
+        ],
+        "meridianAffinity": [
+          "Spleen",
+          "Liver"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "kunyit",
+      "name": "Kunyit",
+      "latinName": "Curcuma longa",
+      "tcmIds": [
+        "CHP01864"
+      ],
+      "tcmNames": [
+        "rhizome of Common Turmeric",
+        "姜黄",
+        "jiang huang"
+      ],
+      "speciesVariants": [
+        "Curcuma longa"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent",
+          "Bitter"
+        ],
+        "nature": [
+          "Cold therapeutic"
+        ],
+        "meridianAffinity": [
+          "Liver",
+          "Heart",
+          "Gallbladder"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "sambung-nyawa",
+      "name": "Sambung Nyawa",
+      "latinName": "Gynura procumbens",
+      "tcmIds": [
+        "CHP03652"
+      ],
+      "tcmNames": [
+        "Gynura procumbens",
+        "蛇接骨",
+        "she jie gu"
+      ],
+      "speciesVariants": [
+        "Gynura procumbens"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent",
+          "Bitter"
+        ],
+        "nature": [
+          "Cool therapeutic"
+        ],
+        "meridianAffinity": [
+          "Lung",
+          "Kidney"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "kembang-sepatu",
+      "name": "Kembang Sepatu",
+      "latinName": "Hibiscus rosa-sinensis",
+      "tcmIds": [
+        "CHP01082",
+        "CHP01083"
+      ],
+      "tcmNames": [
+        "Hibiscus rosa-sinensis",
+        "扶桑根",
+        "fu sang gen",
+        "Chinese Hibiscus Flower",
+        "扶桑花",
+        "fu sang hua"
+      ],
+      "speciesVariants": [
+        "Hibiscus rosa-sinensis"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Astringent",
+          "Sweet"
+        ],
+        "nature": [
+          "Neutral therapeutic",
+          "Cold therapeutic"
+        ],
+        "meridianAffinity": [],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "rosella",
+      "name": "Rosella",
+      "latinName": "Hibiscus sabdariffa",
+      "tcmIds": [
+        "CHP02752"
+      ],
+      "tcmNames": [
+        "Hibiscus sabdariffa",
+        "玫瑰茄",
+        "mei gui jia"
+      ],
+      "speciesVariants": [
+        "Hibiscus sabdariffa"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Sour"
+        ],
+        "nature": [
+          "Cool therapeutic"
+        ],
+        "meridianAffinity": [
+          "Kidney"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "alang-alang",
+      "name": "Alang-alang",
+      "latinName": "Imperata cylindrica",
+      "tcmIds": [
+        "CHP00125",
+        "CHP00126",
+        "CHP00124",
+        "CHP02738"
+      ],
+      "tcmNames": [
+        "Imperata cylindrica",
+        "白茅花",
+        "bai mao hua",
+        "白茅针",
+        "bai mao zhen",
+        "Rhizoma Imperatae",
+        "白茅根",
+        "bai mao gen",
+        "Lalang Grass Leaf",
+        "茅草叶",
+        "mao cao ye"
+      ],
+      "speciesVariants": [
+        "Imperata cylindrica"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Sweet",
+          "Pungent",
+          "Bitter"
+        ],
+        "nature": [
+          "Warm therapeutic",
+          "Neutral therapeutic",
+          "Cold therapeutic"
+        ],
+        "meridianAffinity": [
+          "Stomach",
+          "Lung",
+          "Bladder",
+          "Liver"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "kencur",
+      "name": "Kencur",
+      "latinName": "Kaempferia galanga",
+      "tcmIds": [
+        "CHP03561"
+      ],
+      "tcmNames": [
+        "Rhizoma Kaempferiae",
+        "山柰",
+        "shan nai"
+      ],
+      "speciesVariants": [
+        "Kaempferia galanga"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent"
+        ],
+        "nature": [
+          "Warm therapeutic"
+        ],
+        "meridianAffinity": [
+          "Stomach",
+          "Spleen"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "putri-malu",
+      "name": "Putri Malu",
+      "latinName": "Mimosa pudica",
+      "tcmIds": [
+        "CHP01887",
+        "CHP01346"
+      ],
+      "tcmNames": [
+        "Mimosa pudica",
+        "接骨草",
+        "jie gu cao",
+        "Sensitive Plant",
+        "含羞草",
+        "han xiu cao"
+      ],
+      "speciesVariants": [
+        "Mimosa pudica"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Bitter",
+          "Sweet",
+          "Astringent"
+        ],
+        "nature": [
+          "Neutral therapeutic",
+          "Cool therapeutic"
+        ],
+        "meridianAffinity": [],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "pare",
+      "name": "Pare",
+      "latinName": "Momordica charantia",
+      "tcmIds": [
+        "CHP02105",
+        "CHP02106",
+        "CHP02107",
+        "CHP02108",
+        "CHP02104"
+      ],
+      "tcmNames": [
+        "Momordica charantia",
+        "苦瓜花",
+        "ku gua hua",
+        "苦瓜藤",
+        "ku gua teng",
+        "苦瓜叶",
+        "ku gua ye",
+        "苦瓜子",
+        "ku gua zi",
+        "Balsampear",
+        "苦瓜",
+        "ku gua"
+      ],
+      "speciesVariants": [
+        "Momordica charantia"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Bitter",
+          "Sweet"
+        ],
+        "nature": [
+          "Cold therapeutic",
+          "Cool therapeutic",
+          "Warm therapeutic"
+        ],
+        "meridianAffinity": [
+          "Large intestine",
+          "Stomach",
+          "Spleen",
+          "Kidney",
+          "Lung",
+          "Heart"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "mengkudu",
+      "name": "Mengkudu",
+      "latinName": "Morinda citrifolia",
+      "tcmIds": [
+        "CHP02034"
+      ],
+      "tcmNames": [
+        "Morinda citrifolia",
+        "橘叶巴戟",
+        "ju ye ba ji"
+      ],
+      "speciesVariants": [
+        "Morinda citrifolia"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Bitter"
+        ],
+        "nature": [
+          "Cool therapeutic"
+        ],
+        "meridianAffinity": [],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "daun-kelor",
+      "name": "Daun Kelor",
+      "latinName": "Moringa oleifera",
+      "tcmIds": [
+        "CHP02176"
+      ],
+      "tcmNames": [
+        "Moringa oleifera",
+        "辣木",
+        "la mu"
+      ],
+      "speciesVariants": [
+        "Moringa oleifera"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Sweet",
+          "Pungent"
+        ],
+        "nature": [
+          "Neutral therapeutic"
+        ],
+        "meridianAffinity": [
+          "Spleen",
+          "Liver",
+          "Kidney"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "pala",
+      "name": "Pala",
+      "latinName": "Myristica fragrans",
+      "tcmIds": [
+        "CHP03343",
+        "CHP03342"
+      ],
+      "tcmNames": [
+        "Myristica fragrans",
+        "肉豆蔻衣",
+        "rou dou kou yi",
+        "Semen Myristicae",
+        "肉豆蔻",
+        "rou dou kou"
+      ],
+      "speciesVariants": [
+        "Myristica fragrans"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent"
+        ],
+        "nature": [
+          "Warm therapeutic"
+        ],
+        "meridianAffinity": [
+          "Stomach",
+          "Spleen",
+          "Large intestine"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "kemangi",
+      "name": "Kemangi",
+      "latinName": "Ocimum basilicum",
+      "tcmIds": [
+        "CHP02503",
+        "CHP02502",
+        "CHP02504"
+      ],
+      "tcmNames": [
+        "Ocimum basilicum",
+        "罗勒根",
+        "luo le gen",
+        "Basil",
+        "罗勒",
+        "luo le",
+        "Basil Fruit",
+        "罗勒子",
+        "luo le zi"
+      ],
+      "speciesVariants": [
+        "Ocimum basilicum"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Bitter",
+          "Sweet",
+          "Pungent"
+        ],
+        "nature": [
+          "Neutral therapeutic",
+          "Warm therapeutic",
+          "Cool therapeutic"
+        ],
+        "meridianAffinity": [
+          "Heart",
+          "Large intestine",
+          "Stomach",
+          "Spleen",
+          "Lung"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "kumis-kucing",
+      "name": "Kumis Kucing",
+      "latinName": "Orthosiphon aristatus",
+      "tcmIds": [
+        "CHP03673"
+      ],
+      "tcmNames": [
+        "Big-Flowered Javatea",
+        "肾茶",
+        "shen cha"
+      ],
+      "speciesVariants": [
+        "Orthosiphon aristatus"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Bitter"
+        ],
+        "nature": [
+          "Cold therapeutic"
+        ],
+        "meridianAffinity": [
+          "Kidney",
+          "Bladder"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "sirih",
+      "name": "Sirih",
+      "latinName": "Piper betle",
+      "tcmIds": [
+        "CHP02436",
+        "CHP02036"
+      ],
+      "tcmNames": [
+        "Piper betle",
+        "蒌油",
+        "lou you",
+        "Betel Pepper Leaf",
+        "蒟酱叶",
+        "ju jiang ye"
+      ],
+      "speciesVariants": [
+        "Piper betle"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent"
+        ],
+        "nature": [
+          "Cool therapeutic",
+          "Warm therapeutic"
+        ],
+        "meridianAffinity": [
+          "Spleen",
+          "Lung",
+          "Liver"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "lada",
+      "name": "Lada",
+      "latinName": "Piper nigrum",
+      "tcmIds": [
+        "CHP01515"
+      ],
+      "tcmNames": [
+        "Fructus Piperis",
+        "胡椒",
+        "hu jiao"
+      ],
+      "speciesVariants": [
+        "Piper nigrum"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent"
+        ],
+        "nature": [
+          "Hot therapeutic"
+        ],
+        "meridianAffinity": [
+          "Large intestine",
+          "Stomach"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "cabai-jawa",
+      "name": "Cabai Jawa",
+      "latinName": "Piper retrofractum",
+      "tcmIds": [
+        "CHP05428"
+      ],
+      "tcmNames": [
+        "Petrofracted Pepper",
+        "长果荜茇",
+        "zhang guo bi ba"
+      ],
+      "speciesVariants": [
+        "Piper retrofractum"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent"
+        ],
+        "nature": [
+          "Warm therapeutic"
+        ],
+        "meridianAffinity": [
+          "Stomach"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "daun-sendok",
+      "name": "Daun Sendok",
+      "latinName": "Plantago major",
+      "tcmIds": [
+        "CHP00483"
+      ],
+      "tcmNames": [
+        "Rippleseed Plantain",
+        "大车前",
+        "da che qian"
+      ],
+      "speciesVariants": [
+        "Plantago major"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Sweet"
+        ],
+        "nature": [
+          "Cold therapeutic"
+        ],
+        "meridianAffinity": [
+          "Liver",
+          "Kidney",
+          "Bladder"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "jambu-biji",
+      "name": "Jambu Biji",
+      "latinName": "Psidium guajava",
+      "tcmIds": [
+        "CHP00990",
+        "CHP00992",
+        "CHP00995",
+        "CHP00991",
+        "CHP00993",
+        "CHP00994"
+      ],
+      "tcmNames": [
+        "Psidium guajava",
+        "番石榴",
+        "fan shi liu",
+        "番石榴根",
+        "fan shi liu gen",
+        "番石榴子",
+        "fan shi liu zi",
+        "Guava Unripe Fruit",
+        "番石榴干",
+        "fan shi liu gan",
+        "Guava Bark",
+        "番石榴皮",
+        "fan shi liu pi",
+        "Guava Leaf",
+        "番石榴叶",
+        "fan shi liu ye"
+      ],
+      "speciesVariants": [
+        "Psidium guajava"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Sweet",
+          "Astringent",
+          "Bitter",
+          "Sour"
+        ],
+        "nature": [
+          "Neutral therapeutic"
+        ],
+        "meridianAffinity": [
+          "Large intestine",
+          "Lung"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "sidaguri",
+      "name": "Sidaguri",
+      "latinName": "Sida rhombifolia",
+      "tcmIds": [
+        "CHP01659",
+        "CHP01660"
+      ],
+      "tcmNames": [
+        "Sida rhombifolia",
+        "黄花母",
+        "huang hua mu",
+        "黄花母根",
+        "huang hua mu gen"
+      ],
+      "speciesVariants": [
+        "Sida rhombifolia"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Sweet",
+          "Pungent"
+        ],
+        "nature": [
+          "Cool therapeutic"
+        ],
+        "meridianAffinity": [
+          "Large intestine",
+          "Stomach",
+          "Liver"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "tempuyung",
+      "name": "Tempuyung",
+      "latinName": "Sonchus arvensis",
+      "tcmIds": [
+        "CHP03015"
+      ],
+      "tcmNames": [
+        "Field Sowthistle",
+        "牛舌头",
+        "niu she tou"
+      ],
+      "speciesVariants": [
+        "Sonchus arvensis"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Bitter"
+        ],
+        "nature": [
+          "Cold therapeutic"
+        ],
+        "meridianAffinity": [
+          "Stomach",
+          "Kidney"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "cengkeh",
+      "name": "Cengkeh",
+      "latinName": "Syzygium aromaticum",
+      "tcmIds": [
+        "CHP00779",
+        "CHP00780",
+        "CHP00783",
+        "CHP00785",
+        "CHP00787",
+        "CHP00788"
+      ],
+      "tcmNames": [
+        "Flos Caryophylli",
+        "丁香",
+        "ding xiang",
+        "Radix Syzygii aromatici",
+        "丁香根",
+        "ding xiang gen",
+        "Liquor destillata Caryophylli",
+        "丁香露",
+        "ding xiang lu",
+        "Cortex Syzygii aromatici",
+        "丁香树皮",
+        "ding xiang shu pi",
+        "Oleum Caryophylli",
+        "丁香油",
+        "ding xiang you",
+        "Ramulus Syzygii aromatici",
+        "丁香枝",
+        "ding xiang zhi"
+      ],
+      "speciesVariants": [
+        "Syzygium aromaticum"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent",
+          "Sweet"
+        ],
+        "nature": [
+          "Warm therapeutic",
+          "Neutral therapeutic",
+          "Hot therapeutic"
+        ],
+        "meridianAffinity": [
+          "Stomach",
+          "Spleen",
+          "Kidney",
+          "Lung"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    },
+    {
+      "id": "jahe",
+      "name": "Jahe",
+      "latinName": "Zingiber officinale",
+      "tcmIds": [
+        "CHP01866",
+        "CHP03684",
+        "CHP04309",
+        "CHP01146",
+        "CHP01865",
+        "CHP01867",
+        "CHP03081",
+        "CHP03683"
+      ],
+      "tcmNames": [
+        "Zingiber officinale",
+        "姜炭",
+        "jiang tan",
+        "生姜汁",
+        "sheng jiang zhi",
+        "煨姜",
+        "wei jiang",
+        "Dried Ginger",
+        "干姜",
+        "gan jiang",
+        "Ginger peel",
+        "姜皮",
+        "jiang pi",
+        "Caulis et Folium Zingiberis officinali",
+        "姜叶",
+        "jiang ye",
+        "Roasted Ginger",
+        "炮姜",
+        "pao jiang",
+        "Fresh Ginger",
+        "生姜",
+        "sheng jiang"
+      ],
+      "speciesVariants": [
+        "Zingiber officinale"
+      ],
+      "tcmProperties": {
+        "flavor": [
+          "Pungent",
+          "Bitter",
+          "Astringent"
+        ],
+        "nature": [
+          "Warm therapeutic",
+          "Hot therapeutic",
+          "Cool therapeutic"
+        ],
+        "meridianAffinity": [
+          "Spleen",
+          "Liver",
+          "Kidney",
+          "Stomach",
+          "Lung",
+          "Heart"
+        ],
+        "therapeuticActions": []
+      },
+      "evidenceLevel": "B",
+      "tcmSource": "TCM-MKG v1.0 — DOI: 10.5281/zenodo.13763953",
+      "license": "CC BY-NC 4.0 — Zeng & Jia (2025), J. Pharm. Analysis"
+    }
+  ]
+}

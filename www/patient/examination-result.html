@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Hasil Pemeriksaan</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12); box-shadow: none;
+      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .page-title { color: #fff; font-size: 1.05rem; font-weight: 700; }
+    .date-chip {
+      background: rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.9);
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* Diagnosis card */
+    .diagnosis-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out);
+      border-radius: 20px;
+      padding: 20px;
+      border-top: 4px solid var(--primary-dark);
+    }
+    .diag-main { font-size: 1.15rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; }
+    .diag-icd {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--info-bg);
+      color: var(--info);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-right: 8px;
+    }
+    .severity-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .severity-ringan { background: var(--success-bg); color: var(--primary-dark); }
+    .severity-sedang { background: var(--warning-bg); color: var(--warning); }
+    .severity-berat { background: var(--danger-bg); color: var(--danger); }
+
+    /* Doctor note card */
+    .doctor-note-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 16px;
+      padding: 18px;
+      position: relative;
+    }
+    .doctor-note-card::before {
+      content: '"';
+      position: absolute;
+      top: -8px;
+      left: 16px;
+      font-size: 3rem;
+      color: var(--primary-dark);
+      font-family: Georgia, serif;
+      opacity: 0.4;
+      line-height: 1;
+    }
+
+    /* Output section cards */
+    .output-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+    .output-card.blue { border-left: 4px solid var(--info); }
+    .output-card.green { border-left: 4px solid var(--primary-dark); }
+    .output-card.orange { border-left: 4px solid var(--warning); }
+
+    .output-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    .output-title .badge {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+    }
+    .badge-blue { background: var(--info-bg); }
+    .badge-green { background: var(--success-bg); }
+    .badge-orange { background: var(--warning-bg); }
+
+    /* Drug list */
+    .drug-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(200,208,231,0.5);
+    }
+    .drug-item:last-child { border-bottom: none; }
+    .drug-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--info-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .drug-name { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+    .drug-dose { font-size: 0.72rem; color: var(--text-tertiary); margin-top: 2px; }
+
+    /* Herbal item */
+    .herbal-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(200,208,231,0.4);
+    }
+    .herbal-item:last-child { border-bottom: none; }
+    .herbal-icon-wrap {
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      background: var(--success-bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+    .herbal-name { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+    .herbal-takaran { font-size: 0.7rem; color: var(--text-tertiary); }
+
+    /* Care point */
+    .care-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(200,208,231,0.4);
+    }
+    .care-point:last-child { border-bottom: none; }
+    .care-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      color: #fff; font-size: 0.7rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .care-text { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* Follow-up */
+    .followup-card {
+      background: linear-gradient(135deg, #0D2B1A, #1A5C38);
+      border-radius: 16px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #fff;
+    }
+    .followup-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    /* Doctor info row */
+    .doctor-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--shadow-dark);
+      margin-bottom: 4px;
+    }
+    .doctor-row-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 800; color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="page-title">Hasil Pemeriksaan</div>
+    <span class="date-chip">21 Mar 2026</span>
+  </header>
+
+  <div class="section">
+
+    <!-- Doctor info -->
+    <div class="doctor-row" data-animate="up">
+      <div class="doctor-row-avatar">SW</div>
+      <div style="flex:1">
+        <div style="font-size:0.82rem;font-weight:700;color:var(--text-primary);">dr. Sarah Wijaya, Sp.PD</div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);">Spesialis Penyakit Dalam · RS Medicore Jakarta</div>
+      </div>
+      <span class="neu-chip" style="font-size:0.65rem;">Terverifikasi ✓</span>
+    </div>
+
+    <!-- Diagnosis -->
+    <div class="diagnosis-card" style="margin-top:16px;" data-animate="up" data-delay="80">
+      <div class="diag-main">Tension-Type Headache</div>
+      <div style="margin-bottom:12px;">
+        <span class="diag-icd"><ion-icon name="code-outline"></ion-icon> ICD-10: G44.2</span>
+        <span class="severity-badge severity-ringan"><ion-icon name="leaf-outline"></ion-icon> Ringan</span>
+      </div>
+      <p style="font-size:0.75rem;color:var(--text-tertiary);line-height:1.5;">Sakit kepala tipe tegang tanpa komplikasi. Terkait dengan stres dan kurang tidur.</p>
+    </div>
+
+    <!-- Doctor note -->
+    <div class="doctor-note-card" style="margin-top:14px;" data-animate="up" data-delay="140">
+      <div style="font-size:0.72rem;font-weight:700;color:var(--text-tertiary);margin-bottom:8px;margin-top:8px;">Catatan Klinis Dokter</div>
+      <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.7;">
+        Pasien datang dengan keluhan sakit kepala bilateral tipe tegang selama 3 hari, disertai mual ringan. Pemeriksaan vital sign dalam batas normal (HR 88 bpm, SpO2 97%, Suhu 36.8°C). Tidak ditemukan tanda-tanda infeksi atau kelainan neurologis berat. Riwayat hipertensi terkontrol. Kemungkinan besar dipicu oleh kurang tidur dan stres kerja. Disarankan manajemen stres dan farmakoterapi simtomatik.
+      </p>
+    </div>
+
+    <!-- OUTPUT 1: Resep -->
+    <div class="section-header" style="margin-top:20px;" data-animate="up" data-delay="180">
+      <span class="section-title" style="border-left:3px solid var(--primary-dark);padding-left:10px;">Resep &amp; Rekomendasi</span>
+    </div>
+
+    <div class="output-card blue" data-animate="up" data-delay="220">
+      <div class="output-title">
+        <div class="badge badge-blue">💊</div>
+        Resep Digital
+      </div>
+      <div class="drug-item">
+        <div class="drug-icon">💊</div>
+        <div>
+          <div class="drug-name">Paracetamol 500mg</div>
+          <div class="drug-dose">3×1 tablet · sesudah makan · selama 5 hari</div>
+        </div>
+      </div>
+      <div class="drug-item">
+        <div class="drug-icon">🔷</div>
+        <div>
+          <div class="drug-name">B-Complex (Vitamin B1, B6, B12)</div>
+          <div class="drug-dose">1×1 tablet · pagi hari · selama 14 hari</div>
+        </div>
+      </div>
+      <p style="font-size:0.68rem;color:var(--text-muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--shadow-dark);">
+        <ion-icon name="alert-circle-outline" style="vertical-align:middle;margin-right:3px;color:var(--warning);"></ion-icon>
+        Hindari penggunaan paracetamol lebih dari 4× sehari. Konsultasikan jika nyeri tidak membaik dalam 3 hari.
+      </p>
+    </div>
+
+    <!-- OUTPUT 2: Herbal -->
+    <div class="output-card green" data-animate="up" data-delay="280">
+      <div class="output-title">
+        <div class="badge badge-green">🌿</div>
+        Rekomendasi Herbal
+      </div>
+      <div style="font-size:0.78rem;font-weight:700;color:var(--primary-dark);margin-bottom:10px;">Formula Cabe Puyang — Pereda Nyeri Kepala</div>
+      <div class="herbal-item">
+        <div class="herbal-icon-wrap">🌶️</div>
+        <div>
+          <div class="herbal-name">Cabe Jawa (Piper retrofractum)</div>
+          <div class="herbal-takaran">5 gram · anti-inflamasi, analgesik ringan</div>
+        </div>
+      </div>
+      <div class="herbal-item">
+        <div class="herbal-icon-wrap">🌱</div>
+        <div>
+          <div class="herbal-name">Puyang (Zingiber zerumbet)</div>
+          <div class="herbal-takaran">10 gram · relaksasi otot, anti-nyeri</div>
+        </div>
+      </div>
+      <div class="herbal-item">
+        <div class="herbal-icon-wrap">🍃</div>
+        <div>
+          <div class="herbal-name">Jahe Merah (Zingiber officinale var. rubrum)</div>
+          <div class="herbal-takaran">8 gram · anti-mual, sirkulasi darah</div>
+        </div>
+      </div>
+      <div class="herbal-item">
+        <div class="herbal-icon-wrap">🌿</div>
+        <div>
+          <div class="herbal-name">Kayu Secang (Caesalpinia sappan)</div>
+          <div class="herbal-takaran">5 gram · anti-oksidan</div>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:var(--text-tertiary);margin-top:12px;line-height:1.5;">
+        Cara: Rebus semua bahan dengan 600ml air hingga tersisa 300ml. Minum 2× sehari setelah makan.
+      </p>
+    </div>
+
+    <!-- OUTPUT 3: Saran Perawatan -->
+    <div class="output-card orange" data-animate="up" data-delay="340">
+      <div class="output-title">
+        <div class="badge badge-orange">📋</div>
+        Saran Perawatan Mandiri
+      </div>
+      <div class="care-point">
+        <div class="care-num">1</div>
+        <div class="care-text"><strong>Istirahat cukup</strong> — Tidur 7-8 jam per malam. Hindari layar gadget 1 jam sebelum tidur untuk meningkatkan kualitas tidur.</div>
+      </div>
+      <div class="care-point">
+        <div class="care-num">2</div>
+        <div class="care-text"><strong>Pola makan teratur</strong> — Makan 3× sehari tepat waktu. Perbanyak air putih minimal 2 liter/hari. Kurangi kafein dan makanan tinggi garam.</div>
+      </div>
+      <div class="care-point">
+        <div class="care-num">3</div>
+        <div class="care-text"><strong>Olahraga ringan</strong> — Jalan kaki 30 menit atau yoga ringan setiap hari untuk menurunkan tegangan otot leher dan bahu.</div>
+      </div>
+    </div>
+
+    <!-- Follow-up -->
+    <div class="followup-card" data-animate="up" data-delay="400">
+      <div class="followup-icon">📅</div>
+      <div>
+        <div style="font-size:0.85rem;font-weight:700;margin-bottom:2px;">Kontrol Ulang</div>
+        <div style="font-size:0.78rem;opacity:0.85;line-height:1.4;">Dalam 7 hari (28 Mar 2026) atau segera jika nyeri makin berat</div>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:20px;" data-animate="up" data-delay="460">
+      <button class="neu-btn neu-btn-block" onclick="showToast('Mengunduh PDF...','info')" style="display:flex;align-items:center;justify-content:center;gap:8px;">
+        <ion-icon name="download-outline"></ion-icon> Download PDF
+      </button>
+      <button class="neu-btn neu-btn-block" onclick="saveToMedicalRecord()" style="display:flex;align-items:center;justify-content:center;gap:8px;color:var(--primary-dark);font-weight:700;">
+        <ion-icon name="save-outline"></ion-icon> Simpan ke Rekam Medis
+      </button>
+      <button class="neu-btn neu-btn-primary neu-btn-block" onclick="nav('home.html')">
+        <ion-icon name="home-outline"></ion-icon> Kembali ke Beranda
+      </button>
+    </div>
+
+    <div style="height:20px;"></div>
+
+  </div>
+
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  let _erUser = null;
+  let _erConsultData = null;
+
+  (async () => {
+    try {
+      const { user } = await VAuth.guard('patient', 1);
+      _erUser = user;
+
+      const consultId = new URLSearchParams(location.search).get('consultId');
+      if (!consultId) return; // keep static content
+
+      const consult = await VDB.getConsultation(consultId);
+      if (!consult) return;
+
+      _erConsultData = consult;
+
+      // Populate diagnosis if available
+      if (consult.diagnosis) {
+        const diagEl = document.querySelector('.diag-main');
+        if (diagEl) diagEl.textContent = consult.diagnosis;
+      }
+
+      // Populate doctor note
+      if (consult.clinicalNote) {
+        const noteEl = document.querySelector('.doctor-note-card p');
+        if (noteEl) noteEl.textContent = consult.clinicalNote;
+      }
+
+      // Update date chip
+      if (consult.startTime) {
+        const d = consult.startTime.toDate ? consult.startTime.toDate() : new Date(consult.startTime);
+        const dateChip = document.querySelector('.date-chip');
+        if (dateChip) dateChip.textContent = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+      }
+
+    } catch (e) {
+      console.error('[examination-result] error:', e);
+    }
+  })();
+
+  async function saveToMedicalRecord() {
+    if (!_erUser) { showToast('Belum terautentikasi', 'error'); return; }
+    try {
+      const diagEl = document.querySelector('.diag-main');
+      const diagnosis = diagEl ? diagEl.textContent : 'Pemeriksaan Integratif';
+      const consultId = new URLSearchParams(location.search).get('consultId');
+
+      await VDB.createMedicalRecord({
+        patientId: _erUser.uid,
+        consultationId: consultId || null,
+        type: 'examination',
+        diagnosis,
+        notes: _erConsultData ? (_erConsultData.clinicalNote || '') : '',
+        doctorName: _erConsultData ? (_erConsultData.doctorName || 'Dokter') : 'Dokter'
+      });
+      showToast('Berhasil disimpan ke rekam medis', 'success');
+    } catch (e) {
+      console.error('[examination-result] save error:', e);
+      showToast('Gagal menyimpan ke rekam medis: ' + (e.message || e), 'error');
+    }
+  }
+</script>
+</body>
+</html>

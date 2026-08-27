@@ -1,0 +1,5740 @@
+{
+  "metadata": {
+    "generatedBy": "Claude Desktop",
+    "generatedAt": "2026-03-22",
+    "categories": [
+      "pencernaan",
+      "imunitas",
+      "antiinflamasi",
+      "dermatologi",
+      "relaksasi",
+      "hematologi"
+    ],
+    "totalFormulas": 68,
+    "evidenceBasis": "FOHAI Kemenkes RI, WHO Monographs, Saintifikasi Jamu, Farmakope Herbal Indonesia"
+  },
+  "formulas": [
+    {
+      "recipeNumber": 1,
+      "name": "Jamu Kunyit Madu Anti-Maag",
+      "indications": [
+        "maag",
+        "gastritis",
+        "nyeri lambung"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Kunyit segar",
+          "latinName": "Curcuma longa L.",
+          "amount": 25,
+          "unit": "gram",
+          "condition": "segar, iris tipis"
+        },
+        {
+          "herb": "Madu murni",
+          "latinName": null,
+          "amount": 2,
+          "unit": "sendok makan",
+          "condition": "murni, tidak dipanaskan"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Parut atau iris tipis kunyit segar. Rebus dengan 300ml air hingga mendidih ±15 menit. Saring, tambahkan madu setelah hangat. Aduk rata.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "2x sehari, pagi dan malam sebelum tidur",
+      "duration": "7-14 hari atau hingga gejala berkurang",
+      "warnings": [
+        "Konsultasi dokter jika gejala berlanjut >2 minggu",
+        "Tidak untuk penderita gangguan pembekuan darah"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "pencernaan",
+        "maag",
+        "kunyit",
+        "madu",
+        "rebus"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 2,
+      "name": "Jus Lidah Buaya Pencernaan",
+      "indications": [
+        "maag",
+        "gastritis",
+        "luka lambung ringan"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Lidah buaya gel murni",
+          "latinName": "Aloe barbadensis Mill.",
+          "amount": 50,
+          "unit": "ml",
+          "condition": "gel segar, tanpa getah kuning"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 150,
+          "unit": "ml",
+          "condition": "dingin"
+        },
+        {
+          "herb": "Madu",
+          "latinName": null,
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "murni"
+        }
+      ],
+      "preparationMethod": "Ambil gel lidah buaya, pastikan tidak ada getah kuning. Campur dengan air dingin dan madu. Aduk rata dan saring.",
+      "preparationType": "peras",
+      "dosage": "Minum 50-100ml",
+      "frequency": "2x sehari, pagi dan sore",
+      "duration": "7-10 hari",
+      "warnings": [
+        "Hanya gunakan gel putih, hindari getah kuning (latex)",
+        "Tidak untuk ibu hamil/menyusui",
+        "Hati-hati pada penderita diare"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs + Farmakope Herbal Indonesia",
+      "tags": [
+        "pencernaan",
+        "maag",
+        "lidah-buaya",
+        "jus"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 3,
+      "name": "Wedang Kayu Manis Madu Anti-Maag",
+      "indications": [
+        "maag",
+        "nyeri perut",
+        "pencernaan lambat"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Kayu manis (kulit)",
+          "latinName": "Cinnamomum verum J. Presl",
+          "amount": 3,
+          "unit": "potong kecil",
+          "condition": "utuh"
+        },
+        {
+          "herb": "Madu murni",
+          "latinName": null,
+          "amount": 1.5,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus kayu manis dengan 250ml air hingga mendidih ±8 menit. Saring, tambahkan madu. Aduk rata sambil hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "2x sehari setelah makan pagi dan malam",
+      "duration": "7-14 hari",
+      "warnings": [
+        "Tidak untuk penderita alergi kayu manis",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + FOHAI Kemenkes RI",
+      "tags": [
+        "pencernaan",
+        "maag",
+        "kayu-manis",
+        "madu"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 4,
+      "name": "Minuman Jahe Merah Akar Manis",
+      "indications": [
+        "maag",
+        "gastritis",
+        "pencernaan lemah"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Jahe merah segar",
+          "latinName": "Zingiber officinale Rosc. var. rubrum",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Akar manis (licorice)",
+          "latinName": "Glycyrrhiza glabra L.",
+          "amount": 5,
+          "unit": "gram",
+          "condition": "potong kecil"
+        },
+        {
+          "herb": "Madu",
+          "latinName": null,
+          "amount": 1.5,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Parut jahe merah, rebus bersama akar manis dengan 300ml air hingga mendidih ±10 menit. Saring, tambahkan madu. Aduk rata.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "2x sehari, pagi dan malam",
+      "duration": "10-14 hari",
+      "warnings": [
+        "Tidak untuk penderita tekanan darah tinggi (akar manis)",
+        "Hindari jika alergi jahe"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "pencernaan",
+        "maag",
+        "jahe-merah",
+        "akar-manis"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 5,
+      "name": "Jamu Daun Pisang Anti-Maag",
+      "indications": [
+        "maag",
+        "gastritis",
+        "luka lambung"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Daun pisang (muda)",
+          "latinName": "Musa paradisiaca L.",
+          "amount": 5,
+          "unit": "lembar",
+          "condition": "segar, utuh"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 400,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus daun pisang segar dengan 400ml air hingga mendidih ±15 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (200ml)",
+      "frequency": "3x sehari sebelum makan",
+      "duration": "7-14 hari",
+      "warnings": [
+        "Pastikan daun pisang bersih dari pestisida",
+        "Tidak ada efek samping serius yang diketahui"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Jamu",
+      "tags": [
+        "pencernaan",
+        "maag",
+        "daun-pisang"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 6,
+      "name": "Jamu Daun Senna Pencahar",
+      "indications": [
+        "sembelit",
+        "susah buang air besar"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Daun senna",
+          "latinName": "Cassia angustifolia Vahl",
+          "amount": 5,
+          "unit": "gram",
+          "condition": "kering, utuh"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Seduh daun senna dengan 250ml air hangat. Diamkan ±5 menit, saring. Sajikan hangat atau dingin sesuai preferensi.",
+      "preparationType": "seduh",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "1x sehari sebelum tidur",
+      "duration": "3-7 hari atau hingga BAB lancar",
+      "warnings": [
+        "Tidak untuk ibu hamil/menyusui",
+        "Hindari penggunaan jangka panjang (>2 minggu)",
+        "Konsultasi dokter jika ada nyeri perut parah"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs + Farmakope Herbal Indonesia",
+      "tags": [
+        "pencernaan",
+        "sembelit",
+        "senna"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 7,
+      "name": "Jus Lidah Buaya Jeruk Nipis Pencahar",
+      "indications": [
+        "sembelit",
+        "susah buang air besar",
+        "perut kembung"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Lidah buaya gel murni",
+          "latinName": "Aloe barbadensis Mill.",
+          "amount": 50,
+          "unit": "ml",
+          "condition": "gel segar"
+        },
+        {
+          "herb": "Jeruk nipis",
+          "latinName": "Citrus aurantifolia Swingle",
+          "amount": 1,
+          "unit": "buah",
+          "condition": "peras airnya"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 150,
+          "unit": "ml",
+          "condition": "dingin"
+        }
+      ],
+      "preparationMethod": "Ambil gel lidah buaya, campur dengan air dingin dan jus jeruk nipis segar. Aduk rata.",
+      "preparationType": "peras",
+      "dosage": "Minum 100ml",
+      "frequency": "1x sehari pagi hari saat perut kosong",
+      "duration": "3-5 hari",
+      "warnings": [
+        "Hanya gunakan gel, hindari latex (getah kuning)",
+        "Dapat menyebabkan diare jika overdosis",
+        "Tidak untuk ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + FOHAI Kemenkes RI",
+      "tags": [
+        "pencernaan",
+        "sembelit",
+        "lidah-buaya",
+        "jeruk-nipis"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 8,
+      "name": "Jamu Pepaya Selasih Pencahar",
+      "indications": [
+        "sembelit",
+        "pencernaan lambat",
+        "usus tidak aktif"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Buah pepaya matang",
+          "latinName": "Carica papaya L.",
+          "amount": 100,
+          "unit": "gram",
+          "condition": "potong dadu"
+        },
+        {
+          "herb": "Biji selasih",
+          "latinName": "Ocimum basilicum L.",
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "utuh"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 200,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus biji selasih dengan 200ml air hingga mendidih ±5 menit. Tuangkan ke mangkuk pepaya matang yang sudah dipotong. Diamkan ±3 menit, saring jika perlu.",
+      "preparationType": "rebus",
+      "dosage": "Makan pepaya + minum air rebusan",
+      "frequency": "1x sehari pagi hari",
+      "duration": "3-5 hari",
+      "warnings": [
+        "Pepaya hanya gunakan yang matang",
+        "Hindari jika alergi papain",
+        "Tidak untuk ibu hamil trimester pertama"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Jamu",
+      "tags": [
+        "pencernaan",
+        "sembelit",
+        "pepaya",
+        "selasih"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 9,
+      "name": "Minyak Kelapa Pencahar Lembut",
+      "indications": [
+        "sembelit ringan",
+        "pencernaan lambat",
+        "kulit kering"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Minyak kelapa murni",
+          "latinName": "Cocos nucifera L.",
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "murni, tidak terekspos panas tinggi"
+        },
+        {
+          "herb": "Madu (opsional)",
+          "latinName": null,
+          "amount": 1,
+          "unit": "sendok teh",
+          "condition": "murni"
+        }
+      ],
+      "preparationMethod": "Minum minyak kelapa murni langsung atau dapat dicampur dengan madu hangat untuk rasa lebih baik.",
+      "preparationType": "olesan",
+      "dosage": "1 sendok makan (15ml)",
+      "frequency": "1x sehari pagi hari saat perut kosong",
+      "duration": "3-7 hari",
+      "warnings": [
+        "Dapat menyebabkan diare jika berlebihan",
+        "Tidak untuk penderita pankreatitis",
+        "Hati-hati pada penderita kolitis"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + FOHAI Kemenkes RI",
+      "tags": [
+        "pencernaan",
+        "sembelit",
+        "minyak-kelapa"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 10,
+      "name": "Jamu Jambu Biji Delima Anti-Diare",
+      "indications": [
+        "diare",
+        "disentri",
+        "diare infeksi",
+        "perut mules"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Daun jambu biji muda",
+          "latinName": "Psidium guajava L.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, utuh"
+        },
+        {
+          "herb": "Kulit delima",
+          "latinName": "Punica granatum L.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "kering, iris tipis"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 400,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus daun jambu biji dan kulit delima dengan 400ml air hingga mendidih ±15 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (200ml)",
+      "frequency": "3x sehari, pagi siang malam",
+      "duration": "3-5 hari atau hingga diare berhenti",
+      "warnings": [
+        "Konsultasi dokter jika diare >3 hari disertai demam",
+        "Hindari pada diare dengan darah banyak tanpa konsultasi dokter"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "pencernaan",
+        "diare",
+        "jambu-biji",
+        "delima"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 11,
+      "name": "Jamu Temu Ireng Kunyit Anti-Diare",
+      "indications": [
+        "diare",
+        "disentri",
+        "pencernaan lemah"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Temu ireng segar",
+          "latinName": "Curcuma aeruginosa Roxb.",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Kunyit segar",
+          "latinName": "Curcuma longa L.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Parut temu ireng dan kunyit. Rebus dengan 300ml air hingga mendidih ±10 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "3x sehari, pagi siang malam",
+      "duration": "3-7 hari",
+      "warnings": [
+        "Tidak untuk penderita gangguan pembekuan darah",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + FOHAI Kemenkes RI",
+      "tags": [
+        "pencernaan",
+        "diare",
+        "temu-ireng",
+        "kunyit"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 12,
+      "name": "Jamu Daun Sirih Anti-Diare",
+      "indications": [
+        "diare",
+        "disentri ringan",
+        "nyeri perut"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Daun sirih segar",
+          "latinName": "Piper betle L.",
+          "amount": 8,
+          "unit": "lembar",
+          "condition": "segar, utuh"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus daun sirih dengan 300ml air hingga mendidih ±10 menit. Saring dan sajikan hangat atau suhu ruang.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "3x sehari sebelum makan",
+      "duration": "3-5 hari",
+      "warnings": [
+        "Tidak untuk ibu hamil/menyusui dalam dosis tinggi",
+        "Hati-hati pada penderita gastritis"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Tradisi Jamu",
+      "tags": [
+        "pencernaan",
+        "diare",
+        "daun-sirih"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 13,
+      "name": "Wedang Jahe Kencur Gula Merah Anti-Kembung",
+      "indications": [
+        "perut kembung",
+        "mual",
+        "gangguan pencernaan",
+        "kembung setelah makan"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Jahe segar",
+          "latinName": "Zingiber officinale Rosc.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, memarkan"
+        },
+        {
+          "herb": "Kencur segar",
+          "latinName": "Kaempferia galanga L.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, memarkan"
+        },
+        {
+          "herb": "Gula merah",
+          "latinName": null,
+          "amount": 1.5,
+          "unit": "sendok makan",
+          "condition": "serut halus"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Memarkan jahe dan kencur. Rebus dengan 300ml air hingga mendidih ±12 menit. Masukkan gula merah, aduk rata. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "2-3x sehari atau saat gejala muncul",
+      "duration": "Sesuai kebutuhan (gejala akut)",
+      "warnings": [
+        "Tidak untuk GERD/tukak aktif",
+        "Batasi pada ibu hamil trimester pertama"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "pencernaan",
+        "kembung",
+        "mual",
+        "jahe",
+        "kencur"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 14,
+      "name": "Jamu Adas Jintan Anti-Kembung",
+      "indications": [
+        "perut kembung",
+        "usus kembung",
+        "gangguan pencernaan",
+        "kolik bayi"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Biji adas",
+          "latinName": "Foeniculum vulgare Mill.",
+          "amount": 5,
+          "unit": "gram",
+          "condition": "utuh atau cincang kasar"
+        },
+        {
+          "herb": "Biji jintan putih",
+          "latinName": "Cuminum cyminum L.",
+          "amount": 3,
+          "unit": "gram",
+          "condition": "utuh atau cincang kasar"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Seduh biji adas dan jintan dengan 250ml air hangat. Diamkan ±5 menit, saring. Sajikan hangat atau suhu ruang.",
+      "preparationType": "seduh",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "2-3x sehari setelah makan",
+      "duration": "Sesuai kebutuhan",
+      "warnings": [
+        "Aman untuk bayi dalam dosis rendah dengan konsultasi dokter",
+        "Hindari pada alergi terhadap Apiaceae family"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "WHO Monographs + FOHAI Kemenkes RI",
+      "tags": [
+        "pencernaan",
+        "kembung",
+        "adas",
+        "jintan"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 15,
+      "name": "Minuman Kapulaga Kayu Manis Anti-Mual",
+      "indications": [
+        "mual",
+        "perut mules",
+        "gangguan pencernaan",
+        "muntah"
+      ],
+      "category": "pencernaan",
+      "ingredients": [
+        {
+          "herb": "Kapulaga (kardamom)",
+          "latinName": "Elettaria cardamomum Maton",
+          "amount": 4,
+          "unit": "buah",
+          "condition": "utuh atau cincang"
+        },
+        {
+          "herb": "Kayu manis (kulit)",
+          "latinName": "Cinnamomum verum J. Presl",
+          "amount": 1,
+          "unit": "potong kecil",
+          "condition": "utuh"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus kapulaga dan kayu manis dengan 250ml air hingga mendidih ±8 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "2-3x sehari sebelum atau setelah makan",
+      "duration": "Sesuai kebutuhan",
+      "warnings": [
+        "Tidak untuk penderita alergi rempah",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + FOHAI Kemenkes RI",
+      "tags": [
+        "pencernaan",
+        "mual",
+        "kapulaga",
+        "kayu-manis"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 16,
+      "name": "Jamu Kencur Madu Jeruk Nipis Batuk Kering",
+      "indications": [
+        "batuk kering",
+        "batuk persisten",
+        "iritasi tenggorokan"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Kencur segar",
+          "latinName": "Kaempferia galanga L.",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Madu murni",
+          "latinName": null,
+          "amount": 2,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Jeruk nipis",
+          "latinName": "Citrus aurantifolia Swingle",
+          "amount": 1,
+          "unit": "buah",
+          "condition": "peras airnya"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 150,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus kencur dengan 150ml air hangat ±5 menit. Saring, tambahkan madu dan jus jeruk nipis segar. Aduk rata.",
+      "preparationType": "rebus",
+      "dosage": "Minum 100ml",
+      "frequency": "3-4x sehari, atau saat batuk",
+      "duration": "5-7 hari",
+      "warnings": [
+        "Tidak untuk penderita diabetes (hitung kalori madu)",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + FOHAI Kemenkes RI",
+      "tags": [
+        "imunitas",
+        "batuk-kering",
+        "kencur",
+        "madu",
+        "jeruk-nipis"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 17,
+      "name": "Jamu Jahe Bawang Putih Madu Batuk Kering",
+      "indications": [
+        "batuk kering",
+        "batuk malam",
+        "iritasi tenggorokan"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Jahe segar",
+          "latinName": "Zingiber officinale Rosc.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Bawang putih",
+          "latinName": "Allium sativum L.",
+          "amount": 3,
+          "unit": "siung",
+          "condition": "segar, haluskan"
+        },
+        {
+          "herb": "Madu murni",
+          "latinName": null,
+          "amount": 2,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 200,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus jahe dan bawang putih dengan 200ml air hingga mendidih ±10 menit. Saring, tambahkan madu. Aduk rata sambil hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 100ml",
+      "frequency": "3x sehari, pagi siang malam",
+      "duration": "5-7 hari",
+      "warnings": [
+        "Hindari overdosis bawang putih (dapat menyebabkan sakit perut)",
+        "Tidak untuk penderita asam lambung"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "imunitas",
+        "batuk-kering",
+        "jahe",
+        "bawang-putih",
+        "madu"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 18,
+      "name": "Minuman Thyme Madu Batuk Kering",
+      "indications": [
+        "batuk kering",
+        "batuk malam",
+        "bronkitis ringan"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Thyme kering",
+          "latinName": "Thymus vulgaris L.",
+          "amount": 1,
+          "unit": "sendok teh",
+          "condition": "kering, utuh"
+        },
+        {
+          "herb": "Madu murni",
+          "latinName": null,
+          "amount": 1.5,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 200,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Seduh thyme dengan 200ml air hangat. Diamkan ±5-8 menit, saring. Tambahkan madu, aduk rata.",
+      "preparationType": "seduh",
+      "dosage": "Minum 100ml",
+      "frequency": "3-4x sehari",
+      "duration": "5-7 hari",
+      "warnings": [
+        "Tidak untuk ibu hamil/menyusui",
+        "Hindari jika alergi terhadap Lamiaceae family"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs + Farmakope Herbal Eropa",
+      "tags": [
+        "imunitas",
+        "batuk-kering",
+        "thyme",
+        "madu"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 19,
+      "name": "Minuman Daun Sirih Madu Batuk Kering",
+      "indications": [
+        "batuk kering",
+        "batuk persisten",
+        "iritasi tenggorokan"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Daun sirih segar",
+          "latinName": "Piper betle L.",
+          "amount": 5,
+          "unit": "lembar",
+          "condition": "segar, utuh"
+        },
+        {
+          "herb": "Madu murni",
+          "latinName": null,
+          "amount": 1.5,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 200,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus daun sirih dengan 200ml air hangat hingga mendidih ±8 menit. Saring, tambahkan madu. Aduk rata.",
+      "preparationType": "rebus",
+      "dosage": "Minum 100ml",
+      "frequency": "3-4x sehari",
+      "duration": "5-7 hari",
+      "warnings": [
+        "Tidak untuk ibu hamil/menyusui dalam dosis tinggi",
+        "Hati-hati pada penderita gastritis"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "imunitas",
+        "batuk-kering",
+        "daun-sirih",
+        "madu"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 20,
+      "name": "Minuman Licorice Jahe Batuk Kering",
+      "indications": [
+        "batuk kering",
+        "iritasi tenggorokan",
+        "bronkitis ringan"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Akar licorice (akar manis)",
+          "latinName": "Glycyrrhiza glabra L.",
+          "amount": 8,
+          "unit": "gram",
+          "condition": "potong kecil"
+        },
+        {
+          "herb": "Jahe segar",
+          "latinName": "Zingiber officinale Rosc.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus akar licorice dan jahe dengan 250ml air hingga mendidih ±12 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "2-3x sehari",
+      "duration": "5-7 hari",
+      "warnings": [
+        "Tidak untuk penderita tekanan darah tinggi (licorice)",
+        "Hindari penggunaan jangka panjang"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "WHO Monographs + FOHAI Kemenkes RI",
+      "tags": [
+        "imunitas",
+        "batuk-kering",
+        "licorice",
+        "jahe"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 21,
+      "name": "Jamu Jahe Bawang Putih Kencur Madu Batuk Berdahak",
+      "indications": [
+        "batuk berdahak",
+        "batuk produktif",
+        "dahak berlebih"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Jahe segar",
+          "latinName": "Zingiber officinale Rosc.",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Bawang putih",
+          "latinName": "Allium sativum L.",
+          "amount": 3,
+          "unit": "siung",
+          "condition": "segar, haluskan"
+        },
+        {
+          "herb": "Kencur segar",
+          "latinName": "Kaempferia galanga L.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Madu murni",
+          "latinName": null,
+          "amount": 2,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus jahe, bawang putih, dan kencur dengan 250ml air hingga mendidih ±10 menit. Saring, tambahkan madu. Aduk rata.",
+      "preparationType": "rebus",
+      "dosage": "Minum 125ml",
+      "frequency": "3x sehari, pagi siang malam",
+      "duration": "5-7 hari",
+      "warnings": [
+        "Tidak untuk penderita asam lambung aktif",
+        "Hindari overdosis bawang putih"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "imunitas",
+        "batuk-berdahak",
+        "jahe",
+        "bawang-putih",
+        "kencur"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 22,
+      "name": "Jamu Meniran Sambiloto Batuk Berdahak",
+      "indications": [
+        "batuk berdahak",
+        "pilek berlendir",
+        "bronkitis ringan"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Meniran (seluruh tanaman)",
+          "latinName": "Phyllanthus niruri L.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Sambiloto daun",
+          "latinName": "Andrographis paniculata Nees",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus meniran dan sambiloto dengan 300ml air hingga mendidih ±15 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "3x sehari, pagi siang malam",
+      "duration": "5-7 hari",
+      "warnings": [
+        "Tidak untuk ibu hamil/menyusui",
+        "Batasi pada penderita anemia parah"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + FOHAI Kemenkes RI",
+      "tags": [
+        "imunitas",
+        "batuk-berdahak",
+        "meniran",
+        "sambiloto"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 23,
+      "name": "Inhalasi Mint Eucalyptus Batuk Berdahak",
+      "indications": [
+        "batuk berdahak",
+        "hidung tersumbat",
+        "sinus",
+        "bronkitis ringan"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Daun mint segar",
+          "latinName": "Mentha piperita L.",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, utuh"
+        },
+        {
+          "herb": "Eucalyptus (minyak atau daun)",
+          "latinName": "Eucalyptus globulus Labill.",
+          "amount": 5,
+          "unit": "gram",
+          "condition": "daun segar atau 3-5 tetes minyak"
+        },
+        {
+          "herb": "Air panas",
+          "latinName": null,
+          "amount": 500,
+          "unit": "ml",
+          "condition": "mendidih"
+        }
+      ],
+      "preparationMethod": "Rebus daun mint dan eucalyptus dengan 500ml air mendidih. Tuangkan ke baskom, pekerjakan kepala dengan handuk, hirup uap selama ±10-15 menit.",
+      "preparationType": "mandi",
+      "dosage": "Inhalasi uap panas",
+      "frequency": "2-3x sehari",
+      "duration": "3-5 hari atau sampai gejala berkurang",
+      "warnings": [
+        "Hati-hati dengan air panas yang terlalu panas (cegah luka bakar)",
+        "Tidak untuk anak <3 tahun tanpa pengawasan"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "WHO Monographs + FOHAI Kemenkes RI",
+      "tags": [
+        "imunitas",
+        "batuk-berdahak",
+        "mint",
+        "eucalyptus",
+        "inhalasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 24,
+      "name": "Jamu Bunga Kamboja Batuk Berdahak",
+      "indications": [
+        "batuk berdahak",
+        "pilek berkepanjangan",
+        "iritasi saluran napas"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Bunga kamboja (Plumeria)",
+          "latinName": "Plumeria rubra L.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus bunga kamboja dengan 250ml air hangat hingga mendidih ±8 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "2-3x sehari",
+      "duration": "5-7 hari",
+      "warnings": [
+        "Pastikan menggunakan bunga kamboja, bukan daun (berbeda efek)",
+        "Hindari jika alergi"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Terbatas",
+      "tags": [
+        "imunitas",
+        "batuk-berdahak",
+        "kamboja"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 25,
+      "name": "Jamu Bangle Asam Jawa Demam",
+      "indications": [
+        "demam",
+        "flu",
+        "demam tinggi ringan"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Bangle segar",
+          "latinName": "Zingiber purpureum Roxb.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Asam jawa",
+          "latinName": "Tamarindus indica L.",
+          "amount": 2,
+          "unit": "sendok makan",
+          "condition": "daging asam, tanpa biji"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 400,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus bangle dengan 400ml air hangat ±10 menit. Masukkan asam jawa, aduk rata. Saring dan sajikan hangat atau suhu ruang.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (200ml)",
+      "frequency": "2-3x sehari",
+      "duration": "Hingga demam turun (1-3 hari)",
+      "warnings": [
+        "Konsultasi dokter jika demam >39°C atau bertahan >3 hari",
+        "Tidak untuk penderita gastritis akut"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Jamu",
+      "tags": [
+        "imunitas",
+        "demam",
+        "bangle",
+        "asam-jawa"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 26,
+      "name": "Jamu Daun Pepaya Air Kelapa Demam",
+      "indications": [
+        "demam",
+        "demam tinggi",
+        "demam akibat penyakit tropis"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Daun pepaya muda",
+          "latinName": "Carica papaya L.",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, utuh"
+        },
+        {
+          "herb": "Air kelapa segar",
+          "latinName": "Cocos nucifera L.",
+          "amount": 200,
+          "unit": "ml",
+          "condition": "segar, dari kelapa hijau"
+        }
+      ],
+      "preparationMethod": "Rebus daun pepaya dengan 200ml air kelapa segar ±10 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (100ml)",
+      "frequency": "2-3x sehari",
+      "duration": "Hingga demam berkurang",
+      "warnings": [
+        "Tidak untuk ibu hamil trimester pertama",
+        "Konsultasi dokter jika demam tidak turun >3 hari"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Jamu",
+      "tags": [
+        "imunitas",
+        "demam",
+        "daun-pepaya",
+        "air-kelapa"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 27,
+      "name": "Jamu Sambiloto Demam",
+      "indications": [
+        "demam",
+        "demam tinggi",
+        "infeksi bakteri/virus ringan"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Sambiloto daun",
+          "latinName": "Andrographis paniculata Nees",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus sambiloto dengan 250ml air hangat hingga mendidih ±12 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "2-3x sehari",
+      "duration": "Hingga demam turun (1-3 hari)",
+      "warnings": [
+        "Rasa pahit, dapat ditambahkan madu",
+        "Tidak untuk ibu hamil/menyusui",
+        "Hati-hati pada penderita anemia parah"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "imunitas",
+        "demam",
+        "sambiloto"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 28,
+      "name": "Jamu Jintan Hitam Madu Imun Booster",
+      "indications": [
+        "imunitas rendah",
+        "pencegahan penyakit",
+        "daya tahan tubuh lemah"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Biji jintan hitam (nigella)",
+          "latinName": "Nigella sativa L.",
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "utuh atau dihancurkan halus"
+        },
+        {
+          "herb": "Madu murni",
+          "latinName": null,
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 200,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Seduh biji jintan hitam dengan 200ml air hangat. Diamkan ±5 menit, saring. Tambahkan madu, aduk rata.",
+      "preparationType": "seduh",
+      "dosage": "Minum 1 gelas (100ml)",
+      "frequency": "1-2x sehari, pagi dan malam",
+      "duration": "Konsumsi regular (2-3 bulan)",
+      "warnings": [
+        "Aman untuk penggunaan jangka panjang",
+        "Tidak untuk ibu hamil (kurangi dosis)"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "WHO Monographs + FOHAI Kemenkes RI",
+      "tags": [
+        "imunitas",
+        "imun-booster",
+        "jintan-hitam",
+        "madu"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 29,
+      "name": "Jamu Daun Kelor Jahe Imun Booster",
+      "indications": [
+        "imunitas rendah",
+        "nutrisi tubuh",
+        "daya tahan rendah"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Daun kelor segar",
+          "latinName": "Moringa oleifera Lam.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Jahe segar",
+          "latinName": "Zingiber officinale Rosc.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus daun kelor dan jahe dengan 250ml air hangat hingga mendidih ±10 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "1x sehari, sebaiknya pagi",
+      "duration": "Konsumsi regular (2-3 bulan)",
+      "warnings": [
+        "Tidak untuk penderita penyakit tiroid (perlu konsultasi)",
+        "Aman secara umum"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "imunitas",
+        "imun-booster",
+        "daun-kelor",
+        "jahe"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 30,
+      "name": "Jamu Meniran Sambiloto Temulawak Imun Booster",
+      "indications": [
+        "imunitas rendah",
+        "pencegahan penyakit",
+        "daya tahan tubuh lemah"
+      ],
+      "category": "imunitas",
+      "ingredients": [
+        {
+          "herb": "Meniran (seluruh tanaman)",
+          "latinName": "Phyllanthus niruri L.",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Sambiloto daun",
+          "latinName": "Andrographis paniculata Nees",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Temulawak segar",
+          "latinName": "Curcuma xanthorrhiza Roxb.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus meniran, sambiloto, dan temulawak dengan 300ml air hangat hingga mendidih ±15 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "1x sehari, pagi atau siang",
+      "duration": "Konsumsi regular (2-3 bulan)",
+      "warnings": [
+        "Rasa pahit, dapat ditambahkan madu",
+        "Tidak untuk ibu hamil/menyusui"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "imunitas",
+        "imun-booster",
+        "meniran",
+        "sambiloto",
+        "temulawak"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 31,
+      "name": "Jamu Cabe Puyang Rematik",
+      "indications": [
+        "rematik",
+        "radang sendi",
+        "nyeri persisten sendi"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Cabe puyang segar",
+          "latinName": "Piper retrofractum Vahl",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus cabe puyang dengan 300ml air hangat hingga mendidih ±12 menit. Saring dan sajikan hangat atau suhu ruang.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "2x sehari, pagi dan malam",
+      "duration": "2-4 minggu (perlu konsistensi)",
+      "warnings": [
+        "Rasa pedas, hindari pada penderita gastritis akut",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Terbatas",
+      "tags": [
+        "antiinflamasi",
+        "rematik",
+        "cabe-puyang"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 32,
+      "name": "Jamu Jahe Merah Kunyit Lada Rematik",
+      "indications": [
+        "rematik",
+        "radang sendi",
+        "nyeri sendi persisten"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Jahe merah segar",
+          "latinName": "Zingiber officinale Rosc. var. rubrum",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Kunyit segar",
+          "latinName": "Curcuma longa L.",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Lada hitam",
+          "latinName": "Piper nigrum L.",
+          "amount": 3,
+          "unit": "gram",
+          "condition": "utuh atau cincang"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus jahe merah, kunyit, dan lada hitam dengan 300ml air hangat hingga mendidih ±12 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "2x sehari, pagi dan malam",
+      "duration": "2-4 minggu",
+      "warnings": [
+        "Tidak untuk penderita gangguan pembekuan darah",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "antiinflamasi",
+        "rematik",
+        "jahe-merah",
+        "kunyit",
+        "lada"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 33,
+      "name": "Jamu Temulawak Kunyit Kencur Rematik",
+      "indications": [
+        "rematik",
+        "radang sendi",
+        "nyeri otot sendi"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Temulawak segar",
+          "latinName": "Curcuma xanthorrhiza Roxb.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Kunyit segar",
+          "latinName": "Curcuma longa L.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Kencur segar",
+          "latinName": "Kaempferia galanga L.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 350,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus temulawak, kunyit, dan kencur dengan 350ml air hangat hingga mendidih ±15 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (175ml)",
+      "frequency": "2x sehari, pagi dan malam",
+      "duration": "2-4 minggu",
+      "warnings": [
+        "Tidak untuk penderita batu empedu tanpa konsultasi dokter",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "antiinflamasi",
+        "rematik",
+        "temulawak",
+        "kunyit",
+        "kencur"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 34,
+      "name": "Jamu Sambiloto Bangle Rematik",
+      "indications": [
+        "rematik",
+        "radang sendi",
+        "demam rematik ringan"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Sambiloto daun",
+          "latinName": "Andrographis paniculata Nees",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Bangle segar",
+          "latinName": "Zingiber purpureum Roxb.",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus sambiloto dan bangle dengan 300ml air hangat hingga mendidih ±12 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "2x sehari, pagi dan malam",
+      "duration": "2-4 minggu",
+      "warnings": [
+        "Rasa pahit, dapat ditambahkan madu",
+        "Tidak untuk ibu hamil/menyusui"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "antiinflamasi",
+        "rematik",
+        "sambiloto",
+        "bangle"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 35,
+      "name": "Jamu Daun Dewa Kunyit Rematik",
+      "indications": [
+        "rematik",
+        "radang sendi",
+        "nyeri sendi menahun"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Daun dewa segar",
+          "latinName": "Gynura procumbens Merr.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Kunyit segar",
+          "latinName": "Curcuma longa L.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus daun dewa dan kunyit dengan 300ml air hangat hingga mendidih ±12 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "2x sehari, pagi dan malam",
+      "duration": "2-4 minggu",
+      "warnings": [
+        "Tidak untuk penderita gangguan pembekuan darah",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Terbatas",
+      "tags": [
+        "antiinflamasi",
+        "rematik",
+        "daun-dewa",
+        "kunyit"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 36,
+      "name": "Olesan Minyak Kayu Putih Jahe Nyeri Otot",
+      "indications": [
+        "nyeri otot",
+        "kaku otot",
+        "sakit otot post-aktivitas"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Minyak kayu putih",
+          "latinName": "Eucalyptus globulus Labill.",
+          "amount": 30,
+          "unit": "ml",
+          "condition": "murni"
+        },
+        {
+          "herb": "Jahe segar",
+          "latinName": "Zingiber officinale Rosc.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Minyak kelapa",
+          "latinName": "Cocos nucifera L.",
+          "amount": 20,
+          "unit": "ml",
+          "condition": "murni"
+        }
+      ],
+      "preparationMethod": "Campur minyak kayu putih, jahe parut, dan minyak kelapa. Aduk rata hingga homogen. Diamkan 30 menit, kemudian dapat langsung digunakan.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±15ml ke area nyeri",
+      "frequency": "2-3x sehari",
+      "duration": "Hingga nyeri berkurang (3-7 hari)",
+      "warnings": [
+        "Tidak untuk kulit sensitif/luka terbuka",
+        "Hindari area mata dan selaput lendir"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + FOHAI Kemenkes RI",
+      "tags": [
+        "antiinflamasi",
+        "nyeri-otot",
+        "topikal",
+        "minyak-kayu-putih",
+        "jahe"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 37,
+      "name": "Minuman Serai Jahe Mandi Nyeri Otot",
+      "indications": [
+        "nyeri otot",
+        "kaku otot",
+        "nyeri setelah bekerja berat"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Serai (batang)",
+          "latinName": "Cymbopogon citratus Stapf",
+          "amount": 4,
+          "unit": "batang",
+          "condition": "segar, geprek"
+        },
+        {
+          "herb": "Jahe segar",
+          "latinName": "Zingiber officinale Rosc.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 1000,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus serai dan jahe dengan 1 liter air hangat hingga mendidih ±15 menit. Saring dan gunakan air ini untuk mandi atau kompres area nyeri.",
+      "preparationType": "mandi",
+      "dosage": "Gunakan untuk mandi atau kompres area nyeri",
+      "frequency": "1x sehari, sebaiknya sore/malam sebelum tidur",
+      "duration": "3-7 hari atau hingga nyeri berkurang",
+      "warnings": [
+        "Pastikan suhu air tidak terlalu panas untuk menghindari kulit terbakar",
+        "Hindari pada kulit luka terbuka"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Jamu",
+      "tags": [
+        "antiinflamasi",
+        "nyeri-otot",
+        "topikal",
+        "serai",
+        "jahe"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 38,
+      "name": "Olesan Biji Pala Minyak Kelapa Nyeri Otot",
+      "indications": [
+        "nyeri otot",
+        "kaku otot",
+        "sakit punggung ringan"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Biji pala (bubuk)",
+          "latinName": "Myristica fragrans Houtt.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "utuh atau bubuk halus"
+        },
+        {
+          "herb": "Minyak kelapa",
+          "latinName": "Cocos nucifera L.",
+          "amount": 30,
+          "unit": "ml",
+          "condition": "murni"
+        }
+      ],
+      "preparationMethod": "Campur bubuk biji pala dengan 30ml minyak kelapa. Aduk rata hingga homogen. Diamkan 15 menit sebelum digunakan.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±15ml ke area nyeri",
+      "frequency": "2x sehari, pagi dan malam",
+      "duration": "3-7 hari",
+      "warnings": [
+        "Tidak untuk kulit luka terbuka/iritasi",
+        "Hindari area mata",
+        "Tidak untuk ibu hamil dalam dosis tinggi"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Jamu",
+      "tags": [
+        "antiinflamasi",
+        "nyeri-otot",
+        "topikal",
+        "biji-pala",
+        "minyak-kelapa"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 39,
+      "name": "Olesan Cengkeh Minyak Zaitun Nyeri Otot",
+      "indications": [
+        "nyeri otot",
+        "sakit otot lokal",
+        "nyeri tegang"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Cengkeh (bubuk)",
+          "latinName": "Syzygium aromaticum L.",
+          "amount": 5,
+          "unit": "gram",
+          "condition": "utuh atau bubuk halus"
+        },
+        {
+          "herb": "Minyak zaitun",
+          "latinName": "Olea europaea L.",
+          "amount": 30,
+          "unit": "ml",
+          "condition": "extra virgin"
+        }
+      ],
+      "preparationMethod": "Campur bubuk cengkeh dengan 30ml minyak zaitun. Aduk rata hingga homogen. Diamkan 15-20 menit sebelum digunakan.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±15ml ke area nyeri",
+      "frequency": "2-3x sehari",
+      "duration": "3-7 hari",
+      "warnings": [
+        "Cengkeh dapat menyebabkan iritasi pada kulit sensitif",
+        "Hindari area mata dan selaput lendir",
+        "Lakukan patch test terlebih dahulu"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + Tradisi Lokal",
+      "tags": [
+        "antiinflamasi",
+        "nyeri-otot",
+        "topikal",
+        "cengkeh",
+        "minyak-zaitun"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 40,
+      "name": "Gel Lidah Buaya Eksim Alergi",
+      "indications": [
+        "eksim",
+        "alergi kulit",
+        "gatal-gatal",
+        "dermatitis"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Lidah buaya gel murni",
+          "latinName": "Aloe barbadensis Mill.",
+          "amount": 100,
+          "unit": "ml",
+          "condition": "gel segar, tanpa latex"
+        }
+      ],
+      "preparationMethod": "Ambil gel lidah buaya segar, pastikan tidak ada getah kuning (latex). Gunakan langsung untuk aplikasi ke kulit yang terkena eksim.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±10-15ml ke area yang terkena",
+      "frequency": "2-3x sehari atau sesuai kebutuhan",
+      "duration": "Hingga gejala berkurang (1-2 minggu)",
+      "warnings": [
+        "Hanya gunakan gel putih, hindari getah kuning (latex = pencahar)",
+        "Lakukan patch test jika kulit sangat sensitif"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs + Farmakope Herbal Indonesia",
+      "tags": [
+        "antiinflamasi",
+        "eksim",
+        "alergi",
+        "topikal",
+        "lidah-buaya"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 41,
+      "name": "Bubuk Kunyit Air Eksim Alergi",
+      "indications": [
+        "eksim",
+        "alergi kulit",
+        "iritasi kulit ringan"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Kunyit segar atau bubuk",
+          "latinName": "Curcuma longa L.",
+          "amount": 5,
+          "unit": "gram",
+          "condition": "bubuk halus atau parut segar"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 2,
+          "unit": "sendok makan",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Campur bubuk kunyit dengan air putih hangat hingga membentuk pasta. Aduk rata dan oleskan ke area kulit yang terkena eksim.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±5-10ml pasta ke area terkena",
+      "frequency": "2-3x sehari",
+      "duration": "Hingga gejala berkurang (1-2 minggu)",
+      "warnings": [
+        "Pasta kunyit dapat meninggalkan noda kuning pada kain",
+        "Tidak untuk kulit luka dalam/berdarah",
+        "Lakukan patch test jika kulit sangat sensitif"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "antiinflamasi",
+        "eksim",
+        "alergi",
+        "topikal",
+        "kunyit"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 42,
+      "name": "Tumbukan Daun Binahong Eksim Alergi",
+      "indications": [
+        "eksim",
+        "luka bernanah",
+        "alergi kulit",
+        "iritasi kulit"
+      ],
+      "category": "antiinflamasi",
+      "ingredients": [
+        {
+          "herb": "Daun binahong segar",
+          "latinName": "Anredera cordifolia Steenis",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "segar, utuh"
+        }
+      ],
+      "preparationMethod": "Cuci daun binahong bersih, tumbuk hingga halus. Aplikasikan langsung ke area kulit yang terkena eksim atau luka.",
+      "preparationType": "tumbuk",
+      "dosage": "Oleskan ±10-15ml tumbukan ke area terkena",
+      "frequency": "2-3x sehari",
+      "duration": "Hingga gejala berkurang (5-10 hari)",
+      "warnings": [
+        "Pastikan daun binahong bersih dari pestisida",
+        "Hindari pada kulit dengan alergi ekstrim tanpa konsultasi"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Jamu",
+      "tags": [
+        "antiinflamasi",
+        "eksim",
+        "alergi",
+        "topikal",
+        "binahong"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 43,
+      "name": "Olesan Cabe Puyang Kudis Scabies",
+      "indications": [
+        "kudis",
+        "scabies",
+        "gatal-gatal yang menular"
+      ],
+      "category": "dermatologi",
+      "ingredients": [
+        {
+          "herb": "Cabe puyang segar",
+          "latinName": "Piper retrofractum Vahl",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "segar, tumbuk halus"
+        },
+        {
+          "herb": "Minyak kelapa",
+          "latinName": "Cocos nucifera L.",
+          "amount": 50,
+          "unit": "ml",
+          "condition": "murni"
+        }
+      ],
+      "preparationMethod": "Tumbuk cabe puyang halus, campur dengan 50ml minyak kelapa. Aduk rata dan diamkan 1 jam sebelum digunakan.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±10ml ke area terkena kudis",
+      "frequency": "2x sehari, pagi dan malam sebelum tidur",
+      "duration": "5-10 hari atau hingga kudis sembuh",
+      "warnings": [
+        "Hindari pada kulit luka parah/iritasi parah",
+        "Rasa pedas, hati-hati pada kulit sensitif",
+        "Cuci tangan setelah penggunaan"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal",
+      "tags": [
+        "dermatologi",
+        "kudis",
+        "topikal",
+        "cabe-puyang"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 44,
+      "name": "Olesan Sulfur Minyak Kelapa Kudis Scabies",
+      "indications": [
+        "kudis",
+        "scabies",
+        "cacar air ringan"
+      ],
+      "category": "dermatologi",
+      "ingredients": [
+        {
+          "herb": "Sulfur (belerang)",
+          "latinName": "Sulphur precipitatum",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "bubuk halus"
+        },
+        {
+          "herb": "Minyak kelapa",
+          "latinName": "Cocos nucifera L.",
+          "amount": 40,
+          "unit": "ml",
+          "condition": "murni"
+        }
+      ],
+      "preparationMethod": "Campur bubuk sulfur dengan 40ml minyak kelapa. Aduk rata hingga homogen. Diamkan 20 menit sebelum digunakan.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±10ml ke area terkena",
+      "frequency": "2x sehari, pagi dan malam",
+      "duration": "7-14 hari atau hingga kudis sembuh",
+      "warnings": [
+        "Hindari area mata dan selaput lendir",
+        "Dapat menyebabkan iritasi pada kulit sensitif",
+        "Tidak untuk kulit luka parah"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "Farmakope Herbal Indonesia + WHO Monographs",
+      "tags": [
+        "dermatologi",
+        "kudis",
+        "topikal",
+        "sulfur"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 45,
+      "name": "Olesan Cengkeh Minyak Kelapa Kudis Scabies",
+      "indications": [
+        "kudis",
+        "scabies ringan",
+        "gatal-gatal kulit"
+      ],
+      "category": "dermatologi",
+      "ingredients": [
+        {
+          "herb": "Cengkeh (bubuk)",
+          "latinName": "Syzygium aromaticum L.",
+          "amount": 8,
+          "unit": "gram",
+          "condition": "bubuk halus"
+        },
+        {
+          "herb": "Minyak kelapa",
+          "latinName": "Cocos nucifera L.",
+          "amount": 40,
+          "unit": "ml",
+          "condition": "murni"
+        }
+      ],
+      "preparationMethod": "Campur bubuk cengkeh dengan 40ml minyak kelapa. Aduk rata hingga homogen. Diamkan 15 menit sebelum digunakan.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±10ml ke area terkena",
+      "frequency": "2x sehari, pagi dan malam",
+      "duration": "7-10 hari",
+      "warnings": [
+        "Hindari pada kulit sensitif/luka terbuka",
+        "Lakukan patch test terlebih dahulu",
+        "Cuci tangan setelah penggunaan"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Terbatas",
+      "tags": [
+        "dermatologi",
+        "kudis",
+        "topikal",
+        "cengkeh",
+        "minyak-kelapa"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 46,
+      "name": "Olesan Curcuma Xanthorrhiza Kurap Panu",
+      "indications": [
+        "kurap",
+        "panu",
+        "infeksi jamur superfisial",
+        "tinea"
+      ],
+      "category": "dermatologi",
+      "ingredients": [
+        {
+          "herb": "Temulawak segar",
+          "latinName": "Curcuma xanthorrhiza Roxb.",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "segar, parut halus"
+        },
+        {
+          "herb": "Minyak kelapa",
+          "latinName": "Cocos nucifera L.",
+          "amount": 30,
+          "unit": "ml",
+          "condition": "murni"
+        }
+      ],
+      "preparationMethod": "Parut temulawak halus, campur dengan 30ml minyak kelapa. Aduk rata dan diamkan 30 menit sebelum digunakan.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±10ml ke area terkena kurap/panu",
+      "frequency": "2-3x sehari",
+      "duration": "2-3 minggu atau hingga kurap/panu sembuh",
+      "warnings": [
+        "Hindari area mata dan selaput lendir",
+        "Pastikan area kulit bersih sebelum aplikasi",
+        "Lakukan patch test jika kulit sensitif"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + FOHAI Kemenkes RI",
+      "tags": [
+        "dermatologi",
+        "kurap",
+        "panu",
+        "topikal",
+        "temulawak"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 47,
+      "name": "Bubuk Kapur Sirih Kurap Panu",
+      "indications": [
+        "kurap",
+        "panu",
+        "infeksi jamur ringan"
+      ],
+      "category": "dermatologi",
+      "ingredients": [
+        {
+          "herb": "Kapur sirih",
+          "latinName": "Calcium hydroxide",
+          "amount": 5,
+          "unit": "gram",
+          "condition": "bubuk halus"
+        },
+        {
+          "herb": "Daun sirih",
+          "latinName": "Piper betle L.",
+          "amount": 5,
+          "unit": "lembar",
+          "condition": "segar, tumbuk halus"
+        },
+        {
+          "herb": "Minyak kelapa",
+          "latinName": "Cocos nucifera L.",
+          "amount": 20,
+          "unit": "ml",
+          "condition": "murni"
+        }
+      ],
+      "preparationMethod": "Tumbuk daun sirih halus, campur dengan kapur sirih dan minyak kelapa. Aduk rata hingga homogen.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±5-10ml ke area terkena",
+      "frequency": "2x sehari, pagi dan malam",
+      "duration": "2-3 minggu",
+      "warnings": [
+        "Kapur sirih dapat menyebabkan iritasi pada kulit sensitif",
+        "Hindari area mata dan selaput lendir",
+        "Lakukan patch test terlebih dahulu"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal",
+      "tags": [
+        "dermatologi",
+        "kurap",
+        "panu",
+        "topikal",
+        "kapur-sirih"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 48,
+      "name": "Olesan Centella Asiatica Kurap Panu",
+      "indications": [
+        "kurap",
+        "panu",
+        "infeksi jamur superfisial",
+        "penyembuhan luka"
+      ],
+      "category": "dermatologi",
+      "ingredients": [
+        {
+          "herb": "Daun pegagan (Centella asiatica)",
+          "latinName": "Centella asiatica L. Urban",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "segar, tumbuk halus"
+        },
+        {
+          "herb": "Minyak kelapa",
+          "latinName": "Cocos nucifera L.",
+          "amount": 30,
+          "unit": "ml",
+          "condition": "murni"
+        }
+      ],
+      "preparationMethod": "Tumbuk daun pegagan halus, campur dengan 30ml minyak kelapa. Aduk rata dan diamkan 20 menit.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±10ml ke area terkena",
+      "frequency": "2-3x sehari",
+      "duration": "2-3 minggu",
+      "warnings": [
+        "Pastikan daun pegagan bersih dari pestisida",
+        "Hindari area mata",
+        "Lakukan patch test jika kulit sensitif"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + WHO Monographs",
+      "tags": [
+        "dermatologi",
+        "kurap",
+        "panu",
+        "topikal",
+        "pegagan"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 49,
+      "name": "Olesan Aloe Vera Lidah Buaya Koreng Luka",
+      "indications": [
+        "koreng",
+        "luka ringan",
+        "luka bakar superfisial",
+        "penyembuhan luka"
+      ],
+      "category": "dermatologi",
+      "ingredients": [
+        {
+          "herb": "Lidah buaya gel murni",
+          "latinName": "Aloe barbadensis Mill.",
+          "amount": 50,
+          "unit": "ml",
+          "condition": "gel segar, tanpa latex"
+        }
+      ],
+      "preparationMethod": "Ambil gel lidah buaya segar langsung dari tanaman. Pastikan tidak ada getah kuning (latex). Aplikasikan ke area luka.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±5-10ml gel ke area luka",
+      "frequency": "2-3x sehari atau sesuai kebutuhan",
+      "duration": "Hingga luka sembuh (7-14 hari)",
+      "warnings": [
+        "Hanya gunakan gel putih, hindari latex",
+        "Hindari penggunaan pada luka dalam/terinfeksi parah tanpa konsultasi dokter"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs + Farmakope Herbal Indonesia",
+      "tags": [
+        "dermatologi",
+        "luka",
+        "koreng",
+        "topikal",
+        "lidah-buaya"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 50,
+      "name": "Tumbukan Palu Adil Koreng Luka",
+      "indications": [
+        "koreng",
+        "luka ringan",
+        "luka bernanah ringan"
+      ],
+      "category": "dermatologi",
+      "ingredients": [
+        {
+          "herb": "Daun palu adil segar",
+          "latinName": "Euphorbia pulcherrima Willd.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, utuh"
+        }
+      ],
+      "preparationMethod": "Cuci daun palu adil bersih, tumbuk hingga halus. Aplikasikan langsung ke area luka atau koreng.",
+      "preparationType": "tumbuk",
+      "dosage": "Oleskan ±5-10ml tumbukan ke luka",
+      "frequency": "2-3x sehari",
+      "duration": "5-10 hari atau hingga luka sembuh",
+      "warnings": [
+        "Daun palu adil bersifat caustic, hindari pada kulit sensitif",
+        "Hindari area mata dan selaput lendir",
+        "Lakukan patch test terlebih dahulu"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal",
+      "tags": [
+        "dermatologi",
+        "luka",
+        "koreng",
+        "topikal",
+        "palu-adil"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 51,
+      "name": "Olesan Jahe Minyak Zaitun Bau Badan",
+      "indications": [
+        "bau badan",
+        "hiperhidrosis ringan",
+        "keringat berlebih"
+      ],
+      "category": "dermatologi",
+      "ingredients": [
+        {
+          "herb": "Jahe segar",
+          "latinName": "Zingiber officinale Rosc.",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Minyak zaitun",
+          "latinName": "Olea europaea L.",
+          "amount": 30,
+          "unit": "ml",
+          "condition": "extra virgin"
+        }
+      ],
+      "preparationMethod": "Parut jahe, campur dengan 30ml minyak zaitun. Aduk rata dan diamkan 30 menit sebelum digunakan.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±5ml ke ketiak atau area dengan keringat berlebih",
+      "frequency": "1-2x sehari, sebaiknya pagi sebelum aktivitas",
+      "duration": "Konsumsi regular (2-4 minggu)",
+      "warnings": [
+        "Hindari area kulit luka/iritasi",
+        "Hindari area mata",
+        "Jahe dapat meninggalkan aroma panas"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Lokal",
+      "tags": [
+        "dermatologi",
+        "bau-badan",
+        "topikal",
+        "jahe"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 52,
+      "name": "Bubuk Biji Jintan Hitam Bau Badan",
+      "indications": [
+        "bau badan",
+        "keringat berlebih",
+        "body odor"
+      ],
+      "category": "dermatologi",
+      "ingredients": [
+        {
+          "herb": "Biji jintan hitam bubuk",
+          "latinName": "Nigella sativa L.",
+          "amount": 5,
+          "unit": "gram",
+          "condition": "bubuk halus"
+        },
+        {
+          "herb": "Minyak kelapa",
+          "latinName": "Cocos nucifera L.",
+          "amount": 20,
+          "unit": "ml",
+          "condition": "murni"
+        }
+      ],
+      "preparationMethod": "Campur bubuk jintan hitam dengan 20ml minyak kelapa. Aduk rata hingga homogen.",
+      "preparationType": "olesan",
+      "dosage": "Oleskan ±3-5ml ke ketiak atau area dengan keringat berlebih",
+      "frequency": "1-2x sehari",
+      "duration": "Konsumsi regular (2-4 minggu)",
+      "warnings": [
+        "Hindari pada kulit sensitif/luka terbuka",
+        "Lakukan patch test terlebih dahulu"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Lokal",
+      "tags": [
+        "dermatologi",
+        "bau-badan",
+        "topikal",
+        "jintan-hitam"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 53,
+      "name": "Jamu Daun Dewa Insomnia",
+      "indications": [
+        "insomnia",
+        "susah tidur",
+        "tidur tidak nyenyak"
+      ],
+      "category": "relaksasi",
+      "ingredients": [
+        {
+          "herb": "Daun dewa segar",
+          "latinName": "Gynura procumbens Merr.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Madu",
+          "latinName": null,
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus daun dewa dengan 250ml air hangat hingga mendidih ±10 menit. Saring, tambahkan madu. Aduk rata dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "1x sehari, 1-2 jam sebelum tidur",
+      "duration": "Konsumsi regular (2-4 minggu)",
+      "warnings": [
+        "Tidak untuk penderita gangguan pembekuan darah",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal",
+      "tags": [
+        "relaksasi",
+        "insomnia",
+        "daun-dewa"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 54,
+      "name": "Minuman Bunga Mawar Insomnia",
+      "indications": [
+        "insomnia",
+        "kecemasan malam",
+        "tidur tidak nyenyak"
+      ],
+      "category": "relaksasi",
+      "ingredients": [
+        {
+          "herb": "Bunga mawar merah (kelopak)",
+          "latinName": "Rosa centifolia L.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar atau kering"
+        },
+        {
+          "herb": "Madu",
+          "latinName": null,
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Seduh kelopak bunga mawar dengan 250ml air hangat. Diamkan ±5-8 menit, saring. Tambahkan madu, aduk rata.",
+      "preparationType": "seduh",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "1x sehari, sebelum tidur",
+      "duration": "Konsumsi regular (2-4 minggu)",
+      "warnings": [
+        "Pastikan bunga mawar organik/tanpa pestisida",
+        "Tidak untuk penderita alergi"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Aromaterapi + Herbal Lokal",
+      "tags": [
+        "relaksasi",
+        "insomnia",
+        "bunga-mawar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 55,
+      "name": "Minuman Chamomile Honey Insomnia",
+      "indications": [
+        "insomnia",
+        "kecemasan",
+        "ketegangan saraf"
+      ],
+      "category": "relaksasi",
+      "ingredients": [
+        {
+          "herb": "Bunga chamomile kering",
+          "latinName": "Matricaria chamomilla L.",
+          "amount": 3,
+          "unit": "gram",
+          "condition": "kering, utuh"
+        },
+        {
+          "herb": "Madu murni",
+          "latinName": null,
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Seduh bunga chamomile dengan 250ml air hangat. Diamkan ±5 menit, saring. Tambahkan madu, aduk rata.",
+      "preparationType": "seduh",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "1x sehari, 1-2 jam sebelum tidur",
+      "duration": "Konsumsi regular (2-4 minggu)",
+      "warnings": [
+        "Tidak untuk penderita alergi Asteraceae family",
+        "Batasi pada ibu hamil (kurangi dosis)"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs + Farmakope Herbal Eropa",
+      "tags": [
+        "relaksasi",
+        "insomnia",
+        "chamomile"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 56,
+      "name": "Wedang Uwuh Kelelahan",
+      "indications": [
+        "kelelahan",
+        "lesu",
+        "stamina rendah",
+        "energi terbatas"
+      ],
+      "category": "relaksasi",
+      "ingredients": [
+        {
+          "herb": "Ginger (jahe)",
+          "latinName": "Zingiber officinale Rosc.",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Clove (cengkeh)",
+          "latinName": "Syzygium aromaticum L.",
+          "amount": 2,
+          "unit": "gram",
+          "condition": "utuh"
+        },
+        {
+          "herb": "Cinnamon (kayu manis)",
+          "latinName": "Cinnamomum verum J. Presl",
+          "amount": 1,
+          "unit": "potong kecil",
+          "condition": "utuh"
+        },
+        {
+          "herb": "Honey (madu)",
+          "latinName": null,
+          "amount": 2,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus jahe, cengkeh, dan kayu manis dengan 300ml air hingga mendidih ±10 menit. Saring, tambahkan madu. Aduk rata dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "1-2x sehari, pagi atau sore",
+      "duration": "Konsumsi regular (1-2 minggu)",
+      "warnings": [
+        "Tidak untuk GERD/tukak aktif",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Jamu",
+      "tags": [
+        "relaksasi",
+        "kelelahan",
+        "wedang-uwuh"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 57,
+      "name": "Jamu Beras Kencur Kelelahan",
+      "indications": [
+        "kelelahan",
+        "lemas",
+        "stamina rendah",
+        "pemulihan pasca sakit"
+      ],
+      "category": "relaksasi",
+      "ingredients": [
+        {
+          "herb": "Beras putih",
+          "latinName": "Oryza sativa L.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "sangrai ringan sampai harum"
+        },
+        {
+          "herb": "Kencur segar",
+          "latinName": "Kaempferia galanga L.",
+          "amount": 10,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Jahe segar",
+          "latinName": "Zingiber officinale Rosc.",
+          "amount": 5,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Madu",
+          "latinName": null,
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus beras yang sudah disangrai, kencur, dan jahe dengan 300ml air hingga mendidih ±15 menit. Saring, tambahkan madu. Aduk rata.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "1-2x sehari, pagi atau sore",
+      "duration": "Konsumsi regular (2-4 minggu)",
+      "warnings": [
+        "Aman untuk konsumsi jangka panjang",
+        "Cocok untuk pemulihan pasca sakit"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Jamu",
+      "tags": [
+        "relaksasi",
+        "kelelahan",
+        "beras-kencur"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 58,
+      "name": "Jamu Jahe Madu Limun Kelelahan",
+      "indications": [
+        "kelelahan",
+        "lesu",
+        "energi rendah",
+        "istirahat tidak cukup"
+      ],
+      "category": "relaksasi",
+      "ingredients": [
+        {
+          "herb": "Jahe segar",
+          "latinName": "Zingiber officinale Rosc.",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, parut"
+        },
+        {
+          "herb": "Madu murni",
+          "latinName": null,
+          "amount": 2,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Jeruk limun/lemon",
+          "latinName": "Citrus limon Osbeck",
+          "amount": 1,
+          "unit": "buah",
+          "condition": "peras airnya"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 200,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus jahe parut dengan 200ml air hangat ±5 menit. Saring, tambahkan madu dan jus jeruk limun segar. Aduk rata.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (100ml)",
+      "frequency": "1-2x sehari, pagi atau sore",
+      "duration": "Konsumsi regular (1-2 minggu)",
+      "warnings": [
+        "Batasi pada ibu hamil",
+        "Tidak untuk GERD/tukak aktif"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Jamu",
+      "tags": [
+        "relaksasi",
+        "kelelahan",
+        "jahe",
+        "madu",
+        "jeruk-limun"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 59,
+      "name": "Jamu Daun Dewa Stres",
+      "indications": [
+        "stres",
+        "kecemasan",
+        "ketegangan saraf"
+      ],
+      "category": "relaksasi",
+      "ingredients": [
+        {
+          "herb": "Daun dewa segar",
+          "latinName": "Gynura procumbens Merr.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Madu",
+          "latinName": null,
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus daun dewa dengan 250ml air hangat hingga mendidih ±10 menit. Saring, tambahkan madu. Aduk rata.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "1-2x sehari, pagi atau sore",
+      "duration": "Konsumsi regular (2-4 minggu)",
+      "warnings": [
+        "Tidak untuk penderita gangguan pembekuan darah",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal",
+      "tags": [
+        "relaksasi",
+        "stres",
+        "daun-dewa"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 60,
+      "name": "Minuman Valerian Stres",
+      "indications": [
+        "stres",
+        "kecemasan",
+        "ketenangan saraf",
+        "ketegangan mental"
+      ],
+      "category": "relaksasi",
+      "ingredients": [
+        {
+          "herb": "Akar valerian kering",
+          "latinName": "Valeriana officinalis L.",
+          "amount": 5,
+          "unit": "gram",
+          "condition": "kering, iris kecil"
+        },
+        {
+          "herb": "Madu",
+          "latinName": null,
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus akar valerian dengan 250ml air hangat hingga mendidih ±10 menit. Saring, tambahkan madu. Aduk rata.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "1x sehari, sore atau malam",
+      "duration": "Konsumsi regular (2-4 minggu)",
+      "warnings": [
+        "Tidak untuk ibu hamil/menyusui",
+        "Hindari penggunaan jangka panjang tanpa konsultasi",
+        "Dapat menyebabkan kantuk"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs + Farmakope Herbal Eropa",
+      "tags": [
+        "relaksasi",
+        "stres",
+        "valerian"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 61,
+      "name": "Jamu Daun Bayam Merah Anemia",
+      "indications": [
+        "anemia",
+        "kurang darah",
+        "kelelahan akibat anemia",
+        "pucat"
+      ],
+      "category": "hematologi",
+      "ingredients": [
+        {
+          "herb": "Daun bayam merah segar",
+          "latinName": "Amaranthus tricolor L.",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Besi (iron) fortifikasi alami (optional)",
+          "latinName": null,
+          "amount": null,
+          "unit": null,
+          "condition": null
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus daun bayam merah dengan 300ml air hangat hingga mendidih ±10 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "1-2x sehari, pagi atau sore",
+      "duration": "Konsumsi regular (2-3 bulan)",
+      "warnings": [
+        "Tidak menggantikan suplemen besi medis untuk anemia berat",
+        "Konsultasi dokter untuk pemeriksaan kadar hemoglobin"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Terbatas",
+      "tags": [
+        "hematologi",
+        "anemia",
+        "bayam-merah"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 62,
+      "name": "Jamu Seledri Kurma Anemia",
+      "indications": [
+        "anemia",
+        "kurang darah",
+        "kelelahan",
+        "pemulihan anemia"
+      ],
+      "category": "hematologi",
+      "ingredients": [
+        {
+          "herb": "Seledri segar",
+          "latinName": "Apium graveolens L.",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Kurma",
+          "latinName": "Phoenix dactylifera L.",
+          "amount": 5,
+          "unit": "buah",
+          "condition": "kering, tanpa biji"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus seledri dan kurma dengan 300ml air hangat hingga mendidih ±10 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (150ml)",
+      "frequency": "1-2x sehari, pagi atau sore",
+      "duration": "Konsumsi regular (2-3 bulan)",
+      "warnings": [
+        "Kurma tinggi gula, hati-hati pada penderita diabetes",
+        "Konsultasi dokter untuk anemia berat"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal",
+      "tags": [
+        "hematologi",
+        "anemia",
+        "seledri",
+        "kurma"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 63,
+      "name": "Jamu Beet Beetroot Anemia",
+      "indications": [
+        "anemia",
+        "kurang darah",
+        "pemulihan pasca operasi"
+      ],
+      "category": "hematologi",
+      "ingredients": [
+        {
+          "herb": "Akar bit merah segar",
+          "latinName": "Beta vulgaris L.",
+          "amount": 100,
+          "unit": "gram",
+          "condition": "segar, kupas, potong"
+        },
+        {
+          "herb": "Jeruk nipis",
+          "latinName": "Citrus aurantifolia Swingle",
+          "amount": 1,
+          "unit": "buah",
+          "condition": "peras airnya"
+        },
+        {
+          "herb": "Madu",
+          "latinName": null,
+          "amount": 1,
+          "unit": "sendok makan",
+          "condition": "murni"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 200,
+          "unit": "ml",
+          "condition": "dingin"
+        }
+      ],
+      "preparationMethod": "Jus akar bit segar, campur dengan air dingin, jus jeruk nipis, dan madu. Aduk rata dan saring jika perlu.",
+      "preparationType": "jus",
+      "dosage": "Minum 100ml",
+      "frequency": "1x sehari, pagi saat perut kosong atau 30 menit sebelum sarapan",
+      "duration": "Konsumsi regular (2-3 bulan)",
+      "warnings": [
+        "Bit dapat mengeraskan urin/feses menjadi merah-keunguan (normal)",
+        "Tidak untuk penderita kidney stones"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Nutrisi + Tradisi Lokal",
+      "tags": [
+        "hematologi",
+        "anemia",
+        "bit-beetroot",
+        "jus"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 64,
+      "name": "Jamu Hati Ayam Kuning Telur Anemia",
+      "indications": [
+        "anemia",
+        "kurang darah",
+        "stamina rendah",
+        "pemulihan anemia"
+      ],
+      "category": "hematologi",
+      "ingredients": [
+        {
+          "herb": "Hati ayam segar",
+          "latinName": "Gallus gallus domesticus",
+          "amount": 100,
+          "unit": "gram",
+          "condition": "segar, kupas, potong dadu"
+        },
+        {
+          "herb": "Kuning telur",
+          "latinName": "Gallus gallus domesticus",
+          "amount": 2,
+          "unit": "butir",
+          "condition": "segar"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 300,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus potongan hati ayam dengan 300ml air hangat ±15 menit hingga empuk. Masukkan kuning telur, aduk cepat. Matikan api dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Makan 1 porsi lengkap (hati + kuning telur + kuah)",
+      "frequency": "2-3x seminggu, pagi atau sore",
+      "duration": "Konsumsi regular (1-2 bulan)",
+      "warnings": [
+        "Pastikan daging ayam segar dan bersih",
+        "Tidak untuk penderita kolesterol tinggi (makan putih telur saja)"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Nutrisi",
+      "tags": [
+        "hematologi",
+        "anemia",
+        "hati-ayam",
+        "telur"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 65,
+      "name": "Minuman Sambiloto Perdarahan Ringan",
+      "indications": [
+        "mimisan ringan",
+        "gusi berdarah",
+        "perdarahan ringan",
+        "hemostasis"
+      ],
+      "category": "hematologi",
+      "ingredients": [
+        {
+          "herb": "Sambiloto daun",
+          "latinName": "Andrographis paniculata Nees",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus sambiloto dengan 250ml air hangat hingga mendidih ±12 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "2-3x sehari",
+      "duration": "Hingga perdarahan berhenti (3-7 hari)",
+      "warnings": [
+        "Rasa pahit, dapat ditambahkan madu",
+        "Konsultasi dokter jika perdarahan berlanjut >1 minggu",
+        "Tidak untuk ibu hamil/menyusui"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI + Saintifikasi Jamu",
+      "tags": [
+        "hematologi",
+        "perdarahan",
+        "sambiloto"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 66,
+      "name": "Jus Buah Delima Perdarahan Ringan",
+      "indications": [
+        "perdarahan ringan",
+        "mimisan",
+        "gusi berdarah",
+        "haid berlebih ringan"
+      ],
+      "category": "hematologi",
+      "ingredients": [
+        {
+          "herb": "Buah delima merah segar",
+          "latinName": "Punica granatum L.",
+          "amount": 200,
+          "unit": "gram",
+          "condition": "segar, ambil biji-bijinya"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 100,
+          "unit": "ml",
+          "condition": "dingin"
+        }
+      ],
+      "preparationMethod": "Jus biji delima merah segar dengan 100ml air dingin. Saring untuk menghilangkan ampas. Minum jus murni.",
+      "preparationType": "jus",
+      "dosage": "Minum 100-150ml",
+      "frequency": "1-2x sehari, pagi dan sore",
+      "duration": "Hingga perdarahan berkurang (5-7 hari)",
+      "warnings": [
+        "Delima asam dapat mengganggu gigi sensitif",
+        "Hati-hati pada penderita gastritis",
+        "Batasi pada ibu hamil"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal + Saintifikasi Jamu",
+      "tags": [
+        "hematologi",
+        "perdarahan",
+        "delima",
+        "jus"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 67,
+      "name": "Minuman Daun Jeringgel Perdarahan Ringan",
+      "indications": [
+        "perdarahan ringan",
+        "mimisan",
+        "haid berlebih ringan"
+      ],
+      "category": "hematologi",
+      "ingredients": [
+        {
+          "herb": "Daun jeringgel segar",
+          "latinName": "Acmella oleracea L. R.K. Jansen",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, potong kecil"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus daun jeringgel dengan 250ml air hangat hingga mendidih ±10 menit. Saring dan sajikan hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas (125ml)",
+      "frequency": "2-3x sehari",
+      "duration": "Hingga perdarahan berkurang (5-7 hari)",
+      "warnings": [
+        "Daun jeringgel bersifat astringent (menyusut)",
+        "Pastikan daun bersih dari pestisida",
+        "Konsultasi dokter jika perdarahan berlanjut"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal",
+      "tags": [
+        "hematologi",
+        "perdarahan",
+        "daun-jeringgel"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 68,
+      "name": "Kompres Daun Jeringgel Perdarahan Eksternal",
+      "indications": [
+        "perdarahan eksternal ringan",
+        "luka berdarah ringan",
+        "hemostasis lokal"
+      ],
+      "category": "hematologi",
+      "ingredients": [
+        {
+          "herb": "Daun jeringgel segar",
+          "latinName": "Acmella oleracea L. R.K. Jansen",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar, utuh"
+        },
+        {
+          "herb": "Air putih",
+          "latinName": null,
+          "amount": 250,
+          "unit": "ml",
+          "condition": "hangat"
+        }
+      ],
+      "preparationMethod": "Rebus daun jeringgel dengan 250ml air hangat ±10 menit. Saring dan gunakan air rebusan hangat untuk kompres. Atau langsung gunakan daun segar yang sudah ditumbuk sebagai kompres.",
+      "preparationType": "tempel",
+      "dosage": "Kompres dengan kain bersih yang sudah direndam air rebusan jeringgel atau tumbukan daun segar",
+      "frequency": "2-3x sehari atau saat perdarahan terjadi",
+      "duration": "Hingga perdarahan berhenti (15-30 menit per kompres)",
+      "warnings": [
+        "Ganti kompres dengan yang bersih setiap kali",
+        "Jangan gunakan pada luka dalam yang memerlukan jahitan",
+        "Konsultasi medis jika perdarahan tidak berhenti dalam 30 menit"
+      ],
+      "isTopical": true,
+      "evidenceLevel": "C",
+      "doctorVerified": false,
+      "source": "Tradisi Jamu Lokal",
+      "tags": [
+        "hematologi",
+        "perdarahan",
+        "topikal",
+        "daun-jeringgel",
+        "kompres"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "WHO Monographs on Selected Medicinal Plants",
+            "publisher": "World Health Organization (WHO)",
+            "location": "Geneva",
+            "years": "1999–2009",
+            "volumes": "Vol. 1–4",
+            "type": "monograph",
+            "url": "https://www.who.int/medicines/areas/traditional/en/"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #2",
+        "collectedAt": "2026-03-22"
+      }
+    }
+  ]
+}

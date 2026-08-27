@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Dashboard</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+    @media (min-width: 768px) {
+      .admin-home-grid { grid-template-columns: 2fr 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item active" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar" data-animate="up"><h1>Dashboard</h1><div class="header-actions"><button class="neu-icon-btn"><ion-icon name="notifications-outline"></ion-icon><span class="badge"></span></button><div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#F2994A,#FFD54F)">A</div></div></div>
+
+    <div class="stat-grid" data-animate="up" data-delay="100">
+      <div class="stat-card"><div class="sc-icon" style="background:var(--primary-bg);color:var(--primary-dark)">👥</div><div class="sc-value" id="users-count">—</div><div class="sc-label">Total Users</div><div class="sc-change up" id="users-change">Memuat...</div></div>
+      <div class="stat-card"><div class="sc-icon" style="background:var(--info-bg);color:var(--info)">🩺</div><div class="sc-value" id="doctors-count">—</div><div class="sc-label">Dokter Aktif</div><div class="sc-change up" id="doctors-change">Memuat...</div></div>
+      <div class="stat-card"><div class="sc-icon" style="background:var(--accent-bg);color:var(--accent)">💬</div><div class="sc-value" id="consult-count">—</div><div class="sc-label">Konsultasi Selesai</div><div class="sc-change up" id="consult-change">Memuat...</div></div>
+      <div class="stat-card"><div class="sc-icon" style="background:var(--warning-bg);color:var(--warning)">📰</div><div class="sc-value" id="articles-count">—</div><div class="sc-label">Artikel Published</div><div class="sc-change up" id="articles-change">Memuat...</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:24px;margin-top:24px;" class="admin-home-grid" data-animate="up" data-delay="200">
+      <div class="neu-table-wrap">
+        <div style="padding:20px 20px 12px;display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-weight:700;">Konsultasi Terbaru</span>
+          <span style="font-size:0.75rem;color:var(--primary-dark);cursor:pointer;" onclick="nav('users.html')">Lihat Semua →</span>
+        </div>
+        <table class="neu-table">
+          <thead><tr><th>Pasien</th><th>Dokter</th><th>Tipe</th><th>Status</th></tr></thead>
+          <tbody id="consult-tbody">
+            <tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">Memuat data...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="neu-card-flat">
+        <div style="font-weight:700;margin-bottom:16px;">Platform Health</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--text-tertiary);">Server Uptime</span><span style="font-weight:600;color:var(--success);">99.8%</span></div><div class="neu-progress"><div class="neu-progress-fill" style="width:99.8%"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--text-tertiary);">API Response</span><span style="font-weight:600;color:var(--primary-dark);">142ms</span></div><div class="neu-progress"><div class="neu-progress-fill" style="width:85%"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--text-tertiary);">BLE Success Rate</span><span style="font-weight:600;color:var(--info);">96.2%</span></div><div class="neu-progress"><div class="neu-progress-fill" style="width:96.2%;background:linear-gradient(90deg,#2F80ED,#56CCF2)"></div></div></div>
+        </div>
+      </div>
+    </div>
+</main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+(async () => {
+  // 1. Auth guard
+  const { user, profile } = await VAuth.guard('admin', 1);
+  if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+
+  // Update avatar initials
+  const initials = (profile.name || 'A').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+  document.getElementById('admin-avatar').textContent = initials;
+
+  // 2. Load stats
+  try {
+    const stats = await VDB.getStats();
+    animateNumber(document.getElementById('users-count'), stats.totalUsers, 1000);
+    animateNumber(document.getElementById('doctors-count'), stats.doctors, 1000);
+    animateNumber(document.getElementById('consult-count'), stats.completedConsultations, 1000);
+    animateNumber(document.getElementById('articles-count'), stats.publishedArticles, 1000);
+    document.getElementById('users-change').textContent = stats.patients + ' pasien, ' + stats.doctors + ' dokter';
+    document.getElementById('doctors-change').textContent = stats.doctors + ' terdaftar';
+    document.getElementById('consult-change').textContent = 'Total selesai';
+    document.getElementById('articles-change').textContent = 'Artikel aktif';
+  } catch (e) {
+    console.error('Stats error:', e);
+  }
+
+  // 3. Load recent consultations
+  try {
+    const snap = await VFirebase.db.collection('consultations')
+      .orderBy('startTime', 'desc')
+      .limit(5)
+      .get();
+
+    const tbody = document.getElementById('consult-tbody');
+
+    if (snap.empty) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">Belum ada konsultasi</td></tr>';
+      return;
+    }
+
+    const statusChip = {
+      completed: '<span class="neu-chip-primary" style="font-size:0.65rem;">Selesai</span>',
+      active:    '<span class="neu-chip-info" style="font-size:0.65rem;background:var(--info-bg);color:var(--info);">Aktif</span>',
+      pending:   '<span class="neu-chip-warning" style="font-size:0.65rem;">Pending</span>',
+    };
+
+    tbody.innerHTML = snap.docs.map(doc => {
+      const c = doc.data();
+      const patientName = c.patientName || c.patientId || '—';
+      const doctorName  = c.doctorName  || c.doctorId  || '—';
+      const type        = c.type        || '—';
+      const status      = c.status      || 'pending';
+      const chip        = statusChip[status] || statusChip['pending'];
+      return `<tr>
+        <td>${patientName}</td>
+        <td>${doctorName}</td>
+        <td>${type}</td>
+        <td>${chip}</td>
+      </tr>`;
+    }).join('');
+  } catch (e) {
+    console.error('Consultations error:', e);
+    document.getElementById('consult-tbody').innerHTML =
+      '<tr><td colspan="4" style="text-align:center;color:var(--danger);padding:20px;">Gagal memuat data</td></tr>';
+  }
+})();
+</script>
+</body>
+</html>

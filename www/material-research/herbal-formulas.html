@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traditional Herbal Formulas — HerboraTech Evidence Portal</title>
+  <link rel="stylesheet" href="../../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    :root {
+      --primary-herbal: #27AE60;
+      --primary-herbal-dark: #1E8449;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f0fdf4 0%, #e8f5e9 100%);
+    }
+
+    .mobile-frame {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 480px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #f0fdf4 0%, #e8f5e9 100%);
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      color: #fff;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(13, 43, 26, 0.2);
+    }
+
+    .app-header .header-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      flex: 1;
+      text-align: center;
+    }
+
+    .app-header .neu-icon-btn {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .app-header .neu-icon-btn:active {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .content-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .content-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .content-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .content-scroll::-webkit-scrollbar-thumb {
+      background: rgba(39, 174, 96, 0.3);
+      border-radius: 3px;
+    }
+
+    .indication-header {
+      background: rgba(39, 174, 96, 0.08);
+      border-left: 4px solid var(--primary-herbal);
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+    }
+
+    .indication-header h2 {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--primary-herbal);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .neu-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(39, 174, 96, 0.1);
+      border-top: 3px solid var(--primary-herbal);
+    }
+
+    .formula-name {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .formula-meta {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+
+    .badge-empirical { background: #E3F2FD; color: #1565C0; }
+    .badge-verified { background: #E8F5E9; color: #2E7D32; }
+
+    .ingredients-list {
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .ingredients-list h3 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    .ingredient-item {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 3px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .prep-method {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .dosage-box {
+      background: rgba(39, 174, 96, 0.05);
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--primary-herbal-dark);
+      font-weight: 600;
+    }
+
+    .warning-box {
+      background: #FFEBEE;
+      color: #C62828;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      margin-top: 6px;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .warning-box ion-icon {
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    [data-animate] {
+      opacity: 0;
+      animation: slideUp 0.5s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer-spacer {
+      height: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="window.history.back()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="header-title">Herbal Formulas</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="content-scroll">
+
+    <div class="indication-header" data-animate="up" data-delay="0">
+      <h2><ion-icon name="heart-outline"></ion-icon> Anti-Lipid (Kolesterol)</h2>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="50">
+      <div class="formula-name">Ramuan Belimbing Wuluh</div>
+      <div class="formula-meta">
+        <span class="badge badge-empirical">EMPIRIS</span>
+        <span class="badge">RESEP #518</span>
+      </div>
+      <div class="ingredients-list">
+        <h3>Bahan</h3>
+        <div class="ingredient-item"><span>Belimbing Wuluh</span> <span>3 buah</span></div>
+      </div>
+      <div class="prep-method">Iris tipis-tipis. Rebus dengan 1 gelas air 15 menit. Angkat & dinginkan.</div>
+      <div class="dosage-box">Minum sekaligus. 2x sehari.</div>
+      <div class="warning-box">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <span>Dilarang untuk penderita maag atau kencing batu.</span>
+      </div>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="100">
+      <div class="formula-name">Jus Avokad Murni</div>
+      <div class="formula-meta">
+        <span class="badge badge-empirical">EMPIRIS</span>
+        <span class="badge">RESEP #519</span>
+      </div>
+      <div class="ingredients-list">
+        <h3>Bahan</h3>
+        <div class="ingredient-item"><span>Buah Avokad Masak</span> <span>150g</span></div>
+      </div>
+      <div class="prep-method">Pilih avokad masak. Blender daging buah dengan air secukupnya menjadi jus kental.</div>
+      <div class="dosage-box">Konsumsi jus setiap hari tanpa gula.</div>
+      <div class="warning-box">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <span>JANGAN tambahkan gula pasir (increase trigliserida).</span>
+      </div>
+    </div>
+
+    <div class="indication-header" data-animate="up" data-delay="150">
+      <h2><ion-icon name="speedometer-outline"></ion-icon> Anti-Hypertension (Hipertensi)</h2>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="200">
+      <div class="formula-name">Ramuan Bawang Putih</div>
+      <div class="formula-meta">
+        <span class="badge badge-empirical">EMPIRIS</span>
+        <span class="badge">RESEP #522</span>
+      </div>
+      <div class="ingredients-list">
+        <h3>Bahan</h3>
+        <div class="ingredient-item"><span>Bawang Putih</span> <span>2 siung</span></div>
+      </div>
+      <div class="prep-method">Iris tipis, buat bulatan kecil atau tumbuk kasar.</div>
+      <div class="dosage-box">Telan dengan nasi. 2x sehari.</div>
+      <div class="warning-box">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <span>Jangan berlebihan (mual atau iritasi lambung).</span>
+      </div>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="250">
+      <div class="formula-name">Sari Labu Siam</div>
+      <div class="formula-meta">
+        <span class="badge badge-empirical">EMPIRIS</span>
+        <span class="badge">RESEP #523</span>
+      </div>
+      <div class="ingredients-list">
+        <h3>Bahan</h3>
+        <div class="ingredient-item"><span>Labu Siam Sedang</span> <span>1 buah</span></div>
+      </div>
+      <div class="prep-method">Kupas kulit, potong kecil. Blender & saring untuk memisahkan sari.</div>
+      <div class="dosage-box">Minum air sarinya sekaligus. Setiap hari.</div>
+      <div class="warning-box">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <span>Penderita maag & reumatik dilarang.</span>
+      </div>
+    </div>
+
+    <div class="indication-header" data-animate="up" data-delay="300">
+      <h2><ion-icon name="water-outline"></ion-icon> Anti-Diabetes (Gula Darah)</h2>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="350">
+      <div class="formula-name">Rebusan Biji Avokad</div>
+      <div class="formula-meta">
+        <span class="badge badge-empirical">EMPIRIS</span>
+        <span class="badge">RESEP #195</span>
+      </div>
+      <div class="ingredients-list">
+        <h3>Bahan</h3>
+        <div class="ingredient-item"><span>Biji Avokad</span> <span>1 buah</span></div>
+      </div>
+      <div class="prep-method">Panggang biji avokad, potong kecil-kecil. Rebus hingga air berwarna cokelat. Saring.</div>
+      <div class="dosage-box">Minum pagi 30 menit sebelum makan. 2x sehari.</div>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="400">
+      <div class="formula-name">Ramuan Biji Buncis</div>
+      <div class="formula-meta">
+        <span class="badge badge-empirical">EMPIRIS</span>
+        <span class="badge">RESEP #197</span>
+      </div>
+      <div class="ingredients-list">
+        <h3>Bahan</h3>
+        <div class="ingredient-item"><span>Biji Buncis</span> <span>120g</span></div>
+      </div>
+      <div class="prep-method">Rebus biji buncis dengan 3 gelas air hingga tersisa 1 gelas. Dinginkan & saring.</div>
+      <div class="dosage-box">Minum 2x sehari, masing-masing 1/2 gelas.</div>
+    </div>
+
+    <div class="indication-header" data-animate="up" data-delay="450">
+      <h2><ion-icon name="medkit-outline"></ion-icon> Liver Support (Lemak Hati)</h2>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="500">
+      <div class="formula-name">Ramuan Pegagan</div>
+      <div class="formula-meta">
+        <span class="badge badge-empirical">EMPIRIS</span>
+        <span class="badge">RESEP #332</span>
+      </div>
+      <div class="ingredients-list">
+        <h3>Bahan</h3>
+        <div class="ingredient-item"><span>Herba Pegagan Segar</span> <span>30-60g</span></div>
+      </div>
+      <div class="prep-method">Rebus dalam 3 gelas air hingga sisa 1.5 gelas. Bagi 3 bagian.</div>
+      <div class="dosage-box">Minum pagi hari saat perut kosong.</div>
+    </div>
+
+    <div class="indication-header" data-animate="up" data-delay="550">
+      <h2><ion-icon name="git-compare-outline"></ion-icon> Metabolic Balance (Asam Urat)</h2>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="600">
+      <div class="formula-name">Ramuan Tempuyung</div>
+      <div class="formula-meta">
+        <span class="badge badge-empirical">EMPIRIS</span>
+        <span class="badge">RESEP #4</span>
+      </div>
+      <div class="ingredients-list">
+        <h3>Bahan</h3>
+        <div class="ingredient-item"><span>Herba Tempuyung Segar</span> <span>15-60g</span></div>
+      </div>
+      <div class="prep-method">Rebus herba dengan 3 gelas air hingga sisa 1 gelas. Saring.</div>
+      <div class="dosage-box">Minum 2x sehari, masing-masing 1/2 gelas.</div>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="650">
+      <div class="formula-name">Ramuan Meniran</div>
+      <div class="formula-meta">
+        <span class="badge badge-empirical">EMPIRIS</span>
+        <span class="badge">RESEP #6</span>
+      </div>
+      <div class="ingredients-list">
+        <h3>Bahan</h3>
+        <div class="ingredient-item"><span>Herba Meniran Segar</span> <span>30-60g</span></div>
+      </div>
+      <div class="prep-method">Cuci bersih & rebus herba secukupnya. Saring airnya.</div>
+      <div class="dosage-box">Minum air rebusan sekaligus.</div>
+      <div class="warning-box">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <span>Jangan berlebihan (dapat memicu disfungsi ereksi).</span>
+      </div>
+    </div>
+
+    <div class="footer-spacer"></div>
+
+  </div>
+
+</div>
+
+<script src="../../shared/app.js"></script>
+</body>
+</html>

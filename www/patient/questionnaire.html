@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Kuesioner Evaluasi</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
+  <style>
+    /* === COLOR SCHEME === */
+    :root {
+      --q-tam: #2F80ED;
+      --q-tam-dark: #1A5276;
+      --q-sus: #27AE60;
+      --q-sus-dark: #1B7A3D;
+      --q-ux: #6C63FF;
+      --q-ux-dark: #4A42B0;
+    }
+
+    /* === HEADER === */
+    .app-header {
+      background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12); box-shadow: none;
+      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .page-title { color: #fff; font-size: 1.0rem; font-weight: 700; }
+
+    /* === SECTION TABS (TAM / SUS / UX) === */
+    .section-tabs {
+      display: flex; gap: 0; background: var(--bg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      position: sticky; top: 64px; z-index: 25;
+      border-bottom: 1px solid var(--shadow-dark);
+    }
+    .section-tab {
+      flex: 1; text-align: center; padding: 12px 6px 10px; cursor: pointer;
+      font-size: 0.7rem; font-weight: 600; color: var(--text-tertiary);
+      border-bottom: 3px solid transparent; transition: all 0.3s;
+      position: relative;
+    }
+    .section-tab.active { color: var(--text-primary); }
+    .section-tab.active[data-section="tam"] { border-bottom-color: var(--q-tam); color: var(--q-tam); }
+    .section-tab.active[data-section="sus"] { border-bottom-color: var(--q-sus); color: var(--q-sus); }
+    .section-tab.active[data-section="ux"] { border-bottom-color: var(--q-ux); color: var(--q-ux); }
+    .section-tab.done::after {
+      content: '✓'; position: absolute; top: 4px; right: 8px;
+      font-size: 0.6rem; font-weight: 800; color: #27AE60;
+      background: rgba(39,174,96,0.12); width: 16px; height: 16px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    }
+    .section-tab .tab-label { display: block; font-size: 0.72rem; font-weight: 700; }
+    .section-tab .tab-sub { display: block; font-size: 0.58rem; font-weight: 500; margin-top: 1px; opacity: 0.7; }
+
+    /* === STEP PROGRESS === */
+    .step-progress-bar {
+      background: var(--bg);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      padding: 14px 16px 10px;
+      position: sticky; top: 118px; z-index: 20;
+    }
+    .step-dots { display: flex; align-items: center; justify-content: center; gap: 0; }
+    .step-dot {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 2px solid var(--shadow-dark); background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 700; color: var(--text-tertiary);
+      transition: all 0.3s; flex-shrink: 0;
+    }
+    .step-dot.past { color: #fff; }
+    .step-dot.current { color: #fff; border-color: transparent; transform: scale(1.12); }
+    .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 18px; min-width: 4px; }
+
+    .step-info { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+    .step-title-text { font-size: 0.76rem; font-weight: 700; }
+    .step-counter { font-size: 0.66rem; color: var(--text-tertiary); }
+
+    /* === CONTENT PANES === */
+    .q-section { display: none; }
+    .q-section.active { display: block; }
+    .step-pane { display: none; }
+    .step-pane.active { display: block; animation: fadeIn 0.35s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* === BOTTOM BUTTON === */
+    .confirm-btn-wrap {
+      position: sticky; bottom: 0; background: var(--bg);
+      border-top: 1px solid var(--shadow-dark); padding: 12px 20px; z-index: 30;
+    }
+    .btn-proceed {
+      color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
+      font-family: var(--font); font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .btn-proceed:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* === LIKERT === */
+    .likert-question {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 16px;
+      padding: 16px; margin-bottom: 12px;
+    }
+    .likert-question .q-text {
+      font-size: 0.82rem; font-weight: 600; color: var(--text-primary);
+      margin-bottom: 10px; line-height: 1.5;
+    }
+    .likert-question .q-number { font-size: 0.65rem; font-weight: 700; margin-bottom: 5px; }
+    .likert-question .q-note { font-size: 0.68rem; color: var(--text-tertiary); font-style: italic; margin-bottom: 8px; }
+    .likert-options { display: flex; flex-direction: column; gap: 7px; }
+    .likert-opt {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 10px; padding: 9px 12px;
+      cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
+      font-size: 0.76rem; font-weight: 500; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .likert-opt .radio-circle {
+      width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--shadow-dark);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .likert-opt.selected .radio-circle::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+
+    /* TAM colors */
+    .q-section[data-section="tam"] .q-number { color: var(--q-tam); }
+    .q-section[data-section="tam"] .likert-opt.selected { border-color: var(--q-tam); background: rgba(47,128,237,0.05); color: var(--q-tam-dark); font-weight: 600; }
+    .q-section[data-section="tam"] .likert-opt.selected .radio-circle { border-color: var(--q-tam); background: var(--q-tam); }
+    .q-section[data-section="tam"] .step-dot.past { background: var(--q-tam); border-color: var(--q-tam); }
+    .q-section[data-section="tam"] .step-dot.current { background: linear-gradient(135deg, var(--q-tam-dark), var(--q-tam)); box-shadow: 0 3px 10px rgba(47,128,237,0.35); }
+    .q-section[data-section="tam"] .step-line.done { background: var(--q-tam); }
+    .q-section[data-section="tam"] .step-title-text { color: var(--q-tam); }
+
+    /* SUS colors */
+    .q-section[data-section="sus"] .q-number { color: var(--q-sus); }
+    .q-section[data-section="sus"] .likert-opt.selected { border-color: var(--q-sus); background: rgba(39,174,96,0.05); color: var(--q-sus-dark); font-weight: 600; }
+    .q-section[data-section="sus"] .likert-opt.selected .radio-circle { border-color: var(--q-sus); background: var(--q-sus); }
+    .q-section[data-section="sus"] .step-dot.past { background: var(--q-sus); border-color: var(--q-sus); }
+    .q-section[data-section="sus"] .step-dot.current { background: linear-gradient(135deg, var(--q-sus-dark), var(--q-sus)); box-shadow: 0 3px 10px rgba(39,174,96,0.35); }
+    .q-section[data-section="sus"] .step-line.done { background: var(--q-sus); }
+    .q-section[data-section="sus"] .step-title-text { color: var(--q-sus); }
+
+    /* UX colors */
+    .q-section[data-section="ux"] .q-number { color: var(--q-ux); }
+    .q-section[data-section="ux"] .likert-opt.selected { border-color: var(--q-ux); background: rgba(108,99,255,0.05); color: var(--q-ux-dark); font-weight: 600; }
+    .q-section[data-section="ux"] .likert-opt.selected .radio-circle { border-color: var(--q-ux); background: var(--q-ux); }
+    .q-section[data-section="ux"] .step-dot.past { background: var(--q-ux); border-color: var(--q-ux); }
+    .q-section[data-section="ux"] .step-dot.current { background: linear-gradient(135deg, var(--q-ux-dark), var(--q-ux)); box-shadow: 0 3px 10px rgba(108,99,255,0.35); }
+    .q-section[data-section="ux"] .step-line.done { background: var(--q-ux); }
+    .q-section[data-section="ux"] .step-title-text { color: var(--q-ux); }
+
+    /* === MISC === */
+    .intro-card {
+      border-radius: 14px; padding: 18px; margin-bottom: 16px;
+    }
+    .intro-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; }
+    .intro-card p { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.6; }
+
+    .dimension-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+      padding: 10px 14px; border-radius: 12px;
+    }
+    .dimension-header ion-icon { font-size: 1.2rem; }
+    .dimension-header span { font-size: 0.84rem; font-weight: 700; }
+
+    .overall-progress {
+      padding: 0 20px 0; display: flex; align-items: center; gap: 10px;
+    }
+    .overall-bar { flex: 1; height: 6px; background: var(--shadow-dark); border-radius: 3px; overflow: hidden; }
+    .overall-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--q-tam), var(--q-sus), var(--q-ux)); transition: width 0.4s ease; }
+    .overall-label { font-size: 0.68rem; font-weight: 700; color: var(--text-tertiary); min-width: 50px; text-align: right; }
+
+    /* === RESULT === */
+    .result-card { text-align: center; padding: 24px 16px; }
+    .result-icon { font-size: 3rem; margin-bottom: 12px; }
+
+    .final-scores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+    .score-card {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 14px;
+      padding: 16px 10px; text-align: center;
+    }
+    .score-card .sc-label { font-size: 0.68rem; font-weight: 700; color: var(--text-tertiary); margin-bottom: 4px; }
+    .score-card .sc-value { font-size: 1.6rem; font-weight: 800; }
+    .score-card .sc-max { font-size: 0.62rem; color: var(--text-muted); }
+
+    .detail-section { margin-top: 16px; }
+    .detail-section .ds-title {
+      font-size: 0.82rem; font-weight: 700; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ds-bar-row {
+      display: flex; align-items: center; gap: 10px; padding: 8px 0;
+      border-bottom: 1px solid rgba(200,208,231,0.5); font-size: 0.76rem;
+    }
+    .ds-bar-row:last-child { border-bottom: none; }
+    .ds-bar-label { min-width: 55px; font-weight: 500; color: var(--text-secondary); }
+    .ds-bar { flex: 1; height: 6px; background: var(--shadow-dark); border-radius: 3px; overflow: hidden; }
+    .ds-bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+    .ds-bar-val { min-width: 40px; text-align: right; font-weight: 700; font-size: 0.74rem; }
+
+    .textarea-wrap { margin-top: 14px; }
+    .textarea-wrap label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .textarea-wrap textarea {
+      width: 100%; min-height: 80px; border: none; border-radius: 14px;
+      background: var(--bg); box-shadow: var(--shadow-in); padding: 12px;
+      font-family: var(--font); font-size: 0.8rem; color: var(--text-primary);
+      resize: vertical; outline: none;
+    }
+    .textarea-wrap textarea::placeholder { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div class="page-title">Kuesioner Evaluasi</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <!-- SECTION TABS -->
+  <div class="section-tabs">
+    <div class="section-tab active" data-section="tam" onclick="switchSection('tam')">
+      <span class="tab-label">TAM</span>
+      <span class="tab-sub">Penerimaan Teknologi</span>
+    </div>
+    <div class="section-tab" data-section="sus" onclick="switchSection('sus')">
+      <span class="tab-label">SUS</span>
+      <span class="tab-sub">Usability</span>
+    </div>
+    <div class="section-tab" data-section="ux" onclick="switchSection('ux')">
+      <span class="tab-label">UX</span>
+      <span class="tab-sub">User Experience</span>
+    </div>
+  </div>
+
+  <!-- OVERALL PROGRESS -->
+  <div class="overall-progress" style="padding-top:12px;">
+    <div class="overall-bar"><div class="overall-bar-fill" id="overall-fill" style="width:0%"></div></div>
+    <span class="overall-label" id="overall-label">0 / 46</span>
+  </div>
+
+  <!-- ============ TAM SECTION ============ -->
+  <div class="q-section active" data-section="tam">
+    <div class="step-progress-bar">
+      <div class="step-dots" id="tam-step-dots"></div>
+      <div class="step-info">
+        <span class="step-title-text" id="tam-step-title">Pendahuluan</span>
+        <span class="step-counter" id="tam-step-counter">1 / 5</span>
+      </div>
+    </div>
+
+    <!-- TAM Step 1: Intro -->
+    <div class="step-pane active" data-section="tam" data-step="1">
+      <div class="section">
+        <div class="intro-card" style="background:linear-gradient(135deg,rgba(47,128,237,0.08),rgba(47,128,237,0.02));border-left:4px solid var(--q-tam);">
+          <h3 style="color:var(--q-tam-dark);">Bagian 1: Technology Acceptance Model (TAM)</h3>
+          <p>Mengukur tingkat penerimaan Anda terhadap teknologi HerboraTech melalui <strong>4 dimensi</strong>: Perceived Usefulness, Perceived Ease of Use, Attitude, dan Behavioral Intention.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="neu-card-sm" style="text-align:center;padding:14px 10px;">
+            <ion-icon name="bulb-outline" style="font-size:1.4rem;color:var(--q-tam);"></ion-icon>
+            <div style="font-size:0.7rem;font-weight:600;margin-top:6px;">PU</div>
+            <div style="font-size:0.58rem;color:var(--text-tertiary);">Kegunaan</div>
+          </div>
+          <div class="neu-card-sm" style="text-align:center;padding:14px 10px;">
+            <ion-icon name="hand-left-outline" style="font-size:1.4rem;color:#27AE60;"></ion-icon>
+            <div style="font-size:0.7rem;font-weight:600;margin-top:6px;">PEOU</div>
+            <div style="font-size:0.58rem;color:var(--text-tertiary);">Kemudahan</div>
+          </div>
+          <div class="neu-card-sm" style="text-align:center;padding:14px 10px;">
+            <ion-icon name="heart-outline" style="font-size:1.4rem;color:#F2994A;"></ion-icon>
+            <div style="font-size:0.7rem;font-weight:600;margin-top:6px;">ATU</div>
+            <div style="font-size:0.58rem;color:var(--text-tertiary);">Sikap</div>
+          </div>
+          <div class="neu-card-sm" style="text-align:center;padding:14px 10px;">
+            <ion-icon name="rocket-outline" style="font-size:1.4rem;color:#9B51E0;"></ion-icon>
+            <div style="font-size:0.7rem;font-weight:600;margin-top:6px;">BI</div>
+            <div style="font-size:0.58rem;color:var(--text-tertiary);">Niat Penggunaan</div>
+          </div>
+        </div>
+        <div class="neu-card-sm" style="margin-top:12px;background:rgba(47,128,237,0.04);border:1px dashed rgba(47,128,237,0.3);">
+          <p style="font-size:0.72rem;color:var(--text-tertiary);text-align:center;margin:0;">16 pertanyaan &bull; Skala Likert 1-5</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAM Step 2: PU -->
+    <div class="step-pane" data-section="tam" data-step="2">
+      <div class="section">
+        <div class="dimension-header" style="background:rgba(47,128,237,0.06);">
+          <ion-icon name="bulb-outline" style="color:var(--q-tam);"></ion-icon>
+          <span style="color:var(--q-tam-dark);">Perceived Usefulness (PU)</span>
+        </div>
+        <div class="likert-question" data-q="pu1"><div class="q-number">1 / 4</div><div class="q-text">Menggunakan HerboraTech membantu saya memantau kesehatan dengan lebih efektif.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="pu2"><div class="q-number">2 / 4</div><div class="q-text">HerboraTech meningkatkan kemampuan saya dalam mengelola data kesehatan pribadi.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="pu3"><div class="q-number">3 / 4</div><div class="q-text">HerboraTech mempercepat proses konsultasi kesehatan dibandingkan cara konvensional.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="pu4"><div class="q-number">4 / 4</div><div class="q-text">Secara keseluruhan, HerboraTech berguna untuk mendukung kesehatan saya.</div><div class="likert-options"></div></div>
+      </div>
+    </div>
+
+    <!-- TAM Step 3: PEOU -->
+    <div class="step-pane" data-section="tam" data-step="3">
+      <div class="section">
+        <div class="dimension-header" style="background:rgba(39,174,96,0.06);">
+          <ion-icon name="hand-left-outline" style="color:#27AE60;"></ion-icon>
+          <span style="color:var(--q-sus-dark);">Perceived Ease of Use (PEOU)</span>
+        </div>
+        <div class="likert-question" data-q="peou1"><div class="q-number">1 / 4</div><div class="q-text">Saya merasa mudah mempelajari cara menggunakan aplikasi HerboraTech.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="peou2"><div class="q-number">2 / 4</div><div class="q-text">Navigasi dan menu di HerboraTech mudah dipahami dan digunakan.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="peou3"><div class="q-number">3 / 4</div><div class="q-text">Saya dapat menggunakan fitur-fitur HerboraTech tanpa memerlukan bantuan teknis.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="peou4"><div class="q-number">4 / 4</div><div class="q-text">Secara keseluruhan, HerboraTech mudah digunakan oleh siapa saja.</div><div class="likert-options"></div></div>
+      </div>
+    </div>
+
+    <!-- TAM Step 4: ATU + BI -->
+    <div class="step-pane" data-section="tam" data-step="4">
+      <div class="section">
+        <div class="dimension-header" style="background:rgba(242,153,74,0.06);">
+          <ion-icon name="heart-outline" style="color:#F2994A;"></ion-icon>
+          <span style="color:#D68910;">Attitude Toward Using (ATU)</span>
+        </div>
+        <div class="likert-question" data-q="atu1"><div class="q-number">1 / 4</div><div class="q-text">Saya merasa senang menggunakan aplikasi HerboraTech untuk kesehatan saya.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="atu2"><div class="q-number">2 / 4</div><div class="q-text">Menggunakan HerboraTech merupakan pengalaman yang positif bagi saya.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="atu3"><div class="q-number">3 / 4</div><div class="q-text">Menggunakan HerboraTech adalah keputusan yang baik untuk kesehatan saya.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="atu4"><div class="q-number">4 / 4</div><div class="q-text">Saya merasa nyaman dan aman menggunakan fitur-fitur di HerboraTech.</div><div class="likert-options"></div></div>
+
+        <div style="height:14px"></div>
+
+        <div class="dimension-header" style="background:rgba(155,81,224,0.06);">
+          <ion-icon name="rocket-outline" style="color:#9B51E0;"></ion-icon>
+          <span style="color:#6C3483;">Behavioral Intention (BI)</span>
+        </div>
+        <div class="likert-question" data-q="bi1"><div class="q-number">1 / 4</div><div class="q-text">Saya berniat untuk terus menggunakan HerboraTech di masa depan.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="bi2"><div class="q-number">2 / 4</div><div class="q-text">Saya akan merekomendasikan HerboraTech kepada keluarga dan teman.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="bi3"><div class="q-number">3 / 4</div><div class="q-text">Saya berencana menggunakan HerboraTech secara rutin untuk memantau kesehatan.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="bi4"><div class="q-number">4 / 4</div><div class="q-text">Saya bersedia menggunakan fitur-fitur baru yang akan ditambahkan ke HerboraTech.</div><div class="likert-options"></div></div>
+      </div>
+    </div>
+
+    <!-- TAM Step 5: Done placeholder (auto-advance) -->
+    <div class="step-pane" data-section="tam" data-step="5">
+      <div class="section" style="text-align:center;padding:40px 20px;">
+        <div style="font-size:3rem;">✅</div>
+        <h3 style="color:var(--q-tam);margin-top:12px;">Bagian TAM Selesai!</h3>
+        <p style="font-size:0.8rem;color:var(--text-tertiary);">Lanjutkan ke bagian SUS untuk mengukur usability.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SUS SECTION ============ -->
+  <div class="q-section" data-section="sus">
+    <div class="step-progress-bar">
+      <div class="step-dots" id="sus-step-dots"></div>
+      <div class="step-info">
+        <span class="step-title-text" id="sus-step-title">Pendahuluan</span>
+        <span class="step-counter" id="sus-step-counter">1 / 4</span>
+      </div>
+    </div>
+
+    <!-- SUS Step 1: Intro -->
+    <div class="step-pane active" data-section="sus" data-step="1">
+      <div class="section">
+        <div class="intro-card" style="background:linear-gradient(135deg,rgba(39,174,96,0.08),rgba(39,174,96,0.02));border-left:4px solid var(--q-sus);">
+          <h3 style="color:var(--q-sus-dark);">Bagian 2: System Usability Scale (SUS)</h3>
+          <p>Metode standar industri untuk mengukur <strong>usability</strong>. Terdiri dari 10 pertanyaan — beberapa bernada negatif (ditandai *). Skor akhir: 0-100.</p>
+        </div>
+        <div class="neu-card-sm" style="background:rgba(39,174,96,0.04);border:1px dashed rgba(39,174,96,0.3);">
+          <p style="font-size:0.72rem;color:var(--text-tertiary);text-align:center;margin:0;">10 pertanyaan &bull; Skor ≥ 68 = di atas rata-rata</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUS Step 2: Q1-5 -->
+    <div class="step-pane" data-section="sus" data-step="2">
+      <div class="section">
+        <div class="likert-question" data-q="sus1"><div class="q-number">1 / 10</div><div class="q-text">Saya rasa saya akan sering menggunakan HerboraTech.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="sus2"><div class="q-number">2 / 10</div><div class="q-text">Saya merasa HerboraTech terlalu kompleks dan tidak perlu.</div><div class="q-note">* Pertanyaan negatif</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="sus3"><div class="q-number">3 / 10</div><div class="q-text">Saya rasa HerboraTech mudah digunakan.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="sus4"><div class="q-number">4 / 10</div><div class="q-text">Saya rasa saya memerlukan bantuan teknis untuk menggunakan HerboraTech.</div><div class="q-note">* Pertanyaan negatif</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="sus5"><div class="q-number">5 / 10</div><div class="q-text">Saya merasa berbagai fungsi di HerboraTech terintegrasi dengan baik.</div><div class="likert-options"></div></div>
+      </div>
+    </div>
+
+    <!-- SUS Step 3: Q6-10 -->
+    <div class="step-pane" data-section="sus" data-step="3">
+      <div class="section">
+        <div class="likert-question" data-q="sus6"><div class="q-number">6 / 10</div><div class="q-text">Saya merasa terlalu banyak inkonsistensi dalam HerboraTech.</div><div class="q-note">* Pertanyaan negatif</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="sus7"><div class="q-number">7 / 10</div><div class="q-text">Saya rasa kebanyakan orang akan cepat belajar menggunakan HerboraTech.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="sus8"><div class="q-number">8 / 10</div><div class="q-text">Saya merasa HerboraTech sangat rumit untuk digunakan.</div><div class="q-note">* Pertanyaan negatif</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="sus9"><div class="q-number">9 / 10</div><div class="q-text">Saya merasa percaya diri saat menggunakan HerboraTech.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="sus10"><div class="q-number">10 / 10</div><div class="q-text">Saya perlu belajar banyak hal sebelum bisa menggunakan HerboraTech.</div><div class="q-note">* Pertanyaan negatif</div><div class="likert-options"></div></div>
+      </div>
+    </div>
+
+    <!-- SUS Step 4: Done -->
+    <div class="step-pane" data-section="sus" data-step="4">
+      <div class="section" style="text-align:center;padding:40px 20px;">
+        <div style="font-size:3rem;">✅</div>
+        <h3 style="color:var(--q-sus);margin-top:12px;">Bagian SUS Selesai!</h3>
+        <p style="font-size:0.8rem;color:var(--text-tertiary);">Lanjutkan ke bagian UX — penilaian terakhir.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ UX SECTION ============ -->
+  <div class="q-section" data-section="ux">
+    <div class="step-progress-bar">
+      <div class="step-dots" id="ux-step-dots"></div>
+      <div class="step-info">
+        <span class="step-title-text" id="ux-step-title">Pendahuluan</span>
+        <span class="step-counter" id="ux-step-counter">1 / 6</span>
+      </div>
+    </div>
+
+    <!-- UX Step 1: Intro -->
+    <div class="step-pane active" data-section="ux" data-step="1">
+      <div class="section">
+        <div class="intro-card" style="background:linear-gradient(135deg,rgba(108,99,255,0.08),rgba(108,99,255,0.02));border-left:4px solid var(--q-ux);">
+          <h3 style="color:var(--q-ux-dark);">Bagian 3: Penilaian User Experience</h3>
+          <p>Menilai pengalaman Anda secara menyeluruh mencakup 5 dimensi: Visual Design, Navigasi, Konten, Kepuasan, dan Kepercayaan. Termasuk feedback terbuka.</p>
+        </div>
+        <div class="neu-card-sm" style="background:rgba(108,99,255,0.04);border:1px dashed rgba(108,99,255,0.3);">
+          <p style="font-size:0.72rem;color:var(--text-tertiary);text-align:center;margin:0;">20 pertanyaan + feedback opsional</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- UX Step 2: Visual + Navigasi -->
+    <div class="step-pane" data-section="ux" data-step="2">
+      <div class="section">
+        <div class="dimension-header" style="background:rgba(108,99,255,0.06);">
+          <ion-icon name="eye-outline" style="color:var(--q-ux);"></ion-icon>
+          <span style="color:var(--q-ux-dark);">Visual Design</span>
+        </div>
+        <div class="likert-question" data-q="vd1"><div class="q-number">1 / 4</div><div class="q-text">Tampilan visual HerboraTech menarik dan modern.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="vd2"><div class="q-number">2 / 4</div><div class="q-text">Penggunaan warna dan ikon memudahkan saya memahami informasi.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="vd3"><div class="q-number">3 / 4</div><div class="q-text">Tata letak halaman terorganisir dengan rapi.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="vd4"><div class="q-number">4 / 4</div><div class="q-text">Ukuran teks dan elemen nyaman untuk dibaca dan digunakan.</div><div class="likert-options"></div></div>
+
+        <div style="height:14px"></div>
+
+        <div class="dimension-header" style="background:rgba(47,128,237,0.06);">
+          <ion-icon name="navigate-outline" style="color:#2F80ED;"></ion-icon>
+          <span style="color:var(--q-tam-dark);">Navigasi & Interaksi</span>
+        </div>
+        <div class="likert-question" data-q="nav1"><div class="q-number">1 / 4</div><div class="q-text">Saya dapat menemukan fitur yang dibutuhkan dengan mudah.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="nav2"><div class="q-number">2 / 4</div><div class="q-text">Alur navigasi antar halaman terasa logis dan intuitif.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="nav3"><div class="q-number">3 / 4</div><div class="q-text">Aplikasi merespon interaksi saya dengan cepat dan lancar.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="nav4"><div class="q-number">4 / 4</div><div class="q-text">Menu dan tombol memiliki label yang jelas dan mudah dipahami.</div><div class="likert-options"></div></div>
+      </div>
+    </div>
+
+    <!-- UX Step 3: Konten -->
+    <div class="step-pane" data-section="ux" data-step="3">
+      <div class="section">
+        <div class="dimension-header" style="background:rgba(39,174,96,0.06);">
+          <ion-icon name="document-text-outline" style="color:#27AE60;"></ion-icon>
+          <span style="color:var(--q-sus-dark);">Konten & Informasi</span>
+        </div>
+        <div class="likert-question" data-q="ci1"><div class="q-number">1 / 4</div><div class="q-text">Informasi kesehatan yang disajikan mudah dipahami.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="ci2"><div class="q-number">2 / 4</div><div class="q-text">Data vital sign dan grafik ditampilkan dengan jelas dan informatif.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="ci3"><div class="q-number">3 / 4</div><div class="q-text">Konten edukasi (artikel, ensiklopedia, herbal) bermanfaat.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="ci4"><div class="q-number">4 / 4</div><div class="q-text">Notifikasi dan peringatan relevan dan tidak mengganggu.</div><div class="likert-options"></div></div>
+      </div>
+    </div>
+
+    <!-- UX Step 4: Kepuasan + Kepercayaan -->
+    <div class="step-pane" data-section="ux" data-step="4">
+      <div class="section">
+        <div class="dimension-header" style="background:rgba(242,153,74,0.06);">
+          <ion-icon name="happy-outline" style="color:#F2994A;"></ion-icon>
+          <span style="color:#D68910;">Kepuasan Pengguna</span>
+        </div>
+        <div class="likert-question" data-q="sat1"><div class="q-number">1 / 4</div><div class="q-text">Saya puas dengan pengalaman menggunakan HerboraTech secara keseluruhan.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="sat2"><div class="q-number">2 / 4</div><div class="q-text">Fitur konsultasi (chat, video call) memenuhi kebutuhan saya.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="sat3"><div class="q-number">3 / 4</div><div class="q-text">Fitur AI (AI Health, risk score) memberikan insight yang berharga.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="sat4"><div class="q-number">4 / 4</div><div class="q-text">HerboraTech memenuhi ekspektasi saya sebagai aplikasi kesehatan digital.</div><div class="likert-options"></div></div>
+
+        <div style="height:14px"></div>
+
+        <div class="dimension-header" style="background:rgba(235,87,87,0.06);">
+          <ion-icon name="shield-checkmark-outline" style="color:#EB5757;"></ion-icon>
+          <span style="color:#C0392B;">Kepercayaan & Keamanan</span>
+        </div>
+        <div class="likert-question" data-q="tr1"><div class="q-number">1 / 4</div><div class="q-text">Saya merasa data kesehatan saya aman di HerboraTech.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="tr2"><div class="q-number">2 / 4</div><div class="q-text">Saya percaya pada akurasi data vital sign yang ditampilkan.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="tr3"><div class="q-number">3 / 4</div><div class="q-text">Proses autentikasi membuat saya merasa terlindungi.</div><div class="likert-options"></div></div>
+        <div class="likert-question" data-q="tr4"><div class="q-number">4 / 4</div><div class="q-text">HerboraTech menjaga privasi informasi kesehatan saya.</div><div class="likert-options"></div></div>
+      </div>
+    </div>
+
+    <!-- UX Step 5: Feedback -->
+    <div class="step-pane" data-section="ux" data-step="5">
+      <div class="section">
+        <div class="dimension-header" style="background:rgba(108,99,255,0.06);">
+          <ion-icon name="chatbox-ellipses-outline" style="color:var(--q-ux);"></ion-icon>
+          <span style="color:var(--q-ux-dark);">Feedback Terbuka (Opsional)</span>
+        </div>
+        <div class="textarea-wrap">
+          <label>Apa fitur yang paling Anda sukai dari HerboraTech?</label>
+          <textarea id="fb-like" placeholder="Tulis jawaban Anda di sini..."></textarea>
+        </div>
+        <div class="textarea-wrap">
+          <label>Apa yang perlu diperbaiki atau ditingkatkan?</label>
+          <textarea id="fb-improve" placeholder="Tulis saran Anda di sini..."></textarea>
+        </div>
+        <div class="textarea-wrap">
+          <label>Fitur tambahan apa yang Anda harapkan?</label>
+          <textarea id="fb-feature" placeholder="Tulis ide Anda di sini..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- UX Step 6: Final Result (hidden, auto) -->
+    <div class="step-pane" data-section="ux" data-step="6"></div>
+  </div>
+
+  <!-- ============ FINAL RESULT (shown after all 3 done) ============ -->
+  <div class="q-section" data-section="result" style="display:none;">
+    <div class="section">
+      <div class="neu-card result-card">
+        <div class="result-icon">🏆</div>
+        <h3 style="margin-bottom:4px;">Terima Kasih!</h3>
+        <p style="font-size:0.78rem;color:var(--text-tertiary);">Evaluasi Anda telah selesai. Berikut ringkasan hasil:</p>
+      </div>
+
+      <!-- 3 Score Cards -->
+      <div class="final-scores">
+        <div class="score-card" style="border-top:3px solid var(--q-tam);">
+          <div class="sc-label">TAM</div>
+          <div class="sc-value" style="color:var(--q-tam);" id="final-tam">0</div>
+          <div class="sc-max">/ 80</div>
+        </div>
+        <div class="score-card" style="border-top:3px solid var(--q-sus);">
+          <div class="sc-label">SUS</div>
+          <div class="sc-value" style="color:var(--q-sus);" id="final-sus">0</div>
+          <div class="sc-max">/ 100</div>
+        </div>
+        <div class="score-card" style="border-top:3px solid var(--q-ux);">
+          <div class="sc-label">UX</div>
+          <div class="sc-value" style="color:var(--q-ux);" id="final-ux">0</div>
+          <div class="sc-max">/ 100</div>
+        </div>
+      </div>
+
+      <!-- TAM Detail -->
+      <div class="neu-card detail-section" style="margin-top:16px;">
+        <div class="ds-title"><ion-icon name="analytics-outline" style="color:var(--q-tam);"></ion-icon> TAM — Penerimaan Teknologi</div>
+        <div class="ds-bar-row"><span class="ds-bar-label">PU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-pu" style="width:0%;background:var(--q-tam);"></div></div><span class="ds-bar-val" style="color:var(--q-tam);" id="r-val-pu">0/20</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">PEOU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-peou" style="width:0%;background:#27AE60;"></div></div><span class="ds-bar-val" style="color:#27AE60;" id="r-val-peou">0/20</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">ATU</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-atu" style="width:0%;background:#F2994A;"></div></div><span class="ds-bar-val" style="color:#F2994A;" id="r-val-atu">0/20</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">BI</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-bi" style="width:0%;background:#9B51E0;"></div></div><span class="ds-bar-val" style="color:#9B51E0;" id="r-val-bi">0/20</span></div>
+        <div id="tam-interp" style="margin-top:10px;font-size:0.76rem;color:var(--text-secondary);line-height:1.5;"></div>
+      </div>
+
+      <!-- SUS Detail -->
+      <div class="neu-card detail-section" style="margin-top:12px;">
+        <div class="ds-title"><ion-icon name="checkmark-done-circle-outline" style="color:var(--q-sus);"></ion-icon> SUS — Usability</div>
+        <div style="text-align:center;margin:10px 0;">
+          <div style="font-size:2rem;font-weight:800;color:var(--q-sus);" id="r-sus-score">0</div>
+          <div style="font-size:0.7rem;color:var(--text-tertiary);">dari 100 &bull; <span id="r-sus-grade">-</span></div>
+        </div>
+        <div style="height:14px;border-radius:7px;overflow:hidden;background:linear-gradient(90deg,#EB5757 0%,#F2994A 25%,#F2C94C 50%,#27AE60 75%,#2F80ED 100%);position:relative;">
+          <div id="r-sus-marker" style="position:absolute;top:-2px;width:4px;height:18px;background:var(--text-primary);border-radius:2px;left:0%;transition:left 0.8s ease;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.58rem;color:var(--text-muted);margin-top:4px;">
+          <span>0</span><span>25</span><span>50</span><span>68</span><span>80</span><span>100</span>
+        </div>
+        <div id="sus-interp" style="margin-top:10px;font-size:0.76rem;color:var(--text-secondary);line-height:1.5;"></div>
+      </div>
+
+      <!-- UX Detail -->
+      <div class="neu-card detail-section" style="margin-top:12px;">
+        <div class="ds-title"><ion-icon name="sparkles-outline" style="color:var(--q-ux);"></ion-icon> UX — User Experience</div>
+        <div class="ds-bar-row"><span class="ds-bar-label">Visual</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-vd" style="width:0%;background:var(--q-ux);"></div></div><span class="ds-bar-val" style="color:var(--q-ux);" id="r-val-vd">0%</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">Navigasi</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-nav" style="width:0%;background:#2F80ED;"></div></div><span class="ds-bar-val" style="color:#2F80ED;" id="r-val-nav">0%</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">Konten</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-ci" style="width:0%;background:#27AE60;"></div></div><span class="ds-bar-val" style="color:#27AE60;" id="r-val-ci">0%</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">Kepuasan</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-sat" style="width:0%;background:#F2994A;"></div></div><span class="ds-bar-val" style="color:#F2994A;" id="r-val-sat">0%</span></div>
+        <div class="ds-bar-row"><span class="ds-bar-label">Trust</span><div class="ds-bar"><div class="ds-bar-fill" id="r-bar-tr" style="width:0%;background:#EB5757;"></div></div><span class="ds-bar-val" style="color:#EB5757;" id="r-val-tr">0%</span></div>
+        <div id="ux-interp" style="margin-top:10px;font-size:0.76rem;color:var(--text-secondary);line-height:1.5;"></div>
+      </div>
+
+      <button class="neu-btn neu-btn-block" style="margin-top:20px;background:linear-gradient(135deg,#1A1A2E,#0F3460);color:#fff;padding:14px;font-weight:700;" onclick="nav('home.html')">
+        <ion-icon name="home-outline"></ion-icon> Kembali ke Beranda
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTTOM BUTTON -->
+  <div class="confirm-btn-wrap" id="btn-wrap">
+    <button class="btn-proceed" id="btn-next" onclick="handleNext()" style="background:linear-gradient(135deg,var(--q-tam-dark),var(--q-tam));">
+      Mulai Kuesioner <ion-icon name="arrow-forward-outline"></ion-icon>
+    </button>
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+// ===== CONFIG =====
+const SECTIONS = {
+  tam: { steps: 5, titles: ['Pendahuluan','Perceived Usefulness','Perceived Ease of Use','Attitude & Intention','TAM Selesai'] },
+  sus: { steps: 4, titles: ['Pendahuluan','Pertanyaan 1-5','Pertanyaan 6-10','SUS Selesai'] },
+  ux:  { steps: 6, titles: ['Pendahuluan','Visual & Navigasi','Konten & Informasi','Kepuasan & Kepercayaan','Feedback Terbuka','Hasil Akhir'] }
+};
+const SECTION_ORDER = ['tam','sus','ux'];
+const SECTION_COLORS = {
+  tam: { grad: 'linear-gradient(135deg,var(--q-tam-dark),var(--q-tam))' },
+  sus: { grad: 'linear-gradient(135deg,var(--q-sus-dark),var(--q-sus))' },
+  ux:  { grad: 'linear-gradient(135deg,var(--q-ux-dark),var(--q-ux))' }
+};
+const LIKERT_LABELS = ['Sangat Tidak Setuju','Tidak Setuju','Netral','Setuju','Sangat Setuju'];
+const TOTAL_QUESTIONS = 46;
+
+let currentSection = 'tam';
+let currentSteps = { tam: 1, sus: 1, ux: 1 };
+let answers = {};
+let completedSections = new Set();
+
+// ===== INIT LIKERT OPTIONS =====
+document.querySelectorAll('.likert-question').forEach(q => {
+  const qId = q.dataset.q;
+  const optDiv = q.querySelector('.likert-options');
+  LIKERT_LABELS.forEach((label, i) => {
+    const opt = document.createElement('div');
+    opt.className = 'likert-opt';
+    opt.innerHTML = `<div class="radio-circle"></div><span>${i+1}. ${label}</span>`;
+    opt.onclick = () => {
+      q.querySelectorAll('.likert-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      answers[qId] = i + 1;
+      updateOverallProgress();
+      checkCanProceed();
+    };
+    optDiv.appendChild(opt);
+  });
+});
+
+// ===== SECTION SWITCHING =====
+function switchSection(sec) {
+  currentSection = sec;
+  document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.section-tab[data-section="${sec}"]`).classList.add('active');
+  document.querySelectorAll('.q-section').forEach(s => s.classList.remove('active'));
+  document.querySelector(`.q-section[data-section="${sec}"]`).classList.add('active');
+  renderStepDots(sec);
+  updateBtnStyle();
+  checkCanProceed();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== STEP DOTS =====
+function renderStepDots(sec) {
+  const totalSteps = SECTIONS[sec].steps;
+  const step = currentSteps[sec];
+  const container = document.getElementById(`${sec}-step-dots`);
+  if (!container) return;
+  let html = '';
+  for (let i = 1; i <= totalSteps; i++) {
+    const cls = i < step ? 'past' : i === step ? 'current' : '';
+    html += `<div class="step-dot ${cls}">${i}</div>`;
+    if (i < totalSteps) html += `<div class="step-line ${i < step ? 'done' : ''}"></div>`;
+  }
+  container.innerHTML = html;
+  const titleEl = document.getElementById(`${sec}-step-title`);
+  const counterEl = document.getElementById(`${sec}-step-counter`);
+  if (titleEl) titleEl.textContent = SECTIONS[sec].titles[step - 1];
+  if (counterEl) counterEl.textContent = `${step} / ${totalSteps}`;
+}
+
+// ===== BUTTON STYLE =====
+function updateBtnStyle() {
+  const btn = document.getElementById('btn-next');
+  btn.style.background = SECTION_COLORS[currentSection].grad;
+
+  const sec = currentSection;
+  const step = currentSteps[sec];
+  const maxStep = SECTIONS[sec].steps;
+
+  if (step === 1) {
+    btn.innerHTML = 'Mulai <ion-icon name="arrow-forward-outline"></ion-icon>';
+  } else if (step === maxStep) {
+    // "done" step — advance to next section or show results
+    const idx = SECTION_ORDER.indexOf(sec);
+    if (idx < SECTION_ORDER.length - 1) {
+      const next = SECTION_ORDER[idx + 1];
+      const labels = { sus: 'Lanjut ke SUS', ux: 'Lanjut ke UX' };
+      btn.innerHTML = `${labels[next]} <ion-icon name="arrow-forward-outline"></ion-icon>`;
+      btn.style.background = SECTION_COLORS[next].grad;
+    } else {
+      btn.innerHTML = 'Lihat Hasil Akhir <ion-icon name="trophy-outline"></ion-icon>';
+      btn.style.background = 'linear-gradient(135deg,#1A1A2E,#0F3460)';
+    }
+  } else if (sec === 'ux' && step === 5) {
+    btn.innerHTML = 'Selesai & Lihat Hasil <ion-icon name="arrow-forward-outline"></ion-icon>';
+  } else {
+    btn.innerHTML = 'Lanjut <ion-icon name="arrow-forward-outline"></ion-icon>';
+  }
+}
+
+// ===== CHECK CAN PROCEED =====
+function checkCanProceed() {
+  const btn = document.getElementById('btn-next');
+  const sec = currentSection;
+  const step = currentSteps[sec];
+  const maxStep = SECTIONS[sec].steps;
+
+  // Intro and done steps always allowed
+  if (step === 1 || step === maxStep) { btn.disabled = false; return; }
+  // Feedback step (ux step 5) always allowed
+  if (sec === 'ux' && step === 5) { btn.disabled = false; return; }
+
+  const pane = document.querySelector(`.step-pane[data-section="${sec}"][data-step="${step}"]`);
+  if (!pane) { btn.disabled = false; return; }
+  const questions = pane.querySelectorAll('.likert-question');
+  btn.disabled = ![...questions].every(q => answers[q.dataset.q]);
+}
+
+// ===== OVERALL PROGRESS =====
+function updateOverallProgress() {
+  const answered = Object.keys(answers).length;
+  const pct = Math.round((answered / TOTAL_QUESTIONS) * 100);
+  document.getElementById('overall-fill').style.width = `${pct}%`;
+  document.getElementById('overall-label').textContent = `${answered} / ${TOTAL_QUESTIONS}`;
+}
+
+// ===== HANDLE NEXT =====
+function handleNext() {
+  const sec = currentSection;
+  const step = currentSteps[sec];
+  const maxStep = SECTIONS[sec].steps;
+
+  if (step < maxStep) {
+    // Advance within section
+    currentSteps[sec]++;
+    const newStep = currentSteps[sec];
+    document.querySelectorAll(`.step-pane[data-section="${sec}"]`).forEach(p => p.classList.remove('active'));
+    const nextPane = document.querySelector(`.step-pane[data-section="${sec}"][data-step="${newStep}"]`);
+    if (nextPane) nextPane.classList.add('active');
+    renderStepDots(sec);
+    updateBtnStyle();
+    checkCanProceed();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    // Section done — move to next section or show results
+    completedSections.add(sec);
+    document.querySelector(`.section-tab[data-section="${sec}"]`).classList.add('done');
+
+    const idx = SECTION_ORDER.indexOf(sec);
+    if (idx < SECTION_ORDER.length - 1) {
+      switchSection(SECTION_ORDER[idx + 1]);
+    } else {
+      showFinalResults();
+    }
+  }
+}
+
+// ===== FINAL RESULTS =====
+function showFinalResults() {
+  // Hide tabs, progress, button
+  document.querySelector('.section-tabs').style.display = 'none';
+  document.querySelector('.overall-progress').style.display = 'none';
+  document.getElementById('btn-wrap').style.display = 'none';
+  document.querySelectorAll('.q-section').forEach(s => s.classList.remove('active'));
+  document.querySelector('.q-section[data-section="result"]').style.display = 'block';
+
+  // === TAM ===
+  const tamDims = { pu: 0, peou: 0, atu: 0, bi: 0 };
+  for (const [k, v] of Object.entries(answers)) {
+    const dim = k.replace(/\d+/, '');
+    if (tamDims[dim] !== undefined) tamDims[dim] += v;
+  }
+  const tamTotal = tamDims.pu + tamDims.peou + tamDims.atu + tamDims.bi;
+  document.getElementById('final-tam').textContent = tamTotal;
+
+  ['pu','peou','atu','bi'].forEach(d => {
+    document.getElementById(`r-val-${d}`).textContent = `${tamDims[d]}/20`;
+    setTimeout(() => { document.getElementById(`r-bar-${d}`).style.width = `${(tamDims[d]/20)*100}%`; }, 300);
+  });
+
+  const tamPct = (tamTotal / 80) * 100;
+  const tamInterp = document.getElementById('tam-interp');
+  if (tamPct >= 80) tamInterp.innerHTML = '<strong style="color:var(--q-tam);">Penerimaan sangat tinggi.</strong> Anda sangat menerima teknologi HerboraTech.';
+  else if (tamPct >= 60) tamInterp.innerHTML = '<strong style="color:#27AE60;">Penerimaan baik.</strong> Ada ruang peningkatan pada beberapa aspek.';
+  else if (tamPct >= 40) tamInterp.innerHTML = '<strong style="color:#F2994A;">Penerimaan cukup.</strong> Perlu evaluasi kegunaan dan kemudahan.';
+  else tamInterp.innerHTML = '<strong style="color:#EB5757;">Penerimaan rendah.</strong> Masukan Anda sangat berharga untuk perbaikan.';
+
+  // === SUS ===
+  let susSum = 0;
+  for (let i = 1; i <= 10; i++) {
+    const raw = answers[`sus${i}`] || 3;
+    susSum += (i % 2 === 1) ? (raw - 1) : (5 - raw);
+  }
+  const susScore = Math.round(susSum * 2.5);
+  document.getElementById('final-sus').textContent = susScore;
+  document.getElementById('r-sus-score').textContent = susScore;
+  setTimeout(() => { document.getElementById('r-sus-marker').style.left = `${Math.min(susScore,100)}%`; }, 300);
+
+  let susGrade;
+  if (susScore >= 85) susGrade = 'Grade A — Excellent';
+  else if (susScore >= 72) susGrade = 'Grade B — Good';
+  else if (susScore >= 68) susGrade = 'Grade C — OK';
+  else if (susScore >= 51) susGrade = 'Grade D — Poor';
+  else susGrade = 'Grade F — Awful';
+  document.getElementById('r-sus-grade').textContent = susGrade;
+
+  const susInterp = document.getElementById('sus-interp');
+  if (susScore >= 68) susInterp.innerHTML = `<strong style="color:var(--q-sus);">Skor ${susScore} — di atas rata-rata industri.</strong> Usability HerboraTech baik.`;
+  else susInterp.innerHTML = `<strong style="color:#F2994A;">Skor ${susScore} — di bawah rata-rata.</strong> Beberapa aspek usability perlu diperbaiki.`;
+
+  // === UX ===
+  const uxDims = {
+    vd: { keys: ['vd1','vd2','vd3','vd4'], total: 0, barId: 'r-bar-vd', valId: 'r-val-vd' },
+    nav: { keys: ['nav1','nav2','nav3','nav4'], total: 0, barId: 'r-bar-nav', valId: 'r-val-nav' },
+    ci: { keys: ['ci1','ci2','ci3','ci4'], total: 0, barId: 'r-bar-ci', valId: 'r-val-ci' },
+    sat: { keys: ['sat1','sat2','sat3','sat4'], total: 0, barId: 'r-bar-sat', valId: 'r-val-sat' },
+    tr: { keys: ['tr1','tr2','tr3','tr4'], total: 0, barId: 'r-bar-tr', valId: 'r-val-tr' }
+  };
+  let uxGrand = 0;
+  for (const [, dim] of Object.entries(uxDims)) {
+    dim.total = dim.keys.reduce((s, k) => s + (answers[k] || 0), 0);
+    uxGrand += dim.total;
+    const pct = Math.round((dim.total / 20) * 100);
+    document.getElementById(dim.valId).textContent = `${pct}%`;
+    setTimeout(() => { document.getElementById(dim.barId).style.width = `${pct}%`; }, 300);
+  }
+  const uxPct = Math.round((uxGrand / 100) * 100);
+  document.getElementById('final-ux').textContent = uxPct;
+
+  const uxInterp = document.getElementById('ux-interp');
+  if (uxPct >= 85) uxInterp.innerHTML = '<strong style="color:var(--q-ux);">UX Excellent!</strong> Pengalaman pengguna luar biasa di semua dimensi.';
+  else if (uxPct >= 70) uxInterp.innerHTML = '<strong style="color:#27AE60;">UX Baik.</strong> Pengalaman positif dengan ruang peningkatan.';
+  else if (uxPct >= 50) uxInterp.innerHTML = '<strong style="color:#F2994A;">UX Cukup.</strong> Beberapa dimensi perlu perhatian khusus.';
+  else uxInterp.innerHTML = '<strong style="color:#EB5757;">UX Perlu Perbaikan.</strong> Masukan Anda sangat berharga.';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== INIT =====
+SECTION_ORDER.forEach(sec => renderStepDots(sec));
+updateBtnStyle();
+checkCanProceed();
+updateOverallProgress();
+</script>
+</body>
+</html>

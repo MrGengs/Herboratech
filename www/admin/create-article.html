@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Buat Artikel</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .article-layout { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 24px; align-items: start; }
+    @media (min-width: 900px) { .article-layout { grid-template-columns: 1fr 300px; } }
+    .form-group { margin-bottom: 20px; }
+    .form-label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 8px; }
+
+    .title-input { width: 100%; border: none; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 14px 18px; font-family: 'Poppins', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--text-primary); outline: none; box-sizing: border-box; }
+    .title-input::placeholder { color: var(--text-muted); font-weight: 400; }
+
+    .neu-select { width: 100%; border: none; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 12px 16px; font-family: 'Poppins', sans-serif; font-size: 0.88rem; color: var(--text-primary); outline: none; box-sizing: border-box; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7B8D' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+
+    .tags-input { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 14px; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); min-height: 46px; align-items: center; cursor: text; }
+    .tag-chip { background: rgba(111,207,151,0.15); color: var(--primary-dark); font-size: 0.78rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; }
+    .tag-chip span { cursor: pointer; opacity: 0.6; }
+    .tag-chip span:hover { opacity: 1; }
+    .tag-text-input { border: none; background: transparent; outline: none; font-family: 'Poppins', sans-serif; font-size: 0.85rem; color: var(--text-primary); min-width: 80px; }
+
+    .wysiwyg-toolbar { display: flex; gap: 4px; padding: 10px 12px; border-radius: 12px 12px 0 0; box-shadow: var(--shadow-out-sm); background: var(--bg); flex-wrap: wrap; }
+    .toolbar-btn { border: none; background: transparent; border-radius: 6px; padding: 5px 10px; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; font-family: 'Poppins', sans-serif; }
+    .toolbar-btn:hover { background: rgba(111,207,151,0.12); color: var(--primary-dark); }
+    .toolbar-separator { width: 1px; background: var(--shadow-dark); margin: 2px 4px; }
+
+    .content-textarea { width: 100%; border: none; border-radius: 0 0 12px 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 16px; font-family: 'Poppins', sans-serif; font-size: 0.9rem; color: var(--text-primary); resize: vertical; min-height: 300px; outline: none; box-sizing: border-box; line-height: 1.7; }
+
+    .drop-zone { border: 2px dashed rgba(111,207,151,0.4); border-radius: 14px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .drop-zone:hover { border-color: var(--primary-dark); }
+    .drop-zone ion-icon { font-size: 2rem; color: var(--primary-dark); }
+    .drop-zone p { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 6px; }
+
+    .excerpt-textarea { width: 100%; border: none; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 12px 16px; font-family: 'Poppins', sans-serif; font-size: 0.85rem; color: var(--text-primary); resize: vertical; min-height: 80px; outline: none; box-sizing: border-box; }
+
+    .bottom-actions { display: flex; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--shadow-dark); flex-wrap: wrap; }
+    @media (max-width: 640px) {
+      .neu-card [style*="grid-template-columns:1fr 1fr"],
+      .neu-card [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+      .bottom-actions button { flex: 1 1 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item active" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+
+    <div class="admin-topbar" data-animate="up">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <h1>Buat Artikel</h1>
+        <span class="neu-chip" style="background:var(--warning-bg);color:var(--warning);font-size:0.78rem;font-weight:600;">
+          <ion-icon name="document-outline" style="vertical-align:middle;margin-right:3px;"></ion-icon>Draft
+        </span>
+      </div>
+      <div class="header-actions">
+        <button class="neu-btn neu-btn-sm" onclick="nav('news.html')"><ion-icon name="arrow-back-outline"></ion-icon> Kembali</button>
+      </div>
+    </div>
+
+    <div class="article-layout">
+
+      <!-- Left: Main Content -->
+      <div data-animate="up" data-delay="100">
+        <div class="neu-card" style="padding:28px;">
+
+          <div class="form-group">
+            <label class="form-label">Judul Artikel</label>
+            <input class="title-input" id="article-title" type="text" placeholder="Masukkan judul artikel yang menarik...">
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="form-group">
+              <label class="form-label">Kategori</label>
+              <select class="neu-select" id="article-category">
+                <option value="">Pilih kategori...</option>
+                <option value="Kesehatan">Kesehatan</option>
+                <option value="Herbal">Herbal</option>
+                <option value="Gaya Hidup">Gaya Hidup</option>
+                <option value="AIoT">AIoT</option>
+                <option value="Teknologi">Teknologi</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tags</label>
+              <div class="tags-input" id="tags-container" onclick="document.getElementById('tag-input').focus()">
+                <div class="tag-chip">kesehatan <span onclick="removeTag(this)">×</span></div>
+                <div class="tag-chip">tips <span onclick="removeTag(this)">×</span></div>
+                <input class="tag-text-input" id="tag-input" placeholder="Tambah tag..." onkeydown="handleTagInput(event)">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Konten Artikel</label>
+            <div class="wysiwyg-toolbar">
+              <button class="toolbar-btn" style="font-weight:800;" onclick="showToast('Format Bold diterapkan','info')">B</button>
+              <button class="toolbar-btn" style="font-style:italic;" onclick="showToast('Format Italic diterapkan','info')">I</button>
+              <button class="toolbar-btn" style="text-decoration:underline;" onclick="showToast('Format Underline diterapkan','info')">U</button>
+              <div class="toolbar-separator"></div>
+              <button class="toolbar-btn" onclick="showToast('Format H1 diterapkan','info')">H1</button>
+              <button class="toolbar-btn" onclick="showToast('Format H2 diterapkan','info')">H2</button>
+              <div class="toolbar-separator"></div>
+              <button class="toolbar-btn" onclick="showToast('Tambah tautan','info')"><ion-icon name="link-outline" style="font-size:0.9rem;vertical-align:middle;"></ion-icon></button>
+              <button class="toolbar-btn" onclick="showToast('Upload gambar ke konten','info')"><ion-icon name="image-outline" style="font-size:0.9rem;vertical-align:middle;"></ion-icon></button>
+              <button class="toolbar-btn" onclick="showToast('Format list diterapkan','info')"><ion-icon name="list-outline" style="font-size:0.9rem;vertical-align:middle;"></ion-icon></button>
+              <button class="toolbar-btn" onclick="showToast('Format quote diterapkan','info')"><ion-icon name="chatbox-outline" style="font-size:0.9rem;vertical-align:middle;"></ion-icon></button>
+            </div>
+            <textarea class="content-textarea" id="article-body" placeholder="Mulai menulis konten artikel di sini...&#10;&#10;Gunakan toolbar di atas untuk memformat teks Anda."></textarea>
+          </div>
+
+        </div>
+
+        <div class="bottom-actions">
+          <button class="neu-btn" id="btn-draft" onclick="saveArticle('draft')">
+            <ion-icon name="save-outline"></ion-icon> Simpan Draft
+          </button>
+          <button class="neu-btn" id="btn-review" style="color:var(--warning);" onclick="saveArticle('review')">
+            <ion-icon name="paper-plane-outline"></ion-icon> Kirim untuk Review
+          </button>
+          <button class="neu-btn-primary" id="btn-publish" onclick="saveArticle('published')">
+            <ion-icon name="checkmark-circle-outline"></ion-icon> Publish
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar -->
+      <div data-animate="up" data-delay="200">
+        <div class="neu-card" style="padding:20px;">
+          <div style="font-weight:700;margin-bottom:16px;font-size:0.9rem;">Pengaturan Artikel</div>
+
+          <div class="form-group">
+            <label class="form-label">Upload Gambar Utama</label>
+            <div class="drop-zone" onclick="showToast('Pilih gambar utama artikel.','info')">
+              <ion-icon name="image-outline"></ion-icon>
+              <p>Drag &amp; drop atau <strong style="color:var(--primary-dark);">pilih file</strong></p>
+              <p style="font-size:0.72rem;margin-top:2px;">JPG, PNG, WebP — maks. 5MB</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Assigned Reviewer</label>
+            <select class="neu-select">
+              <option>Pilih reviewer...</option>
+              <option>dr. Sarah Wijaya</option>
+              <option>dr. Andi Rahmat</option>
+              <option>Tim Editorial</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Tanggal Publish</label>
+            <input class="neu-input" type="date" id="article-publish-date" value="2026-03-25">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Excerpt / Ringkasan</label>
+            <textarea class="excerpt-textarea" id="article-excerpt" placeholder="Tulis ringkasan singkat artikel (maks. 160 karakter)..."></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+let _currentUser = null;
+let _currentProfile = null;
+
+function handleTagInput(e) {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const val = e.target.value.trim().replace(',', '');
+    if (val) {
+      const chip = document.createElement('div');
+      chip.className = 'tag-chip';
+      chip.innerHTML = val + ' <span onclick="removeTag(this)">×</span>';
+      document.getElementById('tags-container').insertBefore(chip, e.target);
+      e.target.value = '';
+    }
+  }
+}
+
+function removeTag(el) {
+  el.closest('.tag-chip').remove();
+}
+
+function getTags() {
+  return Array.from(document.querySelectorAll('#tags-container .tag-chip'))
+    .map(c => c.textContent.replace('×', '').trim());
+}
+
+function setButtonsDisabled(disabled) {
+  ['btn-draft', 'btn-review', 'btn-publish'].forEach(id => {
+    document.getElementById(id).disabled = disabled;
+  });
+}
+
+async function saveArticle(status) {
+  const title    = document.getElementById('article-title').value.trim();
+  const body     = document.getElementById('article-body').value.trim();
+  const category = document.getElementById('article-category').value;
+  const excerpt  = document.getElementById('article-excerpt').value.trim();
+  const tags     = getTags();
+
+  if (!title) { showToast('Judul artikel wajib diisi.', 'warning'); return; }
+  if (!body)  { showToast('Konten artikel wajib diisi.', 'warning'); return; }
+
+  setButtonsDisabled(true);
+
+  const readTime = Math.max(1, Math.ceil(body.split(' ').length / 200));
+
+  const payload = {
+    title,
+    body,
+    category:  category || '',
+    tags,
+    excerpt,
+    status,
+    readTime,
+    author: {
+      id:   _currentUser.uid,
+      name: _currentProfile.name || 'Admin'
+    }
+  };
+
+  if (status === 'published') {
+    payload.publishedAt = firebase.firestore.FieldValue.serverTimestamp();
+  }
+
+  try {
+    await VDB.createArticle(payload);
+
+    const msgs = {
+      draft:     'Artikel disimpan sebagai Draft.',
+      review:    'Artikel dikirim untuk direview.',
+      published: 'Artikel berhasil dipublish!'
+    };
+    const types = { draft: 'info', review: 'warning', published: 'success' };
+    showToast(msgs[status], types[status]);
+    setTimeout(() => nav('news.html'), 1500);
+  } catch (e) {
+    showToast('Gagal menyimpan: ' + e.message, 'error');
+    setButtonsDisabled(false);
+  }
+}
+
+(async () => {
+  const { user, profile } = await VAuth.guard('admin', 1);
+  if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+  _currentUser    = user;
+  _currentProfile = profile;
+})();
+</script>
+</body>
+</html>

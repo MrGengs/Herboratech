@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Ulasan Pasien</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0C2352 0%, #1D5DB5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
+
+    .rating-overview {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .rating-big {
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .rating-number {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .stars-row {
+      display: flex;
+      gap: 2px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+    .stars-row ion-icon { font-size: 1rem; color: #FFD54F; }
+    .rating-count {
+      font-size: 0.68rem;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+    }
+    .rating-bars { flex: 1; }
+    .rating-bar-row { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+    .rating-bar-label { font-size: 0.68rem; color: var(--text-tertiary); min-width: 20px; text-align: right; }
+    .rating-bar-track { flex: 1; height: 6px; border-radius: 3px; background: var(--bg); box-shadow: var(--shadow-in); overflow: hidden; }
+    .rating-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #FFD54F, #FFA000); }
+    .rating-bar-pct { font-size: 0.62rem; color: var(--text-muted); min-width: 28px; }
+
+    .review-card { background: var(--bg); border-radius: 16px; box-shadow: var(--shadow-out-sm); padding: 16px; margin-bottom: 14px; }
+    .review-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .review-info { flex: 1; }
+    .reviewer-name { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+    .review-date { font-size: 0.65rem; color: var(--text-muted); margin-top: 1px; }
+    .review-stars { display: flex; gap: 2px; margin-top: 3px; }
+    .review-stars ion-icon { font-size: 0.8rem; }
+    .review-comment { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px; }
+    .reply-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--info); font-weight: 600; background: none; border: none; font-family: 'Poppins', sans-serif; cursor: pointer; padding: 0; }
+    .reply-form { margin-top: 10px; display: none; }
+    .reply-form textarea { width: 100%; padding: 10px 12px; border-radius: 10px; border: none; background: var(--bg); box-shadow: var(--shadow-in); font-family: 'Poppins', sans-serif; font-size: 0.78rem; color: var(--text-primary); resize: none; box-sizing: border-box; }
+    .reply-form textarea:focus { outline: none; }
+    .reply-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+    .badge-type { font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+    .badge-chat { background: rgba(47,128,237,0.1); color: var(--info); }
+    .badge-video { background: rgba(108,99,255,0.1); color: var(--accent); }
+    .badge-integratif { background: rgba(111,207,151,0.12); color: var(--primary-dark); }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('profile.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;">Ulasan Pasien</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+
+    <!-- Rating Overview -->
+    <div class="neu-card" data-animate="up" style="padding:0;">
+      <div class="rating-overview">
+        <div class="rating-big">
+          <div class="rating-number">4.9</div>
+          <div class="stars-row">
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star-half"></ion-icon>
+          </div>
+          <div class="rating-count">238 ulasan total</div>
+        </div>
+        <div class="rating-bars">
+          <div class="rating-bar-row">
+            <div class="rating-bar-label">5★</div>
+            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:89%;"></div></div>
+            <div class="rating-bar-pct">89%</div>
+          </div>
+          <div class="rating-bar-row">
+            <div class="rating-bar-label">4★</div>
+            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:7%;background:linear-gradient(90deg,#90CAF9,#42A5F5);"></div></div>
+            <div class="rating-bar-pct">7%</div>
+          </div>
+          <div class="rating-bar-row">
+            <div class="rating-bar-label">3★</div>
+            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:2%;background:linear-gradient(90deg,#A5D6A7,#66BB6A);"></div></div>
+            <div class="rating-bar-pct">2%</div>
+          </div>
+          <div class="rating-bar-row">
+            <div class="rating-bar-label">2★</div>
+            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:1%;background:linear-gradient(90deg,#FFCC80,#FFA726);"></div></div>
+            <div class="rating-bar-pct">1%</div>
+          </div>
+          <div class="rating-bar-row">
+            <div class="rating-bar-label">1★</div>
+            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:1%;background:linear-gradient(90deg,#EF9A9A,#EF5350);"></div></div>
+            <div class="rating-bar-pct">1%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reviews List -->
+    <div class="section-header mt-20" data-animate="up" data-delay="100">
+      <div class="section-title">Ulasan Terbaru</div>
+    </div>
+
+    <!-- Reviews Container -->
+    <div id="reviewsContainer"></div>
+
+    <!-- Empty State -->
+    <div id="emptyState" style="text-align:center;padding:40px 20px;color:var(--text-muted);">
+      <ion-icon name="chatbubbles-outline" style="font-size:2rem;display:block;margin-bottom:8px;"></ion-icon>
+      <div style="font-size:0.85rem;">Belum ada ulasan dari pasien</div>
+    </div>
+
+    <!-- Load More Button -->
+    <button class="neu-btn neu-btn-block mt-8 mb-24" id="loadMoreBtn" data-animate="up" data-delay="260" onclick="loadMoreReviews()" style="display:none;">
+      <ion-icon name="chevron-down-outline"></ion-icon> Lihat Semua Ulasan
+    </button>
+
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+let currentDoctorId, reviewsLoaded = 0, allReviews = [];
+const REVIEWS_PER_PAGE = 5;
+
+const GRADIENTS = [
+  'linear-gradient(135deg,#2F80ED,#56CCF2)',
+  'linear-gradient(135deg,#EB5757,#FF8E8E)',
+  'linear-gradient(135deg,#F2994A,#F2C94C)',
+  'linear-gradient(135deg,#6C63FF,#9C8FFF)',
+  'linear-gradient(135deg,#27AE60,#52C76F)',
+  'linear-gradient(135deg,#FF6B6B,#FF8E53)',
+];
+
+const BADGE_TYPES = {
+  'chat': { class: 'badge-chat', label: 'Chat' },
+  'video': { class: 'badge-video', label: 'Video' },
+  'integrative': { class: 'badge-integratif', label: 'Integratif' },
+};
+
+function getInitials(name) {
+  return (name || 'DR').split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+}
+
+function renderStars(rating) {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5;
+  let s = '';
+  for (let i = 0; i < full; i++) s += '<ion-icon name="star" style="color:#FFD54F;"></ion-icon>';
+  if (half) s += '<ion-icon name="star-half" style="color:#FFD54F;"></ion-icon>';
+  for (let i = full + (half ? 1 : 0); i < 5; i++) s += '<ion-icon name="star-outline" style="color:#ccc;"></ion-icon>';
+  return s;
+}
+
+function toggleReply(id) {
+  const form = document.getElementById(id);
+  form.style.display = form.style.display === 'block' ? 'none' : 'block';
+}
+
+async function sendReply(id, reviewId) {
+  const form = document.getElementById(id);
+  const textarea = form.querySelector('textarea');
+  const reply = textarea.value.trim();
+
+  if (!reply) {
+    showToast('Balasan tidak boleh kosong', 'warning');
+    return;
+  }
+
+  form.querySelector('button:last-child').disabled = true;
+  form.querySelector('button:last-child').textContent = 'Mengirim...';
+
+  try {
+    await firebase.firestore().collection('reviews').doc(reviewId).update({
+      doctorReply: reply,
+      doctorReplyDate: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    showToast('Balasan berhasil dikirim', 'success');
+    form.style.display = 'none';
+    textarea.value = '';
+
+    // Reload reviews
+    await loadReviews(currentDoctorId);
+  } catch (e) {
+    console.error('Error sending reply:', e);
+    showToast('Gagal mengirim balasan', 'error');
+  } finally {
+    form.querySelector('button:last-child').disabled = false;
+    form.querySelector('button:last-child').textContent = 'Kirim';
+  }
+}
+
+function getConsultationType(type) {
+  return BADGE_TYPES[type] || BADGE_TYPES['chat'];
+}
+
+function createReviewCard(review, index) {
+  const gradient = GRADIENTS[index % GRADIENTS.length];
+  const initials = getInitials(review.patientName);
+  const badgeType = getConsultationType(review.consultType);
+  const reviewDate = review.createdAt ? new Date(review.createdAt.toDate()).toLocaleDateString('id-ID') : 'Baru-baru ini';
+  const replySection = review.doctorReply ? `
+    <div style="margin-top:10px;padding:10px;background:rgba(47,128,237,0.08);border-radius:8px;border-left:3px solid var(--info);">
+      <div style="font-size:0.72rem;font-weight:600;color:var(--info);margin-bottom:4px;">Balasan Anda:</div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);">${review.doctorReply}</div>
+    </div>
+  ` : '';
+
+  return `
+    <div class="review-card" data-animate="up" data-delay="${100 + index * 40}">
+      <div class="review-header">
+        <div class="neu-avatar" style="background:${gradient};flex-shrink:0;">${initials}</div>
+        <div class="review-info">
+          <div class="reviewer-name">${review.patientName}</div>
+          <div class="review-stars">${renderStars(review.rating)}</div>
+          <div class="review-date">${reviewDate}</div>
+        </div>
+        <span class="badge-type ${badgeType.class}">${badgeType.label}</span>
+      </div>
+      <div class="review-comment">"${review.comment}"</div>
+      ${!review.doctorReply ? `
+        <button class="reply-btn" onclick="toggleReply('r${review.id}')">
+          <ion-icon name="chatbubble-outline"></ion-icon> Balas
+        </button>
+        <div class="reply-form" id="r${review.id}">
+          <textarea rows="3" placeholder="Tulis balasan untuk ulasan ini..."></textarea>
+          <div class="reply-actions">
+            <button class="neu-btn neu-btn-sm" onclick="toggleReply('r${review.id}')">Batal</button>
+            <button class="neu-btn neu-btn-sm" style="background:linear-gradient(135deg,#2F80ED,#56CCF2);color:#fff;" onclick="sendReply('r${review.id}', '${review.id}')">Kirim</button>
+          </div>
+        </div>
+      ` : ''}
+      ${replySection}
+    </div>
+  `;
+}
+
+async function loadReviews(doctorId) {
+  const container = document.getElementById('reviewsContainer');
+  const emptyState = document.getElementById('emptyState');
+
+  try {
+    // Get all consultations for doctor with ratings
+    const consultations = await firebase.firestore()
+      .collection('consultations')
+      .where('doctorId', '==', doctorId)
+      .where('rating', '>', 0)
+      .orderBy('rating', 'desc')
+      .orderBy('createdAt', 'desc')
+      .get();
+
+    allReviews = [];
+
+    for (const doc of consultations.docs) {
+      const consult = doc.data();
+      if (consult.rating > 0 && consult.comment) {
+        const patientDoc = await firebase.firestore().collection('users').doc(consult.patientId).get();
+        allReviews.push({
+          id: doc.id,
+          rating: consult.rating,
+          comment: consult.comment,
+          createdAt: consult.createdAt,
+          patientName: patientDoc.exists && patientDoc.data() ? patientDoc.data().name : 'Pasien',
+          consultType: consult.consultType || 'chat',
+          doctorReply: consult.doctorReply || null,
+          doctorReplyDate: consult.doctorReplyDate || null
+        });
+      }
+    }
+
+    // Display reviews
+    if (allReviews.length === 0) {
+      emptyState.style.display = 'block';
+      container.innerHTML = '';
+    } else {
+      emptyState.style.display = 'none';
+      displayReviews(0, REVIEWS_PER_PAGE);
+    }
+
+    // Update rating stats
+    updateRatingStats(allReviews);
+
+  } catch (e) {
+    console.error('Error loading reviews:', e);
+    showToast('Gagal memuat ulasan', 'error');
+  }
+}
+
+function displayReviews(start, count) {
+  const container = document.getElementById('reviewsContainer');
+
+  for (let i = start; i < Math.min(start + count, allReviews.length); i++) {
+    container.insertAdjacentHTML('beforeend', createReviewCard(allReviews[i], i));
+  }
+
+  reviewsLoaded += count;
+
+  // Show load more button if there are more reviews
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  if (reviewsLoaded < allReviews.length) {
+    loadMoreBtn.style.display = 'block';
+  } else {
+    loadMoreBtn.style.display = 'none';
+  }
+}
+
+function loadMoreReviews() {
+  displayReviews(reviewsLoaded, REVIEWS_PER_PAGE);
+}
+
+function updateRatingStats(reviews) {
+  if (reviews.length === 0) return;
+
+  const avgRating = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
+  const totalReviews = reviews.length;
+
+  // Count by rating
+  const counts = [0, 0, 0, 0, 0];
+  reviews.forEach(r => counts[Math.floor(r.rating) - 1]++);
+
+  // Update UI
+  const ratingCard = document.querySelector('.rating-overview');
+  if (ratingCard) {
+    // Update rating number
+    const ratingNum = ratingCard.querySelector('.rating-number');
+    if (ratingNum) ratingNum.textContent = avgRating;
+
+    // Update rating count
+    const ratingCount = ratingCard.querySelector('.rating-count');
+    if (ratingCount) ratingCount.textContent = `${totalReviews} ulasan total`;
+
+    // Update rating bars
+    const bars = ratingCard.querySelectorAll('.rating-bar-row');
+    for (let i = 0; i < 5; i++) {
+      if (bars[i]) {
+        const pct = Math.round((counts[4 - i] / totalReviews) * 100);
+        const fill = bars[i].querySelector('.rating-bar-fill');
+        const pctEl = bars[i].querySelector('.rating-bar-pct');
+        if (fill) fill.style.width = pct + '%';
+        if (pctEl) pctEl.textContent = pct + '%';
+      }
+    }
+  }
+}
+
+// ── Firebase Auth Guard + Load Reviews ───────────────────────────────────
+(async () => {
+  const { user } = await VAuth.guard('doctor', 1);
+  currentDoctorId = user.uid;
+
+  try {
+    await loadReviews(currentDoctorId);
+  } catch (err) {
+    console.error('[Reviews] Error loading reviews:', err.message);
+    showToast('Gagal memuat ulasan', 'error');
+  }
+})();
+</script>
+</body>
+</html>

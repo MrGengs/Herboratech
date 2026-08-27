@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Menunggu Persetujuan</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg,#040E07 0%,#071A0F 40%,#0D2B1A 70%,#1A5C38 100%);
+      padding: 20px;
+    }
+    .pending-card {
+      background: rgba(228,235,245,0.97);
+      border-radius: 28px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+    .pending-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--warning-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 3rem;
+      color: var(--warning);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+    .pending-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .pending-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .status-box {
+      background: var(--bg);
+      box-shadow: var(--shadow-in);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      font-size: 0.85rem;
+    }
+    .status-row:not(:last-child) {
+      border-bottom: 1px solid var(--shadow-dark);
+    }
+    .status-label {
+      color: var(--text-tertiary);
+    }
+    .status-value {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .status-badge.pending {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+    .btn-row {
+      display: flex;
+      gap: 12px;
+    }
+    .btn-row button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      color: var(--text-secondary);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(39,174,96,0.35);
+    }
+    .btn-row button:hover {
+      transform: translateY(-2px);
+    }
+    .help-text {
+      margin-top: 20px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .help-text a {
+      color: var(--primary-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<div class="pending-card">
+  <div class="pending-icon">
+    <ion-icon name="hourglass-outline"></ion-icon>
+  </div>
+
+  <div class="pending-title">Menunggu Persetujuan</div>
+  <div class="pending-subtitle">
+    Permintaan role Anda sedang dalam proses verifikasi oleh Admin. Anda akan mendapat notifikasi setelah disetujui.
+  </div>
+
+  <div class="status-box">
+    <div class="status-row">
+      <span class="status-label">Akun</span>
+      <span class="status-value" id="userEmail">-</span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Role yang diminta</span>
+      <span class="status-value" id="requestedRole">-</span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Status</span>
+      <span class="status-badge pending" id="statusBadge">Menunggu</span>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-secondary" onclick="logout()">
+      <ion-icon name="log-out-outline"></ion-icon> Logout
+    </button>
+    <button class="btn-primary" onclick="checkStatus()">
+      <ion-icon name="refresh-outline"></ion-icon> Cek Status
+    </button>
+  </div>
+
+  <p class="help-text">
+    Ada pertanyaan? <a href="../company/contact.html">Hubungi kami</a>
+  </p>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  const roleNames = {
+    patient: 'Pasien',
+    doctor: 'Dokter',
+    admin: 'Admin'
+  };
+
+  async function checkStatus() {
+    const user = VFirebase.auth.currentUser;
+    if (!user) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    showToast('Memeriksa status...', 'info');
+
+    try {
+      const profile = await VAuth.getProfile(user.uid);
+
+      if (!profile) {
+        showToast('Profil tidak ditemukan', 'error');
+        return;
+      }
+
+      if (profile.roleStatus === 'approved') {
+        showToast('Role disetujui! Mengalihkan...', 'success');
+        setTimeout(() => {
+          VAuth.redirectByRole(profile.role, 1);
+        }, 1500);
+      } else if (profile.roleStatus === 'rejected') {
+        window.location.href = 'role-rejected.html';
+      } else {
+        showToast('Masih menunggu persetujuan', 'warning');
+      }
+    } catch (e) {
+      showToast('Gagal memeriksa: ' + e.message, 'error');
+    }
+  }
+
+  async function logout() {
+    await VFirebase.auth.signOut();
+    window.location.href = 'login.html';
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    VFirebase.auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      document.getElementById('userEmail').textContent = user.email || '-';
+
+      const profile = await VAuth.getProfile(user.uid);
+      if (profile) {
+        document.getElementById('requestedRole').textContent = roleNames[profile.requestedRole || profile.role] || '-';
+
+        // If already approved, redirect
+        if (profile.roleStatus === 'approved') {
+          VAuth.redirectByRole(profile.role, 1);
+        } else if (profile.roleStatus === 'rejected') {
+          window.location.href = 'role-rejected.html';
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>

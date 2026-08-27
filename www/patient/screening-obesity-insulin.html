@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Skrining Obesitas & Resistensi Insulin</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    :root {
+      --primary-obs: #6FCF97;
+      --primary-obs-dark: #219653;
+    }
+    .app-header {
+      background: linear-gradient(135deg, var(--primary-obs) 0%, #27AE60 100%);
+      box-shadow: 0 2px 16px rgba(111, 207, 151, 0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12); box-shadow: none;
+      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .page-title { color: #fff; font-size: 0.9rem; font-weight: 700; }
+
+    /* Progress bar */
+    .step-progress-bar {
+      background: var(--bg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 16px 16px 12px;
+      position: sticky;
+      top: 64px;
+      z-index: 20;
+    }
+    .step-dots { display: flex; align-items: center; justify-content: center; gap: 0; }
+    .step-dot {
+      width: 26px; height: 24px; border-radius: 50%;
+      border: 2px solid var(--shadow-dark); background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700; color: var(--text-tertiary);
+      transition: all 0.3s; flex-shrink: 0;
+    }
+    .step-dot.past { background: var(--primary-obs); color: #fff; border-color: var(--primary-obs); }
+    .step-dot.current {
+      background: linear-gradient(135deg, var(--primary-obs), #27AE60);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 12px rgba(111,207,151,0.4);
+      transform: scale(1.15);
+    }
+    .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
+    .step-line.done { background: var(--primary-obs); }
+    
+    .step-info { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+    .step-title-text { font-size: 0.8rem; font-weight: 700; color: var(--primary-obs-dark); }
+    .step-counter { font-size: 0.7rem; color: var(--text-tertiary); }
+
+    .step-pane { display: none; }
+    .step-pane.active { display: block; animation: fadeIn 0.4s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .confirm-btn-wrap {
+      position: sticky; bottom: 0; background: var(--bg);
+      border-top: 1px solid var(--shadow-dark); padding: 14px 20px; z-index: 30;
+    }
+    .btn-proceed {
+      background: linear-gradient(135deg, var(--primary-obs), #27AE60);
+      color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
+      font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
+      box-shadow: 0 6px 18px rgba(111,207,151,0.3);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+
+    .homa-box {
+      background: var(--bg); box-shadow: var(--shadow-in); border-radius: 16px; padding: 20px;
+      text-align: center; margin-bottom: 20px;
+    }
+    .homa-val { font-size: 2.2rem; font-weight: 800; color: var(--text-primary); }
+    .homa-lbl { font-size: 0.75rem; font-weight: 700; color: var(--primary-obs-dark); margin-top: 4px; }
+
+    .symptom-opt {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 12px; padding: 12px;
+      text-align: center; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
+    }
+    .symptom-opt.selected { border-color: var(--primary-obs); background: rgba(111,207,151,0.05); }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('disease-risk.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="page-title">Skrining Resistensi Insulin</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="step-progress-bar">
+    <div class="step-dots" id="stepDots"></div>
+    <div class="step-info">
+      <span class="step-title-text" id="stepTitleText">Step 1 — Antropometri</span>
+      <span class="step-counter" id="stepCounter">1 / 6</span>
+    </div>
+  </div>
+
+  <div style="flex:1;overflow-y:auto;padding-bottom:20px;">
+
+    <!-- STEP 1: Antropometri -->
+    <div id="step-1" class="step-pane active">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:800;margin-bottom:6px;">Komposisi Tubuh</h3>
+        <p style="font-size:0.78rem;color:var(--text-tertiary);margin-bottom:20px;">Lemak viseral adalah pemicu utama resistensi insulin.</p>
+
+        <div class="neu-card" data-animate="up">
+          <label class="neu-label">Berat Badan (kg)</label>
+          <input type="number" id="in-weight" class="neu-input" placeholder="70">
+        </div>
+
+        <div class="neu-card" style="margin-top:14px;" data-animate="up" data-delay="80">
+          <label class="neu-label">Tinggi Badan (cm)</label>
+          <input type="number" id="in-height" class="neu-input" placeholder="170">
+        </div>
+
+        <div class="neu-card" style="margin-top:14px;" data-animate="up" data-delay="160">
+          <label class="neu-label">Lingkar Pinggang (cm)</label>
+          <input type="number" id="in-waist" class="neu-input" placeholder="90">
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Clinical Signs -->
+    <div id="step-2" class="step-pane">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:800;margin-bottom:6px;">Tanda Klinis</h3>
+        <p style="font-size:0.78rem;color:var(--text-tertiary);margin-bottom:20px;">Tanda fisik yang sering muncul pada kondisi hiperinsulinemia.</p>
+
+        <div class="neu-card" data-animate="up">
+          <p style="font-size:0.85rem;font-weight:700;margin-bottom:12px;">Apakah Anda memiliki tanda berikut?</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="symptom-opt" onclick="toggleSymptom(this, 'acanthosis')">
+              <div style="font-size:1.4rem;">🌑</div>
+              <div style="font-size:0.7rem;font-weight:700;margin-top:4px;">Kulit Leher/Ketiak Gelap</div>
+            </div>
+            <div class="symptom-opt" onclick="toggleSymptom(this, 'skintags')">
+              <div style="font-size:1.4rem;">🏷️</div>
+              <div style="font-size:0.7rem;font-weight:700;margin-top:4px;">Skin Tags (Kutil Kulit)</div>
+            </div>
+            <div class="symptom-opt" onclick="toggleSymptom(this, 'fatigue')">
+              <div style="font-size:1.4rem;">🥱</div>
+              <div style="font-size:0.7rem;font-weight:700;margin-top:4px;">Mengantuk Berat Usai Makan</div>
+            </div>
+            <div class="symptom-opt" onclick="toggleSymptom(this, 'cravings')">
+              <div style="font-size:1.4rem;">🍩</div>
+              <div style="font-size:0.7rem;font-weight:700;margin-top:4px;">Sering Ingin Makan Manis</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Activity -->
+    <div id="step-3" class="step-pane">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:800;margin-bottom:6px;">Aktivitas Fisik</h3>
+        <p style="font-size:0.78rem;color:var(--text-tertiary);margin-bottom:20px;">Otot adalah pembuangan glukosa terbesar dalam tubuh.</p>
+
+        <div class="neu-card" data-animate="up">
+          <label class="neu-label">Latihan Beban / Otot per Minggu</label>
+          <div class="radio-group" style="margin-top:10px;display:grid;gap:8px;">
+            <div class="radio-opt" onclick="selectRadio(this, 'resistance', 0)">>= 3 Kali</div>
+            <div class="radio-opt" onclick="selectRadio(this, 'resistance', 1)">1 - 2 Kali</div>
+            <div class="radio-opt" onclick="selectRadio(this, 'resistance', 2)">Hampir tidak pernah</div>
+          </div>
+        </div>
+
+        <div class="neu-card" style="margin-top:14px;" data-animate="up" data-delay="100">
+          <label class="neu-label">Rata-rata Langkah Harian</label>
+          <div class="radio-group" style="margin-top:10px;display:grid;gap:8px;">
+            <div class="radio-opt" onclick="selectRadio(this, 'steps', 0)">> 10.000 langkah</div>
+            <div class="radio-opt" onclick="selectRadio(this, 'steps', 1)">5.000 - 10.000 langkah</div>
+            <div class="radio-opt" onclick="selectRadio(this, 'steps', 2)">< 5.000 langkah</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: Diet -->
+    <div id="step-4" class="step-pane">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:800;margin-bottom:6px;">Pola Makan Glikemik</h3>
+        <p style="font-size:0.78rem;color:var(--text-tertiary);margin-bottom:20px;">Asupan karbohidrat olahan memicu lonjakan insulin kronis.</p>
+
+        <div class="neu-card" data-animate="up">
+          <label class="neu-label">Seberapa sering konsumsi Tepung (Roti, Mie, Bakmie)?</label>
+          <div class="radio-group" style="margin-top:10px;display:grid;gap:8px;">
+            <div class="radio-opt" onclick="selectRadio(this, 'carbs', 3)">Hampir tiap makan</div>
+            <div class="radio-opt" onclick="selectRadio(this, 'carbs', 2)">Sering (1x sehari)</div>
+            <div class="radio-opt" onclick="selectRadio(this, 'carbs', 1)">Jarang</div>
+            <div class="radio-opt" onclick="selectRadio(this, 'carbs', 0)">Sangat jarang</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: Lab Data (Optional) -->
+    <div id="step-5" class="step-pane">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:800;margin-bottom:6px;">Data Laboratorium</h3>
+        <p style="font-size:0.78rem;color:var(--text-tertiary);margin-bottom:20px;">Untuk menghitung skor HOMA-IR (Indeks Resistensi Insulin).</p>
+
+        <div class="neu-card" data-animate="up">
+          <label class="neu-label">Gula Darah Puasa (mg/dL)</label>
+          <input type="number" id="lab-glu" class="neu-input" placeholder="Contoh: 100">
+        </div>
+
+        <div class="neu-card" style="margin-top:14px;" data-animate="up" data-delay="80">
+          <label class="neu-label">Insulin Puasa (µIU/mL)</label>
+          <input type="number" id="lab-ins" class="neu-input" placeholder="Contoh: 15">
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6: Result -->
+    <div id="step-6" class="step-pane">
+      <div class="section">
+        <div id="loading-result" style="text-align:center;padding:40px 0;">
+          <div class="spinner" style="border-top-color:var(--primary-obs);"></div>
+          <p style="margin-top:20px;font-weight:700;color:var(--primary-obs-dark);">Menganalisis sensitivitas insulin...</p>
+        </div>
+
+        <div id="actual-result" style="display:none;">
+          <h3 style="font-size:1.1rem;font-weight:800;text-align:center;margin-bottom:20px;">Hasil Analisis Sensitivitas</h3>
+          
+          <div class="homa-box">
+            <div id="res-homa" class="homa-val">--</div>
+            <div class="homa-lbl">HOMA-IR INDEX</div>
+            <div id="res-badge" style="margin-top:10px;font-weight:800;font-size:0.8rem;padding:4px 12px;border-radius:20px;display:inline-block;">HASIL</div>
+          </div>
+
+          <div id="res-desc" class="neu-card" style="text-align:center;margin-bottom:20px;font-size:0.85rem;line-height:1.6;color:var(--text-secondary);">
+            ...
+          </div>
+
+          <!-- Medical Rec -->
+          <div class="neu-card" style="margin-bottom:14px;border-left:4px solid var(--primary-obs);">
+            <div style="font-size:0.85rem;font-weight:800;color:var(--primary-obs-dark);margin-bottom:8px;">🏥 Rekomendasi Medis</div>
+            <ul id="res-med-list" style="font-size:0.78rem;color:var(--text-secondary);line-height:1.6;padding-left:18px;margin:0;">
+              <li>Lakukan latihan beban minimal 2x seminggu untuk meningkatkan GLUT4.</li>
+              <li>Pertimbangkan Intermittent Fasting (16:8) untuk mengistirahatkan pankreas.</li>
+            </ul>
+          </div>
+
+          <div class="neu-card" style="margin-bottom:14px;background:rgba(39, 174, 96, 0.05);border-left:4px solid #27AE60;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <span style="font-size:1.2rem;">🌿</span>
+              <span style="font-size:0.85rem;font-weight:800;color:#1A5C38;">Rekomendasi Herbal</span>
+            </div>
+            <div id="res-herbal-name" style="font-size:0.85rem;font-weight:700;margin-bottom:4px;">Kapsul Brotowali-Daun Ungu</div>
+            <div id="res-herbal-desc" style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;">
+              Brotowali mengandung alkaloid yang merangsang sekresi insulin dan meningkatkan pengambilan glukosa perifer.
+            </div>
+          </div>
+
+          <button class="neu-btn neu-btn-primary" style="margin-top:20px;width:100%;" onclick="saveAndFinish()">
+            <ion-icon name="checkmark-done-outline"></ion-icon> Simpan Hasil & Selesai
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="confirm-btn-wrap" id="nav-wrap">
+    <button class="btn-proceed" onclick="nextStep()">
+      <span id="btn-text">Lanjut ke Step 2</span> <ion-icon name="arrow-forward-outline"></ion-icon>
+    </button>
+  </div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  let _geUser = null;
+  (async () => {
+    try {
+      const { user } = await VAuth.guard('patient', 1);
+      _geUser = user;
+    } catch (e) { console.error('[obs-exam] guard error:', e); }
+  })();
+
+  let currentStep = 1;
+  const totalSteps = 6;
+  let responses = {
+    'signs': [],
+    'resistance': 0,
+    'steps': 0,
+    'carbs': 0
+  };
+
+  const stepTitles = [
+    '',
+    'Step 1 — Antropometri',
+    'Step 2 — Tanda Klinis',
+    'Step 3 — Aktivitas Fisik',
+    'Step 4 — Pola Makan',
+    'Step 5 — Data Lab',
+    'Hasil Analisis'
+  ];
+
+  function buildStepDots() {
+    const container = document.getElementById('stepDots');
+    container.innerHTML = '';
+    for (let i = 1; i <= totalSteps; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'step-dot' + (i < currentStep ? ' past' : '') + (i === currentStep ? ' current' : '');
+      dot.textContent = i < currentStep ? '✓' : i;
+      container.appendChild(dot);
+      if (i < totalSteps) {
+        const line = document.createElement('div');
+        line.className = 'step-line' + (i < currentStep ? ' done' : '');
+        container.appendChild(line);
+      }
+    }
+  }
+
+  function updateStepUI() {
+    buildStepDots();
+    document.getElementById('stepTitleText').textContent = stepTitles[currentStep];
+    document.getElementById('stepCounter').textContent = currentStep + ' / ' + totalSteps;
+    document.querySelectorAll('.step-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById('step-' + currentStep).classList.add('active');
+    
+    const navWrap = document.getElementById('nav-wrap');
+    if (currentStep === totalSteps) {
+      navWrap.style.display = 'none';
+      processInsulinResult();
+    } else {
+      navWrap.style.display = 'block';
+      document.getElementById('btn-text').textContent = currentStep === totalSteps - 1 ? 'Lihat Hasil' : 'Lanjut ke Step ' + (currentStep + 1);
+    }
+    window.scrollTo(0, 0);
+  }
+
+  function nextStep() {
+    if (currentStep < totalSteps) {
+      currentStep++;
+      updateStepUI();
+    }
+  }
+
+  function selectRadio(el, key, val) {
+    el.parentElement.querySelectorAll('.radio-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    responses[key] = val;
+  }
+
+  function toggleSymptom(el, id) {
+    el.classList.toggle('selected');
+    if (el.classList.contains('selected')) responses.signs.push(id);
+    else responses.signs = responses.signs.filter(s => s !== id);
+  }
+
+  function processInsulinResult() {
+    setTimeout(() => {
+      document.getElementById('loading-result').style.display = 'none';
+      document.getElementById('actual-result').style.display = 'block';
+      
+      const glu = parseFloat(document.getElementById('lab-glu').value) || 0;
+      const ins = parseFloat(document.getElementById('lab-ins').value) || 0;
+      
+      let homaIR = null;
+      if (glu > 0 && ins > 0) {
+        homaIR = (glu * ins) / 405;
+      }
+
+      const resHoma = document.getElementById('res-homa');
+      const badge = document.getElementById('res-badge');
+      const desc = document.getElementById('res-desc');
+      const medList = document.getElementById('res-med-list');
+      const herbalName = document.getElementById('res-herbal-name');
+      const herbalDesc = document.getElementById('res-herbal-desc');
+
+      if (homaIR !== null) {
+        resHoma.textContent = homaIR.toFixed(2);
+        if (homaIR <= 1.9) {
+          badge.textContent = 'SENSITIF (NORMAL)';
+          badge.style.background = '#27AE601A'; badge.style.color = '#27AE60';
+          desc.textContent = 'Sel-sel tubuh Anda merespons insulin dengan sangat baik. Pertahankan pola hidup sehat ini.';
+        } else if (homaIR < 2.9) {
+          badge.textContent = 'RESISTENSI AWAL';
+          badge.style.background = '#F2994A1A'; badge.style.color = '#F2994A';
+          desc.textContent = 'Ada tanda-tanda awal resistensi insulin. Pankreas bekerja lebih keras untuk menjaga gula darah tetap normal.';
+          medList.innerHTML = '<li>Lakukan jalan kaki 15 menit SEGERA setelah makan.</li><li>Batasi asupan karbohidrat glikemik tinggi (nasi putih berlebih, tepung).</li>';
+        } else {
+          badge.textContent = 'RESISTENSI TINGGI';
+          badge.style.background = '#EB57571A'; badge.style.color = '#EB5757';
+          desc.textContent = 'Tingkat resistensi insulin Anda tinggi. Risiko progresi menjadi Diabetes Tipe 2 sangat besar.';
+          medList.innerHTML = '<li>⚠️ Rujuk ke dokter spesialis penyakit dalam untuk pemeriksaan HbA1c.</li><li>Wajib menurunkan asupan gula tambahan (zero added sugar).</li><li>Target penurunan BB 7-10%.</li>';
+          herbalName.textContent = 'Standardized Bitter Melon (Pare)';
+          herbalDesc.textContent = 'Pare mengandung Charantin yang bekerja menyerupai insulin untuk membantu pengambilan glukosa oleh sel.';
+        }
+      } else {
+        resHoma.textContent = '??';
+        badge.textContent = 'ANALISIS LIFESTYLE';
+        badge.style.background = '#BDBDBD1A'; badge.style.color = '#828282';
+        
+        // Proxy based on signs and waist
+        const waist = parseFloat(document.getElementById('in-waist').value) || 0;
+        if (waist >= 90 || responses.signs.length >= 2) {
+          desc.textContent = 'Berdasarkan tanda klinis dan lingkar pinggang, Anda memiliki risiko tinggi resistensi insulin.';
+        } else {
+          desc.textContent = 'Lengkapi data lab insulin puasa untuk hasil yang lebih akurat.';
+        }
+      }
+    }, 1500);
+  }
+
+  async function saveAndFinish() {
+    if (!_geUser) { nav('disease-risk.html'); return; }
+    try {
+      const homaVal = document.getElementById('res-homa').textContent;
+      const levelEl = document.getElementById('res-badge');
+      const resultData = {
+        homaScore: homaVal === '??' ? null : parseFloat(homaVal),
+        riskLevel: levelEl.textContent,
+        inputs: {
+          weight: parseFloat(document.getElementById('in-weight').value),
+          waist: parseFloat(document.getElementById('in-waist').value),
+          ...responses
+        }
+      };
+      await VDB.saveScreeningResult(_geUser.uid, 'obesity_insulin', resultData);
+      showToast('Hasil Resistensi Insulin disimpan!', 'success');
+      setTimeout(() => nav('disease-risk.html'), 1500);
+    } catch (e) {
+      console.error('[obs] save error:', e);
+      showToast('Gagal menyimpan hasil', 'error');
+    }
+  }
+
+  buildStepDots();
+</script>
+</body>
+</html>

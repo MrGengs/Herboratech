@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Info CKD & Fungsi Ginjal</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #1565C0 0%, #42A5F5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #90CAF9; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .stage-card { border-left: 4px solid var(--info); padding-left: 16px; margin-bottom: 12px; }
+    .kdigo-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-right: 8px; margin-bottom: 4px; }
+    .g1 { background: rgba(76, 175, 80, 0.15); color: #388E3C; }
+    .g2 { background: rgba(76, 175, 80, 0.15); color: #388E3C; }
+    .g3 { background: rgba(255, 152, 0, 0.15); color: #E65100; }
+    .g4 { background: rgba(244, 67, 54, 0.15); color: #C62828; }
+    .g5 { background: rgba(156, 39, 176, 0.15); color: #6A1B9A; }
+    .a1 { background: rgba(76, 175, 80, 0.15); color: #388E3C; }
+    .a2 { background: rgba(255, 193, 7, 0.15); color: #F57F17; }
+    .a3 { background: rgba(244, 67, 54, 0.15); color: #C62828; }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('health-profile.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;">Fungsi Ginjal & CKD</div>
+    <div style="width:42px;"></div>
+  </header>
+
+  <div class="section">
+    <!-- Hero Card -->
+    <div class="neu-card" data-animate="up" style="border-left:4px solid var(--info);padding-left:16px;background:linear-gradient(135deg,rgba(33,150,243,0.08),rgba(66,165,245,0.08));">
+      <div style="font-size:0.85rem;font-weight:700;color:var(--info);">💙 Kesehatan Ginjal Anda Penting</div>
+      <p style="font-size:0.82rem;color:var(--text-secondary);margin-top:8px;line-height:1.6;">
+        Ginjal Anda menyaring limbah dan air dari darah. Deteksi dini penyakit ginjal kronis (CKD) dapat mencegah komplikasi serius.
+      </p>
+    </div>
+
+    <!-- ACR Explanation -->
+    <div class="neu-card" data-animate="up" data-delay="100" style="margin-top:16px;">
+      <div style="font-size:0.9rem;font-weight:700;margin-bottom:12px;">🫘 ACR — Albumin-to-Creatinine Ratio</div>
+      <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;">
+        <strong>ACR mengukur</strong> berapa banyak protein albumin dalam urin Anda. Albumin dalam urin bisa tanda awal kerusakan ginjal.
+      </p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div style="background:rgba(76,175,80,0.1);padding:8px;border-radius:8px;border-left:3px solid #4CAF50;">
+          <div style="font-size:0.75rem;font-weight:700;color:#2E7D32;">✓ Normal: ACR <30 mg/g</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:2px;">Ginjal bekerja dengan baik, tidak ada albumin dalam urin</div>
+        </div>
+        <div style="background:rgba(255,193,7,0.1);padding:8px;border-radius:8px;border-left:3px solid #FFC107;">
+          <div style="font-size:0.75rem;font-weight:700;color:#F57F17;">⚠ Microalbuminuria: 30-300 mg/g</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:2px;">Tanda awal kerusakan ginjal, terutama jika ada diabetes atau HTN</div>
+        </div>
+        <div style="background:rgba(244,67,54,0.1);padding:8px;border-radius:8px;border-left:3px solid #F44336;">
+          <div style="font-size:0.75rem;font-weight:700;color:#C62828;">⚠ Proteinuria: ACR >300 mg/g</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:2px;">Kemungkinan kerusakan ginjal lebih lanjut, perlu evaluasi dokter</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- eGFR & KDIGO Stages -->
+    <div class="neu-card" data-animate="up" data-delay="150" style="margin-top:16px;">
+      <div style="font-size:0.9rem;font-weight:700;margin-bottom:12px;">📊 KDIGO Classification — Fungsi Ginjal</div>
+      <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;margin-bottom:12px;">
+        <strong>eGFR (Estimated Glomerular Filtration Rate)</strong> = ukuran berapa baik ginjal menyaring limbah. Semakin tinggi, semakin baik.
+      </p>
+
+      <div class="stage-card">
+        <span class="kdigo-badge g1">G1</span><span style="font-weight:700;font-size:0.85rem;">Fungsi Normal atau Tinggi</span>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">eGFR ≥ 90 mL/min | Ginjal bekerja normal</div>
+      </div>
+
+      <div class="stage-card">
+        <span class="kdigo-badge g2">G2</span><span style="font-weight:700;font-size:0.85rem;">Berkurang Ringan</span>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">eGFR 60-89 mL/min | Fungsi ginjal sedikit menurun</div>
+      </div>
+
+      <div class="stage-card">
+        <span class="kdigo-badge g3">G3a</span><span style="font-weight:700;font-size:0.85rem;">Berkurang Sedang (Awal)</span>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">eGFR 45-59 mL/min | Perlu monitor lebih ketat</div>
+      </div>
+
+      <div class="stage-card">
+        <span class="kdigo-badge g3">G3b</span><span style="font-weight:700;font-size:0.85rem;">Berkurang Sedang (Lanjut)</span>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">eGFR 30-44 mL/min | Konsultasi nefrolog sangat disarankan</div>
+      </div>
+
+      <div class="stage-card">
+        <span class="kdigo-badge g4">G4</span><span style="font-weight:700;font-size:0.85rem;">Berkurang Berat</span>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">eGFR 15-29 mL/min | Persiapan terapi dialisis dimulai</div>
+      </div>
+
+      <div class="stage-card">
+        <span class="kdigo-badge g5">G5</span><span style="font-weight:700;font-size:0.85rem;">Gagal Ginjal</span>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">eGFR <15 mL/min | Membutuhkan dialisis atau transplantasi</div>
+      </div>
+    </div>
+
+    <!-- Risk Factors -->
+    <div class="neu-card" data-animate="up" data-delay="200" style="margin-top:16px;border-left:4px solid var(--warning);">
+      <div style="font-size:0.9rem;font-weight:700;color:var(--warning);margin-bottom:12px;">⚠️ Faktor Risiko CKD</div>
+      <ul style="font-size:0.8rem;color:var(--text-secondary);line-height:1.8;padding-left:20px;margin:0;">
+        <li><strong>Diabetes</strong> — Penyebab CKD #1 worldwide</li>
+        <li><strong>Hipertensi (Tekanan Darah Tinggi)</strong> — Merusak pembuluh darah ginjal</li>
+        <li><strong>Obesitas & Metabolic Syndrome</strong> — Meningkatkan beban ginjal</li>
+        <li><strong>Penggunaan NSAID Jangka Panjang</strong> — Ibuprofen, naproxen dapat merusak ginjal</li>
+        <li><strong>Riwayat Keluarga CKD</strong> — Genetik memainkan peran penting</li>
+        <li><strong>Usia >60 Tahun</strong> — Fungsi ginjal alami menurun seiring usia</li>
+      </ul>
+    </div>
+
+    <!-- Action Steps -->
+    <div class="neu-card" data-animate="up" data-delay="250" style="margin-top:16px;border-left:4px solid var(--primary-dark);">
+      <div style="font-size:0.9rem;font-weight:700;color:var(--primary-dark);margin-bottom:12px;">✅ Apa yang Bisa Saya Lakukan?</div>
+      <ol style="font-size:0.8rem;color:var(--text-secondary);line-height:1.8;padding-left:20px;margin:0;">
+        <li><strong>Periksa Ginjal Secara Berkala</strong> — Tes ACR + creatinine setiap tahun jika ada risiko</li>
+        <li><strong>Kontrol Diabetes & HTN</strong> — Adalah pencegahan terbaik untuk CKD</li>
+        <li><strong>Kurangi Garam & Cairan</strong> — Bantu mengurangi beban pada ginjal</li>
+        <li><strong>Hindari NSAID Berlebih</strong> — Gunakan paracetamol atau konsultasi dokter</li>
+        <li><strong>Olahraga Teratur</strong> — 30 menit aktivitas ringan setiap hari</li>
+        <li><strong>Pantau Berat Badan</strong> — Target BMI 18.5-25 (Asia: 23)</li>
+        <li><strong>Referral ke Nefrolog</strong> — Jika eGFR <30 atau ACR tinggi</li>
+      </ol>
+    </div>
+
+    <!-- When to See Doctor -->
+    <div class="neu-card" data-animate="up" data-delay="300" style="margin-top:16px;background:linear-gradient(135deg,rgba(244,67,54,0.08),rgba(229,57,53,0.08));border-left:4px solid var(--danger);">
+      <div style="font-size:0.9rem;font-weight:700;color:var(--danger);margin-bottom:12px;">🚨 Segera Konsultasi Dokter Jika:</div>
+      <ul style="font-size:0.8rem;color:var(--text-secondary);line-height:1.8;padding-left:20px;margin:0;list-style-type:circle;">
+        <li>Buang air kecil berubah (jarang, banyak, warna aneh)</li>
+        <li>Pembengkakan di tangan, kaki, atau wajah</li>
+        <li>Kelelahan & kelemahan luar biasa</li>
+        <li>Sesak napas</li>
+        <li>Mual & hilang nafsu makan</li>
+        <li>Nyeri di bagian pinggang (area ginjal)</li>
+        <li>eGFR <30 atau ACR >300</li>
+      </ul>
+    </div>
+
+    <!-- Research Info -->
+    <div class="neu-card" data-animate="up" data-delay="350" style="margin-top:16px;background:rgba(108,99,255,0.08);border-left:4px solid var(--accent);">
+      <div style="font-size:0.75rem;font-weight:700;color:var(--accent);margin-bottom:8px;">🔬 BACKED BY RESEARCH</div>
+      <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.6;margin:0;">
+        KDIGO Classification divalidasi oleh 6 penelitian peer-reviewed dengan 312+ citations.
+        ACR ≥30 mg/g secara akurat memprediksi perkembangan CKD dalam 5-10 tahun.
+      </p>
+    </div>
+
+    <!-- Footer CTA -->
+    <div style="text-align:center;margin-top:20px;padding-bottom:20px;">
+      <button class="neu-btn neu-btn-primary" onclick="nav('health-profile.html')">
+        <ion-icon name="arrow-back-outline"></ion-icon> Kembali ke Profile
+      </button>
+      <div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:12px;">
+        Informasi ini untuk edukasi. Konsultasi dokter untuk diagnosis & treatment.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../shared/app.js"></script>
+</body>
+</html>

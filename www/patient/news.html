@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — News</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #6FCF97; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
+    .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(39,174,96,0.5)); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;">Berita Kesehatan</div>
+    <button class="neu-icon-btn" ><ion-icon name="bookmark-outline"></ion-icon></button>
+  </header>
+
+  <div class="section">
+    <div class="neu-search" data-animate="up"><ion-icon name="search-outline"></ion-icon><input placeholder="Cari artikel..."></div>
+    <div style="display:flex;gap:8px;margin-top:16px;overflow-x:auto;scrollbar-width:none;" data-animate="up" data-delay="50">
+      <span class="neu-chip filter-chip" data-cat="Terbaru" style="background:var(--primary-gradient);color:#fff;">Terbaru</span>
+      <span class="neu-chip filter-chip" data-cat="Nutrisi">Nutrisi</span><span class="neu-chip filter-chip" data-cat="Olahraga">Olahraga</span><span class="neu-chip filter-chip" data-cat="Herbal">Herbal</span><span class="neu-chip filter-chip" data-cat="Penyakit">Penyakit</span>
+    </div>
+
+    <!-- News Cards -->
+    <div id="news-list" style="margin-top:20px;display:flex;flex-direction:column;gap:16px;">
+      <div style="text-align:center;padding:32px 0;color:var(--text-muted);font-size:0.82rem;">Memuat artikel...</div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item" href="monitoring.html">
+      <ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span>
+    </a>
+    <a class="nav-item" href="consultation.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span>
+    </a>
+    <a class="nav-item" href="herbal.html">
+      <ion-icon name="leaf-outline"></ion-icon><span>Jamu</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  const CATEGORY_COLORS = {
+    'Herbal':     { chip: 'var(--success-bg)', color: 'var(--primary-dark)' },
+    'Teknologi':  { chip: 'var(--info-bg)',    color: 'var(--info)' },
+    'Lifestyle':  { chip: 'var(--warning-bg)', color: 'var(--warning)' },
+    'Penyakit':   { chip: 'var(--danger-bg)',  color: 'var(--danger)' },
+    'Nutrisi':    { chip: 'var(--success-bg)', color: 'var(--primary-dark)' },
+  };
+
+  let _allArticles = [];
+  let _activeFilter = 'Terbaru';
+
+  function timeAgo(ts) {
+    if (!ts) return '';
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    const diff = Math.floor((Date.now() - d.getTime()) / 1000);
+    if (diff < 3600)  return Math.floor(diff / 60) + ' menit lalu';
+    if (diff < 86400) return Math.floor(diff / 3600) + ' jam lalu';
+    return Math.floor(diff / 86400) + ' hari lalu';
+  }
+
+  function renderArticles(articles) {
+    const list = document.getElementById('news-list');
+    if (!articles.length) {
+      list.innerHTML = '<div style="text-align:center;padding:32px 0;color:var(--text-muted);font-size:0.82rem;">Belum ada artikel.</div>';
+      return;
+    }
+    list.innerHTML = articles.map((a, i) => {
+      const cc = CATEGORY_COLORS[a.category] || { chip: 'var(--info-bg)', color: 'var(--info)' };
+      const excerpt = a.content ? a.content.replace(/<[^>]+>/g, '').substring(0, 90) + '...' : '';
+      return `
+        <div class="neu-card" data-animate="up" data-delay="${i * 80}" style="cursor:pointer;" onclick="nav('news-detail.html?id=${a.id}')">
+          <span style="background:${cc.chip};color:${cc.color};font-size:0.6rem;padding:3px 10px;border-radius:20px;font-weight:700;">${a.category || 'Artikel'}</span>
+          <h3 style="font-size:0.92rem;font-weight:700;margin-top:8px;">${a.title || ''}</h3>
+          <p style="font-size:0.72rem;color:var(--text-tertiary);margin-top:4px;">${excerpt}</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
+            <span style="font-size:0.65rem;color:var(--text-muted);">${a.readTime || '3'} menit baca · ${timeAgo(a.createdAt)}</span>
+            <ion-icon name="bookmark-outline" style="color:var(--text-muted);"></ion-icon>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function filterArticles(category) {
+    _activeFilter = category;
+    document.querySelectorAll('.filter-chip').forEach(el => {
+      el.style.background = el.dataset.cat === category ? 'var(--primary-gradient)' : '';
+      el.style.color = el.dataset.cat === category ? '#fff' : '';
+    });
+    if (category === 'Terbaru') { renderArticles(_allArticles); return; }
+    renderArticles(_allArticles.filter(a => a.category === category));
+  }
+
+  // Add dataset attrs to existing chips
+  document.querySelectorAll('.filter-chip').forEach(el => {
+    el.addEventListener('click', () => filterArticles(el.dataset.cat));
+  });
+
+  (async () => {
+    try {
+      await VAuth.guard('patient', 1);
+      _allArticles = await VDB.getPublishedArticles();
+      renderArticles(_allArticles);
+    } catch (e) {
+      console.error('[news] error:', e);
+      document.getElementById('news-list').innerHTML =
+        '<div style="text-align:center;padding:32px 0;color:var(--danger);font-size:0.82rem;">Gagal memuat artikel.</div>';
+    }
+  })();
+</script>
+
+</body>
+</html>

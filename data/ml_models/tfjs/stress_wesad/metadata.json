@@ -1,0 +1,52 @@
+{
+  "modelName": "stress_wesad",
+  "modelType": "random_forest_proxy",
+  "version": "1.0",
+  "trainedAt": "2026-03-22",
+  "accuracy": 0.9988,
+  "featureNames": [
+    "eda_mean",
+    "eda_std",
+    "eda_min",
+    "eda_max",
+    "eda_n_peaks",
+    "eda_max_amp",
+    "eda_mean_amp"
+  ],
+  "featureCount": 7,
+  "scalerMean": [
+    2.3817738194774942,
+    0.4056345427043349,
+    1.1476805604795863,
+    3.8688025205578738,
+    3.02375,
+    0.16698793128400233,
+    0.08002756243502356
+  ],
+  "scalerStd": [
+    1.0673529371085997,
+    0.25737075303848167,
+    0.5496926542129321,
+    1.9054108691343132,
+    2.298926040023892,
+    0.10406614830772974,
+    0.05493882606194844
+  ],
+  "outputLabels": [
+    "Baseline/Rileks",
+    "Stres"
+  ],
+  "outputCount": 2,
+  "thresholds": {
+    "threshold": 0.5
+  },
+  "sensorInfo": {
+    "targetSensor": "GSR/EDA",
+    "samplingRateHz": 4,
+    "windowSec": 60,
+    "windowSamples": 240,
+    "peakDetectionThreshold": 0.005,
+    "peakMinDistanceSamples": 2,
+    "calibrationNote": "Jalankan baseline 2 menit sebelum deteksi aktif"
+  }
+}

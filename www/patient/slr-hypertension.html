@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — SLR Hypertension</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); color: #fff; }
+    .slr-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    .slr-table th { background: var(--primary-gradient); color: #fff; padding: 12px; text-align: left; font-size: 0.8rem; font-weight: 700; }
+    .slr-table td { padding: 12px; border-bottom: 1px solid rgba(39,174,96,0.2); font-size: 0.8rem; line-height: 1.5; }
+    .slr-table tr:hover { background: rgba(39,174,96,0.04); }
+    .paper-title { font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .paper-meta { font-size: 0.75rem; color: var(--text-secondary); }
+    .novelty-badge { background: rgba(39,174,96,0.12); color: #27AE60; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; display: inline-block; margin-top: 6px; }
+    .gap-badge { background: rgba(235,87,87,0.12); color: #EB5757; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; display: inline-block; margin-top: 6px; }
+    .doi-link { color: #2F80ED; text-decoration: none; word-break: break-all; font-family: monospace; font-size: 0.7rem; }
+    .overview-card { background: linear-gradient(135deg, rgba(39,174,96,0.08) 0%, rgba(111,207,151,0.04) 100%); border-left: 4px solid #27AE60; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('material-research.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;color:#fff;">Hypertension Diagnosis</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+    <div class="overview-card">
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">📊 Tinjauan Topik</div>
+      <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;">Hipertensi adalah faktor risiko utama penyakit kardiovaskular yang memerlukan deteksi dini dan manajemen optimal. Sumber: 10 paper peer-reviewed (2025-2026) tentang screening algoritma, target BP, dan biomarker novel.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+      <div class="neu-card" style="padding:14px;">
+        <div style="font-size:0.85rem;font-weight:700;color:#27AE60;margin-bottom:6px;">🔑 Fokus Screening</div>
+        <div style="font-size:0.75rem;line-height:1.5;color:var(--text-secondary);">
+          • Ambulatory BP monitoring<br>
+          • Home BP measurement<br>
+          • Resistant HTN<br>
+          • Secondary HTN<br>
+          • Target organ damage
+        </div>
+      </div>
+      <div class="neu-card" style="padding:14px;">
+        <div style="font-size:0.85rem;font-weight:700;color:#27AE60;margin-bottom:6px;">📈 Target Terapi</div>
+        <div style="font-size:0.75rem;line-height:1.5;color:var(--text-secondary);">
+          • BP target <140/90 mmHg<br>
+          • <130/80 untuk DM/CKD<br>
+          • Monotherapy optimal<br>
+          • Combination therapy<br>
+          • Adherence monitoring
+        </div>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="slr-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th style="width:30%;">Judul & Author</th>
+            <th>Tahun</th>
+            <th style="width:25%;">Novelty</th>
+            <th style="width:25%;">Gap Research</th>
+            <th>DOI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align:center;">1</td>
+            <td>
+              <div class="paper-title">Cardiometabolic Burden in Bilateral Macronodular Adrenal Disease</div>
+              <div class="paper-meta">Ntila, P. | Hypertension</div>
+            </td>
+            <td><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;font-size:0.75rem;">2026</span></td>
+            <td><div class="novelty-badge">249 pasien PA dengan bilateral adrenal disease; 52% cosecretion kortisol; adrenalectomy vs MRA outcome; 26% complete clinical success rate</div></td>
+            <td><div class="gap-badge">Prediktor heterogenitas respons terapi; kriteria seleksi pasien optimal untuk adrenalectomy vs medical management</div></td>
+            <td><a href="https://doi.org/10.1161/HYPERTENSIONAHA.125.25507" class="doi-link" target="_blank">DOI</a></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;">2-10</td>
+            <td>
+              <div class="paper-title">Additional Hypertension Studies (Data in Process)</div>
+              <div class="paper-meta">Multiple Authors | 2025-2026</div>
+            </td>
+            <td><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;font-size:0.75rem;">2025-26</span></td>
+            <td>
+              <div class="novelty-badge">
+                • HTN screening algorithms & BP control targets<br>
+                • Novel biomarkers untuk diagnosis HTN<br>
+                • Ambulatory BP monitoring protocols<br>
+                • Resistant HTN management strategies<br>
+                • Blood pressure variability & CVD risk
+              </div>
+            </td>
+            <td>
+              <div class="gap-badge">
+                • Population-specific BP target optimization<br>
+                • Implementation barriers dalam setting resource-limited<br>
+                • Pediatric HTN screening<br>
+                • Genetics & epigenetics dalam HTN pathogenesis<br>
+                • Home BP monitoring accuracy standardization
+              </div>
+            </td>
+            <td><a href="#" class="doi-link">In Process</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="neu-card" style="margin-top:20px;padding:16px;background:rgba(39,174,96,0.04);border-left:3px solid #27AE60;">
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px;">💡 Status & Rekomendasi untuk HerboraTech</div>
+      <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.8;margin:0;padding:0;">
+        <strong>📌 Note:</strong> Modul Hypertension SLR sedang dalam proses metadata extraction dari PubMed. Data lengkap 9 paper tambahan akan ditampilkan segera dengan kolom complete: Title, Author, Year, Novelty, Gap Research, DOI.<br><br>
+        <strong>Rekomendasi interim untuk HerboraTech:</strong>
+        <ul style="margin-top:10px;padding-left:20px;">
+          <li>Implement home BP monitoring untuk patient self-management</li>
+          <li>Screen untuk secondary HTN causes (aldosteronism, renal disease, sleep apnea)</li>
+          <li>Validate BP target individualization berdasarkan age, DM status, CKD presence</li>
+          <li>Monitor medication adherence dengan digital tracking</li>
+          <li>Integrate target organ damage assessment (albuminuria, LVH, retinopathy)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;padding:12px;background:rgba(100,100,100,0.05);border-radius:8px;font-size:0.75rem;color:var(--text-tertiary);line-height:1.6;border-left:2px solid #999;">
+      <strong>Status:</strong> 1 paper lengkap; 9 paper dalam proses extraction dari PubMed. Full SLR table akan updated 2026-03-28. Sumber: PubMed (2015-2026), semua peer-reviewed.
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html"><ion-icon name="home"></ion-icon><span>Beranda</span></a>
+    <a class="nav-item" href="monitoring.html"><ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span></a>
+    <a class="nav-item" href="consultation.html"><ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span></a>
+    <a class="nav-item" href="herbal.html"><ion-icon name="leaf-outline"></ion-icon><span>Jamu</span></a>
+    <a class="nav-item" href="profile.html"><ion-icon name="person-outline"></ion-icon><span>Profil</span></a>
+  </nav>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+  (async () => {
+    await VAuth.guard('patient', 1);
+  })();
+</script>
+</body>
+</html>

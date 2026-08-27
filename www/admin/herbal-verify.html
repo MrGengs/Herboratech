@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Verifikasi Herbal (Super Admin)</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+
+    .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+    .ftab { padding: 8px 18px; border-radius: 20px; border: none; background: var(--bg); box-shadow: var(--shadow-out-sm); font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; }
+    .ftab.active { background: linear-gradient(135deg, #27AE60, #6FCF97); color: #fff; box-shadow: none; }
+    .ftab .badge { background: rgba(255,255,255,0.3); color: #fff; padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; margin-left: 4px; }
+
+    .submit-card { background: var(--bg); box-shadow: var(--shadow-out); border-radius: 20px; margin-bottom: 16px; overflow: hidden; }
+    .submit-header { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+    .submit-meta { display: flex; align-items: center; gap: 12px; }
+    .type-badge { padding: 3px 10px; border-radius: 10px; font-size: 0.72rem; font-weight: 700; }
+    .type-herbal { background: #E8F5E9; color: #27AE60; }
+    .type-formula { background: #E3F2FD; color: #2196F3; }
+    .status-badge { padding: 3px 10px; border-radius: 10px; font-size: 0.72rem; font-weight: 700; }
+    .status-pending { background: #FFF3E0; color: #F2994A; }
+    .status-approved { background: #E8F5E9; color: #27AE60; }
+    .status-rejected { background: #FFE5E5; color: #EB5757; }
+
+    .submit-body { padding: 0 20px 20px; border-top: 1px solid var(--shadow-dark); display: none; }
+    .submit-body.open { display: block; }
+
+    .detail-section { margin-top: 16px; }
+    .detail-section h4 { font-size: 0.78rem; font-weight: 700; color: var(--primary-dark); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .detail-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 0.82rem; }
+    .detail-label { font-weight: 600; color: var(--text-secondary); min-width: 130px; flex-shrink: 0; }
+    .detail-value { color: var(--text-primary); }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { background: var(--primary-bg, #E8F5E9); color: var(--primary-dark); padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .tag.compound { background: #E8EAF6; color: #3F51B5; }
+    .tag.interaction { background: #FFF3E0; color: #E65100; }
+    ol.steps-list { padding-left: 20px; font-size: 0.82rem; color: var(--text-primary); }
+    ol.steps-list li { margin-bottom: 4px; }
+
+    .action-bar { display: flex; gap: 10px; margin-top: 20px; }
+    .btn-approve { flex: 1; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, #27AE60, #6FCF97); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+    .btn-reject { flex: 1; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, #EB5757, #FF8A8A); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+    .btn-approve:disabled, .btn-reject:disabled { opacity: 0.5; cursor: not-allowed; }
+    .rejection-note { width: 100%; margin-top: 8px; padding: 10px 14px; border-radius: 10px; border: none; background: var(--bg); box-shadow: var(--shadow-in); font-family: var(--font); font-size: 0.83rem; color: var(--text-primary); resize: vertical; min-height: 60px; display: none; }
+    .show-reject-note { display: block !important; }
+
+    .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+    .empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
+
+    .evidence-badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
+    .ev-A { background: #E8F5E9; color: #27AE60; }
+    .ev-B { background: #FFF3E0; color: #F2994A; }
+    .ev-C { background: #F3E5F5; color: #9B51E0; }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item active" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar" data-animate="up">
+      <h1 style="border-left:4px solid var(--primary-dark);padding-left:12px;">Verifikasi Data Herbal</h1>
+      <div class="header-actions">
+        <div style="font-size:0.75rem;padding:4px 12px;border-radius:20px;background:linear-gradient(135deg,#6B21A8,#A855F7);color:#fff;font-weight:700;">👑 Super Admin</div>
+        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#6B21A8,#A855F7);margin-left:8px;">S</div>
+      </div>
+    </div>
+
+    <div class="filter-tabs" data-animate="up" data-delay="50">
+      <button class="ftab active" id="tab-pending" onclick="filterSubmissions('pending_review')">
+        Menunggu Verifikasi <span class="badge" id="count-pending">0</span>
+      </button>
+      <button class="ftab" id="tab-approved" onclick="filterSubmissions('approved')">
+        Disetujui <span class="badge" style="background:rgba(39,174,96,0.3);color:#27AE60;" id="count-approved">0</span>
+      </button>
+      <button class="ftab" id="tab-rejected" onclick="filterSubmissions('rejected')">
+        Ditolak <span class="badge" style="background:rgba(235,87,87,0.3);color:#EB5757;" id="count-rejected">0</span>
+      </button>
+    </div>
+
+    <div id="submissions-container" data-animate="up" data-delay="100">
+      <div class="empty-state"><div class="icon">⏳</div><div>Memuat data...</div></div>
+    </div>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+let allSubmissions = [];
+let currentFilter = 'pending_review';
+
+(async () => {
+  const { user, profile } = await VAuth.guard('super_admin', 1);
+  const _vhEl = document.getElementById('nav-verify-herbal'); if (_vhEl) _vhEl.style.display = '';
+  const initials = (profile.name || 'S').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+  document.getElementById('admin-avatar').textContent = initials;
+  await loadSubmissions();
+})();
+
+async function loadSubmissions() {
+  try {
+    const snap = await VFirebase.db.collection('herbalSubmissions')
+      .orderBy('submittedAt', 'desc').get();
+    allSubmissions = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    document.getElementById('count-pending').textContent = allSubmissions.filter(s => s.status === 'pending_review').length;
+    document.getElementById('count-approved').textContent = allSubmissions.filter(s => s.status === 'approved').length;
+    document.getElementById('count-rejected').textContent = allSubmissions.filter(s => s.status === 'rejected').length;
+
+    renderSubmissions(currentFilter);
+  } catch (e) {
+    document.getElementById('submissions-container').innerHTML =
+      '<div class="empty-state"><div class="icon">❌</div><div>Gagal memuat: ' + e.message + '</div></div>';
+  }
+}
+
+function filterSubmissions(status) {
+  currentFilter = status;
+  ['pending','approved','rejected'].forEach(k => document.getElementById('tab-' + k).classList.remove('active'));
+  const map = { pending_review: 'pending', approved: 'approved', rejected: 'rejected' };
+  document.getElementById('tab-' + map[status]).classList.add('active');
+  renderSubmissions(status);
+}
+
+function renderSubmissions(status) {
+  const filtered = allSubmissions.filter(s => s.status === status);
+  const container = document.getElementById('submissions-container');
+  if (!filtered.length) {
+    container.innerHTML = '<div class="empty-state"><div class="icon">📭</div><div>Tidak ada submission dengan status ini.</div></div>';
+    return;
+  }
+  container.innerHTML = filtered.map(sub => renderCard(sub)).join('');
+}
+
+function renderCard(sub) {
+  const typeClass = sub.type === 'formula' ? 'type-formula' : 'type-herbal';
+  const typeLabel = sub.type === 'formula' ? '🧪 Formula' : '🌿 Tanaman';
+  const statusMap = { pending_review: 'status-pending', approved: 'status-approved', rejected: 'status-rejected' };
+  const statusLabel = { pending_review: '⏳ Menunggu', approved: '✅ Disetujui', rejected: '❌ Ditolak' };
+  const submittedTime = sub.submittedAt ? new Date(sub.submittedAt.seconds * 1000).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+
+  const actionBar = sub.status === 'pending_review' ? `
+    <div class="action-bar">
+      <button class="btn-approve" onclick="approveSubmission('${sub.id}', this)">✅ Setujui & Publish</button>
+      <button class="btn-reject" onclick="toggleRejectNote('${sub.id}')">❌ Tolak</button>
+    </div>
+    <textarea class="rejection-note" id="reject-note-${sub.id}" placeholder="Alasan penolakan (wajib diisi sebelum tolak)..."></textarea>
+    <button id="confirm-reject-${sub.id}" style="display:none;width:100%;margin-top:8px;padding:10px;border-radius:10px;border:none;background:#EB5757;color:#fff;font-weight:700;cursor:pointer;" onclick="rejectSubmission('${sub.id}', this)">Konfirmasi Tolak</button>
+  ` : sub.status === 'rejected' && sub.rejectionNote ? `<div style="margin-top:12px;padding:10px;background:#FFE5E5;border-radius:10px;font-size:0.82rem;color:#EB5757;"><b>Catatan penolakan:</b> ${sub.rejectionNote}</div>` : '';
+
+  const detailContent = sub.type === 'herbal' ? renderHerbalDetail(sub) : renderFormulaDetail(sub);
+
+  return `
+    <div class="submit-card" id="card-${sub.id}">
+      <div class="submit-header" onclick="toggleCard('${sub.id}')">
+        <div class="submit-meta">
+          <span style="font-size:1.5rem;">${sub.emoji || '🌿'}</span>
+          <div>
+            <div style="font-weight:700;font-size:0.95rem;">${sub.name || '—'}</div>
+            <div style="font-size:0.75rem;color:var(--text-muted);">oleh ${sub.submitterName || '—'} · ${submittedTime}</div>
+          </div>
+          <span class="type-badge ${typeClass}">${typeLabel}</span>
+          <span class="status-badge ${statusMap[sub.status]}">${statusLabel[sub.status]}</span>
+          ${sub.evidenceLevel ? `<span class="evidence-badge ev-${sub.evidenceLevel}">Level ${sub.evidenceLevel}</span>` : ''}
+        </div>
+        <ion-icon name="chevron-down-outline" style="color:var(--text-muted);"></ion-icon>
+      </div>
+      <div class="submit-body" id="body-${sub.id}">
+        ${detailContent}
+        ${actionBar}
+      </div>
+    </div>`;
+}
+
+function renderHerbalDetail(sub) {
+  const refs = (sub.references || []).map(r => `<div class="detail-row"><span class="detail-value">${r.author || ''} (${r.year || ''}) — ${r.journal || ''} ${r.pmid ? 'PMID:' + r.pmid : ''}</span></div>`).join('');
+  const benefits = (sub.benefits || []).map(b => `<div class="detail-row"><span class="detail-label">${b.name}</span><span class="detail-value">${b.mechanism}</span></div>`).join('');
+  const dosages = (sub.dosage || []).map(d => `<div class="detail-row"><span class="detail-label">${d.condition}</span><span class="detail-value">${d.dose} · ${d.duration}</span></div>`).join('');
+  const interactions = (sub.drugInteractions || []).map(i => `<div class="detail-row"><span class="detail-label" style="color:var(--warning);">${i.drug}</span><span class="detail-value">[${i.severity}] ${i.description}</span></div>`).join('');
+  const compounds = (sub.activeCompounds || []).map(c => `<span class="tag compound">${c}</span>`).join('');
+  const contra = (sub.contraindications || []).map(c => `<span class="tag interaction">${c}</span>`).join('');
+
+  return `
+    <div class="detail-section">
+      <h4>Identifikasi</h4>
+      <div class="detail-row"><span class="detail-label">Nama Latin</span><span class="detail-value"><i>${sub.latinName || '—'}</i></span></div>
+      <div class="detail-row"><span class="detail-label">Famili</span><span class="detail-value">${sub.family || '—'}</span></div>
+      <div class="detail-row"><span class="detail-label">Bagian Digunakan</span><span class="detail-value">${sub.partUsed || '—'}</span></div>
+      <div class="detail-row"><span class="detail-label">Status BPOM</span><span class="detail-value">${sub.bpomStatus || '—'}</span></div>
+      <div class="detail-row"><span class="detail-label">Jumlah Studi</span><span class="detail-value">${sub.studyCount || 0} studi</span></div>
+    </div>
+    ${compounds ? `<div class="detail-section"><h4>Senyawa Aktif</h4><div class="tag-list">${compounds}</div></div>` : ''}
+    ${benefits ? `<div class="detail-section"><h4>Manfaat Klinis</h4>${benefits}</div>` : ''}
+    ${dosages ? `<div class="detail-section"><h4>Dosis</h4>${dosages}</div>` : ''}
+    ${contra ? `<div class="detail-section"><h4>Kontraindikasi</h4><div class="tag-list">${contra}</div></div>` : ''}
+    ${interactions ? `<div class="detail-section"><h4>Interaksi Obat</h4>${interactions}</div>` : ''}
+    ${refs ? `<div class="detail-section"><h4>Referensi Ilmiah</h4>${refs}</div>` : ''}`;
+}
+
+function renderFormulaDetail(sub) {
+  const ingredients = (sub.ingredients || []).map(i => `<div class="detail-row"><span class="detail-label">${i.name}</span><span class="detail-value">${i.dose} <i style="color:var(--text-muted);">(${i.latinName || ''})</i></span></div>`).join('');
+  const steps = (sub.preparationSteps || []).map(s => `<li>${s}</li>`).join('');
+  const sideEffects = (sub.sideEffects || []).map(s => `<span class="tag interaction">${s}</span>`).join('');
+
+  return `
+    <div class="detail-section">
+      <h4>Info Formula</h4>
+      <div class="detail-row"><span class="detail-label">Kategori</span><span class="detail-value">${sub.category || '—'}</span></div>
+      <div class="detail-row"><span class="detail-label">Sumber</span><span class="detail-value">${sub.source || '—'}</span></div>
+      ${sub.description ? `<div style="margin-top:8px;font-size:0.83rem;color:var(--text-secondary);line-height:1.6;">${sub.description}</div>` : ''}
+    </div>
+    ${ingredients ? `<div class="detail-section"><h4>Komposisi</h4>${ingredients}</div>` : ''}
+    ${steps ? `<div class="detail-section"><h4>Cara Pembuatan</h4><ol class="steps-list">${steps}</ol></div>` : ''}
+    <div class="detail-section">
+      <h4>Penggunaan</h4>
+      <div class="detail-row"><span class="detail-label">Dosis</span><span class="detail-value">${sub.dosageInstruction || '—'}</span></div>
+      <div class="detail-row"><span class="detail-label">Durasi</span><span class="detail-value">${sub.duration || '—'}</span></div>
+    </div>
+    ${sideEffects ? `<div class="detail-section"><h4>Efek Samping</h4><div class="tag-list">${sideEffects}</div></div>` : ''}`;
+}
+
+function toggleCard(id) {
+  const body = document.getElementById('body-' + id);
+  body.classList.toggle('open');
+}
+
+function toggleRejectNote(id) {
+  const note = document.getElementById('reject-note-' + id);
+  const btn = document.getElementById('confirm-reject-' + id);
+  note.classList.add('show-reject-note');
+  btn.style.display = 'block';
+  note.focus();
+}
+
+async function approveSubmission(id, btn) {
+  const sub = allSubmissions.find(s => s.id === id);
+  if (!sub) return;
+  btn.disabled = true; btn.textContent = 'Menyimpan...';
+
+  try {
+    // 1. Update status di herbalSubmissions
+    await VFirebase.db.collection('herbalSubmissions').doc(id).update({
+      status: 'approved',
+      reviewedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    // 2. Copy ke koleksi publik (herbals atau herbalFormulas)
+    const targetCollection = sub.type === 'formula' ? 'herbalFormulas' : 'herbals';
+    const { id: _, status: __, submittedBy: ___, submittedAt: ____, submitterName: _____, type: ______, ...publicData } = sub;
+    const docId = sub.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    await VFirebase.db.collection(targetCollection).doc(docId).set({
+      ...publicData,
+      publishedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+
+    alert('✅ Submission disetujui dan dipublikasikan ke database ' + targetCollection + '!');
+    await loadSubmissions();
+  } catch (e) {
+    alert('Error: ' + e.message);
+    btn.disabled = false; btn.textContent = '✅ Setujui & Publish';
+  }
+}
+
+async function rejectSubmission(id, btn) {
+  const noteEl = document.getElementById('reject-note-' + id);
+  const note = noteEl ? noteEl.value.trim() : '';
+  if (!note) { alert('Mohon isi alasan penolakan!'); return; }
+
+  btn.disabled = true; btn.textContent = 'Menyimpan...';
+
+  try {
+    await VFirebase.db.collection('herbalSubmissions').doc(id).update({
+      status: 'rejected',
+      rejectionNote: note,
+      reviewedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    alert('Submission ditolak. Notifikasi akan dikirim ke tim admin.');
+    await loadSubmissions();
+  } catch (e) {
+    alert('Error: ' + e.message);
+    btn.disabled = false; btn.textContent = 'Konfirmasi Tolak';
+  }
+}
+</script>
+</body>
+</html>

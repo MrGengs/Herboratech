@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Monitoring</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #6FCF97; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
+    .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(39,174,96,0.5)); }
+    .vital-grid .vital-card:nth-child(1) { border-top: 3px solid #EB5757; }
+    .vital-grid .vital-card:nth-child(2) { border-top: 3px solid #2F80ED; }
+    .vital-grid .vital-card:nth-child(3) { border-top: 3px solid #F2994A; }
+    .vital-grid .vital-card:nth-child(4) { border-top: 3px solid #27AE60; }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <div style="width:42px"></div>
+    <div style="font-size:1.05rem;font-weight:700;">Monitoring Vital</div>
+    <button class="neu-icon-btn" id="export-btn" onclick="exportVitals()"><ion-icon name="download-outline"></ion-icon></button>
+  </header>
+
+  <!-- Tabs -->
+  <div class="section" style="padding-bottom:0">
+    <div class="neu-tabs">
+      <div class="neu-tab active" data-tab="realtime">Real-time</div>
+      <div class="neu-tab" data-tab="history">Riwayat</div>
+      <div class="neu-tab" data-tab="hrv">HRV</div>
+      <div class="neu-tab" data-tab="sleep">Tidur</div>
+    </div>
+  </div>
+
+  <!-- Real-time Panel -->
+  <div id="realtime" class="tab-panel">
+    <!-- BLE Connection Alert -->
+    <div id="ble-alert-card" class="section" style="display:none;padding-bottom:0;">
+      <div class="neu-card" style="background:linear-gradient(135deg,rgba(235,87,87,0.1),rgba(255,107,107,0.05));border-left:4px solid #EB5757;padding:16px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <ion-icon name="alert-circle-outline" style="font-size:1.4rem;color:#EB5757;flex-shrink:0;"></ion-icon>
+          <div style="flex:1;">
+            <div style="font-weight:600;color:var(--danger);font-size:0.88rem;">Perangkat Belum Terhubung</div>
+            <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:2px;">Hubungkan smartwatch untuk monitoring real-time</div>
+          </div>
+          <button class="neu-btn neu-btn-sm" style="padding:6px 12px;font-size:0.7rem;white-space:nowrap;flex-shrink:0;" onclick="toggleBLEConnection()">Hubungkan</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="vital-grid" id="vital-grid-monitoring" data-animate="up" style="transition:all 0.3s ease;">
+        <div class="vital-card" style="grid-column:1/-1;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div class="v-label">❤️ DETAK JANTUNG</div>
+              <div style="font-size:3rem;font-weight:800;color:var(--danger);margin:4px 0;"><span id="hr-live">--</span><span style="font-size:1rem;color:var(--text-tertiary);"> bpm</span></div>
+            </div>
+            <div class="gauge-container" id="hr-gauge" data-animate="scale" data-delay="200"></div>
+          </div>
+          <div id="hr-chart" style="height:60px;margin-top:12px;" data-animate="up" data-delay="300"></div>
+        </div>
+        <div class="vital-card" data-animate="up" data-delay="100">
+          <div class="v-icon">🩸</div><div class="v-label">SpO2</div>
+          <div class="v-value" style="color:var(--info)"><span id="spo2-live">--</span> <span class="v-unit">%</span></div>
+          <div class="v-status normal">● Normal</div>
+        </div>
+        <div class="vital-card" data-animate="up" data-delay="150">
+          <div class="v-icon">🌡️</div><div class="v-label">Suhu</div>
+          <div class="v-value"><span id="temp-live">--</span> <span class="v-unit">°C</span></div>
+          <div class="v-status normal">● Normal</div>
+        </div>
+        <div class="vital-card" data-animate="up" data-delay="200">
+          <div class="v-icon">🫁</div><div class="v-label">Resp. Rate</div>
+          <div class="v-value"><span id="rr-live">--</span> <span class="v-unit">/min</span></div>
+          <div class="v-status normal">● Normal</div>
+        </div>
+        <div class="vital-card" data-animate="up" data-delay="250">
+          <div class="v-icon">😰</div><div class="v-label">Stress Level</div>
+          <div class="v-value" style="color:var(--warning)"><span id="stress-live">--</span> <span class="v-unit">/100</span></div>
+          <div class="v-status" id="stress-status">● --</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity -->
+    <div class="section" style="padding-top:0">
+      <div class="section-header"><span class="section-title">🚶 Aktivitas Harian</span></div>
+      <div class="neu-card" data-animate="up" data-delay="300">
+        <div style="display:flex;justify-content:space-around;text-align:center;">
+          <div><div id="steps-live" style="font-size:1.5rem;font-weight:800;color:var(--primary-dark);">0</div><div style="font-size:0.68rem;color:var(--text-muted);">Langkah</div></div>
+          <div style="width:1px;background:var(--shadow-dark);"></div>
+          <div><div id="kcal-live" style="font-size:1.5rem;font-weight:800;color:var(--warning);">0</div><div style="font-size:0.68rem;color:var(--text-muted);">kkal</div></div>
+          <div style="width:1px;background:var(--shadow-dark);"></div>
+          <div><div id="km-live" style="font-size:1.5rem;font-weight:800;color:var(--info);">0.0</div><div style="font-size:0.68rem;color:var(--text-muted);">km</div></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;"><span>Target: 10,000 langkah</span><span id="steps-pct-live">0%</span></div>
+          <div class="neu-progress"><div id="steps-progress-fill" class="neu-progress-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Recommendation -->
+    <div class="section" style="padding-top:0">
+      <div class="section-header"><span class="section-title">🤖 Rekomendasi AI</span></div>
+      <div class="neu-card" data-animate="up" data-delay="350" style="background:var(--accent-bg);border-left:4px solid var(--accent);">
+        <p id="ai-recommendation-text" style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;"><strong style="color:var(--accent);">Hubungkan smartwatch Anda</strong> untuk mendapatkan rekomendasi AI berdasarkan data vital sign real-time.</p>
+        <button class="neu-btn-sm neu-btn-accent" style="margin-top:12px;font-size:0.72rem;padding:6px 16px;border-radius:20px;color:#fff;background:linear-gradient(135deg,#6C63FF,#8B83FF);box-shadow:none;" onclick="nav('device.html')">Hubungkan Perangkat →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Panel -->
+  <div id="history" class="tab-panel" style="display:none;">
+    <div class="section">
+      <div class="neu-tabs" style="margin:0;box-shadow:var(--shadow-in-sm);">
+        <div class="neu-tab active" style="font-size:0.7rem;">24 Jam</div>
+        <div class="neu-tab" style="font-size:0.7rem;">7 Hari</div>
+        <div class="neu-tab" style="font-size:0.7rem;">30 Hari</div>
+        <div class="neu-tab" style="font-size:0.7rem;">1 Tahun</div>
+      </div>
+      <div class="neu-card mt-16">
+        <div class="section-title" style="font-size:0.85rem;">Detak Jantung (7 Hari)</div>
+        <div id="hist-chart" style="height:100px;margin-top:12px;"></div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px;">
+          <div style="text-align:center"><span style="font-size:0.65rem;color:var(--text-muted);">Min</span><br><strong style="color:var(--info);">--</strong></div>
+          <div style="text-align:center"><span style="font-size:0.65rem;color:var(--text-muted);">Rata-rata</span><br><strong>--</strong></div>
+          <div style="text-align:center"><span style="font-size:0.65rem;color:var(--text-muted);">Max</span><br><strong style="color:var(--danger);">--</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HRV Panel -->
+  <div id="hrv" class="tab-panel" style="display:none;">
+    <div class="section">
+      <div class="neu-card">
+        <div class="section-title" style="font-size:0.85rem;">Heart Rate Variability</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+          <div class="neu-inset" style="text-align:center;"><span style="font-size:0.65rem;color:var(--text-muted);">SDNN</span><br><strong style="font-size:1.2rem;">--</strong><span style="font-size:0.7rem;color:var(--text-muted);"> ms</span></div>
+          <div class="neu-inset" style="text-align:center;"><span style="font-size:0.65rem;color:var(--text-muted);">RMSSD</span><br><strong style="font-size:1.2rem;">--</strong><span style="font-size:0.7rem;color:var(--text-muted);"> ms</span></div>
+          <div class="neu-inset" style="text-align:center;"><span style="font-size:0.65rem;color:var(--text-muted);">pNN50</span><br><strong style="font-size:1.2rem;">--</strong><span style="font-size:0.7rem;color:var(--text-muted);"> %</span></div>
+          <div class="neu-inset" style="text-align:center;"><span style="font-size:0.65rem;color:var(--text-muted);">LF/HF</span><br><strong style="font-size:1.2rem;">--</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sleep Panel -->
+  <div id="sleep" class="tab-panel" style="display:none;">
+    <div class="section">
+      <div class="neu-card">
+        <div style="text-align:center;margin-bottom:16px;">
+          <p style="font-size:0.75rem;color:var(--text-muted);">Kualitas Tidur Semalam</p>
+          <p style="font-size:2.5rem;font-weight:800;color:var(--primary-dark);">--</p>
+          <span style="background:var(--shadow-dark);color:var(--text-muted);padding:3px 12px;border-radius:20px;font-size:0.7rem;font-weight:600;">Belum ada data</span>
+        </div>
+        <div style="display:flex;gap:4px;height:24px;border-radius:12px;overflow:hidden;">
+          <div style="flex:1;background:var(--shadow-dark);"></div>
+        </div>
+        <div style="display:flex;justify-content:space-around;margin-top:12px;font-size:0.65rem;">
+          <span style="color:var(--text-muted);">Hubungkan smartwatch untuk data tidur</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item active" href="monitoring.html">
+      <ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span>
+    </a>
+    <a class="nav-item" href="consultation.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span>
+    </a>
+    <a class="nav-item" href="herbal.html">
+      <ion-icon name="leaf-outline"></ion-icon><span>Jamu</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/ble-manager.js"></script>
+<script>
+(async () => {
+  const { user } = await VAuth.guard('patient', 1);
+
+  // Start VitalsManager
+  VitalsManager.start(user.uid);
+
+  // ========== TAB SWITCHING ==========
+  document.querySelectorAll('.neu-tab[data-tab]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Deactivate all main tabs
+      document.querySelectorAll('.neu-tabs:not(:has(.neu-tabs .neu-tabs)) .neu-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Hide all panels
+      document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+
+      // Show selected panel
+      const panelId = tab.getAttribute('data-tab');
+      const panel = document.getElementById(panelId);
+      if (panel) panel.style.display = 'block';
+    });
+  });
+
+  // ========== REAL-TIME TAB ==========
+  // Load last vitals from Firestore as defaults
+  let lastVitals = { hr: '--', spo2: '--', temperature: '--', respirationRate: '--', stress: '--', steps: '--' };
+  try {
+    const history = await VDB.getVitalsHistory(user.uid, 1);
+    if (history && history.length > 0) {
+      const last = history[history.length - 1];
+      lastVitals = {
+        hr: last.hr ?? '--',
+        spo2: last.spo2 ?? '--',
+        temperature: last.temperature ?? '--',
+        respirationRate: last.respirationRate ?? '--',
+        stress: last.stress ?? '--',
+        steps: last.steps ?? '--'
+      };
+    }
+  } catch (e) {
+    console.warn('Could not load last vitals:', e);
+  }
+
+  // Display initial values
+  const displayVitals = (v) => {
+    const setInt = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = (typeof val === 'number') ? Math.round(val) : val;
+    };
+    const setDec = (id, val, decimals = 1) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = (typeof val === 'number') ? val.toFixed(decimals) : val;
+    };
+    setInt('hr-live', v.hr);
+    setInt('spo2-live', v.spo2);
+    setDec('temp-live', v.temperature || v.temp);
+    setInt('rr-live', v.respirationRate || v.rr);
+    setInt('stress-live', v.stress);
+
+    // Update status badges
+    const spo2Cards = document.querySelectorAll('#vital-grid-monitoring .vital-card');
+    if (spo2Cards[1]) {
+      const spo2Status = spo2Cards[1].querySelector('.v-status');
+      if (spo2Status && typeof v.spo2 === 'number') {
+        if (v.spo2 >= 95) { spo2Status.className = 'v-status normal'; spo2Status.textContent = '● Normal'; }
+        else if (v.spo2 >= 90) { spo2Status.className = 'v-status warning'; spo2Status.textContent = '⬤ Rendah'; }
+        else { spo2Status.className = 'v-status danger'; spo2Status.textContent = '⬤ Kritis'; }
+      }
+    }
+    if (spo2Cards[2]) {
+      const tempStatus = spo2Cards[2].querySelector('.v-status');
+      const t = v.temperature || v.temp;
+      if (tempStatus && typeof t === 'number') {
+        if (t >= 36.1 && t <= 37.2) { tempStatus.className = 'v-status normal'; tempStatus.textContent = '● Normal'; }
+        else if (t > 37.2 && t <= 38) { tempStatus.className = 'v-status warning'; tempStatus.textContent = '⬤ Subfebris'; }
+        else if (t > 38) { tempStatus.className = 'v-status danger'; tempStatus.textContent = '⬤ Demam'; }
+        else { tempStatus.className = 'v-status warning'; tempStatus.textContent = '⬤ Rendah'; }
+      }
+    }
+
+    // Update activity section
+    const steps = (typeof v.steps === 'number') ? v.steps : 0;
+    const stepsEl = document.getElementById('steps-live');
+    const kcalEl = document.getElementById('kcal-live');
+    const kmEl = document.getElementById('km-live');
+    const stepsPctEl = document.getElementById('steps-pct-live');
+    const stepsFill = document.getElementById('steps-progress-fill');
+    if (stepsEl) stepsEl.textContent = steps.toLocaleString();
+    if (kcalEl) kcalEl.textContent = Math.round(steps * 0.04);
+    if (kmEl) kmEl.textContent = (steps * 0.0008).toFixed(1);
+    const pct = Math.min(100, Math.round(steps / 10000 * 100));
+    if (stepsPctEl) stepsPctEl.textContent = pct + '%';
+    if (stepsFill) stepsFill.style.width = pct + '%';
+
+    const g = document.getElementById('hr-gauge');
+    if (g) {
+      g.innerHTML = '';
+      if (v.hr && v.hr !== '--') createGauge(g, v.hr, 120, '#EB5757');
+    }
+  };
+
+  // Display initial/last values
+  displayVitals(lastVitals);
+
+  // Subscribe to live vitals — only display real BLE data
+  VitalsManager.subscribe(v => {
+    if (v.source === 'ble') {
+      displayVitals(v);
+    }
+  });
+
+  // Initial charts — only show from Firestore history, no dummy
+  setTimeout(async () => {
+    try {
+      const hist = await VDB.getVitalsHistory(user.uid, 1);
+      if (hist && hist.length > 0) {
+        const lastHR = hist[hist.length - 1].hr;
+        if (lastHR && !document.getElementById('hr-gauge').children.length) {
+          createGauge(document.getElementById('hr-gauge'), lastHR, 120, '#EB5757');
+        }
+        const hrData = hist.slice(-18).map(r => r.hr || 0);
+        if (hrData.length > 1) sparkline(document.getElementById('hr-chart'), hrData, '#EB5757', 50);
+      }
+    } catch (e) {
+      console.warn('Could not load initial chart data:', e);
+    }
+  }, 200);
+
+  // ========== HISTORY TAB ==========
+  const historySubTabs = document.querySelectorAll('#history .neu-tabs .neu-tab');
+  historySubTabs.forEach((tab, idx) => {
+    tab.addEventListener('click', async () => {
+      // Update sub-tab active state
+      historySubTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Determine date range
+      const ranges = [
+        { label: '24 Jam', days: 1 },
+        { label: '7 Hari', days: 7 },
+        { label: '30 Hari', days: 30 },
+        { label: '1 Tahun', days: 365 }
+      ];
+      const range = ranges[idx];
+
+      // Load from Firestore
+      try {
+        const readings = await VDB.getVitalsHistory(user.uid, range.days);
+        if (readings && readings.length > 0) {
+          const hrData = readings.map(r => r.hr || 0).filter(v => v > 0);
+          const spo2Data = readings.map(r => r.spo2 || 0).filter(v => v > 0);
+
+          // Update title and chart
+          document.querySelector('#history .section-title').textContent = `Detak Jantung (${range.label})`;
+
+          // Calculate stats
+          const min = Math.min(...hrData);
+          const max = Math.max(...hrData);
+          const avg = Math.round(hrData.reduce((a, b) => a + b) / hrData.length);
+
+          const statEls = document.querySelectorAll('#history .neu-card strong');
+          if (statEls[0]) statEls[0].textContent = min;
+          if (statEls[1]) statEls[1].textContent = avg;
+          if (statEls[2]) statEls[2].textContent = max;
+
+          // Draw chart
+          sparkline(document.getElementById('hist-chart'), hrData.slice(-20), '#27AE60', 80);
+        }
+      } catch (e) {
+        console.warn('History load failed:', e);
+      }
+    });
+  });
+
+  // Trigger first history tab on load
+  if (historySubTabs[1]) historySubTabs[1].click();
+
+  // ========== HRV TAB ==========
+  const hrvTab = document.querySelector('.neu-tab[data-tab="hrv"]');
+  if (hrvTab) {
+    hrvTab.addEventListener('click', async () => {
+      try {
+        const readings = await VDB.getVitalsHistory(user.uid, 7);
+        if (readings && readings.length > 0) {
+          // Calculate HRV metrics from 7-day window
+          const sdnns = readings.map(r => r.sdnn || 0).filter(v => v > 0).slice(-100);
+          const rmssds = readings.map(r => r.rmssd || 0).filter(v => v > 0).slice(-100);
+          const pnn50s = readings.map(r => r.pnn50 || 0).filter(v => v > 0).slice(-100);
+          if (sdnns.length === 0 || rmssds.length === 0) return;
+
+          const avgSdnn = Math.round(sdnns.reduce((a, b) => a + b) / sdnns.length);
+          const avgRmssd = Math.round(rmssds.reduce((a, b) => a + b) / rmssds.length);
+          const avgPnn50 = Math.round(pnn50s.reduce((a, b) => a + b) / pnn50s.length);
+          const lfhf = (avgSdnn / avgRmssd * 0.9).toFixed(1);
+
+          // Update display
+          const insets = document.querySelectorAll('#hrv .neu-inset');
+          if (insets[0]) insets[0].innerHTML = `<span style="font-size:0.65rem;color:var(--text-muted);">SDNN</span><br><strong style="font-size:1.2rem;">${avgSdnn}</strong><span style="font-size:0.7rem;color:var(--text-muted);"> ms</span>`;
+          if (insets[1]) insets[1].innerHTML = `<span style="font-size:0.65rem;color:var(--text-muted);">RMSSD</span><br><strong style="font-size:1.2rem;">${avgRmssd}</strong><span style="font-size:0.7rem;color:var(--text-muted);"> ms</span>`;
+          if (insets[2]) insets[2].innerHTML = `<span style="font-size:0.65rem;color:var(--text-muted);">pNN50</span><br><strong style="font-size:1.2rem;">${avgPnn50}</strong><span style="font-size:0.7rem;color:var(--text-muted);"> %</span>`;
+          if (insets[3]) insets[3].innerHTML = `<span style="font-size:0.65rem;color:var(--text-muted);">LF/HF</span><br><strong style="font-size:1.2rem;">${lfhf}</strong>`;
+        }
+      } catch (e) {
+        console.warn('HRV load failed:', e);
+      }
+    });
+  }
+
+  // ========== SLEEP TAB ==========
+  const sleepTab = document.querySelector('.neu-tab[data-tab="sleep"]');
+  if (sleepTab) {
+    sleepTab.addEventListener('click', async () => {
+      try {
+        const readings = await VDB.getVitalsHistory(user.uid, 1);
+        if (readings && readings.length > 0) {
+          // Calculate sleep from movement data (IMU variance)
+          let awakeCount = 0, lightCount = 0, deepCount = 0, remCount = 0;
+          const now = new Date();
+          const nightReadings = readings.filter(r => {
+            const hour = new Date(r.timestamp?.toDate?.() || r.timestamp).getHours();
+            return hour >= 22 || hour <= 8;  // 22:00 - 08:00
+          });
+
+          nightReadings.forEach(r => {
+            const movement = r.movement || 0.12;
+            const hour = new Date(r.timestamp?.toDate?.() || r.timestamp).getHours();
+
+            if (movement > 0.3) awakeCount++;
+            else if (movement > 0.05) lightCount++;
+            else if (hour >= 3 && hour <= 7 && movement >= 0.02) remCount++;
+            else deepCount++;
+          });
+
+          const total = awakeCount + lightCount + deepCount + remCount || 1;
+          const deepPct = Math.round((deepCount / total) * 100);
+          const lightPct = Math.round((lightCount / total) * 100);
+          const remPct = Math.round((remCount / total) * 100);
+          const awakePct = 100 - deepPct - lightPct - remPct;
+          const totalHours = Math.floor(nightReadings.length / 60);
+          const totalMins = nightReadings.length % 60;
+
+          // Update display
+          const card = document.querySelector('#sleep .neu-card');
+          if (card) {
+            card.innerHTML = `
+              <div style="text-align:center;margin-bottom:16px;">
+                <p style="font-size:0.75rem;color:var(--text-muted);">Kualitas Tidur Semalam</p>
+                <p style="font-size:2.5rem;font-weight:800;color:var(--primary-dark);">${totalHours}h ${totalMins}m</p>
+                <span style="background:var(--success-bg);color:var(--success);padding:3px 12px;border-radius:20px;font-size:0.7rem;font-weight:600;">Baik</span>
+              </div>
+              <div style="display:flex;gap:4px;height:24px;border-radius:12px;overflow:hidden;">
+                <div style="flex:${deepPct};background:#6C63FF;" title="Deep Sleep ${deepPct}%"></div>
+                <div style="flex:${lightPct};background:#8B83FF;" title="Light Sleep ${lightPct}%"></div>
+                <div style="flex:${remPct};background:#FFD54F;" title="REM ${remPct}%"></div>
+                <div style="flex:${awakePct};background:#EB5757;" title="Awake ${awakePct}%"></div>
+              </div>
+              <div style="display:flex;justify-content:space-around;margin-top:12px;font-size:0.65rem;">
+                <span style="color:#6C63FF;">● Deep ${deepPct}%</span>
+                <span style="color:#8B83FF;">● Light ${lightPct}%</span>
+                <span style="color:#FFD54F;">● REM ${remPct}%</span>
+                <span style="color:#EB5757;">● Awake ${awakePct}%</span>
+              </div>
+            `;
+          }
+        }
+      } catch (e) {
+        console.warn('Sleep load failed:', e);
+      }
+    });
+  }
+
+  // ========== BLE STATUS - ALERT CARD & DISABLED STATE ==========
+  setInterval(() => {
+    const bleStatus = BLEManager.getStatus();
+    const vitals = VitalsManager.getCurrent();
+    // Consider "connected" if BLEManager is connected OR VitalsManager has BLE data
+    const isBLEActive = bleStatus.connected || (vitals.source === 'ble');
+    const vitalGrid = document.getElementById('vital-grid-monitoring');
+    const alertCard = document.getElementById('ble-alert-card');
+
+    if (vitalGrid) {
+      if (isBLEActive) {
+        vitalGrid.style.opacity = '1';
+        vitalGrid.style.filter = 'none';
+      } else {
+        vitalGrid.style.opacity = '0.85';
+        vitalGrid.style.filter = 'none';
+      }
+      vitalGrid.style.pointerEvents = 'auto';
+    }
+
+    if (alertCard) {
+      alertCard.style.display = isBLEActive ? 'none' : 'block';
+    }
+  }, 2000);
+
+  // ========== CSV EXPORT ==========
+  window.exportVitals = async function() {
+    try {
+      const readings = await VDB.getVitalsHistory(user.uid, 7);
+      let csv = 'Timestamp,HR,SpO2,Temp,RR,HRV,Steps,Battery,Source\n';
+
+      readings.forEach(r => {
+        const date = r.timestamp?.toDate?.() || new Date(r.timestamp);
+        const dateStr = date.toLocaleString('id-ID');
+        csv += `${dateStr},${r.hr},${r.spo2},${r.temperature},${r.respirationRate},${r.hrv},${r.steps},${r.batteryLevel || 87},${r.source || 'unknown'}\n`;
+      });
+
+      // Download
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `herboratech_export_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+
+      showToast('Export berhasil: ' + readings.length + ' data points', 'success');
+    } catch (e) {
+      showToast('Export gagal: ' + e.message, 'error');
+    }
+  };
+
+  // ========== TOGGLE BLE CONNECTION ==========
+  window.toggleBLEConnection = async function() {
+    const status = BLEManager.getStatus();
+    if (status.connected) {
+      await BLEManager.disconnect();
+      showToast('Smartwatch disconnected', 'success');
+    } else {
+      const success = await BLEManager.connect();
+      if (success) {
+        showToast('Smartwatch connected!', 'success');
+      } else {
+        showToast('Failed to connect smartwatch', 'error');
+      }
+    }
+  };
+
+  window.addEventListener('beforeunload', () => VitalsManager.forceUpload());
+})();
+</script>
+</body>
+</html>

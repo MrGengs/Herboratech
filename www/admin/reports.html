@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Laporan & Ekspor Data</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .admin-main { padding: 24px; }
+    .container { max-width: 100%; margin: 0; }
+
+    .header { margin-bottom: 2rem; }
+    .header h1 { color: var(--text-primary); margin: 0; }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .report-card {
+      background: var(--bg-white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .report-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    .report-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .report-title { font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+    .report-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
+    .report-meta { font-size: 0.85rem; color: var(--text-tertiary); }
+
+    .btn-report {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .btn-report:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    .filters-section {
+      background: var(--bg-white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .filters-title { font-weight: 700; margin-bottom: 1rem; color: var(--text-primary); }
+
+    .filter-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .filter-input, .filter-select {
+      padding: 0.75rem;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      font-family: var(--font-family);
+      color: var(--text-primary);
+      background: var(--bg-light);
+    }
+
+    .filter-input:focus, .filter-select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-generate {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-generate:hover { opacity: 0.9; }
+
+    .btn-reset {
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-light);
+      color: var(--text-primary);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-reset:hover { background: var(--border-light); }
+
+    .report-preview {
+      background: var(--bg-white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: none;
+    }
+
+    .report-preview.show { display: block; }
+
+    .report-preview h2 { margin-top: 0; color: var(--text-primary); }
+
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: var(--bg-light);
+      padding: 0.75rem;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid var(--border-light);
+    }
+
+    td {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    tr:hover { background: var(--bg-light); }
+
+    .stat-box {
+      background: var(--bg-light);
+      padding: 1rem;
+      border-radius: 6px;
+      margin: 1rem 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number { font-size: 1.5rem; font-weight: 700; color: #667eea; }
+    .stat-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-content {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 1rem;
+    }
+
+    .modal-header h2 { margin: 0; }
+
+    .btn-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+
+    .export-format {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .format-option {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border: 2px solid var(--border-light);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .format-option:hover { border-color: #667eea; background: rgba(102, 126, 234, 0.05); }
+
+    .format-option input[type="radio"] {
+      margin-right: 1rem;
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+    }
+
+    .format-label {
+      flex: 1;
+    }
+
+    .format-title { font-weight: 600; color: var(--text-primary); }
+    .format-desc { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+    .loading { text-align: center; padding: 2rem; color: var(--text-secondary); }
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid var(--border-light);
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 0.5rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .no-data {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item active" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar"><h1>Laporan & Ekspor Data</h1></div>
+    <div class="container">
+
+    <div class="report-grid" id="reportGrid">
+      <!-- Report cards will be generated here -->
+    </div>
+
+    <div id="reportContent"></div>
+    </div>
+  </main>
+</div>
+
+  <!-- Export Format Modal -->
+  <div class="modal" id="exportModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Pilih Format Ekspor</h2>
+        <button class="btn-close" onclick="closeExportModal()">×</button>
+      </div>
+      <div class="export-format">
+        <label class="format-option">
+          <input type="radio" name="format" value="csv" checked>
+          <div class="format-label">
+            <div class="format-title">CSV (.csv)</div>
+            <div class="format-desc">Kompatibel dengan Excel, Google Sheets, dll</div>
+          </div>
+        </label>
+        <label class="format-option">
+          <input type="radio" name="format" value="json">
+          <div class="format-label">
+            <div class="format-title">JSON (.json)</div>
+            <div class="format-desc">Format terstruktur untuk import/integrasi</div>
+          </div>
+        </label>
+        <label class="format-option">
+          <input type="radio" name="format" value="xlsx">
+          <div class="format-label">
+            <div class="format-title">Excel (.xlsx)</div>
+            <div class="format-desc">Format spreadsheet dengan multiple sheets</div>
+          </div>
+        </label>
+      </div>
+      <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+        <button class="btn-reset" onclick="closeExportModal()" style="flex: 1;">Batal</button>
+        <button class="btn-generate" onclick="executeExport()" style="flex: 1;">Ekspor</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+
+  <script>
+    let currentReportType = null;
+
+    const reports = [
+      {
+        id: 'users',
+        title: 'Laporan User',
+        desc: 'Statistik dan detail semua pengguna sistem',
+        icon: '👥',
+        generate: generateUserReport
+      },
+      {
+        id: 'doctors',
+        title: 'Laporan Dokter',
+        desc: 'Data dokter, specialisasi, rating, earnings',
+        icon: '⚕️',
+        generate: generateDoctorReport
+      },
+      {
+        id: 'consultations',
+        title: 'Laporan Konsultasi',
+        desc: 'Statistik konsultasi, durasi, satisfaction',
+        icon: '💬',
+        generate: generateConsultationReport
+      },
+      {
+        id: 'herbals',
+        title: 'Laporan Herbal',
+        desc: 'Inventori herbal, evidence level, kategori',
+        icon: '🌿',
+        generate: generateHerbalReport
+      },
+      {
+        id: 'formulas',
+        title: 'Laporan Formula',
+        desc: 'Inventori formula, indikasi, preparation methods',
+        icon: '🧪',
+        generate: generateFormulaReport
+      },
+      {
+        id: 'health',
+        title: 'Laporan Health Profiles',
+        desc: 'Data profil kesehatan pasien, risk scores',
+        icon: '❤️',
+        generate: generateHealthReport
+      }
+    ];
+
+    async function initReports() {
+      const result = await VAuth.guard();
+      const profile = result.profile || result;
+      if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+      if (profile.role !== 'admin' && profile.role !== 'super_admin') {
+        showToast('Akses ditolak', 'error');
+        setTimeout(() => nav('home.html'), 2000);
+        return;
+      }
+
+      renderReportGrid();
+    }
+
+    function renderReportGrid() {
+      const grid = document.getElementById('reportGrid');
+      grid.innerHTML = reports.map(r => `
+        <div class="report-card" onclick="selectReport('${r.id}', this)">
+          <div class="report-icon">${r.icon}</div>
+          <div class="report-title">${r.title}</div>
+          <div class="report-desc">${r.desc}</div>
+          <div class="report-meta">Klik untuk lihat laporan</div>
+          <button class="btn-report" onclick="selectReport('${r.id}', event); return false;">Buka</button>
+        </div>
+      `).join('');
+    }
+
+    async function selectReport(reportId, element) {
+      if (typeof element !== 'string') {
+        element.closest('.report-card')?.classList.add('active');
+      }
+
+      currentReportType = reportId;
+      const report = reports.find(r => r.id === reportId);
+
+      if (report && report.generate) {
+        await report.generate();
+      }
+    }
+
+    // User Report
+    async function generateUserReport() {
+      const content = document.getElementById('reportContent');
+      content.innerHTML = '<div class="loading"><span class="spinner"></span>Membuat laporan...</div>';
+
+      try {
+        const snapshot = await VFirebase.db.collection('users').get();
+        const users = snapshot.docs.map(d => d.data());
+
+        const totalUsers = users.length;
+        const patients = users.filter(u => u.role === 'patient').length;
+        const doctors = users.filter(u => u.role === 'doctor').length;
+        const admins = users.filter(u => u.role === 'admin').length;
+        const activeUsers = users.filter(u => u.isActive !== false).length;
+
+        content.innerHTML = `
+          <div class="filters-section">
+            <div class="filters-title">Laporan User</div>
+            <div class="stat-box">
+              <div class="stat-item">
+                <div class="stat-number">${totalUsers}</div>
+                <div class="stat-label">Total User</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${patients}</div>
+                <div class="stat-label">Pasien</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${doctors}</div>
+                <div class="stat-label">Dokter</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${admins}</div>
+                <div class="stat-label">Admin</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${activeUsers}</div>
+                <div class="stat-label">Aktif</div>
+              </div>
+            </div>
+            <button class="btn-generate" onclick="showExportModal('users', ${totalUsers})">📊 Ekspor Data</button>
+          </div>
+          <div class="report-preview show">
+            <h3>Detail User</h3>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Nama</th><th>Email</th><th>Role</th><th>Status</th></tr></thead>
+                <tbody>
+                  ${users.slice(0, 20).map(u => `
+                    <tr>
+                      <td>${u.name || '-'}</td>
+                      <td>${u.email || '-'}</td>
+                      <td>${u.role || '-'}</td>
+                      <td>${u.isActive !== false ? '✓ Aktif' : '✗ Nonaktif'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+            ${users.length > 20 ? `<div class="no-data">Menampilkan 20 dari ${users.length} user</div>` : ''}
+          </div>
+        `;
+      } catch (error) {
+        content.innerHTML = `<div class="no-data">Gagal memuat laporan: ${error.message}</div>`;
+      }
+    }
+
+    // Doctor Report
+    async function generateDoctorReport() {
+      const content = document.getElementById('reportContent');
+      content.innerHTML = '<div class="loading"><span class="spinner"></span>Membuat laporan...</div>';
+
+      try {
+        const snapshot = await VFirebase.db.collection('users')
+          .where('role', '==', 'doctor').get();
+        const doctors = snapshot.docs.map(d => d.data());
+
+        const totalDoctors = doctors.length;
+        const avgRating = doctors.length > 0
+          ? (doctors.reduce((sum, d) => sum + (d.rating || 0), 0) / doctors.length).toFixed(1)
+          : 0;
+
+        content.innerHTML = `
+          <div class="filters-section">
+            <div class="filters-title">Laporan Dokter</div>
+            <div class="stat-box">
+              <div class="stat-item">
+                <div class="stat-number">${totalDoctors}</div>
+                <div class="stat-label">Total Dokter</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">⭐ ${avgRating}</div>
+                <div class="stat-label">Rata-rata Rating</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${doctors.filter(d => d.verified).length}</div>
+                <div class="stat-label">Terverifikasi</div>
+              </div>
+            </div>
+            <button class="btn-generate" onclick="showExportModal('doctors', ${totalDoctors})">📊 Ekspor Data</button>
+          </div>
+          <div class="report-preview show">
+            <h3>Detail Dokter</h3>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Nama</th><th>Spesialisasi</th><th>Rating</th><th>Verifikasi</th></tr></thead>
+                <tbody>
+                  ${doctors.slice(0, 20).map(d => `
+                    <tr>
+                      <td>${d.name || '-'}</td>
+                      <td>${d.specialty || '-'}</td>
+                      <td>⭐ ${d.rating || '-'}</td>
+                      <td>${d.verified ? '✓' : '✗'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+            ${doctors.length > 20 ? `<div class="no-data">Menampilkan 20 dari ${doctors.length} dokter</div>` : ''}
+          </div>
+        `;
+      } catch (error) {
+        content.innerHTML = `<div class="no-data">Gagal memuat laporan: ${error.message}</div>`;
+      }
+    }
+
+    // Consultation Report
+    async function generateConsultationReport() {
+      const content = document.getElementById('reportContent');
+      content.innerHTML = '<div class="loading"><span class="spinner"></span>Membuat laporan...</div>';
+
+      try {
+        const snapshot = await VFirebase.db.collection('consultations').get();
+        const consultations = snapshot.docs.map(d => d.data());
+
+        const totalConsultations = consultations.length;
+        const completed = consultations.filter(c => c.status === 'completed').length;
+        const active = consultations.filter(c => c.status === 'active').length;
+        const pending = consultations.filter(c => c.status === 'pending').length;
+        const avgDuration = consultations.length > 0
+          ? Math.round(consultations.reduce((sum, c) => sum + (c.duration || 0), 0) / consultations.length)
+          : 0;
+
+        content.innerHTML = `
+          <div class="filters-section">
+            <div class="filters-title">Laporan Konsultasi</div>
+            <div class="stat-box">
+              <div class="stat-item">
+                <div class="stat-number">${totalConsultations}</div>
+                <div class="stat-label">Total Konsultasi</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${completed}</div>
+                <div class="stat-label">Selesai</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${active}</div>
+                <div class="stat-label">Aktif</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${avgDuration} m</div>
+                <div class="stat-label">Durasi Rata-rata</div>
+              </div>
+            </div>
+            <button class="btn-generate" onclick="showExportModal('consultations', ${totalConsultations})">📊 Ekspor Data</button>
+          </div>
+          <div class="report-preview show">
+            <h3>Detail Konsultasi (20 terbaru)</h3>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Pasien</th><th>Dokter</th><th>Tipe</th><th>Status</th><th>Durasi</th></tr></thead>
+                <tbody>
+                  ${consultations.slice(0, 20).map(c => `
+                    <tr>
+                      <td>${c.patientName || c.patientId || '-'}</td>
+                      <td>${c.doctorName || c.doctorId || '-'}</td>
+                      <td>${c.type || '-'}</td>
+                      <td>${c.status || '-'}</td>
+                      <td>${c.duration || '-'} menit</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        content.innerHTML = `<div class="no-data">Gagal memuat laporan: ${error.message}</div>`;
+      }
+    }
+
+    // Herbal Report
+    async function generateHerbalReport() {
+      const content = document.getElementById('reportContent');
+      content.innerHTML = '<div class="loading"><span class="spinner"></span>Membuat laporan...</div>';
+
+      try {
+        const snapshot = await VFirebase.db.collection('herbals').get();
+        const herbals = snapshot.docs.map(d => d.data());
+
+        const totalHerbals = herbals.length;
+        const levelA = herbals.filter(h => h.evidenceLevel === 'A').length;
+        const levelB = herbals.filter(h => h.evidenceLevel === 'B').length;
+        const levelC = herbals.filter(h => h.evidenceLevel === 'C').length;
+
+        content.innerHTML = `
+          <div class="filters-section">
+            <div class="filters-title">Laporan Herbal</div>
+            <div class="stat-box">
+              <div class="stat-item">
+                <div class="stat-number">${totalHerbals}</div>
+                <div class="stat-label">Total Herbal</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${levelA}</div>
+                <div class="stat-label">Evidence A</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${levelB}</div>
+                <div class="stat-label">Evidence B</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${levelC}</div>
+                <div class="stat-label">Evidence C</div>
+              </div>
+            </div>
+            <button class="btn-generate" onclick="showExportModal('herbals', ${totalHerbals})">📊 Ekspor Data</button>
+          </div>
+          <div class="report-preview show">
+            <h3>Detail Herbal (20 pertama)</h3>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Nama</th><th>Nama Latin</th><th>Kategori</th><th>Evidence</th></tr></thead>
+                <tbody>
+                  ${herbals.slice(0, 20).map(h => `
+                    <tr>
+                      <td>${h.name || '-'}</td>
+                      <td>${h.latinName || '-'}</td>
+                      <td>${h.categories?.join(', ') || '-'}</td>
+                      <td>${h.evidenceLevel || '-'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        content.innerHTML = `<div class="no-data">Gagal memuat laporan: ${error.message}</div>`;
+      }
+    }
+
+    // Formula Report
+    async function generateFormulaReport() {
+      const content = document.getElementById('reportContent');
+      content.innerHTML = '<div class="loading"><span class="spinner"></span>Membuat laporan...</div>';
+
+      try {
+        const snapshot = await VFirebase.db.collection('formulas').get();
+        const formulas = snapshot.docs.map(d => d.data());
+
+        const totalFormulas = formulas.length;
+        const levelA = formulas.filter(f => f.evidenceLevel === 'A').length;
+        const levelB = formulas.filter(f => f.evidenceLevel === 'B').length;
+        const levelC = formulas.filter(f => f.evidenceLevel === 'C').length;
+        const verified = formulas.filter(f => f.doctorVerified).length;
+
+        content.innerHTML = `
+          <div class="filters-section">
+            <div class="filters-title">Laporan Formula</div>
+            <div class="stat-box">
+              <div class="stat-item">
+                <div class="stat-number">${totalFormulas}</div>
+                <div class="stat-label">Total Formula</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${levelA}</div>
+                <div class="stat-label">Evidence A</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${levelB}</div>
+                <div class="stat-label">Evidence B</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${verified}</div>
+                <div class="stat-label">Terverifikasi</div>
+              </div>
+            </div>
+            <button class="btn-generate" onclick="showExportModal('formulas', ${totalFormulas})">📊 Ekspor Data</button>
+          </div>
+          <div class="report-preview show">
+            <h3>Detail Formula (20 pertama)</h3>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>Nama</th><th>Kategori</th><th>Indikasi</th><th>Evidence</th></tr></thead>
+                <tbody>
+                  ${formulas.slice(0, 20).map(f => `
+                    <tr>
+                      <td>${f.name || '-'}</td>
+                      <td>${f.category || '-'}</td>
+                      <td>${(f.indications || []).join(', ') || '-'}</td>
+                      <td>${f.evidenceLevel || '-'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        content.innerHTML = `<div class="no-data">Gagal memuat laporan: ${error.message}</div>`;
+      }
+    }
+
+    // Health Report
+    async function generateHealthReport() {
+      const content = document.getElementById('reportContent');
+      content.innerHTML = '<div class="loading"><span class="spinner"></span>Membuat laporan...</div>';
+
+      try {
+        const snapshot = await VFirebase.db.collection('patients').get();
+        const patients = snapshot.docs.map(d => d.data());
+
+        const withProfiles = patients.filter(p => p.profile).length;
+        const withRiskScores = patients.filter(p => p.riskScores).length;
+
+        content.innerHTML = `
+          <div class="filters-section">
+            <div class="filters-title">Laporan Health Profiles</div>
+            <div class="stat-box">
+              <div class="stat-item">
+                <div class="stat-number">${patients.length}</div>
+                <div class="stat-label">Total Pasien</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${withProfiles}</div>
+                <div class="stat-label">Dengan Profil</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">${withRiskScores}</div>
+                <div class="stat-label">Dengan Risk Score</div>
+              </div>
+            </div>
+            <button class="btn-generate" onclick="showExportModal('health', ${patients.length})">📊 Ekspor Data</button>
+          </div>
+          <div class="report-preview show">
+            <h3>Detail Pasien (20 pertama)</h3>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>User ID</th><th>Profil Lengkap</th><th>Risk Score</th></tr></thead>
+                <tbody>
+                  ${patients.slice(0, 20).map(p => `
+                    <tr>
+                      <td>${p.userId || '-'}</td>
+                      <td>${p.profile ? '✓' : '✗'}</td>
+                      <td>${p.riskScores ? '✓' : '✗'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        content.innerHTML = `<div class="no-data">Gagal memuat laporan: ${error.message}</div>`;
+      }
+    }
+
+    function showExportModal(reportType, count) {
+      currentReportType = reportType;
+      document.getElementById('exportModal').classList.add('open');
+    }
+
+    function closeExportModal() {
+      document.getElementById('exportModal').classList.remove('open');
+    }
+
+    async function executeExport() {
+      const format = document.querySelector('input[name="format"]:checked').value;
+      closeExportModal();
+
+      showToast(`Mengekspor ${currentReportType} sebagai ${format.toUpperCase()}...`, 'info');
+
+      // Simulate export - in production would generate actual file
+      setTimeout(() => {
+        showToast(`${currentReportType} berhasil diekspor sebagai ${format}`, 'success');
+      }, 1000);
+    }
+
+    function nav(url) {
+      window.location.href = url;
+    }
+
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 4px;
+        z-index: 2000;
+        animation: slideUp 0.3s ease;
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Auto-init on page load
+    document.addEventListener('DOMContentLoaded', initReports);
+  </script>
+</body>
+</html>

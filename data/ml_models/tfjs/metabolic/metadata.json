@@ -1,0 +1,43 @@
+{
+  "modelName": "metabolic",
+  "modelType": "random_forest_proxy",
+  "version": "1.0",
+  "trainedAt": "2026-03-22",
+  "accuracy": 0.8649,
+  "featureNames": [
+    "Age",
+    "BMI",
+    "WaistCirc",
+    "BloodGlucose",
+    "HDL",
+    "Triglycerides",
+    "UricAcid"
+  ],
+  "featureCount": 7,
+  "scalerMean": [
+    49.10208333333333,
+    28.658958333333263,
+    98.02609375000014,
+    107.80989583333333,
+    53.55104166666667,
+    128.6453125,
+    5.502864583333326
+  ],
+  "scalerStd": [
+    17.632415574533642,
+    6.636173985432464,
+    16.178169812781988,
+    33.35840420702313,
+    15.133726785393296,
+    96.54563757248323,
+    1.46284081584281
+  ],
+  "outputLabels": [
+    "No Metabolic Syndrome",
+    "Metabolic Syndrome"
+  ],
+  "outputCount": 2,
+  "thresholds": {
+    "threshold": 0.5
+  }
+}

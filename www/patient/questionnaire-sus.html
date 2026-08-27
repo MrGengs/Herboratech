@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Kuesioner SUS</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
+  <style>
+    :root {
+      --sus-primary: #27AE60;
+      --sus-dark: #1B7A3D;
+    }
+    .app-header {
+      background: linear-gradient(135deg, var(--sus-dark) 0%, var(--sus-primary) 100%);
+      box-shadow: 0 2px 16px rgba(27, 122, 61, 0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12); box-shadow: none;
+      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .page-title { color: #fff; font-size: 1.0rem; font-weight: 700; }
+
+    .step-progress-bar {
+      background: var(--bg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 16px 16px 12px;
+      position: sticky; top: 64px; z-index: 20;
+    }
+    .step-dots { display: flex; align-items: center; justify-content: center; gap: 0; }
+    .step-dot {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid var(--shadow-dark); background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700; color: var(--text-tertiary);
+      transition: all 0.3s; flex-shrink: 0;
+    }
+    .step-dot.past { background: var(--sus-primary); color: #fff; border-color: var(--sus-primary); }
+    .step-dot.current {
+      background: linear-gradient(135deg, var(--sus-dark), var(--sus-primary));
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 12px rgba(39,174,96,0.4);
+      transform: scale(1.15);
+    }
+    .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
+    .step-line.done { background: var(--sus-primary); }
+
+    .step-info { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+    .step-title-text { font-size: 0.8rem; font-weight: 700; color: var(--sus-primary); }
+    .step-counter { font-size: 0.7rem; color: var(--text-tertiary); }
+
+    .step-pane { display: none; }
+    .step-pane.active { display: block; animation: fadeIn 0.4s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .confirm-btn-wrap {
+      position: sticky; bottom: 0; background: var(--bg);
+      border-top: 1px solid var(--shadow-dark); padding: 14px 20px; z-index: 30;
+    }
+    .btn-proceed {
+      background: linear-gradient(135deg, var(--sus-dark), var(--sus-primary));
+      color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
+      font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
+      box-shadow: 0 6px 18px rgba(39,174,96,0.3);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-proceed:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .likert-question {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 16px;
+      padding: 18px; margin-bottom: 14px;
+    }
+    .likert-question .q-text {
+      font-size: 0.84rem; font-weight: 600; color: var(--text-primary);
+      margin-bottom: 12px; line-height: 1.5;
+    }
+    .likert-question .q-number {
+      font-size: 0.68rem; font-weight: 700; color: var(--sus-primary);
+      margin-bottom: 6px;
+    }
+    .likert-question .q-note {
+      font-size: 0.7rem; color: var(--text-tertiary); font-style: italic;
+      margin-bottom: 10px;
+    }
+    .likert-options { display: flex; flex-direction: column; gap: 8px; }
+    .likert-opt {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 10px; padding: 10px 14px;
+      cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
+      font-size: 0.78rem; font-weight: 500; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .likert-opt.selected { border-color: var(--sus-primary); background: rgba(39,174,96,0.05); color: var(--sus-dark); font-weight: 600; }
+    .likert-opt .radio-circle {
+      width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--shadow-dark);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .likert-opt.selected .radio-circle { border-color: var(--sus-primary); background: var(--sus-primary); }
+    .likert-opt.selected .radio-circle::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+
+    .intro-card {
+      background: linear-gradient(135deg, rgba(39,174,96,0.08), rgba(39,174,96,0.02));
+      border-left: 4px solid var(--sus-primary); border-radius: 14px; padding: 18px; margin-bottom: 16px;
+    }
+    .intro-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--sus-dark); margin-bottom: 8px; }
+    .intro-card p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
+
+    .result-card { text-align: center; padding: 30px 20px; }
+    .result-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .result-score { font-size: 2.8rem; font-weight: 800; color: var(--sus-primary); }
+    .result-label { font-size: 0.85rem; color: var(--text-tertiary); margin-top: 4px; }
+
+    .sus-grade-visual {
+      margin-top: 20px; padding: 16px; background: var(--bg); box-shadow: var(--shadow-in);
+      border-radius: 14px;
+    }
+    .sus-scale-bar {
+      height: 16px; border-radius: 8px; overflow: hidden; position: relative;
+      background: linear-gradient(90deg, #EB5757 0%, #F2994A 25%, #F2C94C 50%, #27AE60 75%, #2F80ED 100%);
+    }
+    .sus-scale-marker {
+      position: absolute; top: -6px; width: 4px; height: 28px; background: var(--text-primary);
+      border-radius: 2px; transition: left 0.8s ease;
+    }
+    .sus-scale-labels {
+      display: flex; justify-content: space-between; margin-top: 8px;
+      font-size: 0.6rem; color: var(--text-tertiary); font-weight: 600;
+    }
+    .grade-badge {
+      display: inline-block; margin-top: 16px; padding: 8px 24px; border-radius: 30px;
+      font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;
+    }
+
+    .result-details { margin-top: 20px; text-align: left; }
+    .result-details .rd-item {
+      display: flex; justify-content: space-between; padding: 10px 0;
+      border-bottom: 1px solid var(--shadow-dark); font-size: 0.78rem;
+    }
+    .result-details .rd-item:last-child { border-bottom: none; }
+    .rd-q { flex: 1; color: var(--text-secondary); padding-right: 10px; }
+    .rd-s { font-weight: 700; color: var(--sus-primary); min-width: 30px; text-align: right; }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div class="page-title">Kuesioner SUS</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="step-progress-bar">
+    <div class="step-dots" id="step-dots"></div>
+    <div class="step-info">
+      <span class="step-title-text" id="step-title">Pendahuluan</span>
+      <span class="step-counter" id="step-counter">1 / 4</span>
+    </div>
+  </div>
+
+  <!-- STEP 1: INTRO -->
+  <div class="step-pane active" data-step="1">
+    <div class="section">
+      <div class="intro-card">
+        <h3>System Usability Scale (SUS)</h3>
+        <p>SUS adalah metode standar industri untuk mengukur <strong>usability</strong> (kebergunaan) suatu sistem. Kuesioner ini terdiri dari <strong>10 pertanyaan</strong> dengan skala Likert 1-5.</p>
+      </div>
+      <div class="neu-card-sm" style="margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(39,174,96,0.1);display:flex;align-items:center;justify-content:center;">
+            <ion-icon name="checkmark-circle-outline" style="font-size:1.2rem;color:var(--sus-primary);"></ion-icon>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:0.84rem;">Skala Penilaian</div>
+            <div style="font-size:0.72rem;color:var(--text-tertiary);">1 = Sangat Tidak Setuju &rarr; 5 = Sangat Setuju</div>
+          </div>
+        </div>
+      </div>
+      <div class="neu-card-sm" style="margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,128,237,0.1);display:flex;align-items:center;justify-content:center;">
+            <ion-icon name="analytics-outline" style="font-size:1.2rem;color:#2F80ED;"></ion-icon>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:0.84rem;">Skor SUS: 0 - 100</div>
+            <div style="font-size:0.72rem;color:var(--text-tertiary);">Skor >= 68 dianggap di atas rata-rata</div>
+          </div>
+        </div>
+      </div>
+      <div class="neu-card-sm" style="background:rgba(39,174,96,0.04);border:1px dashed rgba(39,174,96,0.3);">
+        <p style="font-size:0.75rem;color:var(--text-tertiary);text-align:center;margin:0;">
+          <ion-icon name="time-outline" style="vertical-align:middle;"></ion-icon>
+          Estimasi waktu: <strong>3-5 menit</strong> &bull; 10 pertanyaan
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Q1-5 -->
+  <div class="step-pane" data-step="2">
+    <div class="section">
+      <div class="likert-question" data-q="sus1">
+        <div class="q-number">Pertanyaan 1 dari 10</div>
+        <div class="q-text">Saya rasa saya akan sering menggunakan HerboraTech.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="sus2">
+        <div class="q-number">Pertanyaan 2 dari 10</div>
+        <div class="q-text">Saya merasa HerboraTech terlalu kompleks dan tidak perlu.</div>
+        <div class="q-note">* Pertanyaan negatif</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="sus3">
+        <div class="q-number">Pertanyaan 3 dari 10</div>
+        <div class="q-text">Saya rasa HerboraTech mudah digunakan.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="sus4">
+        <div class="q-number">Pertanyaan 4 dari 10</div>
+        <div class="q-text">Saya rasa saya memerlukan bantuan teknis untuk menggunakan HerboraTech.</div>
+        <div class="q-note">* Pertanyaan negatif</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="sus5">
+        <div class="q-number">Pertanyaan 5 dari 10</div>
+        <div class="q-text">Saya merasa berbagai fungsi di HerboraTech terintegrasi dengan baik.</div>
+        <div class="likert-options"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Q6-10 -->
+  <div class="step-pane" data-step="3">
+    <div class="section">
+      <div class="likert-question" data-q="sus6">
+        <div class="q-number">Pertanyaan 6 dari 10</div>
+        <div class="q-text">Saya merasa terlalu banyak inkonsistensi dalam HerboraTech.</div>
+        <div class="q-note">* Pertanyaan negatif</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="sus7">
+        <div class="q-number">Pertanyaan 7 dari 10</div>
+        <div class="q-text">Saya rasa kebanyakan orang akan cepat belajar menggunakan HerboraTech.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="sus8">
+        <div class="q-number">Pertanyaan 8 dari 10</div>
+        <div class="q-text">Saya merasa HerboraTech sangat rumit untuk digunakan.</div>
+        <div class="q-note">* Pertanyaan negatif</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="sus9">
+        <div class="q-number">Pertanyaan 9 dari 10</div>
+        <div class="q-text">Saya merasa percaya diri saat menggunakan HerboraTech.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="sus10">
+        <div class="q-number">Pertanyaan 10 dari 10</div>
+        <div class="q-text">Saya perlu belajar banyak hal sebelum bisa menggunakan HerboraTech.</div>
+        <div class="q-note">* Pertanyaan negatif</div>
+        <div class="likert-options"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: RESULT -->
+  <div class="step-pane" data-step="4">
+    <div class="section">
+      <div class="neu-card result-card">
+        <div class="result-icon">🎯</div>
+        <div style="font-size:0.78rem;color:var(--text-tertiary);margin-bottom:4px;">Skor SUS Anda</div>
+        <div class="result-score" id="sus-total-score">0</div>
+        <div class="result-label">dari 100 poin</div>
+
+        <div class="sus-grade-visual">
+          <div style="position:relative;">
+            <div class="sus-scale-bar">
+              <div class="sus-scale-marker" id="sus-marker" style="left:0%"></div>
+            </div>
+            <div class="sus-scale-labels">
+              <span>0</span><span>25</span><span>50</span><span>68</span><span>80</span><span>100</span>
+            </div>
+          </div>
+          <div style="text-align:center;">
+            <div class="grade-badge" id="sus-grade-badge">-</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="neu-card" id="sus-interpretation" style="border-left:4px solid var(--sus-primary);margin-top:16px;">
+        <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;" id="sus-interp-text"></p>
+      </div>
+
+      <div class="neu-card" style="margin-top:16px;">
+        <div style="font-weight:700;font-size:0.88rem;margin-bottom:12px;color:var(--text-primary);">Detail Per Pertanyaan</div>
+        <div class="result-details" id="sus-details"></div>
+      </div>
+
+      <button class="neu-btn neu-btn-primary neu-btn-block" style="margin-top:16px;" onclick="nav('home.html')">
+        <ion-icon name="home-outline"></ion-icon> Kembali ke Beranda
+      </button>
+    </div>
+  </div>
+
+  <div class="confirm-btn-wrap">
+    <button class="btn-proceed" id="btn-next" onclick="nextStep()">
+      Mulai Kuesioner <ion-icon name="arrow-forward-outline"></ion-icon>
+    </button>
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+const TOTAL_STEPS = 4;
+let currentStep = 1;
+const answers = {};
+
+const LIKERT_LABELS = [
+  'Sangat Tidak Setuju',
+  'Tidak Setuju',
+  'Netral',
+  'Setuju',
+  'Sangat Setuju'
+];
+
+const STEP_TITLES = ['Pendahuluan', 'Pertanyaan 1-5', 'Pertanyaan 6-10', 'Hasil Penilaian'];
+
+const SUS_QUESTIONS = [
+  'Saya rasa saya akan sering menggunakan HerboraTech.',
+  'Saya merasa HerboraTech terlalu kompleks.',
+  'Saya rasa HerboraTech mudah digunakan.',
+  'Saya memerlukan bantuan teknis untuk menggunakan HerboraTech.',
+  'Berbagai fungsi di HerboraTech terintegrasi dengan baik.',
+  'Terlalu banyak inkonsistensi dalam HerboraTech.',
+  'Kebanyakan orang akan cepat belajar menggunakan HerboraTech.',
+  'HerboraTech sangat rumit untuk digunakan.',
+  'Saya merasa percaya diri saat menggunakan HerboraTech.',
+  'Saya perlu belajar banyak hal sebelum bisa menggunakan HerboraTech.'
+];
+
+document.querySelectorAll('.likert-question').forEach(q => {
+  const qId = q.dataset.q;
+  const optionsDiv = q.querySelector('.likert-options');
+  LIKERT_LABELS.forEach((label, i) => {
+    const opt = document.createElement('div');
+    opt.className = 'likert-opt';
+    opt.innerHTML = `<div class="radio-circle"></div><span>${i + 1}. ${label}</span>`;
+    opt.onclick = () => selectAnswer(qId, i + 1, opt);
+    optionsDiv.appendChild(opt);
+  });
+});
+
+function selectAnswer(qId, value, el) {
+  const parent = el.closest('.likert-question');
+  parent.querySelectorAll('.likert-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[qId] = value;
+  checkStepComplete();
+}
+
+function checkStepComplete() {
+  const btn = document.getElementById('btn-next');
+  if (currentStep === 1 || currentStep === 4) { btn.disabled = false; return; }
+  const pane = document.querySelector(`.step-pane[data-step="${currentStep}"]`);
+  const questions = pane.querySelectorAll('.likert-question');
+  btn.disabled = ![...questions].every(q => answers[q.dataset.q]);
+}
+
+function renderStepDots() {
+  const container = document.getElementById('step-dots');
+  let html = '';
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const cls = i < currentStep ? 'past' : i === currentStep ? 'current' : '';
+    html += `<div class="step-dot ${cls}">${i}</div>`;
+    if (i < TOTAL_STEPS) html += `<div class="step-line ${i < currentStep ? 'done' : ''}"></div>`;
+  }
+  container.innerHTML = html;
+  document.getElementById('step-title').textContent = STEP_TITLES[currentStep - 1];
+  document.getElementById('step-counter').textContent = `${currentStep} / ${TOTAL_STEPS}`;
+}
+
+function nextStep() {
+  if (currentStep < TOTAL_STEPS) {
+    currentStep++;
+    document.querySelectorAll('.step-pane').forEach(p => p.classList.remove('active'));
+    document.querySelector(`.step-pane[data-step="${currentStep}"]`).classList.add('active');
+    renderStepDots();
+
+    const btn = document.getElementById('btn-next');
+    if (currentStep === TOTAL_STEPS) {
+      calculateResults();
+      btn.style.display = 'none';
+    } else {
+      btn.innerHTML = 'Lanjut <ion-icon name="arrow-forward-outline"></ion-icon>';
+      checkStepComplete();
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function calculateResults() {
+  // SUS scoring: odd items (1,3,5,7,9) = value - 1; even items (2,4,6,8,10) = 5 - value
+  // Then sum * 2.5
+  let sum = 0;
+  const contributions = [];
+  for (let i = 1; i <= 10; i++) {
+    const raw = answers[`sus${i}`] || 3;
+    let contribution;
+    if (i % 2 === 1) {
+      contribution = raw - 1; // odd (positive) items
+    } else {
+      contribution = 5 - raw; // even (negative) items
+    }
+    contributions.push(contribution);
+    sum += contribution;
+  }
+  const susScore = Math.round(sum * 2.5);
+
+  document.getElementById('sus-total-score').textContent = susScore;
+
+  // Marker position
+  setTimeout(() => {
+    document.getElementById('sus-marker').style.left = `${Math.min(susScore, 100)}%`;
+  }, 300);
+
+  // Grade
+  const badge = document.getElementById('sus-grade-badge');
+  const interp = document.getElementById('sus-interp-text');
+
+  let grade, gradeColor, gradeBg;
+  if (susScore >= 85) { grade = 'A'; gradeColor = '#2F80ED'; gradeBg = 'rgba(47,128,237,0.12)'; }
+  else if (susScore >= 72) { grade = 'B'; gradeColor = '#27AE60'; gradeBg = 'rgba(39,174,96,0.12)'; }
+  else if (susScore >= 68) { grade = 'C'; gradeColor = '#F2C94C'; gradeBg = 'rgba(242,201,76,0.15)'; }
+  else if (susScore >= 51) { grade = 'D'; gradeColor = '#F2994A'; gradeBg = 'rgba(242,153,74,0.12)'; }
+  else { grade = 'F'; gradeColor = '#EB5757'; gradeBg = 'rgba(235,87,87,0.12)'; }
+
+  badge.textContent = `Grade ${grade}`;
+  badge.style.background = gradeBg;
+  badge.style.color = gradeColor;
+
+  if (susScore >= 85) {
+    interp.innerHTML = `<strong style="color:${gradeColor};">Excellent!</strong><br>Skor SUS ${susScore} menunjukkan usability yang luar biasa. Pengguna sangat puas dengan kemudahan penggunaan HerboraTech.`;
+  } else if (susScore >= 68) {
+    interp.innerHTML = `<strong style="color:${gradeColor};">Di Atas Rata-rata</strong><br>Skor SUS ${susScore} berada di atas rata-rata industri (68). HerboraTech memiliki usability yang baik dengan ruang untuk peningkatan.`;
+  } else if (susScore >= 51) {
+    interp.innerHTML = `<strong style="color:${gradeColor};">Rata-rata</strong><br>Skor SUS ${susScore} menunjukkan usability yang cukup. Beberapa aspek perlu diperbaiki untuk meningkatkan pengalaman pengguna.`;
+  } else {
+    interp.innerHTML = `<strong style="color:${gradeColor};">Di Bawah Rata-rata</strong><br>Skor SUS ${susScore} menunjukkan adanya masalah usability yang perlu diperbaiki. Masukan Anda sangat berharga.`;
+  }
+
+  // Detail per question
+  const detailsEl = document.getElementById('sus-details');
+  detailsEl.innerHTML = SUS_QUESTIONS.map((q, i) => {
+    const score = contributions[i];
+    return `<div class="rd-item"><span class="rd-q">${i + 1}. ${q}</span><span class="rd-s">${score}/4</span></div>`;
+  }).join('');
+}
+
+renderStepDots();
+checkStepComplete();
+</script>
+</body>
+</html>

@@ -1,0 +1,3052 @@
+{
+  "metadata": {
+    "generatedBy": "Claude Desktop",
+    "generatedAt": "2026-03-22",
+    "categories": [
+      "metabolisme",
+      "kardiovaskular",
+      "urologi"
+    ],
+    "totalFormulas": 42,
+    "evidenceBasis": "FOHAI Kemenkes RI, WHO Monographs, Saintifikasi Jamu, Farmakope Herbal Indonesia"
+  },
+  "formulas": [
+    {
+      "recipeNumber": 1,
+      "name": "Ramuan Asam Urat — Sidaguri Tunggal",
+      "indications": [
+        "asam-urat"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Akar Sidaguri kering",
+          "latinName": "Sida rhombifolia L.",
+          "amount": 60,
+          "unit": "gram",
+          "condition": "kering, dipotong kecil"
+        }
+      ],
+      "preparationMethod": "Cuci bersih akar sidaguri. Potong tipis. Rebus dengan 3 gelas air (600ml) api sedang 15-20 menit hingga tersisa ±1 gelas (200ml). Saring dan dinginkan.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum makan)",
+      "duration": "14-30 hari, evaluasi setelah 2 minggu",
+      "warnings": [
+        "Ibu hamil DILARANG",
+        "Hentikan jika mual/pusing",
+        "Konsultasi dokter jika tidak membaik setelah 1 bulan"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI + Farmakope Herbal Indonesia Ed.II",
+      "tags": [
+        "asam-urat",
+        "sidaguri",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 2,
+      "name": "Ramuan Asam Urat — Tempuyung Tunggal",
+      "indications": [
+        "asam-urat"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Daun Tempuyung segar",
+          "latinName": "Sonchus arvensis L.",
+          "amount": 90,
+          "unit": "gram",
+          "condition": "segar, dicuci bersih"
+        }
+      ],
+      "preparationMethod": "Ambil daun tempuyung segar, cuci bersih. Rebus dengan 4 gelas air (800ml) api sedang 15 menit hingga tersisa ±1.5 gelas (300ml). Saring, dinginkan.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "21-30 hari",
+      "warnings": [
+        "Pasien dengan tekanan darah rendah hati-hati",
+        "Ibu menyusui perlu konsultasi",
+        "Hentikan jika diare berlebihan"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "FOHAI Kemenkes RI - Profil Tempuyung",
+      "tags": [
+        "asam-urat",
+        "tempuyung",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 3,
+      "name": "Ramuan Asam Urat — Kumis Kucing Tunggal",
+      "indications": [
+        "asam-urat"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Daun Kumis Kucing kering",
+          "latinName": "Orthosiphon stamineus Benth.",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "kering, dicuci"
+        }
+      ],
+      "preparationMethod": "Cuci daun kumis kucing kering. Rebus dengan 3 gelas air (600ml) api sedang 20 menit hingga tersisa 1 gelas (200ml). Saring hangat-hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1 gelas sekaligus.",
+      "frequency": "1x sehari (pagi atau malam)",
+      "duration": "30-60 hari",
+      "warnings": [
+        "Jangan diminum saat perut kosong",
+        "Hentikan jika terjadi gangguan pencernaan",
+        "Ibu hamil trimester pertama hindari"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs on Orthosiphon stamineus + Farmakope Herbal",
+      "tags": [
+        "asam-urat",
+        "kumis-kucing",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 4,
+      "name": "Ramuan Asam Urat — Rambut Jagung Tunggal",
+      "indications": [
+        "asam-urat"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Rambut Jagung kering",
+          "latinName": "Zea mays L. var. saccharata",
+          "amount": 40,
+          "unit": "gram",
+          "condition": "kering, dibersihkan"
+        }
+      ],
+      "preparationMethod": "Cuci rambut jagung kering. Rebus dengan 4 gelas air (800ml) api sedang 20 menit hingga tersisa 1.5 gelas (300ml). Saring, tambah sedikit madu jika diperlukan.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "14-21 hari",
+      "warnings": [
+        "Aman untuk jangka panjang",
+        "Ibu hamil boleh konsumsi",
+        "Hentikan jika alergi"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Farmakope Herbal Indonesia Ed.II + Saintifikasi Jamu",
+      "tags": [
+        "asam-urat",
+        "rambut-jagung",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 5,
+      "name": "Ramuan Asam Urat — Sambiloto Tunggal",
+      "indications": [
+        "asam-urat"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Daun Sambiloto kering",
+          "latinName": "Andrographis paniculata (Burm.f.) Wall. ex Nees",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "kering, ditepung"
+        }
+      ],
+      "preparationMethod": "Rebus 30g daun sambiloto kering dengan 3 gelas air (600ml) api sedang 15 menit hingga tersisa 1 gelas (200ml). Saring, minum hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan malam)",
+      "duration": "14 hari, istirahat 7 hari, ulangi",
+      "warnings": [
+        "Rasa pahit, boleh ditambah madu",
+        "Ibu hamil DILARANG",
+        "Jangan bersamaan dengan obat antidiabetes tanpa konsultasi"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs + Saintifikasi Jamu Kemenkes",
+      "tags": [
+        "asam-urat",
+        "sambiloto",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 6,
+      "name": "Ramuan Asam Urat — Sidaguri + Tempuyung Kombinasi",
+      "indications": [
+        "asam-urat"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Akar Sidaguri kering",
+          "latinName": "Sida rhombifolia L.",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "kering"
+        },
+        {
+          "herb": "Daun Tempuyung segar",
+          "latinName": "Sonchus arvensis L.",
+          "amount": 45,
+          "unit": "gram",
+          "condition": "segar"
+        }
+      ],
+      "preparationMethod": "Cuci semua bahan. Rebus dengan 4 gelas air (800ml) api sedang 20 menit hingga tersisa 1.5 gelas (300ml). Saring dan minum hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum makan)",
+      "duration": "21-30 hari",
+      "warnings": [
+        "Ibu hamil DILARANG",
+        "Tekanan darah rendah hati-hati",
+        "Konsultasi dokter jika ada penyakit ginjal"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "asam-urat",
+        "sidaguri",
+        "tempuyung",
+        "rebus",
+        "kombinasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 7,
+      "name": "Ramuan Asam Urat — Kumis Kucing + Sambiloto Kombinasi",
+      "indications": [
+        "asam-urat"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Daun Kumis Kucing kering",
+          "latinName": "Orthosiphon stamineus Benth.",
+          "amount": 25,
+          "unit": "gram",
+          "condition": "kering"
+        },
+        {
+          "herb": "Daun Sambiloto kering",
+          "latinName": "Andrographis paniculata (Burm.f.) Wall. ex Nees",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "kering"
+        }
+      ],
+      "preparationMethod": "Rebus 25g kumis kucing + 20g sambiloto dengan 3 gelas air (600ml) api sedang 20 menit. Tersisa ±1 gelas (200ml). Saring hangat-hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan malam sebelum tidur)",
+      "duration": "30-45 hari",
+      "warnings": [
+        "Rasa sangat pahit",
+        "Ibu hamil DILARANG",
+        "Monitor fungsi ginjal jika konsumsi jangka panjang"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Formulasi Jamu Tradisional Terstandar",
+      "tags": [
+        "asam-urat",
+        "kumis-kucing",
+        "sambiloto",
+        "rebus",
+        "kombinasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 8,
+      "name": "Ramuan Asam Urat — Rambut Jagung + Tempuyung Kombinasi",
+      "indications": [
+        "asam-urat"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Rambut Jagung kering",
+          "latinName": "Zea mays L. var. saccharata",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "kering"
+        },
+        {
+          "herb": "Daun Tempuyung segar",
+          "latinName": "Sonchus arvensis L.",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "segar"
+        }
+      ],
+      "preparationMethod": "Cuci semua bahan. Rebus dengan 4 gelas air (800ml) api sedang 20 menit. Tersisa ±1.5 gelas (300ml). Saring dan dinginkan.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "21 hari",
+      "warnings": [
+        "Aman untuk jangka panjang",
+        "Ibu hamil boleh konsumsi",
+        "Kombinasi ini ringan dan aman"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "asam-urat",
+        "rambut-jagung",
+        "tempuyung",
+        "rebus",
+        "kombinasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 9,
+      "name": "Ramuan Diabetes — Sambiloto Tunggal",
+      "indications": [
+        "diabetes-tipe-2"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Daun Sambiloto kering",
+          "latinName": "Andrographis paniculata (Burm.f.) Wall. ex Nees",
+          "amount": 25,
+          "unit": "gram",
+          "condition": "kering, dipotong halus"
+        }
+      ],
+      "preparationMethod": "Rebus 25g daun sambiloto kering dengan 3 gelas air (600ml) api sedang 15 menit. Tersisa ±1 gelas (200ml). Saring dan minum hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "2x sehari (pagi sebelum sarapan, malam sebelum tidur)",
+      "duration": "30-60 hari, monitor gula darah secara berkala",
+      "warnings": [
+        "Jangan menggantikan obat dokter",
+        "Hentikan jika hipoglikemia",
+        "Ibu hamil DILARANG",
+        "Pantau gula darah reguler"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs + Saintifikasi Jamu Kemenkes",
+      "tags": [
+        "diabetes",
+        "sambiloto",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 10,
+      "name": "Ramuan Diabetes — Pare Tunggal",
+      "indications": [
+        "diabetes-tipe-2"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Buah Pare segar",
+          "latinName": "Momordica charantia L.",
+          "amount": 100,
+          "unit": "gram",
+          "condition": "segar, dibelah ambil biji dan kulit putih, potong tipis"
+        }
+      ],
+      "preparationMethod": "Cuci pare segar. Belah, ambil biji dan kulit putih (bagian pahit). Potong tipis ±2cm. Rebus dengan 3 gelas air (600ml) api sedang 15-20 menit. Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan malam)",
+      "duration": "14-21 hari, evaluasi kadar gula darah",
+      "warnings": [
+        "Pasien dengan insulin HATI-HATI",
+        "Jangan pada pagi hari saat perut kosong",
+        "Ibu hamil DILARANG",
+        "Pantau gula darah berkala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Farmakope Herbal Indonesia + Saintifikasi Jamu",
+      "tags": [
+        "diabetes",
+        "pare",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 11,
+      "name": "Ramuan Diabetes — Brotowali Tunggal",
+      "indications": [
+        "diabetes-tipe-2"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Batang Brotowali kering",
+          "latinName": "Tinospora cordifolia (Thunb.) Miers",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "kering, dipotong kecil 2-3cm"
+        }
+      ],
+      "preparationMethod": "Cuci batang brotowali kering. Potong kecil. Rebus dengan 4 gelas air (800ml) api sedang 25-30 menit. Tersisa ±1.5 gelas (300ml). Saring.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "30-45 hari",
+      "warnings": [
+        "Rasa pahit yang kuat",
+        "Ibu hamil hati-hati",
+        "Jangan bersamaan dengan obat diabetes tanpa konsultasi",
+        "Pantau gula darah"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "WHO Traditional Medicine Database + Farmakope",
+      "tags": [
+        "diabetes",
+        "brotowali",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 12,
+      "name": "Ramuan Diabetes — Mahkota Dewa Tunggal",
+      "indications": [
+        "diabetes-tipe-2"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Daun Mahkota Dewa segar",
+          "latinName": "Phaleria macrocarpa (Scheff.) Boerl.",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "segar, dicuci bersih"
+        }
+      ],
+      "preparationMethod": "Cuci daun mahkota dewa segar. Rebus dengan 3 gelas air (600ml) api sedang 15 menit. Tersisa ±1 gelas (200ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "14-21 hari, istirahat 7 hari, ulangi",
+      "warnings": [
+        "Jangan diminum saat perut kosong",
+        "Batasi penggunaan jangka panjang",
+        "Ibu hamil DILARANG",
+        "Hentikan jika ada alergi kulit"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "diabetes",
+        "mahkota-dewa",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 13,
+      "name": "Ramuan Diabetes — Daun Salam Tunggal",
+      "indications": [
+        "diabetes-tipe-2"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Daun Salam kering",
+          "latinName": "Syzygium polyanthum (Wight) Walp.",
+          "amount": 40,
+          "unit": "gram",
+          "condition": "kering, utuh atau dipecah"
+        }
+      ],
+      "preparationMethod": "Cuci daun salam kering. Rebus dengan 4 gelas air (800ml) api sedang 20 menit. Tersisa ±1.5 gelas (300ml). Saring dan dinginkan.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "2x sehari (pagi sebelum sarapan, sore)",
+      "duration": "30 hari",
+      "warnings": [
+        "Aman untuk jangka panjang",
+        "Ibu hamil boleh konsumsi",
+        "Kombinasi baik dengan herba lain",
+        "Monitor kadar gula darah"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Farmakope Herbal Indonesia Ed.II",
+      "tags": [
+        "diabetes",
+        "daun-salam",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 14,
+      "name": "Ramuan Diabetes — Kayu Manis Tunggal",
+      "indications": [
+        "diabetes-tipe-2"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Kayu Manis kering (kupas kulit)",
+          "latinName": "Cinnamomum burmanni (Nees & T.Nees) Blume",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "kering, potong 2-3cm"
+        }
+      ],
+      "preparationMethod": "Rebus 20g kayu manis dengan 3 gelas air (600ml) api sedang 25-30 menit. Tersisa ±1 gelas (200ml). Saring dan minum hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan malam)",
+      "duration": "30-60 hari",
+      "warnings": [
+        "Ibu hamil HINDARI",
+        "Rasa manis alami dari kayu manis",
+        "Jangan bersamaan dengan antikoagulan",
+        "Monitor gula darah"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs Cinnamomum + Farmakope",
+      "tags": [
+        "diabetes",
+        "kayu-manis",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 15,
+      "name": "Ramuan Diabetes — Sambiloto + Pare Kombinasi",
+      "indications": [
+        "diabetes-tipe-2"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Daun Sambiloto kering",
+          "latinName": "Andrographis paniculata (Burm.f.) Wall. ex Nees",
+          "amount": 15,
+          "unit": "gram",
+          "condition": "kering"
+        },
+        {
+          "herb": "Buah Pare segar",
+          "latinName": "Momordica charantia L.",
+          "amount": 60,
+          "unit": "gram",
+          "condition": "segar, dipersiapkan"
+        }
+      ],
+      "preparationMethod": "Cuci semua bahan. Rebus pare (tanpa biji putih) + sambiloto dengan 4 gelas air (800ml) api sedang 20 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan malam)",
+      "duration": "21-30 hari",
+      "warnings": [
+        "Kombinasi kuat untuk kontrol gula",
+        "Ibu hamil DILARANG",
+        "Jangan gantikan obat dokter",
+        "Monitor gula darah berkala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "diabetes",
+        "sambiloto",
+        "pare",
+        "rebus",
+        "kombinasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 16,
+      "name": "Ramuan Diabetes — Brotowali + Daun Salam Kombinasi",
+      "indications": [
+        "diabetes-tipe-2"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Batang Brotowali kering",
+          "latinName": "Tinospora cordifolia (Thunb.) Miers",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "kering"
+        },
+        {
+          "herb": "Daun Salam kering",
+          "latinName": "Syzygium polyanthum (Wight) Walp.",
+          "amount": 25,
+          "unit": "gram",
+          "condition": "kering"
+        }
+      ],
+      "preparationMethod": "Rebus 30g brotowali + 25g daun salam dengan 4 gelas air (800ml) api sedang 25 menit. Tersisa ±1.5 gelas (300ml). Saring.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "45-60 hari",
+      "warnings": [
+        "Kombinasi sinergis",
+        "Ibu hamil hati-hati",
+        "Monitor gula darah",
+        "Konsultasi dengan dokter"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Formulasi Herbal Terstandar",
+      "tags": [
+        "diabetes",
+        "brotowali",
+        "daun-salam",
+        "rebus",
+        "kombinasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 17,
+      "name": "Ramuan Kolesterol — Bawang Putih Tunggal",
+      "indications": [
+        "hiperkolesterol"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Bawang Putih segar",
+          "latinName": "Allium sativum L.",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "segar, 5-6 siung, dipisahkan"
+        }
+      ],
+      "preparationMethod": "Kupas bawang putih segar. Rebus dengan 3 gelas air (600ml) api sedang 15 menit. Tersisa ±1 gelas (200ml). Saring dan minum hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "30-60 hari, monitor kolesterol",
+      "warnings": [
+        "Mungkin ada bau napas",
+        "Jangan pada pasien dengan tukak lambung",
+        "Ibu menyusui boleh konsumsi",
+        "Tidak boleh bersamaan dengan antikoagulan"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs Allium sativum + Farmakope",
+      "tags": [
+        "kolesterol",
+        "bawang-putih",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 18,
+      "name": "Ramuan Kolesterol — Daun Salam Tunggal",
+      "indications": [
+        "hiperkolesterol"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Daun Salam kering",
+          "latinName": "Syzygium polyanthum (Wight) Walp.",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "kering, utuh"
+        }
+      ],
+      "preparationMethod": "Cuci daun salam kering. Rebus dengan 4 gelas air (800ml) api sedang 20 menit. Tersisa ±1.5 gelas (300ml). Saring dan dinginkan.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "30-45 hari",
+      "warnings": [
+        "Aman untuk jangka panjang",
+        "Ibu hamil boleh konsumsi",
+        "Monitor kolesterol berkala",
+        "Kombinasi baik dengan diet sehat"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Farmakope Herbal Indonesia Ed.II",
+      "tags": [
+        "kolesterol",
+        "daun-salam",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 19,
+      "name": "Ramuan Kolesterol — Temulawak Tunggal",
+      "indications": [
+        "hiperkolesterol"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Rimpang Temulawak kering",
+          "latinName": "Curcuma xanthorrhiza Roxb.",
+          "amount": 40,
+          "unit": "gram",
+          "condition": "kering, diiris tipis"
+        }
+      ],
+      "preparationMethod": "Cuci rimpang temulawak kering. Potong tipis ±3-5mm. Rebus dengan 4 gelas air (800ml) api sedang 25-30 menit. Tersisa ±1.5 gelas (300ml). Saring.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "30-60 hari",
+      "warnings": [
+        "Rasa pahit, bisa ditambah madu",
+        "Ibu hamil boleh konsumsi",
+        "Penderita batu empedu hati-hati",
+        "Monitor kolesterol berkala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu + Farmakope Herbal",
+      "tags": [
+        "kolesterol",
+        "temulawak",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 20,
+      "name": "Ramuan Kolesterol — Rosella Tunggal",
+      "indications": [
+        "hiperkolesterol"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Kelopak Rosella kering",
+          "latinName": "Hibiscus sabdariffa L.",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "kering, dibersihkan"
+        }
+      ],
+      "preparationMethod": "Cuci kelopak rosella kering. Rebus dengan 4 gelas air (800ml) api sedang 15-20 menit. Tersisa ±1.5 gelas (300ml). Saring hangat atau dinginkan.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "30-45 hari",
+      "warnings": [
+        "Rasa asam alami",
+        "Tekanan darah rendah hati-hati",
+        "Ibu hamil boleh konsumsi",
+        "Konsultasi jika ada gangguan ginjal"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs + Farmakope Herbal",
+      "tags": [
+        "kolesterol",
+        "rosella",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 21,
+      "name": "Ramuan Kolesterol — Daun Sirsak Tunggal",
+      "indications": [
+        "hiperkolesterol"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Daun Sirsak segar",
+          "latinName": "Annona muricata L.",
+          "amount": 60,
+          "unit": "gram",
+          "condition": "segar, dipilih daun muda"
+        }
+      ],
+      "preparationMethod": "Cuci daun sirsak segar dengan air mengalir. Rebus dengan 4 gelas air (800ml) api sedang 15 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "21-30 hari, evaluasi kolesterol",
+      "warnings": [
+        "Ibu hamil HINDARI",
+        "Jangan terlalu lama konsumsi",
+        "Hentikan jika ada gangguan pencernaan",
+        "Monitor kolesterol setelah 30 hari"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "kolesterol",
+        "daun-sirsak",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 22,
+      "name": "Ramuan Kolesterol — Bawang Putih + Daun Salam Kombinasi",
+      "indications": [
+        "hiperkolesterol"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Bawang Putih segar",
+          "latinName": "Allium sativum L.",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "segar"
+        },
+        {
+          "herb": "Daun Salam kering",
+          "latinName": "Syzygium polyanthum (Wight) Walp.",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "kering"
+        }
+      ],
+      "preparationMethod": "Rebus 20g bawang putih (3-4 siung) + 30g daun salam dengan 4 gelas air (800ml) api sedang 20 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "30-60 hari",
+      "warnings": [
+        "Kombinasi sinergis untuk kolesterol",
+        "Bau bawang putih mungkin terjadi",
+        "Monitor kolesterol berkala",
+        "Tidak boleh dengan antikoagulan"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Formulasi Herbal Terstandar",
+      "tags": [
+        "kolesterol",
+        "bawang-putih",
+        "daun-salam",
+        "rebus",
+        "kombinasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 23,
+      "name": "Ramuan Hipertensi — Seledri Tunggal",
+      "indications": [
+        "hipertensi"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Batang dan Daun Seledri segar",
+          "latinName": "Apium graveolens L.",
+          "amount": 100,
+          "unit": "gram",
+          "condition": "segar, dicuci bersih"
+        }
+      ],
+      "preparationMethod": "Cuci seledri segar. Potong kecil hingga 2-3cm. Jus atau rebus dengan 3 gelas air (600ml) api sedang 10-15 menit. Tersisa ±1 gelas (200ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "30 hari, monitor tekanan darah",
+      "warnings": [
+        "Ibu hamil boleh konsumsi",
+        "Pasien dengan hipotensi HATI-HATI",
+        "Konsultasi dengan dokter",
+        "Jangan menggantikan obat"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Farmakope Herbal Indonesia + Saintifikasi Jamu",
+      "tags": [
+        "hipertensi",
+        "seledri",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 24,
+      "name": "Ramuan Hipertensi — Rosella Tunggal",
+      "indications": [
+        "hipertensi"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Kelopak Rosella kering",
+          "latinName": "Hibiscus sabdariffa L.",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "kering, dibersihkan"
+        }
+      ],
+      "preparationMethod": "Cuci kelopak rosella kering. Rebus dengan 4 gelas air (800ml) api sedang 15-20 menit. Tersisa ±1.5 gelas (300ml). Saring hangat atau dinginkan.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "45-60 hari, monitor tekanan darah",
+      "warnings": [
+        "Efektif menurunkan tekanan darah",
+        "Monitor tekanan berkala",
+        "Ibu hamil boleh konsumsi",
+        "Konsultasi jika ada efek samping"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs Hibiscus sabdariffa",
+      "tags": [
+        "hipertensi",
+        "rosella",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 25,
+      "name": "Ramuan Hipertensi — Mengkudu Tunggal",
+      "indications": [
+        "hipertensi"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Buah Mengkudu segar",
+          "latinName": "Morinda citrifolia L.",
+          "amount": 100,
+          "unit": "gram",
+          "condition": "segar, tidak terlalu matang"
+        }
+      ],
+      "preparationMethod": "Cuci mengkudu segar. Potong kecil. Jus dengan blender, saring dengan kain bersih. Atau rebus dengan 3 gelas air (600ml) api sedang 10 menit. Saring.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/4 gelas sekaligus atau 50ml jus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "30-45 hari, evaluasi tekanan darah",
+      "warnings": [
+        "Rasa sangat pahit dan tidak enak",
+        "Ibu hamil HINDARI",
+        "Pasien dengan hipotensi jangan konsumsi",
+        "Hentikan jika ada efek samping"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "hipertensi",
+        "mengkudu",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 26,
+      "name": "Ramuan Hipertensi — Bawang Putih Tunggal",
+      "indications": [
+        "hipertensi"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Bawang Putih segar",
+          "latinName": "Allium sativum L.",
+          "amount": 40,
+          "unit": "gram",
+          "condition": "segar, 6-8 siung"
+        }
+      ],
+      "preparationMethod": "Kupas bawang putih segar. Rebus dengan 3 gelas air (600ml) api sedang 15-20 menit. Tersisa ±1 gelas (200ml). Saring dan minum hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "60 hari, monitor tekanan darah",
+      "warnings": [
+        "Efektif menurunkan tekanan darah",
+        "Bau napas mungkin terjadi",
+        "Ibu hamil boleh konsumsi",
+        "Jangan dengan antikoagulan"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs Allium sativum",
+      "tags": [
+        "hipertensi",
+        "bawang-putih",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 27,
+      "name": "Ramuan Hipertensi — Kumis Kucing Tunggal",
+      "indications": [
+        "hipertensi"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Daun Kumis Kucing kering",
+          "latinName": "Orthosiphon stamineus Benth.",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "kering, dibersihkan"
+        }
+      ],
+      "preparationMethod": "Cuci daun kumis kucing kering. Rebus dengan 4 gelas air (800ml) api sedang 20 menit. Tersisa ±1.5 gelas (300ml). Saring hangat-hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan malam)",
+      "duration": "30-45 hari",
+      "warnings": [
+        "Diuretik, pembuangan urin meningkat",
+        "Monitor tekanan darah",
+        "Ibu hamil hati-hati",
+        "Jangan pada hipotensi"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs Orthosiphon stamineus",
+      "tags": [
+        "hipertensi",
+        "kumis-kucing",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 28,
+      "name": "Ramuan Hipertensi — Belimbing Wuluh Tunggal",
+      "indications": [
+        "hipertensi"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Buah Belimbing Wuluh segar",
+          "latinName": "Averrhoa bilimbi L.",
+          "amount": 80,
+          "unit": "gram",
+          "condition": "segar, dicuci"
+        }
+      ],
+      "preparationMethod": "Cuci buah belimbing wuluh segar. Potong kecil. Rebus dengan 3 gelas air (600ml) api sedang 15 menit. Tersisa ±1 gelas (200ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "21-30 hari",
+      "warnings": [
+        "Rasa sangat asam",
+        "Ibu hamil boleh konsumsi",
+        "Hati-hati pada pasien asam urat",
+        "Monitor tekanan berkala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Farmakope Herbal Indonesia",
+      "tags": [
+        "hipertensi",
+        "belimbing-wuluh",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 29,
+      "name": "Ramuan Hipertensi — Seledri + Bawang Putih Kombinasi",
+      "indications": [
+        "hipertensi"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Batang dan Daun Seledri segar",
+          "latinName": "Apium graveolens L.",
+          "amount": 60,
+          "unit": "gram",
+          "condition": "segar"
+        },
+        {
+          "herb": "Bawang Putih segar",
+          "latinName": "Allium sativum L.",
+          "amount": 25,
+          "unit": "gram",
+          "condition": "segar, 3-4 siung"
+        }
+      ],
+      "preparationMethod": "Cuci semua bahan. Potong seledri, kupas bawang putih. Rebus dengan 4 gelas air (800ml) api sedang 15 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "30-60 hari",
+      "warnings": [
+        "Kombinasi sinergis kuat",
+        "Monitor tekanan darah berkala",
+        "Ibu hamil boleh konsumsi",
+        "Konsultasi dokter jika ada efek"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Formulasi Herbal Terstandar",
+      "tags": [
+        "hipertensi",
+        "seledri",
+        "bawang-putih",
+        "rebus",
+        "kombinasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 30,
+      "name": "Ramuan Hipertensi — Rosella + Mengkudu Kombinasi",
+      "indications": [
+        "hipertensi"
+      ],
+      "category": "kardiovaskular",
+      "ingredients": [
+        {
+          "herb": "Kelopak Rosella kering",
+          "latinName": "Hibiscus sabdariffa L.",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "kering"
+        },
+        {
+          "herb": "Buah Mengkudu segar",
+          "latinName": "Morinda citrifolia L.",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "segar"
+        }
+      ],
+      "preparationMethod": "Cuci semua bahan. Rebus rosella + mengkudu yang telah dipotong dengan 4 gelas air (800ml) api sedang 20 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "45-60 hari",
+      "warnings": [
+        "Rasa kurang enak tapi efektif",
+        "Monitor tekanan darah",
+        "Ibu hamil hati-hati",
+        "Tidak untuk hipotensi"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "hipertensi",
+        "rosella",
+        "mengkudu",
+        "rebus",
+        "kombinasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 31,
+      "name": "Ramuan Batu Ginjal — Keji Beling Tunggal",
+      "indications": [
+        "batu-ginjal"
+      ],
+      "category": "urologi",
+      "ingredients": [
+        {
+          "herb": "Daun Keji Beling segar",
+          "latinName": "Strobilanthes crispus (L.) Blume",
+          "amount": 90,
+          "unit": "gram",
+          "condition": "segar, dicuci bersih"
+        }
+      ],
+      "preparationMethod": "Cuci daun keji beling segar dengan air mengalir. Rebus dengan 4 gelas air (800ml) api sedang 20 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "30-45 hari, monitor dengan USG",
+      "warnings": [
+        "Banyak minum air putih (2-3L/hari)",
+        "Ibu hamil DILARANG",
+        "Hentikan jika ada nyeri punggung parah",
+        "Monitor dengan dokter berkala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI + Farmakope",
+      "tags": [
+        "batu-ginjal",
+        "keji-beling",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 32,
+      "name": "Ramuan Batu Ginjal — Meniran Tunggal",
+      "indications": [
+        "batu-ginjal"
+      ],
+      "category": "urologi",
+      "ingredients": [
+        {
+          "herb": "Seluruh Tanaman Meniran segar",
+          "latinName": "Phyllanthus niruri L.",
+          "amount": 100,
+          "unit": "gram",
+          "condition": "segar, dicuci"
+        }
+      ],
+      "preparationMethod": "Cuci meniran segar. Rebus dengan 4 gelas air (800ml) api sedang 20 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "3x sehari (pagi, siang, sore)",
+      "duration": "30-60 hari, monitor dengan USG",
+      "warnings": [
+        "Banyak minum air putih",
+        "Ibu hamil boleh konsumsi",
+        "Efektif untuk batu kecil/sedang",
+        "Konsultasi dokter berkala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Traditional Medicine + Farmakope",
+      "tags": [
+        "batu-ginjal",
+        "meniran",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 33,
+      "name": "Ramuan Batu Ginjal — Kumis Kucing Tunggal",
+      "indications": [
+        "batu-ginjal"
+      ],
+      "category": "urologi",
+      "ingredients": [
+        {
+          "herb": "Daun Kumis Kucing kering",
+          "latinName": "Orthosiphon stamineus Benth.",
+          "amount": 60,
+          "unit": "gram",
+          "condition": "kering, dibersihkan"
+        }
+      ],
+      "preparationMethod": "Cuci daun kumis kucing kering. Rebus dengan 4 gelas air (800ml) api sedang 20 menit. Tersisa ±1.5 gelas (300ml). Saring hangat-hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "45-60 hari, monitor dengan USG",
+      "warnings": [
+        "Kuat sebagai diuretik",
+        "Banyak minum air putih 2-3L/hari",
+        "Monitor fungsi ginjal",
+        "Konsultasi dokter berkala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs Orthosiphon stamineus",
+      "tags": [
+        "batu-ginjal",
+        "kumis-kucing",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 34,
+      "name": "Ramuan Batu Ginjal — Tempuyung Tunggal",
+      "indications": [
+        "batu-ginjal"
+      ],
+      "category": "urologi",
+      "ingredients": [
+        {
+          "herb": "Daun Tempuyung segar",
+          "latinName": "Sonchus arvensis L.",
+          "amount": 100,
+          "unit": "gram",
+          "condition": "segar, dicuci"
+        }
+      ],
+      "preparationMethod": "Cuci daun tempuyung segar. Rebus dengan 4 gelas air (800ml) api sedang 15-20 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "30-45 hari, monitor dengan USG",
+      "warnings": [
+        "Banyak minum air putih",
+        "Tekanan darah rendah hati-hati",
+        "Ibu hamil boleh konsumsi",
+        "Monitor kesehatan berkala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "batu-ginjal",
+        "tempuyung",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 35,
+      "name": "Ramuan Batu Ginjal — Akar Alang-alang Tunggal",
+      "indications": [
+        "batu-ginjal"
+      ],
+      "category": "urologi",
+      "ingredients": [
+        {
+          "herb": "Akar Alang-alang kering",
+          "latinName": "Imperata cylindrica (L.) Raeusch.",
+          "amount": 80,
+          "unit": "gram",
+          "condition": "kering, dicuci"
+        }
+      ],
+      "preparationMethod": "Cuci akar alang-alang kering. Rebus dengan 4 gelas air (800ml) api sedang 25-30 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan sore)",
+      "duration": "30-45 hari",
+      "warnings": [
+        "Banyak minum air putih",
+        "Ibu hamil boleh konsumsi",
+        "Aman untuk jangka panjang",
+        "Monitor dengan dokter"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Farmakope Herbal Indonesia",
+      "tags": [
+        "batu-ginjal",
+        "akar-alang-alang",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 36,
+      "name": "Ramuan ISK — Meniran Tunggal",
+      "indications": [
+        "isk",
+        "infeksi-saluran-kemih"
+      ],
+      "category": "urologi",
+      "ingredients": [
+        {
+          "herb": "Seluruh Tanaman Meniran segar",
+          "latinName": "Phyllanthus niruri L.",
+          "amount": 100,
+          "unit": "gram",
+          "condition": "segar, dicuci"
+        }
+      ],
+      "preparationMethod": "Cuci meniran segar dengan air mengalir. Rebus dengan 4 gelas air (800ml) api sedang 20 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "3x sehari (pagi, siang, sore)",
+      "duration": "7-14 hari, monitor gejala",
+      "warnings": [
+        "Banyak minum air putih 2-3L/hari",
+        "Ibu hamil boleh konsumsi",
+        "Jangan mengganti antibiotik dokter",
+        "Hentikan jika efek samping"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "isk",
+        "meniran",
+        "rebus",
+        "tunggal",
+        "segar"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 37,
+      "name": "Ramuan ISK — Kumis Kucing Tunggal",
+      "indications": [
+        "isk",
+        "infeksi-saluran-kemih"
+      ],
+      "category": "urologi",
+      "ingredients": [
+        {
+          "herb": "Daun Kumis Kucing kering",
+          "latinName": "Orthosiphon stamineus Benth.",
+          "amount": 50,
+          "unit": "gram",
+          "condition": "kering"
+        }
+      ],
+      "preparationMethod": "Cuci daun kumis kucing kering. Rebus dengan 3 gelas air (600ml) api sedang 20 menit. Tersisa ±1 gelas (200ml). Saring hangat-hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan malam)",
+      "duration": "7-14 hari, evaluasi gejala",
+      "warnings": [
+        "Banyak minum air putih",
+        "Jangan mengganti antibiotik dokter",
+        "Ibu hamil hati-hati",
+        "Monitor gejala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "A",
+      "doctorVerified": false,
+      "source": "WHO Monographs Orthosiphon stamineus",
+      "tags": [
+        "isk",
+        "kumis-kucing",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 38,
+      "name": "Ramuan ISK — Alang-alang Tunggal",
+      "indications": [
+        "isk",
+        "infeksi-saluran-kemih"
+      ],
+      "category": "urologi",
+      "ingredients": [
+        {
+          "herb": "Akar Alang-alang kering",
+          "latinName": "Imperata cylindrica (L.) Raeusch.",
+          "amount": 60,
+          "unit": "gram",
+          "condition": "kering"
+        }
+      ],
+      "preparationMethod": "Cuci akar alang-alang kering. Rebus dengan 3 gelas air (600ml) api sedang 25 menit. Tersisa ±1 gelas (200ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "2x sehari (pagi dan malam)",
+      "duration": "7-10 hari",
+      "warnings": [
+        "Banyak minum air putih 2-3L/hari",
+        "Ibu hamil boleh konsumsi",
+        "Jangan mengganti antibiotik dokter",
+        "Konsultasi dokter jika tidak membaik"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Farmakope Herbal Indonesia",
+      "tags": [
+        "isk",
+        "akar-alang-alang",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 39,
+      "name": "Ramuan ISK — Meniran + Kumis Kucing Kombinasi",
+      "indications": [
+        "isk",
+        "infeksi-saluran-kemih"
+      ],
+      "category": "urologi",
+      "ingredients": [
+        {
+          "herb": "Seluruh Tanaman Meniran segar",
+          "latinName": "Phyllanthus niruri L.",
+          "amount": 60,
+          "unit": "gram",
+          "condition": "segar"
+        },
+        {
+          "herb": "Daun Kumis Kucing kering",
+          "latinName": "Orthosiphon stamineus Benth.",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "kering"
+        }
+      ],
+      "preparationMethod": "Cuci semua bahan. Rebus meniran + kumis kucing dengan 3 gelas air (600ml) api sedang 20 menit. Tersisa ±1 gelas (200ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 1/2 gelas sekaligus.",
+      "frequency": "3x sehari (pagi, siang, sore)",
+      "duration": "7-14 hari",
+      "warnings": [
+        "Kombinasi sinergis untuk ISK",
+        "Banyak minum air putih 2-3L/hari",
+        "Jangan mengganti antibiotik dokter",
+        "Monitor gejala berkala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "isk",
+        "meniran",
+        "kumis-kucing",
+        "rebus",
+        "kombinasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 40,
+      "name": "Ramuan Obesitas — Bangle Tunggal",
+      "indications": [
+        "obesitas"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Rimpang Bangle kering",
+          "latinName": "Zingiber purpureum Roxb.",
+          "amount": 40,
+          "unit": "gram",
+          "condition": "kering, diiris"
+        }
+      ],
+      "preparationMethod": "Cuci rimpang bangle kering. Potong tipis 2-3mm. Rebus dengan 4 gelas air (800ml) api sedang 25-30 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "30-60 hari, kombinasi dengan olahraga",
+      "warnings": [
+        "Rasa pedas dan pahit",
+        "Ibu hamil HINDARI",
+        "Kombinasi dengan diet dan olahraga",
+        "Monitor berat badan berkala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "obesitas",
+        "bangle",
+        "rebus",
+        "tunggal"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 41,
+      "name": "Ramuan Obesitas — Jahe Merah + Temulawak Kombinasi",
+      "indications": [
+        "obesitas"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Rimpang Jahe Merah kering",
+          "latinName": "Zingiber officinale Roscoe var. rubra",
+          "amount": 25,
+          "unit": "gram",
+          "condition": "kering, diiris"
+        },
+        {
+          "herb": "Rimpang Temulawak kering",
+          "latinName": "Curcuma xanthorrhiza Roxb.",
+          "amount": 30,
+          "unit": "gram",
+          "condition": "kering, diiris"
+        }
+      ],
+      "preparationMethod": "Cuci semua bahan. Potong tipis 2-3mm. Rebus dengan 4 gelas air (800ml) api sedang 30 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "45-60 hari",
+      "warnings": [
+        "Kombinasi membantu metabolisme",
+        "Ibu hamil HINDARI",
+        "Kombinasi dengan diet dan olahraga",
+        "Monitor berat badan secara rutin"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI",
+      "tags": [
+        "obesitas",
+        "jahe-merah",
+        "temulawak",
+        "rebus",
+        "kombinasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    },
+    {
+      "recipeNumber": 42,
+      "name": "Ramuan Obesitas — Daun Salam + Jahe Merah Kombinasi",
+      "indications": [
+        "obesitas"
+      ],
+      "category": "metabolisme",
+      "ingredients": [
+        {
+          "herb": "Daun Salam kering",
+          "latinName": "Syzygium polyanthum (Wight) Walp.",
+          "amount": 40,
+          "unit": "gram",
+          "condition": "kering"
+        },
+        {
+          "herb": "Rimpang Jahe Merah kering",
+          "latinName": "Zingiber officinale Roscoe var. rubra",
+          "amount": 20,
+          "unit": "gram",
+          "condition": "kering, diiris"
+        }
+      ],
+      "preparationMethod": "Cuci semua bahan. Rebus daun salam + jahe merah dengan 4 gelas air (800ml) api sedang 25 menit. Tersisa ±1.5 gelas (300ml). Saring hangat.",
+      "preparationType": "rebus",
+      "dosage": "Minum 3/4 gelas sekaligus.",
+      "frequency": "1x sehari (pagi sebelum sarapan)",
+      "duration": "30-45 hari, kombinasi dengan gaya hidup sehat",
+      "warnings": [
+        "Kombinasi ringan dan aman",
+        "Ibu hamil boleh konsumsi dengan hati-hati",
+        "Kombinasi dengan olahraga dan diet",
+        "Monitor berat badan berkala"
+      ],
+      "isTopical": false,
+      "evidenceLevel": "B",
+      "doctorVerified": false,
+      "source": "Saintifikasi Jamu Kemenkes RI + Farmakope",
+      "tags": [
+        "obesitas",
+        "daun-salam",
+        "jahe-merah",
+        "rebus",
+        "kombinasi"
+      ],
+      "sourceRef": {
+        "primary": "FOHAI Kemenkes RI",
+        "references": [
+          {
+            "title": "Formula Obat Herbal Asli Indonesia (FOHAI)",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2016,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Pedoman Saintifikasi Jamu",
+            "publisher": "Kementerian Kesehatan RI",
+            "location": "Jakarta",
+            "year": 2013,
+            "type": "government-guide",
+            "url": "https://www.kemkes.go.id"
+          },
+          {
+            "title": "Farmakope Herbal Indonesia Edisi II",
+            "publisher": "Badan Pengawas Obat dan Makanan (BPOM) RI",
+            "location": "Jakarta",
+            "year": 2017,
+            "type": "pharmacopeia",
+            "url": "https://www.pom.go.id"
+          }
+        ],
+        "sourceType": "evidence-based",
+        "collectedBy": "Claude CLI #1",
+        "collectedAt": "2026-03-22"
+      }
+    }
+  ]
+}

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Edit Artikel</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .article-layout { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 24px; align-items: start; }
+    @media (min-width: 900px) { .article-layout { grid-template-columns: 1fr 300px; } }
+    .form-group { margin-bottom: 20px; }
+    .form-label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 8px; }
+
+    .title-input { width: 100%; border: none; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 14px 18px; font-family: 'Poppins', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--text-primary); outline: none; box-sizing: border-box; }
+
+    .neu-select { width: 100%; border: none; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 12px 16px; font-family: 'Poppins', sans-serif; font-size: 0.88rem; color: var(--text-primary); outline: none; box-sizing: border-box; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7B8D' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+
+    .tags-input { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 14px; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); min-height: 46px; align-items: center; cursor: text; }
+    .tag-chip { background: rgba(111,207,151,0.15); color: var(--primary-dark); font-size: 0.78rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; }
+    .tag-chip span { cursor: pointer; opacity: 0.6; }
+    .tag-chip span:hover { opacity: 1; }
+    .tag-text-input { border: none; background: transparent; outline: none; font-family: 'Poppins', sans-serif; font-size: 0.85rem; color: var(--text-primary); min-width: 80px; }
+
+    .wysiwyg-toolbar { display: flex; gap: 4px; padding: 10px 12px; border-radius: 12px 12px 0 0; box-shadow: var(--shadow-out-sm); background: var(--bg); flex-wrap: wrap; }
+    .toolbar-btn { border: none; background: transparent; border-radius: 6px; padding: 5px 10px; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; font-family: 'Poppins', sans-serif; }
+    .toolbar-btn:hover { background: rgba(111,207,151,0.12); color: var(--primary-dark); }
+    .toolbar-separator { width: 1px; background: var(--shadow-dark); margin: 2px 4px; }
+
+    .content-textarea { width: 100%; border: none; border-radius: 0 0 12px 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 16px; font-family: 'Poppins', sans-serif; font-size: 0.9rem; color: var(--text-primary); resize: vertical; min-height: 300px; outline: none; box-sizing: border-box; line-height: 1.7; }
+
+    .drop-zone { border: 2px dashed rgba(111,207,151,0.4); border-radius: 14px; overflow: hidden; cursor: pointer; }
+    .drop-zone-preview { height: 140px; background: linear-gradient(135deg,#6FCF97 0%,#27AE60 60%,#1A7A40 100%); display: flex; align-items: center; justify-content: center; position: relative; }
+    .drop-zone-preview-text { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.5); color: #fff; font-size: 0.72rem; padding: 3px 8px; border-radius: 6px; }
+    .drop-zone-footer { padding: 10px 14px; text-align: center; }
+    .drop-zone-footer p { font-size: 0.78rem; color: var(--text-tertiary); }
+
+    .excerpt-textarea { width: 100%; border: none; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 12px 16px; font-family: 'Poppins', sans-serif; font-size: 0.85rem; color: var(--text-primary); resize: vertical; min-height: 80px; outline: none; box-sizing: border-box; }
+
+    .bottom-actions { display: flex; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--shadow-dark); flex-wrap: wrap; }
+    @media (max-width: 640px) {
+      .neu-card [style*="grid-template-columns:1fr 1fr"],
+      .neu-card [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+      .bottom-actions button { flex: 1 1 100%; }
+    }
+
+    .status-timeline { display: flex; gap: 0; margin-bottom: 20px; }
+    .status-step { flex: 1; text-align: center; position: relative; }
+    .status-step::before { content: ''; position: absolute; top: 12px; left: 50%; right: -50%; height: 2px; background: var(--shadow-dark); z-index: 0; }
+    .status-step:last-child::before { display: none; }
+    .status-dot { width: 24px; height: 24px; border-radius: 50%; margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; position: relative; z-index: 1; }
+    .status-dot.done { background: var(--primary-dark); color: #fff; }
+    .status-dot.current { background: linear-gradient(135deg,#6FCF97,#27AE60); color: #fff; box-shadow: 0 0 0 3px rgba(111,207,151,0.3); }
+    .status-dot.pending { background: var(--shadow-dark); color: var(--text-tertiary); }
+    .status-label { font-size: 0.7rem; color: var(--text-tertiary); }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item active" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" id="logout-link" href="#" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+
+    <div class="admin-topbar" data-animate="up">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <h1>Edit Artikel</h1>
+        <span id="status-badge" class="neu-chip" style="background:#E8F8F0;color:#27AE60;font-size:0.78rem;font-weight:600;">
+          <ion-icon name="checkmark-circle" style="vertical-align:middle;margin-right:3px;"></ion-icon>Published
+        </span>
+      </div>
+      <div class="header-actions">
+        <button class="neu-btn neu-btn-sm" onclick="nav('news.html')"><ion-icon name="arrow-back-outline"></ion-icon> Kembali</button>
+      </div>
+    </div>
+
+    <div class="article-layout">
+
+      <!-- Left: Main Content -->
+      <div data-animate="up" data-delay="100">
+        <div class="neu-card" style="padding:28px;">
+
+          <!-- Status Workflow -->
+          <div class="form-group">
+            <label class="form-label">Status Workflow</label>
+            <div class="status-timeline" id="status-timeline">
+              <div class="status-step">
+                <div class="status-dot done" id="step-draft"><ion-icon name="checkmark-outline" style="font-size:0.8rem;"></ion-icon></div>
+                <div class="status-label">Draft</div>
+              </div>
+              <div class="status-step">
+                <div class="status-dot done" id="step-review"><ion-icon name="checkmark-outline" style="font-size:0.8rem;"></ion-icon></div>
+                <div class="status-label">Review</div>
+              </div>
+              <div class="status-step">
+                <div class="status-dot current" id="step-published"><ion-icon name="checkmark-outline" style="font-size:0.8rem;"></ion-icon></div>
+                <div class="status-label" id="step-published-label" style="color:var(--primary-dark);font-weight:600;">Published</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Judul Artikel</label>
+            <input class="title-input" type="text" id="article-title" value="5 Manfaat Temulawak untuk Kesehatan">
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="form-group">
+              <label class="form-label">Kategori</label>
+              <select class="neu-select" id="article-category">
+                <option>Kesehatan</option>
+                <option selected>Herbal</option>
+                <option>Gaya Hidup</option>
+                <option>AIoT</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tags</label>
+              <div class="tags-input" id="tags-container" onclick="document.getElementById('tag-input').focus()">
+                <div class="tag-chip">temulawak <span onclick="removeTag(this)">×</span></div>
+                <div class="tag-chip">herbal <span onclick="removeTag(this)">×</span></div>
+                <div class="tag-chip">kesehatan <span onclick="removeTag(this)">×</span></div>
+                <input class="tag-text-input" id="tag-input" placeholder="Tambah tag..." onkeydown="handleTagInput(event)">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Konten Artikel</label>
+            <div class="wysiwyg-toolbar">
+              <button class="toolbar-btn" style="font-weight:800;" onclick="showToast('Format Bold diterapkan','info')">B</button>
+              <button class="toolbar-btn" style="font-style:italic;" onclick="showToast('Format Italic diterapkan','info')">I</button>
+              <button class="toolbar-btn" style="text-decoration:underline;" onclick="showToast('Format Underline diterapkan','info')">U</button>
+              <div class="toolbar-separator"></div>
+              <button class="toolbar-btn" onclick="showToast('Format H1 diterapkan','info')">H1</button>
+              <button class="toolbar-btn" onclick="showToast('Format H2 diterapkan','info')">H2</button>
+              <div class="toolbar-separator"></div>
+              <button class="toolbar-btn" onclick="showToast('Tambah tautan','info')"><ion-icon name="link-outline" style="font-size:0.9rem;vertical-align:middle;"></ion-icon></button>
+              <button class="toolbar-btn" onclick="showToast('Upload gambar ke konten','info')"><ion-icon name="image-outline" style="font-size:0.9rem;vertical-align:middle;"></ion-icon></button>
+              <button class="toolbar-btn" onclick="showToast('Format list diterapkan','info')"><ion-icon name="list-outline" style="font-size:0.9rem;vertical-align:middle;"></ion-icon></button>
+              <button class="toolbar-btn" onclick="showToast('Format quote diterapkan','info')"><ion-icon name="chatbox-outline" style="font-size:0.9rem;vertical-align:middle;"></ion-icon></button>
+            </div>
+            <textarea class="content-textarea" id="article-body">Temulawak (Curcuma xanthorrhiza) adalah tanaman herbal asli Indonesia yang telah digunakan selama berabad-abad dalam pengobatan tradisional Jawa. Rimpangnya mengandung curcumin, xanthorrhizol, dan berbagai senyawa bioaktif yang memberikan khasiat luar biasa bagi kesehatan tubuh.
+
+Berikut adalah 5 manfaat utama temulawak yang telah didukung oleh penelitian ilmiah modern:
+
+1. Melindungi dan meremajakan fungsi hati (hepatoprotektif). Senyawa xanthorrhizol dalam temulawak terbukti mampu merangsang produksi empedu dan meningkatkan metabolisme lemak di hati.
+
+2. Mengurangi peradangan kronis. Curcumin bertindak sebagai anti-inflamasi alami yang efektif menghambat enzim cyclooxygenase, mirip dengan cara kerja obat antiinflamasi non-steroid (OAINS) namun dengan efek samping yang jauh lebih minimal.</textarea>
+          </div>
+
+        </div>
+
+        <div class="bottom-actions">
+          <button class="neu-btn-primary" id="btn-update">
+            <ion-icon name="checkmark-circle-outline"></ion-icon> Update
+          </button>
+          <button class="neu-btn" style="color:var(--warning);border:1px solid var(--warning);" id="btn-unpublish">
+            <ion-icon name="eye-off-outline"></ion-icon> Unpublish
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar -->
+      <div data-animate="up" data-delay="200">
+        <div class="neu-card" style="padding:20px;">
+          <div style="font-weight:700;margin-bottom:16px;font-size:0.9rem;">Pengaturan Artikel</div>
+
+          <div class="form-group">
+            <label class="form-label">Gambar Utama</label>
+            <div class="drop-zone" onclick="showToast('Ganti gambar utama artikel.','info')">
+              <div class="drop-zone-preview">
+                <ion-icon name="leaf-outline" style="font-size:3rem;color:rgba(255,255,255,0.5);"></ion-icon>
+                <div class="drop-zone-preview-text">Gambar artikel</div>
+              </div>
+              <div class="drop-zone-footer">
+                <p>Klik untuk <strong style="color:var(--primary-dark);">ganti gambar</strong></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Assigned Reviewer</label>
+            <select class="neu-select">
+              <option selected>dr. Sarah Wijaya</option>
+              <option>dr. Andi Rahmat</option>
+              <option>Tim Editorial</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Tanggal Publish</label>
+            <input class="neu-input" type="date" value="2026-03-10">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Excerpt / Ringkasan</label>
+            <textarea class="excerpt-textarea">Temulawak mengandung curcumin dan xanthorrhizol yang terbukti bermanfaat untuk kesehatan hati, anti-inflamasi, dan meningkatkan daya tahan tubuh.</textarea>
+          </div>
+
+          <div style="padding:12px;background:rgba(111,207,151,0.06);border-radius:10px;font-size:0.78rem;color:var(--text-tertiary);">
+            <div style="font-weight:600;color:var(--text-secondary);margin-bottom:6px;">Statistik Artikel</div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>Views</span><span style="font-weight:600;color:var(--primary-dark);" id="stat-views">4,821</span></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>Dibagikan</span><span style="font-weight:600;color:var(--primary-dark);" id="stat-shares">312</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Komentar</span><span style="font-weight:600;color:var(--primary-dark);" id="stat-comments">47</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+function handleTagInput(e) {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const val = e.target.value.trim().replace(',','');
+    if (val) {
+      const chip = document.createElement('div');
+      chip.className = 'tag-chip';
+      chip.innerHTML = val + ' <span onclick="removeTag(this)">×</span>';
+      document.getElementById('tags-container').insertBefore(chip, e.target);
+      e.target.value = '';
+    }
+  }
+}
+function removeTag(el) {
+  el.closest('.tag-chip').remove();
+}
+
+function getTags() {
+  return Array.from(document.querySelectorAll('#tags-container .tag-chip'))
+    .map(c => c.textContent.replace('×','').trim())
+    .filter(Boolean);
+}
+
+function applyStatusUI(status) {
+  const badge = document.getElementById('status-badge');
+  const stepDraft = document.getElementById('step-draft');
+  const stepReview = document.getElementById('step-review');
+  const stepPublished = document.getElementById('step-published');
+  const stepPublishedLabel = document.getElementById('step-published-label');
+
+  // Reset
+  [stepDraft, stepReview, stepPublished].forEach(el => {
+    el.className = 'status-dot pending';
+    el.innerHTML = '';
+  });
+  stepPublishedLabel.style.color = '';
+  stepPublishedLabel.style.fontWeight = '';
+
+  if (status === 'published') {
+    badge.style.background = '#E8F8F0';
+    badge.style.color = '#27AE60';
+    badge.innerHTML = '<ion-icon name="checkmark-circle" style="vertical-align:middle;margin-right:3px;"></ion-icon>Published';
+    stepDraft.className = 'status-dot done';
+    stepDraft.innerHTML = '<ion-icon name="checkmark-outline" style="font-size:0.8rem;"></ion-icon>';
+    stepReview.className = 'status-dot done';
+    stepReview.innerHTML = '<ion-icon name="checkmark-outline" style="font-size:0.8rem;"></ion-icon>';
+    stepPublished.className = 'status-dot current';
+    stepPublished.innerHTML = '<ion-icon name="checkmark-outline" style="font-size:0.8rem;"></ion-icon>';
+    stepPublishedLabel.style.color = 'var(--primary-dark)';
+    stepPublishedLabel.style.fontWeight = '600';
+  } else if (status === 'review') {
+    badge.style.background = 'rgba(47,128,237,0.1)';
+    badge.style.color = '#2F80ED';
+    badge.innerHTML = '<ion-icon name="time-outline" style="vertical-align:middle;margin-right:3px;"></ion-icon>Review';
+    stepDraft.className = 'status-dot done';
+    stepDraft.innerHTML = '<ion-icon name="checkmark-outline" style="font-size:0.8rem;"></ion-icon>';
+    stepReview.className = 'status-dot current';
+    stepReview.innerHTML = '<ion-icon name="time-outline" style="font-size:0.8rem;"></ion-icon>';
+    stepPublished.className = 'status-dot pending';
+  } else {
+    // draft
+    badge.style.background = 'rgba(242,153,74,0.12)';
+    badge.style.color = '#F2994A';
+    badge.innerHTML = '<ion-icon name="document-outline" style="vertical-align:middle;margin-right:3px;"></ion-icon>Draft';
+    stepDraft.className = 'status-dot current';
+    stepDraft.innerHTML = '<ion-icon name="document-outline" style="font-size:0.8rem;"></ion-icon>';
+    stepReview.className = 'status-dot pending';
+    stepPublished.className = 'status-dot pending';
+  }
+}
+
+function prefillForm(article) {
+  if (article.title) document.getElementById('article-title').value = article.title;
+  if (article.body) document.getElementById('article-body').value = article.body;
+  if (article.category) {
+    const sel = document.getElementById('article-category');
+    for (let i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === article.category || sel.options[i].text === article.category) {
+        sel.selectedIndex = i;
+        break;
+      }
+    }
+  }
+  if (article.tags && Array.isArray(article.tags)) {
+    const container = document.getElementById('tags-container');
+    const input = document.getElementById('tag-input');
+    // Remove existing hardcoded chips
+    container.querySelectorAll('.tag-chip').forEach(c => c.remove());
+    article.tags.forEach(tag => {
+      const chip = document.createElement('div');
+      chip.className = 'tag-chip';
+      chip.innerHTML = tag + ' <span onclick="removeTag(this)">×</span>';
+      container.insertBefore(chip, input);
+    });
+  }
+  if (article.status) applyStatusUI(article.status);
+  if (article.views != null) document.getElementById('stat-views').textContent = article.views.toLocaleString('id-ID');
+  if (article.shares != null) document.getElementById('stat-shares').textContent = article.shares.toLocaleString('id-ID');
+  if (article.comments != null) document.getElementById('stat-comments').textContent = article.comments.toLocaleString('id-ID');
+}
+
+let currentArticleId = null;
+
+VAuth.guard('admin', 1).then(({ profile }) => {
+  if (profile && profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+  // Logout link
+  document.getElementById('logout-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    VAuth.logout();
+  });
+
+  // Get article ID from URL
+  const articleId = new URLSearchParams(location.search).get('id');
+
+  if (articleId) {
+    currentArticleId = articleId;
+    VFirebase.db.collection('articles').doc(articleId).get()
+      .then(doc => {
+        if (doc.exists) {
+          prefillForm(doc.data());
+        }
+      })
+      .catch(() => {
+        // keep hardcoded defaults on error
+      });
+  }
+
+  // Update button
+  document.getElementById('btn-update').addEventListener('click', () => {
+    if (!currentArticleId) {
+      showToast('Artikel belum dimuat dari Firestore.', 'warning');
+      return;
+    }
+    const payload = {
+      title: document.getElementById('article-title').value,
+      body: document.getElementById('article-body').value,
+      category: document.getElementById('article-category').value,
+      tags: getTags(),
+      status: 'published',
+    };
+    VDB.updateArticle(currentArticleId, payload)
+      .then(() => {
+        showToast('Artikel berhasil diperbarui!', 'success');
+        setTimeout(() => nav('news.html'), 1200);
+      })
+      .catch(() => {
+        showToast('Gagal memperbarui artikel.', 'error');
+      });
+  });
+
+  // Unpublish button
+  document.getElementById('btn-unpublish').addEventListener('click', () => {
+    if (!currentArticleId) {
+      showToast('Artikel belum dimuat dari Firestore.', 'warning');
+      return;
+    }
+    VDB.updateArticle(currentArticleId, { status: 'draft' })
+      .then(() => {
+        applyStatusUI('draft');
+        showToast('Artikel dikembalikan ke Draft.', 'warning');
+      })
+      .catch(() => {
+        showToast('Gagal mengubah status artikel.', 'error');
+      });
+  });
+});
+</script>
+</body>
+</html>

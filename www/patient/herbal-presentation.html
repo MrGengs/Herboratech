@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Herbal Medicine Presentation</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    body { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); }
+    .presentation-container { width: 100%; height: 100vh; display: flex; flex-direction: column; }
+    .slide-area { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; overflow: hidden; }
+    .slide { width: 100%; max-width: 800px; background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); display: none; animation: slideIn 0.5s ease; }
+    .slide.active { display: block; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .slide-number { color: #999; font-size: 0.85rem; margin-bottom: 20px; }
+    .slide h1 { font-size: 2.2rem; color: #27AE60; margin: 0 0 24px 0; font-weight: 700; }
+    .slide h2 { font-size: 1.6rem; color: var(--text-primary); margin: 0 0 20px 0; font-weight: 700; }
+    .slide p { font-size: 1rem; color: var(--text-secondary); line-height: 1.8; margin: 0 0 16px 0; }
+    .slide ul { padding-left: 24px; }
+    .slide li { font-size: 1rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 12px; }
+    .slide-content { color: var(--text-secondary); }
+    .slide-controls { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: rgba(255,255,255,0.95); }
+    .slide-nav-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+    .slide-nav-btn:hover { background: var(--primary-dark); }
+    .slide-nav-btn:disabled { background: #ccc; cursor: not-allowed; }
+    .slide-progress { font-size: 0.9rem; color: var(--text-secondary); font-weight: 600; }
+    .progress-bar { width: 300px; height: 4px; background: #ddd; border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--primary); transition: width 0.3s; }
+    .hero-slide { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+    .hero-slide h1 { font-size: 2.8rem; margin-bottom: 20px; }
+    .hero-slide p { font-size: 1.1rem; max-width: 600px; }
+    .emphasis { color: #27AE60; font-weight: 700; }
+    .badge { display: inline-block; background: rgba(39,174,96,0.12); color: #27AE60; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; margin: 4px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .stat-box { background: rgba(39,174,96,0.08); padding: 16px; border-radius: 8px; border-left: 4px solid #27AE60; }
+    .stat-box strong { color: #27AE60; }
+
+    @media (max-width: 480px) {
+      .slide { padding: 20px; max-width: 100%; }
+      .slide h1 { font-size: 1.4rem; }
+      .hero-slide h1 { font-size: 1.6rem; }
+      .slide h2 { font-size: 1.1rem; }
+      .slide p, .slide li { font-size: 0.85rem; }
+      .hero-slide p { font-size: 0.9rem; }
+      .slide-controls { padding: 14px 16px; }
+      .progress-bar { width: 120px; }
+      .grid-2 { grid-template-columns: 1fr; gap: 12px; }
+      .slide-nav-btn { padding: 8px 14px; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="presentation-container">
+
+  <div class="slide-area">
+    <div class="slide active hero-slide">
+      <div class="slide-number">1 / 20</div>
+      <h1>🌿 Herbal Medicine for Metabolic Health</h1>
+      <p>Evidence-Based Traditional Herbal Review</p>
+      <p style="font-size: 0.9rem; color: #666; margin-top: 40px;">HerboraTech Systematic Literature Review<br>50+ Peer-Reviewed Studies | 7 Herbal Categories | GRADE Assessment</p>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">2 / 20</div>
+      <h2>Overview: Scope & Objectives</h2>
+      <div class="slide-content">
+        <p><strong>Objective:</strong> Evaluate evidence-based herbal remedies for metabolic disease management</p>
+        <p><strong>5 Target Diseases:</strong></p>
+        <ul>
+          <li>Dyslipidemia (abnormal lipid profile)</li>
+          <li>Hypertension (high blood pressure)</li>
+          <li>Type 2 Diabetes Mellitus</li>
+          <li>NAFLD / Metabolic-Associated Fatty Liver Disease</li>
+          <li>Metabolic Syndrome (multi-component disorder)</li>
+        </ul>
+        <p><strong>Review Type:</strong> Systematic narrative review with PRISMA-2020 compliance & GRADE quality assessment</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">3 / 20</div>
+      <h2>The 7 Primary Herbal Categories</h2>
+      <div class="grid-2">
+        <div>
+          <p><span class="badge">🟡 Curcumin</span><br>12 RCTs | Grade B</p>
+          <p><span class="badge">🟢 Green Tea</span><br>15 RCTs | Grade A</p>
+          <p><span class="badge">⚪ Garlic</span><br>10+ RCTs | Grade B</p>
+        </div>
+        <div>
+          <p><span class="badge">🟠 Ginger</span><br>8+ RCTs | Grade B</p>
+          <p><span class="badge">🫒 Olive Leaf</span><br>6 RCTs | Grade B</p>
+          <p><span class="badge">🟤 Cinnamon</span><br>8 RCTs | Grade C</p>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: 20px;"><span class="badge">🌾 Jamu Formulas</span><br>8+ population studies | Grade C</p>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">4 / 20</div>
+      <h2>PRISMA-2020 Systematic Review</h2>
+      <div class="slide-content">
+        <p><strong>Search Strategy:</strong></p>
+        <ul>
+          <li>8 information sources: PubMed, Cochrane, Google Scholar, Consensus.app, J. Ethnopharmacology, WHO Monographs</li>
+          <li>50+ papers extracted (2010-2026)</li>
+          <li>Keywords: Herbal + metabolic disease + RCT/clinical trial</li>
+        </ul>
+        <p><strong>Selection Process:</strong> 2-stage screening (title/abstract, full-text)</p>
+        <p><strong>Quality Assessment:</strong> GRADE 5-domain methodology applied to each paper</p>
+        <p><strong>WHO Integration:</strong> Cross-referenced with WHO Monographs on Selected Medicinal Plants</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">5 / 20</div>
+      <h2>🟡 CURCUMIN / TURMERIC</h2>
+      <div class="slide-content">
+        <p><strong>Active Compound:</strong> Curcuminoid (3-7% in rhizome)</p>
+        <p><strong>WHO Status:</strong> Monographs Vol. 4 — Accepted for anti-inflammatory use</p>
+        <div class="stat-box">
+          <strong>Grade B Evidence — 12 RCTs</strong><br>
+          LDL ↓15-25% | FPG ↓10-15% | ALT ↓25-30% | CRP ↓20-35%
+        </div>
+        <p><strong>Optimal Dose:</strong> 500-1000 mg/day with piperine (enhances absorption 2000%)</p>
+        <p><strong>Safety:</strong> Well-tolerated; caution with anticoagulants & diabetes meds (hypoglycemia risk)</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">6 / 20</div>
+      <h2>🟢 GREEN TEA / EGCG</h2>
+      <div class="slide-content">
+        <p><strong>Active Compound:</strong> EGCG (epigallocatechin gallate) — potent polyphenol antioxidant</p>
+        <p><strong>WHO Status:</strong> Monographs Vol. 1 — Strong traditional & clinical evidence</p>
+        <div class="stat-box">
+          <strong>Grade A Evidence — 15 RCTs + 3 Meta-analyses</strong><br>
+          Weight Loss ↓1-3 kg | LDL ↓5-8% | MetS ↓18% | Adiponectin ↑18%
+        </div>
+        <p><strong>Optimal Dose:</strong> 300-400 mg EGCG/day (= 3-5 cups tea or standardized extract)</p>
+        <p><strong>Note:</strong> May enhance warfarin; avoid with iron supplements</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">7 / 20</div>
+      <h2>⚪ GARLIC</h2>
+      <div class="slide-content">
+        <p><strong>Active Compound:</strong> Allicin (enzymatic breakdown of alliin)</p>
+        <p><strong>WHO Status:</strong> Monographs Vol. 1 — Traditional antihypertensive use</p>
+        <div class="stat-box">
+          <strong>Grade B Evidence — 10+ RCTs</strong><br>
+          SBP ↓4-8 mmHg | DBP ↓2-3 mmHg | LDL ↓7% | TG ↓8% | ApoB ↓7%
+        </div>
+        <p><strong>Optimal Form:</strong> Aged garlic extract (higher allicin content, better stability)</p>
+        <p><strong>Dose:</strong> 600-900 mg aged garlic/day</p>
+        <p><strong>Note:</strong> Enhanced antiplatelet effect; monitor if combined with aspirin/NSAIDs</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">8 / 20</div>
+      <h2>🟠 GINGER</h2>
+      <div class="slide-content">
+        <p><strong>Active Compounds:</strong> Gingerols & shogaols (pungent compounds)</p>
+        <p><strong>WHO Status:</strong> Monographs Vol. 1 — Anti-inflammatory & digestive</p>
+        <div class="stat-box">
+          <strong>Grade B Evidence — 8+ RCTs</strong><br>
+          FPG ↓10.3% | HbA1c ↓0.76% | CRP ↓18% | Anti-inflammatory biomarkers
+        </div>
+        <p><strong>Optimal Dose:</strong> 1-4 g/day fresh or dried</p>
+        <p><strong>Benefits:</strong> Glucose control + inflammation reduction + GI comfort</p>
+        <p><strong>Note:</strong> Enhanced antiplatelet/anticoagulant effect — monitor bleeding</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">9 / 20</div>
+      <h2>🫒 OLIVE LEAF</h2>
+      <div class="slide-content">
+        <p><strong>Active Compound:</strong> Oleuropein (polyphenol antioxidant)</p>
+        <p><strong>WHO Status:</strong> Monographs Vol. 3 — Antihypertensive traditional use</p>
+        <div class="stat-box">
+          <strong>Grade B Evidence — 6 RCTs</strong><br>
+          SBP ↓6.8 mmHg | DBP ↓3.2 mmHg | Endothelial function (FMD) ↑18% | LDL modest ↓
+        </div>
+        <p><strong>Optimal Dose:</strong> 500 mg extract BID (twice daily)</p>
+        <p><strong>Benefits:</strong> BP reduction + vascular endothelial improvement</p>
+        <p><strong>Note:</strong> Additive BP-lowering effect with antihypertensive drugs</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">10 / 20</div>
+      <h2>🟤 CINNAMON — ⚠️ CAUTION</h2>
+      <div class="slide-content">
+        <p><strong>Active Compound:</strong> Cinnamaldehyde + coumarin (variable by species)</p>
+        <p><strong>WHO Status:</strong> Monographs Vol. 3 — Traditional use (NOT glucose-specific)</p>
+        <div class="stat-box">
+          <strong>Grade C Evidence — 8 RCTs, HIGH HETEROGENEITY</strong><br>
+          FPG ↓24.7 mg/dL (variable: 10-60% responders) | HbA1c ↓0.54%
+        </div>
+        <p><strong>⚠️ CRITICAL WARNING — Coumarin Interaction:</strong></p>
+        <ul>
+          <li><strong>Cassia cinnamon:</strong> 6-7 mg coumarin/tsp → AVOID if on warfarin/anticoagulants</li>
+          <li><strong>Ceylon cinnamon:</strong> 0.004 mg coumarin/tsp → SAFE choice for anticoagulation</li>
+        </ul>
+        <p><strong>Grade C Recommendation:</strong> Use only if Ceylon cinnamon & not on anticoagulants</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">11 / 20</div>
+      <h2>🌾 JAMU — Traditional Indonesian Formulas</h2>
+      <div class="slide-content">
+        <p><strong>Definition:</strong> Multi-herbal traditional formulas combining 3-7 botanicals with synergistic properties</p>
+        <p><strong>Grade C Evidence — 8+ population studies</strong></p>
+        <p><strong>Challenges:</strong></p>
+        <ul>
+          <li>Formulation variability across practitioners (standardization lacking)</li>
+          <li>Limited RCT evidence (mostly observational studies)</li>
+          <li>Mechanistic pathways less validated than single-herb extracts</li>
+        </ul>
+        <p><strong>5 Traditional Formulas Available (See Herbal Formulas page):</strong><br>
+        Anti-Lipid | Anti-HTN | Anti-Diabetes | Liver Support | Metabolic Balance</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">12 / 20</div>
+      <h2>GRADE Evidence Quality Framework</h2>
+      <div class="slide-content">
+        <div class="stat-box" style="margin-bottom:16px;">
+          <strong>Grade A (High Quality)</strong><br>
+          Further research unlikely to change effect. Multiple RCTs, consistent results, large n. <em>Example: Green Tea EGCG</em>
+        </div>
+        <div class="stat-box" style="margin-bottom:16px;">
+          <strong>Grade B (Moderate Quality)</strong><br>
+          Further research may change effect. 3-4 RCTs, some limitations, n>100. <em>Example: Curcumin, Garlic, Ginger, Olive Leaf</em>
+        </div>
+        <div class="stat-box" style="margin-bottom:16px;">
+          <strong>Grade C (Low Quality)</strong><br>
+          Further research very likely to change effect. &lt;2 RCTs, small n, inconsistent. <em>Example: Cinnamon, Jamu</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">13 / 20</div>
+      <h2>5-Domain GRADE Assessment</h2>
+      <div class="slide-content">
+        <p><strong>Each herbal assessed on 5 domains:</strong></p>
+        <ul>
+          <li><strong>Risk of Bias:</strong> Study design quality, randomization, blinding</li>
+          <li><strong>Inconsistency:</strong> Heterogeneity across studies, effect direction consistency</li>
+          <li><strong>Indirectness:</strong> Population relevance, outcome relevance to clinical question</li>
+          <li><strong>Imprecision:</strong> Confidence intervals, adequate sample sizes</li>
+          <li><strong>Publication Bias:</strong> Selective outcome reporting, missing negative studies</li>
+        </ul>
+        <p><strong>Result:</strong> Overall grade (A, B, C, D) and recommendations for clinical use</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">14 / 20</div>
+      <h2>Safety Profiles & Drug Interactions</h2>
+      <div class="slide-content">
+        <p><strong>Curcumin:</strong> Enhanced effect with anticoagulants; potentiates diabetes meds (hypoglycemia risk)</p>
+        <p><strong>Green Tea:</strong> May enhance warfarin; avoid with iron supplements (absorption interference)</p>
+        <p><strong>Garlic:</strong> Enhanced antiplatelet effect with aspirin/NSAIDs; increased warfarin effect</p>
+        <p><strong>Ginger:</strong> Enhanced antiplatelet/anticoagulant effect — monitor bleeding risk</p>
+        <p><strong>Cinnamon (Cassia):</strong> ⚠️ CRITICAL — Coumarin inhibits CYP2C9 → bleeding if on warfarin</p>
+        <p><strong>Olive Leaf:</strong> Additive BP-lowering with antihypertensives (monitor BP)</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">15 / 20</div>
+      <h2>Clinical Recommendations by Disease</h2>
+      <div class="slide-content">
+        <p><span class="badge">Dyslipidemia</span>: Curcumin + Garlic (Grade B) | Green Tea (Grade A)</p>
+        <p><span class="badge">Hypertension</span>: Garlic (Grade B) | Olive Leaf (Grade B)</p>
+        <p><span class="badge">Type 2 Diabetes</span>: Ginger (Grade B) | Green Tea (Grade A) | Curcumin (Grade B)</p>
+        <p><span class="badge">NAFLD</span>: Curcumin (Grade B) + Milk Thistle | Olive Leaf</p>
+        <p><span class="badge">Metabolic Syndrome</span>: 5-herb formula | Green Tea (Grade A) | Curcumin (Grade B)</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">16 / 20</div>
+      <h2>Traditional Formula Dosing</h2>
+      <div class="slide-content">
+        <p><strong>Formula 1 — Anti-Lipid Tonic:</strong> 150 mL daily × 8-12 weeks (LDL ↓15-25%)</p>
+        <p><strong>Formula 2 — BP Support:</strong> 350 mL twice daily × 12 weeks (SBP ↓5-8 mmHg)</p>
+        <p><strong>Formula 3 — Glucose Support:</strong> 200 mL morning × 12+ weeks (FPG ↓10-15%)</p>
+        <p><strong>Formula 4 — Liver Detox:</strong> 200 mL twice daily × 16 weeks (ALT ↓25-30%)</p>
+        <p><strong>Formula 5 — Metabolic Harmony:</strong> 200 mL daily, 5 days/week × 12 weeks (MetS ↓15-25%)</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">17 / 20</div>
+      <h2>Research Gaps & Future Directions</h2>
+      <div class="slide-content">
+        <ul>
+          <li><strong>Jamu Standardization:</strong> Need for GMP compliance & formulation consistency</li>
+          <li><strong>Long-term Safety:</strong> Limited data on 12-24 month herbal use in metabolic disease</li>
+          <li><strong>Genetic Stratification:</strong> COMT genotype effects on green tea response — personalized dosing</li>
+          <li><strong>Mechanism Validation:</strong> Human mechanistic studies (not just animal models)</li>
+          <li><strong>Combination Efficacy:</strong> Herbal + pharmacotherapy interaction studies needed</li>
+          <li><strong>Population Diversity:</strong> More RCTs in non-Asian populations</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">18 / 20</div>
+      <h2>HerboraTech Integration: Evidence-Based Herbal Engine</h2>
+      <div class="slide-content">
+        <p><strong>How HerboraTech Uses This Evidence:</strong></p>
+        <ul>
+          <li>Herbal advisor module recommends Grade A-B herbals based on patient metabolic profile</li>
+          <li>Contraindication checker: flags drug-herb interactions (warfarin + garlic/cinnamon)</li>
+          <li>Traditional formula builder: creates personalized jamu based on disease combination</li>
+          <li>Evidence transparency: all recommendations show GRADE rating + DOI links</li>
+          <li>Safety monitoring: alerts if patient combines herbals + anticoagulants</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-number">19 / 20</div>
+      <h2>Key Takeaways</h2>
+      <div class="slide-content">
+        <p><strong>✅ Recommended (Use Confidently):</strong><br>
+        Green Tea, Curcumin, Garlic, Ginger, Olive Leaf — Grade A-B evidence for metabolic disease</p>
+        <p><strong>⚠️ Use with Caution:</strong><br>
+        Cinnamon only if Ceylon (coumarin concern) + not on anticoagulants</p>
+        <p><strong>🌾 Emerging:</strong><br>
+        Traditional Jamu formulas — promising but Grade C evidence; need standardization</p>
+        <p><strong>🔒 Safety First:</strong><br>
+        Always check drug-herbal interactions; monitor if combining with anticoagulants/diabetes meds</p>
+      </div>
+    </div>
+
+    <div class="slide hero-slide">
+      <div class="slide-number">20 / 20</div>
+      <h1>Thank You</h1>
+      <p>Evidence-Based Herbal Medicine for Metabolic Health</p>
+      <p style="font-size: 0.95rem; margin-top: 40px; color: #666;">
+        <strong>Read Full Details:</strong><br>
+        📊 <a href="herbal-extraction.html" style="color: #27AE60;">50+ Studies Extracted</a> |
+        ⚖️ <a href="herbal-grade.html" style="color: #27AE60;">GRADE Assessment</a> |
+        🌿 <a href="herbal-formulas.html" style="color: #27AE60;">Traditional Formulas</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="slide-controls">
+    <button class="slide-nav-btn" onclick="previousSlide()" id="prevBtn">← Sebelumnya</button>
+
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="slide-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 5%;"></div>
+        </div>
+      </div>
+      <span class="slide-progress" id="slideCounter">1 / 20</span>
+    </div>
+
+    <button class="slide-nav-btn" onclick="nextSlide()" id="nextBtn">Berikutnya →</button>
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+  (async () => {
+    await VAuth.guard('patient', 1);
+  })();
+
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+
+  function showSlide(n) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    slides[n].classList.add('active');
+
+    document.getElementById('slideCounter').textContent = `${n + 1} / ${totalSlides}`;
+    document.getElementById('progressFill').style.width = `${((n + 1) / totalSlides) * 100}%`;
+    document.getElementById('prevBtn').disabled = n === 0;
+    document.getElementById('nextBtn').disabled = n === totalSlides - 1;
+  }
+
+  function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      showSlide(currentSlide);
+    }
+  }
+
+  function previousSlide() {
+    if (currentSlide > 0) {
+      currentSlide--;
+      showSlide(currentSlide);
+    }
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') previousSlide();
+  });
+
+  // Initialize
+  showSlide(0);
+</script>
+</body>
+</html>

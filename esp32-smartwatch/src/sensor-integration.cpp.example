@@ -1,0 +1,193 @@
+/*
+ * Contoh Integrasi Sensor untuk Smartwatch HerboraTech
+ * File ini adalah template, copy ke main.cpp atau module terpisah
+ *
+ * Supported Sensors:
+ * - MAX30102: Heart Rate + SpO2
+ * - DHT22: Temperature & Humidity
+ * - MPU6050: Accelerometer (step counting)
+ */
+
+#include <Arduino.h>
+#include <Wire.h>
+
+// ==================== MAX30102 Heart Rate + SpO2 ====================
+// Library: sparkfun/SparkFun MAX3010x Pulse and Proximity Sensor Library
+
+#ifdef USE_MAX30102
+#include "MAX30105.h"
+#include "heartRate.h"
+
+MAX30105 particleSensor;
+
+struct HealthData {
+  uint32_t heartRate;
+  uint32_t spO2;
+  int32_t temperature;
+  uint16_t steps;
+  uint8_t battery;
+};
+
+void initializeHeartRateSensor() {
+  if (!particleSensor.begin(Wire, I2C_SPEED_FAST)) {
+    Serial.println("[ERROR] MAX30102 not found!");
+    return;
+  }
+
+  byte ledBrightness = 60;  // 0=off, 255=max
+  byte sampleAverage = 4;   // 1, 2, 4, 8, 16
+  byte ledMode = 2;         // 1=Red only, 2=Red+IR, 3=Red+IR+Green
+  byte sampleRate = 200;    // 50, 100, 200, 400, 800, 1000, 1600, 3200
+  int pulseWidth = 411;     // 69, 118, 215, 411
+  int adcRange = 4096;      // 2048, 4096, 8192, 16384
+
+  particleSensor.setup(ledBrightness, sampleAverage, ledMode, sampleRate,
+                       pulseWidth, adcRange);
+
+  Serial.println("[OK] MAX30102 initialized");
+}
+
+void readHeartRateData() {
+  long irValue = particleSensor.getIR();
+
+  // Check if finger is detected
+  if (irValue < 50000) {
+    Serial.println("[SENSOR] Place finger on sensor");
+    return;
+  }
+
+  // BPM calculation (simplified)
+  static uint32_t lastBeat = 0;
+  uint32_t now = millis();
+
+  if (irValue > 50000 && now - lastBeat > 500) {
+    lastBeat = now;
+    Serial.print("[HEART_RATE] BPM: ");
+    Serial.println(checkForBeat(irValue) ? "BEAT DETECTED" : "waiting...");
+  }
+}
+#endif
+
+// ==================== DHT22 Temperature & Humidity ====================
+// Library: adafruit/DHT sensor library
+
+#ifdef USE_DHT22
+#include "DHT.h"
+
+#define DHT_PIN 4
+#define DHT_TYPE DHT22
+
+DHT dht(DHT_PIN, DHT_TYPE);
+
+void initializeTemperatureSensor() {
+  dht.begin();
+  Serial.println("[OK] DHT22 initialized");
+}
+
+void readTemperatureData() {
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();
+
+  if (isnan(humidity) || isnan(temperature)) {
+    Serial.println("[ERROR] Failed to read from DHT22");
+    return;
+  }
+
+  Serial.print("[TEMP] ");
+  Serial.print(temperature);
+  Serial.print("°C, Humidity: ");
+  Serial.print(humidity);
+  Serial.println("%");
+}
+#endif
+
+// ==================== MPU6050 Accelerometer (Step Counter) ====================
+// Library: jrowberg/MPU6050
+
+#ifdef USE_MPU6050
+#include "MPU6050.h"
+
+MPU6050 mpu;
+const float STEP_THRESHOLD = 15.0;  // Tunable threshold
+uint32_t stepCount = 0;
+
+void initializeAccelerometer() {
+  Wire.begin();
+  mpu.initialize();
+
+  if (!mpu.testConnection()) {
+    Serial.println("[ERROR] MPU6050 connection failed!");
+    return;
+  }
+
+  Serial.println("[OK] MPU6050 initialized");
+}
+
+void readAccelerometerData() {
+  int16_t ax, ay, az;
+  mpu.getAcceleration(&ax, &ay, &az);
+
+  // Calculate magnitude of acceleration
+  float magnitude = sqrt(ax*ax + ay*ay + az*az);
+
+  // Simple step detection
+  static float lastMagnitude = 0;
+  if (magnitude > STEP_THRESHOLD && lastMagnitude <= STEP_THRESHOLD) {
+    stepCount++;
+    Serial.print("[STEPS] ");
+    Serial.println(stepCount);
+  }
+  lastMagnitude = magnitude;
+}
+#endif
+
+// ==================== Battery Monitoring ====================
+#define ADC_BATTERY_PIN 3
+
+int readBatteryLevel() {
+  int rawValue = analogRead(ADC_BATTERY_PIN);
+  // Assuming voltage divider: 4.2V max = 1023 ADC
+  int percentage = map(rawValue, 0, 1023, 0, 100);
+  return constrain(percentage, 0, 100);
+}
+
+// ==================== Data Aggregation ====================
+HealthData collectAllSensorData() {
+  HealthData data = {0};
+
+  #ifdef USE_MAX30102
+  // Heart rate reading here
+  data.heartRate = 72;  // placeholder
+  #endif
+
+  #ifdef USE_DHT22
+  // Temperature reading here
+  data.temperature = 368;  // 36.8°C in 0.1°C units
+  #endif
+
+  #ifdef USE_MPU6050
+  data.steps = stepCount;
+  #endif
+
+  data.battery = readBatteryLevel();
+
+  return data;
+}
+
+// ==================== Send to HerboraTech Backend ====================
+/*
+void sendHealthDataToHerboraTech(HealthData& data) {
+  // Implementation: Use WiFiClient or HTTPClient to send data
+  // Endpoint: POST /api/v1/smartwatch/health-data
+
+  String json = "{";
+  json += "\"heartRate\":" + String(data.heartRate) + ",";
+  json += "\"spO2\":" + String(data.spO2) + ",";
+  json += "\"temperature\":" + String(data.temperature / 10.0) + ",";
+  json += "\"steps\":" + String(data.steps) + ",";
+  json += "\"battery\":" + String(data.battery);
+  json += "}";
+
+  // TODO: HTTP POST implementation
+}
+*/

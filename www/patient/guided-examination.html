@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Pemeriksaan Integratif</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12); box-shadow: none;
+      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .page-title { color: #fff; font-size: 1.0rem; font-weight: 700; }
+
+    /* Progress bar */
+    .step-progress-bar {
+      background: var(--bg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 16px 16px 12px;
+      position: sticky;
+      top: 64px;
+      z-index: 20;
+    }
+    .step-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+    .step-dot {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--shadow-dark);
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-tertiary);
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+    .step-dot.past {
+      background: #1A5C38;
+      color: #fff;
+      border-color: #1A5C38;
+    }
+    .step-dot.current {
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(39,174,96,0.5);
+      transform: scale(1.12);
+    }
+    .step-line {
+      flex: 1;
+      height: 2px;
+      background: var(--shadow-dark);
+      max-width: 22px;
+      min-width: 8px;
+      transition: background 0.3s;
+    }
+    .step-line.done { background: var(--primary-dark); }
+    .step-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .step-title-text {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+    .step-counter {
+      font-size: 0.72rem;
+      color: var(--text-tertiary);
+    }
+
+    /* Step panes */
+    .step-pane { display: none; }
+    .step-pane.active { display: block; }
+
+    /* Info grid */
+    .info-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .info-card-mini {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 14px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .icm-icon { font-size: 1.4rem; margin-bottom: 4px; }
+    .icm-val { font-size: 1.1rem; font-weight: 800; color: var(--text-primary); }
+    .icm-unit { font-size: 0.65rem; color: var(--text-tertiary); }
+    .icm-lbl { font-size: 0.7rem; color: var(--text-secondary); margin-top: 2px; }
+
+    /* Doctor bubble */
+    .doc-bubble {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+    .doc-bubble-avatar {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 800; color: #fff;
+    }
+    .doc-bubble-text {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 16px;
+      border-bottom-left-radius: 4px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    /* Live vitals */
+    .live-vital-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .live-vital-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+    }
+    .lvc-label { font-size: 0.68rem; color: var(--text-tertiary); font-weight: 600; }
+    .lvc-val { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); margin: 4px 0; }
+    .lvc-unit { font-size: 0.65rem; color: var(--text-muted); }
+
+    /* Camera mock */
+    .camera-mock {
+      width: 100%;
+      height: 190px;
+      background: linear-gradient(160deg, #0D1F14, #071A0F);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.35);
+      border: 2px dashed rgba(255,255,255,0.12);
+    }
+    .camera-mock ion-icon { font-size: 2.5rem; }
+    .camera-mock span { font-size: 0.75rem; }
+
+    /* Body diagram SVG */
+    .body-diagram {
+      background: var(--bg);
+      box-shadow: var(--shadow-in);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+    }
+
+    /* Pain slider */
+    .pain-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(to right, #6FCF97 0%, #F2994A 50%, #EB5757 100%);
+      outline: none;
+    }
+    .pain-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      cursor: pointer;
+      border: 2px solid var(--primary-dark);
+    }
+
+    /* Radio options */
+    .radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
+    .radio-opt {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .radio-opt.selected {
+      border-color: var(--primary-dark);
+      color: var(--primary-dark);
+      background: var(--success-bg);
+    }
+
+    /* Spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      border: 4px solid var(--shadow-dark);
+      border-top-color: var(--primary-dark);
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    /* Confirm button */
+    .confirm-btn-wrap {
+      position: sticky;
+      bottom: 0;
+      background: var(--bg);
+      border-top: 1px solid var(--shadow-dark);
+      padding: 14px 20px;
+      z-index: 30;
+    }
+    .btn-waiting {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      color: var(--text-muted);
+      border: none;
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      font-family: var(--font);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: not-allowed;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-proceed {
+      display: none;
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      color: #fff;
+      border: none;
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      font-family: var(--font);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(39,174,96,0.4);
+      align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-proceed.show { display: flex; }
+
+    /* neu-input textarea */
+    textarea.neu-input {
+      width: 100%; resize: none;
+      font-family: var(--font); font-size: 0.82rem;
+    }
+
+    /* Checkbox item */
+    .check-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(200,208,231,0.5);
+      cursor: pointer;
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-box {
+      width: 22px; height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--shadow-dark);
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .check-box.checked {
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      border-color: transparent;
+      box-shadow: 0 3px 8px rgba(39,174,96,0.35);
+    }
+    .check-box.checked::after {
+      content: '✓';
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .check-label { font-size: 0.82rem; color: var(--text-secondary); font-weight: 500; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('consultation.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="page-title">Pemeriksaan Integratif</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <!-- STEP PROGRESS BAR -->
+  <div class="step-progress-bar">
+    <div class="step-dots" id="stepDots"></div>
+    <div class="step-info">
+      <span class="step-title-text" id="stepTitleSmall">Step 1 — Review Data</span>
+      <span class="step-counter" id="stepCounter">1 / 8</span>
+    </div>
+  </div>
+
+  <!-- STEP CONTENT -->
+  <div style="flex:1;overflow-y:auto;">
+
+    <!-- STEP 1: Review Data -->
+    <div id="step-1" class="step-pane active">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;" data-animate="up">Review Data Kesehatan</h3>
+        <p style="font-size:0.76rem;color:var(--text-tertiary);" data-animate="up" data-delay="60">Ringkasan 7 hari terakhir dari sensor Anda</p>
+
+        <div class="info-grid-2" style="margin-top:16px;" data-animate="up" data-delay="100">
+          <div class="info-card-mini">
+            <div class="icm-icon">❤️</div>
+            <div class="icm-val">82 <span class="icm-unit">bpm</span></div>
+            <div class="icm-lbl">Rata-rata HR</div>
+          </div>
+          <div class="info-card-mini">
+            <div class="icm-icon">🩸</div>
+            <div class="icm-val">97 <span class="icm-unit">%</span></div>
+            <div class="icm-lbl">Rata-rata SpO2</div>
+          </div>
+          <div class="info-card-mini">
+            <div class="icm-icon">🚶</div>
+            <div class="icm-val">7200 <span class="icm-unit">langkah</span></div>
+            <div class="icm-lbl">Rata-rata Harian</div>
+          </div>
+          <div class="info-card-mini">
+            <div class="icm-icon">😴</div>
+            <div class="icm-val">6.8 <span class="icm-unit">jam</span></div>
+            <div class="icm-lbl">Rata-rata Tidur</div>
+          </div>
+        </div>
+
+        <div class="neu-card" style="margin-top:14px;border-left:3px solid var(--warning);" data-animate="up" data-delay="160">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--warning);margin-bottom:6px;">📝 Keluhan Utama</div>
+          <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">Pusing dan sakit kepala sudah 3 hari, disertai mual ringan. Tidak ada demam. Tidur kurang nyenyak 2 minggu terakhir.</p>
+        </div>
+
+        <div class="neu-card" style="margin-top:14px;background:var(--success-bg);border:1px solid rgba(39,174,96,0.2);" data-animate="up" data-delay="200">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <ion-icon name="time-outline" style="color:var(--primary-dark);font-size:1.2rem;"></ion-icon>
+            <span style="font-size:0.78rem;color:var(--primary-dark);font-weight:600;">Dokter sedang mereview data Anda...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Anamnesa -->
+    <div id="step-2" class="step-pane">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:14px;" data-animate="up">Anamnesa — Wawancara Klinis</h3>
+
+        <div class="doc-bubble" data-animate="up" data-delay="80">
+          <div class="doc-bubble-avatar">SW</div>
+          <div class="doc-bubble-text">Halo, saya akan mengajukan beberapa pertanyaan untuk lebih memahami kondisi Anda. Mohon jawab sejujurnya dan selengkap mungkin ya.</div>
+        </div>
+
+        <div class="neu-card" data-animate="up" data-delay="140">
+          <label style="font-size:0.75rem;font-weight:700;color:var(--text-secondary);display:block;margin-bottom:8px;">Ceritakan keluhan secara detail</label>
+          <textarea class="neu-input" rows="3" placeholder="Deskripsikan keluhan Anda...">Pusing berputar terutama saat berdiri, disertai mual ringan dan sedikit nyeri kepala bagian belakang</textarea>
+        </div>
+
+        <div class="neu-card" style="margin-top:12px;" data-animate="up" data-delay="180">
+          <label style="font-size:0.75rem;font-weight:700;color:var(--text-secondary);display:block;margin-bottom:8px;">Sejak kapan?</label>
+          <input type="text" class="neu-input" value="3 hari yang lalu, mulai Sabtu pagi" style="width:100%;">
+        </div>
+
+        <div class="neu-card" style="margin-top:12px;" data-animate="up" data-delay="220">
+          <label style="font-size:0.75rem;font-weight:700;color:var(--text-secondary);display:block;margin-bottom:10px;">Riwayat Penyakit</label>
+          <div onclick="toggleCheck(this)" class="check-item"><div class="check-box"></div><span class="check-label">Diabetes Melitus (DM)</span></div>
+          <div onclick="toggleCheck(this)" class="check-item"><div class="check-box checked"></div><span class="check-label">Hipertensi</span></div>
+          <div onclick="toggleCheck(this)" class="check-item"><div class="check-box"></div><span class="check-label">Penyakit Jantung</span></div>
+          <div onclick="toggleCheck(this)" class="check-item"><div class="check-box"></div><span class="check-label">Asma / Penyakit Paru</span></div>
+        </div>
+
+        <div class="neu-card" style="margin-top:12px;" data-animate="up" data-delay="260">
+          <label style="font-size:0.75rem;font-weight:700;color:var(--text-secondary);display:block;margin-bottom:8px;">Alergi obat/makanan</label>
+          <input type="text" class="neu-input" value="Penisilin" style="width:100%;">
+        </div>
+
+        <button class="neu-btn neu-btn-primary neu-btn-block" style="margin-top:16px;" onclick="showToast('Jawaban terkirim ke dokter','success')" data-animate="up" data-delay="300">
+          <ion-icon name="send-outline"></ion-icon> Kirim Jawaban
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Vital Sign -->
+    <div id="step-3" class="step-pane">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;" data-animate="up">Pemeriksaan Vital Sign</h3>
+
+        <div class="neu-card" style="background:var(--info-bg);border:1px solid rgba(47,128,237,0.2);margin-bottom:16px;" data-animate="up" data-delay="80">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <ion-icon name="watch-outline" style="font-size:1.5rem;color:var(--info);"></ion-icon>
+            <div>
+              <div style="font-size:0.82rem;font-weight:700;color:var(--info);">Pastikan sensor terpasang dengan benar</div>
+              <div style="font-size:0.7rem;color:var(--text-tertiary);margin-top:2px;">Smartwatch harus menempel di pergelangan tangan</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="live-vital-grid" data-animate="up" data-delay="120">
+          <div class="live-vital-card" style="border-top:3px solid #EB5757;">
+            <div class="lvc-label">Detak Jantung</div>
+            <div class="lvc-val" id="s3-hr">88</div>
+            <div class="lvc-unit">bpm</div>
+          </div>
+          <div class="live-vital-card" style="border-top:3px solid #2F80ED;">
+            <div class="lvc-label">SpO2</div>
+            <div class="lvc-val" id="s3-spo2">97</div>
+            <div class="lvc-unit">%</div>
+          </div>
+          <div class="live-vital-card" style="border-top:3px solid #F2994A;">
+            <div class="lvc-label">Suhu Tubuh</div>
+            <div class="lvc-val" id="s3-temp">36.8</div>
+            <div class="lvc-unit">°C</div>
+          </div>
+          <div class="live-vital-card" style="border-top:3px solid #27AE60;">
+            <div class="lvc-label">Laju Napas</div>
+            <div class="lvc-val" id="s3-rr">16</div>
+            <div class="lvc-unit">x/mnt</div>
+          </div>
+        </div>
+
+        <div class="neu-card" style="margin-top:16px;" data-animate="up" data-delay="180">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span style="font-size:0.78rem;font-weight:700;color:var(--text-secondary);">Durasi Pengukuran</span>
+            <span style="font-size:0.78rem;font-weight:700;color:var(--primary-dark);" id="timerDisplay">1:45 / 2:00</span>
+          </div>
+          <div class="neu-progress">
+            <div class="neu-progress-fill" id="timerBar" style="width:87%;background:linear-gradient(90deg,#27AE60,#6FCF97);"></div>
+          </div>
+          <p style="font-size:0.68rem;color:var(--text-muted);margin-top:8px;">Minimal 2 menit untuk data HRV yang akurat</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: Inspeksi Visual -->
+    <div id="step-4" class="step-pane">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;" data-animate="up">Inspeksi Visual</h3>
+
+        <div class="doc-bubble" data-animate="up" data-delay="80">
+          <div class="doc-bubble-avatar">SW</div>
+          <div class="doc-bubble-text">Saya akan memeriksa secara visual melalui kamera. Tolong hadapkan wajah Anda ke kamera dengan pencahayaan yang cukup.</div>
+        </div>
+
+        <div class="camera-mock" data-animate="up" data-delay="140">
+          <ion-icon name="camera-outline"></ion-icon>
+          <span>Aktifkan kamera untuk inspeksi visual</span>
+          <button class="neu-btn neu-btn-sm" onclick="showToast('Membuka kamera...','info')" style="margin-top:6px;">
+            <ion-icon name="camera-outline"></ion-icon> Buka Kamera
+          </button>
+        </div>
+
+        <div class="neu-card" style="margin-top:16px;" data-animate="up" data-delay="200">
+          <div style="font-size:0.82rem;font-weight:700;color:var(--text-primary);margin-bottom:12px;">Checklist Inspeksi</div>
+          <div onclick="toggleCheck(this)" class="check-item"><div class="check-box checked"></div><span class="check-label">Wajah — Ekspresi, simetri, warna kulit</span></div>
+          <div onclick="toggleCheck(this)" class="check-item"><div class="check-box checked"></div><span class="check-label">Mata — Konjungtiva, sclera</span></div>
+          <div onclick="toggleCheck(this)" class="check-item"><div class="check-box"></div><span class="check-label">Lidah — Warna, tekstur</span></div>
+          <div onclick="toggleCheck(this)" class="check-item"><div class="check-box"></div><span class="check-label">Area Keluhan — Kepala, leher</span></div>
+        </div>
+
+        <button class="neu-btn neu-btn-primary" style="margin-top:16px;width:100%;" onclick="showToast('Foto diambil','success')" data-animate="up" data-delay="260">
+          <ion-icon name="camera-outline"></ion-icon> 📸 Ambil Foto
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Palpasi -->
+    <div id="step-5" class="step-pane">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:14px;" data-animate="up">Palpasi Terpandu</h3>
+
+        <div class="doc-bubble" data-animate="up" data-delay="80">
+          <div class="doc-bubble-avatar">SW</div>
+          <div class="doc-bubble-text">Tekan perlahan di area yang terasa nyeri pada diagram tubuh di bawah, kemudian sesuaikan skala nyeri yang Anda rasakan.</div>
+        </div>
+
+        <div class="body-diagram" data-animate="up" data-delay="140">
+          <svg width="120" height="200" viewBox="0 0 120 200">
+            <!-- Head -->
+            <circle cx="60" cy="25" r="20" fill="none" stroke="#4A5568" stroke-width="2"/>
+            <!-- Neck -->
+            <rect x="53" y="44" width="14" height="10" fill="none" stroke="#4A5568" stroke-width="2" rx="3"/>
+            <!-- Body -->
+            <rect x="35" y="54" width="50" height="65" fill="none" stroke="#4A5568" stroke-width="2" rx="6"/>
+            <!-- Left arm -->
+            <rect x="18" y="56" width="16" height="50" fill="none" stroke="#4A5568" stroke-width="2" rx="6"/>
+            <!-- Right arm -->
+            <rect x="86" y="56" width="16" height="50" fill="none" stroke="#4A5568" stroke-width="2" rx="6"/>
+            <!-- Left leg -->
+            <rect x="38" y="120" width="18" height="65" fill="none" stroke="#4A5568" stroke-width="2" rx="6"/>
+            <!-- Right leg -->
+            <rect x="64" y="120" width="18" height="65" fill="none" stroke="#4A5568" stroke-width="2" rx="6"/>
+            <!-- Pain marker - head area -->
+            <circle cx="60" cy="25" r="8" fill="rgba(235,87,87,0.3)" stroke="#EB5757" stroke-width="1.5"/>
+            <text x="60" y="29" text-anchor="middle" font-size="8" fill="#EB5757" font-weight="bold">!</text>
+          </svg>
+        </div>
+
+        <div class="neu-card" style="margin-top:16px;" data-animate="up" data-delay="200">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <span style="font-size:0.82rem;font-weight:700;color:var(--text-secondary);">Skala Nyeri</span>
+            <span style="font-size:1.2rem;font-weight:800;color:var(--primary-dark);" id="painScale">4</span>
+          </div>
+          <input type="range" class="pain-slider" min="1" max="10" value="4" oninput="document.getElementById('painScale').textContent=this.value">
+          <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:var(--text-muted);margin-top:6px;">
+            <span>1 (Ringan)</span><span>5 (Sedang)</span><span>10 (Berat)</span>
+          </div>
+        </div>
+
+        <div class="neu-card" style="margin-top:12px;" data-animate="up" data-delay="240">
+          <label style="font-size:0.75rem;font-weight:700;color:var(--text-secondary);display:block;margin-bottom:8px;">Deskripsi temuan</label>
+          <textarea class="neu-input" rows="2" placeholder="Mis: nyeri tekan di kepala bagian belakang..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6: Auskultasi -->
+    <div id="step-6" class="step-pane">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;" data-animate="up">Auskultasi</h3>
+
+        <div class="neu-card" style="background:var(--warning-bg);border:1px solid rgba(242,153,74,0.25);text-align:center;" data-animate="up" data-delay="80">
+          <ion-icon name="ear-outline" style="font-size:2.5rem;color:var(--warning);"></ion-icon>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--warning);margin:8px 0 4px;">Memerlukan Digital Stethoscope</div>
+          <p style="font-size:0.75rem;color:var(--text-tertiary);line-height:1.5;">Fitur auskultasi digital memerlukan aksesori digital stethoscope yang terhubung via Bluetooth. Tanpa perangkat ini, langkah ini dapat dilewati.</p>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:20px;" data-animate="up" data-delay="140">
+          <button class="neu-btn neu-btn-block" onclick="skipAuskultasi()" style="flex:1;">
+            <ion-icon name="skip-forward-outline"></ion-icon> Lewati
+          </button>
+          <button class="neu-btn neu-btn-primary" onclick="showToast('Digital stethoscope tidak terhubung','warning')" style="flex:1;">
+            <ion-icon name="radio-outline"></ion-icon> Mulai
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 7: Pemeriksaan Tambahan -->
+    <div id="step-7" class="step-pane">
+      <div class="section">
+        <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:14px;" data-animate="up">Pemeriksaan Tambahan</h3>
+
+        <div class="neu-card" data-animate="up" data-delay="80">
+          <div style="font-size:0.82rem;font-weight:700;color:var(--text-primary);margin-bottom:12px;">Kuesioner PHQ-9 (Mood & Stres)</div>
+          <!-- Q1 -->
+          <div style="margin-bottom:14px;">
+            <p style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:8px;line-height:1.5;">1. Kurang tertarik atau semangat dalam beraktivitas?</p>
+            <div class="radio-group">
+              <div class="radio-opt selected" onclick="selectRadio(this,'q1')">Tidak pernah</div>
+              <div class="radio-opt" onclick="selectRadio(this,'q1')">Beberapa hari</div>
+              <div class="radio-opt" onclick="selectRadio(this,'q1')">Lebih dari setengah</div>
+              <div class="radio-opt" onclick="selectRadio(this,'q1')">Hampir setiap hari</div>
+            </div>
+          </div>
+          <!-- Q2 -->
+          <div style="margin-bottom:14px;">
+            <p style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:8px;line-height:1.5;">2. Merasa sedih, murung, atau putus asa?</p>
+            <div class="radio-group">
+              <div class="radio-opt" onclick="selectRadio(this,'q2')">Tidak pernah</div>
+              <div class="radio-opt selected" onclick="selectRadio(this,'q2')">Beberapa hari</div>
+              <div class="radio-opt" onclick="selectRadio(this,'q2')">Lebih dari setengah</div>
+              <div class="radio-opt" onclick="selectRadio(this,'q2')">Hampir setiap hari</div>
+            </div>
+          </div>
+          <!-- Q3 -->
+          <div style="margin-bottom:14px;">
+            <p style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:8px;line-height:1.5;">3. Kesulitan tidur atau tidur terlalu banyak?</p>
+            <div class="radio-group">
+              <div class="radio-opt" onclick="selectRadio(this,'q3')">Tidak pernah</div>
+              <div class="radio-opt selected" onclick="selectRadio(this,'q3')">Beberapa hari</div>
+              <div class="radio-opt" onclick="selectRadio(this,'q3')">Lebih dari setengah</div>
+              <div class="radio-opt" onclick="selectRadio(this,'q3')">Hampir setiap hari</div>
+            </div>
+          </div>
+          <!-- Q4 -->
+          <div>
+            <p style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:8px;line-height:1.5;">4. Merasa lelah atau kurang bertenaga?</p>
+            <div class="radio-group">
+              <div class="radio-opt" onclick="selectRadio(this,'q4')">Tidak pernah</div>
+              <div class="radio-opt selected" onclick="selectRadio(this,'q4')">Beberapa hari</div>
+              <div class="radio-opt" onclick="selectRadio(this,'q4')">Lebih dari setengah</div>
+              <div class="radio-opt" onclick="selectRadio(this,'q4')">Hampir setiap hari</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="neu-card" style="margin-top:14px;" data-animate="up" data-delay="160">
+          <div style="font-size:0.82rem;font-weight:700;color:var(--text-primary);margin-bottom:12px;">Data Antropometri</div>
+          <div style="display:flex;gap:12px;">
+            <div style="flex:1">
+              <label style="font-size:0.72rem;color:var(--text-tertiary);display:block;margin-bottom:6px;">Berat Badan (kg)</label>
+              <input type="number" class="neu-input" value="68" style="width:100%;">
+            </div>
+            <div style="flex:1">
+              <label style="font-size:0.72rem;color:var(--text-tertiary);display:block;margin-bottom:6px;">Tinggi Badan (cm)</label>
+              <input type="number" class="neu-input" value="170" style="width:100%;">
+            </div>
+          </div>
+          <div style="margin-top:12px;">
+            <label style="font-size:0.72rem;color:var(--text-tertiary);display:block;margin-bottom:6px;">Lingkar Pinggang (cm)</label>
+            <input type="number" class="neu-input" value="82" style="width:100%;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 8: Menunggu Assessment -->
+    <div id="step-8" class="step-pane">
+      <div class="section" style="text-align:center;padding-top:40px;">
+        <div id="loadingState">
+          <div class="spinner"></div>
+          <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:8px;" data-animate="up">Menunggu Assessment</h3>
+          <p style="font-size:0.82rem;color:var(--text-tertiary);line-height:1.6;" data-animate="up" data-delay="60">
+            Dokter sedang menyusun hasil pemeriksaan berdasarkan semua data yang telah dikumpulkan...
+          </p>
+          <div style="margin-top:24px;display:flex;flex-direction:column;gap:8px;text-align:left;" data-animate="up" data-delay="120">
+            <div style="display:flex;align-items:center;gap:10px;font-size:0.78rem;color:var(--text-secondary);">
+              <ion-icon name="checkmark-circle" style="color:var(--primary-dark);font-size:1.1rem;"></ion-icon> Vital sign dianalisis
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:0.78rem;color:var(--text-secondary);">
+              <ion-icon name="checkmark-circle" style="color:var(--primary-dark);font-size:1.1rem;"></ion-icon> Anamnesa diproses
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:0.78rem;color:var(--text-secondary);">
+              <ion-icon name="checkmark-circle" style="color:var(--primary-dark);font-size:1.1rem;"></ion-icon> Data inspeksi dicatat
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:0.78rem;color:var(--text-secondary);">
+              <ion-icon name="time-outline" style="color:var(--warning);font-size:1.1rem;"></ion-icon> Menyusun diagnosis &amp; rekomendasi...
+            </div>
+          </div>
+        </div>
+
+        <div id="doneState" style="display:none;">
+          <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#27AE60,#6FCF97);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 24px rgba(39,174,96,0.4);">
+            <ion-icon name="checkmark-outline" style="font-size:2.5rem;color:#fff;"></ion-icon>
+          </div>
+          <h3 style="font-size:1.1rem;font-weight:800;color:var(--primary-dark);margin-bottom:8px;">Hasil Siap!</h3>
+          <p style="font-size:0.82rem;color:var(--text-tertiary);margin-bottom:24px;line-height:1.6;">Dokter telah menyusun hasil pemeriksaan lengkap untuk Anda.</p>
+          <button class="neu-btn neu-btn-primary neu-btn-lg" onclick="submitGuidedExam()">
+            <ion-icon name="document-text-outline"></ion-icon> Lihat Hasil Pemeriksaan
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end content -->
+
+  <!-- CONFIRM BUTTON -->
+  <div class="confirm-btn-wrap">
+    <button class="btn-waiting" id="waitingBtn">
+      <ion-icon name="time-outline"></ion-icon> Menunggu konfirmasi dokter...
+    </button>
+    <button class="btn-proceed" id="proceedBtn" onclick="nextStep()">
+      Lanjut → <span id="nextStepLabel">Step 2</span>
+    </button>
+  </div>
+
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  let _geUser = null;
+
+  (async () => {
+    try {
+      const { user } = await VAuth.guard('patient', 1);
+      _geUser = user;
+    } catch (e) {
+      console.error('[guided-exam] guard error:', e);
+    }
+  })();
+
+  let currentStep = 1;
+  const totalSteps = 8;
+
+  const stepTitles = [
+    '', // 0 unused
+    'Step 1 — Review Data',
+    'Step 2 — Anamnesa',
+    'Step 3 — Vital Sign',
+    'Step 4 — Inspeksi Visual',
+    'Step 5 — Palpasi',
+    'Step 6 — Auskultasi',
+    'Step 7 — Pemeriksaan Tambahan',
+    'Step 8 — Menunggu Assessment'
+  ];
+
+  function buildStepDots() {
+    const container = document.getElementById('stepDots');
+    container.innerHTML = '';
+    for (let i = 1; i <= totalSteps; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'step-dot' +
+        (i < currentStep ? ' past' : '') +
+        (i === currentStep ? ' current' : '');
+      dot.textContent = i < currentStep ? '✓' : i;
+      container.appendChild(dot);
+
+      if (i < totalSteps) {
+        const line = document.createElement('div');
+        line.className = 'step-line' + (i < currentStep ? ' done' : '');
+        container.appendChild(line);
+      }
+    }
+  }
+
+  function updateUI() {
+    buildStepDots();
+    document.getElementById('stepTitleSmall').textContent = stepTitles[currentStep];
+    document.getElementById('stepCounter').textContent = currentStep + ' / ' + totalSteps;
+    document.querySelectorAll('.step-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById('step-' + currentStep).classList.add('active');
+    document.getElementById('nextStepLabel').textContent = 'Step ' + (currentStep + 1);
+
+    // Show waiting state, then auto-enable after 2s
+    const waitBtn = document.getElementById('waitingBtn');
+    const procBtn = document.getElementById('proceedBtn');
+
+    if (currentStep === totalSteps) {
+      waitBtn.style.display = 'none';
+      procBtn.classList.remove('show');
+      // Show loading, then result after 3s
+      setTimeout(() => {
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('doneState').style.display = 'block';
+      }, 3000);
+      return;
+    }
+
+    waitBtn.style.display = 'flex';
+    procBtn.classList.remove('show');
+
+    setTimeout(() => {
+      waitBtn.style.display = 'none';
+      procBtn.classList.add('show');
+    }, 2000);
+  }
+
+  function nextStep() {
+    if (currentStep < totalSteps) {
+      currentStep++;
+      updateUI();
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function skipAuskultasi() {
+    showToast('Langkah auskultasi dilewati', 'info');
+    nextStep();
+  }
+
+  function toggleCheck(el) {
+    el.querySelector('.check-box').classList.toggle('checked');
+  }
+
+  function selectRadio(el, group) {
+    el.closest('.radio-group').querySelectorAll('.radio-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  // Live vital simulation for step 3
+  setInterval(() => {
+    const hrEl = document.getElementById('s3-hr');
+    const spo2El = document.getElementById('s3-spo2');
+    const tempEl = document.getElementById('s3-temp');
+    const rrEl = document.getElementById('s3-rr');
+    if (hrEl) hrEl.textContent = Math.round(88 + (Math.random()-0.5)*8);
+    if (spo2El) spo2El.textContent = Math.round(97 + (Math.random()-0.5)*2);
+    if (tempEl) tempEl.textContent = (36.8 + (Math.random()-0.5)*0.4).toFixed(1);
+    if (rrEl) rrEl.textContent = Math.round(16 + (Math.random()-0.5)*4);
+  }, 2500);
+
+  async function submitGuidedExam() {
+    if (!_geUser) {
+      nav('examination-result.html');
+      return;
+    }
+    try {
+      // Collect answers from each step
+      const results = {};
+
+      // Step 2: Anamnesa answers
+      const anamnesaInputs = document.querySelectorAll('#step-2 input, #step-2 textarea');
+      anamnesaInputs.forEach((el, i) => { if (el.value) results['anamnesa_' + i] = el.value; });
+
+      // Step 3: Vital signs
+      results.hr = document.getElementById('s3-hr') ? document.getElementById('s3-hr').textContent : '';
+      results.spo2 = document.getElementById('s3-spo2') ? document.getElementById('s3-spo2').textContent : '';
+      results.temperature = document.getElementById('s3-temp') ? document.getElementById('s3-temp').textContent : '';
+      results.rr = document.getElementById('s3-rr') ? document.getElementById('s3-rr').textContent : '';
+
+      // Step 5: Pain scale
+      const painSlider = document.querySelector('#step-5 input[type="range"]');
+      if (painSlider) results.painScale = painSlider.value;
+
+      // Step 7: PHQ answers + weight/waist
+      const step7Inputs = document.querySelectorAll('#step-7 input[type="number"]');
+      step7Inputs.forEach((el, i) => { if (el.value) results['measurements_' + i] = el.value; });
+
+      await VDB.createMedicalRecord({
+        patientId: _geUser.uid,
+        type: 'guided_exam',
+        results,
+        date: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      nav('examination-result.html');
+    } catch (e) {
+      console.error('[guided-exam] submit error:', e);
+      showToast('Gagal menyimpan hasil, melanjutkan...', 'warning');
+      nav('examination-result.html');
+    }
+  }
+
+  // Init
+  updateUI();
+</script>
+</body>
+</html>

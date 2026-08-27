@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Penilaian UX</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
+  <style>
+    :root {
+      --ux-primary: #6C63FF;
+      --ux-dark: #4A42B0;
+    }
+    .app-header {
+      background: linear-gradient(135deg, var(--ux-dark) 0%, var(--ux-primary) 100%);
+      box-shadow: 0 2px 16px rgba(74, 66, 176, 0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12); box-shadow: none;
+      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .page-title { color: #fff; font-size: 1.0rem; font-weight: 700; }
+
+    .step-progress-bar {
+      background: var(--bg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 16px 16px 12px;
+      position: sticky; top: 64px; z-index: 20;
+    }
+    .step-dots { display: flex; align-items: center; justify-content: center; gap: 0; }
+    .step-dot {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid var(--shadow-dark); background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700; color: var(--text-tertiary);
+      transition: all 0.3s; flex-shrink: 0;
+    }
+    .step-dot.past { background: var(--ux-primary); color: #fff; border-color: var(--ux-primary); }
+    .step-dot.current {
+      background: linear-gradient(135deg, var(--ux-dark), var(--ux-primary));
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 12px rgba(108,99,255,0.4);
+      transform: scale(1.15);
+    }
+    .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
+    .step-line.done { background: var(--ux-primary); }
+
+    .step-info { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+    .step-title-text { font-size: 0.8rem; font-weight: 700; color: var(--ux-primary); }
+    .step-counter { font-size: 0.7rem; color: var(--text-tertiary); }
+
+    .step-pane { display: none; }
+    .step-pane.active { display: block; animation: fadeIn 0.4s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .confirm-btn-wrap {
+      position: sticky; bottom: 0; background: var(--bg);
+      border-top: 1px solid var(--shadow-dark); padding: 14px 20px; z-index: 30;
+    }
+    .btn-proceed {
+      background: linear-gradient(135deg, var(--ux-dark), var(--ux-primary));
+      color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
+      font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
+      box-shadow: 0 6px 18px rgba(108,99,255,0.3);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-proceed:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .likert-question {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 16px;
+      padding: 18px; margin-bottom: 14px;
+    }
+    .likert-question .q-text {
+      font-size: 0.84rem; font-weight: 600; color: var(--text-primary);
+      margin-bottom: 12px; line-height: 1.5;
+    }
+    .likert-question .q-number {
+      font-size: 0.68rem; font-weight: 700; color: var(--ux-primary);
+      margin-bottom: 6px;
+    }
+    .likert-options { display: flex; flex-direction: column; gap: 8px; }
+    .likert-opt {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 10px; padding: 10px 14px;
+      cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
+      font-size: 0.78rem; font-weight: 500; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .likert-opt.selected { border-color: var(--ux-primary); background: rgba(108,99,255,0.05); color: var(--ux-dark); font-weight: 600; }
+    .likert-opt .radio-circle {
+      width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--shadow-dark);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .likert-opt.selected .radio-circle { border-color: var(--ux-primary); background: var(--ux-primary); }
+    .likert-opt.selected .radio-circle::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+
+    .intro-card {
+      background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(108,99,255,0.02));
+      border-left: 4px solid var(--ux-primary); border-radius: 14px; padding: 18px; margin-bottom: 16px;
+    }
+    .intro-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--ux-dark); margin-bottom: 8px; }
+    .intro-card p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
+
+    .dimension-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+      padding: 12px 16px; background: rgba(108,99,255,0.06); border-radius: 12px;
+    }
+    .dimension-header ion-icon { font-size: 1.3rem; color: var(--ux-primary); }
+    .dimension-header span { font-size: 0.88rem; font-weight: 700; color: var(--ux-dark); }
+
+    .result-card { text-align: center; padding: 30px 20px; }
+    .result-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .result-score { font-size: 2.8rem; font-weight: 800; color: var(--ux-primary); }
+    .result-label { font-size: 0.85rem; color: var(--text-tertiary); margin-top: 4px; }
+
+    .ux-radar {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px;
+    }
+    .ux-dim-card {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 14px;
+      padding: 16px; text-align: center;
+    }
+    .ux-dim-card .dim-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .ux-dim-card .dim-name { font-size: 0.72rem; font-weight: 600; color: var(--text-tertiary); margin-bottom: 4px; }
+    .ux-dim-card .dim-score { font-size: 1.4rem; font-weight: 800; }
+    .ux-dim-card .dim-bar { height: 6px; background: var(--shadow-dark); border-radius: 3px; margin-top: 8px; overflow: hidden; }
+    .ux-dim-card .dim-bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+
+    .textarea-wrap { margin-top: 16px; }
+    .textarea-wrap label {
+      display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .textarea-wrap textarea {
+      width: 100%; min-height: 100px; border: none; border-radius: 14px;
+      background: var(--bg); box-shadow: var(--shadow-in); padding: 14px;
+      font-family: var(--font); font-size: 0.82rem; color: var(--text-primary);
+      resize: vertical; outline: none;
+    }
+    .textarea-wrap textarea::placeholder { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div class="page-title">Penilaian UX</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="step-progress-bar">
+    <div class="step-dots" id="step-dots"></div>
+    <div class="step-info">
+      <span class="step-title-text" id="step-title">Pendahuluan</span>
+      <span class="step-counter" id="step-counter">1 / 6</span>
+    </div>
+  </div>
+
+  <!-- STEP 1: INTRO -->
+  <div class="step-pane active" data-step="1">
+    <div class="section">
+      <div class="intro-card">
+        <h3>Penilaian User Experience (UX)</h3>
+        <p>Kuesioner ini mengukur pengalaman Anda menggunakan aplikasi <strong>HerboraTech</strong> secara menyeluruh, mencakup 5 dimensi UX:</p>
+      </div>
+      <div class="neu-card-sm" style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(108,99,255,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+          <ion-icon name="eye-outline" style="color:var(--ux-primary);"></ion-icon>
+        </div>
+        <div><div style="font-weight:600;font-size:0.82rem;">Visual Design</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Tampilan & estetika antarmuka</div></div>
+      </div>
+      <div class="neu-card-sm" style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(47,128,237,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+          <ion-icon name="navigate-outline" style="color:#2F80ED;"></ion-icon>
+        </div>
+        <div><div style="font-weight:600;font-size:0.82rem;">Navigasi & Interaksi</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Kemudahan navigasi & responsivitas</div></div>
+      </div>
+      <div class="neu-card-sm" style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(39,174,96,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+          <ion-icon name="document-text-outline" style="color:#27AE60;"></ion-icon>
+        </div>
+        <div><div style="font-weight:600;font-size:0.82rem;">Konten & Informasi</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Kejelasan & relevansi informasi</div></div>
+      </div>
+      <div class="neu-card-sm" style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(242,153,74,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+          <ion-icon name="happy-outline" style="color:#F2994A;"></ion-icon>
+        </div>
+        <div><div style="font-weight:600;font-size:0.82rem;">Kepuasan Pengguna</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Tingkat kepuasan keseluruhan</div></div>
+      </div>
+      <div class="neu-card-sm" style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(235,87,87,0.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+          <ion-icon name="shield-checkmark-outline" style="color:#EB5757;"></ion-icon>
+        </div>
+        <div><div style="font-weight:600;font-size:0.82rem;">Kepercayaan & Keamanan</div><div style="font-size:0.68rem;color:var(--text-tertiary);">Rasa aman & percaya pada aplikasi</div></div>
+      </div>
+      <div class="neu-card-sm" style="background:rgba(108,99,255,0.04);border:1px dashed rgba(108,99,255,0.3);">
+        <p style="font-size:0.75rem;color:var(--text-tertiary);text-align:center;margin:0;">
+          <ion-icon name="time-outline" style="vertical-align:middle;"></ion-icon>
+          Estimasi waktu: <strong>5-10 menit</strong> &bull; 20 pertanyaan + feedback
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Visual Design & Navigasi -->
+  <div class="step-pane" data-step="2">
+    <div class="section">
+      <div class="dimension-header">
+        <ion-icon name="eye-outline"></ion-icon>
+        <span>Visual Design</span>
+      </div>
+      <div class="likert-question" data-q="vd1">
+        <div class="q-number">Pertanyaan 1 dari 4</div>
+        <div class="q-text">Tampilan visual HerboraTech menarik dan modern.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="vd2">
+        <div class="q-number">Pertanyaan 2 dari 4</div>
+        <div class="q-text">Penggunaan warna dan ikon di HerboraTech memudahkan saya memahami informasi.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="vd3">
+        <div class="q-number">Pertanyaan 3 dari 4</div>
+        <div class="q-text">Tata letak (layout) halaman HerboraTech terorganisir dengan rapi.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="vd4">
+        <div class="q-number">Pertanyaan 4 dari 4</div>
+        <div class="q-text">Ukuran teks dan elemen di HerboraTech nyaman untuk dibaca dan digunakan.</div>
+        <div class="likert-options"></div>
+      </div>
+
+      <div style="height:16px"></div>
+
+      <div class="dimension-header">
+        <ion-icon name="navigate-outline" style="color:#2F80ED;"></ion-icon>
+        <span>Navigasi & Interaksi</span>
+      </div>
+      <div class="likert-question" data-q="nav1">
+        <div class="q-number">Pertanyaan 1 dari 4</div>
+        <div class="q-text">Saya dapat menemukan fitur yang saya butuhkan dengan mudah di HerboraTech.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="nav2">
+        <div class="q-number">Pertanyaan 2 dari 4</div>
+        <div class="q-text">Alur navigasi antar halaman terasa logis dan intuitif.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="nav3">
+        <div class="q-number">Pertanyaan 3 dari 4</div>
+        <div class="q-text">Aplikasi merespon interaksi saya (tap, scroll) dengan cepat dan lancar.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="nav4">
+        <div class="q-number">Pertanyaan 4 dari 4</div>
+        <div class="q-text">Menu dan tombol di HerboraTech memiliki label yang jelas dan mudah dipahami.</div>
+        <div class="likert-options"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Konten & Informasi -->
+  <div class="step-pane" data-step="3">
+    <div class="section">
+      <div class="dimension-header">
+        <ion-icon name="document-text-outline" style="color:#27AE60;"></ion-icon>
+        <span>Konten & Informasi</span>
+      </div>
+      <div class="likert-question" data-q="ci1">
+        <div class="q-number">Pertanyaan 1 dari 4</div>
+        <div class="q-text">Informasi kesehatan yang disajikan HerboraTech mudah dipahami.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="ci2">
+        <div class="q-number">Pertanyaan 2 dari 4</div>
+        <div class="q-text">Data vital sign dan grafik ditampilkan dengan jelas dan informatif.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="ci3">
+        <div class="q-number">Pertanyaan 3 dari 4</div>
+        <div class="q-text">Konten edukasi (artikel, ensiklopedia, herbal) bermanfaat untuk kesehatan saya.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="ci4">
+        <div class="q-number">Pertanyaan 4 dari 4</div>
+        <div class="q-text">Notifikasi dan peringatan dari HerboraTech relevan dan tidak mengganggu.</div>
+        <div class="likert-options"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: Kepuasan & Kepercayaan -->
+  <div class="step-pane" data-step="4">
+    <div class="section">
+      <div class="dimension-header">
+        <ion-icon name="happy-outline" style="color:#F2994A;"></ion-icon>
+        <span>Kepuasan Pengguna</span>
+      </div>
+      <div class="likert-question" data-q="sat1">
+        <div class="q-number">Pertanyaan 1 dari 4</div>
+        <div class="q-text">Saya merasa puas dengan pengalaman menggunakan HerboraTech secara keseluruhan.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="sat2">
+        <div class="q-number">Pertanyaan 2 dari 4</div>
+        <div class="q-text">Fitur konsultasi (chat, video call) di HerboraTech memenuhi kebutuhan saya.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="sat3">
+        <div class="q-number">Pertanyaan 3 dari 4</div>
+        <div class="q-text">Fitur AI (AI Health, risk score) memberikan insight yang berharga.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="sat4">
+        <div class="q-number">Pertanyaan 4 dari 4</div>
+        <div class="q-text">HerboraTech memenuhi ekspektasi saya sebagai aplikasi kesehatan digital.</div>
+        <div class="likert-options"></div>
+      </div>
+
+      <div style="height:16px"></div>
+
+      <div class="dimension-header">
+        <ion-icon name="shield-checkmark-outline" style="color:#EB5757;"></ion-icon>
+        <span>Kepercayaan & Keamanan</span>
+      </div>
+      <div class="likert-question" data-q="tr1">
+        <div class="q-number">Pertanyaan 1 dari 4</div>
+        <div class="q-text">Saya merasa data kesehatan saya aman di HerboraTech.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="tr2">
+        <div class="q-number">Pertanyaan 2 dari 4</div>
+        <div class="q-text">Saya percaya pada akurasi data vital sign yang ditampilkan HerboraTech.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="tr3">
+        <div class="q-number">Pertanyaan 3 dari 4</div>
+        <div class="q-text">Proses autentikasi (login, verifikasi) di HerboraTech membuat saya merasa terlindungi.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="tr4">
+        <div class="q-number">Pertanyaan 4 dari 4</div>
+        <div class="q-text">Saya percaya bahwa HerboraTech menjaga privasi informasi kesehatan saya.</div>
+        <div class="likert-options"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: Feedback Terbuka -->
+  <div class="step-pane" data-step="5">
+    <div class="section">
+      <div class="dimension-header">
+        <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+        <span>Feedback Terbuka</span>
+      </div>
+      <div class="intro-card" style="border-left-color:var(--ux-primary);">
+        <p style="margin:0;">Berikan masukan tambahan Anda untuk membantu kami meningkatkan kualitas HerboraTech. Bagian ini bersifat <strong>opsional</strong>.</p>
+      </div>
+      <div class="textarea-wrap">
+        <label>Apa fitur yang paling Anda sukai dari HerboraTech?</label>
+        <textarea id="feedback-like" placeholder="Tulis jawaban Anda di sini..."></textarea>
+      </div>
+      <div class="textarea-wrap">
+        <label>Apa yang perlu diperbaiki atau ditingkatkan?</label>
+        <textarea id="feedback-improve" placeholder="Tulis saran Anda di sini..."></textarea>
+      </div>
+      <div class="textarea-wrap">
+        <label>Fitur tambahan apa yang Anda harapkan ada di HerboraTech?</label>
+        <textarea id="feedback-feature" placeholder="Tulis ide Anda di sini..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6: RESULT -->
+  <div class="step-pane" data-step="6">
+    <div class="section">
+      <div class="neu-card result-card">
+        <div class="result-icon">✨</div>
+        <div style="font-size:0.78rem;color:var(--text-tertiary);margin-bottom:4px;">Skor UX Keseluruhan</div>
+        <div class="result-score" id="ux-total-score">0</div>
+        <div class="result-label">dari 100 poin</div>
+        <div id="ux-level" style="margin-top:12px;">
+          <span class="neu-chip" style="font-size:0.78rem;padding:6px 16px;" id="ux-level-chip">Menghitung...</span>
+        </div>
+      </div>
+
+      <div class="ux-radar" id="ux-radar">
+        <div class="ux-dim-card">
+          <div class="dim-icon"><ion-icon name="eye-outline" style="color:var(--ux-primary);"></ion-icon></div>
+          <div class="dim-name">Visual Design</div>
+          <div class="dim-score" id="dim-vd" style="color:var(--ux-primary);">0%</div>
+          <div class="dim-bar"><div class="dim-bar-fill" id="bar-vd" style="width:0%;background:var(--ux-primary);"></div></div>
+        </div>
+        <div class="ux-dim-card">
+          <div class="dim-icon"><ion-icon name="navigate-outline" style="color:#2F80ED;"></ion-icon></div>
+          <div class="dim-name">Navigasi</div>
+          <div class="dim-score" id="dim-nav" style="color:#2F80ED;">0%</div>
+          <div class="dim-bar"><div class="dim-bar-fill" id="bar-nav" style="width:0%;background:#2F80ED;"></div></div>
+        </div>
+        <div class="ux-dim-card">
+          <div class="dim-icon"><ion-icon name="document-text-outline" style="color:#27AE60;"></ion-icon></div>
+          <div class="dim-name">Konten</div>
+          <div class="dim-score" id="dim-ci" style="color:#27AE60;">0%</div>
+          <div class="dim-bar"><div class="dim-bar-fill" id="bar-ci" style="width:0%;background:#27AE60;"></div></div>
+        </div>
+        <div class="ux-dim-card">
+          <div class="dim-icon"><ion-icon name="happy-outline" style="color:#F2994A;"></ion-icon></div>
+          <div class="dim-name">Kepuasan</div>
+          <div class="dim-score" id="dim-sat" style="color:#F2994A;">0%</div>
+          <div class="dim-bar"><div class="dim-bar-fill" id="bar-sat" style="width:0%;background:#F2994A;"></div></div>
+        </div>
+        <div class="ux-dim-card" style="grid-column: span 2;">
+          <div class="dim-icon"><ion-icon name="shield-checkmark-outline" style="color:#EB5757;"></ion-icon></div>
+          <div class="dim-name">Kepercayaan & Keamanan</div>
+          <div class="dim-score" id="dim-tr" style="color:#EB5757;">0%</div>
+          <div class="dim-bar"><div class="dim-bar-fill" id="bar-tr" style="width:0%;background:#EB5757;"></div></div>
+        </div>
+      </div>
+
+      <div class="neu-card" id="ux-interpretation" style="border-left:4px solid var(--ux-primary);margin-top:16px;">
+        <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;" id="ux-interp-text"></p>
+      </div>
+
+      <button class="neu-btn neu-btn-primary neu-btn-block" style="margin-top:16px;background:linear-gradient(135deg,var(--ux-dark),var(--ux-primary));" onclick="nav('home.html')">
+        <ion-icon name="home-outline"></ion-icon> Kembali ke Beranda
+      </button>
+    </div>
+  </div>
+
+  <div class="confirm-btn-wrap">
+    <button class="btn-proceed" id="btn-next" onclick="nextStep()">
+      Mulai Penilaian <ion-icon name="arrow-forward-outline"></ion-icon>
+    </button>
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+const TOTAL_STEPS = 6;
+let currentStep = 1;
+const answers = {};
+
+const LIKERT_LABELS = [
+  'Sangat Tidak Setuju',
+  'Tidak Setuju',
+  'Netral',
+  'Setuju',
+  'Sangat Setuju'
+];
+
+const STEP_TITLES = [
+  'Pendahuluan',
+  'Visual & Navigasi',
+  'Konten & Informasi',
+  'Kepuasan & Kepercayaan',
+  'Feedback Terbuka',
+  'Hasil Penilaian'
+];
+
+document.querySelectorAll('.likert-question').forEach(q => {
+  const qId = q.dataset.q;
+  const optionsDiv = q.querySelector('.likert-options');
+  LIKERT_LABELS.forEach((label, i) => {
+    const opt = document.createElement('div');
+    opt.className = 'likert-opt';
+    opt.innerHTML = `<div class="radio-circle"></div><span>${i + 1}. ${label}</span>`;
+    opt.onclick = () => selectAnswer(qId, i + 1, opt);
+    optionsDiv.appendChild(opt);
+  });
+});
+
+function selectAnswer(qId, value, el) {
+  const parent = el.closest('.likert-question');
+  parent.querySelectorAll('.likert-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[qId] = value;
+  checkStepComplete();
+}
+
+function checkStepComplete() {
+  const btn = document.getElementById('btn-next');
+  if (currentStep === 1 || currentStep === 5 || currentStep === 6) { btn.disabled = false; return; }
+  const pane = document.querySelector(`.step-pane[data-step="${currentStep}"]`);
+  const questions = pane.querySelectorAll('.likert-question');
+  btn.disabled = ![...questions].every(q => answers[q.dataset.q]);
+}
+
+function renderStepDots() {
+  const container = document.getElementById('step-dots');
+  let html = '';
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const cls = i < currentStep ? 'past' : i === currentStep ? 'current' : '';
+    html += `<div class="step-dot ${cls}">${i}</div>`;
+    if (i < TOTAL_STEPS) html += `<div class="step-line ${i < currentStep ? 'done' : ''}"></div>`;
+  }
+  container.innerHTML = html;
+  document.getElementById('step-title').textContent = STEP_TITLES[currentStep - 1];
+  document.getElementById('step-counter').textContent = `${currentStep} / ${TOTAL_STEPS}`;
+}
+
+function nextStep() {
+  if (currentStep < TOTAL_STEPS) {
+    currentStep++;
+    document.querySelectorAll('.step-pane').forEach(p => p.classList.remove('active'));
+    document.querySelector(`.step-pane[data-step="${currentStep}"]`).classList.add('active');
+    renderStepDots();
+
+    const btn = document.getElementById('btn-next');
+    if (currentStep === TOTAL_STEPS) {
+      calculateResults();
+      btn.style.display = 'none';
+    } else if (currentStep === 5) {
+      btn.innerHTML = 'Lihat Hasil <ion-icon name="arrow-forward-outline"></ion-icon>';
+      btn.disabled = false;
+    } else {
+      btn.innerHTML = 'Lanjut <ion-icon name="arrow-forward-outline"></ion-icon>';
+      checkStepComplete();
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function calculateResults() {
+  const dims = {
+    vd: { keys: ['vd1','vd2','vd3','vd4'], total: 0, color: 'var(--ux-primary)' },
+    nav: { keys: ['nav1','nav2','nav3','nav4'], total: 0, color: '#2F80ED' },
+    ci: { keys: ['ci1','ci2','ci3','ci4'], total: 0, color: '#27AE60' },
+    sat: { keys: ['sat1','sat2','sat3','sat4'], total: 0, color: '#F2994A' },
+    tr: { keys: ['tr1','tr2','tr3','tr4'], total: 0, color: '#EB5757' }
+  };
+
+  let grandTotal = 0;
+  for (const [dimKey, dim] of Object.entries(dims)) {
+    dim.total = dim.keys.reduce((sum, k) => sum + (answers[k] || 0), 0);
+    grandTotal += dim.total;
+    const pct = Math.round((dim.total / 20) * 100);
+    document.getElementById(`dim-${dimKey}`).textContent = `${pct}%`;
+    setTimeout(() => {
+      document.getElementById(`bar-${dimKey}`).style.width = `${pct}%`;
+    }, 300);
+  }
+
+  const overallPct = Math.round((grandTotal / 100) * 100);
+  document.getElementById('ux-total-score').textContent = overallPct;
+
+  const chip = document.getElementById('ux-level-chip');
+  const interp = document.getElementById('ux-interp-text');
+
+  if (overallPct >= 85) {
+    chip.textContent = 'Excellent';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(108,99,255,0.12);color:var(--ux-primary);';
+    interp.innerHTML = '<strong style="color:var(--ux-primary);">Pengalaman pengguna luar biasa!</strong><br>Anda memberikan penilaian yang sangat tinggi terhadap UX HerboraTech. Aplikasi ini telah memberikan pengalaman yang memuaskan di semua dimensi.';
+  } else if (overallPct >= 70) {
+    chip.textContent = 'Baik';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(39,174,96,0.12);color:#27AE60;';
+    interp.innerHTML = '<strong style="color:#27AE60;">Pengalaman pengguna baik.</strong><br>HerboraTech memberikan pengalaman yang positif secara keseluruhan. Beberapa area masih dapat ditingkatkan untuk mencapai level excellent.';
+  } else if (overallPct >= 50) {
+    chip.textContent = 'Cukup';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(242,153,74,0.12);color:#F2994A;';
+    interp.innerHTML = '<strong style="color:#F2994A;">Pengalaman pengguna cukup.</strong><br>Ada beberapa aspek UX yang perlu diperbaiki. Perhatikan dimensi dengan skor terendah untuk prioritas perbaikan.';
+  } else {
+    chip.textContent = 'Perlu Perbaikan';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(235,87,87,0.12);color:#EB5757;';
+    interp.innerHTML = '<strong style="color:#EB5757;">Pengalaman pengguna perlu perbaikan.</strong><br>Terdapat masalah signifikan pada beberapa aspek UX. Masukan Anda sangat berharga untuk perbaikan aplikasi.';
+  }
+
+  // Find weakest dimension
+  const sorted = Object.entries(dims).sort((a, b) => a[1].total - b[1].total);
+  const weakest = sorted[0];
+  const dimNames = { vd: 'Visual Design', nav: 'Navigasi & Interaksi', ci: 'Konten & Informasi', sat: 'Kepuasan Pengguna', tr: 'Kepercayaan & Keamanan' };
+  interp.innerHTML += `<br><br><em style="font-size:0.75rem;color:var(--text-tertiary);">Area paling perlu ditingkatkan: <strong>${dimNames[weakest[0]]}</strong></em>`;
+}
+
+renderStepDots();
+checkStepComplete();
+</script>
+</body>
+</html>

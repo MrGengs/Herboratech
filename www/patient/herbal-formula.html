@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Formula Jamu</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid #27AE60; padding-left: 10px; }
+
+    .formula-hero {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      border-radius: 20px;
+      padding: 24px;
+      color: #fff;
+    }
+    .formula-hero .formula-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
+    .formula-hero .formula-chip {
+      display: inline-block;
+      background: rgba(111,207,151,0.25);
+      border: 1px solid rgba(111,207,151,0.5);
+      color: #6FCF97;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .indikasi-card { }
+    .indikasi-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .indikasi-tag {
+      background: rgba(39,174,96,0.1);
+      border: 1px solid rgba(39,174,96,0.25);
+      color: #27AE60;
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .ingredients-table { display: flex; flex-direction: column; gap: 0; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-out); }
+    .ing-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--bg);
+      border-bottom: 1px solid rgba(200,208,231,0.5);
+    }
+    .ing-row:last-child { border-bottom: none; }
+    .ing-row .ing-num { width: 24px; height: 24px; border-radius: 8px; background: rgba(39,174,96,0.12); color: #27AE60; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ing-row .ing-name { flex: 1; margin-left: 12px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
+    .ing-row .ing-dose { font-size: 0.82rem; color: var(--primary-dark); font-weight: 700; }
+
+    .prep-steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .prep-steps::before {
+      content: '';
+      position: absolute;
+      left: 16px;
+      top: 24px;
+      bottom: 24px;
+      width: 2px;
+      background: linear-gradient(180deg, #27AE60, rgba(39,174,96,0.2));
+    }
+    .prep-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 0 0 20px 0;
+    }
+    .prep-step:last-child { padding-bottom: 0; }
+    .prep-num {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1A5C38, #27AE60);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(39,174,96,0.4);
+      position: relative;
+      z-index: 1;
+    }
+    .prep-content { padding-top: 6px; flex: 1; }
+    .prep-content .prep-title { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+    .prep-content .prep-desc { font-size: 0.75rem; color: var(--text-secondary); margin-top: 3px; line-height: 1.5; }
+
+    .duration-card {
+      background: linear-gradient(135deg, rgba(39,174,96,0.08), rgba(111,207,151,0.05));
+      border: 1.5px solid rgba(39,174,96,0.3);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .duration-card ion-icon { font-size: 1.6rem; color: #27AE60; }
+    .duration-text .dur-label { font-size: 0.68rem; color: var(--text-tertiary); }
+    .duration-text .dur-value { font-size: 0.9rem; font-weight: 700; color: var(--text-primary); }
+
+    .warning-card {
+      border: 2px solid var(--warning);
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(242,153,74,0.05);
+    }
+    .warning-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .warning-header ion-icon { font-size: 1.2rem; color: var(--warning); }
+    .warning-title { font-size: 0.88rem; font-weight: 700; color: var(--warning); }
+    .warning-card p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('herbal.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;">Formula Jamu</div>
+    <button class="neu-icon-btn">
+      <ion-icon name="share-social-outline"></ion-icon>
+    </button>
+  </header>
+
+  <div class="section" style="padding-bottom: 100px;" id="formula-content">
+    <div style="text-align:center;padding:60px 20px;color:var(--text-muted);">
+      <ion-icon name="leaf-outline" style="font-size:3rem;"></ion-icon>
+      <div style="margin-top:12px;font-size:0.85rem;">Memuat formula...</div>
+    </div>
+  </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+(async () => {
+  await VAuth.guard('patient', 1);
+
+  const id = new URLSearchParams(location.search).get('id');
+  if (!id) { nav('herbal.html'); return; }
+
+  try {
+    const formula = await VDB.getHerbalFormula(id);
+    if (!formula) { nav('herbal.html'); return; }
+
+    document.title = 'HerboraTech — ' + formula.name;
+
+    // Evidence level badge
+    const evMap = { A: { color: '#27AE60', label: 'Evidence A — Terbukti Klinis' },
+                    B: { color: '#2D9CDB', label: 'Evidence B — Riset Mendukung' },
+                    C: { color: '#F2994A', label: 'Evidence C — Empiris Tradisional' } };
+    const evInfo = evMap[formula.evidenceLevel] || null;
+    const evBadge = evInfo
+      ? `<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:3px 10px;font-size:0.7rem;font-weight:700;color:#fff;margin-top:8px;">
+           <ion-icon name="flask-outline" style="font-size:0.85rem;"></ion-icon> ${evInfo.label}
+         </span>` : '';
+
+    // Type badges
+    const prepTypeLabel = { rebus:'Rebus',seduh:'Seduh',tumbuk:'Tumbuk',tempel:'Tempel',
+                             mandi:'Mandi Rempah',peras:'Peras/Jus',olesan:'Olesan' };
+    const topicalBadge = formula.isTopical
+      ? `<span class="formula-chip" style="background:rgba(255,179,0,0.2);border-color:rgba(255,179,0,0.5);color:#FFB300;">Pemakaian Luar</span>`
+      : `<span class="formula-chip">Diminum</span>`;
+    const prepBadge = formula.preparationType
+      ? `<span class="formula-chip" style="margin-left:6px;"><ion-icon name="flame-outline" style="font-size:0.8rem;vertical-align:middle;"></ion-icon> ${prepTypeLabel[formula.preparationType] || formula.preparationType}</span>`
+      : '';
+    const recipeNumBadge = formula.recipeNumber
+      ? `<span class="formula-chip" style="margin-left:6px;">Resep #${formula.recipeNumber}</span>` : '';
+
+    // Indications
+    const indicationsHTML = (formula.indications || []).map(ind =>
+      `<span class="indikasi-tag"><ion-icon name="checkmark-outline" style="vertical-align:middle;"></ion-icon> ${ind.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase())}</span>`
+    ).join('');
+
+    // Ingredients — support both old schema (name/dose) and new schema (herb/amount+unit+condition)
+    const ingredientsHTML = (formula.ingredients || []).map((ing, i) => {
+      const herbName = ing.herb || ing.name || '—';
+      const latinName = ing.latinName || '';
+      const dose = (ing.amount != null && ing.unit)
+        ? `${ing.amount} ${ing.unit}${ing.condition ? ' · ' + ing.condition : ''}`
+        : (ing.dose || '');
+      return `<div class="ing-row">
+        <div class="ing-num">${i+1}</div>
+        <div class="ing-name">${herbName}
+          ${latinName ? `<br><span style="font-size:0.68rem;color:var(--text-tertiary);font-weight:400;font-style:italic;">${latinName}</span>` : ''}
+        </div>
+        <div class="ing-dose">${dose}</div>
+      </div>`;
+    }).join('');
+
+    // Preparation — support preparationMethod (string) or preparationSteps (array)
+    let stepsHTML = '';
+    if (Array.isArray(formula.preparationSteps) && formula.preparationSteps.length) {
+      stepsHTML = formula.preparationSteps.map((step, i) =>
+        `<div class="prep-step">
+          <div class="prep-num">${i+1}</div>
+          <div class="prep-content"><div class="prep-desc">${step}</div></div>
+        </div>`).join('');
+    } else if (formula.preparationMethod) {
+      // Split on sentence boundaries for nice display
+      const sentences = formula.preparationMethod.split(/(?<=\.)\s+/).filter(s => s.trim());
+      stepsHTML = sentences.map((s, i) =>
+        `<div class="prep-step">
+          <div class="prep-num">${i+1}</div>
+          <div class="prep-content"><div class="prep-desc">${s.trim()}</div></div>
+        </div>`).join('');
+    }
+
+    // Dosage — support both schemas
+    const dosageText = formula.dosage || formula.dosageInstruction || '';
+    const freqText   = formula.frequency || '';
+    const durText    = formula.duration  || '';
+    const dosageDisplay = [dosageText, freqText, durText].filter(Boolean).join(' · ');
+
+    // Warnings — support both warnings[] and sideEffects[]
+    const warningsList = formula.warnings || formula.sideEffects || [];
+    const warningsHTML = warningsList.map(w =>
+      `<div style="display:flex;gap:8px;margin-bottom:6px;font-size:0.8rem;align-items:flex-start;">
+        <span style="color:var(--warning);flex-shrink:0;font-size:1rem;">⚠</span>
+        <span style="line-height:1.5;">${w}</span>
+      </div>`
+    ).join('');
+
+    // Tags
+    const tagsHTML = (formula.tags || []).map(t =>
+      `<span style="background:rgba(86,204,242,0.1);color:#2D9CDB;border-radius:12px;padding:2px 8px;font-size:0.7rem;font-weight:600;">#${t}</span>`
+    ).join(' ');
+
+    document.getElementById('formula-content').innerHTML = `
+      <div class="formula-hero" data-animate="up">
+        <div style="font-size:2.5rem;margin-bottom:12px;">${formula.emoji || '🌿'}</div>
+        <div class="formula-title">${formula.name}</div>
+        <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;">
+          ${topicalBadge}${prepBadge}${recipeNumBadge}
+          ${formula.category ? `<span class="formula-chip">${formula.category}</span>` : ''}
+        </div>
+        ${evBadge}
+        ${formula.description ? `<p style="font-size:0.75rem;color:rgba(255,255,255,0.7);margin-top:12px;margin-bottom:0;line-height:1.6;">${formula.description}</p>` : ''}
+      </div>
+
+      ${indicationsHTML ? `
+      <div class="section-header mt-24" data-animate="up" data-delay="100"><div class="section-title">Indikasi</div></div>
+      <div class="neu-card indikasi-card" data-animate="up" data-delay="150">
+        <div style="font-size:0.78rem;color:var(--text-secondary);line-height:1.6;">Formula ini direkomendasikan untuk kondisi:</div>
+        <div class="indikasi-list">${indicationsHTML}</div>
+      </div>` : ''}
+
+      ${ingredientsHTML ? `
+      <div class="section-header mt-24" data-animate="up" data-delay="200"><div class="section-title">Bahan-bahan</div></div>
+      <div class="ingredients-table" data-animate="up" data-delay="250">${ingredientsHTML}</div>` : ''}
+
+      ${stepsHTML ? `
+      <div class="section-header mt-24" data-animate="up" data-delay="300"><div class="section-title">Cara Preparasi</div></div>
+      <div class="neu-card" data-animate="up" data-delay="350">
+        <div class="prep-steps">${stepsHTML}</div>
+      </div>` : ''}
+
+      ${dosageDisplay ? `
+      <div class="duration-card mt-20" data-animate="up" data-delay="400">
+        <ion-icon name="time-outline"></ion-icon>
+        <div class="duration-text">
+          <div class="dur-label">${formula.isTopical ? 'Aturan Pakai' : 'Aturan Minum'}</div>
+          <div class="dur-value">${dosageDisplay}</div>
+        </div>
+      </div>` : ''}
+
+      ${warningsHTML ? `
+      <div class="section-header mt-24" data-animate="up" data-delay="450"><div class="section-title">Peringatan Penting</div></div>
+      <div class="warning-card" data-animate="up" data-delay="500">
+        <div class="warning-header">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <div class="warning-title">Baca Sebelum Menggunakan</div>
+        </div>
+        ${warningsHTML}
+      </div>` : ''}
+
+      ${tagsHTML ? `<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;" data-animate="up" data-delay="510">${tagsHTML}</div>` : ''}
+
+      <!-- Sumber & Referensi -->
+      <div style="margin-top:16px;" data-animate="up" data-delay="520">
+        <div style="font-size:0.72rem;font-weight:700;color:var(--text-secondary);margin-bottom:8px;letter-spacing:0.04em;">SUMBER & REFERENSI</div>
+        ${(() => {
+          const sr = formula.sourceRef || {};
+          const refs = sr.references || [];
+          const srcTypeColor = { 'evidence-based':'#27AE60', 'book-ocr':'#F2994A', 'kemenkes':'#27AE60', 'riset-ilmiah':'#2D9CDB' };
+          const srcTypeLabel = { 'evidence-based':'Evidence-Based', 'book-ocr':'Buku Herbal (OCR)', 'kemenkes':'Kemenkes RI', 'riset-ilmiah':'Riset Ilmiah' };
+          const st = sr.sourceType || (formula.source ? 'book-ocr' : 'evidence-based');
+          const sc = srcTypeColor[st] || '#2D9CDB';
+          const sl = srcTypeLabel[st] || st;
+          const typeIcon = { book:'📖', monograph:'📗', pharmacopeia:'⚕️', 'government-guide':'🏛️', database:'🗄️', 'book-ocr':'📚' };
+
+          const badgeHTML = `<span style="background:${sc}18;color:${sc};padding:3px 12px;border-radius:20px;font-size:0.68rem;font-weight:700;display:inline-block;margin-bottom:8px;">📋 ${sl}</span>`;
+
+          const primaryHTML = (sr.primary || formula.source) ? `
+            <div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:6px;">${sr.primary || formula.source}</div>` : '';
+
+          const refsHTML = refs.map(r => {
+            const icon = typeIcon[r.type] || '📋';
+            return `<div style="padding:10px 14px;background:var(--bg);box-shadow:var(--shadow-out-sm);border-radius:12px;margin-bottom:6px;">
+              <div style="font-size:0.75rem;font-weight:600;color:var(--text-secondary);">${icon} ${r.title || ''}</div>
+              <div style="font-size:0.72rem;color:var(--text-tertiary);margin-top:2px;">${r.publisher || ''}${r.year ? ` · ${r.year}` : ''}${r.isbn ? ` · ISBN ${r.isbn}` : ''}</div>
+              ${r.url ? `<a href="${r.url}" target="_blank" style="font-size:0.68rem;color:var(--primary-dark);">${r.url} ↗</a>` : ''}
+            </div>`;
+          }).join('');
+
+          const collectedHTML = sr.collectedBy ? `
+            <div style="margin-top:6px;font-size:0.68rem;color:var(--text-tertiary);">Dikumpulkan oleh: ${sr.collectedBy}${sr.collectedAt ? ` · ${sr.collectedAt}` : ''}</div>` : '';
+
+          return `<div style="padding:12px 14px;background:var(--bg);box-shadow:var(--shadow-out-sm);border-radius:14px;">
+            ${badgeHTML}${primaryHTML}${refsHTML}${collectedHTML}
+          </div>` + (sr.note ? `<div style="margin-top:6px;padding:8px 12px;background:rgba(242,153,74,0.08);border-radius:10px;font-size:0.7rem;color:#F2994A;">ℹ️ ${sr.note}</div>` : '');
+        })()}
+      </div>
+
+      <!-- Disclaimer medis wajib -->
+      <div style="margin-top:16px;padding:14px 16px;background:rgba(235,87,87,0.06);border:1.5px solid rgba(235,87,87,0.25);border-radius:14px;font-size:0.73rem;color:var(--text-secondary);line-height:1.6;" data-animate="up" data-delay="530">
+        <span style="font-weight:700;color:#EB5757;">⚕ Disclaimer Medis:</span>
+        Informasi ini bersifat edukasi dan bukan pengganti saran dokter. Konsultasikan kondisi kesehatan Anda dengan tenaga medis profesional sebelum menggunakan herbal, terutama jika Anda sedang mengonsumsi obat-obatan.
+      </div>
+
+      <button class="neu-btn-primary neu-btn-block mt-24" data-animate="up" data-delay="550" onclick="showToast('${(formula.name||'').replace(/'/g,"\\'")} disimpan','success')">
+        <ion-icon name="bookmark-outline"></ion-icon>
+        Simpan Formula Ini
+      </button>
+    `;
+  } catch (e) {
+    document.getElementById('formula-content').innerHTML =
+      '<div style="text-align:center;padding:60px 20px;color:var(--text-muted);">Gagal memuat data. <a href="herbal.html">Kembali</a></div>';
+  }
+})();
+</script>
+</body>
+</html>

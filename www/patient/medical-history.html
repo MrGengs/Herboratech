@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Riwayat Medis</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid #27AE60; padding-left: 10px; }
+
+    /* Year Filter Tabs */
+    .year-tabs { display: flex; gap: 8px; }
+    .year-tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .year-tab.active {
+      background: linear-gradient(135deg, #1A5C38, #27AE60);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(39,174,96,0.35);
+    }
+
+    /* Timeline */
+    .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 12px;
+      bottom: 12px;
+      width: 2px;
+      background: linear-gradient(180deg, #27AE60, rgba(39,174,96,0.15));
+    }
+    .timeline-item {
+      display: flex;
+      gap: 16px;
+      padding-bottom: 24px;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: #27AE60;
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px #27AE60;
+      flex-shrink: 0;
+      margin-top: 2px;
+      position: relative;
+      z-index: 1;
+    }
+    .tl-content { flex: 1; }
+    .tl-date { font-size: 0.68rem; color: var(--text-tertiary); margin-bottom: 4px; }
+    .tl-diagnosis { font-size: 0.88rem; font-weight: 700; color: var(--text-primary); }
+    .tl-doctor { font-size: 0.72rem; color: var(--text-secondary); margin-top: 3px; }
+    .tl-link {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.72rem;
+      color: #27AE60;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Medicine Cards */
+    .medicine-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .med-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: rgba(39,174,96,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .med-info { flex: 1; }
+    .med-name { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+    .med-dose { font-size: 0.72rem; color: var(--text-secondary); margin-top: 2px; }
+    .med-until { font-size: 0.68rem; color: var(--warning); font-weight: 600; }
+
+    /* Surgery Item */
+    .surgery-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .surgery-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(47,128,237,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .surgery-info .surg-name { font-size: 0.88rem; font-weight: 700; color: var(--text-primary); }
+    .surgery-info .surg-meta { font-size: 0.72rem; color: var(--text-secondary); margin-top: 2px; }
+
+    /* Vaccination */
+    .vax-list { display: flex; flex-direction: column; gap: 8px; }
+    .vax-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+    .vax-check {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1A5C38, #27AE60);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .vax-info .vax-name { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
+    .vax-info .vax-date { font-size: 0.68rem; color: var(--text-tertiary); margin-top: 2px; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('profile.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;">Riwayat Medis</div>
+    <button class="neu-icon-btn" onclick="showToast('Unduh riwayat medis','info')">
+      <ion-icon name="download-outline"></ion-icon>
+    </button>
+  </header>
+
+  <div class="section" style="padding-bottom: 80px;">
+
+    <!-- Year Filter Tabs -->
+    <div class="year-tabs" data-animate="up">
+      <div class="year-tab" onclick="filterYear(this)">2024</div>
+      <div class="year-tab" onclick="filterYear(this)">2025</div>
+      <div class="year-tab active" onclick="filterYear(this)">2026</div>
+    </div>
+
+    <!-- Diagnosa Section -->
+    <div class="section-header mt-24" data-animate="up" data-delay="100">
+      <div class="section-title">Diagnosa</div>
+    </div>
+    <div class="neu-card" data-animate="up" data-delay="150">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-date">15 Mar 2026</div>
+            <div class="tl-diagnosis">Hipertensi Grade I</div>
+            <div class="tl-doctor"><ion-icon name="person-outline" style="vertical-align:middle;font-size:0.8rem;"></ion-icon> dr. Indra Kusuma, Sp.JP</div>
+            <div class="tl-link" onclick="showToast('Membuka detail diagnosa','info')">Lihat Detail →</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-date">20 Feb 2026</div>
+            <div class="tl-diagnosis">Gastritis Akut</div>
+            <div class="tl-doctor"><ion-icon name="person-outline" style="vertical-align:middle;font-size:0.8rem;"></ion-icon> dr. Sari Dewi, Sp.PD</div>
+            <div class="tl-link" onclick="showToast('Membuka detail diagnosa','info')">Lihat Detail →</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-date">5 Jan 2026</div>
+            <div class="tl-diagnosis">ISPA Ringan</div>
+            <div class="tl-doctor"><ion-icon name="person-outline" style="vertical-align:middle;font-size:0.8rem;"></ion-icon> dr. Budi Santoso, Sp.THT</div>
+            <div class="tl-link" onclick="showToast('Membuka detail diagnosa','info')">Lihat Detail →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Obat Aktif -->
+    <div class="section-header mt-24" data-animate="up" data-delay="200">
+      <div class="section-title">Obat Aktif</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;" data-animate="up" data-delay="250">
+      <div class="neu-card-sm medicine-card">
+        <div class="med-icon">💊</div>
+        <div class="med-info">
+          <div class="med-name">Amlodipin 5mg</div>
+          <div class="med-dose">1 × 1 tablet / hari — malam hari</div>
+          <div class="med-until">Hingga 28 Mar 2026</div>
+        </div>
+        <ion-icon name="chevron-forward-outline" style="color:var(--text-tertiary);"></ion-icon>
+      </div>
+      <div class="neu-card-sm medicine-card">
+        <div class="med-icon">💊</div>
+        <div class="med-info">
+          <div class="med-name">Omeprazol 20mg</div>
+          <div class="med-dose">2 × 1 kapsul / hari — sebelum makan</div>
+          <div class="med-until">Hingga 28 Mar 2026</div>
+        </div>
+        <ion-icon name="chevron-forward-outline" style="color:var(--text-tertiary);"></ion-icon>
+      </div>
+    </div>
+
+    <!-- Riwayat Operasi -->
+    <div class="section-header mt-24" data-animate="up" data-delay="300">
+      <div class="section-title">Riwayat Operasi</div>
+    </div>
+    <div class="neu-card" data-animate="up" data-delay="350">
+      <div class="surgery-item">
+        <div class="surgery-icon">🔬</div>
+        <div class="surgery-info">
+          <div class="surg-name">Appendectomy (Usus Buntu)</div>
+          <div class="surg-meta">RS Cipto Mangunkusumo · Agustus 2019</div>
+          <div class="surg-meta">Laparoskopi — Tanpa Komplikasi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vaksinasi -->
+    <div class="section-header mt-24" data-animate="up" data-delay="400">
+      <div class="section-title">Vaksinasi</div>
+    </div>
+    <div class="vax-list" data-animate="up" data-delay="450">
+      <div class="vax-item">
+        <div class="vax-check"><ion-icon name="checkmark-outline"></ion-icon></div>
+        <div class="vax-info">
+          <div class="vax-name">Covid-19 (Booster)</div>
+          <div class="vax-date">Dosis ke-3 · Maret 2023 · Puskesmas Senen</div>
+        </div>
+      </div>
+      <div class="vax-item">
+        <div class="vax-check"><ion-icon name="checkmark-outline"></ion-icon></div>
+        <div class="vax-info">
+          <div class="vax-name">Hepatitis B</div>
+          <div class="vax-date">Dosis lengkap · Juni 2020 · Klinik Pratama</div>
+        </div>
+      </div>
+      <div class="vax-item">
+        <div class="vax-check"><ion-icon name="checkmark-outline"></ion-icon></div>
+        <div class="vax-info">
+          <div class="vax-name">Influenza</div>
+          <div class="vax-date">Tahunan · Oktober 2025 · RS Persahabatan</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  let _allRecords = [];
+
+  function formatDate(ts) {
+    if (!ts) return '';
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function renderRecords(records) {
+    const timeline = document.querySelector('.timeline');
+    if (!timeline) return;
+
+    if (!records || records.length === 0) {
+      timeline.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-tertiary);font-size:0.85rem;">Belum ada rekam medis</div>';
+      return;
+    }
+
+    timeline.innerHTML = records.map(r => `
+      <div class="timeline-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-date">${formatDate(r.date)}</div>
+          <div class="tl-diagnosis">${r.diagnosis || r.type || 'Rekam Medis'}</div>
+          <div class="tl-doctor"><ion-icon name="person-outline" style="vertical-align:middle;font-size:0.8rem;"></ion-icon> ${r.doctorName || 'Dokter'}</div>
+          <div class="tl-link" onclick="showToast('Membuka detail rekam medis','info')">Lihat Detail &rarr;</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function filterYear(el) {
+    document.querySelectorAll('.year-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    const year = parseInt(el.textContent);
+    const filtered = _allRecords.filter(r => {
+      if (!r.date) return false;
+      const d = r.date.toDate ? r.date.toDate() : new Date(r.date);
+      return d.getFullYear() === year;
+    });
+    renderRecords(filtered);
+    showToast('Menampilkan data ' + year, 'info');
+  }
+
+  (async () => {
+    try {
+      const { user } = await VAuth.guard('patient', 1);
+
+      // Show loading
+      const timeline = document.querySelector('.timeline');
+      if (timeline) timeline.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-tertiary);font-size:0.85rem;"><ion-icon name="refresh-outline" style="animation:spin 1s linear infinite;font-size:1.5rem;color:var(--primary-dark);display:block;margin:0 auto 8px;"></ion-icon>Memuat rekam medis...</div>';
+
+      _allRecords = await VDB.getPatientRecords(user.uid);
+
+      if (_allRecords.length > 0) {
+        renderRecords(_allRecords);
+      }
+      // else keep mock data shown in timeline (already rendered in HTML)
+
+    } catch (e) {
+      console.error('[medical-history] error:', e);
+      showToast('Gagal memuat riwayat medis', 'error');
+    }
+  })();
+</script>
+</body>
+</html>

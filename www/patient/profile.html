@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Profil</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #6FCF97; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
+    .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(39,174,96,0.5)); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <div style="width:42px"></div>
+    <div style="font-size:1.05rem;font-weight:700;">Profil Saya</div>
+    <button class="neu-icon-btn" onclick="nav('edit-profile.html')"><ion-icon name="settings-outline"></ion-icon></button>
+  </header>
+
+  <div class="section">
+    <!-- Profile Card -->
+    <div class="neu-card" data-animate="up" style="text-align:center;">
+      <div class="neu-avatar-xl" id="profile-avatar" style="margin:0 auto 12px;overflow:hidden;">AF</div>
+      <div style="font-size:1.1rem;font-weight:700;">Ahmad Fauzi</div>
+      <div style="font-size:0.78rem;color:var(--text-tertiary);">ahmad.fauzi@email.com</div>
+      <div style="display:flex;justify-content:center;gap:12px;margin-top:16px;">
+        <div class="neu-inset" style="padding:8px 16px;text-align:center;"><div style="font-size:1.1rem;font-weight:800;color:var(--primary-dark);">87</div><div style="font-size:0.6rem;color:var(--text-muted);">Health Score</div></div>
+        <div class="neu-inset" style="padding:8px 16px;text-align:center;"><div style="font-size:1.1rem;font-weight:800;color:var(--info);">12</div><div style="font-size:0.6rem;color:var(--text-muted);">Konsultasi</div></div>
+        <div class="neu-inset" style="padding:8px 16px;text-align:center;"><div style="font-size:1.1rem;font-weight:800;color:var(--accent);">5</div><div style="font-size:0.6rem;color:var(--text-muted);">Bulan Aktif</div></div>
+      </div>
+    </div>
+
+    <!-- Menu Items -->
+    <div style="margin-top:24px;display:flex;flex-direction:column;gap:4px;">
+      <div class="neu-list-item" data-animate="up" data-delay="100" onclick="nav('edit-profile.html')">
+        <div style="width:38px;height:38px;border-radius:10px;box-shadow:var(--shadow-out-sm);display:flex;align-items:center;justify-content:center;background:var(--primary-bg);"><ion-icon name="person-outline" style="color:var(--primary-dark);"></ion-icon></div>
+        <div class="li-info"><div class="li-title">Edit Profil</div><div class="li-subtitle">Nama, tanggal lahir, riwayat kesehatan</div></div>
+        <ion-icon name="chevron-forward-outline" class="li-arrow"></ion-icon>
+      </div>
+      <div class="neu-list-item" data-animate="up" data-delay="150" onclick="nav('medical-history.html')">
+        <div style="width:38px;height:38px;border-radius:10px;box-shadow:var(--shadow-out-sm);display:flex;align-items:center;justify-content:center;background:var(--info-bg);"><ion-icon name="document-text-outline" style="color:var(--info);"></ion-icon></div>
+        <div class="li-info"><div class="li-title">Riwayat Medis</div><div class="li-subtitle">Diagnosa, obat, operasi, alergi</div></div>
+        <ion-icon name="chevron-forward-outline" class="li-arrow"></ion-icon>
+      </div>
+      <div class="neu-list-item" data-animate="up" data-delay="200" onclick="nav('faq.html')">
+        <div style="width:38px;height:38px;border-radius:10px;box-shadow:var(--shadow-out-sm);display:flex;align-items:center;justify-content:center;background:var(--accent-bg);"><ion-icon name="help-circle-outline" style="color:var(--accent);"></ion-icon></div>
+        <div class="li-info"><div class="li-title">FAQ / Q&A</div><div class="li-subtitle">Pertanyaan umum tentang HerboraTech</div></div>
+        <ion-icon name="chevron-forward-outline" class="li-arrow"></ion-icon>
+      </div>
+      <div class="neu-list-item" data-animate="up" data-delay="225" onclick="nav('../material-research/index.html')">
+        <div style="width:38px;height:38px;border-radius:10px;box-shadow:var(--shadow-out-sm);display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(39,174,96,0.2),rgba(61,215,127,0.1));"><ion-icon name="leaf-outline" style="color:#27AE60;"></ion-icon></div>
+        <div class="li-info"><div class="li-title">Material Research</div><div class="li-subtitle">SLR Evidence Portal — Disease & Herbal</div></div>
+        <ion-icon name="chevron-forward-outline" class="li-arrow"></ion-icon>
+      </div>
+      <div class="neu-list-item" data-animate="up" data-delay="250" onclick="nav('privacy-policy.html')">
+        <div style="width:38px;height:38px;border-radius:10px;box-shadow:var(--shadow-out-sm);display:flex;align-items:center;justify-content:center;background:var(--warning-bg);"><ion-icon name="shield-checkmark-outline" style="color:var(--warning);"></ion-icon></div>
+        <div class="li-info"><div class="li-title">Kebijakan Privasi</div><div class="li-subtitle">Bagaimana data Anda dilindungi</div></div>
+        <ion-icon name="chevron-forward-outline" class="li-arrow"></ion-icon>
+      </div>
+      <div class="neu-list-item" data-animate="up" data-delay="300" onclick="nav('notification.html')">
+        <div style="width:38px;height:38px;border-radius:10px;box-shadow:var(--shadow-out-sm);display:flex;align-items:center;justify-content:center;background:var(--success-bg);"><ion-icon name="notifications-outline" style="color:var(--success);"></ion-icon></div>
+        <div class="li-info"><div class="li-title">Pengaturan Notifikasi</div><div class="li-subtitle">Kustomisasi preferensi alert</div></div>
+        <ion-icon name="chevron-forward-outline" class="li-arrow"></ion-icon>
+      </div>
+      <div class="neu-list-item" data-animate="up" data-delay="350" onclick="nav('emergency-contact.html')">
+        <div style="width:38px;height:38px;border-radius:10px;box-shadow:var(--shadow-out-sm);display:flex;align-items:center;justify-content:center;background:var(--danger-bg);"><ion-icon name="call-outline" style="color:var(--danger);"></ion-icon></div>
+        <div class="li-info"><div class="li-title">Kontak Darurat</div><div class="li-subtitle">Atur emergency contact</div></div>
+        <ion-icon name="chevron-forward-outline" class="li-arrow"></ion-icon>
+      </div>
+    </div>
+
+    <button class="neu-btn neu-btn-block mt-24" data-animate="up" data-delay="400" style="color:var(--danger);" onclick="nav('../index.html')">
+      <ion-icon name="log-out-outline"></ion-icon> Keluar
+    </button>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item" href="monitoring.html">
+      <ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span>
+    </a>
+    <a class="nav-item" href="consultation.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span>
+    </a>
+    <a class="nav-item" href="herbal.html">
+      <ion-icon name="leaf-outline"></ion-icon><span>Jamu</span>
+    </a>
+    <a class="nav-item active" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+(async () => {
+  try {
+    const { user, profile } = await VAuth.guard('patient', 1);
+
+    // Populate name, email, initials
+    const name = profile.name || user.displayName || 'Pasien';
+    const email = profile.email || user.email || '';
+    const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+
+    // Avatar: use photoURL if available, otherwise show initials
+    const avatarEl = document.getElementById('profile-avatar');
+    if (avatarEl) {
+      const photoURL = profile.photoURL || user.photoURL;
+      if (photoURL) {
+        avatarEl.innerHTML = '<img src="' + photoURL + '" alt="' + name + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+      } else {
+        avatarEl.textContent = initials;
+      }
+    }
+
+    // Name
+    const nameEl = document.querySelector('.neu-card [style*="font-size:1.1rem"]');
+    if (nameEl) nameEl.textContent = name;
+
+    // Email
+    const emailEl = document.querySelector('.neu-card [style*="text-tertiary"]');
+    if (emailEl) emailEl.textContent = email;
+
+    // Role badge — show after email
+    const roleMap = { patient: 'Pasien', doctor: 'Dokter', admin: 'Admin' };
+    const roleText = roleMap[profile.role] || profile.role;
+    if (emailEl) {
+      let roleBadge = document.getElementById('role-badge');
+      if (!roleBadge) {
+        roleBadge = document.createElement('div');
+        roleBadge.id = 'role-badge';
+        roleBadge.className = 'neu-chip-primary';
+        roleBadge.style.cssText = 'margin-top:8px;font-size:0.7rem;display:inline-block;';
+        emailEl.after(roleBadge);
+      }
+      roleBadge.textContent = roleText;
+    }
+
+    // Wire logout button
+    const logoutBtn = document.querySelector('[onclick*="index.html"]');
+    if (logoutBtn) {
+      logoutBtn.removeAttribute('onclick');
+      logoutBtn.addEventListener('click', async () => {
+        try { await VAuth.logout(); } catch(e) { showToast('Gagal logout', 'error'); }
+      });
+    }
+
+  } catch (e) {
+    console.error('[profile] guard error:', e);
+  }
+})();
+</script>
+
+</body>
+</html>

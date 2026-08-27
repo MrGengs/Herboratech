@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Kuesioner TAM</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
+  <style>
+    :root {
+      --tam-primary: #2F80ED;
+      --tam-dark: #1A5276;
+    }
+    .app-header {
+      background: linear-gradient(135deg, var(--tam-dark) 0%, var(--tam-primary) 100%);
+      box-shadow: 0 2px 16px rgba(26, 82, 118, 0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12); box-shadow: none;
+      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .page-title { color: #fff; font-size: 1.0rem; font-weight: 700; }
+
+    .step-progress-bar {
+      background: var(--bg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 16px 16px 12px;
+      position: sticky;
+      top: 64px;
+      z-index: 20;
+    }
+    .step-dots { display: flex; align-items: center; justify-content: center; gap: 0; }
+    .step-dot {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid var(--shadow-dark); background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700; color: var(--text-tertiary);
+      transition: all 0.3s; flex-shrink: 0;
+    }
+    .step-dot.past { background: var(--tam-primary); color: #fff; border-color: var(--tam-primary); }
+    .step-dot.current {
+      background: linear-gradient(135deg, var(--tam-dark), var(--tam-primary));
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 12px rgba(47,128,237,0.4);
+      transform: scale(1.15);
+    }
+    .step-line { flex: 1; height: 2px; background: var(--shadow-dark); max-width: 20px; min-width: 5px; }
+    .step-line.done { background: var(--tam-primary); }
+
+    .step-info { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+    .step-title-text { font-size: 0.8rem; font-weight: 700; color: var(--tam-primary); }
+    .step-counter { font-size: 0.7rem; color: var(--text-tertiary); }
+
+    .step-pane { display: none; }
+    .step-pane.active { display: block; animation: fadeIn 0.4s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .confirm-btn-wrap {
+      position: sticky; bottom: 0; background: var(--bg);
+      border-top: 1px solid var(--shadow-dark); padding: 14px 20px; z-index: 30;
+    }
+    .btn-proceed {
+      background: linear-gradient(135deg, var(--tam-dark), var(--tam-primary));
+      color: #fff; border: none; width: 100%; padding: 14px; border-radius: 14px;
+      font-family: var(--font); font-size: 0.92rem; font-weight: 700; cursor: pointer;
+      box-shadow: 0 6px 18px rgba(47,128,237,0.3);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-proceed:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .likert-question {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 16px;
+      padding: 18px; margin-bottom: 14px;
+    }
+    .likert-question .q-text {
+      font-size: 0.84rem; font-weight: 600; color: var(--text-primary);
+      margin-bottom: 12px; line-height: 1.5;
+    }
+    .likert-question .q-number {
+      font-size: 0.68rem; font-weight: 700; color: var(--tam-primary);
+      margin-bottom: 6px;
+    }
+    .likert-options { display: flex; flex-direction: column; gap: 8px; }
+    .likert-opt {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 10px; padding: 10px 14px;
+      cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
+      font-size: 0.78rem; font-weight: 500; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .likert-opt:hover { border-color: rgba(47,128,237,0.3); }
+    .likert-opt.selected { border-color: var(--tam-primary); background: rgba(47,128,237,0.05); color: var(--tam-primary); font-weight: 600; }
+    .likert-opt .radio-circle {
+      width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--shadow-dark);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .likert-opt.selected .radio-circle {
+      border-color: var(--tam-primary); background: var(--tam-primary);
+    }
+    .likert-opt.selected .radio-circle::after {
+      content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff;
+    }
+
+    .intro-card {
+      background: linear-gradient(135deg, rgba(47,128,237,0.08), rgba(47,128,237,0.02));
+      border-left: 4px solid var(--tam-primary); border-radius: 14px; padding: 18px; margin-bottom: 16px;
+    }
+    .intro-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--tam-dark); margin-bottom: 8px; }
+    .intro-card p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
+
+    .result-card {
+      text-align: center; padding: 30px 20px;
+    }
+    .result-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .result-score { font-size: 2.8rem; font-weight: 800; color: var(--tam-primary); }
+    .result-label { font-size: 0.85rem; color: var(--text-tertiary); margin-top: 4px; }
+    .result-breakdown { margin-top: 20px; text-align: left; }
+    .result-breakdown .rb-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 0; border-bottom: 1px solid var(--shadow-dark);
+      font-size: 0.82rem;
+    }
+    .result-breakdown .rb-item:last-child { border-bottom: none; }
+    .rb-label { color: var(--text-secondary); font-weight: 500; }
+    .rb-value { font-weight: 700; color: var(--tam-primary); }
+    .rb-bar { flex: 1; margin: 0 14px; height: 6px; background: var(--shadow-dark); border-radius: 3px; overflow: hidden; }
+    .rb-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--tam-dark), var(--tam-primary)); transition: width 0.8s ease; }
+
+    .dimension-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+      padding: 12px 16px; background: rgba(47,128,237,0.06); border-radius: 12px;
+    }
+    .dimension-header ion-icon { font-size: 1.3rem; color: var(--tam-primary); }
+    .dimension-header span { font-size: 0.88rem; font-weight: 700; color: var(--tam-dark); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div class="page-title">Kuesioner TAM</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <!-- STEP PROGRESS -->
+  <div class="step-progress-bar">
+    <div class="step-dots" id="step-dots"></div>
+    <div class="step-info">
+      <span class="step-title-text" id="step-title">Pendahuluan</span>
+      <span class="step-counter" id="step-counter">1 / 5</span>
+    </div>
+  </div>
+
+  <!-- STEP 1: INTRO -->
+  <div class="step-pane active" data-step="1">
+    <div class="section">
+      <div class="intro-card">
+        <h3>Technology Acceptance Model (TAM)</h3>
+        <p>Kuesioner ini bertujuan untuk mengukur tingkat penerimaan Anda terhadap teknologi aplikasi <strong>HerboraTech</strong>. Penilaian mencakup 4 dimensi utama:</p>
+      </div>
+      <div class="neu-card-sm" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(47,128,237,0.1);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="bulb-outline" style="font-size:1.2rem;color:var(--tam-primary);"></ion-icon>
+        </div>
+        <div><div style="font-weight:600;font-size:0.84rem;">Perceived Usefulness (PU)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Persepsi kegunaan aplikasi</div></div>
+      </div>
+      <div class="neu-card-sm" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(39,174,96,0.1);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="hand-left-outline" style="font-size:1.2rem;color:#27AE60;"></ion-icon>
+        </div>
+        <div><div style="font-weight:600;font-size:0.84rem;">Perceived Ease of Use (PEOU)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Persepsi kemudahan penggunaan</div></div>
+      </div>
+      <div class="neu-card-sm" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(242,153,74,0.1);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="heart-outline" style="font-size:1.2rem;color:#F2994A;"></ion-icon>
+        </div>
+        <div><div style="font-weight:600;font-size:0.84rem;">Attitude Toward Using (ATU)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Sikap terhadap penggunaan</div></div>
+      </div>
+      <div class="neu-card-sm" style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(155,81,224,0.1);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="rocket-outline" style="font-size:1.2rem;color:#9B51E0;"></ion-icon>
+        </div>
+        <div><div style="font-weight:600;font-size:0.84rem;">Behavioral Intention (BI)</div><div style="font-size:0.72rem;color:var(--text-tertiary);">Niat untuk menggunakan</div></div>
+      </div>
+      <div class="neu-card-sm" style="background:rgba(47,128,237,0.04);border:1px dashed rgba(47,128,237,0.3);">
+        <p style="font-size:0.75rem;color:var(--text-tertiary);text-align:center;margin:0;">
+          <ion-icon name="time-outline" style="vertical-align:middle;"></ion-icon>
+          Estimasi waktu: <strong>5-8 menit</strong> &bull; 16 pertanyaan
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: PU (Perceived Usefulness) -->
+  <div class="step-pane" data-step="2">
+    <div class="section">
+      <div class="dimension-header">
+        <ion-icon name="bulb-outline"></ion-icon>
+        <span>Perceived Usefulness (PU)</span>
+      </div>
+      <div class="likert-question" data-q="pu1">
+        <div class="q-number">Pertanyaan 1 dari 4</div>
+        <div class="q-text">Menggunakan HerboraTech membantu saya memantau kesehatan dengan lebih efektif.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="pu2">
+        <div class="q-number">Pertanyaan 2 dari 4</div>
+        <div class="q-text">HerboraTech meningkatkan kemampuan saya dalam mengelola data kesehatan pribadi.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="pu3">
+        <div class="q-number">Pertanyaan 3 dari 4</div>
+        <div class="q-text">HerboraTech mempercepat proses konsultasi kesehatan saya dibandingkan cara konvensional.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="pu4">
+        <div class="q-number">Pertanyaan 4 dari 4</div>
+        <div class="q-text">Secara keseluruhan, saya merasa HerboraTech berguna untuk mendukung kesehatan saya.</div>
+        <div class="likert-options"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: PEOU (Perceived Ease of Use) -->
+  <div class="step-pane" data-step="3">
+    <div class="section">
+      <div class="dimension-header">
+        <ion-icon name="hand-left-outline" style="color:#27AE60;"></ion-icon>
+        <span>Perceived Ease of Use (PEOU)</span>
+      </div>
+      <div class="likert-question" data-q="peou1">
+        <div class="q-number">Pertanyaan 1 dari 4</div>
+        <div class="q-text">Saya merasa mudah mempelajari cara menggunakan aplikasi HerboraTech.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="peou2">
+        <div class="q-number">Pertanyaan 2 dari 4</div>
+        <div class="q-text">Navigasi dan menu di HerboraTech mudah dipahami dan digunakan.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="peou3">
+        <div class="q-number">Pertanyaan 3 dari 4</div>
+        <div class="q-text">Saya dapat menggunakan fitur-fitur HerboraTech tanpa memerlukan bantuan teknis.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="peou4">
+        <div class="q-number">Pertanyaan 4 dari 4</div>
+        <div class="q-text">Secara keseluruhan, HerboraTech mudah digunakan oleh siapa saja.</div>
+        <div class="likert-options"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: ATU + BI -->
+  <div class="step-pane" data-step="4">
+    <div class="section">
+      <div class="dimension-header">
+        <ion-icon name="heart-outline" style="color:#F2994A;"></ion-icon>
+        <span>Attitude Toward Using (ATU)</span>
+      </div>
+      <div class="likert-question" data-q="atu1">
+        <div class="q-number">Pertanyaan 1 dari 4</div>
+        <div class="q-text">Saya merasa senang menggunakan aplikasi HerboraTech untuk kesehatan saya.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="atu2">
+        <div class="q-number">Pertanyaan 2 dari 4</div>
+        <div class="q-text">Menggunakan HerboraTech merupakan pengalaman yang positif bagi saya.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="atu3">
+        <div class="q-number">Pertanyaan 3 dari 4</div>
+        <div class="q-text">Saya percaya bahwa menggunakan HerboraTech adalah keputusan yang baik untuk kesehatan saya.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="atu4">
+        <div class="q-number">Pertanyaan 4 dari 4</div>
+        <div class="q-text">Saya merasa nyaman dan aman menggunakan fitur-fitur di HerboraTech.</div>
+        <div class="likert-options"></div>
+      </div>
+
+      <div style="height:16px"></div>
+
+      <div class="dimension-header">
+        <ion-icon name="rocket-outline" style="color:#9B51E0;"></ion-icon>
+        <span>Behavioral Intention (BI)</span>
+      </div>
+      <div class="likert-question" data-q="bi1">
+        <div class="q-number">Pertanyaan 1 dari 4</div>
+        <div class="q-text">Saya berniat untuk terus menggunakan HerboraTech di masa depan.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="bi2">
+        <div class="q-number">Pertanyaan 2 dari 4</div>
+        <div class="q-text">Saya akan merekomendasikan HerboraTech kepada keluarga dan teman saya.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="bi3">
+        <div class="q-number">Pertanyaan 3 dari 4</div>
+        <div class="q-text">Saya berencana menggunakan HerboraTech secara rutin untuk memantau kesehatan.</div>
+        <div class="likert-options"></div>
+      </div>
+      <div class="likert-question" data-q="bi4">
+        <div class="q-number">Pertanyaan 4 dari 4</div>
+        <div class="q-text">Saya bersedia menggunakan fitur-fitur baru yang akan ditambahkan ke HerboraTech.</div>
+        <div class="likert-options"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: RESULT -->
+  <div class="step-pane" data-step="5">
+    <div class="section">
+      <div class="neu-card result-card">
+        <div class="result-icon">📊</div>
+        <div style="font-size:0.78rem;color:var(--text-tertiary);margin-bottom:4px;">Skor TAM Anda</div>
+        <div class="result-score" id="tam-total-score">0</div>
+        <div class="result-label">dari 80 poin</div>
+        <div id="tam-level" style="margin-top:12px;">
+          <span class="neu-chip-primary" style="font-size:0.78rem;padding:6px 16px;" id="tam-level-chip">Menghitung...</span>
+        </div>
+
+        <div class="result-breakdown">
+          <div class="rb-item">
+            <span class="rb-label" style="min-width:60px;">PU</span>
+            <div class="rb-bar"><div class="rb-bar-fill" id="bar-pu" style="width:0%"></div></div>
+            <span class="rb-value" id="score-pu">0/20</span>
+          </div>
+          <div class="rb-item">
+            <span class="rb-label" style="min-width:60px;">PEOU</span>
+            <div class="rb-bar"><div class="rb-bar-fill" id="bar-peou" style="width:0%;background:linear-gradient(90deg,#1B7A3D,#27AE60);"></div></div>
+            <span class="rb-value" id="score-peou" style="color:#27AE60;">0/20</span>
+          </div>
+          <div class="rb-item">
+            <span class="rb-label" style="min-width:60px;">ATU</span>
+            <div class="rb-bar"><div class="rb-bar-fill" id="bar-atu" style="width:0%;background:linear-gradient(90deg,#D68910,#F2994A);"></div></div>
+            <span class="rb-value" id="score-atu" style="color:#F2994A;">0/20</span>
+          </div>
+          <div class="rb-item">
+            <span class="rb-label" style="min-width:60px;">BI</span>
+            <div class="rb-bar"><div class="rb-bar-fill" id="bar-bi" style="width:0%;background:linear-gradient(90deg,#6C3483,#9B51E0);"></div></div>
+            <span class="rb-value" id="score-bi" style="color:#9B51E0;">0/20</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="neu-card" id="tam-interpretation" style="border-left:4px solid var(--tam-primary);margin-top:16px;">
+        <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;" id="tam-interp-text"></p>
+      </div>
+
+      <button class="neu-btn neu-btn-primary neu-btn-block" style="margin-top:16px;" onclick="nav('home.html')">
+        <ion-icon name="home-outline"></ion-icon> Kembali ke Beranda
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTTOM BUTTON -->
+  <div class="confirm-btn-wrap">
+    <button class="btn-proceed" id="btn-next" onclick="nextStep()">
+      Mulai Kuesioner <ion-icon name="arrow-forward-outline"></ion-icon>
+    </button>
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+const TOTAL_STEPS = 5;
+let currentStep = 1;
+const answers = {};
+
+const LIKERT_LABELS = [
+  'Sangat Tidak Setuju',
+  'Tidak Setuju',
+  'Netral',
+  'Setuju',
+  'Sangat Setuju'
+];
+
+const STEP_TITLES = [
+  'Pendahuluan',
+  'Perceived Usefulness',
+  'Perceived Ease of Use',
+  'Attitude & Intention',
+  'Hasil Penilaian'
+];
+
+// Init likert options for all questions
+document.querySelectorAll('.likert-question').forEach(q => {
+  const qId = q.dataset.q;
+  const optionsDiv = q.querySelector('.likert-options');
+  LIKERT_LABELS.forEach((label, i) => {
+    const opt = document.createElement('div');
+    opt.className = 'likert-opt';
+    opt.innerHTML = `<div class="radio-circle"></div><span>${i + 1}. ${label}</span>`;
+    opt.onclick = () => selectAnswer(qId, i + 1, opt);
+    optionsDiv.appendChild(opt);
+  });
+});
+
+function selectAnswer(qId, value, el) {
+  const parent = el.closest('.likert-question');
+  parent.querySelectorAll('.likert-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[qId] = value;
+  checkStepComplete();
+}
+
+function checkStepComplete() {
+  const btn = document.getElementById('btn-next');
+  if (currentStep === 1 || currentStep === 5) { btn.disabled = false; return; }
+
+  const pane = document.querySelector(`.step-pane[data-step="${currentStep}"]`);
+  const questions = pane.querySelectorAll('.likert-question');
+  const allAnswered = [...questions].every(q => answers[q.dataset.q]);
+  btn.disabled = !allAnswered;
+}
+
+function renderStepDots() {
+  const container = document.getElementById('step-dots');
+  let html = '';
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const cls = i < currentStep ? 'past' : i === currentStep ? 'current' : '';
+    html += `<div class="step-dot ${cls}">${i}</div>`;
+    if (i < TOTAL_STEPS) {
+      html += `<div class="step-line ${i < currentStep ? 'done' : ''}"></div>`;
+    }
+  }
+  container.innerHTML = html;
+  document.getElementById('step-title').textContent = STEP_TITLES[currentStep - 1];
+  document.getElementById('step-counter').textContent = `${currentStep} / ${TOTAL_STEPS}`;
+}
+
+function nextStep() {
+  if (currentStep < TOTAL_STEPS) {
+    currentStep++;
+    document.querySelectorAll('.step-pane').forEach(p => p.classList.remove('active'));
+    document.querySelector(`.step-pane[data-step="${currentStep}"]`).classList.add('active');
+    renderStepDots();
+
+    const btn = document.getElementById('btn-next');
+    if (currentStep === TOTAL_STEPS) {
+      calculateResults();
+      btn.style.display = 'none';
+    } else {
+      btn.innerHTML = 'Lanjut <ion-icon name="arrow-forward-outline"></ion-icon>';
+      checkStepComplete();
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function calculateResults() {
+  const dims = { pu: 0, peou: 0, atu: 0, bi: 0 };
+  for (const [key, val] of Object.entries(answers)) {
+    const dim = key.replace(/\d+/, '');
+    dims[dim] += val;
+  }
+
+  const total = dims.pu + dims.peou + dims.atu + dims.bi;
+  document.getElementById('tam-total-score').textContent = total;
+
+  // Update bars
+  ['pu', 'peou', 'atu', 'bi'].forEach(d => {
+    document.getElementById(`score-${d}`).textContent = `${dims[d]}/20`;
+    setTimeout(() => {
+      document.getElementById(`bar-${d}`).style.width = `${(dims[d] / 20) * 100}%`;
+    }, 200);
+  });
+
+  // Level
+  const pct = (total / 80) * 100;
+  const chip = document.getElementById('tam-level-chip');
+  const interp = document.getElementById('tam-interp-text');
+
+  if (pct >= 80) {
+    chip.textContent = 'Sangat Diterima';
+    chip.className = 'neu-chip-primary';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;';
+    interp.innerHTML = '<strong style="color:var(--tam-primary);">Tingkat penerimaan sangat tinggi!</strong><br>Anda menunjukkan penerimaan yang sangat baik terhadap teknologi HerboraTech. Anda merasa aplikasi ini berguna, mudah digunakan, dan berniat untuk terus menggunakannya.';
+  } else if (pct >= 60) {
+    chip.textContent = 'Diterima';
+    chip.className = 'neu-chip';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(39,174,96,0.12);color:#27AE60;';
+    interp.innerHTML = '<strong style="color:#27AE60;">Tingkat penerimaan baik.</strong><br>Anda cukup menerima teknologi HerboraTech. Masih ada ruang untuk meningkatkan pengalaman penggunaan agar lebih optimal.';
+  } else if (pct >= 40) {
+    chip.textContent = 'Cukup Diterima';
+    chip.className = 'neu-chip';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(242,153,74,0.12);color:#F2994A;';
+    interp.innerHTML = '<strong style="color:#F2994A;">Tingkat penerimaan cukup.</strong><br>Anda memiliki pandangan yang netral terhadap HerboraTech. Perlu evaluasi lebih lanjut pada aspek kegunaan dan kemudahan penggunaan.';
+  } else {
+    chip.textContent = 'Perlu Peningkatan';
+    chip.className = 'neu-chip';
+    chip.style.cssText = 'font-size:0.78rem;padding:6px 16px;background:rgba(235,87,87,0.12);color:#EB5757;';
+    interp.innerHTML = '<strong style="color:#EB5757;">Tingkat penerimaan rendah.</strong><br>Anda belum sepenuhnya menerima teknologi HerboraTech. Masukan Anda sangat berharga untuk perbaikan aplikasi ke depan.';
+  }
+}
+
+// Init
+renderStepDots();
+checkStepComplete();
+</script>
+</body>
+</html>

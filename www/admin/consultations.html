@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Manajemen Konsultasi</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .admin-main { padding: 24px; }
+    .container { max-width: 100%; margin: 0; }
+
+    .header { margin-bottom: 2rem; }
+    .header h1 { color: var(--text-primary); margin: 0; }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-input, .filter-select {
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--bg-white);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .search-input { flex: 1; min-width: 160px; }
+    .search-input:focus, .filter-select:focus { outline: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+    .btn-export {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .btn-export:hover { box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4); transform: translateY(-2px); }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--bg-white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .stat-label { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .stat-value { font-size: 2rem; font-weight: 700; color: var(--text-primary); }
+    .stat-change { font-size: 0.85rem; color: var(--text-tertiary); margin-top: 0.5rem; }
+
+    .table-wrapper { overflow-x: auto; margin-bottom: 2rem; -webkit-overflow-scrolling: touch; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    th {
+      background: var(--bg-light);
+      padding: 1rem;
+      text-align: left;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-primary);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background: var(--bg-light); }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-active { background: #d1ecf1; color: #0c5460; }
+    .status-completed { background: #d4edda; color: #155724; }
+    .status-cancelled { background: #f8d7da; color: #721c24; }
+
+    .type-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: #e7f3ff;
+      color: #0066cc;
+      border-radius: 12px;
+      font-size: 0.85rem;
+    }
+
+    .actions { display: flex; gap: 0.5rem; }
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-view {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+    .btn-view:hover { background: #bbdefb; }
+
+    .btn-cancel {
+      background: #ffebee;
+      color: #d32f2f;
+    }
+    .btn-cancel:hover { background: #ffcdd2; }
+
+    .pagination {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pagination button {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border-light);
+      background: var(--bg-white);
+      color: var(--text-primary);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pagination button.active {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
+    }
+
+    .pagination button:hover:not(.active) { background: var(--bg-light); }
+
+    /* Modals */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal.open { display: flex; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .modal-content {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 1rem;
+    }
+
+    .modal-header h2 { margin: 0; color: var(--text-primary); }
+
+    .btn-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+
+    .consultation-detail {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      background: var(--bg-light);
+      border-radius: 6px;
+    }
+
+    .detail-label { color: var(--text-secondary); font-weight: 600; }
+    .detail-value { color: var(--text-primary); }
+
+    .modal-footer {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .btn-action {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-cancel-action {
+      background: #ffebee;
+      color: #d32f2f;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+    }
+
+    .timeline {
+      border-left: 3px solid #667eea;
+      padding-left: 1.5rem;
+    }
+
+    .timeline-item {
+      padding: 1rem 0;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.8rem;
+      top: 1.5rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #667eea;
+      border: 3px solid var(--bg-white);
+    }
+
+    .timeline-time { font-size: 0.85rem; color: var(--text-tertiary); }
+    .timeline-event { font-weight: 600; margin-top: 0.25rem; }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item active" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar"><h1>Manajemen Konsultasi</h1></div>
+    <div class="container">
+
+    <div class="stat-grid" id="statsGrid">
+      <div class="stat-card">
+        <div class="stat-label">Total Konsultasi</div>
+        <div class="stat-value" id="stat-total">—</div>
+        <div class="stat-change">Semua waktu</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Aktif</div>
+        <div class="stat-value" id="stat-active">—</div>
+        <div class="stat-change">Sedang berlangsung</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Selesai</div>
+        <div class="stat-value" id="stat-completed">—</div>
+        <div class="stat-change">Hari ini</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Rata-rata Durasi</div>
+        <div class="stat-value" id="stat-avgduration">—</div>
+        <div class="stat-change">Menit</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <input type="text" class="search-input" id="searchInput" placeholder="Cari pasien atau dokter..." oninput="filterTable()">
+      <select class="filter-select" id="statusFilter" onchange="filterTable()">
+        <option value="">Semua Status</option>
+        <option value="pending">Pending</option>
+        <option value="active">Aktif</option>
+        <option value="completed">Selesai</option>
+        <option value="cancelled">Dibatalkan</option>
+      </select>
+      <select class="filter-select" id="typeFilter" onchange="filterTable()">
+        <option value="">Semua Tipe</option>
+        <option value="chat">Chat</option>
+        <option value="video">Video</option>
+        <option value="integratif">Integratif</option>
+      </select>
+      <button class="btn-export" onclick="exportReport()">📊 Export Laporan</button>
+    </div>
+
+    <div class="table-wrapper" id="tableWrapper">
+      <table id="consultationsTable">
+        <thead>
+          <tr>
+            <th>Pasien</th>
+            <th>Dokter</th>
+            <th>Tipe</th>
+            <th>Status</th>
+            <th>Waktu Mulai</th>
+            <th>Durasi</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="consultationsBody">
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+    </div>
+  </main>
+</div>
+
+  <!-- Detail Modal -->
+  <div class="modal" id="detailModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Detail Konsultasi</h2>
+        <button class="btn-close" onclick="closeDetailModal()">×</button>
+      </div>
+      <div class="consultation-detail" id="detailContent">
+        <!-- Populated by JS -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn-action btn-cancel-action" id="cancelBtn" onclick="cancelConsultation()" style="display:none;">Batalkan Konsultasi</button>
+        <button class="btn-action" style="background:var(--bg-light);color:var(--text-primary);" onclick="closeDetailModal()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+
+  <script>
+    let consultations = [];
+    let filteredConsultations = [];
+    let currentPage = 1;
+    const ITEMS_PER_PAGE = 15;
+    let currentDetailId = null;
+
+    async function initConsultations() {
+      try {
+        const { profile } = await VAuth.guard('admin', 1);
+        if (profile && profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+        await loadConsultations();
+        filterTable();
+        updateStats();
+      } catch (e) {
+        showToast('Akses ditolak', 'error');
+        setTimeout(() => nav('../index.html'), 2000);
+      }
+    }
+
+    // Auto-init on page load
+    document.addEventListener('DOMContentLoaded', initConsultations);
+
+    async function loadConsultations() {
+      const snapshot = await VFirebase.db.collection('consultations')
+        .orderBy('startTime', 'desc')
+        .get();
+      consultations = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+      filteredConsultations = [...consultations];
+    }
+
+    function filterTable() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const status = document.getElementById('statusFilter').value;
+      const type = document.getElementById('typeFilter').value;
+
+      filteredConsultations = consultations.filter(c => {
+        const patientMatch = (c.patientName || c.patientId || '').toLowerCase().includes(search);
+        const doctorMatch = (c.doctorName || c.doctorId || '').toLowerCase().includes(search);
+        const searchMatch = patientMatch || doctorMatch;
+
+        const statusMatch = !status || c.status === status;
+        const typeMatch = !type || c.type === type;
+
+        return searchMatch && statusMatch && typeMatch;
+      });
+
+      currentPage = 1;
+      renderTable();
+      renderPagination();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('consultationsBody');
+      tbody.innerHTML = '';
+
+      if (filteredConsultations.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="no-data">Tidak ada konsultasi yang ditemukan</td></tr>';
+        return;
+      }
+
+      const start = (currentPage - 1) * ITEMS_PER_PAGE;
+      const end = start + ITEMS_PER_PAGE;
+      const pageData = filteredConsultations.slice(start, end);
+
+      pageData.forEach(c => {
+        const patientName = c.patientName || c.patientId || '-';
+        const doctorName = c.doctorName || c.doctorId || '-';
+        const type = c.type || '-';
+        const status = c.status || 'pending';
+        const statusClass = `status-${status}`;
+        const startTime = c.startTime ? new Date(c.startTime.toDate?.() || c.startTime).toLocaleString('id-ID') : '-';
+        const duration = c.duration ? `${c.duration} menit` : '-';
+
+        const row = `
+          <tr>
+            <td><strong>${patientName}</strong></td>
+            <td>${doctorName}</td>
+            <td><span class="type-badge">${type}</span></td>
+            <td><span class="status-badge ${statusClass}">${status.charAt(0).toUpperCase() + status.slice(1)}</span></td>
+            <td>${startTime}</td>
+            <td>${duration}</td>
+            <td>
+              <div class="actions">
+                <button class="btn-sm btn-view" onclick="openDetailModal('${c.id}')">Lihat</button>
+              </div>
+            </td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function renderPagination() {
+      const totalPages = Math.ceil(filteredConsultations.length / ITEMS_PER_PAGE);
+      const paginationDiv = document.getElementById('pagination');
+      paginationDiv.innerHTML = '';
+
+      if (totalPages <= 1) return;
+
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = i === currentPage ? 'active' : '';
+        btn.onclick = () => {
+          currentPage = i;
+          renderTable();
+          renderPagination();
+          document.querySelector('.table-wrapper').scrollIntoView({ behavior: 'smooth' });
+        };
+        paginationDiv.appendChild(btn);
+      }
+    }
+
+    function openDetailModal(id) {
+      currentDetailId = id;
+      const consultation = consultations.find(c => c.id === id);
+      if (!consultation) return;
+
+      const detailContent = document.getElementById('detailContent');
+      const startTime = consultation.startTime ? new Date(consultation.startTime.toDate?.() || consultation.startTime).toLocaleString('id-ID') : '-';
+      const endTime = consultation.endTime ? new Date(consultation.endTime.toDate?.() || consultation.endTime).toLocaleString('id-ID') : '-';
+
+      detailContent.innerHTML = `
+        <div class="detail-row">
+          <span class="detail-label">Pasien</span>
+          <span class="detail-value">${consultation.patientName || consultation.patientId || '-'}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Dokter</span>
+          <span class="detail-value">${consultation.doctorName || consultation.doctorId || '-'}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Tipe</span>
+          <span class="detail-value">${consultation.type || '-'}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Status</span>
+          <span class="status-badge status-${consultation.status || 'pending'}">${(consultation.status || 'pending').charAt(0).toUpperCase() + (consultation.status || 'pending').slice(1)}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Waktu Mulai</span>
+          <span class="detail-value">${startTime}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Waktu Selesai</span>
+          <span class="detail-value">${endTime}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Durasi</span>
+          <span class="detail-value">${consultation.duration ? consultation.duration + ' menit' : '-'}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Rating</span>
+          <span class="detail-value">${consultation.rating ? '⭐ ' + consultation.rating : 'Belum ada'}</span>
+        </div>
+        ${consultation.notes ? `<div class="detail-row"><span class="detail-label">Catatan</span><span class="detail-value">${consultation.notes}</span></div>` : ''}
+      `;
+
+      const cancelBtn = document.getElementById('cancelBtn');
+      if (consultation.status === 'pending' || consultation.status === 'active') {
+        cancelBtn.style.display = '';
+      } else {
+        cancelBtn.style.display = 'none';
+      }
+
+      document.getElementById('detailModal').classList.add('open');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detailModal').classList.remove('open');
+      currentDetailId = null;
+    }
+
+    async function cancelConsultation() {
+      if (!currentDetailId) return;
+
+      if (!confirm('Apakah Anda yakin ingin membatalkan konsultasi ini?')) return;
+
+      try {
+        await VFirebase.db.collection('consultations').doc(currentDetailId).update({
+          status: 'cancelled',
+          cancelledAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showToast('Konsultasi berhasil dibatalkan', 'success');
+        closeDetailModal();
+        await loadConsultations();
+        filterTable();
+        updateStats();
+      } catch (error) {
+        console.error('Cancel error:', error);
+        showToast('Gagal membatalkan konsultasi: ' + error.message, 'error');
+      }
+    }
+
+    function updateStats() {
+      const total = consultations.length;
+      const active = consultations.filter(c => c.status === 'active').length;
+      const today = new Date().toDateString();
+      const completedToday = consultations.filter(c =>
+        c.status === 'completed' &&
+        c.startTime &&
+        new Date(c.startTime.toDate?.() || c.startTime).toDateString() === today
+      ).length;
+
+      const completedWithDuration = consultations.filter(c => c.status === 'completed' && c.duration);
+      const avgDuration = completedWithDuration.length > 0
+        ? Math.round(completedWithDuration.reduce((sum, c) => sum + c.duration, 0) / completedWithDuration.length)
+        : 0;
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-active').textContent = active;
+      document.getElementById('stat-completed').textContent = completedToday;
+      document.getElementById('stat-avgduration').textContent = avgDuration;
+    }
+
+    function exportReport() {
+      const csv = [
+        ['Pasien', 'Dokter', 'Tipe', 'Status', 'Waktu Mulai', 'Durasi (menit)', 'Rating'].join(',')
+      ];
+
+      filteredConsultations.forEach(c => {
+        const startTime = c.startTime ? new Date(c.startTime.toDate?.() || c.startTime).toLocaleString('id-ID') : '-';
+        const row = [
+          c.patientName || c.patientId || '-',
+          c.doctorName || c.doctorId || '-',
+          c.type || '-',
+          c.status || 'pending',
+          startTime,
+          c.duration || '-',
+          c.rating || '-'
+        ].map(v => `"${v}"`).join(',');
+        csv.push(row);
+      });
+
+      const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `konsultasi-laporan-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      showToast('Laporan berhasil diunduh', 'success');
+    }
+
+    function nav(url) {
+      window.location.href = url;
+    }
+
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 4px;
+        z-index: 2000;
+        animation: slideUp 0.3s ease;
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{
+  "format": "vitalora_ml_v1",
+  "modelType": "random_forest_proxy",
+  "weights": {
+    "feature_importances": [
+      0.17800962614527308,
+      0.140458541775926,
+      0.11112020295381533,
+      0.1600149843726127,
+      0.12770678323766949,
+      0.1433128284612226,
+      0.12873454000909873,
+      0.010642493044382058,
+      0.0
+    ],
+    "n_estimators": 100,
+    "classes": [
+      0,
+      1
+    ]
+  },
+  "metadata": {
+    "modelName": "hypertension",
+    "modelType": "random_forest_proxy",
+    "version": "1.0",
+    "trainedAt": "2026-03-22",
+    "accuracy": 0.7708,
+    "featureNames": [
+      "age",
+      "bmi",
+      "salt",
+      "stress",
+      "sleep",
+      "fam",
+      "smoking",
+      "exercise",
+      "bp_hist"
+    ],
+    "featureCount": 9,
+    "scalerMean": [
+      50.702770780856426,
+      25.993010075566733,
+      8.500692695214095,
+      4.974811083123425,
+      6.427833753148613,
+      0.48740554156171284,
+      0.5717884130982368,
+      0.7292191435768262,
+      0.0
+    ],
+    "scalerStd": [
+      19.457304997444528,
+      4.546270124811921,
+      2.0120432798455905,
+      3.152204502610053,
+      1.5302388126522537,
+      0.49984135444823,
+      0.9036785030325011,
+      0.7740941857417962,
+      1.0
+    ],
+    "outputLabels": [
+      "No Hypertension",
+      "Hypertension"
+    ],
+    "outputCount": 2,
+    "thresholds": {
+      "threshold": 0.5
+    }
+  }
+}

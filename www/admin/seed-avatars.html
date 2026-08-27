@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Seed Avatar Images</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+  <style>
+    .admin-layout { display: flex; height: 100vh; }
+    .admin-sidebar { width: 250px; background: var(--bg); box-shadow: var(--shadow-out-sm); padding: 24px 0; }
+    .sidebar-logo { font-size: 1.2rem; font-weight: 800; padding: 0 20px 24px; }
+    .sidebar-logo span { color: var(--primary-dark); }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 8px; padding: 0 12px; }
+    .sidebar-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
+    .sidebar-item:hover { background: var(--shadow-light); color: var(--text-primary); }
+    .admin-main { flex: 1; overflow-y: auto; background: linear-gradient(135deg, #E4EBF5 0%, #F7FAFF 100%); }
+    .admin-topbar { background: var(--bg); box-shadow: var(--shadow-out-sm); padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; }
+    .admin-topbar h1 { font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin: 0; }
+    .admin-content { padding: 32px; }
+    .neu-card { background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+    .progress-bar { width: 100%; height: 8px; background: var(--shadow-light); border-radius: 4px; overflow: hidden; margin: 16px 0; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #27AE60, #6FCF97); width: 0%; transition: width 0.3s; }
+    .status-box { background: var(--success-bg); color: var(--primary-dark); padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 600; margin: 16px 0; }
+    .error-box { background: var(--danger-bg); color: var(--danger); padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 600; margin: 16px 0; }
+    .user-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-top: 20px; }
+    .user-card { background: var(--bg); border-radius: 12px; padding: 16px; box-shadow: var(--shadow-out-sm); text-align: center; }
+    .user-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; }
+    .user-name { font-weight: 700; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 4px; }
+    .user-role { font-size: 0.75rem; color: var(--text-tertiary); margin-bottom: 8px; }
+    .user-status { font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; background: var(--success-bg); color: var(--primary-dark); }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="seed-avatars.html" style="background:var(--shadow-light);color:var(--text-primary);"><ion-icon name="image-outline"></ion-icon>Seed Avatars</a>
+    </nav>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <h1>🎨 Seed Avatar Images</h1>
+    </div>
+    <div class="admin-content">
+      <div class="neu-card">
+        <h2 style="margin:0 0 12px 0;font-size:1.1rem;">Generate & Update Dummy Avatars</h2>
+        <p style="margin:0 0 16px 0;color:var(--text-secondary);font-size:0.9rem;">Tambahkan gambar avatar dummy untuk semua dokter dan pasien menggunakan UI Avatars API</p>
+
+        <button class="neu-btn neu-btn-primary" onclick="startSeedAvatars()" style="width:100%;margin-bottom:16px;">
+          <ion-icon name="play-outline"></ion-icon> Mulai Seed Avatars
+        </button>
+
+        <div id="progressSection" style="display:none;">
+          <div style="font-size:0.85rem;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Progress:</div>
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+          <div id="progressText" style="font-size:0.8rem;color:var(--text-tertiary);text-align:center;margin-top:8px;">0/0</div>
+        </div>
+
+        <div id="statusBox" style="display:none;"></div>
+
+        <div id="userGrid" class="user-list" style="display:none;margin-top:24px;"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+let allUsers = [];
+let processedCount = 0;
+let totalCount = 0;
+
+async function startSeedAvatars() {
+  try {
+    await VAuth.guard('admin', 1);
+
+    const btn = event.target;
+    btn.disabled = true;
+    btn.textContent = '⏳ Sedang memproses...';
+
+    document.getElementById('progressSection').style.display = 'block';
+    document.getElementById('statusBox').style.display = 'none';
+    document.getElementById('userGrid').style.display = 'none';
+
+    // Get all users
+    const usersSnapshot = await firebase.firestore().collection('users').get();
+    allUsers = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    totalCount = allUsers.length;
+    processedCount = 0;
+
+    if (totalCount === 0) {
+      showStatus('Tidak ada pengguna ditemukan', 'error');
+      btn.disabled = false;
+      btn.textContent = '▶ Mulai Seed Avatars';
+      return;
+    }
+
+    // Process each user
+    for (const user of allUsers) {
+      try {
+        const name = user.name || 'User';
+        const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+
+        // Generate avatar URL using UI Avatars API
+        // Format: https://ui-avatars.com/api/?name=NAME&background=RANDOM&color=fff
+        const colors = ['FF6B6B', '4ECDC4', '45B7D1', 'FFA07A', '98D8C8', 'F7DC6F', 'BB8FCE', '85C1E2'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=${randomColor}&color=fff&bold=true&size=256`;
+
+        // Update user document
+        await firebase.firestore().collection('users').doc(user.id).update({
+          photoURL: avatarUrl
+        });
+
+        processedCount++;
+        updateProgress();
+      } catch (err) {
+        console.error(`Error processing user ${user.id}:`, err);
+        processedCount++;
+        updateProgress();
+      }
+    }
+
+    showStatus(`✅ Berhasil update ${totalCount} pengguna dengan avatar dummy!`, 'success');
+    displayUsers();
+    btn.disabled = false;
+    btn.textContent = '▶ Mulai Seed Avatars';
+
+  } catch (err) {
+    console.error('Error:', err);
+    showStatus('Error: ' + err.message, 'error');
+    event.target.disabled = false;
+    event.target.textContent = '▶ Mulai Seed Avatars';
+  }
+}
+
+function updateProgress() {
+  const percent = (processedCount / totalCount) * 100;
+  document.getElementById('progressFill').style.width = percent + '%';
+  document.getElementById('progressText').textContent = `${processedCount}/${totalCount}`;
+}
+
+function showStatus(message, type) {
+  const box = document.getElementById('statusBox');
+  box.className = type === 'error' ? 'error-box' : 'status-box';
+  box.textContent = message;
+  box.style.display = 'block';
+}
+
+function displayUsers() {
+  const grid = document.getElementById('userGrid');
+  grid.innerHTML = '';
+  grid.style.display = 'grid';
+
+  allUsers.forEach(user => {
+    const role = user.role === 'doctor' ? '👨‍⚕️ Dokter' : '👤 Pasien';
+    const card = document.createElement('div');
+    card.className = 'user-card';
+    card.innerHTML = `
+      <img src="${user.photoURL || ''}" alt="${user.name}" class="user-avatar" onerror="this.style.display='none'">
+      <div class="user-name">${user.name || 'Unnamed'}</div>
+      <div class="user-role">${role}</div>
+      <div class="user-status">✓ Avatar Updated</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+</script>
+</body>
+</html>

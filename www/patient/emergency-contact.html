@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Kontak Darurat</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid #27AE60; padding-left: 10px; }
+
+    .contact-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+    .contact-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .contact-avatar {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0D2B1A, #27AE60);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-out-sm);
+      flex-shrink: 0;
+    }
+    .contact-info { flex: 1; }
+    .contact-name { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); }
+    .relation-badge {
+      display: inline-block;
+      background: rgba(39,174,96,0.12);
+      border: 1px solid rgba(39,174,96,0.3);
+      color: #27AE60;
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+    .contact-phone {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      background: var(--bg);
+      box-shadow: var(--shadow-in);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+    }
+    .contact-phone ion-icon { font-size: 1rem; color: #27AE60; }
+
+    .contact-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .contact-active-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .contact-active-row span { font-size: 0.75rem; color: var(--text-secondary); font-weight: 500; }
+    .action-btns { display: flex; gap: 6px; }
+    .action-icon-btn {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+    .action-icon-btn:active { box-shadow: var(--shadow-in); }
+    .action-icon-btn.edit { color: var(--info); }
+    .action-icon-btn.delete { color: var(--danger); }
+
+    /* Add Form */
+    .add-form {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .add-form.visible { display: flex; }
+    .form-label { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; display: block; }
+    .neu-input-full {
+      width: 100%;
+      box-sizing: border-box;
+      background: var(--bg);
+      box-shadow: var(--shadow-in);
+      border: none;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-size: 0.85rem;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-primary);
+      outline: none;
+    }
+    .neu-input-full:focus { box-shadow: var(--shadow-in), 0 0 0 2px rgba(39,174,96,0.3); }
+    .auto-notify-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .auto-notify-row .notify-info .nt-title { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+    .auto-notify-row .notify-info .nt-desc { font-size: 0.68rem; color: var(--text-tertiary); }
+    .info-banner {
+      background: rgba(39,174,96,0.08);
+      border: 1.5px solid rgba(39,174,96,0.25);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .info-banner ion-icon { color: #27AE60; font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .info-banner p { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('profile.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;">Kontak Darurat</div>
+    <div style="width:42px;"></div>
+  </header>
+
+  <div class="section" style="padding-bottom: 100px;">
+
+    <!-- Info Banner -->
+    <div class="info-banner" data-animate="up">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <p>Kontak darurat akan dihubungi otomatis saat sistem mendeteksi kondisi kritis pada data vital Anda. Maksimal 3 kontak darurat.</p>
+    </div>
+
+    <!-- Contact 1: Siti Rahayu -->
+    <div class="contact-card mt-16" data-animate="up" data-delay="100">
+      <div class="contact-top">
+        <div class="contact-avatar">SR</div>
+        <div class="contact-info">
+          <div class="contact-name">Siti Rahayu</div>
+          <span class="relation-badge">Ibu</span>
+        </div>
+      </div>
+      <div class="contact-phone">
+        <ion-icon name="call-outline"></ion-icon>
+        0812-3456-7890
+      </div>
+      <div class="contact-actions">
+        <div class="contact-active-row">
+          <label class="neu-switch" style="transform:scale(0.85);transform-origin:left;">
+            <input type="checkbox" checked onchange="toggleActive(this, 'Siti Rahayu')">
+            <span class="slider"></span>
+          </label>
+          <span>Aktif</span>
+        </div>
+        <div class="action-btns">
+          <button class="action-icon-btn edit" onclick="showToast('Edit Siti Rahayu','info')" title="Edit">
+            <ion-icon name="create-outline"></ion-icon>
+          </button>
+          <button class="action-icon-btn delete" onclick="confirmDelete('Siti Rahayu')" title="Hapus">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact 2: Budi Santoso -->
+    <div class="contact-card" data-animate="up" data-delay="200">
+      <div class="contact-top">
+        <div class="contact-avatar" style="background:linear-gradient(135deg,#1A3A5C,#2F80ED);">BS</div>
+        <div class="contact-info">
+          <div class="contact-name">Budi Santoso</div>
+          <span class="relation-badge">Ayah</span>
+        </div>
+      </div>
+      <div class="contact-phone">
+        <ion-icon name="call-outline"></ion-icon>
+        0813-2345-6789
+      </div>
+      <div class="contact-actions">
+        <div class="contact-active-row">
+          <label class="neu-switch" style="transform:scale(0.85);transform-origin:left;">
+            <input type="checkbox" checked onchange="toggleActive(this, 'Budi Santoso')">
+            <span class="slider"></span>
+          </label>
+          <span>Aktif</span>
+        </div>
+        <div class="action-btns">
+          <button class="action-icon-btn edit" onclick="showToast('Edit Budi Santoso','info')" title="Edit">
+            <ion-icon name="create-outline"></ion-icon>
+          </button>
+          <button class="action-icon-btn delete" onclick="confirmDelete('Budi Santoso')" title="Hapus">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Contact Button -->
+    <button class="neu-btn neu-btn-block mt-8" id="toggle-add-btn" data-animate="up" data-delay="300"
+      onclick="toggleAddForm()" style="color:var(--primary-dark);font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      Tambah Kontak Darurat
+    </button>
+
+    <!-- Add Form (hidden initially) -->
+    <div class="neu-card mt-16" id="add-form-card" style="display:none;" data-animate="up">
+      <div style="font-size:0.9rem;font-weight:700;color:var(--text-primary);margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+        <ion-icon name="person-add-outline" style="color:#27AE60;"></ion-icon>
+        Kontak Baru
+      </div>
+      <div class="add-form visible" id="add-form">
+
+        <div>
+          <label class="form-label">Nama Lengkap</label>
+          <input class="neu-input-full" type="text" placeholder="Nama kontak darurat" id="new-name">
+        </div>
+
+        <div>
+          <label class="form-label">Hubungan</label>
+          <select class="neu-input-full" id="new-relation">
+            <option value="">Pilih hubungan...</option>
+            <option>Ibu</option>
+            <option>Ayah</option>
+            <option>Suami</option>
+            <option>Istri</option>
+            <option>Anak</option>
+            <option>Kakak</option>
+            <option>Adik</option>
+            <option>Teman Dekat</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="form-label">Nomor HP</label>
+          <input class="neu-input-full" type="tel" placeholder="08xx-xxxx-xxxx" id="new-phone">
+        </div>
+
+        <div class="auto-notify-row">
+          <div class="notify-info">
+            <div class="nt-title">Notifikasi Otomatis</div>
+            <div class="nt-desc">Hubungi saat kondisi kritis terdeteksi</div>
+          </div>
+          <label class="neu-switch">
+            <input type="checkbox" checked id="new-notify">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div style="display:flex;gap:10px;">
+          <button class="neu-btn neu-btn-block" onclick="cancelAddForm()" style="color:var(--text-secondary);">
+            Batal
+          </button>
+          <button class="neu-btn-primary neu-btn-block" onclick="saveContact()">
+            <ion-icon name="checkmark-outline"></ion-icon>
+            Simpan
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  let _ecUid = null;
+  let _ecData = null;
+
+  function prefillEmergencyContact(ec) {
+    if (!ec) return;
+    const nameInput = document.getElementById('new-name');
+    const phoneInput = document.getElementById('new-phone');
+    const relationSelect = document.getElementById('new-relation');
+    if (nameInput && ec.name) nameInput.value = ec.name;
+    if (phoneInput && ec.phone) phoneInput.value = ec.phone;
+    if (relationSelect && ec.relation) {
+      Array.from(relationSelect.options).forEach(o => { o.selected = o.text === ec.relation; });
+    }
+  }
+
+  (async () => {
+    try {
+      const { user } = await VAuth.guard('patient', 1);
+      _ecUid = user.uid;
+      const patient = await VDB.getPatient(user.uid);
+      if (patient && patient.emergencyContact) {
+        _ecData = patient.emergencyContact;
+        // Pre-fill the first visible contact card with real data if available
+        const ec = patient.emergencyContact;
+        const firstCard = document.querySelector('.contact-card');
+        if (firstCard && ec.name) {
+          const nameEl = firstCard.querySelector('.contact-name');
+          const relEl = firstCard.querySelector('.relation-badge');
+          const phoneEl = firstCard.querySelector('.contact-phone');
+          const avatarEl = firstCard.querySelector('.contact-avatar');
+          if (nameEl) nameEl.textContent = ec.name;
+          if (relEl) relEl.textContent = ec.relation || 'Kontak';
+          if (phoneEl) {
+            const icon = phoneEl.querySelector('ion-icon');
+            phoneEl.textContent = ec.phone || '';
+            if (icon) phoneEl.prepend(icon);
+          }
+          if (avatarEl) {
+            avatarEl.textContent = (ec.name || 'K').split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+          }
+        }
+      }
+    } catch (e) {
+      console.error('[emergency-contact] guard error:', e);
+      showToast('Gagal memuat kontak darurat', 'error');
+    }
+  })();
+
+  async function saveContact() {
+    const name = document.getElementById('new-name').value.trim();
+    const phone = document.getElementById('new-phone').value.trim();
+    const relation = document.getElementById('new-relation').value;
+    if (!name || !phone || !relation) {
+      showToast('Lengkapi semua field terlebih dahulu', 'warning');
+      return;
+    }
+    if (_ecUid) {
+      try {
+        await VDB.updatePatient(_ecUid, { emergencyContact: { name, phone, relation } });
+        showToast(name + ' berhasil disimpan sebagai kontak darurat', 'success');
+        // Update first card
+        const firstCard = document.querySelector('.contact-card');
+        if (firstCard) {
+          const nameEl = firstCard.querySelector('.contact-name');
+          const relEl = firstCard.querySelector('.relation-badge');
+          const phoneEl = firstCard.querySelector('.contact-phone');
+          const avatarEl = firstCard.querySelector('.contact-avatar');
+          if (nameEl) nameEl.textContent = name;
+          if (relEl) relEl.textContent = relation;
+          if (phoneEl) {
+            const icon = phoneEl.querySelector('ion-icon');
+            phoneEl.textContent = phone;
+            if (icon) phoneEl.prepend(icon);
+          }
+          if (avatarEl) avatarEl.textContent = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+        }
+        cancelAddForm();
+      } catch (e) {
+        console.error('[emergency-contact] save error:', e);
+        showToast('Gagal menyimpan kontak: ' + (e.message || e), 'error');
+      }
+    } else {
+      showToast(name + ' berhasil ditambahkan', 'success');
+      cancelAddForm();
+    }
+  }
+
+  function toggleAddForm() {
+    const card = document.getElementById('add-form-card');
+    const btn = document.getElementById('toggle-add-btn');
+    const isVisible = card.style.display !== 'none';
+    card.style.display = isVisible ? 'none' : 'block';
+    btn.innerHTML = isVisible
+      ? '<ion-icon name="add-circle-outline"></ion-icon> Tambah Kontak Darurat'
+      : '<ion-icon name="chevron-up-outline"></ion-icon> Tutup Form';
+  }
+
+  function cancelAddForm() {
+    const card = document.getElementById('add-form-card');
+    const btn = document.getElementById('toggle-add-btn');
+    card.style.display = 'none';
+    btn.innerHTML = '<ion-icon name="add-circle-outline"></ion-icon> Tambah Kontak Darurat';
+    document.getElementById('new-name').value = '';
+    document.getElementById('new-phone').value = '';
+    document.getElementById('new-relation').value = '';
+  }
+
+  function toggleActive(checkbox, name) {
+    if (checkbox.checked) {
+      showToast(name + ' diaktifkan', 'success');
+    } else {
+      showToast(name + ' dinonaktifkan', 'warning');
+    }
+  }
+
+  function confirmDelete(name) {
+    showToast(name + ' dihapus dari kontak darurat', 'error');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Material Penelitian</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #6FCF97; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
+    .disease-card { cursor: pointer; transition: all 0.3s ease; }
+    .disease-card:active { transform: scale(0.98); }
+    .disease-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .stat-badge { background: var(--primary-gradient); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;">Material Penelitian</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+    <div class="section-header" style="margin-bottom:20px;">
+      <div class="section-title" style="font-size:1rem;">SLR — Systematic Literature Review</div>
+      <p style="font-size:0.78rem;color:var(--text-secondary);margin-top:8px;line-height:1.5;">Database penelitian terbaru dari PubMed (2015-2026) tentang 5 penyakit metabolik utama. Total 50 paper peer-reviewed dengan analisis mendalam.</p>
+    </div>
+
+    <!-- Search bar -->
+    <div class="neu-search" style="margin-bottom:20px;"><ion-icon name="search-outline"></ion-icon><input id="search-input" placeholder="Cari berdasarkan judul, author, atau penyakit..."></div>
+
+    <!-- Summary stats -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;">
+      <div class="neu-card" style="text-align:center;padding:16px;">
+        <div style="font-size:1.8rem;font-weight:700;color:#27AE60;">50</div>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Paper Analisis</div>
+      </div>
+      <div class="neu-card" style="text-align:center;padding:16px;">
+        <div style="font-size:1.8rem;font-weight:700;color:#27AE60;">5</div>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Topik Penyakit</div>
+      </div>
+    </div>
+
+    <!-- Disease cards -->
+    <div class="disease-grid">
+
+      <!-- 1. Dyslipidemia -->
+      <div class="disease-card neu-card" onclick="nav('slr-dyslipidemia.html')">
+        <div style="font-size:2rem;margin-bottom:12px;">🩸</div>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">Dyslipidemia</div>
+        <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">Kolesterol, Lipid, Screening</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <span class="stat-badge">10 Paper</span>
+          <span class="stat-badge" style="background:rgba(39,174,96,0.2);color:#27AE60;">2026</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);padding-top:8px;border-top:1px solid rgba(39,174,96,0.1);">TyG index, non-HDL-C, APOB rs1042034 →</div>
+      </div>
+
+      <!-- 2. Type 2 Diabetes -->
+      <div class="disease-card neu-card" onclick="nav('slr-diabetes.html')">
+        <div style="font-size:2rem;margin-bottom:12px;">🩺</div>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">Type 2 Diabetes</div>
+        <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">Screening, Risk Assessment</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <span class="stat-badge">10 Paper</span>
+          <span class="stat-badge" style="background:rgba(39,174,96,0.2);color:#27AE60;">2026</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);padding-top:8px;border-top:1px solid rgba(39,174,96,0.1);">TyG-BMI, Osteogenic markers, DKD →</div>
+      </div>
+
+      <!-- 3. Hypertension -->
+      <div class="disease-card neu-card" onclick="nav('slr-hypertension.html')">
+        <div style="font-size:2rem;margin-bottom:12px;">🫀</div>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">Hypertension</div>
+        <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">Tekanan Darah, Diagnosis</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <span class="stat-badge">10 Paper</span>
+          <span class="stat-badge" style="background:rgba(39,174,96,0.2);color:#27AE60;">2026</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);padding-top:8px;border-top:1px solid rgba(39,174,96,0.1);">PA screening, BP targets, ABPM →</div>
+      </div>
+
+      <!-- 4. NAFLD -->
+      <div class="disease-card neu-card" onclick="nav('slr-nafld.html')">
+        <div style="font-size:2rem;margin-bottom:12px;">🫘</div>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">NAFLD/MASLD</div>
+        <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">Fatty Liver, Fibrosis</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <span class="stat-badge">10 Paper</span>
+          <span class="stat-badge" style="background:rgba(39,174,96,0.2);color:#27AE60;">2026</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);padding-top:8px;border-top:1px solid rgba(39,174,96,0.1);">TyG-BMI, Metabolomics, FIB-4 →</div>
+      </div>
+
+      <!-- 5. Metabolic Syndrome -->
+      <div class="disease-card neu-card" onclick="nav('slr-metabsyn.html')">
+        <div style="font-size:2rem;margin-bottom:12px;">⚖️</div>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">Metabolic Syndrome</div>
+        <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">Diagnosis, Screening</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <span class="stat-badge">10 Paper</span>
+          <span class="stat-badge" style="background:rgba(39,174,96,0.2);color:#27AE60;">2026</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);padding-top:8px;border-top:1px solid rgba(39,174,96,0.1);">Life's Simple 7, IR markers →</div>
+      </div>
+
+    </div>
+
+    <!-- Herbal SLR Section -->
+    <div class="section-header" style="margin-top:32px;margin-bottom:20px;">
+      <div class="section-title" style="font-size:1rem;">🌿 Herbal Medicine Research</div>
+      <p style="font-size:0.78rem;color:var(--text-secondary);margin-top:8px;line-height:1.5;">50+ peer-reviewed papers pada 7 kategori herbal tradisional untuk penyakit metabolik. GRADE quality assessment dan WHO integration.</p>
+    </div>
+
+    <!-- Herbal cards -->
+    <div class="disease-grid">
+
+      <!-- 1. Herbal Protocol -->
+      <div class="disease-card neu-card" onclick="nav('herbal-protocol.html')">
+        <div style="font-size:2rem;margin-bottom:12px;">📋</div>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">Herbal Protocol</div>
+        <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">Metodologi & Kriteria Inklusi</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <span class="stat-badge">PRISMA-2020</span>
+          <span class="stat-badge" style="background:rgba(111,207,151,0.2);color:#27AE60;">7 Herbal</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);padding-top:8px;border-top:1px solid rgba(39,174,96,0.1);">SLR framework, search strategy →</div>
+      </div>
+
+      <!-- 2. Herbal Data Extraction -->
+      <div class="disease-card neu-card" onclick="nav('herbal-extraction.html')">
+        <div style="font-size:2rem;margin-bottom:12px;">📊</div>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">Data Extraction</div>
+        <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">50+ Paper dengan Detail Lengkap</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <span class="stat-badge">50+ Papers</span>
+          <span class="stat-badge" style="background:rgba(111,207,151,0.2);color:#27AE60;">DOI Verified</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);padding-top:8px;border-top:1px solid rgba(39,174,96,0.1);">Full citations, effect sizes, outcomes →</div>
+      </div>
+
+      <!-- 3. GRADE Assessment -->
+      <div class="disease-card neu-card" onclick="nav('herbal-grade.html')">
+        <div style="font-size:2rem;margin-bottom:12px;">⚖️</div>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">GRADE Assessment</div>
+        <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">Kualitas Bukti & Keamanan</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <span class="stat-badge">5-Domain</span>
+          <span class="stat-badge" style="background:rgba(111,207,151,0.2);color:#27AE60;">A-D Grade</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);padding-top:8px;border-top:1px solid rgba(39,174,96,0.1);">Safety profiles, drug interactions →</div>
+      </div>
+
+      <!-- 4. Herbal Formulas -->
+      <div class="disease-card neu-card" onclick="nav('herbal-formulas.html')">
+        <div style="font-size:2rem;margin-bottom:12px;">🌾</div>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">Herbal Formulas</div>
+        <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">Resep Tradisional Jamu</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <span class="stat-badge">5 Formulas</span>
+          <span class="stat-badge" style="background:rgba(111,207,151,0.2);color:#27AE60;">Resep Lengkap</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);padding-top:8px;border-top:1px solid rgba(39,174,96,0.1);">Ingredients, preparation, dosage →</div>
+      </div>
+
+      <!-- 5. Herbal Presentation -->
+      <div class="disease-card neu-card" onclick="nav('herbal-presentation.html')">
+        <div style="font-size:2rem;margin-bottom:12px;">📽️</div>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">Presentasi</div>
+        <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">20-Slide Overview Interaktif</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <span class="stat-badge">20 Slides</span>
+          <span class="stat-badge" style="background:rgba(111,207,151,0.2);color:#27AE60;">Interactive</span>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);padding-top:8px;border-top:1px solid rgba(39,174,96,0.1);">Herbal evidence summary with keyboard nav →</div>
+      </div>
+
+    </div>
+
+    <!-- Citation note -->
+    <div class="neu-card" style="margin-top:24px;padding:16px;background:rgba(39,174,96,0.04);border-left:3px solid #27AE60;">
+      <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.6;">
+        <strong>📚 Sumber Data:</strong> Systematic Literature Review dari PubMed, Cochrane, WHO Monographs (2010-2026). Semua paper peer-reviewed dengan DOI terverifikasi. GRADE methodology applied. Integrated dengan WHO herbal medicine guidelines untuk keamanan & efektivitas.
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item" href="monitoring.html">
+      <ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span>
+    </a>
+    <a class="nav-item" href="consultation.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span>
+    </a>
+    <a class="nav-item" href="herbal.html">
+      <ion-icon name="leaf-outline"></ion-icon><span>Jamu</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  // Search functionality — filter cards on input, navigate on Enter
+  const searchInput = document.getElementById('search-input');
+  searchInput.addEventListener('input', function(e) {
+    const query = e.target.value.toLowerCase();
+    document.querySelectorAll('.disease-card').forEach(card => {
+      const text = card.textContent.toLowerCase();
+      card.style.display = text.includes(query) ? '' : 'none';
+    });
+  });
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const query = e.target.value.toLowerCase();
+      if (query.includes('dyslipidemia') || query.includes('kolesterol')) nav('slr-dyslipidemia.html');
+      else if (query.includes('diabetes') || query.includes('gula')) nav('slr-diabetes.html');
+      else if (query.includes('hypertension') || query.includes('tensi')) nav('slr-hypertension.html');
+      else if (query.includes('nafld') || query.includes('liver') || query.includes('hati')) nav('slr-nafld.html');
+      else if (query.includes('metabolic')) nav('slr-metabsyn.html');
+    }
+  });
+
+  // Guard check
+  (async () => {
+    await VAuth.guard('patient', 1);
+  })();
+</script>
+</body>
+</html>

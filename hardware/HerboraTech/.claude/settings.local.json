@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:gist.github.com)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:www.waveshare.com)",
+      "WebFetch(domain:spotpear.com)",
+      "WebFetch(domain:stephenmonro.wordpress.com)",
+      "Bash(mkdir -p /home/mrgengs/eez-projects/DisplayTest)",
+      "Bash(mv /home/mrgengs/eez-projects/HerboraTech/DisplayTest.ino /home/mrgengs/eez-projects/DisplayTest/DisplayTest.ino)",
+      "WebFetch(domain:files.waveshare.com)",
+      "Bash(unzip -q ESP32-S3-Touch-LCD-1.47-Demo.zip -d ESP32-S3-Touch-LCD-1.47-Demo)",
+      "Bash(find /home/mrgengs/ESP32-S3-Touch-LCD-1.47-Demo -maxdepth 4 -type f \\\\\\(-name pin_config* -o -name pins_arduino* -o -name *.ino -o -name bsp*.h \\\\\\))"
+    ]
+  }
+}

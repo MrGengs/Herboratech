@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Jurnal Kesehatan</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
+
+    /* Calendar */
+    .calendar-card { background: var(--bg); border-radius: 20px; box-shadow: var(--shadow-out); padding: 16px; margin-bottom: 20px; }
+    .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .cal-month { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); }
+    .cal-nav-btn { background: none; border: none; cursor: pointer; color: var(--primary-dark); display: flex; align-items: center; font-size: 1.2rem; }
+    .cal-days-header { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-bottom: 6px; }
+    .cal-day-label { text-align: center; font-size: 0.6rem; font-weight: 700; color: var(--text-muted); padding: 2px; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .cal-cell {
+      aspect-ratio: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      border-radius: 10px; cursor: pointer;
+      font-size: 0.78rem; font-weight: 500; color: var(--text-secondary);
+      position: relative; transition: all 0.15s;
+    }
+    .cal-cell:hover { background: rgba(111,207,151,0.12); }
+    .cal-cell.today {
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      color: #fff; font-weight: 700;
+      box-shadow: 0 3px 10px rgba(39,174,96,0.35);
+    }
+    .cal-cell.selected {
+      background: var(--bg);
+      box-shadow: var(--shadow-in);
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+    .cal-cell.has-entry::after {
+      content: '';
+      position: absolute; bottom: 3px;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--primary-dark);
+    }
+    .cal-cell.today.has-entry::after { background: rgba(255,255,255,0.9); }
+    .cal-cell.other-month { opacity: 0.3; pointer-events: none; }
+    .cal-cell.empty { pointer-events: none; }
+
+    /* Entry Cards */
+    .entry-card { background: var(--bg); border-radius: 16px; box-shadow: var(--shadow-out-sm); padding: 14px 16px; margin-bottom: 12px; }
+    .entry-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .entry-mood { font-size: 1.5rem; }
+    .entry-meta { flex: 1; }
+    .entry-time { font-size: 0.68rem; color: var(--text-muted); }
+    .entry-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+    .symptom-tag { font-size: 0.65rem; padding: 3px 10px; border-radius: 20px; background: rgba(235,87,87,0.1); color: var(--danger); font-weight: 600; }
+    .entry-note { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Add Form */
+    .add-form { background: var(--bg); border-radius: 18px; box-shadow: var(--shadow-out); padding: 18px; margin-bottom: 20px; display: none; }
+    .add-form.show { display: block; }
+    .form-row { margin-bottom: 14px; }
+    .form-label { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; display: block; }
+    .neu-form-input {
+      width: 100%; padding: 10px 14px; border-radius: 12px; border: none;
+      background: var(--bg); box-shadow: var(--shadow-in);
+      font-family: 'Poppins', sans-serif; font-size: 0.83rem;
+      color: var(--text-primary); box-sizing: border-box;
+    }
+    .neu-form-input:focus { outline: none; box-shadow: var(--shadow-in), 0 0 0 2px var(--primary); }
+    .neu-form-textarea {
+      width: 100%; padding: 10px 14px; border-radius: 12px; border: none;
+      background: var(--bg); box-shadow: var(--shadow-in);
+      font-family: 'Poppins', sans-serif; font-size: 0.83rem;
+      color: var(--text-primary); resize: none; box-sizing: border-box;
+    }
+    .neu-form-textarea:focus { outline: none; box-shadow: var(--shadow-in), 0 0 0 2px var(--primary); }
+
+    /* Symptom tag input */
+    .tag-input-wrap {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      background: var(--bg); box-shadow: var(--shadow-in);
+      border-radius: 12px; padding: 8px 12px; min-height: 44px; align-items: center;
+    }
+    .tag-item { display: flex; align-items: center; gap: 4px; background: rgba(235,87,87,0.1); color: var(--danger); border-radius: 20px; padding: 3px 10px; font-size: 0.65rem; font-weight: 600; }
+    .tag-item span { cursor: pointer; font-size: 0.8rem; opacity: 0.7; }
+    .tag-input { border: none; background: transparent; font-family: 'Poppins', sans-serif; font-size: 0.82rem; color: var(--text-primary); min-width: 80px; flex: 1; }
+    .tag-input:focus { outline: none; }
+    .tag-hint { font-size: 0.65rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* Mood Selector */
+    .mood-selector { display: flex; gap: 8px; justify-content: space-between; }
+    .mood-btn {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 10px 4px; border-radius: 12px; border: 2px solid transparent;
+      background: var(--bg); box-shadow: var(--shadow-out-sm);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .mood-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-out); }
+    .mood-btn.active { border-color: var(--primary-dark); box-shadow: var(--shadow-out), 0 0 0 2px rgba(39,174,96,0.2); }
+    .mood-emoji { font-size: 1.5rem; }
+    .mood-label { font-size: 0.58rem; color: var(--text-muted); font-weight: 500; }
+
+    .date-display { font-size: 0.82rem; color: var(--primary-dark); font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('profile.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;">Jurnal Kesehatan</div>
+    <button class="neu-icon-btn" onclick="showToast('Ekspor jurnal', 'info')">
+      <ion-icon name="download-outline"></ion-icon>
+    </button>
+  </header>
+
+  <div class="section">
+
+    <!-- Calendar -->
+    <div class="calendar-card" data-animate="up">
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="changeMonth(-1)"><ion-icon name="chevron-back-outline"></ion-icon></button>
+        <div class="cal-month" id="calMonthTitle">Maret 2026</div>
+        <button class="cal-nav-btn" onclick="changeMonth(1)"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+      </div>
+      <div class="cal-days-header">
+        <div class="cal-day-label">Min</div>
+        <div class="cal-day-label">Sen</div>
+        <div class="cal-day-label">Sel</div>
+        <div class="cal-day-label">Rab</div>
+        <div class="cal-day-label">Kam</div>
+        <div class="cal-day-label">Jum</div>
+        <div class="cal-day-label">Sab</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+
+    <!-- Selected Date Label -->
+    <div class="section-header" data-animate="up" data-delay="80">
+      <div class="section-title" id="selectedDateLabel">Hari Ini — 21 Mar 2026</div>
+    </div>
+
+    <!-- Entry List -->
+    <div id="entryList" data-animate="up" data-delay="100">
+      <div class="entry-card">
+        <div class="entry-header">
+          <div class="entry-mood">😊</div>
+          <div class="entry-meta">
+            <div style="font-size:0.82rem;font-weight:700;color:var(--text-primary);">Pagi</div>
+            <div class="entry-time">21 Mar 2026 · 07:45</div>
+          </div>
+        </div>
+        <div class="entry-tags">
+          <span class="symptom-tag">Pusing</span>
+          <span class="symptom-tag">Lelah</span>
+        </div>
+        <div class="entry-note">Merasa cukup baik di pagi hari, namun ada sedikit kepala berat setelah bangun tidur. Tidur semalam kurang nyenyak, terbangun 2 kali.</div>
+      </div>
+
+      <div class="entry-card">
+        <div class="entry-header">
+          <div class="entry-mood">😐</div>
+          <div class="entry-meta">
+            <div style="font-size:0.82rem;font-weight:700;color:var(--text-primary);">Siang</div>
+            <div class="entry-time">21 Mar 2026 · 12:30</div>
+          </div>
+        </div>
+        <div class="entry-tags">
+          <span class="symptom-tag">Lelah</span>
+        </div>
+        <div class="entry-note">Rasa lelah bertambah setelah makan siang. Nafsu makan normal, minum air cukup 6 gelas.</div>
+      </div>
+    </div>
+
+    <!-- Add New Entry Button -->
+    <button class="neu-btn neu-btn-primary neu-btn-block mt-8" data-animate="up" data-delay="140" onclick="toggleAddForm()">
+      <ion-icon name="add-outline"></ion-icon> Entry Baru
+    </button>
+
+    <!-- Add Form -->
+    <div class="add-form" id="addForm" data-animate="up">
+      <div class="date-display">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span id="formDate">21 Maret 2026</span>
+      </div>
+
+      <!-- Mood Selector -->
+      <div class="form-row">
+        <label class="form-label">Mood</label>
+        <div class="mood-selector">
+          <button class="mood-btn" data-mood="1" onclick="selectMood(this)">
+            <span class="mood-emoji">😣</span>
+            <span class="mood-label">Buruk</span>
+          </button>
+          <button class="mood-btn" data-mood="2" onclick="selectMood(this)">
+            <span class="mood-emoji">😔</span>
+            <span class="mood-label">Kurang</span>
+          </button>
+          <button class="mood-btn" data-mood="3" onclick="selectMood(this)">
+            <span class="mood-emoji">😐</span>
+            <span class="mood-label">Biasa</span>
+          </button>
+          <button class="mood-btn active" data-mood="4" onclick="selectMood(this)">
+            <span class="mood-emoji">😊</span>
+            <span class="mood-label">Baik</span>
+          </button>
+          <button class="mood-btn" data-mood="5" onclick="selectMood(this)">
+            <span class="mood-emoji">😄</span>
+            <span class="mood-label">Luar biasa</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Gejala Tags -->
+      <div class="form-row">
+        <label class="form-label">Gejala</label>
+        <div class="tag-input-wrap" id="tagWrap" onclick="document.getElementById('tagInput').focus()">
+          <div class="tag-item" id="tag-pusing">Pusing <span onclick="removeTag('tag-pusing')">×</span></div>
+          <input type="text" class="tag-input" id="tagInput" placeholder="Tambah gejala..." onkeydown="handleTagInput(event)">
+        </div>
+        <div class="tag-hint">Tekan Enter untuk menambah gejala</div>
+      </div>
+
+      <!-- Makanan -->
+      <div class="form-row">
+        <label class="form-label">Makanan / Minuman</label>
+        <input type="text" class="neu-form-input" placeholder="Contoh: Nasi + sayur, 8 gelas air" value="">
+      </div>
+
+      <!-- Catatan -->
+      <div class="form-row" style="margin-bottom:18px;">
+        <label class="form-label">Catatan</label>
+        <textarea class="neu-form-textarea" rows="3" placeholder="Tuliskan catatan kesehatanmu hari ini..."></textarea>
+      </div>
+
+      <div style="display:flex;gap:10px;">
+        <button class="neu-btn neu-btn-block" style="flex:0 0 auto;width:auto;padding:10px 16px;" onclick="toggleAddForm()">Batal</button>
+        <button class="neu-btn neu-btn-primary neu-btn-block" onclick="saveEntry()">
+          <ion-icon name="checkmark-outline"></ion-icon> Simpan Entry
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  // Calendar state
+  const TODAY = new Date();
+  let currentYear = TODAY.getFullYear();
+  let currentMonth = TODAY.getMonth();
+  let selectedDay = TODAY.getDate();
+
+  // Dates with entries (1-indexed day numbers for March)
+  const entryDates = [3, 5, 8, 10, 12, 14, 17, 18, 19, 20, 21];
+
+  const monthNames = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const dayShortNames = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+
+  function renderCalendar() {
+    document.getElementById('calMonthTitle').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const daysInPrev = new Date(currentYear, currentMonth, 0).getDate();
+
+    // Previous month filler
+    for (let i = 0; i < firstDay; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'cal-cell other-month';
+      cell.textContent = daysInPrev - firstDay + 1 + i;
+      grid.appendChild(cell);
+    }
+
+    // Current month days
+    for (let d = 1; d <= daysInMonth; d++) {
+      const cell = document.createElement('div');
+      cell.className = 'cal-cell';
+      cell.textContent = d;
+
+      const isToday = d === TODAY.getDate() && currentMonth === TODAY.getMonth() && currentYear === TODAY.getFullYear();
+      const isSelected = d === selectedDay && currentMonth === TODAY.getMonth() && currentYear === TODAY.getFullYear();
+      const hasEntry = entryDates.includes(d) && currentMonth === TODAY.getMonth();
+
+      if (isToday) cell.classList.add('today');
+      if (isSelected && !isToday) cell.classList.add('selected');
+      if (hasEntry) cell.classList.add('has-entry');
+
+      cell.onclick = () => selectDay(d);
+      grid.appendChild(cell);
+    }
+
+    // Next month filler
+    const totalCells = firstDay + daysInMonth;
+    const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+    for (let i = 1; i <= remaining; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'cal-cell other-month';
+      cell.textContent = i;
+      grid.appendChild(cell);
+    }
+  }
+
+  function selectDay(d) {
+    selectedDay = d;
+    renderCalendar();
+    const label = document.getElementById('selectedDateLabel');
+    const isToday = d === TODAY.getDate() && currentMonth === TODAY.getMonth() && currentYear === TODAY.getFullYear();
+    label.textContent = (isToday ? 'Hari Ini — ' : '') + d + ' ' + monthNames[currentMonth] + ' ' + currentYear;
+    document.getElementById('formDate').textContent = d + ' ' + monthNames[currentMonth] + ' ' + currentYear;
+  }
+
+  function changeMonth(dir) {
+    currentMonth += dir;
+    if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+    renderCalendar();
+  }
+
+  function toggleAddForm() {
+    const form = document.getElementById('addForm');
+    form.classList.toggle('show');
+    if (form.classList.contains('show')) {
+      form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function selectMood(btn) {
+    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function handleTagInput(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const input = document.getElementById('tagInput');
+      const val = input.value.trim();
+      if (!val) return;
+      addTag(val);
+      input.value = '';
+    }
+  }
+
+  let tagCount = 2;
+  function addTag(text) {
+    const wrap = document.getElementById('tagWrap');
+    const input = document.getElementById('tagInput');
+    const id = 'tag-' + tagCount++;
+    const div = document.createElement('div');
+    div.className = 'tag-item';
+    div.id = id;
+    div.innerHTML = `${text} <span onclick="removeTag('${id}')">×</span>`;
+    wrap.insertBefore(div, input);
+  }
+
+  function removeTag(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+  }
+
+  let _journalUid = null;
+
+  async function saveEntry() {
+    const activeMood = document.querySelector('.mood-btn.active');
+    const mood = activeMood ? parseInt(activeMood.dataset.mood) : 4;
+    const emoji = activeMood ? activeMood.querySelector('.mood-emoji').textContent : '😊';
+
+    const tags = Array.from(document.querySelectorAll('#tagWrap .tag-item')).map(t => t.textContent.replace('×','').trim());
+    const content = document.querySelector('.neu-form-textarea').value || '';
+    const food = document.querySelector('.neu-form-input').value || '';
+    const title = (tags.length ? tags.join(', ') : 'Catatan') + ' — ' + selectedDay + ' ' + monthNames[currentMonth];
+    const dateStr = currentYear + '-' + String(currentMonth + 1).padStart(2,'0') + '-' + String(selectedDay).padStart(2,'0');
+
+    // Optimistic UI update
+    const list = document.getElementById('entryList');
+    const newCard = document.createElement('div');
+    newCard.className = 'entry-card';
+    newCard.style.cssText = 'animation: fadeInUp 0.3s ease;';
+    newCard.innerHTML = `
+      <div class="entry-header">
+        <div class="entry-mood">${emoji}</div>
+        <div class="entry-meta">
+          <div style="font-size:0.82rem;font-weight:700;color:var(--text-primary);">Baru Ditambahkan</div>
+          <div class="entry-time">${selectedDay} ${monthNames[currentMonth]} ${currentYear} · Baru saja</div>
+        </div>
+      </div>
+      ${tags.length ? '<div class="entry-tags">' + tags.map(t => `<span class="symptom-tag">${t}</span>`).join('') + '</div>' : ''}
+      <div class="entry-note">${content || food || 'Tidak ada catatan tambahan.'}</div>`;
+    list.insertBefore(newCard, list.firstChild);
+
+    toggleAddForm();
+
+    // Save to Firestore
+    if (_journalUid) {
+      try {
+        await VFirebase.db.collection('healthJournal').doc(_journalUid).collection('entries').add({
+          title, content, mood, food, symptoms: tags, date: dateStr,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showToast('Entry jurnal berhasil disimpan!', 'success');
+        // Mark date as having entry
+        if (!entryDates.includes(selectedDay)) {
+          entryDates.push(selectedDay);
+          renderCalendar();
+        }
+      } catch (e) {
+        console.error('[health-journal] save error:', e);
+        showToast('Gagal menyimpan ke cloud, tersimpan lokal', 'warning');
+      }
+    } else {
+      showToast('Entry jurnal berhasil disimpan!', 'success');
+    }
+  }
+
+  async function loadJournalEntries(uid, day, month, year) {
+    try {
+      const dateStr = year + '-' + String(month + 1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+      const snap = await VFirebase.db.collection('healthJournal').doc(uid).collection('entries')
+        .orderBy('createdAt', 'desc').limit(30).get();
+      const entries = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+      // Mark dates with entries
+      entries.forEach(e => {
+        if (e.date) {
+          const parts = e.date.split('-');
+          if (parts.length === 3) {
+            const d = parseInt(parts[2]);
+            if (!entryDates.includes(d)) entryDates.push(d);
+          }
+        }
+      });
+      renderCalendar();
+    } catch (e) {
+      console.error('[health-journal] load error:', e);
+    }
+  }
+
+  (async () => {
+    try {
+      const { user } = await VAuth.guard('patient', 1);
+      _journalUid = user.uid;
+      await loadJournalEntries(user.uid, selectedDay, currentMonth, currentYear);
+    } catch (e) {
+      console.error('[health-journal] guard error:', e);
+    }
+  })();
+
+  // Init
+  renderCalendar();
+</script>
+</body>
+</html>

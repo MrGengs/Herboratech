@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — SLR NAFLD/MASLD</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); color: #fff; }
+    .slr-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    .slr-table th { background: var(--primary-gradient); color: #fff; padding: 12px; text-align: left; font-size: 0.8rem; font-weight: 700; }
+    .slr-table td { padding: 12px; border-bottom: 1px solid rgba(39,174,96,0.2); font-size: 0.8rem; line-height: 1.5; }
+    .slr-table tr:hover { background: rgba(39,174,96,0.04); }
+    .paper-title { font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .paper-meta { font-size: 0.75rem; color: var(--text-secondary); }
+    .novelty-badge { background: rgba(39,174,96,0.12); color: #27AE60; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; display: inline-block; margin-top: 6px; }
+    .gap-badge { background: rgba(235,87,87,0.12); color: #EB5757; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; display: inline-block; margin-top: 6px; }
+    .doi-link { color: #2F80ED; text-decoration: none; word-break: break-all; font-family: monospace; font-size: 0.7rem; }
+    .overview-card { background: linear-gradient(135deg, rgba(39,174,96,0.08) 0%, rgba(111,207,151,0.04) 100%); border-left: 4px solid #27AE60; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('material-research.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;color:#fff;">NAFLD/MASLD Screening</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+    <div class="overview-card">
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">📊 Tinjauan Topik</div>
+      <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;">Non-Alcoholic Fatty Liver Disease (NAFLD/MASLD) adalah gangguan metabolik hepatik paling umum. Sumber: 10 paper peer-reviewed (2025-2026) tentang noninvasive screening, fibrosis assessment, dan metabolomics markers.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+      <div class="neu-card" style="padding:14px;">
+        <div style="font-size:0.85rem;font-weight:700;color:#27AE60;margin-bottom:6px;">🔑 Biomarker Screening</div>
+        <div style="font-size:0.75rem;line-height:1.5;color:var(--text-secondary);">
+          • TyG-BMI (AUC 0.819)<br>
+          • FIB-4 score<br>
+          • Transient elastography<br>
+          • Metabolomic signatures<br>
+          • Exosomal miRNAs
+        </div>
+      </div>
+      <div class="neu-card" style="padding:14px;">
+        <div style="font-size:0.85rem;font-weight:700;color:#27AE60;margin-bottom:6px;">📈 Clinical Focus</div>
+        <div style="font-size:0.75rem;line-height:1.5;color:var(--text-secondary);">
+          • Fatty liver prevalence<br>
+          • Fibrosis stage assessment<br>
+          • NASH progression<br>
+          • Cirrhosis risk<br>
+          • HCC surveillance
+        </div>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="slr-table">
+        <thead>
+          <tr>
+            <th style="width:5%;">#</th>
+            <th style="width:30%;">Judul & Author</th>
+            <th style="width:8%;">Tahun</th>
+            <th style="width:25%;">Novelty</th>
+            <th style="width:25%;">Gap Research</th>
+            <th style="width:7%;">DOI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><div class="paper-title">MASLD, Obesity & Youth-Onset T2DM Pathway</div><div class="paper-meta">Parizad, R. | World J Clin Pediatrics</div></td>
+            <td><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;font-size:0.75rem;">2026</span></td>
+            <td><div class="novelty-badge">MASLD mempengaruhi ~13% anak global, 47% dengan obesity; risiko T2D meningkat 2.7x; ceramide & pro-inflammatory cytokine mekanisme; GLP-1RA menjanjikan</div></td>
+            <td><div class="gap-badge">Validasi biomarker noninvasive dalam pediatri; akses equitable targeted therapy; disparitas sosioekonomi</div></td>
+            <td><a href="https://doi.org/10.5409/wjcp.v15.i1.111030" class="doi-link" target="_blank">DOI</a></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><div class="paper-title">Simple Screening Strategy for MASLD</div><div class="paper-meta">Katahira, M. | Metabolic Syndrome & Related Disorders</div></td>
+            <td><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;font-size:0.75rem;">2026</span></td>
+            <td><div class="novelty-badge">Sistem scoring 6-variabel (age, BMI, HDL-C, HbA1c, ALT, albumin) mencapai AUC lebih tinggi daripada FLI, HSI, NAFLD ridge; berguna untuk health screening centers</div></td>
+            <td><div class="gap-badge">Validasi prospektif; implementasi setting primary care; cost-effectiveness analysis</div></td>
+            <td><a href="https://doi.org/10.1177/15578518251408508" class="doi-link" target="_blank">DOI</a></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><div class="paper-title">Lipid-Related IR Indices for NAFLD Diagnosis</div><div class="paper-meta">Cao, W.H. | Biomedical & Environmental Sciences</div></td>
+            <td><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;font-size:0.75rem;">2026</span></td>
+            <td><div class="novelty-badge">TyG-BMI optimal dalam NAFLD dengan abnormalitas metabolik (AUC 0.819, cutoff 39.77); indeks TyG lebih baik untuk NAFLD tanpa MA (AUC 0.724, cutoff 1.580)</div></td>
+            <td><div class="gap-badge">Validasi dalam kelompok etnis diverse; standardisasi cutoff values; prediksi prospektif DKD/NASH risk</div></td>
+            <td><a href="https://doi.org/10.3967/bes2025.161" class="doi-link" target="_blank">DOI</a></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><div class="paper-title">Life's Simple 7 & MASLD Association</div><div class="paper-meta">Hofer, H. | Open Heart</div></td>
+            <td><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;font-size:0.75rem;">2026</span></td>
+            <td><div class="novelty-badge">LS7 score inverse terkait MASLD (RR 0.80); 82% MASLD poor LS7, 47% intermediate, 16% ideal; asosiasi weak fibrosis</div></td>
+            <td><div class="gap-badge">Perubahan longitudinal LS7 dan hepatic outcome; integrasi dengan noninvasive fibrosis markers; trial intervensi</div></td>
+            <td><a href="https://doi.org/10.1136/openhrt-2026-003982" class="doi-link" target="_blank">DOI</a></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><div class="paper-title">ML-Driven Hepatic Fibrosis Staging in NASH</div><div class="paper-meta">Faisal, S. | Computers in Biology & Medicine</div></td>
+            <td><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;font-size:0.75rem;">2026</span></td>
+            <td><div class="novelty-badge">Model RF & XGBoost dengan microbiome mencapai 99.1% balanced accuracy; advanced fibrosis (F3/F4) menunjukkan dysbiosis pathogenik; superior daripada APRI, FIB-4</div></td>
+            <td><div class="gap-badge">Validasi eksternal dalam kohort independen; feasibility cost; generalisasi ke populasi non-biopsy</div></td>
+            <td><a href="https://doi.org/10.1016/j.compbiomed.2026.111584" class="doi-link" target="_blank">DOI</a></td>
+          </tr>
+          <tr>
+            <td>6-10</td>
+            <td><div class="paper-title">Additional Metabolomics & Biomarker Studies</div><div class="paper-meta">Multiple | 2025-2026</div></td>
+            <td><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;font-size:0.75rem;">2025-26</span></td>
+            <td>
+              <div class="novelty-badge">
+                • Exosomal miRNA dalam NAFLD patogenesis & biomarker<br>
+                • CRP & dietary inflammatory index pada fatty liver<br>
+                • Serum metabolomik signatures (1-methyluric acid, paraxanthine, maresin 1)<br>
+                • MASLD-Periodontitis comorbidity metabolomics<br>
+                • Aging-related MASLD biomarker profiles
+              </div>
+            </td>
+            <td>
+              <div class="gap-badge">
+                • Translasi ke clinical biomarker panels<br>
+                • Targeted anti-inflammatory interventions<br>
+                • Mechanistic pathway studies<br>
+                • Broader dietary assessment tools<br>
+                • Therapeutic target validation studies
+              </div>
+            </td>
+            <td><a href="#" class="doi-link">In Process</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="neu-card" style="margin-top:20px;padding:16px;background:rgba(39,174,96,0.04);border-left:3px solid #27AE60;">
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px;">💡 Ringkasan untuk HerboraTech</div>
+      <ul style="font-size:0.8rem;color:var(--text-secondary);line-height:1.8;margin:0;padding-left:20px;">
+        <li><strong>Screening terdepan:</strong> TyG-BMI untuk MASLD dengan abnormalitas metabolik; 6-variable score untuk health screening</li>
+        <li><strong>Fibrosis assessment:</strong> Transient elastography + FIB-4 untuk noninvasive staging</li>
+        <li><strong>Early detection:</strong> Metabolomics markers (1-methyluric acid, maresin 1) untuk diagnosis accuracy</li>
+        <li><strong>Comorbidity awareness:</strong> Periksa T2DM, dyslipidemia, obesity concurrent</li>
+        <li><strong>Intervention focus:</strong> Lifestyle modifications; GLP-1RA untuk weight loss; monitor hepatic function</li>
+      </ul>
+    </div>
+
+    <div style="margin-top:16px;padding:12px;background:rgba(100,100,100,0.05);border-radius:8px;font-size:0.75rem;color:var(--text-tertiary);border-left:2px solid #999;">
+      <strong>Sumber:</strong> PubMed (2015-2026), peer-reviewed. 5 papers lengkap; 5 papers dalam metadata extraction. Updated 2026-03-27.
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html"><ion-icon name="home"></ion-icon><span>Beranda</span></a>
+    <a class="nav-item" href="monitoring.html"><ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span></a>
+    <a class="nav-item" href="consultation.html"><ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span></a>
+    <a class="nav-item" href="herbal.html"><ion-icon name="leaf-outline"></ion-icon><span>Jamu</span></a>
+    <a class="nav-item" href="profile.html"><ion-icon name="person-outline"></ion-icon><span>Profil</span></a>
+  </nav>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+  (async () => {
+    await VAuth.guard('patient', 1);
+  })();
+</script>
+</body>
+</html>

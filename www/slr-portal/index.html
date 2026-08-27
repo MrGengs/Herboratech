@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — SLR Evidence Portal</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12);
+      box-shadow: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+
+    .section-header .section-title {
+      border-left: 3px solid var(--primary-dark);
+      padding-left: 10px;
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .portal-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 14px;
+      padding: 16px;
+      border-left: 4px solid var(--primary-dark);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .portal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-out);
+    }
+
+    .portal-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .portal-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .portal-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .portal-badge {
+      display: inline-block;
+      background: rgba(39, 174, 96, 0.12);
+      color: var(--primary-dark);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    .stat-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      border-top: 3px solid var(--primary-dark);
+    }
+
+    .stat-number {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('../index.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;color:#fff;">Evidence Portal</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <!-- OVERVIEW SECTION -->
+  <div class="section" data-animate="up">
+    <div class="section-header"><span class="section-title">Research Overview</span></div>
+    <div class="neu-card" style="padding:16px;border-left:4px solid var(--primary-dark);">
+      <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;margin:0;">
+        <strong>1,020+ papers</strong> systematically reviewed for 15 metabolic diseases. PRISMA-2020 compliant with GRADE evidence quality assessment. All evidence linked to peer-reviewed sources.
+      </p>
+    </div>
+  </div>
+
+  <!-- STATISTICS -->
+  <div class="section" data-animate="up" data-delay="50">
+    <div class="portal-grid">
+      <div class="stat-card">
+        <div class="stat-number">15</div>
+        <div class="stat-label">Landmark Papers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">13A+2B</div>
+        <div class="stat-label">Quality Grade</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Diseases</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">30+</div>
+        <div class="stat-label">Data Elements</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DISEASE SLR SECTION -->
+  <div class="section" data-animate="up" data-delay="100">
+    <div class="section-header"><span class="section-title">Disease SLR</span></div>
+    <div class="portal-grid">
+      <div class="portal-card" onclick="nav('protocol.html')">
+        <div class="portal-icon">📋</div>
+        <div class="portal-title">SLR Protocol</div>
+        <div class="portal-desc">PRISMA-2020 protocol with research questions, inclusion/exclusion criteria, search strategy</div>
+        <span class="portal-badge">PROTOCOL</span>
+      </div>
+
+      <div class="portal-card" onclick="nav('extraction.html')">
+        <div class="portal-icon">📊</div>
+        <div class="portal-title">Data Extraction</div>
+        <div class="portal-desc">30+ data elements from 15 landmark papers with DOI links to originals</div>
+        <span class="portal-badge">DATA</span>
+      </div>
+
+      <div class="portal-card" onclick="nav('grade.html')">
+        <div class="portal-icon">⭐</div>
+        <div class="portal-title">GRADE Assessment</div>
+        <div class="portal-desc">Quality ratings across 5 domains: Risk, Consistency, Directness, Precision, Bias</div>
+        <span class="portal-badge">QUALITY</span>
+      </div>
+
+      <div class="portal-card" onclick="nav('gaps.html')">
+        <div class="portal-icon">🔍</div>
+        <div class="portal-title">Gap Analysis</div>
+        <div class="portal-desc">5 major research gaps with severity & strategic innovation roadmap</div>
+        <span class="portal-badge">GAPS</span>
+      </div>
+
+      <div class="portal-card" onclick="nav('presentation.html')">
+        <div class="portal-icon">📺</div>
+        <div class="portal-title">Presentation</div>
+        <div class="portal-desc">20-slide professional presentation on methodology & evidence quality</div>
+        <span class="portal-badge">SLIDES</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTEGRATED SECTION -->
+  <div class="section" data-animate="up" data-delay="150">
+    <div class="section-header"><span class="section-title">Integration</span></div>
+    <div class="neu-card" style="padding:16px;border-left:4px solid var(--primary-dark);background:linear-gradient(135deg,rgba(39,174,96,0.08),rgba(27,174,96,0.04));">
+      <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;margin:0;">
+        <strong>Combined Framework:</strong> Disease evidence + herbal SLR = comprehensive screening & management. Access herbal research and integrated disease evidence in the Material Research portal.
+      </p>
+      <button class="neu-btn neu-btn-sm" style="margin-top:12px;" onclick="nav('../material-research/index.html')">
+        <ion-icon name="leaf-outline"></ion-icon> Material Research
+      </button>
+    </div>
+  </div>
+
+  <div style="height:20px;"></div>
+</div>
+
+<script src="../shared/app.js"></script>
+</body>
+</html>

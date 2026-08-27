@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+  <title>HerboraTech</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <!-- Ionicons 7 (superset of v5) -->
+  <script type="module" src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
+  <!-- Page-specific CSS injected by router -->
+  <style id="page-css"></style>
+  <style id="spa-shell-css">
+    #app.spa-fullscreen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 1000;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- Shared scripts — loaded ONCE, survive all navigations -->
+  <script src="../shared/app.js"></script>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <!-- Shared modules -->
+  <script src="../shared/firebase.js"></script>
+  <script src="../shared/ble-manager.js"></script>
+  <script src="../shared/risk-engine.js"></script>
+  <script src="../shared/chat-manager.js"></script>
+  <script src="../shared/webrtc-manager.js"></script>
+  <script src="../shared/gemini-keys.js"></script>
+  <script src="../shared/notification-audio.js"></script>
+
+  <!-- SPA Router -->
+  <!-- Path absolut dari root situs: tetap benar baik diakses sebagai
+       /patient maupun /patient/. Kalau relatif ("router.js"), URL tanpa
+       garis miring akhir akan me-resolve-nya ke /router.js dan 404. -->
+  <script src="/patient/router.js"></script>
+
+  <!-- Bootstrap: auth once, start vitals once, boot router -->
+  <script>
+    (async () => {
+      try {
+        // Auth guard — runs ONCE for the entire SPA session
+        const auth = await VAuth.guard('patient', 1);
+        window.__spaAuth = auth;
+
+        // Start VitalsManager ONCE (survives all navigations)
+        if (window.VitalsManager) {
+          VitalsManager.start(auth.user.uid);
+        }
+
+        // Boot router (installs patches + loads initial page)
+        HerboraTechRouter.init();
+      } catch (err) {
+        console.error('[SPA] Bootstrap failed:', err);
+      }
+    })();
+  </script>
+</body>
+</html>

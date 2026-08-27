@@ -1,0 +1,11 @@
+# Dependencies untuk OCR Pipeline HerboraTech Herbal Database
+# Install dengan: pip install -r requirements.txt --break-system-packages
+pdf2image>=1.16.0      # Konversi PDF → gambar
+pytesseract>=0.3.10    # OCR wrapper untuk Tesseract
+Pillow>=9.0.0          # Image processing
+pypdf>=3.0.0           # Baca metadata PDF
+
+# System requirements:
+# - tesseract-ocr (sudo apt install tesseract-ocr)
+# - poppler-utils (sudo apt install poppler-utils) 
+# - tesseract-ocr-ind (sudo apt install tesseract-ocr-ind) - opsional, untuk akurasi lebih baik

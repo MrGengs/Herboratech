@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Buat Janji</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12);
+      box-shadow: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .page-title { color: #fff; font-size: 1.05rem; font-weight: 700; }
+
+    /* Progress Steps */
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 20px 10px;
+      gap: 0;
+    }
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      color: var(--text-tertiary);
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+    .step-circle.active {
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(39,174,96,0.4);
+    }
+    .step-circle.done {
+      background: var(--success-bg);
+      color: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+    .step-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--text-tertiary);
+    }
+    .step-label.active { color: var(--primary-dark); }
+    .step-connector {
+      height: 2px;
+      width: 40px;
+      background: var(--shadow-dark);
+      margin-bottom: 22px;
+    }
+    .step-connector.done { background: var(--primary-dark); }
+
+    /* Consultation type cards */
+    .consult-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+    }
+    .consult-card.selected {
+      border-color: var(--primary-dark);
+      background: var(--success-bg);
+    }
+    .consult-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .consult-name { font-size: 0.88rem; font-weight: 700; color: var(--text-primary); }
+    .consult-desc { font-size: 0.72rem; color: var(--text-tertiary); margin-top: 2px; line-height: 1.4; }
+    .consult-price { font-size: 0.8rem; font-weight: 700; color: var(--primary-dark); margin-top: 6px; }
+
+    /* Date pills */
+    .date-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 4px 2px 8px;
+      scrollbar-width: none;
+    }
+    .date-scroll::-webkit-scrollbar { display: none; }
+    .date-pill {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 52px;
+      padding: 10px 6px;
+      border-radius: 14px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .date-pill.active {
+      border-color: var(--primary-dark);
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      box-shadow: 0 4px 12px rgba(39,174,96,0.35);
+    }
+    .date-pill .dp-day { font-size: 0.6rem; font-weight: 600; color: var(--text-tertiary); }
+    .date-pill .dp-date { font-size: 1rem; font-weight: 800; color: var(--text-primary); margin: 2px 0; }
+    .date-pill.active .dp-day,
+    .date-pill.active .dp-date { color: #fff; }
+
+    /* Time slots */
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .time-slot {
+      padding: 10px 6px;
+      border-radius: 12px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .time-slot.active {
+      border-color: var(--primary-dark);
+      color: var(--primary-dark);
+      background: var(--success-bg);
+    }
+    .time-slot.unavailable { opacity: 0.38; cursor: default; }
+
+    /* Doctor mini card */
+    .doc-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 16px;
+    }
+    .doc-mini-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; font-weight: 800; color: #fff;
+    }
+
+    /* Summary row */
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--shadow-dark);
+    }
+    .summary-row:last-child { border-bottom: none; }
+    .sum-label { font-size: 0.75rem; color: var(--text-tertiary); }
+    .sum-value { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+
+    /* Sticky bottom */
+    .sticky-bottom-bar {
+      position: sticky;
+      bottom: 0;
+      background: var(--bg);
+      border-top: 1px solid var(--shadow-dark);
+      padding: 14px 20px;
+      z-index: 50;
+    }
+
+    /* Section title accent */
+    .section-accent {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      border-left: 3px solid var(--primary-dark);
+      padding-left: 10px;
+      margin-bottom: 14px;
+    }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('doctor-detail.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="page-title">Buat Janji</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <!-- PROGRESS STEPS -->
+  <div class="progress-steps" data-animate="up">
+    <div class="step-item">
+      <div class="step-circle done"><ion-icon name="checkmark-outline" style="font-size:0.85rem"></ion-icon></div>
+      <div class="step-label">Tipe</div>
+    </div>
+    <div class="step-connector done"></div>
+    <div class="step-item">
+      <div class="step-circle active">2</div>
+      <div class="step-label active">Jadwal</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item">
+      <div class="step-circle">3</div>
+      <div class="step-label">Konfirmasi</div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: TIPE KONSULTASI -->
+  <div class="section" style="padding-bottom:0">
+    <div class="section-accent" data-animate="up" data-delay="80">Pilih Tipe Konsultasi</div>
+
+    <div class="consult-card selected" onclick="selectConsult(this)" data-animate="up" data-delay="120">
+      <div class="consult-icon" style="background:rgba(39,174,96,0.12);color:#27AE60;">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+      </div>
+      <div style="flex:1">
+        <div class="consult-name">Chat</div>
+        <div class="consult-desc">Konsultasi via teks, cepat dan mudah diakses kapan saja</div>
+        <div class="consult-price">Rp 75.000 / sesi</div>
+      </div>
+      <div id="check-chat" style="color:var(--primary-dark);"><ion-icon name="checkmark-circle" style="font-size:1.3rem;"></ion-icon></div>
+    </div>
+
+    <div class="consult-card" onclick="selectConsult(this)" data-animate="up" data-delay="160">
+      <div class="consult-icon" style="background:rgba(47,128,237,0.12);color:#2F80ED;">
+        <ion-icon name="videocam-outline"></ion-icon>
+      </div>
+      <div style="flex:1">
+        <div class="consult-name">Video Call</div>
+        <div class="consult-desc">Tatap muka virtual, pemeriksaan visual dan diskusi mendalam</div>
+        <div class="consult-price">Rp 120.000 / sesi</div>
+      </div>
+      <div style="color:var(--text-muted);"><ion-icon name="ellipse-outline" style="font-size:1.3rem;"></ion-icon></div>
+    </div>
+
+    <div class="consult-card" onclick="selectConsult(this)" data-animate="up" data-delay="200">
+      <div class="consult-icon" style="background:rgba(108,99,255,0.12);color:#6C63FF;">
+        <ion-icon name="scan-outline"></ion-icon>
+      </div>
+      <div style="flex:1">
+        <div class="consult-name">Pemeriksaan Integratif</div>
+        <div class="consult-desc">Pemeriksaan komprehensif 8-langkah dengan sensor AIoT + herbal</div>
+        <div class="consult-price">Rp 150.000 / sesi</div>
+      </div>
+      <div style="color:var(--text-muted);"><ion-icon name="ellipse-outline" style="font-size:1.3rem;"></ion-icon></div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: JADWAL -->
+  <div class="section" style="padding-bottom:0">
+    <div class="section-accent" data-animate="up" data-delay="240">Pilih Jadwal</div>
+    <div class="neu-card" data-animate="up" data-delay="280">
+      <div style="font-size:0.82rem;font-weight:600;color:var(--text-secondary);margin-bottom:10px;">Tanggal</div>
+      <div class="date-scroll">
+        <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">SEN</span><span class="dp-date">24</span></div>
+        <div class="date-pill active" onclick="selectDate(this)"><span class="dp-day">SEL</span><span class="dp-date">25</span></div>
+        <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">RAB</span><span class="dp-date">26</span></div>
+        <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">KAM</span><span class="dp-date">27</span></div>
+        <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">JUM</span><span class="dp-date">28</span></div>
+        <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">SAB</span><span class="dp-date">29</span></div>
+        <div class="date-pill" onclick="selectDate(this)"><span class="dp-day">MIN</span><span class="dp-date">30</span></div>
+      </div>
+      <div style="font-size:0.82rem;font-weight:600;color:var(--text-secondary);margin:14px 0 10px;">Waktu</div>
+      <div class="slot-grid">
+        <div class="time-slot unavailable">08:00</div>
+        <div class="time-slot active" onclick="selectSlot(this)">09:00</div>
+        <div class="time-slot" onclick="selectSlot(this)">10:00</div>
+        <div class="time-slot" onclick="selectSlot(this)">11:00</div>
+        <div class="time-slot unavailable">13:00</div>
+        <div class="time-slot" onclick="selectSlot(this)">14:00</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: KONFIRMASI -->
+  <div class="section">
+    <div class="section-accent" data-animate="up" data-delay="320">Konfirmasi</div>
+
+    <div class="doc-mini" data-animate="up" data-delay="360">
+      <div class="doc-mini-avatar">SW</div>
+      <div style="flex:1">
+        <div style="font-size:0.85rem;font-weight:700;color:var(--text-primary);">dr. Sarah Wijaya, Sp.PD</div>
+        <div style="font-size:0.72rem;color:var(--text-tertiary);">Spesialis Penyakit Dalam · RS Medicore Jakarta</div>
+      </div>
+    </div>
+
+    <div class="neu-card" style="margin-top:14px;" data-animate="up" data-delay="400">
+      <div class="summary-row">
+        <span class="sum-label">Tipe Konsultasi</span>
+        <span class="sum-value" id="selected-type">Chat</span>
+      </div>
+      <div class="summary-row">
+        <span class="sum-label">Tanggal</span>
+        <span class="sum-value">Selasa, 25 Mar 2026</span>
+      </div>
+      <div class="summary-row">
+        <span class="sum-label">Waktu</span>
+        <span class="sum-value">09:00 WIB</span>
+      </div>
+      <div class="summary-row">
+        <span class="sum-label">Tarif</span>
+        <span class="sum-value" id="selected-price" style="color:var(--primary-dark);font-weight:800;">Rp 75.000</span>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;" data-animate="up" data-delay="440">
+      <label style="font-size:0.78rem;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:8px;">Keluhan Utama</label>
+      <textarea class="neu-input" rows="3" placeholder="Ceritakan keluhan Anda secara singkat (mis. pusing, demam, batuk)..." style="resize:none;width:100%;font-family:var(--font);font-size:0.82rem;padding:14px;"></textarea>
+    </div>
+
+    <div style="margin-top:6px;padding:12px 14px;background:var(--info-bg);border-radius:12px;border-left:3px solid var(--info);" data-animate="up" data-delay="480">
+      <p style="font-size:0.72rem;color:var(--info);line-height:1.5;">
+        <ion-icon name="information-circle-outline" style="vertical-align:middle;margin-right:4px;"></ion-icon>
+        Pembayaran akan diproses melalui gateway aman. Dana dikembalikan jika dokter tidak hadir.
+      </p>
+    </div>
+  </div>
+
+  <!-- STICKY BOTTOM -->
+  <div class="sticky-bottom-bar">
+    <button class="neu-btn neu-btn-primary neu-btn-block" onclick="confirmBooking()">
+      <ion-icon name="shield-checkmark-outline"></ion-icon> Konfirmasi &amp; Bayar
+    </button>
+  </div>
+
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  const typeMap = {0:'Chat', 1:'Video Call', 2:'Pemeriksaan Integratif'};
+  const priceMap = {0:'Rp 75.000', 1:'Rp 120.000', 2:'Rp 150.000'};
+
+  function selectConsult(el) {
+    const cards = document.querySelectorAll('.consult-card');
+    cards.forEach((c, i) => {
+      c.classList.remove('selected');
+      const icons = c.querySelectorAll('ion-icon');
+      icons[icons.length - 1].setAttribute('name','ellipse-outline');
+    });
+    el.classList.add('selected');
+    const elIcons = el.querySelectorAll('ion-icon');
+    elIcons[elIcons.length - 1].setAttribute('name','checkmark-circle');
+    const idx = Array.from(cards).indexOf(el);
+    document.getElementById('selected-type').textContent = typeMap[idx];
+    document.getElementById('selected-price').textContent = priceMap[idx];
+  }
+
+  function selectDate(el) {
+    document.querySelectorAll('.date-pill').forEach(d => d.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function selectSlot(el) {
+    document.querySelectorAll('.time-slot:not(.unavailable)').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  let _bookingUser = null;
+  let _bookingDoctorId = null;
+
+  (async () => {
+    try {
+      const { user } = await VAuth.guard('patient', 1);
+      _bookingUser = user;
+
+      const doctorId = new URLSearchParams(location.search).get('doctor');
+      _bookingDoctorId = doctorId;
+
+      if (doctorId) {
+        const doctor = await VDB.getUser(doctorId);
+        if (doctor) {
+          // Update doctor mini card
+          const docNameEl = document.querySelector('.doc-mini [style*="font-weight:700"]');
+          if (docNameEl) docNameEl.textContent = doctor.name || 'Dokter';
+          const docSubEl = document.querySelector('.doc-mini [style*="font-size:0.72rem"]');
+          if (docSubEl) docSubEl.textContent = (doctor.specialty || 'Dokter Umum') + ' · ' + (doctor.hospital || '');
+          const docAvatarEl = document.querySelector('.doc-mini-avatar');
+          if (docAvatarEl) {
+            docAvatarEl.textContent = (doctor.name || 'D').split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+          }
+        }
+      }
+    } catch (e) {
+      console.error('[booking] init error:', e);
+    }
+  })();
+
+  async function confirmBooking() {
+    if (!_bookingUser) {
+      showToast('Belum terautentikasi', 'error');
+      return;
+    }
+
+    // Disable button to prevent double submission
+    const btn = document.querySelector('.sticky-bottom-bar button');
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<ion-icon name="reload-outline" style="animation:spin 0.8s linear infinite"></ion-icon> Memproses...';
+    }
+
+    try {
+      const selectedTypeEl = document.getElementById('selected-type');
+      const typeText = selectedTypeEl ? selectedTypeEl.textContent : 'Chat';
+      const typeToKey = {'Chat':'chat','Video Call':'video','Pemeriksaan Integratif':'integrative'};
+      const consultType = typeToKey[typeText] || 'chat';
+
+      const keluhanEl = document.querySelector('textarea.neu-input');
+      const complaint = keluhanEl ? keluhanEl.value.trim() : '';
+
+      // Create consultation and get the ID
+      const consultId = await VDB.createConsultation({
+        patientId: _bookingUser.uid,
+        doctorId: _bookingDoctorId || null,
+        type: consultType,
+        status: 'active', // Set as active immediately for demo
+        complaint
+      });
+
+      // Send initial message if complaint is provided
+      if (complaint && consultId) {
+        await VDB.sendMessage(consultId, {
+          senderId: _bookingUser.uid,
+          senderName: 'Pasien',
+          senderRole: 'patient',
+          text: 'Keluhan: ' + complaint,
+          type: 'text'
+        });
+      }
+
+      showToast('Booking berhasil! Membuka chat...', 'success');
+
+      // Redirect to chat room with the consultation ID
+      setTimeout(() => nav('chat-room.html?consultId=' + consultId), 1200);
+    } catch (e) {
+      console.error('[booking] confirm error:', e);
+      showToast('Gagal membuat booking: ' + (e.message || e), 'error');
+
+      // Re-enable button
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<ion-icon name="shield-checkmark-outline"></ion-icon> Konfirmasi & Bayar';
+      }
+    }
+  }
+</script>
+</body>
+</html>

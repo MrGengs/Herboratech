@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Edit Profil</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid #27AE60; padding-left: 10px; }
+
+    .avatar-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+    }
+    .avatar-lg-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .avatar-xl-custom {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0D2B1A, #27AE60);
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-out);
+    }
+    .avatar-edit-btn {
+      position: absolute;
+      bottom: 2px; right: 2px;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: #27AE60;
+      color: #fff;
+      border: 2px solid var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+    .change-photo-btn {
+      margin-top: 12px;
+      background: none;
+      border: none;
+      color: #27AE60;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .form-group { margin-bottom: 18px; }
+    .form-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .neu-input-full {
+      width: 100%;
+      box-sizing: border-box;
+      background: var(--bg);
+      box-shadow: var(--shadow-in);
+      border: none;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-size: 0.85rem;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-primary);
+      outline: none;
+    }
+    .neu-input-full:focus { box-shadow: var(--shadow-in), 0 0 0 2px rgba(39,174,96,0.3); }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .radio-pills { display: flex; gap: 8px; }
+    .radio-pill {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      color: var(--text-secondary);
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+    .radio-pill.active {
+      background: linear-gradient(135deg, #1A5C38, #27AE60);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(39,174,96,0.35);
+      border-color: transparent;
+    }
+
+    .tag-input-wrap {
+      background: var(--bg);
+      box-shadow: var(--shadow-in);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 48px;
+      align-items: center;
+    }
+    .alergi-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(235,87,87,0.12);
+      border: 1px solid rgba(235,87,87,0.3);
+      color: #EB5757;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .alergi-tag button {
+      background: none;
+      border: none;
+      color: #EB5757;
+      cursor: pointer;
+      padding: 0;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+    }
+    .tag-add-input {
+      background: none;
+      border: none;
+      outline: none;
+      font-size: 0.8rem;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-primary);
+      min-width: 80px;
+      flex: 1;
+    }
+
+    .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+    }
+    .checkbox-item input[type=checkbox] {
+      width: 16px; height: 16px;
+      accent-color: #27AE60;
+      cursor: pointer;
+    }
+    .checkbox-item label { font-size: 0.78rem; font-weight: 500; color: var(--text-primary); cursor: pointer; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('profile.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;">Edit Profil</div>
+    <div style="width:42px;"></div>
+  </header>
+
+  <div class="section" style="padding-bottom: 100px;">
+
+    <!-- Avatar Section -->
+    <div class="neu-card" data-animate="up">
+      <div class="avatar-section">
+        <div class="avatar-lg-wrap">
+          <div class="avatar-xl-custom">AF</div>
+          <div class="avatar-edit-btn" onclick="showToast('Pilih foto dari galeri','info')">
+            <ion-icon name="camera-outline"></ion-icon>
+          </div>
+        </div>
+        <button class="change-photo-btn" onclick="showToast('Pilih foto dari galeri','info')">
+          <ion-icon name="image-outline"></ion-icon>
+          Ganti Foto
+        </button>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="neu-card mt-16" data-animate="up" data-delay="100">
+
+      <!-- Nama Lengkap -->
+      <div class="form-group">
+        <label class="form-label">Nama Lengkap</label>
+        <input class="neu-input-full" type="text" value="Ahmad Fauzi" placeholder="Nama lengkap Anda">
+      </div>
+
+      <!-- Tanggal Lahir -->
+      <div class="form-group">
+        <label class="form-label">Tanggal Lahir</label>
+        <input class="neu-input-full" type="date" value="1990-05-15">
+      </div>
+
+      <!-- Jenis Kelamin -->
+      <div class="form-group">
+        <label class="form-label">Jenis Kelamin</label>
+        <div class="radio-pills">
+          <div class="radio-pill active" id="pill-laki" onclick="selectGender('laki')">
+            <ion-icon name="male-outline" style="vertical-align:middle;"></ion-icon> Laki-laki
+          </div>
+          <div class="radio-pill" id="pill-perempuan" onclick="selectGender('perempuan')">
+            <ion-icon name="female-outline" style="vertical-align:middle;"></ion-icon> Perempuan
+          </div>
+        </div>
+      </div>
+
+      <!-- BB & TB -->
+      <div class="two-col">
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Berat Badan (kg)</label>
+          <input class="neu-input-full" type="number" value="70" placeholder="kg">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Tinggi Badan (cm)</label>
+          <input class="neu-input-full" type="number" value="172" placeholder="cm">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Golongan Darah & Alergi -->
+    <div class="neu-card mt-16" data-animate="up" data-delay="200">
+
+      <!-- Golongan Darah -->
+      <div class="form-group">
+        <label class="form-label">Golongan Darah</label>
+        <select class="neu-input-full">
+          <option>A+</option>
+          <option>A-</option>
+          <option selected>B+</option>
+          <option>B-</option>
+          <option>AB+</option>
+          <option>AB-</option>
+          <option>O+</option>
+          <option>O-</option>
+        </select>
+      </div>
+
+      <!-- Riwayat Alergi -->
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Riwayat Alergi</label>
+        <div class="tag-input-wrap">
+          <span class="alergi-tag">
+            Penisilin
+            <button onclick="removeTag(this)" title="Hapus"><ion-icon name="close-outline"></ion-icon></button>
+          </span>
+          <input class="tag-add-input" placeholder="+ Tambah alergi" onkeydown="addTag(event, this)">
+        </div>
+        <div style="font-size:0.68rem;color:var(--text-tertiary);margin-top:6px;">Tekan Enter untuk menambah</div>
+      </div>
+
+    </div>
+
+    <!-- Riwayat Penyakit Keluarga -->
+    <div data-animate="up" data-delay="300">
+      <div class="section-header mt-20">
+        <div class="section-title">Riwayat Penyakit Keluarga</div>
+      </div>
+      <div class="checkbox-grid">
+        <div class="checkbox-item">
+          <input type="checkbox" id="dm" checked>
+          <label for="dm">Diabetes Melitus</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="htn" checked>
+          <label for="htn">Hipertensi</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="jantung">
+          <label for="jantung">Jantung</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="kanker">
+          <label for="kanker">Kanker</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="stroke">
+          <label for="stroke">Stroke</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="asma">
+          <label for="asma">Asma</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nomor Telepon -->
+    <div class="neu-card mt-16" data-animate="up" data-delay="380">
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Nomor Telepon</label>
+        <input id="input-phone" class="neu-input-full" type="tel" placeholder="+62 81x xxxx xxxx">
+      </div>
+    </div>
+
+    <!-- Save Button -->
+    <button class="neu-btn-primary neu-btn-block mt-24" data-animate="up" data-delay="400" onclick="saveProfile()">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      Simpan Perubahan
+    </button>
+
+  </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  let _currentUser = null;
+
+  (async () => {
+    try {
+      const { user, profile } = await VAuth.guard('patient', 1);
+      _currentUser = user;
+
+      // Pre-fill user data
+      const nameInput = document.querySelector('input[placeholder="Nama lengkap Anda"]');
+      if (nameInput && profile.name) nameInput.value = profile.name;
+
+      // Phone
+      const phoneInput = document.getElementById('input-phone');
+      if (phoneInput && profile.phone) phoneInput.value = profile.phone;
+
+      // Update avatar initials
+      const initials = (profile.name || 'P').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+      const avatarEl = document.querySelector('.avatar-xl-custom');
+      if (avatarEl) avatarEl.textContent = initials;
+
+      // Load patient-specific data
+      const patient = await VDB.getPatient(user.uid);
+      if (patient) {
+        // DOB
+        const dobInput = document.querySelector('input[type="date"]');
+        if (dobInput && patient.dob) dobInput.value = patient.dob;
+
+        // Gender
+        if (patient.gender) selectGender(patient.gender);
+
+        // Weight & Height
+        const numInputs = document.querySelectorAll('input[type="number"]');
+        if (numInputs[0] && patient.weight) numInputs[0].value = patient.weight;
+        if (numInputs[1] && patient.height) numInputs[1].value = patient.height;
+
+        // Blood type
+        const bloodSelect = document.querySelector('select.neu-input-full');
+        if (bloodSelect && patient.bloodType) {
+          Array.from(bloodSelect.options).forEach(opt => {
+            opt.selected = opt.value === patient.bloodType || opt.text === patient.bloodType;
+          });
+        }
+
+        // Allergies — clear existing mock tags and add real ones
+        if (patient.allergies && patient.allergies.length > 0) {
+          const tagWrap = document.querySelector('.tag-input-wrap');
+          if (tagWrap) {
+            tagWrap.querySelectorAll('.alergi-tag').forEach(t => t.remove());
+            const tagAddInput = tagWrap.querySelector('.tag-add-input');
+            patient.allergies.forEach(a => {
+              const tag = document.createElement('span');
+              tag.className = 'alergi-tag';
+              tag.innerHTML = a + '<button onclick="removeTag(this)" title="Hapus"><ion-icon name="close-outline"></ion-icon></button>';
+              tagWrap.insertBefore(tag, tagAddInput);
+            });
+          }
+        }
+
+        // Family history checkboxes
+        const familyMap = { dm: 'Diabetes Melitus', htn: 'Hipertensi', jantung: 'Jantung', kanker: 'Kanker', stroke: 'Stroke', asma: 'Asma' };
+        if (patient.familyHistory && patient.familyHistory.length > 0) {
+          Object.keys(familyMap).forEach(id => {
+            const cb = document.getElementById(id);
+            if (cb) cb.checked = patient.familyHistory.includes(familyMap[id]);
+          });
+        }
+      }
+    } catch (e) {
+      console.error('[edit-profile] init error:', e);
+      showToast('Gagal memuat data profil', 'error');
+    }
+  })();
+
+  async function saveProfile() {
+    if (!_currentUser) { showToast('Belum terautentikasi', 'error'); return; }
+    try {
+      const name = document.querySelector('input[placeholder="Nama lengkap Anda"]').value.trim();
+      const dob = document.querySelector('input[type="date"]').value;
+      const numInputs = document.querySelectorAll('input[type="number"]');
+      const weight = numInputs[0] ? parseFloat(numInputs[0].value) || null : null;
+      const height = numInputs[1] ? parseFloat(numInputs[1].value) || null : null;
+      const bloodSelect = document.querySelector('select.neu-input-full');
+      const bloodType = bloodSelect ? bloodSelect.value : null;
+      const gender = document.getElementById('pill-laki').classList.contains('active') ? 'laki' : 'perempuan';
+
+      // Collect allergy tags
+      const allergies = Array.from(document.querySelectorAll('.alergi-tag')).map(t => {
+        return t.childNodes[0].textContent.trim();
+      }).filter(Boolean);
+
+      // Collect family history
+      const familyMap = { dm: 'Diabetes Melitus', htn: 'Hipertensi', jantung: 'Jantung', kanker: 'Kanker', stroke: 'Stroke', asma: 'Asma' };
+      const familyHistory = Object.keys(familyMap).filter(id => {
+        const cb = document.getElementById(id);
+        return cb && cb.checked;
+      }).map(id => familyMap[id]);
+
+      const phone = document.getElementById('input-phone')?.value.trim();
+
+      const userUpdate = { name };
+      if (phone) userUpdate.phone = phone;
+
+      await VDB.updateUser(_currentUser.uid, userUpdate);
+      await VDB.updatePatient(_currentUser.uid, { dob, gender, weight, height, allergies, bloodType, familyHistory });
+
+      // Update avatar
+      const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+      const avatarEl = document.querySelector('.avatar-xl-custom');
+      if (avatarEl) avatarEl.textContent = initials;
+
+      showToast('Profil berhasil disimpan', 'success');
+      setTimeout(() => nav('profile.html'), 1200);
+    } catch (e) {
+      console.error('[edit-profile] save error:', e);
+      showToast('Gagal menyimpan profil: ' + (e.message || e), 'error');
+    }
+  }
+
+  function selectGender(val) {
+    document.getElementById('pill-laki').classList.toggle('active', val === 'laki');
+    document.getElementById('pill-perempuan').classList.toggle('active', val === 'perempuan');
+  }
+  function removeTag(btn) {
+    btn.closest('.alergi-tag').remove();
+  }
+  function addTag(event, input) {
+    if (event.key === 'Enter' && input.value.trim()) {
+      const val = input.value.trim();
+      const tag = document.createElement('span');
+      tag.className = 'alergi-tag';
+      tag.innerHTML = val + '<button onclick="removeTag(this)" title="Hapus"><ion-icon name="close-outline"></ion-icon></button>';
+      input.parentNode.insertBefore(tag, input);
+      input.value = '';
+    }
+  }
+</script>
+</body>
+</html>

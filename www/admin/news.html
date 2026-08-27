@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin News</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item active" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar" data-animate="up">
+      <h1>Manajemen News</h1>
+      <div class="header-actions">
+        <button class="neu-btn-primary" onclick="nav('create-article.html')"><ion-icon name="add-outline"></ion-icon> Buat Artikel</button>
+      </div>
+    </div>
+
+    <div class="neu-table-wrap" data-animate="up" data-delay="100">
+      <div style="padding:20px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;">Semua Artikel</span>
+        <div class="neu-search" style="width:250px;">
+          <ion-icon name="search-outline"></ion-icon>
+          <input id="search-input" placeholder="Cari artikel..." oninput="filterArticles()">
+        </div>
+      </div>
+      <table class="neu-table">
+        <thead><tr><th>Judul</th><th>Kategori</th><th>Penulis</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr></thead>
+        <tbody id="articles-tbody">
+          <tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:20px;">Memuat data...</td></tr>
+        </tbody>
+      </table>
+    </div>
+</main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+let _allArticles = [];
+
+function statusBadge(status) {
+  switch (status) {
+    case 'published': return '<span style="color:var(--success);font-weight:600;font-size:0.78rem;">Published</span>';
+    case 'review':    return '<span style="color:var(--warning);font-weight:600;font-size:0.78rem;">Review</span>';
+    default:          return '<span style="color:var(--text-muted);font-weight:600;font-size:0.78rem;">Draft</span>';
+  }
+}
+
+function categoryChip(cat) {
+  const catLower = (cat || '').toLowerCase();
+  if (catLower === 'herbal')     return `<span class="neu-chip-primary" style="font-size:0.65rem;">${cat}</span>`;
+  if (catLower === 'teknologi')  return `<span class="neu-chip-info" style="font-size:0.65rem;background:var(--info-bg);color:var(--info);">${cat}</span>`;
+  if (catLower === 'lifestyle' || catLower === 'gaya hidup') return `<span class="neu-chip-warning" style="font-size:0.65rem;">${cat}</span>`;
+  return `<span class="neu-chip" style="font-size:0.65rem;">${cat || '—'}</span>`;
+}
+
+function formatDate(ts) {
+  if (!ts) return '—';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+function renderArticles(list) {
+  const tbody = document.getElementById('articles-tbody');
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:20px;">Belum ada artikel</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(a => {
+    const publishBtn = (a.status !== 'published')
+      ? `<button class="neu-btn-sm neu-btn" style="font-size:0.68rem;color:var(--success);" onclick="publishArticle('${a.id}')">Publish</button>`
+      : '';
+    return `<tr data-title="${(a.title || '').toLowerCase()}">
+      <td style="font-weight:600;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${a.title || '—'}</td>
+      <td>${categoryChip(a.category)}</td>
+      <td style="font-size:0.78rem;color:var(--text-tertiary);">${(a.author && a.author.name) ? a.author.name : '—'}</td>
+      <td style="font-size:0.78rem;color:var(--text-tertiary);">${formatDate(a.createdAt)}</td>
+      <td>${statusBadge(a.status)}</td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap;">
+        <button class="neu-btn-sm neu-btn" style="font-size:0.68rem;" onclick="nav('edit-article.html?id=${a.id}')">Edit</button>
+        ${publishBtn}
+        <button class="neu-btn-sm neu-btn" style="font-size:0.68rem;color:var(--danger);" onclick="deleteArticle('${a.id}')">Hapus</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function filterArticles() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  if (!q) { renderArticles(_allArticles); return; }
+  renderArticles(_allArticles.filter(a => (a.title || '').toLowerCase().includes(q)));
+}
+
+async function publishArticle(id) {
+  if (!confirm('Publish artikel ini?')) return;
+  try {
+    await VDB.updateArticle(id, {
+      status:      'published',
+      publishedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    showToast('Artikel berhasil dipublish!', 'success');
+    loadArticles();
+  } catch (e) {
+    showToast('Gagal publish: ' + e.message, 'error');
+  }
+}
+
+async function deleteArticle(id) {
+  if (!confirm('Hapus artikel ini? Tindakan tidak dapat dibatalkan.')) return;
+  try {
+    await VDB.deleteArticle(id);
+    showToast('Artikel dihapus.', 'success');
+    loadArticles();
+  } catch (e) {
+    showToast('Gagal menghapus: ' + e.message, 'error');
+  }
+}
+
+async function loadArticles() {
+  const tbody = document.getElementById('articles-tbody');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:20px;">Memuat data...</td></tr>';
+  try {
+    _allArticles = await VDB.getAllArticles();
+    renderArticles(_allArticles);
+  } catch (e) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--danger);padding:20px;">Gagal memuat: ' + e.message + '</td></tr>';
+  }
+}
+
+(async () => {
+  const { profile } = await VAuth.guard('admin', 1);
+  if (profile && profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+  loadArticles();
+})();
+</script>
+</body>
+</html>

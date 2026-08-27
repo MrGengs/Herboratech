@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Health Dashboard</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+
+    /* Hero card */
+    .hero-card { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); border-radius: 20px; padding: 20px; margin-bottom: 16px; color: #fff; }
+    .hero-name { font-size: 1.1rem; font-weight: 800; }
+    .hero-sub  { font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
+    .hero-bmi  { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; background: rgba(255,255,255,0.15); color: #fff; margin-top: 8px; }
+
+    /* Completeness bar */
+    .completeness-track { height: 8px; background: rgba(255,255,255,0.2); border-radius: 8px; margin-top: 8px; overflow: hidden; }
+    .completeness-fill  { height: 100%; background: #6FCF97; border-radius: 8px; transition: width 1s ease; }
+
+    /* Mini risk cards 2×3 grid */
+    .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .risk-mini { background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 14px; padding: 12px 14px; }
+    .risk-mini-top { display: flex; align-items: center; justify-content: space-between; }
+    .risk-mini-label { font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-top: 6px; }
+    .risk-mini-bar { height: 5px; background: var(--shadow-dark); border-radius: 5px; margin-top: 6px; overflow: hidden; }
+    .risk-mini-fill { height: 100%; border-radius: 5px; transition: width 1.2s ease; width: 0%; }
+
+    /* Trend section */
+    .trend-canvas-wrap { background: var(--bg); box-shadow: var(--shadow-in); border-radius: 14px; padding: 12px; margin-top: 8px; min-height: 120px; display: flex; align-items: center; justify-content: center; }
+
+    /* Action buttons */
+    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .action-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px 10px; background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 14px; cursor: pointer; gap: 6px; transition: all 0.15s; }
+    .action-btn:active { transform: scale(0.97); }
+    .action-btn ion-icon { font-size: 1.6rem; }
+    .action-btn span { font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); text-align: center; }
+
+    /* Herbal recs */
+    .herbal-mini { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 12px; cursor: pointer; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1rem;font-weight:700;color:#fff;">Health Dashboard</div>
+    <button class="neu-icon-btn" onclick="window.recalc()"><ion-icon name="refresh-outline"></ion-icon></button>
+  </header>
+
+  <!-- No profile state -->
+  <div id="no-profile" class="section" style="display:none;">
+    <div class="neu-card" style="text-align:center;padding:28px 20px;">
+      <ion-icon name="analytics-outline" style="font-size:3rem;color:var(--primary-dark);"></ion-icon>
+      <div style="font-weight:800;font-size:1rem;margin:10px 0 8px;">Mulai Profil Kesehatan Anda</div>
+      <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;">
+        Isi kuesioner singkat untuk mendapatkan analisis risiko penyakit berbasis data ilmiah.
+      </p>
+      <button class="neu-btn-primary" onclick="nav('health-profile.html')">
+        <ion-icon name="create-outline"></ion-icon> Isi Profil Sekarang
+      </button>
+    </div>
+  </div>
+
+  <div id="dashboard-content" style="display:none;">
+    <div class="section">
+
+      <!-- Hero: profil singkat + BMI + completeness -->
+      <div class="hero-card" data-animate="up">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div>
+            <div class="hero-name" id="heroName">—</div>
+            <div class="hero-sub" id="heroSub">—</div>
+            <div class="hero-bmi" id="heroBMI">BMI —</div>
+          </div>
+          <div style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1.8rem;" id="heroEmoji">👤</div>
+        </div>
+        <div style="margin-top:14px;font-size:0.72rem;color:rgba(255,255,255,0.7);margin-bottom:6px;">
+          Kelengkapan profil: <span id="heroCompleteness" style="font-weight:700;color:#6FCF97;">0%</span>
+        </div>
+        <div class="completeness-track">
+          <div class="completeness-fill" id="heroCFill"></div>
+        </div>
+      </div>
+
+      <!-- 6 Risk Mini Cards -->
+      <div class="section-header"><span class="section-title">Profil Risiko</span></div>
+      <div class="risk-grid" id="riskGrid" style="margin-top:12px;">
+        <div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text-muted);font-size:0.8rem;">
+          <ion-icon name="hourglass-outline" style="font-size:1.5rem;"></ion-icon>
+          <div style="margin-top:6px;">Menghitung skor risiko...</div>
+        </div>
+      </div>
+      <button class="neu-btn neu-btn-block" style="margin-top:10px;" onclick="nav('disease-risk.html')">
+        <ion-icon name="analytics-outline"></ion-icon> Lihat Analisis Lengkap
+      </button>
+
+      <!-- Trend section -->
+      <div class="section-header mt-24"><span class="section-title">Tren Risiko (Terakhir)</span></div>
+      <div class="trend-canvas-wrap" id="trendWrap">
+        <div style="text-align:center;color:var(--text-muted);font-size:0.78rem;">
+          <ion-icon name="trending-up-outline" style="font-size:1.8rem;"></ion-icon>
+          <div style="margin-top:6px;" id="trendMsg">Belum ada data historis</div>
+        </div>
+      </div>
+
+      <!-- Top Active Factors -->
+      <div id="factorsSection" style="display:none;">
+        <div class="section-header mt-24"><span class="section-title">⚠️ Faktor Risiko Aktif</span></div>
+        <div id="factorsList" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;"></div>
+      </div>
+
+      <!-- Herbal Recommendations -->
+      <div class="section-header mt-24"><span class="section-title">🌿 Rekomendasi Herbal</span></div>
+      <div id="herbalList" style="display:flex;flex-direction:column;gap:10px;">
+        <div style="text-align:center;padding:20px;color:var(--text-muted);font-size:0.8rem;">
+          <ion-icon name="leaf-outline" style="font-size:1.5rem;"></ion-icon>
+          <div style="margin-top:6px;">Memuat rekomendasi...</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="section-header mt-24"><span class="section-title">Aksi Cepat</span></div>
+      <div class="action-grid mt-8">
+        <div class="action-btn" onclick="nav('health-profile.html')">
+          <ion-icon name="create-outline" style="color:#27AE60;"></ion-icon>
+          <span>Update Profil</span>
+        </div>
+        <div class="action-btn" onclick="window.recalc()">
+          <ion-icon name="refresh-circle-outline" style="color:#2D9CDB;"></ion-icon>
+          <span>Hitung Ulang</span>
+        </div>
+        <div class="action-btn" onclick="nav('herbal.html')">
+          <ion-icon name="leaf-outline" style="color:#9B51E0;"></ion-icon>
+          <span>Semua Herbal</span>
+        </div>
+        <div class="action-btn" onclick="nav('consultation.html')">
+          <ion-icon name="chatbubbles-outline" style="color:#F2994A;"></ion-icon>
+          <span>Booking Dokter</span>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div style="margin-top:20px;padding:12px 14px;background:rgba(235,87,87,0.06);border:1px solid rgba(235,87,87,0.2);border-radius:12px;font-size:0.7rem;color:var(--text-secondary);line-height:1.5;">
+        <span style="font-weight:700;color:#EB5757;">⚕ Disclaimer:</span>
+        Dashboard ini menggunakan model prediksi berbasis Framingham Risk Score &amp; FINDRISC. Bukan pengganti pemeriksaan medis profesional.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/risk-engine.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+const MODEL_META = {
+  metabolic:    { label: 'Metabolik',   emoji: '⚖️' },
+  diabetes:     { label: 'Diabetes',    emoji: '🩸' },
+  heart:        { label: 'Jantung',     emoji: '❤️' },
+  hypertension: { label: 'Hipertensi',  emoji: '💊' },
+  stroke:       { label: 'Stroke',      emoji: '🧠' },
+  sleep:        { label: 'Tidur',       emoji: '😴' },
+};
+
+let currentUserId = null;
+
+(async () => {
+  try {
+    const { user } = await VAuth.guard('patient', 1);
+    currentUserId = user.uid;
+
+    const hp = await VDB.getHealthProfile(currentUserId);
+    if (!hp || (hp.profileCompleteness || 0) < 10) {
+      document.getElementById('no-profile').style.display = '';
+      return;
+    }
+    document.getElementById('dashboard-content').style.display = '';
+    await window.renderDashboard(hp);
+  } catch (e) {
+    console.error('[dashboard] init error:', e);
+  }
+})();
+
+window.renderDashboard = async function(hp) {
+  // Hero
+  const age = hp.dateOfBirth
+    ? Math.floor((Date.now() - new Date(hp.dateOfBirth)) / (365.25*24*3600*1000))
+    : null;
+  document.getElementById('heroName').textContent = 'Profil Kesehatan Saya';
+  document.getElementById('heroSub').textContent  = [
+    age ? age + ' tahun' : null,
+    hp.gender === 'male' ? 'Pria' : hp.gender === 'female' ? 'Wanita' : null,
+  ].filter(Boolean).join(' · ') || 'Data tidak lengkap';
+  document.getElementById('heroEmoji').textContent = hp.gender === 'female' ? '👩' : '👨';
+
+  const bmi = hp.bmi || (hp.weightKg && hp.heightCm
+    ? +(hp.weightKg / Math.pow(hp.heightCm/100, 2)).toFixed(1) : null);
+  if (bmi) {
+    const bmiCat = bmi < 18.5 ? 'Kurus' : bmi < 25 ? 'Normal' : bmi < 30 ? 'Gemuk' : 'Obesitas';
+    document.getElementById('heroBMI').textContent = 'BMI ' + bmi + ' — ' + bmiCat;
+  }
+
+  const comp = hp.profileCompleteness || 0;
+  document.getElementById('heroCompleteness').textContent = comp + '%';
+  setTimeout(() => { document.getElementById('heroCFill').style.width = comp + '%'; }, 200);
+
+  // Risk scores
+  const scores = RiskEngine.calculateAll(hp);
+  const personalization = RiskEngine.getPersonalizationMultiplier(hp);
+  const models = ['metabolic','diabetes','heart','hypertension','stroke','sleep'];
+  
+  models.forEach(m => {
+    if (scores[m]) {
+      scores[m].score = Math.round(scores[m].score * personalization.multiplier);
+      scores[m].score = Math.min(100, Math.max(0, scores[m].score));
+      scores[m].category = RiskEngine.RISK_CATEGORY(scores[m].score);
+    }
+  });
+  
+  VDB.saveRiskScore(currentUserId, scores).catch(console.warn);
+
+  const BAR = { low: '#27AE60', medium: '#F2994A', high: '#EB5757' };
+  document.getElementById('riskGrid').innerHTML = models.map(m => {
+    const s = scores[m];
+    const color = BAR[s.category];
+    const meta  = MODEL_META[m];
+    return `<div class="risk-mini">
+      <div class="risk-mini-top">
+        <span style="font-size:1.1rem;">${meta.emoji}</span>
+        <span style="font-size:1.15rem;font-weight:800;color:${color};">${s.score}</span>
+      </div>
+      <div class="risk-mini-label">${meta.label}</div>
+      <div style="font-size:0.6rem;color:${color};font-weight:700;">${RiskEngine.RISK_LABEL_ID[s.category]}</div>
+      <div class="risk-mini-bar">
+        <div class="risk-mini-fill" style="background:${color};" data-w="${s.score}"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  setTimeout(() => {
+    document.querySelectorAll('.risk-mini-fill').forEach(el => {
+      el.style.width = el.dataset.w + '%';
+    });
+  }, 400);
+
+  // Trend & Factors
+  const history = await VDB.getRiskScoreHistory(currentUserId, 10).catch(() => []);
+  window.renderTrendChart(history);
+
+  const allFactors = [];
+  models.forEach(m => scores[m].factors.slice(0, 2).forEach(f => allFactors.push({ f, cat: scores[m].category })));
+  const uniqueFactors = [...new Map(allFactors.map(x => [x.f, x])).values()].slice(0, 6);
+  if (uniqueFactors.length > 0) {
+    document.getElementById('factorsSection').style.display = '';
+    document.getElementById('factorsList').innerHTML = uniqueFactors.map(x =>
+      `<span style="display:inline-block;padding:4px 10px;border-radius:20px;font-size:0.68rem;font-weight:600;background:${
+        x.cat === 'high' ? 'rgba(235,87,87,0.1)' : x.cat === 'medium' ? 'rgba(242,153,74,0.1)' : 'rgba(39,174,96,0.1)'
+      };color:${
+        x.cat === 'high' ? '#EB5757' : x.cat === 'medium' ? '#F2994A' : '#27AE60'
+      };margin:2px;">${x.f}</span>`
+    ).join('');
+  }
+
+  // Herbal
+  const topConditions = RiskEngine.getTopConditions(scores);
+  await window.loadHerbalRecs(topConditions);
+};
+
+window.loadHerbalRecs = async function(conditions) {
+  const wrap = document.getElementById('herbalList');
+  const seen = new Set();
+  const results = [];
+  for (const c of conditions.slice(0, 3)) {
+    try {
+      const res = await VDB.getHerbalFormulasByCondition(c, 2);
+      res.formulas.forEach(f => {
+        if (!seen.has(f.id)) { seen.add(f.id); results.push({ ...f, _cond: c }); }
+      });
+    } catch(e) {}
+  }
+  if (!results.length) {
+    wrap.innerHTML = '<div style="font-size:0.78rem;color:var(--text-muted);text-align:center;padding:12px;">Belum ada resep herbal tersimpan.</div>';
+    return;
+  }
+  wrap.innerHTML = results.slice(0, 4).map(f =>
+    `<div class="herbal-mini" onclick="nav('herbal-formula.html?id=${f.id}')">
+      <div style="width:34px;height:34px;border-radius:10px;background:rgba(39,174,96,0.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">🌿</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:0.6rem;color:var(--primary-dark);font-weight:700;text-transform:uppercase;">${f._cond}</div>
+        <div style="font-weight:700;font-size:0.83rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${f.name}</div>
+      </div>
+      <ion-icon name="chevron-forward-outline" style="color:var(--text-tertiary);"></ion-icon>
+    </div>`
+  ).join('');
+};
+
+window.renderTrendChart = function(history) {
+  const container = document.getElementById('trendWrap');
+  if (!history || !history.length) return;
+
+  const latest = history[0].scores || {};
+  const diseases = ['diabetes', 'heart', 'hypertension', 'stroke', 'metabolic', 'sleep'];
+  const labels = { diabetes:'Diabetes', heart:'Jantung', hypertension:'Hipertensi', stroke:'Stroke', metabolic:'Metabolik', sleep:'Tidur' };
+  const colors = { diabetes:'#EB5757', heart:'#6C63FF', hypertension:'#2F80ED', stroke:'#F2994A', metabolic:'#27AE60', sleep:'#56CCF2' };
+
+  const rows = diseases
+    .filter(d => latest[d])
+    .map(d => {
+      const score = latest[d].score || 0;
+      const color = colors[d];
+      return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;width:100%;">
+        <div style="width:70px;font-size:0.65rem;color:var(--text-secondary);text-align:right;">${labels[d]}</div>
+        <div style="flex:1;background:var(--bg);border-radius:6px;height:12px;box-shadow:var(--shadow-in);overflow:hidden;">
+          <div style="height:100%;width:${score}%;background:${color};transition:width 0.6s;"></div>
+        </div>
+        <div style="width:25px;font-size:0.65rem;font-weight:700;color:${color};">${score}</div>
+      </div>`;
+    }).join('');
+
+  container.innerHTML = `<div style="width:100%;padding:10px 0;">${rows}</div>`;
+  document.getElementById('trendMsg').textContent = history.length + ' data tersimpan';
+};
+
+window.recalc = async function() {
+  if (!currentUserId) return;
+  try {
+    const hp = await VDB.getHealthProfile(currentUserId);
+    if (!hp) return;
+    await window.renderDashboard(hp);
+    showToast('Skor risiko diperbarui', 'success');
+  } catch (e) {
+    showToast('Gagal memperbarui data', 'error');
+  }
+};
+</script>
+</body>
+</html>

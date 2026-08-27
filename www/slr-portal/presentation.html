@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SLR Presentation — HerboraTech</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12);
+      box-shadow: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .app-header .neu-icon-btn:active {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .app-header .title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .header-spacer {
+      width: 42px;
+    }
+
+    .section-header .section-title {
+      border-left: 4px solid #27AE60;
+      padding-left: 10px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card-small {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      border-top: 3px solid #27AE60;
+    }
+
+    .stat-number {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #27AE60;
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      margin-top: 3px;
+      font-weight: 600;
+    }
+
+    .disease-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .disease-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 10px;
+      padding: 10px;
+      border-left: 4px solid #27AE60;
+      transition: all 0.3s;
+    }
+
+    .disease-card:active {
+      box-shadow: var(--shadow-in-sm);
+    }
+
+    .disease-icon {
+      font-size: 1.3rem;
+      margin-bottom: 4px;
+    }
+
+    .disease-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+
+    .disease-desc {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+
+    .content-list {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .content-list strong {
+      color: var(--text-primary);
+    }
+
+    .content-list li {
+      margin-bottom: 6px;
+      margin-left: 16px;
+    }
+
+    .evidence-item {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-left: 4px solid #27AE60;
+    }
+
+    .evidence-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .evidence-detail {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .cutoff-item {
+      background: rgba(39,174,96,0.08);
+      border-left: 3px solid #27AE60;
+      border-radius: 6px;
+      padding: 6px;
+      margin: 6px 0;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+    }
+
+    .cutoff-item strong {
+      color: var(--text-primary);
+    }
+
+    .table-simple {
+      width: 100%;
+      font-size: 0.7rem;
+      margin: 10px 0;
+      border-collapse: collapse;
+    }
+
+    .table-simple th {
+      background: rgba(39,174,96,0.12);
+      padding: 6px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--text-primary);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .table-simple td {
+      padding: 5px 6px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      color: var(--text-secondary);
+    }
+
+    .table-simple tr:hover {
+      background: rgba(0,0,0,0.02);
+    }
+
+    .badge-small {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #fff;
+      background: #27AE60;
+    }
+
+    .section {
+      padding: 16px 20px;
+    }
+
+    .neu-card {
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow-out-sm);
+      padding: 12px;
+    }
+
+    .overview-text {
+      font-size: 0.8rem;
+      color: var(--text-primary);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .overview-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .intro-text {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin: 10px 0 0;
+      padding-top: 10px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      line-height: 1.5;
+    }
+
+    .page-enter {
+      animation: pageEnter 0.5s ease-out;
+    }
+
+    @keyframes pageEnter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('index.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="title">SLR Presentation</div>
+    <div class="header-spacer"></div>
+  </header>
+
+  <!-- INTRO -->
+  <div class="section" data-animate="up" data-delay="0">
+    <div class="section-header"><span class="section-title">Overview</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+      <p class="overview-text">
+        🔬 Evidence-Based Metabolic Disease Screening Framework
+      </p>
+      <p class="overview-subtitle">
+        Systematic Literature Review & Clinical Implementation | PRISMA-2020 Compliant | 15 Landmark Papers | GRADE A-B Evidence
+      </p>
+
+      <div class="stats-grid" style="margin-top:12px;">
+        <div class="stat-card-small">
+          <div class="stat-number">1,020+</div>
+          <div class="stat-label">Papers Identified</div>
+        </div>
+        <div class="stat-card-small">
+          <div class="stat-number">15</div>
+          <div class="stat-label">Landmark Papers</div>
+        </div>
+        <div class="stat-card-small">
+          <div class="stat-number">5</div>
+          <div class="stat-label">Diseases</div>
+        </div>
+        <div class="stat-card-small">
+          <div class="stat-number">HIGH</div>
+          <div class="stat-label">Quality</div>
+        </div>
+      </div>
+
+      <p class="intro-text">
+        Comprehensive review of screening, diagnosis, and risk assessment for 15 metabolic diseases with priority focus on 5 diseases (dyslipidemia, hypertension, NAFLD, metabolic syndrome, type 2 diabetes).
+      </p>
+    </div>
+  </div>
+
+  <!-- METHODOLOGY -->
+  <div class="section" data-animate="up" data-delay="100">
+    <div class="section-header"><span class="section-title">PRISMA-2020 Methodology</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+      <ul class="content-list">
+        <li><strong>Search:</strong> 5 databases | 1995-2026</li>
+        <li><strong>Selection:</strong> Two-stage screening (title/abstract → full-text)</li>
+        <li><strong>Inclusion:</strong> RCTs, cohorts, guidelines, SLRs | Adults ≥18y</li>
+        <li><strong>Extraction:</strong> 30+ elements per paper</li>
+        <li><strong>Quality:</strong> GRADE across 5 domains</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5 DISEASES -->
+  <div class="section" data-animate="up" data-delay="150">
+    <div class="section-header"><span class="section-title">Five Prioritized Diseases</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+      <div class="disease-cards">
+        <div class="disease-card">
+          <div class="disease-icon">💛</div>
+          <div class="disease-name">Dyslipidemia</div>
+          <div class="disease-desc">Lipid disorders affecting 39% of adults globally</div>
+        </div>
+        <div class="disease-card">
+          <div class="disease-icon">❤️‍🩹</div>
+          <div class="disease-name">Hypertension</div>
+          <div class="disease-desc">1.13B people affected; CVD risk amplifier</div>
+        </div>
+        <div class="disease-card">
+          <div class="disease-icon">🏥</div>
+          <div class="disease-name">NAFLD</div>
+          <div class="disease-desc">Non-alcoholic fatty liver disease; fibrosis assessment</div>
+        </div>
+        <div class="disease-card">
+          <div class="disease-icon">📈</div>
+          <div class="disease-name">Metabolic Syndrome</div>
+          <div class="disease-desc">5-component cluster; 2-4x CVD risk</div>
+        </div>
+        <div class="disease-card">
+          <div class="disease-icon">🩺</div>
+          <div class="disease-name">Type 2 Diabetes</div>
+          <div class="disease-desc">Leading cause of morbidity; preventable</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DYSLIPIDEMIA -->
+  <div class="section" data-animate="up" data-delay="200">
+    <div class="section-header"><span class="section-title">💛 Dyslipidemia Evidence</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+
+      <div class="evidence-item">
+        <div class="evidence-title">Nordestgaard Study (2016)</div>
+        <div class="evidence-detail">Familial hypercholesterolemia affects 1:500 globally; only 10% diagnosed</div>
+      </div>
+
+      <div class="evidence-item">
+        <div class="evidence-title">INTERHEART Study (2004)</div>
+        <div class="evidence-detail">9 modifiable risk factors account for 90% MI risk; dyslipidemia top 3. AUROC 0.87</div>
+      </div>
+
+      <div class="evidence-item">
+        <div class="evidence-title">AHA Statistics (2015)</div>
+        <div class="evidence-detail">39% of adults with dyslipidemia; dietary factors 30-40% of variance</div>
+      </div>
+
+      <div class="cutoff-item">
+        <strong>LDL Cutoffs:</strong> Optimal <100 | Borderline 100-129 | High ≥160 mg/dL
+      </div>
+      <div class="cutoff-item">
+        <strong>Risk Algorithm:</strong> INTERHEART combines lipids + smoking + HTN + DM
+      </div>
+    </div>
+  </div>
+
+  <!-- HYPERTENSION -->
+  <div class="section" data-animate="up" data-delay="250">
+    <div class="section-header"><span class="section-title">❤️‍🩹 Hypertension Evidence</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+
+      <div class="evidence-item">
+        <div class="evidence-title">ACC/AHA 2017 Guideline</div>
+        <div class="evidence-detail">Shifted from 140/90 to 130/80; reflects intensive control evidence</div>
+      </div>
+
+      <div class="evidence-item">
+        <div class="evidence-title">Framingham Study (44 years)</div>
+        <div class="evidence-detail">Dose-dependent BP-CVD relationship; 10-year risk calculator foundation</div>
+      </div>
+
+      <div class="evidence-item">
+        <div class="evidence-title">SPRINT Trial (9,361 subjects)</div>
+        <div class="evidence-detail">Intensive SBP <120 vs <140 reduces CVD 27% in high-risk</div>
+      </div>
+
+      <div class="cutoff-item">
+        <strong>Normal:</strong> <120/80 | <strong>Elevated:</strong> 120-129/<80 | <strong>HTN-1:</strong> 130-139/80-89 | <strong>HTN-2:</strong> ≥140/≥90
+      </div>
+      <div class="cutoff-item">
+        <strong>Modifiable:</strong> Sodium ↓, weight ↓, DASH diet, exercise, alcohol ↓
+      </div>
+    </div>
+  </div>
+
+  <!-- NAFLD -->
+  <div class="section" data-animate="up" data-delay="300">
+    <div class="section-header"><span class="section-title">🏥 NAFLD Evidence</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+
+      <div class="evidence-item">
+        <div class="evidence-title">EASL Guideline (2016)</div>
+        <div class="evidence-detail">FIB-4 index first-line non-invasive fibrosis assessment</div>
+      </div>
+
+      <div class="evidence-item">
+        <div class="evidence-title">FIB-4 Validation (2009)</div>
+        <div class="evidence-detail">AUROC 0.81-0.88 for advanced fibrosis; outperforms APRI</div>
+      </div>
+
+      <div class="evidence-item">
+        <div class="evidence-title">Insulin Resistance Review (2018)</div>
+        <div class="evidence-detail">IR central to NAFLD; links NAFLD-MetS-Diabetes continuum</div>
+      </div>
+
+      <div class="cutoff-item">
+        <strong>FIB-4 Formula:</strong> (Age × AST) / (Platelet × √ALT)
+      </div>
+      <div class="cutoff-item">
+        <strong>Interpretation:</strong> <1.30 = low | 1.30-2.67 = indeterminate | >2.67 = high
+      </div>
+    </div>
+  </div>
+
+  <!-- METABOLIC SYNDROME -->
+  <div class="section" data-animate="up" data-delay="350">
+    <div class="section-header"><span class="section-title">📈 Metabolic Syndrome Evidence</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+
+      <div class="evidence-item">
+        <div class="evidence-title">IDF Definition (2019)</div>
+        <div class="evidence-detail">Central obesity + ≥2 of: HTN, dyslipidemia, hyperglycemia, low HDL</div>
+      </div>
+
+      <div class="evidence-item">
+        <div class="evidence-title">Mottillo Meta-Analysis (87 studies)</div>
+        <div class="evidence-detail">MetS increases CVD 2.35x and mortality 1.52x</div>
+      </div>
+
+      <div class="evidence-item">
+        <div class="evidence-title">PREDIMED Trial (7,447 subjects)</div>
+        <div class="evidence-detail">Mediterranean diet reduces CVD 30% in MetS/high-risk</div>
+      </div>
+
+      <div class="cutoff-item">
+        <strong>Central Obesity:</strong> Waist >94cm (M), >80cm (F)
+      </div>
+      <div class="cutoff-item">
+        <strong>Other:</strong> TG ≥150 | HDL <40(M)/<50(F) | BP ≥130/85 | FPG ≥100
+      </div>
+    </div>
+  </div>
+
+  <!-- TYPE 2 DIABETES -->
+  <div class="section" data-animate="up" data-delay="400">
+    <div class="section-header"><span class="section-title">🩺 Type 2 Diabetes Evidence</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+
+      <div class="evidence-item">
+        <div class="evidence-title">DCCT/EDIC (30-year RCT)</div>
+        <div class="evidence-detail">Intensive control (HbA1c <7%) reduces complications 54-76%</div>
+      </div>
+
+      <div class="evidence-item">
+        <div class="evidence-title">ADA Standards (2024)</div>
+        <div class="evidence-detail">Diagnosis: FPG ≥126 | OGTT ≥200 | HbA1c ≥6.5%</div>
+      </div>
+
+      <div class="evidence-item">
+        <div class="evidence-title">Insulin Resistance Definition</div>
+        <div class="evidence-detail">Central in T2DM; reversible with lifestyle (diet, exercise)</div>
+      </div>
+
+      <div class="cutoff-item">
+        <strong>Screen at:</strong> Age ≥45 or 18-44 with BMI ≥25 + risk factor
+      </div>
+      <div class="cutoff-item">
+        <strong>Prediabetes:</strong> HbA1c 5.7-6.4% or FPG 100-125 → lifestyle intervention
+      </div>
+      <div class="cutoff-item">
+        <strong>Risk Score:</strong> FINDRISC (8 factors) for diabetes prediction
+      </div>
+    </div>
+  </div>
+
+  <!-- PAPERS TABLE -->
+  <div class="section" data-animate="up" data-delay="450">
+    <div class="section-header"><span class="section-title">15 Landmark Papers Summary</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;padding:12px;">
+      <div class="table-wrapper">
+        <table class="table-simple">
+          <tr>
+            <th>Disease</th>
+            <th>Paper</th>
+            <th>Year</th>
+            <th>Design</th>
+            <th>Grade</th>
+          </tr>
+          <tr>
+            <td>DYS</td>
+            <td>Nordestgaard FH</td>
+            <td>2016</td>
+            <td>SLR</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>DYS</td>
+            <td>INTERHEART</td>
+            <td>2004</td>
+            <td>Case-Ctrl</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>DYS</td>
+            <td>AHA Stats</td>
+            <td>2015</td>
+            <td>Epi</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>HTN</td>
+            <td>ACC/AHA</td>
+            <td>2017</td>
+            <td>Guide</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>HTN</td>
+            <td>Framingham</td>
+            <td>2002-20</td>
+            <td>Cohort</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>HTN</td>
+            <td>SPRINT</td>
+            <td>2015</td>
+            <td>RCT</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>NAFLD</td>
+            <td>EASL</td>
+            <td>2016</td>
+            <td>Guide</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>NAFLD</td>
+            <td>FIB-4 Val</td>
+            <td>2009</td>
+            <td>C-sectional</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>NAFLD</td>
+            <td>IR Review</td>
+            <td>2018</td>
+            <td>Review</td>
+            <td><span class="badge-small">B</span></td>
+          </tr>
+          <tr>
+            <td>MetS</td>
+            <td>IDF Def</td>
+            <td>2019</td>
+            <td>Consensus</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>MetS</td>
+            <td>Mottillo MA</td>
+            <td>2010</td>
+            <td>MA</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>MetS</td>
+            <td>PREDIMED</td>
+            <td>2013</td>
+            <td>RCT</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>T2DM</td>
+            <td>DCCT/EDIC</td>
+            <td>1993-20</td>
+            <td>RCT</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>T2DM</td>
+            <td>ADA 2024</td>
+            <td>2024</td>
+            <td>Guide</td>
+            <td><span class="badge-small">A</span></td>
+          </tr>
+          <tr>
+            <td>T2DM</td>
+            <td>IR Def</td>
+            <td>2005</td>
+            <td>Consensus</td>
+            <td><span class="badge-small">B</span></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="section" data-animate="up" data-delay="500">
+    <div class="section-header"><span class="section-title">Key Takeaways</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+      <ul class="content-list">
+        <li>✅ <strong>All 15 papers Grade A-B:</strong> High-quality evidence base supports platform implementation</li>
+        <li>✅ <strong>Algorithms validated:</strong> Framingham, INTERHEART, FIB-4, FINDRISC all evidence-based</li>
+        <li>✅ <strong>Multi-disease approach:</strong> Integrated risk assessment feasible</li>
+        <li>⚠️ <strong>Ethnic validation needed:</strong> Cutoffs developed in Caucasian cohorts; validate in Indonesian populations</li>
+        <li>⚠️ <strong>Wearable integration pending:</strong> Smartwatch data not yet clinically validated for screening</li>
+        <li>⚠️ <strong>Herbal evidence limited:</strong> RCTs needed for traditional medicine recommendations</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+function nav(url) {
+  window.location.href = url;
+}
+
+// Initialize animations
+window.addEventListener('load', () => {
+  initScrollAnimations();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Permintaan Ditolak</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg,#040E07 0%,#071A0F 40%,#0D2B1A 70%,#1A5C38 100%);
+      padding: 20px;
+    }
+    .rejected-card {
+      background: rgba(228,235,245,0.97);
+      border-radius: 28px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+    .rejected-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--danger-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 3rem;
+      color: var(--danger);
+    }
+    .rejected-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .rejected-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .reason-box {
+      background: var(--danger-bg);
+      border-left: 3px solid var(--danger);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .reason-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--danger);
+      margin-bottom: 6px;
+    }
+    .reason-text {
+      font-size: 0.88rem;
+      color: var(--text-primary);
+    }
+    .btn-row {
+      display: flex;
+      gap: 12px;
+    }
+    .btn-row button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      color: var(--text-secondary);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(39,174,96,0.35);
+    }
+    .btn-row button:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+<div class="rejected-card">
+  <div class="rejected-icon">
+    <ion-icon name="close-circle-outline"></ion-icon>
+  </div>
+
+  <div class="rejected-title">Permintaan Ditolak</div>
+  <div class="rejected-subtitle">
+    Maaf, permintaan role Anda tidak disetujui oleh Admin.
+  </div>
+
+  <div class="reason-box">
+    <div class="reason-label">Alasan Penolakan</div>
+    <div class="reason-text" id="rejectionReason">Memuat...</div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-secondary" onclick="logout()">
+      <ion-icon name="log-out-outline"></ion-icon> Logout
+    </button>
+    <button class="btn-primary" onclick="reapply()">
+      <ion-icon name="refresh-outline"></ion-icon> Ajukan Ulang
+    </button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  async function logout() {
+    await VFirebase.auth.signOut();
+    window.location.href = 'login.html';
+  }
+
+  async function reapply() {
+    const user = VFirebase.auth.currentUser;
+    if (!user) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    // Reset role status to allow reapply
+    await VFirebase.db.collection('users').doc(user.uid).update({
+      roleStatus: null,
+      role: null
+    });
+
+    window.location.href = 'select-role.html';
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    VFirebase.auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const profile = await VAuth.getProfile(user.uid);
+      if (profile) {
+        document.getElementById('rejectionReason').textContent =
+          profile.rejectionNote || 'Tidak ada alasan yang diberikan.';
+
+        // If not rejected, redirect
+        if (profile.roleStatus === 'approved') {
+          VAuth.redirectByRole(profile.role, 1);
+        } else if (profile.roleStatus === 'pending') {
+          window.location.href = 'pending-approval.html';
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Buat Kampanye Iklan</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .campaign-layout { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 24px; align-items: start; }
+    @media (min-width: 900px) { .campaign-layout { grid-template-columns: 1fr 340px; } }
+    .form-group { margin-bottom: 20px; }
+    .form-label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 8px; }
+
+    .neu-select { width: 100%; border: none; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); padding: 12px 16px; font-family: 'Poppins', sans-serif; font-size: 0.88rem; color: var(--text-primary); outline: none; box-sizing: border-box; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7B8D' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+
+    .banner-drop { border: 2px dashed rgba(111,207,151,0.4); border-radius: 16px; overflow: hidden; cursor: pointer; transition: border-color 0.2s; margin-bottom: 8px; }
+    .banner-drop:hover { border-color: var(--primary-dark); }
+    .banner-placeholder { height: 160px; background: linear-gradient(135deg,#E4EBF5,#c8d0e7); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: background 0.2s; }
+    .banner-placeholder.uploaded { background: linear-gradient(135deg,#6FCF97 0%,#27AE60 50%,#1A5C34 100%); }
+    .banner-placeholder ion-icon { font-size: 2.5rem; color: var(--text-muted); }
+    .banner-placeholder.uploaded ion-icon { color: rgba(255,255,255,0.6); }
+    .banner-placeholder p { font-size: 0.82rem; color: var(--text-tertiary); margin-top: 8px; }
+    .banner-placeholder.uploaded p { color: rgba(255,255,255,0.7); }
+    .banner-footer { padding: 10px 16px; text-align: center; font-size: 0.78rem; color: var(--text-tertiary); }
+
+    .format-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .format-card { border-radius: 12px; box-shadow: var(--shadow-out-sm); padding: 16px 12px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; }
+    .format-card input[type="radio"] { position: absolute; opacity: 0; }
+    .format-card.selected { box-shadow: 0 0 0 2px var(--primary-dark), var(--shadow-out-sm); background: rgba(111,207,151,0.06); }
+    .format-card ion-icon { font-size: 1.8rem; color: var(--primary-dark); display: block; margin: 0 auto 8px; }
+    .format-card-label { font-size: 0.8rem; font-weight: 600; color: var(--text-primary); }
+    .format-card-sub { font-size: 0.7rem; color: var(--text-tertiary); margin-top: 2px; }
+
+    .check-group { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px; }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 0.83rem; color: var(--text-secondary); cursor: pointer; }
+    .check-item input { accent-color: var(--primary-dark); width: 16px; height: 16px; }
+
+    .gender-radio { display: flex; gap: 12px; margin-top: 8px; }
+    .gender-btn { flex: 1; padding: 10px; border-radius: 10px; box-shadow: var(--shadow-out-sm); text-align: center; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
+    .gender-btn.selected { background: rgba(111,207,151,0.1); color: var(--primary-dark); box-shadow: 0 0 0 2px var(--primary-dark); }
+
+    .range-wrap { margin-top: 8px; }
+    .range-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-tertiary); margin-top: 4px; }
+    input[type="range"] { width: 100%; accent-color: var(--primary-dark); }
+
+    .budget-input-wrap { position: relative; }
+    .budget-prefix { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--text-tertiary); font-size: 0.88rem; }
+    .budget-input-wrap input { padding-left: 48px !important; }
+
+    /* Preview banner card */
+    .preview-banner-card { border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-out); }
+    .preview-banner-img { height: 130px; background: linear-gradient(135deg,#6FCF97,#27AE60); display: flex; align-items: center; justify-content: center; }
+    .preview-banner-img ion-icon { font-size: 3rem; color: rgba(255,255,255,0.4); }
+    .preview-banner-body { padding: 14px 16px; background: var(--bg); }
+    .preview-banner-title { font-weight: 700; font-size: 0.88rem; color: var(--text-primary); }
+    .preview-banner-sub { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 3px; }
+    .preview-banner-cta { display: inline-block; margin-top: 10px; background: linear-gradient(135deg,#6FCF97,#27AE60); color: #fff; font-size: 0.75rem; font-weight: 600; padding: 6px 14px; border-radius: 20px; }
+
+    .bottom-actions { display: flex; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--shadow-dark); flex-wrap: wrap; }
+    @media (max-width: 640px) {
+      .neu-card [style*="grid-template-columns:1fr 1fr"],
+      .neu-card [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+      .format-cards { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item active" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+
+    <div class="admin-topbar" data-animate="up">
+      <h1>Buat Kampanye Iklan</h1>
+      <div class="header-actions">
+        <button class="neu-btn neu-btn-sm" onclick="nav('advertise.html')"><ion-icon name="arrow-back-outline"></ion-icon> Kembali</button>
+      </div>
+    </div>
+
+    <div class="campaign-layout">
+
+      <!-- Left: Form -->
+      <div data-animate="up" data-delay="100">
+        <div class="neu-card" style="padding:28px;">
+
+          <div class="form-group">
+            <label class="form-label">Upload Banner Iklan</label>
+            <div class="banner-drop" id="bannerDrop">
+              <div class="banner-placeholder" id="bannerPlaceholder">
+                <ion-icon name="image-outline"></ion-icon>
+                <p>Drag & drop banner di sini</p>
+                <p style="font-size:0.72rem;color:var(--text-muted);">Ukuran ideal: 1200×628px, maks. 5MB</p>
+              </div>
+            </div>
+            <button class="neu-btn neu-btn-sm" style="font-size:0.78rem;" onclick="uploadBanner()">
+              <ion-icon name="cloud-upload-outline"></ion-icon> Pilih File
+            </button>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="form-group">
+              <label class="form-label">Judul Kampanye</label>
+              <input class="neu-input" type="text" placeholder="Nama kampanye iklan..." id="camp-title" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Deskripsi</label>
+              <input class="neu-input" type="text" placeholder="Deskripsi singkat..." id="camp-desc">
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="form-group">
+              <label class="form-label">Tanggal Mulai</label>
+              <input class="neu-input" type="date" id="camp-start" value="2026-04-01">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tanggal Selesai</label>
+              <input class="neu-input" type="date" id="camp-end" value="2026-04-30">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Budget Kampanye</label>
+            <div class="budget-input-wrap">
+              <span class="budget-prefix">Rp</span>
+              <input class="neu-input" type="number" placeholder="0" value="5000000" id="camp-budget" style="padding-left:48px;">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Format Iklan</label>
+            <div class="format-cards">
+              <label class="format-card selected" id="fmt-banner" onclick="selectFormat('banner')">
+                <input type="radio" name="format" value="banner" checked>
+                <ion-icon name="image-outline"></ion-icon>
+                <div class="format-card-label">Banner</div>
+                <div class="format-card-sub">Header & footer</div>
+              </label>
+              <label class="format-card" id="fmt-interstitial" onclick="selectFormat('interstitial')">
+                <input type="radio" name="format" value="interstitial">
+                <ion-icon name="phone-portrait-outline"></ion-icon>
+                <div class="format-card-label">Interstitial</div>
+                <div class="format-card-sub">Layar penuh</div>
+              </label>
+              <label class="format-card" id="fmt-native" onclick="selectFormat('native')">
+                <input type="radio" name="format" value="native">
+                <ion-icon name="reader-outline"></ion-icon>
+                <div class="format-card-label">Native</div>
+                <div class="format-card-sub">Menyatu konten</div>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Targeting Wilayah</label>
+            <div class="check-group">
+              <label class="check-item"><input type="checkbox" checked> Jakarta</label>
+              <label class="check-item"><input type="checkbox"> Surabaya</label>
+              <label class="check-item"><input type="checkbox" checked> Bandung</label>
+              <label class="check-item"><input type="checkbox" checked> Nasional</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Rentang Usia (18–35)</label>
+            <div class="range-wrap">
+              <input type="range" min="18" max="65" value="35">
+              <div class="range-labels"><span>18</span><span>35 thn</span><span>65</span></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Gender Target</label>
+            <div class="gender-radio">
+              <div class="gender-btn selected" onclick="selectGender(this)">Semua</div>
+              <div class="gender-btn" onclick="selectGender(this)">Pria</div>
+              <div class="gender-btn" onclick="selectGender(this)">Wanita</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="bottom-actions">
+          <button class="neu-btn-primary" id="btn-launch" onclick="launchCampaign()">
+            <ion-icon name="rocket-outline"></ion-icon> Luncurkan Kampanye
+          </button>
+          <button class="neu-btn" onclick="showToast('Kampanye disimpan sebagai Draft.','info')">
+            <ion-icon name="save-outline"></ion-icon> Simpan Draft
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Preview -->
+      <div data-animate="up" data-delay="200">
+        <div class="neu-card" style="padding:20px;position:sticky;top:24px;">
+          <div style="font-weight:700;margin-bottom:16px;font-size:0.9rem;">Preview Banner</div>
+
+          <div class="preview-banner-card">
+            <div class="preview-banner-img" id="preview-img">
+              <ion-icon name="megaphone-outline"></ion-icon>
+            </div>
+            <div class="preview-banner-body">
+              <div class="preview-banner-title" id="preview-camp-title">Nama Kampanye</div>
+              <div class="preview-banner-sub">Iklan • HerboraTech</div>
+              <span class="preview-banner-cta">Pelajari Lebih Lanjut</span>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;">
+            <div style="font-size:0.82rem;font-weight:600;color:var(--text-secondary);margin-bottom:12px;">Ringkasan</div>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:0.8rem;">
+              <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-tertiary);">Periode</span><span style="font-weight:600;">Apr 2026</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-tertiary);">Budget</span><span style="font-weight:600;color:var(--primary-dark);">Rp 5.000.000</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-tertiary);">Est. Reach</span><span style="font-weight:600;">~48.200</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-tertiary);">CPM Est.</span><span style="font-weight:600;">Rp 8.200</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+let _adminUser = null;
+
+(async () => {
+  try {
+    const { user, profile } = await VAuth.guard('admin', 1);
+    if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+    _adminUser = user;
+  } catch (err) {
+    console.error(err);
+    showToast('Terjadi kesalahan autentikasi.', 'error');
+  }
+})();
+
+function selectFormat(type) {
+  ['banner','interstitial','native'].forEach(t => {
+    document.getElementById('fmt-' + t).classList.remove('selected');
+  });
+  document.getElementById('fmt-' + type).classList.add('selected');
+}
+
+function selectGender(el) {
+  document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function uploadBanner() {
+  const p = document.getElementById('bannerPlaceholder');
+  p.classList.add('uploaded');
+  p.innerHTML = '<ion-icon name="checkmark-circle-outline"></ion-icon><p>Banner berhasil diupload</p>';
+  document.getElementById('preview-img').style.background = 'linear-gradient(135deg,#6FCF97,#27AE60)';
+  showToast('Banner berhasil diupload!', 'success');
+}
+
+function updatePreview() {
+  const title = document.getElementById('camp-title').value || 'Nama Kampanye';
+  document.getElementById('preview-camp-title').textContent = title;
+}
+
+async function launchCampaign() {
+  const title = document.getElementById('camp-title').value.trim();
+  const description = document.getElementById('camp-desc').value.trim();
+  const startDate = document.getElementById('camp-start').value;
+  const endDate = document.getElementById('camp-end').value;
+  const target = Number(document.getElementById('camp-budget').value) || 0;
+
+  if (!title) {
+    showToast('Judul kampanye wajib diisi.', 'warning');
+    return;
+  }
+  if (!startDate || !endDate) {
+    showToast('Tanggal mulai dan selesai wajib diisi.', 'warning');
+    return;
+  }
+
+  const btn = document.getElementById('btn-launch');
+  btn.disabled = true;
+  btn.innerHTML = '<ion-icon name="hourglass-outline"></ion-icon> Menyimpan...';
+
+  try {
+    await VFirebase.db.collection('campaigns').add({
+      title,
+      description,
+      target,
+      startDate,
+      endDate,
+      status: 'active',
+      createdBy: _adminUser ? _adminUser.uid : 'unknown',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    showToast('Kampanye berhasil dibuat', 'success');
+    setTimeout(() => nav('advertise.html'), 1200);
+  } catch (err) {
+    console.error(err);
+    showToast('Gagal membuat kampanye: ' + (err.message || err), 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<ion-icon name="rocket-outline"></ion-icon> Luncurkan Kampanye';
+  }
+}
+</script>
+</body>
+</html>

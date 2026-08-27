@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Pilih Role</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg,#040E07 0%,#071A0F 40%,#0D2B1A 70%,#1A5C38 100%);
+      padding: 20px;
+    }
+    .select-card {
+      background: rgba(228,235,245,0.97);
+      border-radius: 28px;
+      padding: 40px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+    }
+    .select-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .select-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg);
+      box-shadow: var(--shadow-in);
+      border-radius: 16px;
+      margin-bottom: 24px;
+    }
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+      overflow: hidden;
+    }
+    .user-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .user-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+    .user-email {
+      font-size: 0.78rem;
+      color: var(--text-tertiary);
+    }
+    .role-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .role-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 16px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .role-option:hover {
+      transform: translateY(-2px);
+    }
+    .role-option.selected {
+      border-color: var(--primary-dark);
+      background: var(--success-bg);
+    }
+    .role-option.selected .role-check {
+      display: flex;
+    }
+    .role-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .role-icon.patient { background: linear-gradient(135deg, #27AE60, #6FCF97); color: #fff; }
+    .role-icon.doctor { background: linear-gradient(135deg, #1D5DB5, #56CCF2); color: #fff; }
+    .role-icon.admin { background: linear-gradient(135deg, #4A43CC, #9B59B6); color: #fff; }
+    .role-info { flex: 1; }
+    .role-name { font-weight: 700; font-size: 0.95rem; color: var(--text-primary); }
+    .role-desc { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px; }
+    .role-badge {
+      font-size: 0.65rem;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+    .role-badge.auto { background: var(--success-bg); color: var(--primary-dark); }
+    .role-badge.verify { background: var(--warning-bg); color: var(--warning); }
+    .role-check {
+      display: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary-dark);
+      color: #fff;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .btn-continue {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 6px 24px rgba(111,207,151,0.4);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-continue:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(111,207,151,0.5);
+    }
+    .btn-continue:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .info-box {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: var(--info-bg);
+      border-radius: 12px;
+      border-left: 3px solid var(--info);
+      font-size: 0.78rem;
+      color: var(--info);
+      line-height: 1.5;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<div class="select-card">
+  <div class="select-title">Pilih Role Anda</div>
+  <div class="select-subtitle">Tentukan bagaimana Anda akan menggunakan HerboraTech</div>
+
+  <div class="user-info">
+    <div class="user-avatar" id="userAvatar">
+      <span id="userInitials">?</span>
+    </div>
+    <div>
+      <div class="user-name" id="userName">Memuat...</div>
+      <div class="user-email" id="userEmail">-</div>
+    </div>
+  </div>
+
+  <div class="role-options">
+    <div class="role-option selected" onclick="selectRole('patient', this)">
+      <div class="role-icon patient"><ion-icon name="person-outline"></ion-icon></div>
+      <div class="role-info">
+        <div class="role-name">Pasien</div>
+        <div class="role-desc">Konsultasi dengan dokter, monitoring kesehatan</div>
+      </div>
+      <span class="role-badge auto">Langsung Aktif</span>
+      <div class="role-check"><ion-icon name="checkmark"></ion-icon></div>
+    </div>
+
+    <div class="role-option" onclick="selectRole('doctor', this)">
+      <div class="role-icon doctor"><ion-icon name="medkit-outline"></ion-icon></div>
+      <div class="role-info">
+        <div class="role-name">Dokter</div>
+        <div class="role-desc">Terima konsultasi, buat resep, kelola pasien</div>
+      </div>
+      <span class="role-badge verify">Perlu Verifikasi</span>
+      <div class="role-check"><ion-icon name="checkmark"></ion-icon></div>
+    </div>
+
+    <div class="role-option" onclick="selectRole('admin', this)">
+      <div class="role-icon admin"><ion-icon name="settings-outline"></ion-icon></div>
+      <div class="role-info">
+        <div class="role-name">Admin</div>
+        <div class="role-desc">Kelola users, konten, dan sistem</div>
+      </div>
+      <span class="role-badge verify">Perlu Verifikasi</span>
+      <div class="role-check"><ion-icon name="checkmark"></ion-icon></div>
+    </div>
+  </div>
+
+  <button class="btn-continue" id="btnContinue" onclick="submitRole()">
+    <ion-icon name="arrow-forward-outline"></ion-icon>
+    Lanjutkan
+  </button>
+
+  <div class="info-box" id="infoBox">
+    <ion-icon name="information-circle-outline" style="vertical-align: middle; margin-right: 4px;"></ion-icon>
+    <span id="infoText">Sebagai Pasien, Anda bisa langsung menggunakan aplikasi.</span>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  let selectedRole = 'patient';
+  let currentUser = null;
+
+  const infoTexts = {
+    patient: 'Sebagai Pasien, Anda bisa langsung menggunakan aplikasi.',
+    doctor: 'Sebagai Dokter, akun Anda perlu diverifikasi oleh Admin terlebih dahulu.',
+    admin: 'Sebagai Admin, akun Anda perlu diverifikasi oleh Admin lain terlebih dahulu.'
+  };
+
+  function selectRole(role, el) {
+    selectedRole = role;
+    document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('infoText').textContent = infoTexts[role];
+  }
+
+  async function submitRole() {
+    if (!currentUser) {
+      showToast('User tidak ditemukan', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('btnContinue');
+    btn.disabled = true;
+    btn.innerHTML = '<ion-icon name="reload-outline" style="animation:spin 0.8s linear infinite"></ion-icon> Memproses...';
+
+    try {
+      const roleStatus = selectedRole === 'patient' ? 'approved' : 'pending';
+
+      // Update user document with role and status
+      await VFirebase.db.collection('users').doc(currentUser.uid).set({
+        uid: currentUser.uid,
+        name: currentUser.displayName || 'User',
+        email: currentUser.email,
+        role: selectedRole,
+        roleStatus: roleStatus,
+        requestedRole: selectedRole,
+        photoURL: currentUser.photoURL || null,
+        isActive: true,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+
+      // If patient, create patient profile
+      if (selectedRole === 'patient') {
+        await VFirebase.db.collection('patients').doc(currentUser.uid).set({
+          uid: currentUser.uid,
+          dob: null,
+          gender: null,
+          bloodType: null,
+          weight: null,
+          height: null,
+          allergies: [],
+          familyHistory: [],
+          assignedDoctors: []
+        }, { merge: true });
+      }
+
+      if (roleStatus === 'approved') {
+        showToast('Selamat datang!', 'success');
+        setTimeout(() => {
+          window.location.href = '../patient/index.html#home';
+        }, 1000);
+      } else {
+        showToast('Permintaan role terkirim!', 'success');
+        setTimeout(() => {
+          window.location.href = 'pending-approval.html';
+        }, 1000);
+      }
+
+    } catch (e) {
+      console.error(e);
+      showToast('Gagal menyimpan: ' + e.message, 'error');
+      btn.disabled = false;
+      btn.innerHTML = '<ion-icon name="arrow-forward-outline"></ion-icon> Lanjutkan';
+    }
+  }
+
+  // On load, check if user is logged in
+  document.addEventListener('DOMContentLoaded', async () => {
+    VFirebase.auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      currentUser = user;
+
+      // Display user info
+      document.getElementById('userName').textContent = user.displayName || 'User';
+      document.getElementById('userEmail').textContent = user.email || '-';
+
+      if (user.photoURL) {
+        document.getElementById('userAvatar').innerHTML = `<img src="${user.photoURL}" alt="Avatar">`;
+      } else {
+        const initials = (user.displayName || 'U').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+        document.getElementById('userInitials').textContent = initials;
+      }
+
+      // Check if user already has a role
+      const profile = await VAuth.getProfile(user.uid);
+      if (profile && profile.role && profile.roleStatus) {
+        // User already has a role, redirect accordingly
+        if (profile.roleStatus === 'approved') {
+          VAuth.redirectByRole(profile.role, 1);
+        } else if (profile.roleStatus === 'pending') {
+          window.location.href = 'pending-approval.html';
+        } else if (profile.roleStatus === 'rejected') {
+          window.location.href = 'role-rejected.html';
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>

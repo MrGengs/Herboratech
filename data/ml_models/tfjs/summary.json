@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-03-22",
+  "generatedBy": "Claude Desktop \u2014 preprocess_train_export.py",
+  "models": {
+    "metabolic": {
+      "accuracy": 0.8649,
+      "featureCount": 7,
+      "outputLabels": [
+        "No Metabolic Syndrome",
+        "Metabolic Syndrome"
+      ],
+      "modelType": "random_forest_proxy"
+    },
+    "diabetes": {
+      "accuracy": 0.9217,
+      "featureCount": 10,
+      "outputLabels": [
+        "High Risk",
+        "Low Risk",
+        "Prediabetes"
+      ],
+      "modelType": "random_forest_proxy"
+    },
+    "heart": {
+      "accuracy": 0.8065,
+      "featureCount": 13,
+      "outputLabels": [
+        "No Heart Disease",
+        "Heart Disease"
+      ],
+      "modelType": "random_forest_proxy"
+    },
+    "hypertension": {
+      "accuracy": 0.7708,
+      "featureCount": 9,
+      "outputLabels": [
+        "No Hypertension",
+        "Hypertension"
+      ],
+      "modelType": "random_forest_proxy"
+    },
+    "stroke": {
+      "accuracy": 0.8679,
+      "featureCount": 10,
+      "outputLabels": [
+        "No Stroke",
+        "Stroke"
+      ],
+      "modelType": "random_forest_proxy"
+    },
+    "sleep": {
+      "accuracy": 0.871,
+      "featureCount": 10,
+      "outputLabels": [
+        "Insomnia",
+        "Sleep Apnea"
+      ],
+      "modelType": "random_forest_proxy"
+    },
+    "stress_wesad": {
+      "accuracy": 0.9988,
+      "featureCount": 7,
+      "outputLabels": [
+        "Baseline/Rileks",
+        "Stres"
+      ],
+      "modelType": "random_forest_proxy"
+    }
+  }
+}

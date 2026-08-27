@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRADE Assessment — HerboraTech SLR</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    :root {
+      --grade-a: #27AE60;
+      --grade-b: #3498DB;
+      --grade-c: #F39C12;
+      --grade-d: #E74C3C;
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12);
+      box-shadow: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .app-header .neu-icon-btn:active {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .app-header .title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .header-spacer {
+      width: 42px;
+    }
+
+    .section-header .section-title {
+      border-left: 4px solid #27AE60;
+      padding-left: 10px;
+    }
+
+    .grade-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .grade-legend-item {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 10px;
+      padding: 10px;
+      border-left: 4px solid;
+    }
+
+    .grade-legend-item.grade-a { border-left-color: var(--grade-a); }
+    .grade-legend-item.grade-b { border-left-color: var(--grade-b); }
+    .grade-legend-item.grade-c { border-left-color: var(--grade-c); }
+    .grade-legend-item.grade-d { border-left-color: var(--grade-d); }
+
+    .grade-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 3px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .grade-badge.a { background: var(--grade-a); }
+    .grade-badge.b { background: var(--grade-b); }
+    .grade-badge.c { background: var(--grade-c); }
+    .grade-badge.d { background: var(--grade-d); }
+
+    .grade-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .grade-desc {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+
+    .stat-mini {
+      text-align: center;
+      padding: 8px;
+    }
+
+    .stat-mini-number {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #27AE60;
+    }
+
+    .stat-mini-label {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      margin-top: 3px;
+      font-weight: 600;
+    }
+
+    .disease-assessment {
+      margin-bottom: 20px;
+    }
+
+    .disease-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .disease-icon {
+      font-size: 1.1rem;
+    }
+
+    .paper-grade-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-left: 4px solid #27AE60;
+      transition: all 0.3s;
+    }
+
+    .paper-grade-card:active {
+      box-shadow: var(--shadow-in-sm);
+    }
+
+    .paper-grade-card.grade-a { border-left-color: var(--grade-a); }
+    .paper-grade-card.grade-b { border-left-color: var(--grade-b); }
+
+    .paper-title-small {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .paper-author-small {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .domain-item {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+      padding: 6px;
+      background: rgba(0,0,0,0.02);
+      border-radius: 6px;
+      font-size: 0.7rem;
+    }
+
+    .domain-label {
+      font-weight: 700;
+      color: var(--text-secondary);
+      min-width: 70px;
+    }
+
+    .domain-rating {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 600;
+      font-size: 0.65rem;
+    }
+
+    .domain-rating.low { background: rgba(39,174,96,0.2); color: var(--grade-a); }
+    .domain-rating.moderate { background: rgba(243,156,18,0.2); color: var(--grade-c); }
+    .domain-rating.high { background: rgba(231,76,60,0.2); color: var(--grade-d); }
+
+    .assessment-summary {
+      background: rgba(39,174,96,0.08);
+      border-left: 4px solid #27AE60;
+      border-radius: 8px;
+      padding: 8px;
+      margin-top: 8px;
+      font-size: 0.7rem;
+      line-height: 1.4;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      padding: 16px 20px;
+    }
+
+    .neu-card {
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow-out-sm);
+      padding: 12px;
+    }
+
+    .summary-text {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin: 12px 0 0;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      line-height: 1.5;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .page-enter {
+      animation: pageEnter 0.5s ease-out;
+    }
+
+    @keyframes pageEnter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('index.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="title">GRADE Assessment</div>
+    <div class="header-spacer"></div>
+  </header>
+
+  <!-- GRADE OVERVIEW -->
+  <div class="section" data-animate="up" data-delay="0">
+    <div class="section-header"><span class="section-title">GRADE Framework</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+      <p style="font-size:0.75rem;color:var(--text-secondary);margin:0 0 12px;line-height:1.5;">
+        GRADE (Grading of Recommendations Assessment, Development, and Evaluation) systematically evaluates evidence quality across 5 domains: Risk of Bias, Inconsistency, Indirectness, Imprecision, and Publication Bias.
+      </p>
+
+      <div class="grade-grid">
+        <div class="grade-legend-item grade-a">
+          <div class="grade-badge a">A</div>
+          <div class="grade-title">HIGH</div>
+          <div class="grade-desc">Further research unlikely to change effect estimate</div>
+        </div>
+        <div class="grade-legend-item grade-b">
+          <div class="grade-badge b">B</div>
+          <div class="grade-title">MODERATE</div>
+          <div class="grade-desc">Research may change estimate</div>
+        </div>
+        <div class="grade-legend-item grade-c">
+          <div class="grade-badge c">C</div>
+          <div class="grade-title">LOW</div>
+          <div class="grade-desc">Research very likely to change</div>
+        </div>
+        <div class="grade-legend-item grade-d">
+          <div class="grade-badge d">D</div>
+          <div class="grade-title">VERY LOW</div>
+          <div class="grade-desc">Any estimate very uncertain</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY STATS -->
+  <div class="section" data-animate="up" data-delay="100">
+    <div class="section-header"><span class="section-title">Overall Summary</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+      <div class="stat-grid">
+        <div class="stat-mini">
+          <div class="stat-mini-number" style="color:var(--grade-a);">13</div>
+          <div class="stat-mini-label">Grade A</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-mini-number" style="color:var(--grade-b);">2</div>
+          <div class="stat-mini-label">Grade B</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-mini-number" style="color:var(--text-secondary);">0</div>
+          <div class="stat-mini-label">Grade C/D</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-mini-number" style="color:var(--grade-a);">HIGH</div>
+          <div class="stat-mini-label">Overall</div>
+        </div>
+      </div>
+      <p class="summary-text">
+        All 15 papers Grade A or B. No Grade C/D papers. High certainty evidence base for risk algorithms and clinical decision support.
+      </p>
+    </div>
+  </div>
+
+  <!-- DYSLIPIDEMIA -->
+  <div class="section" data-animate="up" data-delay="200">
+    <div class="disease-assessment">
+      <div class="disease-title">
+        <span class="disease-icon">💛</span> Dyslipidemia (3)
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">DYS-001: Familial Hypercholesterolemia SLR</div>
+        <div class="paper-author-small">Nordestgaard BG, et al. (2016) | Eur Heart J</div>
+        <span class="grade-badge a">GRADE A</span>
+
+        <div class="domain-item">
+          <span class="domain-label">RoB:</span>
+          <span class="domain-rating low">✅ Low</span>
+        </div>
+        <div class="domain-item">
+          <span class="domain-label">Incon:</span>
+          <span class="domain-rating low">✅ Low</span>
+        </div>
+        <div class="domain-item">
+          <span class="domain-label">Direct:</span>
+          <span class="domain-rating low">✅ Low</span>
+        </div>
+        <div class="domain-item">
+          <span class="domain-label">Precision:</span>
+          <span class="domain-rating low">✅ High</span>
+        </div>
+
+        <div class="assessment-summary">
+          Transparent methodology, prospective data, standardized FH criteria. Large sample from multiple cohorts with narrow confidence intervals. FH prevalence 1:500 well-established.
+        </div>
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">DYS-002: INTERHEART Case-Control</div>
+        <div class="paper-author-small">Yusuf S, et al. (2004) | Lancet</div>
+        <span class="grade-badge a">GRADE A</span>
+
+        <div class="domain-item">
+          <span class="domain-label">RoB:</span>
+          <span class="domain-rating moderate">⚠️ Moderate</span>
+        </div>
+        <div class="domain-item">
+          <span class="domain-label">Incon:</span>
+          <span class="domain-rating low">✅ Low</span>
+        </div>
+        <div class="domain-item">
+          <span class="domain-label">Direct:</span>
+          <span class="domain-rating low">✅ Low</span>
+        </div>
+        <div class="domain-item">
+          <span class="domain-label">Precision:</span>
+          <span class="domain-rating low">✅ High</span>
+        </div>
+
+        <div class="assessment-summary">
+          N=27,098 across 52 countries. Case-control design with recall bias mitigated by large size. Lipid-CVD consistent across geographies. 90% attributable fraction.
+        </div>
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">DYS-003: AHA Statistics 2015</div>
+        <div class="paper-author-small">Mozaffarian D, Benjamin EJ (2015) | Circulation</div>
+        <span class="grade-badge a">GRADE A</span>
+
+        <div class="domain-item">
+          <span class="domain-label">RoB:</span>
+          <span class="domain-rating low">✅ Low</span>
+        </div>
+        <div class="domain-item">
+          <span class="domain-label">Incon:</span>
+          <span class="domain-rating moderate">⚠️ Moderate</span>
+        </div>
+        <div class="domain-item">
+          <span class="domain-label">Direct:</span>
+          <span class="domain-rating low">✅ Low</span>
+        </div>
+        <div class="domain-item">
+          <span class="domain-label">Precision:</span>
+          <span class="domain-rating low">✅ High</span>
+        </div>
+
+        <div class="assessment-summary">
+          Systematic review of 1,000+ studies. Dyslipidemia affects 39% of adults. LDL cutoffs (<100 optimal, ≥160 high) well-established. Dietary factors 30-40% of variance.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HYPERTENSION -->
+  <div class="section" data-animate="up" data-delay="250">
+    <div class="disease-assessment">
+      <div class="disease-title">
+        <span class="disease-icon">❤️‍🩹</span> Hypertension (3)
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">HTN-001: 2017 ACC/AHA Guidelines</div>
+        <div class="paper-author-small">Whelton PK, Carey RM (2017) | Hypertension</div>
+        <span class="grade-badge a">GRADE A</span>
+        <div class="assessment-summary">
+          Clinical guideline based on 600+ studies. Transparent GRADE methodology. SBP ≥130 threshold grounded in outcome trials including SPRINT. Evidence-based definition updates.
+        </div>
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">HTN-002: Framingham Heart Study</div>
+        <div class="paper-author-small">Kannel WB, et al. (2002-2020) | Hypertension</div>
+        <span class="grade-badge a">GRADE A</span>
+        <div class="assessment-summary">
+          Landmark prospective cohort (8,000+ subjects, 44-year follow-up). Dose-dependent BP-CVD relationship. Framingham Risk Score: 10-year CVD calculator. 8,500+ citations. Reproducible across populations.
+        </div>
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">HTN-003: SPRINT Trial RCT</div>
+        <div class="paper-author-small">SPRINT Research Group (2015) | NEJM</div>
+        <span class="grade-badge a">GRADE A</span>
+        <div class="assessment-summary">
+          N=9,361 multicenter RCT. Intensive SBP <120 vs <140 reduces CVD 27%. Low risk of bias, adequate power, clearly defined outcomes. Direct influence on 2017 guideline revisions.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAFLD -->
+  <div class="section" data-animate="up" data-delay="300">
+    <div class="disease-assessment">
+      <div class="disease-title">
+        <span class="disease-icon">🏥</span> NAFLD (3)
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">NAFLD-001: EASL Guideline 2016</div>
+        <div class="paper-author-small">EASL Committee (2016) | J Hepatology</div>
+        <span class="grade-badge a">GRADE A</span>
+        <div class="assessment-summary">
+          Evidence-based guideline. Systematic evaluation of non-invasive fibrosis methods. FIB-4 index recommended first-line (AUROC 0.81). Transparent methodology with evidence-graded recommendations.
+        </div>
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">NAFLD-002: FIB-4 Validation</div>
+        <div class="paper-author-small">Shah AG, et al. (2009) | Hepatology</div>
+        <span class="grade-badge a">GRADE A</span>
+        <div class="assessment-summary">
+          Cross-sectional validation with histologically confirmed NAFLD (gold standard). FIB-4 AUROC 0.81-0.88. Large sample sizes, stable estimates. 950+ citations indicate broad validation.
+        </div>
+      </div>
+
+      <div class="paper-grade-card grade-b">
+        <div class="paper-title-small">NAFLD-003: IR Pathophysiology Review</div>
+        <div class="paper-author-small">Stefan N, et al. (2018) | Nat Rev</div>
+        <span class="grade-badge b">GRADE B</span>
+        <div class="assessment-summary">
+          Narrative review of IR mechanisms in NAFLD-MetS-DM. Limited by review design (not systematic). Mechanisms well-established. HOMA-IR and dietary intervention evidence (low GI, fiber) well-supported.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- METABOLIC SYNDROME -->
+  <div class="section" data-animate="up" data-delay="350">
+    <div class="disease-assessment">
+      <div class="disease-title">
+        <span class="disease-icon">📈</span> Metabolic Syndrome (3)
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">MET-001: IDF Definition 2019</div>
+        <div class="paper-author-small">IDF Consensus Group (2019)</div>
+        <span class="grade-badge a">GRADE A</span>
+        <div class="assessment-summary">
+          International consensus definition. 5-component diagnostic criteria (central obesity + ≥2 of HTN/dyslipidemia/hyperglycemia/low HDL). 3,900+ citations. Links to 2-4x CVD risk, 5-9x diabetes risk. Universal acceptance.
+        </div>
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">MET-002: MetS & CVD Meta-Analysis</div>
+        <div class="paper-author-small">Mottillo S, et al. (2010) | JACC</div>
+        <span class="grade-badge a">GRADE A</span>
+        <div class="assessment-summary">
+          Meta-analysis of 87 studies, 900,000+ subjects. MetS increases CVD 2.35x (95% CI 2.02-2.74). Mortality increased 1.52x. Risk driven by components, not diagnosis alone. Robust evidence.
+        </div>
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">MET-003: PREDIMED Diet Trial</div>
+        <div class="paper-author-small">Estruch R, et al. (2013) | NEJM</div>
+        <span class="grade-badge a">GRADE A</span>
+        <div class="assessment-summary">
+          Multicenter RCT, N=7,447 (4.8-year follow-up). Mediterranean diet reduces CVD 30% in MetS/high-risk. Primary prevention evidence. Emphasizes olive oil, nuts, whole grains, legumes.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TYPE 2 DIABETES -->
+  <div class="section" data-animate="up" data-delay="400">
+    <div class="disease-assessment">
+      <div class="disease-title">
+        <span class="disease-icon">🩺</span> Type 2 Diabetes (3)
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">DM2-001: DCCT/EDIC Control Trial</div>
+        <div class="paper-author-small">DCCT/EDIC Group (1993-2020) | NEJM</div>
+        <span class="grade-badge a">GRADE A</span>
+        <div class="assessment-summary">
+          Landmark RCT (N=1,441). Intensive glycemic control (HbA1c <7%) reduces neuropathy 54%, nephropathy 63%, retinopathy 76%. HbA1c ≥6.5% diagnostic. Prediabetes reversible with lifestyle. 6,500+ citations.
+        </div>
+      </div>
+
+      <div class="paper-grade-card grade-a">
+        <div class="paper-title-small">DM2-002: ADA Standards 2024</div>
+        <div class="paper-author-small">American Diabetes Assn (2024) | Diabetes Care</div>
+        <span class="grade-badge a">GRADE A</span>
+        <div class="assessment-summary">
+          Clinical guidelines. T2DM diagnosis: FPG ≥126, OGTT ≥200, HbA1c ≥6.5%. Screening ≥45y or overweight+risk. FINDRISC score for risk identification. Most cited annually. Gold standard.
+        </div>
+      </div>
+
+      <div class="paper-grade-card grade-b">
+        <div class="paper-title-small">DM2-003: IR & MetS Definition</div>
+        <div class="paper-author-small">Kahn R, et al. (2005) | JCEM</div>
+        <span class="grade-badge b">GRADE B</span>
+        <div class="assessment-summary">
+          Consensus definition. Insulin resistance central to T2DM pathophysiology. HOMA-IR = (fasting insulin × glucose)/22.5. Linked to obesity, inactivity, dietary quality. Reversible with lifestyle.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+function nav(url) {
+  window.location.href = url;
+}
+
+// Initialize animations
+window.addEventListener('load', () => {
+  initScrollAnimations();
+});
+</script>
+
+</body>
+</html>

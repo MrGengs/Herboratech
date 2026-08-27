@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Seed Demo Data</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <style>
+    body { background: var(--bg); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .seed-card { background: var(--bg); box-shadow: var(--shadow-out); border-radius: 24px; padding: 32px; max-width: 500px; width: 100%; }
+    .seed-title { font-size: 1.3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; }
+    .seed-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
+    .seed-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: var(--font); font-size: 0.9rem; font-weight: 700; cursor: pointer; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
+    .seed-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .seed-btn.primary { background: linear-gradient(135deg, #27AE60, #6FCF97); color: #fff; box-shadow: 0 4px 16px rgba(39,174,96,0.35); }
+    .seed-btn.secondary { background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); }
+    .seed-btn:hover:not(:disabled) { transform: translateY(-2px); }
+    .log-area { background: #1a1a2e; border-radius: 12px; padding: 16px; margin-top: 20px; max-height: 300px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.75rem; line-height: 1.6; }
+    .log-area .log-line { margin-bottom: 4px; }
+    .log-area .success { color: #6FCF97; }
+    .log-area .error { color: #EB5757; }
+    .log-area .info { color: #56CCF2; }
+    .log-area .warn { color: #F2C94C; }
+  </style>
+</head>
+<body>
+
+<div class="seed-card">
+  <div class="seed-title">Seed Demo Data</div>
+  <div class="seed-desc">
+    Halaman ini untuk memasukkan data demo ke Firestore. Gunakan untuk testing dan demo ke klien.
+  </div>
+
+  <button class="seed-btn primary" id="seedAllBtn" onclick="seedAllAccounts()" style="background:linear-gradient(135deg,#27AE60,#6FCF97);font-size:1rem;">
+    🚀 SEED SEMUA AKUN DEMO (Admin + Dokter + Pasien)
+  </button>
+
+  <div style="height:1px;background:var(--shadow-dark);margin:8px 0;"></div>
+
+  <button class="seed-btn primary" id="seedDoctorsBtn" onclick="seedDoctors()">
+    Seed Data Dokter (Firestore only)
+  </button>
+
+  <button class="seed-btn primary" id="seedDoctorsAuthBtn" onclick="seedDoctorsWithAuth()" style="background:linear-gradient(135deg,#1D5DB5,#56CCF2);">
+    Seed Dokter + Auth (bisa login)
+  </button>
+
+  <button class="seed-btn secondary" id="seedConsultBtn" onclick="seedSampleConsultation()">
+    Buat Sample Konsultasi
+  </button>
+
+  <button class="seed-btn primary" id="seedHerbalBtn" onclick="seedHerbalDatabase()" style="background:linear-gradient(135deg,#27AE60,#1A5C38);">
+    🌿 Seed Database Jamu (12 tanaman + 5 formula berbasis riset)
+  </button>
+
+  <button class="seed-btn primary" id="seedFormulas20Btn" onclick="seedFormulas20()" style="background:linear-gradient(135deg,#2D6A4F,#74C69D);">
+    📋 Seed 20 Resep Manual (Asam Urat, Batuk, Maag, Diabetes, Hipertensi, Kolesterol)
+  </button>
+
+  <button class="seed-btn primary" id="seedTeamBtn" onclick="seedTeamAccounts()" style="background:linear-gradient(135deg,#6B21A8,#A855F7);">
+    👥 Seed Akun Tim Siswa + Super Admin Mentor
+  </button>
+
+  <button class="seed-btn primary" id="seedGeminiKeysBtn" onclick="seedGeminiApiKeys()" style="background:linear-gradient(135deg,#6C63FF,#A78BFA);">
+    🔑 Seed 10 Gemini API Keys
+  </button>
+
+  <button class="seed-btn secondary" onclick="clearLog()">
+    Clear Log
+  </button>
+
+  <div style="margin-top:16px;background:#1a1a2e;border-radius:12px;padding:14px;font-size:0.75rem;color:#56CCF2;font-family:monospace;line-height:1.8;">
+    <div style="color:#F2C94C;font-weight:700;margin-bottom:6px;">📋 Akun Demo Setelah Seed:</div>
+    <div>👑 Super Admin : mentor@herboratech.id / <b>mentor2024</b></div>
+    <div>👤 Admin &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: admin@herboratech.id / <b>admin123</b></div>
+    <div>👨‍⚕️ Dokter 1&nbsp;&nbsp;: sarah.wijaya@herboratech.id / <b>dokter123</b></div>
+    <div>👨‍⚕️ Dokter 2&nbsp;&nbsp;: andi.rahmanto@herboratech.id / <b>dokter123</b></div>
+    <div>👨‍⚕️ Dokter 3&nbsp;&nbsp;: nadia.putri@herboratech.id / <b>dokter123</b></div>
+    <div>🧑 Pasien &nbsp;&nbsp;&nbsp;&nbsp;: budi.santoso@herboratech.id / <b>pasien123</b></div>
+    <div style="color:#A855F7;font-weight:700;margin-top:8px;">👥 Akun Tim Siswa (password: <b>siswa2024</b>)</div>
+    <div>helmi.widyatamaka@herboratech.id</div>
+    <div>anisa.widad@herboratech.id</div>
+    <div>laqif.abdurrahman@herboratech.id</div>
+    <div>anyaila.wahyu@herboratech.id</div>
+    <div>nayla.norcelita@herboratech.id</div>
+    <div>arham.zulfagar@herboratech.id</div>
+  </div>
+
+  <div class="log-area" id="logArea">
+    <div class="log-line info">Siap untuk seed data...</div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+  const logArea = document.getElementById('logArea');
+
+  function log(msg, type = 'info') {
+    const line = document.createElement('div');
+    line.className = 'log-line ' + type;
+    line.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+    logArea.appendChild(line);
+    logArea.scrollTop = logArea.scrollHeight;
+  }
+
+  function clearLog() {
+    logArea.innerHTML = '<div class="log-line info">Log cleared.</div>';
+  }
+
+  // Demo doctors data
+  const demoDoctors = [
+    {
+      uid: 'doctor-sarah-wijaya',
+      name: 'dr. Sarah Wijaya, Sp.PD',
+      email: 'sarah.wijaya@herboratech.id',
+      role: 'doctor',
+      specialty: 'Spesialis Penyakit Dalam',
+      hospital: 'RS Medicore Jakarta',
+      rating: 4.9,
+      reviewCount: 238,
+      experience: 8,
+      patientCount: 238,
+      bio: 'Spesialis penyakit dalam berpengalaman lebih dari 8 tahun. Keahlian khusus dalam penanganan penyakit metabolik, hipertensi, dan diabetes mellitus.',
+      education: ['S1 Kedokteran — Universitas Indonesia (2010-2016)', 'Sp.PD — Universitas Gadjah Mada (2017-2021)'],
+      strNumber: 'STR-4523/2022',
+      isActive: true,
+      isOnline: true,
+      consultTypes: ['chat', 'video', 'integrative'],
+      pricing: { chat: 75000, video: 120000, integrative: 150000 },
+      photoURL: null,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    },
+    {
+      uid: 'doctor-andi-rahmanto',
+      name: 'dr. Andi Rahmanto, Sp.JP',
+      email: 'andi.rahmanto@herboratech.id',
+      role: 'doctor',
+      specialty: 'Spesialis Jantung',
+      hospital: 'RS Jantung Harapan Kita',
+      rating: 4.8,
+      reviewCount: 156,
+      experience: 12,
+      patientCount: 420,
+      bio: 'Kardiolog senior dengan pengalaman lebih dari 12 tahun menangani berbagai penyakit jantung dan pembuluh darah.',
+      education: ['S1 Kedokteran — Universitas Airlangga (2006-2012)', 'Sp.JP — Universitas Indonesia (2013-2018)'],
+      strNumber: 'STR-3128/2020',
+      isActive: true,
+      isOnline: false,
+      consultTypes: ['chat', 'video'],
+      pricing: { chat: 100000, video: 150000 },
+      photoURL: null,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    },
+    {
+      uid: 'doctor-nadia-putri',
+      name: 'dr. Nadia Putri, M.Ked',
+      email: 'nadia.putri@herboratech.id',
+      role: 'doctor',
+      specialty: 'Dokter Umum',
+      hospital: 'Klinik Sehat Sentosa',
+      rating: 4.7,
+      reviewCount: 312,
+      experience: 5,
+      patientCount: 580,
+      bio: 'Dokter umum yang ramah dan teliti. Fokus pada kesehatan keluarga dan pencegahan penyakit.',
+      education: ['S1 Kedokteran — Universitas Padjadjaran (2014-2020)', 'M.Ked — Universitas Padjadjaran (2021-2023)'],
+      strNumber: 'STR-6721/2023',
+      isActive: true,
+      isOnline: true,
+      consultTypes: ['chat'],
+      pricing: { chat: 35000 },
+      photoURL: null,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }
+  ];
+
+  async function seedDoctors() {
+    const btn = document.getElementById('seedDoctorsBtn');
+    btn.disabled = true;
+    btn.textContent = 'Seeding...';
+
+    try {
+      // Ensure user is authenticated first
+      if (!VFirebase.auth.currentUser) {
+        log('Login anonymous untuk akses Firestore...', 'info');
+        try {
+          await VFirebase.auth.signInAnonymously();
+          log('Login berhasil!', 'success');
+        } catch (authErr) {
+          log('Gagal login anonymous: ' + authErr.message, 'error');
+          log('Pastikan Anonymous auth diaktifkan di Firebase Console:', 'warn');
+          log('Firebase Console → Authentication → Sign-in method → Anonymous → Enable', 'warn');
+          throw authErr;
+        }
+      }
+
+      log('Memulai seed data dokter...', 'info');
+
+      for (const doctor of demoDoctors) {
+        log('Menyimpan: ' + doctor.name, 'info');
+        await VFirebase.db.collection('users').doc(doctor.uid).set(doctor, { merge: true });
+        log('Berhasil: ' + doctor.name, 'success');
+      }
+
+      log('Semua dokter berhasil disimpan!', 'success');
+    } catch (e) {
+      log('Error: ' + e.message, 'error');
+      console.error(e);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Seed Data Dokter (3 dokter)';
+    }
+  }
+
+  // Seed doctors WITH Firebase Auth (so they can login)
+  async function seedDoctorsWithAuth() {
+    const btn = document.getElementById('seedDoctorsAuthBtn');
+    btn.disabled = true;
+    btn.textContent = 'Seeding...';
+
+    const defaultPassword = 'dokter123';
+
+    // Doctors with email that can be used for auth
+    const doctorsAuth = [
+      {
+        email: 'sarah.wijaya@herboratech.id',
+        name: 'dr. Sarah Wijaya, Sp.PD',
+        specialty: 'Spesialis Penyakit Dalam',
+        hospital: 'RS Medicore Jakarta',
+        rating: 4.9,
+        reviewCount: 238,
+        experience: 8,
+        consultTypes: ['chat', 'video', 'integrative'],
+        pricing: { chat: 75000, video: 120000, integrative: 150000 }
+      },
+      {
+        email: 'andi.rahmanto@herboratech.id',
+        name: 'dr. Andi Rahmanto, Sp.JP',
+        specialty: 'Spesialis Jantung',
+        hospital: 'RS Jantung Harapan Kita',
+        rating: 4.8,
+        reviewCount: 156,
+        experience: 12,
+        consultTypes: ['chat', 'video'],
+        pricing: { chat: 100000, video: 150000 }
+      },
+      {
+        email: 'nadia.putri@herboratech.id',
+        name: 'dr. Nadia Putri, M.Ked',
+        specialty: 'Dokter Umum',
+        hospital: 'Klinik Sehat Sentosa',
+        rating: 4.7,
+        reviewCount: 312,
+        experience: 5,
+        consultTypes: ['chat'],
+        pricing: { chat: 35000 }
+      }
+    ];
+
+    try {
+      log('Memulai seed dokter dengan Auth...', 'info');
+      log('Password default: ' + defaultPassword, 'warn');
+
+      for (const doc of doctorsAuth) {
+        log('Membuat akun: ' + doc.email, 'info');
+
+        try {
+          // Create Firebase Auth account
+          const cred = await VFirebase.auth.createUserWithEmailAndPassword(doc.email, defaultPassword);
+          await cred.user.updateProfile({ displayName: doc.name });
+
+          // Create Firestore user document
+          await VFirebase.db.collection('users').doc(cred.user.uid).set({
+            uid: cred.user.uid,
+            name: doc.name,
+            email: doc.email,
+            role: 'doctor',
+            specialty: doc.specialty,
+            hospital: doc.hospital,
+            rating: doc.rating,
+            reviewCount: doc.reviewCount,
+            experience: doc.experience,
+            consultTypes: doc.consultTypes,
+            pricing: doc.pricing,
+            isActive: true,
+            isOnline: true,
+            photoURL: null,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+
+          log('Berhasil: ' + doc.name, 'success');
+
+          // Sign out so we can create next account
+          await VFirebase.auth.signOut();
+
+        } catch (authErr) {
+          if (authErr.code === 'auth/email-already-in-use') {
+            log('Akun sudah ada: ' + doc.email + ' (skip)', 'warn');
+          } else {
+            log('Gagal buat ' + doc.email + ': ' + authErr.message, 'error');
+          }
+        }
+      }
+
+      log('', 'info');
+      log('=== SELESAI ===', 'success');
+      log('Login dengan email dokter + password: ' + defaultPassword, 'info');
+      log('Contoh: sarah.wijaya@herboratech.id / dokter123', 'info');
+
+    } catch (e) {
+      log('Error: ' + e.message, 'error');
+      console.error(e);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Seed Dokter + Auth (bisa login)';
+    }
+  }
+
+  // ===== SEED ALL DEMO ACCOUNTS =====
+  async function seedAllAccounts() {
+    const btn = document.getElementById('seedAllBtn');
+    btn.disabled = true;
+    btn.textContent = 'Seeding semua akun...';
+
+    const accounts = [
+      {
+        email: 'mentor@herboratech.id',
+        password: 'mentor2024',
+        name: 'Mentor HerboraTech',
+        role: 'super_admin',
+        roleStatus: 'approved',
+        isActive: true,
+        extra: {}
+      },
+      {
+        email: 'admin@herboratech.id',
+        password: 'admin123',
+        name: 'Admin HerboraTech',
+        role: 'admin',
+        roleStatus: 'approved',
+        isActive: true,
+        extra: {}
+      },
+      {
+        email: 'sarah.wijaya@herboratech.id',
+        password: 'dokter123',
+        name: 'dr. Sarah Wijaya, Sp.PD',
+        role: 'doctor',
+        roleStatus: 'approved',
+        isActive: true,
+        extra: {
+          specialty: 'Spesialis Penyakit Dalam',
+          hospital: 'RS Medicore Jakarta',
+          rating: 4.9, reviewCount: 238, experience: 8,
+          consultTypes: ['chat', 'video', 'integrative'],
+          pricing: { chat: 75000, video: 120000, integrative: 150000 },
+          isOnline: true
+        }
+      },
+      {
+        email: 'andi.rahmanto@herboratech.id',
+        password: 'dokter123',
+        name: 'dr. Andi Rahmanto, Sp.JP',
+        role: 'doctor',
+        roleStatus: 'approved',
+        isActive: true,
+        extra: {
+          specialty: 'Spesialis Jantung',
+          hospital: 'RS Jantung Harapan Kita',
+          rating: 4.8, reviewCount: 156, experience: 12,
+          consultTypes: ['chat', 'video'],
+          pricing: { chat: 100000, video: 150000 },
+          isOnline: false
+        }
+      },
+      {
+        email: 'nadia.putri@herboratech.id',
+        password: 'dokter123',
+        name: 'dr. Nadia Putri, M.Ked',
+        role: 'doctor',
+        roleStatus: 'approved',
+        isActive: true,
+        extra: {
+          specialty: 'Dokter Umum',
+          hospital: 'Klinik Sehat Sentosa',
+          rating: 4.7, reviewCount: 312, experience: 5,
+          consultTypes: ['chat'],
+          pricing: { chat: 35000 },
+          isOnline: true
+        }
+      },
+      {
+        email: 'budi.santoso@herboratech.id',
+        password: 'pasien123',
+        name: 'Budi Santoso',
+        role: 'patient',
+        roleStatus: 'approved',
+        isActive: true,
+        extra: {}
+      }
+    ];
+
+    try {
+      log('Memulai seed semua akun demo...', 'info');
+      log('', 'info');
+
+      for (const acc of accounts) {
+        log('Membuat: ' + acc.email + ' (' + acc.role + ')', 'info');
+        try {
+          const cred = await VFirebase.auth.createUserWithEmailAndPassword(acc.email, acc.password);
+          await cred.user.updateProfile({ displayName: acc.name });
+
+          await VFirebase.db.collection('users').doc(cred.user.uid).set({
+            uid: cred.user.uid,
+            name: acc.name,
+            email: acc.email,
+            role: acc.role,
+            roleStatus: acc.roleStatus,
+            isActive: acc.isActive,
+            photoURL: null,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            ...acc.extra
+          });
+
+          log('✓ Berhasil: ' + acc.name, 'success');
+          await VFirebase.auth.signOut();
+
+        } catch (e) {
+          if (e.code === 'auth/email-already-in-use') {
+            log('⚠ Sudah ada: ' + acc.email + ' (skip)', 'warn');
+          } else {
+            log('✗ Gagal ' + acc.email + ': ' + e.message, 'error');
+          }
+        }
+      }
+
+      log('', 'info');
+      log('=== SELESAI ===', 'success');
+      log('Akun demo siap digunakan untuk demo!', 'success');
+      log('Super Admin : mentor@herboratech.id / mentor2024', 'info');
+      log('Admin       : admin@herboratech.id / admin123', 'info');
+      log('Dokter      : sarah.wijaya@herboratech.id / dokter123', 'info');
+      log('Pasien      : budi.santoso@herboratech.id / pasien123', 'info');
+
+    } catch (e) {
+      log('Error: ' + e.message, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '🚀 SEED SEMUA AKUN DEMO (Admin + Dokter + Pasien)';
+    }
+  }
+
+  // ===== SEED HERBAL DATABASE =====
+  async function seedHerbalDatabase() {
+    const btn = document.getElementById('seedHerbalBtn');
+    btn.disabled = true;
+    btn.textContent = 'Seeding jamu...';
+
+    if (!VFirebase.auth.currentUser) {
+      await VFirebase.auth.signInAnonymously();
+    }
+
+    const herbals = [
+      {
+        id: 'jahe-merah',
+        name: 'Jahe Merah', latinName: 'Zingiber officinale var. rubrum',
+        family: 'Zingiberaceae', origin: ['Jawa', 'Sumatera', 'Kalimantan'],
+        emoji: '🫚', categories: ['antiinflamasi', 'pencernaan', 'imunitas', 'metabolisme'],
+        evidenceLevel: 'A', studyCount: 47,
+        benefits: [
+          { name: 'Anti-inflamasi', mechanism: 'Inhibisi COX-2, prostaglandin, dan TNF-α' },
+          { name: 'Anti-mual & Anti-muntah', mechanism: 'Antagonisme reseptor 5-HT3 di saluran GI' },
+          { name: 'Imunomodulator', mechanism: 'Peningkatan aktivitas sel NK dan limfosit T' },
+          { name: 'Antioksidan', mechanism: 'Scavenging radikal bebas oleh gingerol dan shogaol' }
+        ],
+        activeCompounds: ['6-Gingerol', '6-Shogaol', 'Paradol', 'Zingerone'],
+        usageMethods: ['rebus', 'seduh', 'kapsul', 'ekstrak'],
+        dosage: [
+          { condition: 'Umum/Preventif', dose: '1-2g serbuk/hari atau 2×500mg ekstrak', duration: '4-8 minggu' },
+          { condition: 'Mual (kehamilan)', dose: '250mg 4×/hari', duration: 'Maks 3 hari, konsultasikan ke dokter' },
+          { condition: 'Osteoartritis', dose: '255mg 3×/hari (ekstrak EV.EXT.35)', duration: '6 minggu' }
+        ],
+        contraindications: ['Gangguan pembekuan darah', 'Batu empedu', 'Trimester 1 kehamilan (dosis tinggi)', 'Alergi Zingiberaceae'],
+        drugInteractions: [
+          { drug: 'Warfarin / Antikoagulan', severity: 'sedang', description: 'Meningkatkan risiko perdarahan, monitor INR' },
+          { drug: 'Antidiabetik oral', severity: 'ringan', description: 'Potensiasi efek hipoglikemi' },
+          { drug: 'Antihipertensi', severity: 'ringan', description: 'Efek aditif pada penurunan tekanan darah' }
+        ],
+        references: [
+          { author: 'Mashhadi NS et al.', year: 2013, journal: 'Int J Prev Med', pmid: '23717767' },
+          { author: 'Lete I & Allué J', year: 2016, journal: 'Integr Med Insights', pmid: '27053918' },
+          { author: 'Bartels EM et al.', year: 2015, journal: 'Osteoarthritis Cartilage', pmid: '25749238' }
+        ],
+        bpomStatus: 'Obat Herbal Terstandar',
+        partUsed: 'Rimpang', harvestSeason: 'Sepanjang tahun',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'temulawak',
+        name: 'Temulawak', latinName: 'Curcuma xanthorrhiza Roxb.',
+        family: 'Zingiberaceae', origin: ['Jawa', 'Kalimantan'],
+        emoji: '🟡', categories: ['pencernaan', 'antiinflamasi', 'metabolisme'],
+        evidenceLevel: 'A', studyCount: 62,
+        benefits: [
+          { name: 'Hepatoprotektif', mechanism: 'Aktivasi enzim antioksidan hati, inhibisi fibrosis hepatik' },
+          { name: 'Anti-inflamasi', mechanism: 'Inhibisi NF-κB dan produksi sitokin proinflamasi' },
+          { name: 'Kolagogum', mechanism: 'Merangsang sekresi empedu, membantu pencernaan lemak' },
+          { name: 'Imunomodulator', mechanism: 'Stimulasi proliferasi limfosit dan aktivitas fagosit' }
+        ],
+        activeCompounds: ['Xanthorrhizol', 'Kurkumin', 'α-Kurkumen', 'β-Kurkumen', 'ar-Turmeron'],
+        usageMethods: ['rebus', 'kapsul', 'ekstrak', 'jus'],
+        dosage: [
+          { condition: 'Gangguan Hati / Hepatitis', dose: '3×500mg ekstrak/hari', duration: '12 minggu' },
+          { condition: 'Gangguan Pencernaan', dose: '2×300mg/hari', duration: '4 minggu' },
+          { condition: 'Umum/Preventif', dose: '1-2 rimpang segar (±10g) direbus', duration: 'Tiap hari' }
+        ],
+        contraindications: ['Obstruksi saluran empedu', 'Batu empedu aktif', 'Kehamilan (dosis terapeutik)', 'Hipersensitivitas Curcuma'],
+        drugInteractions: [
+          { drug: 'Antikoagulan', severity: 'sedang', description: 'Xanthorrhizol memiliki efek antiplatelet' },
+          { drug: 'Obat hepatotoksik', severity: 'ringan', description: 'Monitoring fungsi hati direkomendasikan' }
+        ],
+        references: [
+          { author: 'Devaraj S et al.', year: 2014, journal: 'Evid Based Complement Alternat Med', pmid: '24795735' },
+          { author: 'Rasyid A et al.', year: 2002, journal: 'J Gastroenterol Hepatol', pmid: '12084040' },
+          { author: 'Kemenkes RI', year: 2017, journal: 'Formularium Ramuan Obat Tradisional Indonesia', pmid: '' }
+        ],
+        bpomStatus: 'Fitofarmaka',
+        partUsed: 'Rimpang', harvestSeason: 'Sepanjang tahun',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'kunyit',
+        name: 'Kunyit', latinName: 'Curcuma longa L.',
+        family: 'Zingiberaceae', origin: ['Seluruh Indonesia'],
+        emoji: '💛', categories: ['antiinflamasi', 'metabolisme', 'imunitas'],
+        evidenceLevel: 'A', studyCount: 120,
+        benefits: [
+          { name: 'Anti-inflamasi Kuat', mechanism: 'Inhibisi NF-κB, COX-2, LOX, dan TNF-α oleh kurkumin' },
+          { name: 'Antioksidan Tinggi', mechanism: 'Scavenging ROS dan chelasi ion logam berat' },
+          { name: 'Antidiabetik', mechanism: 'Meningkatkan sensitivitas insulin, inhibisi α-glukosidase' },
+          { name: 'Neuroprotektif', mechanism: 'Inhibisi agregasi protein amyloid-β' }
+        ],
+        activeCompounds: ['Kurkumin (1-6%)', 'Bisdesmetoksi-kurkumin', 'Desmetoksi-kurkumin', 'ar-Turmeron'],
+        usageMethods: ['rebus', 'seduh', 'kapsul', 'ekstrak', 'golden milk'],
+        dosage: [
+          { condition: 'Anti-inflamasi / Sendi', dose: '500mg kurkumin 2-3×/hari + piperin 20mg (meningkatkan absorpsi 2000%)', duration: '8 minggu' },
+          { condition: 'Sindrom Metabolik', dose: '1g kurkumin/hari', duration: '12 minggu' },
+          { condition: 'Umum', dose: '1-2 rimpang segar (±5g) atau 400-600mg 3×/hari', duration: 'Jangka panjang' }
+        ],
+        contraindications: ['Batu empedu', 'Gangguan pembekuan darah', 'Pre-operasi (hentikan 2 minggu)', 'Hipersensitivitas'],
+        drugInteractions: [
+          { drug: 'Antikoagulan (warfarin, aspirin)', severity: 'sedang', description: 'Risiko perdarahan meningkat' },
+          { drug: 'Antasida / Penghambat pompa proton', severity: 'ringan', description: 'Kurkumin meningkatkan keasaman lambung' },
+          { drug: 'Kemoterapi (paclitaxel, camptothecin)', severity: 'sedang', description: 'Dapat mengubah metabolisme obat via CYP450' }
+        ],
+        references: [
+          { author: 'Gupta SC et al.', year: 2013, journal: 'AAPS J', pmid: '23143785' },
+          { author: 'Hewlings SJ & Kalman DS', year: 2017, journal: 'Foods', pmid: '28929771' },
+          { author: 'WHO', year: 2002, journal: 'WHO Monographs on Selected Medicinal Plants Vol 1', pmid: '' }
+        ],
+        bpomStatus: 'Obat Herbal Terstandar',
+        partUsed: 'Rimpang', harvestSeason: 'Sepanjang tahun',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'sambiloto',
+        name: 'Sambiloto', latinName: 'Andrographis paniculata (Burm.f.) Nees',
+        family: 'Acanthaceae', origin: ['Asia Selatan', 'Asia Tenggara'],
+        emoji: '🍃', categories: ['imunitas', 'antiinflamasi', 'antiinfeksi'],
+        evidenceLevel: 'A', studyCount: 35,
+        benefits: [
+          { name: 'Imunostimulant', mechanism: 'Meningkatkan produksi interferon-γ dan aktivitas sel NK' },
+          { name: 'Antiviral', mechanism: 'Inhibisi replikasi virus influenza dan SARS-CoV-2 in vitro' },
+          { name: 'Antipiretik', mechanism: 'Inhibisi sintesis prostaglandin E2' },
+          { name: 'Anti-inflamasi', mechanism: 'Andrografolid menghambat NF-κB' }
+        ],
+        activeCompounds: ['Andrografolid', 'Neoandrografolid', 'Isoandrografolid', 'Deoksiandrografolid'],
+        usageMethods: ['rebus', 'kapsul', 'ekstrak', 'tablet'],
+        dosage: [
+          { condition: 'Infeksi Saluran Napas Atas (pilek, flu)', dose: '400mg andrografolid/hari (ekstrak terstandar)', duration: '5-7 hari' },
+          { condition: 'Imunitas Umum', dose: '200mg andrografolid/hari', duration: '4 minggu' },
+          { condition: 'Rebusan Tradisional', dose: '3-6g daun kering, rebus 10 menit', duration: '3 hari berturut-turut' }
+        ],
+        contraindications: ['Kehamilan & laktasi', 'Autoimun aktif (SLE, RA)', 'Transplantasi organ', 'Hipersensitivitas'],
+        drugInteractions: [
+          { drug: 'Imunosupresan (siklosporin, kortikosteroid)', severity: 'tinggi', description: 'Antagonisme efek imunosupresi' },
+          { drug: 'Antikoagulan', severity: 'sedang', description: 'Potensiasi efek antiplatelet' },
+          { drug: 'Antihipertensi', severity: 'ringan', description: 'Efek aditif pada penurunan tekanan darah' }
+        ],
+        references: [
+          { author: 'Coon JT & Ernst E', year: 2004, journal: 'J Clin Pharm Ther', pmid: '15163361' },
+          { author: 'Kligler B et al.', year: 2006, journal: 'Am Fam Physician', pmid: '16913163' },
+          { author: 'BPOM RI', year: 2019, journal: 'Suplemen Herbal Terstandar', pmid: '' }
+        ],
+        bpomStatus: 'Obat Herbal Terstandar',
+        partUsed: 'Daun & batang', harvestSeason: 'Awal musim hujan',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'daun-kelor',
+        name: 'Daun Kelor', latinName: 'Moringa oleifera Lam.',
+        family: 'Moringaceae', origin: ['India', 'Afrika', 'Asia Tenggara'],
+        emoji: '🌿', categories: ['antioksidan', 'metabolisme', 'nutrisi'],
+        evidenceLevel: 'B', studyCount: 28,
+        benefits: [
+          { name: 'Antidiabetik', mechanism: 'Inhibisi α-glukosidase dan α-amilase, meningkatkan uptake glukosa' },
+          { name: 'Antioksidan Tinggi', mechanism: 'Kandungan quersetin dan klorogenik asid sebagai antioksidan potent' },
+          { name: 'Anti-inflamasi', mechanism: 'Inhibisi NF-κB dan ekspresi iNOS' },
+          { name: 'Hepatoprotektif', mechanism: 'Meningkatkan aktivitas enzim antioksidan hati (SOD, CAT, GPx)' }
+        ],
+        activeCompounds: ['Quersetin', 'Klorogenik asid', 'Isothiosianat', 'Glukosinolat', 'β-Karoten', 'Vitamin C'],
+        usageMethods: ['rebus', 'seduh', 'kapsul', 'sayur segar'],
+        dosage: [
+          { condition: 'Antidiabetik / Metabolik', dose: '50-100g daun segar/hari atau 500mg kapsul 2×/hari', duration: '12 minggu' },
+          { condition: 'Antioksidan/Nutrisional', dose: '2 sendok teh serbuk/hari dalam air/jus', duration: 'Jangka panjang' }
+        ],
+        contraindications: ['Kehamilan (stimulasi kontraksi uterus)', 'Hipotensi berat', 'Penggunaan berlebihan merusak ginjal (isothiosianat)'],
+        drugInteractions: [
+          { drug: 'Antidiabetik oral / Insulin', severity: 'sedang', description: 'Risiko hipoglikemia, monitor kadar glukosa' },
+          { drug: 'Antihipertensi', severity: 'ringan', description: 'Efek aditif penurunan tekanan darah' },
+          { drug: 'Levotiroksin', severity: 'sedang', description: 'Dapat mengurangi absorpsi hormon tiroid' }
+        ],
+        references: [
+          { author: 'Jaiswal D et al.', year: 2009, journal: 'J Ethnopharmacol', pmid: '19501271' },
+          { author: 'Mbikay M', year: 2012, journal: 'Front Pharmacol', pmid: '22403543' },
+          { author: 'WHO', year: 2002, journal: 'WHO Global Atlas of Traditional, Complementary and Alternative Medicine', pmid: '' }
+        ],
+        bpomStatus: 'Obat Herbal Terstandar',
+        partUsed: 'Daun, biji, kulit batang', harvestSeason: 'Sepanjang tahun',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'rosella',
+        name: 'Rosella', latinName: 'Hibiscus sabdariffa L.',
+        family: 'Malvaceae', origin: ['Afrika Barat', 'Asia Tropis'],
+        emoji: '🌺', categories: ['antioksidan', 'metabolisme', 'imunitas'],
+        evidenceLevel: 'A', studyCount: 31,
+        benefits: [
+          { name: 'Antihipertensi', mechanism: 'Inhibisi ACE (Angiotensin Converting Enzyme), efek diuretik ringan' },
+          { name: 'Antioksidan Tinggi', mechanism: 'Antosianin dan asam klorogenik sebagai scavenger radikal bebas' },
+          { name: 'Antihiperkolesterolemia', mechanism: 'Mengurangi LDL dan trigliserida, meningkatkan HDL' },
+          { name: 'Hepatoprotektif', mechanism: 'Menurunkan enzim hati SGOT/SGPT' }
+        ],
+        activeCompounds: ['Antosianin (delfinidin, sianidin)', 'Asam sitrat', 'Asam askorbat', 'Protocatechuic acid', 'Hydroxycitric acid'],
+        usageMethods: ['seduh', 'rebus', 'jus', 'sirup'],
+        dosage: [
+          { condition: 'Hipertensi Ringan-Sedang', dose: '10g kelopak kering diseduh 240ml air, 2×/hari', duration: '4-12 minggu' },
+          { condition: 'Kolesterol', dose: '2-3g ekstrak standar/hari', duration: '8 minggu' },
+          { condition: 'Antioksidan Umum', dose: '1-2 cangkir teh/hari', duration: 'Jangka panjang' }
+        ],
+        contraindications: ['Tekanan darah sangat rendah', 'Kehamilan (kontraksi uterus)', 'Alergi Malvaceae'],
+        drugInteractions: [
+          { drug: 'Antihipertensi (amlodipine, captopril)', severity: 'sedang', description: 'Efek aditif, monitor tekanan darah' },
+          { drug: 'Diuretik', severity: 'ringan', description: 'Efek aditif diuretik' },
+          { drug: 'Klorokuin (antimalaria)', severity: 'tinggi', description: 'Menurunkan bioavailabilitas klorokuin secara signifikan' }
+        ],
+        references: [
+          { author: 'Hopkins AL et al.', year: 2013, journal: 'J Hum Hypertens', pmid: '23364525' },
+          { author: 'Mozaffari-Khosravi H et al.', year: 2009, journal: 'Phytother Res', pmid: '19213150' }
+        ],
+        bpomStatus: 'Obat Herbal Terstandar',
+        partUsed: 'Kelopak bunga', harvestSeason: 'Agustus - November',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'pegagan',
+        name: 'Pegagan', latinName: 'Centella asiatica (L.) Urban',
+        family: 'Apiaceae', origin: ['Asia Tropis', 'Seluruh Indonesia'],
+        emoji: '🍀', categories: ['kognitif', 'relaksasi', 'antiinflamasi'],
+        evidenceLevel: 'B', studyCount: 22,
+        benefits: [
+          { name: 'Nootropik / Kognitif', mechanism: 'Meningkatkan BDNF, neurogenesis, dan aliran darah serebral' },
+          { name: 'Ansiolitis / Anti-stres', mechanism: 'Modulasi GABA-A, inhibisi enzim MAO' },
+          { name: 'Penyembuhan Luka', mechanism: 'Asiatikosid menstimulasi sintesis kolagen tipe I dan III' },
+          { name: 'Venotonik', mechanism: 'Memperkuat dinding kapiler dan vena' }
+        ],
+        activeCompounds: ['Asiatikosid', 'Asam asiatat', 'Madekasosid', 'Asam madekat', 'Brahminosid'],
+        usageMethods: ['rebus', 'seduh', 'kapsul', 'sayur lalapan'],
+        dosage: [
+          { condition: 'Kognitif / Memori', dose: '500-750mg ekstrak 2×/hari', duration: '3-6 bulan' },
+          { condition: 'Stres / Kecemasan', dose: '500mg 3×/hari', duration: '4-8 minggu' },
+          { condition: 'Tradisional (lalapan)', dose: '20-30 lembar daun segar/hari', duration: 'Jangka panjang' }
+        ],
+        contraindications: ['Gangguan fungsi hati berat', 'Epilepsi', 'Kehamilan', 'Alergi Apiaceae'],
+        drugInteractions: [
+          { drug: 'Sedatif / Benzodiazepin', severity: 'sedang', description: 'Efek aditif sedasi SSP' },
+          { drug: 'Obat hepatotoksik', severity: 'sedang', description: 'Dosis tinggi jangka panjang → monitoring fungsi hati' },
+          { drug: 'Antidiabetik', severity: 'ringan', description: 'Efek hipoglikemik ringan' }
+        ],
+        references: [
+          { author: 'Gohil KJ et al.', year: 2010, journal: 'J Clin Diagn Res', pmid: '' },
+          { author: 'Puttarak P et al.', year: 2017, journal: 'Sci Rep', pmid: '28761065' }
+        ],
+        bpomStatus: 'Obat Herbal Terstandar',
+        partUsed: 'Seluruh herba', harvestSeason: 'Sepanjang tahun',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'kayu-manis',
+        name: 'Kayu Manis', latinName: 'Cinnamomum burmannii (Nees & T.Nees) Blume',
+        family: 'Lauraceae', origin: ['Sumatera', 'Jawa'],
+        emoji: '🪵', categories: ['metabolisme', 'antiinflamasi', 'pencernaan'],
+        evidenceLevel: 'B', studyCount: 19,
+        benefits: [
+          { name: 'Antidiabetik', mechanism: 'Meningkatkan sensitivitas reseptor insulin dan GLUT4, inhibisi α-glukosidase' },
+          { name: 'Antihiperkolesterolemia', mechanism: 'Mengurangi LDL-C dan total kolesterol' },
+          { name: 'Antimikroba', mechanism: 'Sinamaldehid menghambat pertumbuhan bakteri dan jamur' },
+          { name: 'Anti-inflamasi', mechanism: 'Inhibisi NF-κB dan produksi sitokin proinflamasi' }
+        ],
+        activeCompounds: ['Sinamaldehid (60-90%)', 'Eugenol', 'Asam sinnamat', 'Linalool', 'Kumarin'],
+        usageMethods: ['rebus', 'seduh', 'kapsul', 'bumbu masak'],
+        dosage: [
+          { condition: 'Diabetes Tipe 2', dose: '1-6g serbuk/hari atau 500mg ekstrak 2×/hari', duration: '8-12 minggu' },
+          { condition: 'Umum / Metabolik', dose: '0.5-1 sendok teh (±2g)/hari dalam minuman', duration: 'Jangka panjang' }
+        ],
+        contraindications: ['Penyakit hati berat (kumarin dosis tinggi)', 'Kehamilan (dosis tinggi bersifat uterotonik)', 'Alergi kulit kontak'],
+        drugInteractions: [
+          { drug: 'Insulin / Antidiabetik', severity: 'sedang', description: 'Risiko hipoglikemia, monitor glukosa darah' },
+          { drug: 'Antikoagulan', severity: 'ringan', description: 'Kumarin dapat mempotensiasi efek antikoagulan' }
+        ],
+        references: [
+          { author: 'Allen RW et al.', year: 2013, journal: 'Ann Fam Med', pmid: '23900133' },
+          { author: 'Ranasinghe P et al.', year: 2012, journal: 'Diabetol Metab Syndr', pmid: '23190555' }
+        ],
+        bpomStatus: 'Obat Herbal Terstandar',
+        partUsed: 'Kulit batang', harvestSeason: 'Sepanjang tahun',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'salam',
+        name: 'Daun Salam', latinName: 'Syzygium polyanthum (Wight) Walp.',
+        family: 'Myrtaceae', origin: ['Asia Tenggara', 'Seluruh Indonesia'],
+        emoji: '🍃', categories: ['metabolisme', 'antiinflamasi', 'pencernaan'],
+        evidenceLevel: 'B', studyCount: 14,
+        benefits: [
+          { name: 'Antidiabetik', mechanism: 'Inhibisi enzim α-glukosidase, meningkatkan sekresi insulin' },
+          { name: 'Antihiperurisemia', mechanism: 'Inhibisi xantin oksidase, menurunkan kadar asam urat' },
+          { name: 'Antihiperkolesterolemia', mechanism: 'Menurunkan LDL dan trigliserida' },
+          { name: 'Antihipertensi', mechanism: 'Efek diuretik ringan, inhibisi ACE parsial' }
+        ],
+        activeCompounds: ['Eugenol', 'Asam gallat', 'Tanin', 'Flavonoid', 'Minyak atsiri'],
+        usageMethods: ['rebus', 'seduh', 'bumbu masak'],
+        dosage: [
+          { condition: 'Diabetes / Gula Darah Tinggi', dose: '7-10 lembar daun kering, rebus 300ml, minum 2×/hari', duration: '4 minggu' },
+          { condition: 'Asam Urat', dose: '10 lembar daun segar, rebus 400ml, minum pagi-sore', duration: '2-4 minggu' }
+        ],
+        contraindications: ['Hipoglikemia', 'Kehamilan (dosis tinggi)', 'Gagal ginjal berat'],
+        drugInteractions: [
+          { drug: 'Antidiabetik oral', severity: 'sedang', description: 'Efek aditif hipoglikemi' },
+          { drug: 'Allopurinol (antiasam urat)', severity: 'ringan', description: 'Efek aditif penurunan asam urat' }
+        ],
+        references: [
+          { author: 'Sulistyoningrum E et al.', year: 2012, journal: 'Majalah Obat Tradisional', pmid: '' },
+          { author: 'Kemenkes RI', year: 2016, journal: 'Skrining Fitokimia Tanaman Obat Indonesia', pmid: '' }
+        ],
+        bpomStatus: 'Jamu',
+        partUsed: 'Daun', harvestSeason: 'Sepanjang tahun',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'cabe-jawa',
+        name: 'Cabe Jawa', latinName: 'Piper retrofractum Vahl',
+        family: 'Piperaceae', origin: ['Jawa', 'Nusa Tenggara'],
+        emoji: '🌶️', categories: ['antiinflamasi', 'pencernaan', 'metabolisme'],
+        evidenceLevel: 'C', studyCount: 8,
+        benefits: [
+          { name: 'Analgetik / Anti-nyeri', mechanism: 'Piperin menghambat jalur nyeri prostaglandin' },
+          { name: 'Peningkat Bioavailabilitas', mechanism: 'Piperin inhibisi CYP3A4 dan P-glikoprotein → absorpsi herbal lain meningkat 2000%' },
+          { name: 'Afrodisiak', mechanism: 'Meningkatkan aliran darah dan kadar testosteron (tradisional)' },
+          { name: 'Stimulan Pencernaan', mechanism: 'Meningkatkan sekresi enzim pankreas dan asam lambung' }
+        ],
+        activeCompounds: ['Piperin', 'Piperitsin', 'Retrofraklamida A-C', 'Minyak atsiri'],
+        usageMethods: ['rebus', 'kapsul', 'bumbu'],
+        dosage: [
+          { condition: 'Anti-pegal / Rematik', dose: '3-5g buah kering direbus, 2×/hari', duration: '1-2 minggu' },
+          { condition: 'Kombinasi dengan herbal lain', dose: '5-10mg piperin (meningkatkan absorpsi)', duration: 'Per dosis herbal' }
+        ],
+        contraindications: ['Kehamilan (stimulasi rahim)', 'Ulkus peptikum aktif', 'Asam lambung tinggi'],
+        drugInteractions: [
+          { drug: 'Semua obat (via CYP3A4)', severity: 'sedang', description: 'Piperin meningkatkan absorpsi banyak obat, perlu penyesuaian dosis' },
+          { drug: 'Fenitoin', severity: 'tinggi', description: 'Meningkatkan kadar fenitoin darah secara signifikan' }
+        ],
+        references: [
+          { author: 'Shoba G et al.', year: 1998, journal: 'Planta Med', pmid: '9619120' },
+          { author: 'BPOM RI', year: 2014, journal: 'Acuan Sediaan Herbal Indonesia Vol.7', pmid: '' }
+        ],
+        bpomStatus: 'Jamu',
+        partUsed: 'Buah', harvestSeason: 'Agustus - Oktober',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'lempuyang',
+        name: 'Lempuyang Emprit', latinName: 'Zingiber amaricans Blume',
+        family: 'Zingiberaceae', origin: ['Jawa', 'Sumatera'],
+        emoji: '🌱', categories: ['pencernaan', 'antiinflamasi'],
+        evidenceLevel: 'C', studyCount: 6,
+        benefits: [
+          { name: 'Anti-mual', mechanism: 'Efek antiemetik serupa jahe melalui antagonisme 5-HT3' },
+          { name: 'Appetizer / Penambah Nafsu Makan', mechanism: 'Bitter compounds menstimulasi sekresi asam lambung' },
+          { name: 'Antidiare', mechanism: 'Tanin dan flavonoid mengurangi motilitas usus' },
+          { name: 'Anti-inflamasi', mechanism: 'Komponen seskuiterpen menghambat sitokin inflamasi' }
+        ],
+        activeCompounds: ['Zingiberin', 'Bisabolen', 'Pelandaian', 'Gingerdion'],
+        usageMethods: ['rebus', 'parut & peras'],
+        dosage: [
+          { condition: 'Mual / Kembung', dose: '2 rimpang segar (±15g) diperas dengan air', duration: '3-5 hari' },
+          { condition: 'Nafsu Makan', dose: 'Rebus 10g rimpang, minum sebelum makan', duration: '2 minggu' }
+        ],
+        contraindications: ['Trimester 1 kehamilan', 'Tukak lambung aktif'],
+        drugInteractions: [
+          { drug: 'Antasida', severity: 'ringan', description: 'Dapat mengurangi efektivitas antasida' }
+        ],
+        references: [
+          { author: 'Kemenkes RI', year: 2011, journal: 'Formularium Obat Herbal Asli Indonesia (FOHAI)', pmid: '' },
+          { author: 'RISTOJA', year: 2015, journal: 'Riset Tumbuhan Obat dan Jamu Kemenkes RI', pmid: '' }
+        ],
+        bpomStatus: 'Jamu',
+        partUsed: 'Rimpang', harvestSeason: 'Sepanjang tahun',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'bangle',
+        name: 'Bangle', latinName: 'Zingiber purpureum Rosc.',
+        family: 'Zingiberaceae', origin: ['Asia Tenggara', 'Jawa', 'Bali'],
+        emoji: '🟣', categories: ['pencernaan', 'antiinflamasi', 'relaksasi'],
+        evidenceLevel: 'C', studyCount: 5,
+        benefits: [
+          { name: 'Antispasmodic', mechanism: 'Relaksasi otot polos saluran cerna' },
+          { name: 'Karminatif', mechanism: 'Minyak atsiri meredakan kembung dan gas usus' },
+          { name: 'Anti-inflamasi', mechanism: 'Zerumbon inhibisi NF-κB dan COX-2' },
+          { name: 'Pelangsing Tradisional', mechanism: 'Meningkatkan termogenesis dan metabolisme lemak (klaim tradisional, bukti terbatas)' }
+        ],
+        activeCompounds: ['Zerumbon', 'Kamfor', 'Sineol', 'α-Pinen', 'Sabinen'],
+        usageMethods: ['rebus', 'param (oles luar)'],
+        dosage: [
+          { condition: 'Perut Kembung / Kolik', dose: '10-15g rimpang segar direbus', duration: '3-5 hari' },
+          { condition: 'Pegal Otot (topikal)', dose: 'Parut rimpang, balurkan pada area nyeri', duration: 'Sesuai kebutuhan' }
+        ],
+        contraindications: ['Kehamilan', 'Alergi Zingiberaceae'],
+        drugInteractions: [],
+        references: [
+          { author: 'Kemenkes RI', year: 2011, journal: 'FOHAI — Formularium Obat Herbal Asli Indonesia', pmid: '' }
+        ],
+        bpomStatus: 'Jamu',
+        partUsed: 'Rimpang', harvestSeason: 'Sepanjang tahun',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }
+    ];
+
+    const formulas = [
+      {
+        id: 'formula-cabe-puyang',
+        name: 'Formula Cabe Puyang', category: 'Anti-Pegal & Sirkulasi',
+        emoji: '🌶️',
+        description: 'Formula tradisional Jawa untuk mengatasi pegal linu, rematik, dan meningkatkan sirkulasi darah. Tercantum dalam Formularium Obat Herbal Asli Indonesia (FOHAI) Kemenkes RI 2011.',
+        indications: ['rematik', 'pegal linu', 'sirkulasi', 'nyeri sendi'],
+        ingredients: [
+          { herbalId: 'cabe-jawa', name: 'Cabe Jawa', dose: '5g', latinName: 'Piper retrofractum' },
+          { herbalId: 'lempuyang', name: 'Lempuyang Emprit', dose: '10g', latinName: 'Zingiber amaricans' },
+          { herbalId: 'kunyit', name: 'Kunyit', dose: '15g', latinName: 'Curcuma longa' },
+          { herbalId: 'jahe-merah', name: 'Jahe Merah', dose: '10g', latinName: 'Zingiber officinale var. rubrum' },
+          { name: 'Asam Jawa', dose: '5g', latinName: 'Tamarindus indica' },
+          { name: 'Gula Aren', dose: '20g', latinName: '-' }
+        ],
+        preparationSteps: [
+          'Cuci bersih semua bahan rimpang, iris tipis',
+          'Rebus 600ml air, masukkan semua bahan',
+          'Kecilkan api, rebus 15-20 menit hingga tersisa 300ml',
+          'Saring, tambahkan gula aren, aduk rata',
+          'Minum selagi hangat, 2× sehari (pagi & sore)'
+        ],
+        dosageInstruction: '2× sehari (pagi dan sore), minum 150ml per kali minum',
+        duration: '7-14 hari',
+        sideEffects: ['Panas di lambung pada perut kosong — minum setelah makan', 'Mual pada dosis pertama'],
+        source: 'FOHAI — Formularium Obat Herbal Asli Indonesia, Kemenkes RI, 2011',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'formula-kunyit-asam',
+        name: 'Formula Kunyit Asam', category: 'Menstruasi & Anti-Inflamasi',
+        emoji: '💛',
+        description: 'Minuman herbal tradisional Jawa untuk meredakan nyeri haid (dismenorea) dan menjaga keseimbangan hormon. Telah divalidasi dalam program Saintifikasi Jamu Kemenkes RI.',
+        indications: ['dismenorea', 'nyeri haid', 'antiinflamasi', 'detoks'],
+        ingredients: [
+          { herbalId: 'kunyit', name: 'Kunyit', dose: '30g', latinName: 'Curcuma longa' },
+          { name: 'Asam Jawa', dose: '10g', latinName: 'Tamarindus indica' },
+          { name: 'Gula Merah', dose: '30g', latinName: '-' },
+          { name: 'Air', dose: '400ml', latinName: '-' },
+          { name: 'Garam', dose: '1/4 sdt', latinName: '-' }
+        ],
+        preparationSteps: [
+          'Parut kunyit segar atau haluskan, peras untuk ambil sarinya',
+          'Larutkan asam jawa dalam 100ml air hangat, saring',
+          'Campurkan sari kunyit + air asam + 300ml air bersih',
+          'Masak dengan gula merah dan garam, aduk hingga gula larut',
+          'Saring dan sajikan hangat atau dingin'
+        ],
+        dosageInstruction: '200ml per hari, terutama 2-3 hari sebelum dan saat menstruasi',
+        duration: '3-5 hari per siklus',
+        sideEffects: ['Mewarnai urin jadi kuning (normal, efek kurkumin)', 'Tidak disarankan berlebihan pada kehamilan'],
+        source: 'Saintifikasi Jamu — Balai Besar Penelitian dan Pengembangan Tanaman Obat dan Obat Tradisional (B2P2TOOT) Kemenkes RI',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'formula-liver-support',
+        name: 'Formula Temulawak Kunyit', category: 'Liver Support & Pencernaan',
+        emoji: '🟡',
+        description: 'Kombinasi temulawak dan kunyit untuk mendukung fungsi hati dan sistem pencernaan. Berbasis penelitian klinis temulawak sebagai fitofarmaka hepatoprotektor.',
+        indications: ['gangguan hati', 'hepatitis', 'pencernaan', 'nafsu makan'],
+        ingredients: [
+          { herbalId: 'temulawak', name: 'Temulawak', dose: '20g', latinName: 'Curcuma xanthorrhiza' },
+          { herbalId: 'kunyit', name: 'Kunyit', dose: '10g', latinName: 'Curcuma longa' },
+          { herbalId: 'jahe-merah', name: 'Jahe Merah', dose: '5g', latinName: 'Zingiber officinale var. rubrum' },
+          { name: 'Gula Aren', dose: '15g', latinName: '-' },
+          { name: 'Air', dose: '500ml', latinName: '-' }
+        ],
+        preparationSteps: [
+          'Cuci dan iris tipis semua rimpang',
+          'Rebus dalam 500ml air selama 20 menit hingga tersisa 250ml',
+          'Tambahkan gula aren, aduk, dan saring',
+          'Minum hangat 2× sehari (pagi setelah sarapan dan sore)'
+        ],
+        dosageInstruction: '125ml per kali minum, 2× sehari setelah makan',
+        duration: '4-12 minggu',
+        sideEffects: ['Hindari pada penderita batu empedu aktif', 'Konsultasikan ke dokter bila digunakan bersamaan dengan obat liver'],
+        source: 'Berdasarkan Farmakope Herbal Indonesia Ed.2, BPOM RI & penelitian Devaraj S et al. (2014)',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'formula-imun-booster',
+        name: 'Formula Sambiloto Jahe', category: 'Imunitas & Anti-Infeksi',
+        emoji: '🍃',
+        description: 'Kombinasi sambiloto (imunostimulant) dengan jahe merah (anti-inflamasi) untuk memperkuat daya tahan tubuh saat musim sakit atau pandemi.',
+        indications: ['imunitas', 'influenza', 'demam', 'infeksi saluran napas'],
+        ingredients: [
+          { herbalId: 'sambiloto', name: 'Sambiloto', dose: '15g daun kering', latinName: 'Andrographis paniculata' },
+          { herbalId: 'jahe-merah', name: 'Jahe Merah', dose: '15g', latinName: 'Zingiber officinale var. rubrum' },
+          { name: 'Madu', dose: '1 sdm', latinName: 'Apis mellifera' },
+          { name: 'Air', dose: '400ml', latinName: '-' }
+        ],
+        preparationSteps: [
+          'Cuci daun sambiloto, jahe iris tipis',
+          'Rebus dalam 400ml air selama 10-15 menit',
+          'Saring dan biarkan agak dingin (jangan panas saat tambah madu)',
+          'Tambahkan madu, aduk rata',
+          'Minum hangat 2× sehari'
+        ],
+        dosageInstruction: '200ml per kali minum, 2× sehari (pagi dan malam)',
+        duration: '5-7 hari (akut) atau 2-4 minggu (preventif)',
+        sideEffects: ['Rasa sangat pahit — normal dari sambiloto', 'Hindari pada pengguna imunosupresan'],
+        source: 'Berdasarkan Coon JT & Ernst E (2004) dan BPOM RI Herbal Terstandar',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'formula-antihipertensi',
+        name: 'Formula Rosella Pegagan', category: 'Hipertensi & Relaksasi',
+        emoji: '🌺',
+        description: 'Minuman herbal untuk mendukung pengendalian tekanan darah ringan-sedang dan meredakan stres. Rosella sebagai ACE inhibitor alami + pegagan sebagai adaptogen.',
+        indications: ['hipertensi', 'stres', 'relaksasi', 'kognitif'],
+        ingredients: [
+          { herbalId: 'rosella', name: 'Rosella kering', dose: '8g kelopak', latinName: 'Hibiscus sabdariffa' },
+          { herbalId: 'pegagan', name: 'Pegagan', dose: '10g daun segar', latinName: 'Centella asiatica' },
+          { name: 'Madu', dose: '1 sdt', latinName: '-' },
+          { name: 'Air panas', dose: '300ml', latinName: '-' }
+        ],
+        preparationSteps: [
+          'Seduh rosella kering dalam 300ml air panas (90°C) selama 5 menit',
+          'Tambahkan daun pegagan segar, tutup, diamkan 3 menit',
+          'Saring, tunggu hingga suhu ≤50°C',
+          'Tambahkan madu (jangan dalam air panas — merusak enzim madu)',
+          'Minum 2× sehari, pagi dan sore'
+        ],
+        dosageInstruction: '150ml per kali, 2× sehari. Monitor tekanan darah secara rutin.',
+        duration: '4-8 minggu, lanjutkan sesuai respons',
+        sideEffects: ['Efek diuretik ringan — pastikan konsumsi air cukup', 'Tidak menggantikan obat antihipertensi dari dokter'],
+        source: 'Hopkins AL et al. (2013) & Mozaffari-Khosravi H et al. (2009), J Hum Hypertens',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }
+    ];
+
+    try {
+      log('Memulai seed database jamu...', 'info');
+      const db = VFirebase.db;
+
+      log('--- Menyimpan 12 tanaman herbal ---', 'info');
+      for (const herb of herbals) {
+        const { id, ...data } = herb;
+        await db.collection('herbals').doc(id).set(data, { merge: true });
+        log('✓ ' + herb.name + ' (' + herb.latinName + ')', 'success');
+      }
+
+      log('', 'info');
+      log('--- Menyimpan 5 formula jamu ---', 'info');
+      for (const formula of formulas) {
+        const { id, ...data } = formula;
+        await db.collection('herbalFormulas').doc(id).set(data, { merge: true });
+        log('✓ ' + formula.name, 'success');
+      }
+
+      log('', 'info');
+      log('=== DATABASE JAMU BERHASIL DISIMPAN ===', 'success');
+      log('12 tanaman herbal + 5 formula tersimpan di Firestore', 'success');
+      log('Sumber: BPOM RI, WHO Monographs, FOHAI Kemenkes RI, PubMed', 'info');
+    } catch (e) {
+      log('Error: ' + e.message, 'error');
+      console.error(e);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '🌿 Seed Database Jamu (12 tanaman + 5 formula berbasis riset)';
+    }
+  }
+
+  // ===== SEED 20 RESEP MANUAL (SCHEMA BARU) =====
+  async function seedFormulas20() {
+    const btn = document.getElementById('seedFormulas20Btn');
+    btn.disabled = true;
+    btn.textContent = 'Seeding resep...';
+    if (!VFirebase.auth.currentUser) await VFirebase.auth.signInAnonymously();
+
+    const formulas = [
+      // ── ASAM URAT (4 formula) ─────────────────────────────────────────────
+      {
+        id: 'f-sidaguri-tunggal',
+        recipeNumber: null, name: 'Ramuan Sidaguri Tunggal — Asam Urat',
+        indications: ['asam-urat'], category: 'metabolisme',
+        ingredients: [
+          { herb: 'Akar Sidaguri kering', latinName: 'Sida rhombifolia L.', amount: 60, unit: 'gram', condition: 'kering, dipotong kecil' }
+        ],
+        preparationMethod: 'Cuci akar sidaguri, potong tipis. Rebus dengan 600ml air api sedang 15-20 menit hingga tersisa ±200ml. Saring dan dinginkan.',
+        preparationType: 'rebus', dosage: 'Minum 1 gelas (200ml)', frequency: '1× sehari pagi sebelum makan',
+        duration: '14-30 hari', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['DILARANG ibu hamil — berefek abortivum', 'Hentikan jika muncul mual, pusing', 'Konsultasi dokter jika tidak membaik setelah 1 bulan'],
+        source: 'Saintifikasi Jamu Kemenkes RI + Farmakope Herbal Indonesia Ed.II',
+        tags: ['asam-urat', 'sidaguri', 'rebus', 'tunggal', 'diuretik', 'anti-gout']
+      },
+      {
+        id: 'f-sidaguri-tempuyung',
+        recipeNumber: null, name: 'Kombinasi Sidaguri + Tempuyung — Asam Urat + Batu Ginjal',
+        indications: ['asam-urat', 'batu-ginjal'], category: 'metabolisme',
+        ingredients: [
+          { herb: 'Akar Sidaguri kering', latinName: 'Sida rhombifolia L.', amount: 40, unit: 'gram', condition: 'kering' },
+          { herb: 'Daun Tempuyung kering', latinName: 'Sonchus arvensis L.', amount: 30, unit: 'gram', condition: 'kering' }
+        ],
+        preparationMethod: 'Rebus bahan dengan 600ml air hingga tersisa 200ml. Saring.',
+        preparationType: 'rebus', dosage: '200ml per minum', frequency: '2× sehari (pagi dan sore)',
+        duration: '21 hari', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['Ibu hamil DILARANG', 'Pantau fungsi ginjal jika punya riwayat batu ginjal', 'Perbanyak minum air putih'],
+        source: 'FOHAI Kemenkes RI + Saintifikasi Jamu',
+        tags: ['asam-urat', 'batu-ginjal', 'sidaguri', 'tempuyung', 'rebus', 'diuretik']
+      },
+      {
+        id: 'f-kumis-kucing-asam-urat',
+        recipeNumber: null, name: 'Kumis Kucing + Rambut Jagung — Asam Urat Diuretik',
+        indications: ['asam-urat', 'hipertensi-ringan'], category: 'metabolisme',
+        ingredients: [
+          { herb: 'Daun Kumis Kucing segar', latinName: 'Orthosiphon aristatus (Blume) Miq.', amount: 30, unit: 'gram', condition: 'segar, cuci bersih' },
+          { herb: 'Rambut Jagung kering', latinName: 'Zea mays L. (stigma)', amount: 20, unit: 'gram', condition: 'kering' }
+        ],
+        preparationMethod: 'Rebus bahan dengan 500ml air hingga tersisa 200ml. Saring, minum hangat.',
+        preparationType: 'rebus', dosage: '200ml per minum', frequency: '2× sehari',
+        duration: '14-21 hari', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['Monitor tekanan darah — efek diuretik', 'Tidak untuk pasien gagal ginjal berat'],
+        source: 'Farmakope Herbal Indonesia + WHO Monographs Vol.2',
+        tags: ['asam-urat', 'diuretik', 'kumis-kucing', 'rambut-jagung', 'rebus']
+      },
+      {
+        id: 'f-daun-salam-asam-urat',
+        recipeNumber: null, name: 'Rebusan Daun Salam — Asam Urat + Gula Darah',
+        indications: ['asam-urat', 'diabetes'], category: 'metabolisme',
+        ingredients: [
+          { herb: 'Daun Salam kering', latinName: 'Syzygium polyanthum (Wight) Walp.', amount: 15, unit: 'lembar', condition: 'kering atau segar' }
+        ],
+        preparationMethod: 'Rebus 15 lembar daun salam dengan 400ml air hingga tersisa 200ml. Saring.',
+        preparationType: 'rebus', dosage: '200ml per minum', frequency: '2× sehari setelah makan',
+        duration: '30 hari', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['Pantau gula darah jika mengonsumsi antidiabetik oral', 'Tidak menggantikan insulin'],
+        source: 'Saintifikasi Jamu Kemenkes RI + Sukandar EY et al. 2011',
+        tags: ['asam-urat', 'diabetes', 'daun-salam', 'rebus', 'hipourikemik', 'hipoglikemik']
+      },
+
+      // ── BATUK (4 formula) ─────────────────────────────────────────────────
+      {
+        id: 'f-kencur-madu-jeruk',
+        recipeNumber: null, name: 'Kencur + Madu + Jeruk Nipis — Batuk Kering',
+        indications: ['batuk-kering', 'iritasi-tenggorokan'], category: 'imunitas',
+        ingredients: [
+          { herb: 'Kencur segar', latinName: 'Kaempferia galanga L.', amount: 20, unit: 'gram', condition: 'segar, parut halus' },
+          { herb: 'Madu murni', latinName: null, amount: 2, unit: 'sendok makan', condition: null },
+          { herb: 'Perasan Jeruk Nipis', latinName: 'Citrus aurantiifolia Swingle', amount: 1, unit: 'buah', condition: 'peras ambil airnya' }
+        ],
+        preparationMethod: 'Parut kencur, peras airnya. Campur air kencur + perasan jeruk nipis. Tambahkan madu, aduk rata. Minum langsung.',
+        preparationType: 'peras', dosage: '1 ramuan (±50ml)', frequency: '3× sehari',
+        duration: 'Sesuai gejala (5-7 hari)', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['Hindari pada penderita GERD (asam jeruk)', 'Tidak untuk bayi < 1 tahun (madu — risiko botulisme)'],
+        source: 'FOHAI Kemenkes RI + Saintifikasi Jamu tradisional',
+        tags: ['batuk-kering', 'kencur', 'madu', 'jeruk-nipis', 'ekspektoran', 'peras']
+      },
+      {
+        id: 'f-jahe-bawang-madu',
+        recipeNumber: null, name: 'Jahe Merah + Bawang Putih + Madu — Batuk Berdahak',
+        indications: ['batuk-berdahak', 'infeksi-saluran-napas'], category: 'imunitas',
+        ingredients: [
+          { herb: 'Jahe Merah segar', latinName: 'Zingiber officinale var. rubrum', amount: 25, unit: 'gram', condition: 'segar, memarkan' },
+          { herb: 'Bawang Putih', latinName: 'Allium sativum L.', amount: 3, unit: 'siung', condition: 'geprek' },
+          { herb: 'Madu murni', latinName: null, amount: 2, unit: 'sendok makan', condition: null }
+        ],
+        preparationMethod: 'Rebus jahe merah dan bawang putih geprek dengan 300ml air hingga mendidih 10 menit. Saring, tunggu suhu ≤50°C lalu tambahkan madu.',
+        preparationType: 'rebus', dosage: '150ml per minum', frequency: '3× sehari',
+        duration: '5-7 hari', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['Tidak untuk ibu hamil trimester 1 (bawang putih dosis tinggi)', 'Hentikan jika batuk > 2 minggu — periksakan ke dokter'],
+        source: 'WHO Advisory + Farmakope Herbal Indonesia',
+        tags: ['batuk-berdahak', 'jahe-merah', 'bawang-putih', 'madu', 'ekspektoran', 'antimikroba']
+      },
+      {
+        id: 'f-sambiloto-demam',
+        recipeNumber: null, name: 'Sambiloto — Demam + Batuk Infeksi',
+        indications: ['demam', 'batuk-infeksi', 'imun'], category: 'imunitas',
+        ingredients: [
+          { herb: 'Herba Sambiloto kering', latinName: 'Andrographis paniculata (Burm.f.) Nees', amount: 10, unit: 'gram', condition: 'kering' }
+        ],
+        preparationMethod: 'Rebus 10g sambiloto kering dengan 400ml air hingga tersisa 200ml. Saring. Bisa tambahkan sedikit madu untuk mengurangi kepahitan.',
+        preparationType: 'rebus', dosage: '200ml per minum', frequency: '3× sehari setelah makan',
+        duration: '3-5 hari (akut)', isTopical: false, evidenceLevel: 'A', doctorVerified: false,
+        warnings: ['Sangat pahit — bisa ditambah madu', 'DILARANG ibu hamil dan menyusui', 'Hentikan jika demam > 39°C atau tidak turun 2 hari — segera ke dokter'],
+        source: 'WHO Monographs Vol.2 + Coon JT & Ernst E, 2004, Planta Medica',
+        tags: ['demam', 'batuk', 'sambiloto', 'antipiretik', 'antimikroba', 'imunomodulator']
+      },
+      {
+        id: 'f-meniran-imun',
+        recipeNumber: null, name: 'Triple Imunomodulator — Meniran + Sambiloto + Temulawak',
+        indications: ['imun', 'pencegahan-infeksi', 'hepatoprotektor'], category: 'imunitas',
+        ingredients: [
+          { herb: 'Herba Meniran', latinName: 'Phyllanthus niruri L.', amount: 15, unit: 'gram', condition: 'kering' },
+          { herb: 'Herba Sambiloto', latinName: 'Andrographis paniculata', amount: 5, unit: 'gram', condition: 'kering' },
+          { herb: 'Rimpang Temulawak', latinName: 'Curcuma xanthorrhiza Roxb.', amount: 20, unit: 'gram', condition: 'kering, iris tipis' }
+        ],
+        preparationMethod: 'Rebus semua bahan dengan 600ml air hingga tersisa 200ml. Saring. Minum hangat.',
+        preparationType: 'rebus', dosage: '200ml per minum', frequency: '2× sehari',
+        duration: '14-30 hari (preventif)', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['DILARANG ibu hamil (sambiloto)', 'Sambiloto sangat pahit — kurangi jika tidak tahan', 'Monitor fungsi hati jika konsumsi > 30 hari'],
+        source: 'FOHAI Kemenkes RI + Saintifikasi Jamu + Permadi A, 2006',
+        tags: ['imunitas', 'meniran', 'sambiloto', 'temulawak', 'preventif', 'hepatoprotektor']
+      },
+
+      // ── MAAG / LAMBUNG (3 formula) ────────────────────────────────────────
+      {
+        id: 'f-kunyit-madu-maag',
+        recipeNumber: null, name: 'Kunyit + Madu — Gastritis / Maag',
+        indications: ['maag', 'gastritis', 'tukak-lambung'], category: 'pencernaan',
+        ingredients: [
+          { herb: 'Rimpang Kunyit segar', latinName: 'Curcuma longa L.', amount: 30, unit: 'gram', condition: 'segar, parut halus' },
+          { herb: 'Madu murni', latinName: null, amount: 2, unit: 'sendok makan', condition: null }
+        ],
+        preparationMethod: 'Parut kunyit, peras ambil airnya (±30ml). Tambahkan madu, aduk rata. Minum langsung sebelum makan.',
+        preparationType: 'peras', dosage: '1 ramuan (±60ml)', frequency: '3× sehari sebelum makan (pagi, siang, malam)',
+        duration: '21-30 hari', isTopical: false, evidenceLevel: 'A', doctorVerified: false,
+        warnings: ['Tidak untuk pasien batu empedu (kunyit merangsang kontraksi kantong empedu)', 'Tidak menggantikan terapi eradikasi H. pylori dari dokter'],
+        source: 'Khayat S et al., 2014 + WHO Monographs Vol.1 (Curcuma longa)',
+        tags: ['maag', 'gastritis', 'kunyit', 'madu', 'anti-inflamasi', 'antibakteri-H-pylori']
+      },
+      {
+        id: 'f-aloe-vera-maag',
+        recipeNumber: null, name: 'Gel Lidah Buaya — Gastritis + Pelindung Mukosa',
+        indications: ['maag', 'gastritis', 'refluks-lambung'], category: 'pencernaan',
+        ingredients: [
+          { herb: 'Gel Lidah Buaya segar', latinName: 'Aloe vera (L.) Burm.f.', amount: 50, unit: 'gram', condition: 'gel bagian dalam, cuci bersih hilangkan getah kuning' }
+        ],
+        preparationMethod: 'Ambil gel bagian dalam daun lidah buaya (hindari getah kuning di bawah kulit). Blender atau konsumsi langsung. Bisa campur sedikit madu.',
+        preparationType: 'peras', dosage: '50g gel per minum', frequency: '2× sehari (pagi dan sore, sebelum makan)',
+        duration: '14-21 hari', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['Pastikan cuci bersih getah lateks (bawah kulit) — bersifat laksatif kuat', 'Tidak untuk ibu hamil (kontraksi uterus)', 'Tidak untuk pasien DM yang konsumsi insulin (efek hipoglikemi)'],
+        source: 'Rahmani AH et al., 2015, BioMed Research International',
+        tags: ['maag', 'gastritis', 'lidah-buaya', 'coating-mukosa', 'anti-inflamasi']
+      },
+      {
+        id: 'f-kayu-manis-maag',
+        recipeNumber: null, name: 'Kayu Manis + Madu — Maag + Anti H. pylori',
+        indications: ['maag', 'gastritis'], category: 'pencernaan',
+        ingredients: [
+          { herb: 'Batang Kayu Manis', latinName: 'Cinnamomum verum J.Presl', amount: 5, unit: 'gram', condition: 'patahkan kecil' },
+          { herb: 'Madu murni', latinName: null, amount: 1, unit: 'sendok makan', condition: null }
+        ],
+        preparationMethod: 'Seduh kayu manis dengan 200ml air panas 90°C selama 10 menit. Tunggu suhu turun ≤50°C, larutkan madu. Minum hangat.',
+        preparationType: 'seduh', dosage: '200ml per minum', frequency: '2× sehari sebelum makan',
+        duration: '14-21 hari', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['Tidak untuk pasien gangguan hati (kumarin tinggi pada kayu manis cassia)', 'Dosis besar dapat menurunkan gula darah — pantau jika DM'],
+        source: 'Rafehi H et al., 2012, J Trad Complement Med + WHO Monographs',
+        tags: ['maag', 'gastritis', 'kayu-manis', 'antibakteri', 'H-pylori', 'seduh']
+      },
+
+      // ── DIABETES (3 formula) ──────────────────────────────────────────────
+      {
+        id: 'f-pare-sambiloto-dm',
+        recipeNumber: null, name: 'Pare + Sambiloto — Diabetes Tipe 2 (Gula Darah)',
+        indications: ['diabetes', 'hiperglikemia'], category: 'metabolisme',
+        ingredients: [
+          { herb: 'Buah Pare segar', latinName: 'Momordica charantia L.', amount: 100, unit: 'gram', condition: 'potong, buang biji' },
+          { herb: 'Herba Sambiloto kering', latinName: 'Andrographis paniculata', amount: 5, unit: 'gram', condition: 'kering' }
+        ],
+        preparationMethod: 'Blender pare dengan sedikit air, saring ambil jusnya (±100ml). Rebus sambiloto terpisah dengan 200ml air hingga 100ml, saring. Campur kedua cairan. Minum segera.',
+        preparationType: 'peras', dosage: 'Campuran ±200ml', frequency: '1× sehari pagi sebelum makan',
+        duration: '30 hari, evaluasi kadar gula darah', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['DILARANG ibu hamil (efek abortivum pare + sambiloto)', 'Pantau gula darah ketat jika pakai metformin/insulin — risiko hipoglikemia', 'Rasa sangat pahit — bisa dicampur sedikit madu'],
+        source: 'BPOM RI + Krawinkel MB & Keding GB, 2006, Nutr Rev',
+        tags: ['diabetes', 'hiperglikemia', 'pare', 'sambiloto', 'anti-diabetik']
+      },
+      {
+        id: 'f-brotowali-dm',
+        recipeNumber: null, name: 'Brotowali — Diabetes + Anti-inflamasi',
+        indications: ['diabetes', 'antiinflamasi'], category: 'metabolisme',
+        ingredients: [
+          { herb: 'Batang Brotowali kering', latinName: 'Tinospora crispa (L.) Hook.f. & Thomson', amount: 20, unit: 'gram', condition: 'kering, dipotong kecil' }
+        ],
+        preparationMethod: 'Rebus dengan 600ml air hingga tersisa 200ml. Saring. Minum hangat (bisa tambah madu untuk mengurangi kepahitan).',
+        preparationType: 'rebus', dosage: '200ml per minum', frequency: '2× sehari (pagi dan sore)',
+        duration: '21-30 hari', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['Sangat pahit', 'DILARANG ibu hamil', 'Monitor fungsi ginjal pada konsumsi jangka panjang', 'Konsultasi dokter sebelum kombinasi dengan antidiabetik oral'],
+        source: 'Noor A et al., 2020 + Saintifikasi Jamu Kemenkes',
+        tags: ['diabetes', 'brotowali', 'anti-diabetik', 'anti-inflamasi', 'rebus']
+      },
+      {
+        id: 'f-kayu-manis-dm',
+        recipeNumber: null, name: 'Kayu Manis + Jahe — Sensitivitas Insulin',
+        indications: ['diabetes', 'insulin-resistance', 'metabolisme'], category: 'metabolisme',
+        ingredients: [
+          { herb: 'Kayu Manis', latinName: 'Cinnamomum verum / C. burmannii', amount: 5, unit: 'gram', condition: 'batang kecil' },
+          { herb: 'Jahe segar', latinName: 'Zingiber officinale Rosc.', amount: 15, unit: 'gram', condition: 'iris tipis' }
+        ],
+        preparationMethod: 'Rebus/seduh kayu manis dan jahe dengan 300ml air panas 10 menit. Saring dan minum hangat.',
+        preparationType: 'seduh', dosage: '250ml per minum', frequency: '2× sehari',
+        duration: '30-60 hari', isTopical: false, evidenceLevel: 'A', doctorVerified: false,
+        warnings: ['Monitor HbA1c tiap 3 bulan', 'Tidak menggantikan terapi insulin', 'Dosis kayu manis > 3g/hari berisiko toksisitas kumarin (utk cassia)'],
+        source: 'Davis PA & Yokoyama W, 2011, J Med Food + Allen RW et al., 2013, Annals Fam Med',
+        tags: ['diabetes', 'kayu-manis', 'jahe', 'insulin-sensitizer', 'seduh']
+      },
+
+      // ── HIPERTENSI (3 formula) ────────────────────────────────────────────
+      {
+        id: 'f-seledri-hipertensi',
+        recipeNumber: null, name: 'Jus Seledri — Hipertensi Ringan-Sedang',
+        indications: ['hipertensi', 'diuretik'], category: 'kardiovaskular',
+        ingredients: [
+          { herb: 'Batang dan Daun Seledri segar', latinName: 'Apium graveolens L.', amount: 100, unit: 'gram', condition: 'segar, cuci bersih' },
+          { herb: 'Air matang', latinName: null, amount: 100, unit: 'ml', condition: null }
+        ],
+        preparationMethod: 'Blender seledri dengan 100ml air. Saring. Minum segera (jangan disimpan).',
+        preparationType: 'peras', dosage: '150ml per minum', frequency: '2× sehari (pagi dan sore)',
+        duration: '14-30 hari', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['Tidak untuk pasien gagal ginjal — efek diuretik kuat', 'Monitor tekanan darah tiap 3 hari', 'Tidak menggantikan obat antihipertensi — supplement saja'],
+        source: 'Moghadam MH et al., 2013, Avicenna J Phytomedicine + FOHAI Kemenkes',
+        tags: ['hipertensi', 'seledri', 'diuretik', 'penurun-tekanan-darah', 'jus']
+      },
+      {
+        id: 'f-rosella-hipertensi',
+        recipeNumber: null, name: 'Rosella + Madu — Hipertensi + Kolesterol',
+        indications: ['hipertensi', 'kolesterol', 'antioksidan'], category: 'kardiovaskular',
+        ingredients: [
+          { herb: 'Kelopak Rosella kering', latinName: 'Hibiscus sabdariffa L.', amount: 8, unit: 'gram', condition: 'kering (8-10 kelopak)' },
+          { herb: 'Madu murni', latinName: null, amount: 1, unit: 'sendok makan', condition: null }
+        ],
+        preparationMethod: 'Seduh kelopak rosella dalam 250ml air panas (90°C) selama 5-10 menit hingga air berwarna merah tua. Saring, tunggu suhu ≤50°C, larutkan madu.',
+        preparationType: 'seduh', dosage: '200ml per minum', frequency: '2× sehari',
+        duration: '4-8 minggu', isTopical: false, evidenceLevel: 'A', doctorVerified: false,
+        warnings: ['Dapat berinteraksi dengan diuretik (efek aditif)', 'Tidak untuk ibu hamil dosis tinggi', 'Monitor tekanan darah rutin'],
+        source: 'Mozaffari-Khosravi H et al., 2009, J Hum Hypertens + Hopkins AL et al., 2013',
+        tags: ['hipertensi', 'kolesterol', 'rosella', 'ACE-inhibitor-alami', 'antioksidan', 'seduh']
+      },
+      {
+        id: 'f-belimbing-wuluh-hiper',
+        recipeNumber: null, name: 'Belimbing Wuluh + Bawang Putih — Hipertensi',
+        indications: ['hipertensi'], category: 'kardiovaskular',
+        ingredients: [
+          { herb: 'Buah Belimbing Wuluh segar', latinName: 'Averrhoa bilimbi L.', amount: 5, unit: 'buah', condition: 'segar' },
+          { herb: 'Bawang Putih', latinName: 'Allium sativum L.', amount: 2, unit: 'siung', condition: 'geprek' }
+        ],
+        preparationMethod: 'Rebus belimbing wuluh + bawang putih dengan 400ml air hingga tersisa 200ml. Saring.',
+        preparationType: 'rebus', dosage: '200ml per minum', frequency: '1× sehari pagi',
+        duration: '21 hari', isTopical: false, evidenceLevel: 'B', doctorVerified: false,
+        warnings: ['Sangat asam — hindari jika ada masalah lambung/GERD', 'Tidak untuk pasien batu ginjal kalsium oksalat (oxalate tinggi)', 'Monitor tekanan darah rutin'],
+        source: 'Saintifikasi Jamu Kemenkes RI + Akter S et al., 2014',
+        tags: ['hipertensi', 'belimbing-wuluh', 'bawang-putih', 'vasodilatasi', 'rebus']
+      },
+
+      // ── KOLESTEROL (3 formula) ────────────────────────────────────────────
+      {
+        id: 'f-bawang-putih-kolesterol',
+        recipeNumber: null, name: 'Rebusan Bawang Putih — Kolesterol + Hipertensi',
+        indications: ['kolesterol', 'hipertensi', 'kardiovaskular'], category: 'kardiovaskular',
+        ingredients: [
+          { herb: 'Bawang Putih', latinName: 'Allium sativum L.', amount: 4, unit: 'siung', condition: 'geprek atau iris tipis' }
+        ],
+        preparationMethod: 'Geprek 4 siung bawang putih. Diamkan 10 menit (aktivasi allicin). Rebus dengan 300ml air 5 menit. Saring. Atau bisa dikonsumsi mentah 1 siung/hari.',
+        preparationType: 'rebus', dosage: '200ml per minum (atau 1 siung mentah)',
+        frequency: '1× sehari', duration: '30-60 hari', isTopical: false, evidenceLevel: 'A', doctorVerified: false,
+        warnings: ['Dapat meningkatkan risiko perdarahan jika kombinasi warfarin/aspirin', 'Bau mulut — konsumsi pagi hari + sikat gigi setelahnya', 'Tidak untuk pasien sebelum operasi (stop 2 minggu sebelum)'],
+        source: 'Ried K et al., 2016, J Nutr + WHO Monographs Vol.1 (Allium sativum)',
+        tags: ['kolesterol', 'hipertensi', 'bawang-putih', 'allicin', 'lipid-lowering']
+      },
+      {
+        id: 'f-temulawak-kolesterol',
+        recipeNumber: null, name: 'Temulawak + Kunyit — Kolesterol + Hati',
+        indications: ['kolesterol', 'hepatoprotektor', 'antiinflamasi'], category: 'metabolisme',
+        ingredients: [
+          { herb: 'Rimpang Temulawak', latinName: 'Curcuma xanthorrhiza Roxb.', amount: 25, unit: 'gram', condition: 'kering, iris tipis' },
+          { herb: 'Rimpang Kunyit', latinName: 'Curcuma longa L.', amount: 15, unit: 'gram', condition: 'kering, iris tipis' }
+        ],
+        preparationMethod: 'Rebus kedua bahan dengan 600ml air hingga tersisa 200ml. Saring. Minum hangat.',
+        preparationType: 'rebus', dosage: '200ml per minum', frequency: '2× sehari',
+        duration: '30 hari', isTopical: false, evidenceLevel: 'A', doctorVerified: false,
+        warnings: ['Tidak untuk pasien batu empedu aktif', 'Tidak untuk ibu hamil trimester 1', 'Monitor fungsi hati jika konsumsi > 60 hari'],
+        source: 'Saintifikasi Jamu Kemenkes RI + Thabrani H et al., 2014, J Sains Farmasi',
+        tags: ['kolesterol', 'temulawak', 'kunyit', 'hepatoprotektor', 'lipid-lowering', 'rebus']
+      },
+      {
+        id: 'f-daun-sirsak-kolesterol',
+        recipeNumber: null, name: 'Rebusan Daun Sirsak — Kolesterol + Antioksidan',
+        indications: ['kolesterol', 'antioksidan'], category: 'kardiovaskular',
+        ingredients: [
+          { herb: 'Daun Sirsak', latinName: 'Annona muricata L.', amount: 10, unit: 'lembar', condition: 'segar (pilih yang tua)' }
+        ],
+        preparationMethod: 'Cuci 10 lembar daun sirsak. Rebus dengan 600ml air hingga tersisa 300ml. Saring. Minum 2× sehari, pisah menjadi 2 gelas.',
+        preparationType: 'rebus', dosage: '150ml per minum', frequency: '2× sehari',
+        duration: '14-21 hari', isTopical: false, evidenceLevel: 'C', doctorVerified: false,
+        warnings: ['Jangan konsumsi dosis berlebihan — acetogenin dalam dosis tinggi bersifat neurotoksik', 'Tidak untuk jangka panjang > 30 hari tanpa pengawasan dokter', 'Tidak untuk parkinson (memperburuk gejala)'],
+        source: 'Patel S & Gogna P, 2015, Food & Chem Toxicology + Saintifikasi Jamu',
+        tags: ['kolesterol', 'antioksidan', 'daun-sirsak', 'rebus']
+      }
+    ];
+
+    try {
+      log('Memulai seed 20 resep manual...', 'info');
+      const db = VFirebase.db;
+      let n = 0;
+      for (const formula of formulas) {
+        const { id, ...data } = formula;
+        await db.collection('herbalFormulas').doc(id).set({
+          ...data,
+          seededAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+        log('✓ ' + formula.name + ' [ev:' + formula.evidenceLevel + ']', 'success');
+        n++;
+      }
+      log('', 'info');
+      log('=== ' + n + ' RESEP BERHASIL DISIMPAN ===', 'success');
+      log('Sumber: FOHAI Kemenkes, WHO Monographs, Saintifikasi Jamu, PubMed', 'info');
+    } catch (e) {
+      log('Error: ' + e.message, 'error');
+      console.error(e);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '📋 Seed 20 Resep Manual (Asam Urat, Batuk, Maag, Diabetes, Hipertensi, Kolesterol)';
+    }
+  }
+
+  // ===== SEED TIM SISWA + SUPER ADMIN =====
+  async function seedTeamAccounts() {
+    const btn = document.getElementById('seedTeamBtn');
+    btn.disabled = true;
+    btn.textContent = 'Seeding tim...';
+
+    const teamAccounts = [
+      {
+        email: 'mentor@herboratech.id',
+        password: 'mentor2024',
+        name: 'Mentor HerboraTech',
+        role: 'super_admin',
+        roleStatus: 'approved',
+        isActive: true
+      },
+      {
+        email: 'helmi.widyatamaka@herboratech.id',
+        password: 'siswa2024',
+        name: 'Helmi Widyatamaka Putri Setiawan',
+        role: 'admin',
+        roleStatus: 'approved',
+        isActive: true
+      },
+      {
+        email: 'anisa.widad@herboratech.id',
+        password: 'siswa2024',
+        name: 'Anisa Widad',
+        role: 'admin',
+        roleStatus: 'approved',
+        isActive: true
+      },
+      {
+        email: 'laqif.abdurrahman@herboratech.id',
+        password: 'siswa2024',
+        name: 'Laqif Abdurrahman Haris',
+        role: 'admin',
+        roleStatus: 'approved',
+        isActive: true
+      },
+      {
+        email: 'anyaila.wahyu@herboratech.id',
+        password: 'siswa2024',
+        name: 'Anyaila Wahyu',
+        role: 'admin',
+        roleStatus: 'approved',
+        isActive: true
+      },
+      {
+        email: 'nayla.norcelita@herboratech.id',
+        password: 'siswa2024',
+        name: 'Nayla Norcelita Widodo',
+        role: 'admin',
+        roleStatus: 'approved',
+        isActive: true
+      },
+      {
+        email: 'arham.zulfagar@herboratech.id',
+        password: 'siswa2024',
+        name: 'Arham Zulfagar Probohudono',
+        role: 'admin',
+        roleStatus: 'approved',
+        isActive: true
+      }
+    ];
+
+    try {
+      log('Memulai seed akun tim siswa + super admin...', 'info');
+
+      for (const acc of teamAccounts) {
+        log('Membuat: ' + acc.email + ' (' + acc.role + ')', 'info');
+        try {
+          const cred = await VFirebase.auth.createUserWithEmailAndPassword(acc.email, acc.password);
+          await cred.user.updateProfile({ displayName: acc.name });
+
+          await VFirebase.db.collection('users').doc(cred.user.uid).set({
+            uid: cred.user.uid,
+            name: acc.name,
+            email: acc.email,
+            role: acc.role,
+            roleStatus: acc.roleStatus,
+            isActive: acc.isActive,
+            photoURL: null,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+
+          log('✓ ' + acc.name + ' (' + acc.role + ')', 'success');
+          await VFirebase.auth.signOut();
+
+        } catch (e) {
+          if (e.code === 'auth/email-already-in-use') {
+            log('⚠ Sudah ada: ' + acc.email + ' (skip)', 'warn');
+          } else {
+            log('✗ Gagal ' + acc.email + ': ' + e.message, 'error');
+          }
+        }
+      }
+
+      log('', 'info');
+      log('=== AKUN TIM SELESAI ===', 'success');
+      log('Super Admin: mentor@herboratech.id / mentor2024', 'info');
+      log('Admin Siswa: [nama]@herboratech.id / siswa2024', 'info');
+
+    } catch (e) {
+      log('Error: ' + e.message, 'error');
+      console.error(e);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '👥 Seed Akun Tim Siswa + Super Admin Mentor';
+    }
+  }
+
+  async function seedSampleConsultation() {
+    const btn = document.getElementById('seedConsultBtn');
+    btn.disabled = true;
+
+    try {
+      // Check if user is logged in
+      const user = VFirebase.auth.currentUser;
+      if (!user) {
+        log('Anda harus login dulu untuk membuat sample konsultasi', 'warn');
+        log('Membuat konsultasi dengan anonymous auth...', 'info');
+        await VFirebase.auth.signInAnonymously();
+      }
+
+      const currentUser = VFirebase.auth.currentUser;
+      const consultId = 'sample-consult-' + Date.now();
+
+      log('Membuat sample konsultasi...', 'info');
+
+      await VFirebase.db.collection('consultations').doc(consultId).set({
+        patientId: currentUser.uid,
+        doctorId: 'doctor-sarah-wijaya',
+        type: 'chat',
+        status: 'active',
+        complaint: 'Keluhan sample untuk testing',
+        startTime: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      log('Konsultasi dibuat dengan ID: ' + consultId, 'success');
+
+      // Add sample messages
+      log('Menambah sample chat messages...', 'info');
+
+      const messagesRef = VFirebase.db.collection('messages').doc(consultId).collection('items');
+
+      await messagesRef.add({
+        senderId: currentUser.uid,
+        senderName: 'Pasien',
+        senderRole: 'patient',
+        text: 'Halo dok, saya ingin berkonsultasi tentang keluhan saya.',
+        type: 'text',
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      await messagesRef.add({
+        senderId: 'doctor-sarah-wijaya',
+        senderName: 'dr. Sarah Wijaya, Sp.PD',
+        senderRole: 'doctor',
+        text: 'Halo, selamat datang di HerboraTech. Silakan ceritakan keluhan Anda secara detail.',
+        type: 'text',
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      log('Sample messages berhasil ditambahkan!', 'success');
+      log('Anda bisa test chat di: chat-room.html?consultId=' + consultId, 'info');
+
+    } catch (e) {
+      log('Error: ' + e.message, 'error');
+      console.error(e);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  // ===== SEED GEMINI API KEYS =====
+  async function seedGeminiApiKeys() {
+    const btn = document.getElementById('seedGeminiKeysBtn');
+    btn.disabled = true;
+    btn.textContent = 'Seeding API keys...';
+
+    if (!VFirebase.auth.currentUser) {
+      await VFirebase.auth.signInAnonymously();
+    }
+
+    // 10 dummy API keys for testing
+    const apiKeys = [
+      {
+        id: 'gemini-key-01',
+        key: 'AIzaSyD_fake_key_01_for_testing_only_do_not_use_in_production',
+        limit: 10000,
+        usage: 0,
+        active: true,
+        order: 1,
+        lastUsed: null,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'gemini-key-02',
+        key: 'AIzaSyD_fake_key_02_for_testing_only_do_not_use_in_production',
+        limit: 10000,
+        usage: 0,
+        active: true,
+        order: 2,
+        lastUsed: null,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'gemini-key-03',
+        key: 'AIzaSyD_fake_key_03_for_testing_only_do_not_use_in_production',
+        limit: 10000,
+        usage: 0,
+        active: true,
+        order: 3,
+        lastUsed: null,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'gemini-key-04',
+        key: 'AIzaSyD_fake_key_04_for_testing_only_do_not_use_in_production',
+        limit: 10000,
+        usage: 0,
+        active: true,
+        order: 4,
+        lastUsed: null,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'gemini-key-05',
+        key: 'AIzaSyD_fake_key_05_for_testing_only_do_not_use_in_production',
+        limit: 10000,
+        usage: 0,
+        active: true,
+        order: 5,
+        lastUsed: null,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'gemini-key-06',
+        key: 'AIzaSyD_fake_key_06_for_testing_only_do_not_use_in_production',
+        limit: 10000,
+        usage: 0,
+        active: true,
+        order: 6,
+        lastUsed: null,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'gemini-key-07',
+        key: 'AIzaSyD_fake_key_07_for_testing_only_do_not_use_in_production',
+        limit: 10000,
+        usage: 0,
+        active: true,
+        order: 7,
+        lastUsed: null,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'gemini-key-08',
+        key: 'AIzaSyD_fake_key_08_for_testing_only_do_not_use_in_production',
+        limit: 10000,
+        usage: 0,
+        active: true,
+        order: 8,
+        lastUsed: null,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'gemini-key-09',
+        key: 'AIzaSyD_fake_key_09_for_testing_only_do_not_use_in_production',
+        limit: 10000,
+        usage: 0,
+        active: true,
+        order: 9,
+        lastUsed: null,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      },
+      {
+        id: 'gemini-key-10',
+        key: 'AIzaSyD_fake_key_10_for_testing_only_do_not_use_in_production',
+        limit: 10000,
+        usage: 0,
+        active: true,
+        order: 10,
+        lastUsed: null,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }
+    ];
+
+    try {
+      log('Memulai seed 10 Gemini API keys...', 'info');
+      log('', 'info');
+
+      const batch = VFirebase.db.batch();
+
+      for (const keyData of apiKeys) {
+        log('Menambah: ' + keyData.id, 'info');
+        const docRef = VFirebase.db.collection('gemini-api-keys').doc(keyData.id);
+        batch.set(docRef, keyData);
+      }
+
+      await batch.commit();
+
+      log('', 'info');
+      log('✅ Berhasil menambah 10 Gemini API keys!', 'success');
+      log('Lihat admin/gemini-keys.html untuk manage keys', 'info');
+      log('⚠️ Ganti API key dengan yang asli setelah testing!', 'warn');
+
+    } catch (e) {
+      log('Error: ' + e.message, 'error');
+      console.error(e);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '🔑 Seed 10 Gemini API Keys';
+    }
+  }
+</script>
+</body>
+</html>

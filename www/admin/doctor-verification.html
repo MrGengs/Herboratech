@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Verifikasi Dokter</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .doctor-cards-grid { display: flex; flex-direction: column; gap: 24px; margin-top: 24px; }
+
+    .doc-card { padding: 24px; }
+    .doc-card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .doc-avatar { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: #fff; flex-shrink: 0; box-shadow: var(--shadow-out-sm); }
+    .doc-name { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+    .doc-specialty { font-size: 0.83rem; color: var(--text-tertiary); margin-top: 2px; }
+    .doc-date { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+
+    .doc-documents { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 18px; }
+    @media (min-width: 480px) { .doc-documents { grid-template-columns: repeat(3, 1fr); } }
+    .doc-preview { border-radius: 12px; padding: 20px 12px; text-align: center; position: relative; box-shadow: var(--shadow-out-sm); }
+    .doc-preview-label { font-size: 0.75rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
+    .doc-preview-icon { font-size: 2rem; color: rgba(255,255,255,0.8); margin-bottom: 8px; }
+    .doc-preview-link { font-size: 0.72rem; color: rgba(255,255,255,0.9); text-decoration: underline; cursor: pointer; }
+
+    .doc-notes { margin-bottom: 16px; }
+    .doc-notes label { font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 6px; }
+    .doc-notes textarea { width: 100%; border-radius: 10px; border: none; box-shadow: var(--shadow-in); background: var(--bg); padding: 10px 14px; font-family: 'Poppins', sans-serif; font-size: 0.83rem; color: var(--text-primary); resize: vertical; min-height: 70px; outline: none; box-sizing: border-box; }
+
+    .doc-actions { display: flex; gap: 12px; }
+
+    .empty-state { text-align: center; padding: 64px 24px; color: var(--text-tertiary); }
+    .empty-state ion-icon { font-size: 3.5rem; color: var(--text-muted); display: block; margin: 0 auto 16px; }
+    .empty-state h3 { font-size: 1.1rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; }
+    .empty-state p { font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item active" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+
+    <div class="admin-topbar" data-animate="up">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <h1>Verifikasi Role</h1>
+        <span class="neu-chip" id="pending-count-chip" style="background:var(--warning-bg);color:var(--warning);font-weight:600;font-size:0.8rem;">
+          <ion-icon name="time-outline" style="font-size:0.9rem;vertical-align:middle;margin-right:4px;"></ion-icon><span id="pending-count">0</span> Menunggu Verifikasi
+        </span>
+      </div>
+      <div class="header-actions">
+        <button class="neu-icon-btn"><ion-icon name="filter-outline"></ion-icon></button>
+        <button class="neu-btn neu-btn-sm"><ion-icon name="download-outline"></ion-icon> Export</button>
+      </div>
+    </div>
+
+    <div class="doctor-cards-grid" id="doctor-cards-grid">
+      <!-- Diisi oleh JS -->
+    </div>
+
+  </main>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+const AVATAR_GRADIENTS = [
+  'linear-gradient(135deg,#2F80ED,#56CCF2)',
+  'linear-gradient(135deg,#EB5757,#FF8A80)',
+  'linear-gradient(135deg,#27AE60,#6FCF97)',
+  'linear-gradient(135deg,#6C63FF,#8B85FF)',
+  'linear-gradient(135deg,#F2994A,#F2C94C)',
+];
+
+function getInitials(name) {
+  return (name || 'DR').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+const ROLE_NAMES = { patient: 'Pasien', doctor: 'Dokter', admin: 'Admin' };
+const ROLE_COLORS = {
+  patient: 'linear-gradient(135deg,#27AE60,#6FCF97)',
+  doctor: 'linear-gradient(135deg,#1D5DB5,#56CCF2)',
+  admin: 'linear-gradient(135deg,#4A43CC,#9B59B6)'
+};
+
+function renderUserCard(user, index) {
+  const gradient = ROLE_COLORS[user.requestedRole] || AVATAR_GRADIENTS[index % AVATAR_GRADIENTS.length];
+  const initials = getInitials(user.name);
+  const requestedRole = ROLE_NAMES[user.requestedRole] || user.requestedRole || '-';
+  const registeredDate = user.createdAt && user.createdAt.toDate
+    ? user.createdAt.toDate().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+    : '-';
+
+  const card = document.createElement('div');
+  card.className = 'neu-card doc-card';
+  card.setAttribute('data-animate', 'up');
+  card.setAttribute('data-delay', String(100 + index * 100));
+  card.dataset.uid = user.uid;
+
+  card.innerHTML = `
+    <div class="doc-card-header">
+      <div class="doc-avatar" style="background:${gradient};">${initials}</div>
+      <div style="flex:1;">
+        <div class="doc-name">${user.name || 'Tanpa Nama'}</div>
+        <div style="margin-top:4px;font-size:0.78rem;color:var(--text-tertiary);">${user.email || ''}</div>
+        <div class="doc-date"><ion-icon name="calendar-outline"></ion-icon> Mendaftar ${registeredDate}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:4px;">Role yang diminta:</div>
+        <span class="neu-chip" style="background:${gradient};color:#fff;font-weight:700;font-size:0.8rem;padding:6px 14px;">
+          ${requestedRole}
+        </span>
+      </div>
+    </div>
+    ${user.requestedRole === 'doctor' ? `
+    <div class="doc-documents">
+      <div class="doc-preview" style="background:linear-gradient(135deg,#6FCF97,#27AE60);">
+        <div class="doc-preview-icon"><ion-icon name="document-text-outline"></ion-icon></div>
+        <div class="doc-preview-label">STR</div>
+        <span class="doc-preview-link" onclick="showToast('Dokumen belum diupload','warning')">Lihat</span>
+      </div>
+      <div class="doc-preview" style="background:linear-gradient(135deg,#6C63FF,#8B85FF);">
+        <div class="doc-preview-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
+        <div class="doc-preview-label">SIP</div>
+        <span class="doc-preview-link" onclick="showToast('Dokumen belum diupload','warning')">Lihat</span>
+      </div>
+      <div class="doc-preview" style="background:linear-gradient(135deg,#F2994A,#F2C94C);">
+        <div class="doc-preview-icon"><ion-icon name="school-outline"></ion-icon></div>
+        <div class="doc-preview-label">Ijazah</div>
+        <span class="doc-preview-link" onclick="showToast('Dokumen belum diupload','warning')">Lihat</span>
+      </div>
+    </div>
+    ` : ''}
+    <div class="doc-notes">
+      <label>Catatan Admin</label>
+      <textarea id="note-${user.uid}" placeholder="Tambahkan catatan..."></textarea>
+    </div>
+    <div class="doc-actions">
+      <button class="neu-btn-primary neu-btn-sm" onclick="approveUser('${user.uid}', '${user.requestedRole}', this)">
+        <ion-icon name="checkmark-circle-outline"></ion-icon> Setujui
+      </button>
+      <button class="neu-btn-danger neu-btn-sm" onclick="rejectUser('${user.uid}', this)">
+        <ion-icon name="close-circle-outline"></ion-icon> Tolak
+      </button>
+    </div>
+  `;
+
+  return card;
+}
+
+function renderEmptyState() {
+  const grid = document.getElementById('doctor-cards-grid');
+  grid.innerHTML = `
+    <div class="neu-card empty-state">
+      <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+      <h3>Tidak Ada Permintaan Pending</h3>
+      <p>Semua permintaan role sudah diproses atau belum ada yang mendaftar.</p>
+    </div>
+  `;
+}
+
+async function loadPendingUsers() {
+  try {
+    // Get ALL users and filter by roleStatus === 'pending'
+    const allUsers = await VDB.getAllUsers();
+    const pending = allUsers.filter(u => u.roleStatus === 'pending');
+
+    document.getElementById('pending-count').textContent = pending.length;
+
+    const grid = document.getElementById('doctor-cards-grid');
+    grid.innerHTML = '';
+
+    if (pending.length === 0) {
+      renderEmptyState();
+      return;
+    }
+
+    pending.forEach((user, index) => {
+      grid.appendChild(renderUserCard(user, index));
+    });
+  } catch (err) {
+    console.error(err);
+    showToast('Gagal memuat daftar: ' + (err.message || err), 'error');
+  }
+}
+
+async function approveUser(userId, role, btn) {
+  try {
+    btn.disabled = true;
+    const note = document.getElementById('note-' + userId)?.value || '';
+
+    await VDB.updateUser(userId, {
+      role: role,
+      roleStatus: 'approved',
+      approvedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      adminNote: note
+    });
+
+    showToast('User disetujui sebagai ' + (ROLE_NAMES[role] || role), 'success');
+    await loadPendingUsers();
+  } catch (err) {
+    btn.disabled = false;
+    showToast('Gagal menyetujui: ' + (err.message || err), 'error');
+  }
+}
+
+async function rejectUser(userId, btn) {
+  try {
+    btn.disabled = true;
+    const note = document.getElementById('note-' + userId)?.value || 'Permintaan ditolak';
+
+    await VDB.updateUser(userId, {
+      roleStatus: 'rejected',
+      rejectedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      rejectionNote: note
+    });
+
+    showToast('Permintaan role ditolak', 'warning');
+    await loadPendingUsers();
+  } catch (err) {
+    btn.disabled = false;
+    showToast('Gagal menolak: ' + (err.message || err), 'error');
+  }
+}
+
+(async () => {
+  try {
+    const { profile } = await VAuth.guard('admin', 1);
+    if (profile && profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+    await loadPendingUsers();
+  } catch (err) {
+    console.error(err);
+    showToast('Terjadi kesalahan: ' + (err.message || err), 'error');
+  }
+})();
+</script>
+</body>
+</html>

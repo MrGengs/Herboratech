@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Edit Profil Dokter</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0C2352 0%, #1D5DB5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
+
+    .avatar-section { display: flex; flex-direction: column; align-items: center; padding: 24px 0 16px; }
+    .avatar-wrapper { position: relative; margin-bottom: 10px; }
+    .avatar-edit-badge {
+      position: absolute; bottom: 0; right: 0;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2F80ED, #1D5DB5);
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    .avatar-edit-badge ion-icon { font-size: 0.8rem; color: #fff; }
+    .avatar-btn-text { font-size: 0.75rem; color: var(--info); font-weight: 600; cursor: pointer; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-label { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; display: block; }
+    .neu-input-field {
+      width: 100%; padding: 11px 14px; border-radius: 12px; border: none;
+      background: var(--bg); box-shadow: var(--shadow-in);
+      font-family: 'Poppins', sans-serif; font-size: 0.85rem;
+      color: var(--text-primary); box-sizing: border-box;
+    }
+    .neu-input-field:focus { outline: none; box-shadow: var(--shadow-in), 0 0 0 2px var(--info); }
+    .neu-textarea-field {
+      width: 100%; padding: 11px 14px; border-radius: 12px; border: none;
+      background: var(--bg); box-shadow: var(--shadow-in);
+      font-family: 'Poppins', sans-serif; font-size: 0.85rem;
+      color: var(--text-primary); resize: none; box-sizing: border-box;
+    }
+    .neu-textarea-field:focus { outline: none; box-shadow: var(--shadow-in), 0 0 0 2px var(--info); }
+
+    .edu-entry { display: flex; align-items: center; gap: 10px; background: var(--bg); border-radius: 12px; box-shadow: var(--shadow-out-sm); padding: 12px 14px; margin-bottom: 8px; }
+    .edu-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(47,128,237,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .edu-text { flex: 1; }
+    .edu-degree { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+    .edu-school { font-size: 0.68rem; color: var(--text-tertiary); }
+    .edu-delete { color: var(--danger); font-size: 1.1rem; cursor: pointer; }
+
+    .upload-area {
+      border: 2px dashed rgba(47,128,237,0.35);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .upload-area:hover { border-color: var(--info); }
+    .upload-icon { font-size: 1.8rem; color: var(--info); margin-bottom: 4px; }
+    .upload-text { font-size: 0.75rem; color: var(--text-tertiary); }
+    .upload-filename { font-size: 0.72rem; color: var(--info); font-weight: 600; margin-top: 4px; }
+
+    .tarif-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .tarif-label { font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); min-width: 80px; }
+    .tarif-prefix { font-size: 0.78rem; color: var(--text-tertiary); font-weight: 500; }
+    .tarif-input {
+      flex: 1; padding: 9px 12px; border-radius: 10px; border: none;
+      background: var(--bg); box-shadow: var(--shadow-in);
+      font-family: 'Poppins', sans-serif; font-size: 0.82rem;
+      color: var(--text-primary); text-align: right;
+    }
+    .tarif-input:focus { outline: none; }
+
+    .add-edu-btn {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; color: var(--info); font-weight: 600;
+      cursor: pointer; padding: 6px 0;
+      border: none; background: none; font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('profile.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="font-size:1.05rem;font-weight:700;">Edit Profil Dokter</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+
+    <!-- Avatar -->
+    <div class="avatar-section" data-animate="up">
+      <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="handlePhotoSelect(event)">
+      <div class="avatar-wrapper">
+        <img id="avatarImg" style="display:none;width:88px;height:88px;border-radius:50%;object-fit:cover;box-shadow:var(--shadow-out-sm);">
+        <div id="avatarGradient" class="neu-avatar-xl" style="background:linear-gradient(135deg,#2F80ED,#56CCF2);font-size:1.4rem;">SW</div>
+        <div class="avatar-edit-badge" onclick="document.getElementById('photoInput').click()">
+          <ion-icon name="camera-outline"></ion-icon>
+        </div>
+      </div>
+      <span class="avatar-btn-text" onclick="document.getElementById('photoInput').click()">Ganti Foto</span>
+    </div>
+
+    <!-- Basic Info -->
+    <div class="section-header" data-animate="up" data-delay="60">
+      <div class="section-title">Informasi Dasar</div>
+    </div>
+    <div class="neu-card" data-animate="up" data-delay="80">
+      <div class="form-group">
+        <label class="form-label">Nama Dokter</label>
+        <input id="input-name" type="text" class="neu-input-field" placeholder="Nama lengkap + gelar">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Spesialisasi</label>
+        <input id="input-specialty" type="text" class="neu-input-field" placeholder="Contoh: Spesialis Penyakit Dalam">
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Bio / Deskripsi</label>
+        <textarea id="input-bio" class="neu-textarea-field" rows="4" placeholder="Ceritakan pengalaman dan pendekatan praktek Anda..."></textarea>
+      </div>
+    </div>
+
+    <!-- Pendidikan -->
+    <div class="section-header mt-20" data-animate="up" data-delay="100">
+      <div class="section-title">Pendidikan</div>
+    </div>
+    <div data-animate="up" data-delay="120">
+      <div class="edu-entry" id="edu1">
+        <div class="edu-icon"><ion-icon name="school-outline" style="color:var(--info);font-size:1rem;"></ion-icon></div>
+        <div class="edu-text">
+          <div class="edu-degree">S1 Kedokteran Umum</div>
+          <div class="edu-school">Universitas Indonesia · 2008</div>
+        </div>
+        <ion-icon name="close-circle-outline" class="edu-delete" onclick="removeEdu('edu1')"></ion-icon>
+      </div>
+      <div class="edu-entry" id="edu2">
+        <div class="edu-icon"><ion-icon name="school-outline" style="color:var(--info);font-size:1rem;"></ion-icon></div>
+        <div class="edu-text">
+          <div class="edu-degree">Sp.PD — Spesialis Penyakit Dalam</div>
+          <div class="edu-school">Universitas Gadjah Mada · 2013</div>
+        </div>
+        <ion-icon name="close-circle-outline" class="edu-delete" onclick="removeEdu('edu2')"></ion-icon>
+      </div>
+      <div id="edu-extra"></div>
+      <button class="add-edu-btn" onclick="addEdu()">
+        <ion-icon name="add-circle-outline"></ion-icon> Tambah Pendidikan
+      </button>
+    </div>
+
+    <!-- Pengalaman -->
+    <div class="section-header mt-20" data-animate="up" data-delay="140">
+      <div class="section-title">Pengalaman</div>
+    </div>
+    <div class="neu-card" data-animate="up" data-delay="160">
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Tahun Pengalaman</label>
+        <input id="input-experience" type="number" class="neu-input-field" min="0" max="60" placeholder="0" style="max-width:120px;">
+      </div>
+    </div>
+
+    <!-- Dokumen -->
+    <div class="section-header mt-20" data-animate="up" data-delay="180">
+      <div class="section-title">Dokumen Lisensi</div>
+    </div>
+    <div data-animate="up" data-delay="200">
+      <div style="margin-bottom:12px;">
+        <div class="form-label" style="font-size:0.75rem;font-weight:600;color:var(--text-secondary);margin-bottom:6px;">Surat Tanda Registrasi (STR)</div>
+        <div class="upload-area" onclick="showToast('Pilih file STR', 'info')">
+          <div class="upload-icon"><ion-icon name="document-text-outline"></ion-icon></div>
+          <div class="upload-text">Klik atau drag & drop file di sini</div>
+          <div class="upload-filename">STR_SarahWijaya_2026.pdf</div>
+        </div>
+      </div>
+      <div>
+        <div class="form-label" style="font-size:0.75rem;font-weight:600;color:var(--text-secondary);margin-bottom:6px;">Surat Izin Praktik (SIP)</div>
+        <div class="upload-area" onclick="showToast('Pilih file SIP', 'info')">
+          <div class="upload-icon"><ion-icon name="document-text-outline"></ion-icon></div>
+          <div class="upload-text">Klik atau drag & drop file di sini</div>
+          <div class="upload-filename">SIP_SarahWijaya_2026.pdf</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarif -->
+    <div class="section-header mt-20" data-animate="up" data-delay="220">
+      <div class="section-title">Tarif Konsultasi</div>
+    </div>
+    <div class="neu-card" data-animate="up" data-delay="240">
+      <div class="tarif-row">
+        <div class="tarif-label"><ion-icon name="chatbubble-outline" style="vertical-align:-2px;color:var(--info);"></ion-icon> Chat</div>
+        <div class="tarif-prefix">Rp</div>
+        <input id="input-fee-chat" type="number" class="tarif-input" placeholder="0">
+      </div>
+      <div class="tarif-row">
+        <div class="tarif-label"><ion-icon name="videocam-outline" style="vertical-align:-2px;color:var(--accent);"></ion-icon> Video</div>
+        <div class="tarif-prefix">Rp</div>
+        <input id="input-fee-video" type="number" class="tarif-input" placeholder="0">
+      </div>
+      <div class="tarif-row" style="margin-bottom:0;">
+        <div class="tarif-label"><ion-icon name="flask-outline" style="vertical-align:-2px;color:var(--primary-dark);"></ion-icon> Integratif</div>
+        <div class="tarif-prefix">Rp</div>
+        <input id="input-fee-integratif" type="number" class="tarif-input" placeholder="0">
+      </div>
+    </div>
+
+    <button class="neu-btn neu-btn-primary neu-btn-block mt-24 mb-24" data-animate="up" data-delay="260" onclick="saveProfile()">
+      <ion-icon name="checkmark-circle-outline"></ion-icon> Simpan
+    </button>
+
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+  let _currentUser = null;
+  let _photoFile = null;
+
+  // ── Photo Selection & Preview ──────────────────────────────────────────────
+  function handlePhotoSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      showToast('Pilih file gambar yang valid', 'warning');
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      showToast('Ukuran foto terlalu besar (max 5MB)', 'warning');
+      return;
+    }
+
+    _photoFile = file;
+
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const imgEl = document.getElementById('avatarImg');
+      const gradientEl = document.getElementById('avatarGradient');
+      imgEl.src = e.target.result;
+      imgEl.style.display = 'block';
+      gradientEl.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+
+    showToast('Foto siap diunggah — tekan Simpan untuk mengonfirmasi', 'info');
+  }
+
+  // ── Firebase Auth Guard + Pre-fill ──────────────────────────────────────
+  (async () => {
+    const { user, profile } = await VAuth.guard('doctor', 1);
+    _currentUser = user;
+
+    try {
+      const userData = await VDB.getUser(user.uid);
+      if (userData) {
+        if (userData.name) document.getElementById('input-name').value = userData.name;
+        if (userData.specialty || userData.specialization)
+          document.getElementById('input-specialty').value = userData.specialty || userData.specialization;
+        if (userData.bio) document.getElementById('input-bio').value = userData.bio;
+        if (userData.yearsExperience) document.getElementById('input-experience').value = userData.yearsExperience;
+
+        // Fees
+        const fees = userData.consultationFee || {};
+        if (fees.chat)       document.getElementById('input-fee-chat').value = fees.chat;
+        if (fees.video)      document.getElementById('input-fee-video').value = fees.video;
+        if (fees.integratif) document.getElementById('input-fee-integratif').value = fees.integratif;
+
+        // Display photo or initials
+        const imgEl = document.getElementById('avatarImg');
+        const gradientEl = document.getElementById('avatarGradient');
+        if (userData.photoURL) {
+          imgEl.src = userData.photoURL;
+          imgEl.style.display = 'block';
+          gradientEl.style.display = 'none';
+        } else {
+          gradientEl.style.display = 'block';
+          imgEl.style.display = 'none';
+        }
+
+        // Avatar initials
+        if (userData.name) {
+          const parts = userData.name.split(' ');
+          gradientEl.textContent = parts.length >= 2
+            ? parts[0][0] + parts[parts.length - 1][0]
+            : userData.name.substring(0, 2).toUpperCase();
+        }
+      }
+    } catch (err) {
+      console.warn('Failed to load profile data:', err);
+    }
+  })();
+
+  function removeEdu(id) {
+    const el = document.getElementById(id);
+    if (el) { el.style.opacity = '0'; el.style.transform = 'translateX(20px)'; el.style.transition = 'all 0.3s'; setTimeout(() => el.remove(), 300); }
+  }
+
+  let eduCount = 3;
+  function addEdu() {
+    const container = document.getElementById('edu-extra');
+    const id = 'edu' + eduCount++;
+    const div = document.createElement('div');
+    div.className = 'edu-entry';
+    div.id = id;
+    div.innerHTML = `<div class="edu-icon"><ion-icon name="school-outline" style="color:var(--info);font-size:1rem;"></ion-icon></div>
+      <div class="edu-text">
+        <input type="text" class="neu-input-field" placeholder="Gelar / Program Studi" style="margin-bottom:4px;">
+        <input type="text" class="neu-input-field" style="font-size:0.75rem;" placeholder="Institusi · Tahun">
+      </div>
+      <ion-icon name="close-circle-outline" class="edu-delete" onclick="removeEdu('${id}')"></ion-icon>`;
+    container.appendChild(div);
+  }
+
+  async function saveProfile() {
+    if (!_currentUser) { showToast('Sesi tidak valid', 'error'); return; }
+    try {
+      const name       = document.getElementById('input-name')?.value.trim();
+      const specialty  = document.getElementById('input-specialty')?.value.trim();
+      const bio        = document.getElementById('input-bio')?.value.trim();
+      const experience = parseInt(document.getElementById('input-experience')?.value) || 0;
+      const feeChat    = parseInt(document.getElementById('input-fee-chat')?.value) || 0;
+      const feeVideo   = parseInt(document.getElementById('input-fee-video')?.value) || 0;
+      const feeInt     = parseInt(document.getElementById('input-fee-integratif')?.value) || 0;
+
+      // Collect education entries (handle both static divs and dynamic inputs)
+      const eduEntries = Array.from(document.querySelectorAll('.edu-entry')).map(entry => {
+        const inputs = entry.querySelectorAll('input');
+        let degree, school;
+        if (inputs.length >= 2) {
+          degree = inputs[0]?.value?.trim();
+          school = inputs[1]?.value?.trim();
+        } else {
+          const degreeEl = entry.querySelector('.edu-degree');
+          const schoolEl = entry.querySelector('.edu-school');
+          degree = degreeEl ? degreeEl.textContent.trim() : '';
+          school = schoolEl ? schoolEl.textContent.trim() : '';
+        }
+        return degree ? { degree, school: school || '' } : null;
+      }).filter(Boolean);
+
+      const updateData = {};
+      if (name)       updateData.name = name;
+      if (specialty)  updateData.specialty = specialty;
+      if (bio)        updateData.bio = bio;
+      if (experience) updateData.yearsExperience = experience;
+      if (feeChat || feeVideo || feeInt) {
+        updateData.consultationFee = { chat: feeChat, video: feeVideo, integratif: feeInt };
+      }
+      if (eduEntries.length) updateData.education = eduEntries;
+
+      // Upload photo if selected
+      if (_photoFile) {
+        showToast('Mengunggah foto...', 'info');
+        const storage = firebase.storage();
+        const storageRef = storage.ref(`doctor-photos/${_currentUser.uid}`);
+        const uploadTask = storageRef.put(_photoFile);
+
+        await new Promise((resolve, reject) => {
+          uploadTask.on(
+            'state_changed',
+            null,
+            (error) => reject(error),
+            async () => {
+              const downloadURL = await storageRef.getDownloadURL();
+              updateData.photoURL = downloadURL;
+              resolve();
+            }
+          );
+        });
+      }
+
+      await VDB.updateUser(_currentUser.uid, updateData);
+      showToast('Profil berhasil disimpan', 'success');
+      setTimeout(() => nav('profile.html'), 1200);
+    } catch (err) {
+      showToast('Gagal menyimpan: ' + (err.message || err), 'error');
+      console.error(err);
+    }
+  }
+</script>
+</body>
+</html>

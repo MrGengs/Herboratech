@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Iklan</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .ads-form { background: var(--bg-elevated); border-radius: var(--r-xl); padding: 20px; box-shadow: var(--shadow-out); margin-bottom: 24px; }
+    .ads-form h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 16px; }
+    .form-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .form-row input { flex: 1; min-width: 180px; padding: 10px 14px; border-radius: var(--r-md); border: 1.5px solid var(--border); background: var(--bg-base); font-size: 0.83rem; color: var(--text-primary); outline: none; }
+    .form-row input:focus { border-color: var(--primary-dark); }
+    .form-row input[type=number] { max-width: 100px; flex: 0 0 100px; }
+
+    .ads-preview { width: 100%; height: 155px; border-radius: var(--r-lg); overflow: hidden; background: var(--bg-base); box-shadow: var(--shadow-in); margin-bottom: 12px; display: none; }
+    .ads-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .ads-list { display: flex; flex-direction: column; gap: 14px; }
+    .ad-card { background: var(--bg-elevated); border-radius: var(--r-xl); box-shadow: var(--shadow-out); overflow: hidden; }
+    .ad-img-wrap { width: 100%; height: 140px; background: var(--bg-base); position: relative; }
+    .ad-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ad-img-wrap .ad-order { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.55); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
+    .ad-img-wrap .ad-status { position: absolute; top: 8px; right: 8px; padding: 3px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; }
+    .ad-info { padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+    .ad-info .ad-url { flex: 1; font-size: 0.72rem; color: var(--text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ad-actions { display: flex; gap: 8px; }
+    .btn-toggle { padding: 5px 12px; border-radius: var(--r-sm); font-size: 0.72rem; font-weight: 600; cursor: pointer; border: none; }
+    .btn-toggle.on  { background: var(--success-bg); color: var(--success); }
+    .btn-toggle.off { background: var(--bg-base); color: var(--text-muted); box-shadow: var(--shadow-out); }
+    .btn-del { padding: 5px 10px; border-radius: var(--r-sm); background: var(--danger-bg); color: var(--danger); font-size: 0.72rem; cursor: pointer; border: none; font-weight: 600; }
+    .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item active" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar" data-animate="up"><h1>Manajemen Banner Iklan</h1></div>
+
+    <!-- ADD NEW BANNER FORM -->
+    <div class="ads-form" data-animate="up" data-delay="50">
+      <h3>Tambah Banner Baru</h3>
+      <div class="ads-preview" id="imgPreviewWrap">
+        <img id="imgPreview" src="" alt="Preview">
+      </div>
+      <div class="form-row">
+        <input type="url" id="imgUrl" placeholder="URL Gambar (wajib)" oninput="previewImage(this.value)">
+      </div>
+      <div class="form-row">
+        <input type="url" id="linkUrl" placeholder="URL Tujuan saat diklik (opsional)">
+        <input type="number" id="adOrder" placeholder="Urutan" value="1" min="1" max="99">
+      </div>
+      <button class="neu-btn-primary" style="width:100%;padding:11px;" onclick="addBanner()">
+        <ion-icon name="add-outline"></ion-icon> Tambah Banner
+      </button>
+    </div>
+
+    <!-- BANNER LIST -->
+    <div data-animate="up" data-delay="150">
+      <div style="font-weight:700;font-size:0.92rem;margin-bottom:14px;">Banner Aktif</div>
+      <div class="ads-list" id="adsList">
+        <div class="empty-state">Memuat...</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+(async () => {
+  const { profile } = await VAuth.guard('admin', 1);
+  if (profile && profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+  loadBanners();
+})();
+
+function previewImage(url) {
+  const wrap = document.getElementById('imgPreviewWrap');
+  const img  = document.getElementById('imgPreview');
+  if (url) {
+    img.src = url;
+    wrap.style.display = 'block';
+    img.onerror = () => { wrap.style.display = 'none'; };
+  } else {
+    wrap.style.display = 'none';
+  }
+}
+
+async function addBanner() {
+  const imageUrl = document.getElementById('imgUrl').value.trim();
+  const linkUrl  = document.getElementById('linkUrl').value.trim();
+  const order    = parseInt(document.getElementById('adOrder').value) || 1;
+
+  if (!imageUrl) { showToast('URL gambar wajib diisi', 'error'); return; }
+
+  try {
+    await VFirebase.db.collection('ads').add({
+      imageUrl,
+      linkUrl: linkUrl || null,
+      order,
+      active: true,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    document.getElementById('imgUrl').value = '';
+    document.getElementById('linkUrl').value = '';
+    document.getElementById('adOrder').value = '1';
+    document.getElementById('imgPreviewWrap').style.display = 'none';
+    showToast('Banner ditambahkan', 'success');
+    loadBanners();
+  } catch (e) {
+    showToast('Gagal menambah banner: ' + e.message, 'error');
+  }
+}
+
+async function loadBanners() {
+  const list = document.getElementById('adsList');
+  list.innerHTML = '<div class="empty-state">Memuat...</div>';
+  try {
+    const snap = await VFirebase.db.collection('ads')
+      .orderBy('order', 'asc')
+      .get();
+
+    if (snap.empty) {
+      list.innerHTML = '<div class="empty-state">Belum ada banner. Tambahkan di atas.</div>';
+      return;
+    }
+
+    list.innerHTML = '';
+    snap.docs.forEach(doc => {
+      const ad = { id: doc.id, ...doc.data() };
+      const card = document.createElement('div');
+      card.className = 'ad-card';
+      const statusHtml = ad.active
+        ? '<span class="ad-status" style="background:rgba(39,174,96,0.15);color:#27AE60;">Aktif</span>'
+        : '<span class="ad-status" style="background:rgba(0,0,0,0.1);color:var(--text-muted);">Nonaktif</span>';
+      card.innerHTML = `
+        <div class="ad-img-wrap">
+          <img src="${ad.imageUrl}" alt="" onerror="this.style.opacity='0';">
+          <span class="ad-order">#${ad.order}</span>
+          ${statusHtml}
+        </div>
+        <div class="ad-info">
+          <span class="ad-url">${ad.linkUrl || ad.imageUrl}</span>
+          <div class="ad-actions">
+            <button class="btn-toggle ${ad.active ? 'on' : 'off'}" onclick="toggleBanner('${ad.id}', ${ad.active})">
+              ${ad.active ? 'Nonaktifkan' : 'Aktifkan'}
+            </button>
+            <button class="btn-del" onclick="deleteBanner('${ad.id}')">Hapus</button>
+          </div>
+        </div>
+      `;
+      list.appendChild(card);
+    });
+  } catch (e) {
+    list.innerHTML = `<div class="empty-state" style="color:var(--danger);">Gagal memuat: ${e.message}</div>`;
+  }
+}
+
+async function toggleBanner(id, currentActive) {
+  try {
+    await VFirebase.db.collection('ads').doc(id).update({ active: !currentActive });
+    showToast(currentActive ? 'Banner dinonaktifkan' : 'Banner diaktifkan', 'success');
+    loadBanners();
+  } catch (e) {
+    showToast('Gagal mengubah status', 'error');
+  }
+}
+
+async function deleteBanner(id) {
+  if (!confirm('Hapus banner ini?')) return;
+  try {
+    await VFirebase.db.collection('ads').doc(id).delete();
+    showToast('Banner dihapus', 'success');
+    loadBanners();
+  } catch (e) {
+    showToast('Gagal menghapus: ' + e.message, 'error');
+  }
+}
+</script>
+
+</body>
+</html>

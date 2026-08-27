@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Chat Dokter</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12);
+      box-shadow: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Header doctor info */
+    .doc-header-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+    .doc-header-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 800; color: #fff;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    .doc-header-name { font-size: 0.88rem; font-weight: 700; color: #fff; line-height: 1.2; }
+    .doc-header-status { font-size: 0.65rem; color: #6FCF97; font-weight: 600; }
+
+    /* Chat area */
+    .chat-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 16px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: var(--bg);
+    }
+
+    /* Make the mobile-frame flex column so chat fills height */
+    .mobile-frame {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    .chat-timestamp {
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin: 8px 0 4px;
+      background: rgba(200,208,231,0.5);
+      padding: 3px 12px;
+      border-radius: 20px;
+      align-self: center;
+    }
+
+    .chat-bubble {
+      max-width: 78%;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      position: relative;
+    }
+    .chat-bubble.received {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      color: var(--text-primary);
+      border-bottom-left-radius: 4px;
+      align-self: flex-start;
+    }
+    .chat-bubble.sent {
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+      align-self: flex-end;
+      box-shadow: 0 4px 12px rgba(39,174,96,0.3);
+    }
+    .bubble-time {
+      font-size: 0.6rem;
+      opacity: 0.7;
+      display: block;
+      margin-top: 4px;
+      text-align: right;
+    }
+    .bubble-time.left { text-align: left; }
+
+    /* Inline cards */
+    .vital-card-inline {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 6px 0;
+      border-left: 3px solid var(--primary-dark);
+      align-self: stretch;
+    }
+    .vital-card-inline .vc-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+    .vital-inline-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .vital-inline-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .resep-card-inline {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 6px 0;
+      border-left: 3px solid var(--info);
+      align-self: stretch;
+      cursor: pointer;
+    }
+    .resep-card-inline .rc-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--info);
+      margin-bottom: 4px;
+    }
+    .resep-card-inline .rc-body {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Input bar */
+    .chat-input-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px 14px;
+      background: var(--bg);
+      border-top: 1px solid var(--shadow-dark);
+    }
+    .chat-text-input {
+      flex: 1;
+      border: none;
+      background: var(--bg);
+      box-shadow: var(--shadow-in);
+      border-radius: 24px;
+      padding: 10px 16px;
+      font-family: var(--font);
+      font-size: 0.82rem;
+      color: var(--text-primary);
+      outline: none;
+    }
+    .chat-text-input::placeholder { color: var(--text-muted); }
+    .chat-action-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+    .chat-action-btn.send {
+      background: linear-gradient(135deg, #27AE60, #6FCF97);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(39,174,96,0.35);
+    }
+    .chat-action-btn:active { transform: scale(0.92); }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('consultation.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="doc-header-info">
+      <div class="doc-header-avatar" id="doctorInitials">DR</div>
+      <div>
+        <div class="doc-header-name" id="doctorName">Memuat...</div>
+        <div class="doc-header-status">● Online</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="neu-icon-btn" id="videoCallBtn">
+        <ion-icon name="videocam-outline"></ion-icon>
+      </button>
+      <button class="neu-icon-btn" onclick="nav('doctor-detail.html')">
+        <ion-icon name="information-circle-outline"></ion-icon>
+      </button>
+    </div>
+  </header>
+
+  <!-- CHAT AREA -->
+  <div class="chat-area" id="chatArea">
+    <div style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:0.8rem;">
+      Memuat pesan...
+    </div>
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div style="display:flex;gap:8px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--shadow-dark);">
+    <button class="neu-btn neu-btn-sm" onclick="nav('guided-examination.html')" style="flex-shrink:0;font-size:0.7rem;">
+      <ion-icon name="scan-outline"></ion-icon> Pemeriksaan
+    </button>
+    <button class="neu-btn neu-btn-sm" id="shareVitalBtn" style="flex-shrink:0;font-size:0.7rem;">
+      <ion-icon name="share-outline"></ion-icon> Bagikan Vital
+    </button>
+    <button class="neu-btn neu-btn-sm" id="quickVideoBtn" style="flex-shrink:0;font-size:0.7rem;">
+      <ion-icon name="videocam-outline"></ion-icon> Video Call
+    </button>
+  </div>
+
+  <!-- INPUT BAR -->
+  <div class="chat-input-bar">
+    <button class="chat-action-btn" onclick="showToast('Pilih lampiran...','info')">
+      <ion-icon name="attach-outline"></ion-icon>
+    </button>
+    <input type="text" class="chat-text-input" placeholder="Ketik pesan..." id="msgInput" onkeydown="if(event.key==='Enter')sendMessage()">
+    <button class="chat-action-btn send" onclick="sendMessage()">
+      <ion-icon name="send-outline"></ion-icon>
+    </button>
+  </div>
+
+</div>
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/chat-manager.js"></script>
+<script src="../shared/webrtc-manager.js"></script>
+<script>
+  let chat = null;
+  const consultId = new URLSearchParams(location.search).get('consultId') || 'demo-consult-1';
+  const chatArea = document.getElementById('chatArea');
+
+  // Relative time formatter
+  function relativeTime(date) {
+    if (!(date instanceof Date)) return '';
+    const now = new Date();
+    const diff = Math.floor((now - date) / 1000);
+    if (diff < 60) return 'Baru saja';
+    if (diff < 3600) return Math.floor(diff / 60) + ' menit lalu';
+    if (diff < 86400) return Math.floor(diff / 3600) + ' jam lalu';
+    return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+  }
+
+  function renderMessages(msgs) {
+    if (msgs.length === 0) {
+      chatArea.innerHTML = '<div style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:0.8rem;">Belum ada pesan. Mulai percakapan!</div>';
+      return;
+    }
+
+    const groups = VChatManager.groupByDate(msgs);
+    let html = '';
+    for (const [dateLabel, groupMsgs] of Object.entries(groups)) {
+      html += `<div class="chat-timestamp">${dateLabel}</div>`;
+      for (const msg of groupMsgs) {
+        html += VChatManager.renderBubble(msg);
+      }
+    }
+    chatArea.innerHTML = html;
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('msgInput');
+    const text = input.value.trim();
+    if (!text || !chat) return;
+    input.value = '';
+    try {
+      await chat.send(text);
+    } catch (e) {
+      showToast('Gagal mengirim pesan', 'error');
+    }
+  }
+
+  async function shareVitals() {
+    if (!chat) return;
+    try {
+      const vitals = VitalsManager.getCurrent();
+      await chat.sendVitalShare(vitals);
+      showToast('Data vital berhasil dibagikan', 'success');
+    } catch (e) {
+      showToast('Gagal berbagi data vital', 'error');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const { user, profile } = await VAuth.guard('patient', 1);
+
+    // Setup video call button navigation
+    document.getElementById('videoCallBtn').addEventListener('click', () => {
+      nav('video-call.html?consultId=' + consultId);
+    });
+    document.getElementById('quickVideoBtn').addEventListener('click', () => {
+      nav('video-call.html?consultId=' + consultId);
+    });
+    document.getElementById('shareVitalBtn').addEventListener('click', shareVitals);
+
+    // Initialize VitalsManager for this patient
+    VitalsManager.start(user.uid);
+
+    // Load consultation info to get doctor name
+    try {
+      const consult = await VDB.getConsultation(consultId);
+      if (consult && consult.doctorId) {
+        const doctorProfile = await VDB.getUser(consult.doctorId);
+        if (doctorProfile) {
+          document.getElementById('doctorName').textContent = 'dr. ' + doctorProfile.name;
+          const initials = doctorProfile.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+          document.getElementById('doctorInitials').textContent = initials;
+        }
+      }
+    } catch (e) {
+      document.getElementById('doctorName').textContent = 'Dokter';
+    }
+
+    // Init chat
+    chat = new VChatManager(consultId, {
+      uid: user.uid,
+      name: profile.name,
+      role: 'patient'
+    });
+
+    chat.onMessages(renderMessages);
+  });
+</script>
+</body>
+</html>

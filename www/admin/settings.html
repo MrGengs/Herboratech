@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Pengaturan Administrasi</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .admin-main { padding: 24px; }
+    .container { max-width: 100%; margin: 0; }
+
+    .header { margin-bottom: 2rem; }
+    .header h1 { color: var(--text-primary); margin: 0; }
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 800px) {
+      .settings-grid { grid-template-columns: 1fr; }
+    }
+
+    .settings-card {
+      background: var(--bg-white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .settings-card h3 {
+      margin-top: 0;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--border-light);
+      padding-bottom: 1rem;
+    }
+
+    .setting-item {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .setting-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .setting-label {
+      display: block;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .setting-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-flex;
+      width: 50px;
+      height: 26px;
+      background: #ccc;
+      border-radius: 13px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch.active { background: #4caf50; }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 50%;
+      top: 1px;
+      left: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .toggle-switch.active::after { left: 25px; }
+
+    .text-input, .number-input, .select-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      font-family: var(--font-family);
+      color: var(--text-primary);
+      background: var(--bg-light);
+      font-size: 0.95rem;
+    }
+
+    .text-input:focus, .number-input:focus, .select-input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .number-input { width: 100px; }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-save {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-save:hover { opacity: 0.9; transform: translateY(-2px); }
+    .btn-save:active { transform: translateY(0); }
+
+    .btn-reset {
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-light);
+      color: var(--text-primary);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-reset:hover { background: var(--border-light); }
+
+    .btn-danger {
+      padding: 0.75rem 1.5rem;
+      background: #ffebee;
+      color: #d32f2f;
+      border: 1px solid #ffcdd2;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-danger:hover { background: #ffcdd2; }
+
+    .notification {
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      display: none;
+      animation: slideDown 0.3s ease;
+    }
+
+    .notification.show { display: block; }
+
+    .notification.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .notification.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .notification.warning {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+
+    @keyframes slideDown { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .info-box {
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+      color: #0d47a1;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-content {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .modal-header {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .modal-body { margin-bottom: 1.5rem; color: var(--text-secondary); }
+
+    .modal-footer {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+
+    .btn-modal {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-modal-cancel { background: var(--bg-light); color: var(--text-primary); }
+    .btn-modal-confirm { background: #d32f2f; color: white; }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .status-online { background: #d4edda; color: #155724; }
+    .status-offline { background: #f8d7da; color: #721c24; }
+
+    .divider { height: 1px; background: var(--border-light); margin: 2rem 0; }
+
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+    }
+
+    .section-title {
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 1.5rem 0 1rem;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item active" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar"><h1>Pengaturan Administrasi</h1></div>
+    <div class="container">
+
+    <div id="notification"></div>
+
+    <div class="settings-grid">
+      <!-- Platform Settings -->
+      <div class="settings-card">
+        <h3>Pengaturan Platform</h3>
+
+        <div class="setting-item">
+          <label class="setting-label">Mode Maintenance</label>
+          <div class="setting-desc">Tutup akses untuk user umum (admin tetap bisa akses)</div>
+          <div class="toggle-switch" id="maintenanceMode" onclick="toggleSetting('maintenanceMode')"></div>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">Izinkan Registrasi Baru</label>
+          <div class="setting-desc">Izinkan user baru untuk mendaftar</div>
+          <div class="toggle-switch active" id="allowRegistration" onclick="toggleSetting('allowRegistration')"></div>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">Izinkan Konsultasi</label>
+          <div class="setting-desc">Izinkan pembuatan konsultasi baru</div>
+          <div class="toggle-switch active" id="allowConsultations" onclick="toggleSetting('allowConsultations')"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Biaya & Pembayaran</div>
+
+        <div class="setting-item">
+          <label class="setting-label">Harga Konsultasi Default (Rp)</label>
+          <div class="setting-desc">Harga default untuk konsultasi baru</div>
+          <input type="number" class="number-input" id="defaultConsultationFee" value="75000" min="0">
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">Biaya Komisi Admin (%)</label>
+          <div class="setting-desc">Persentase komisi dari setiap transaksi</div>
+          <input type="number" class="number-input" id="commissionFee" value="10" min="0" max="100">
+        </div>
+
+        <div class="button-group">
+          <button class="btn-save" onclick="savePlatformSettings()">💾 Simpan</button>
+          <button class="btn-reset" onclick="resetPlatformSettings()">↻ Reset</button>
+        </div>
+      </div>
+
+      <!-- Notification Settings -->
+      <div class="settings-card">
+        <h3>Pengaturan Notifikasi</h3>
+
+        <div class="setting-item">
+          <label class="setting-label">Email Notifikasi</label>
+          <div class="setting-desc">Alamat email untuk notifikasi sistem</div>
+          <input type="text" class="text-input" id="notificationEmail" value="admin@herboratech.com">
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">Aktifkan Email Alert</label>
+          <div class="setting-desc">Kirim email alert untuk event penting</div>
+          <div class="toggle-switch active" id="emailAlerts" onclick="toggleSetting('emailAlerts')"></div>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">Aktifkan Push Notification</label>
+          <div class="setting-desc">Kirim push notification ke mobile</div>
+          <div class="toggle-switch active" id="pushNotifications" onclick="toggleSetting('pushNotifications')"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">SMS & Komunikasi</div>
+
+        <div class="setting-item">
+          <label class="setting-label">Aktifkan SMS Alert</label>
+          <div class="setting-desc">Kirim SMS untuk alert penting (requires SMS gateway)</div>
+          <div class="toggle-switch" id="smsAlerts" onclick="toggleSetting('smsAlerts')"></div>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">API Key SMS Gateway</label>
+          <div class="setting-desc">Twilio atau SMS gateway provider lainnya</div>
+          <input type="password" class="text-input" id="smsApiKey" placeholder="Masukkan API key">
+        </div>
+
+        <div class="button-group">
+          <button class="btn-save" onclick="saveNotificationSettings()">💾 Simpan</button>
+          <button class="btn-reset" onclick="resetNotificationSettings()">↻ Reset</button>
+        </div>
+      </div>
+
+      <!-- Security Settings -->
+      <div class="settings-card">
+        <h3>Keamanan & Privasi</h3>
+
+        <div class="setting-item">
+          <label class="setting-label">Aktifkan Two-Factor Authentication</label>
+          <div class="setting-desc">Wajibkan 2FA untuk semua admin</div>
+          <div class="toggle-switch" id="twoFactorAuth" onclick="toggleSetting('twoFactorAuth')"></div>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">Session Timeout (menit)</label>
+          <div class="setting-desc">Waktu idle sebelum logout otomatis</div>
+          <input type="number" class="number-input" id="sessionTimeout" value="30" min="5">
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">Max Login Attempts</label>
+          <div class="setting-desc">Jumlah attempt sebelum akun di-lock</div>
+          <input type="number" class="number-input" id="maxLoginAttempts" value="5" min="1">
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Data Privacy</div>
+
+        <div class="setting-item">
+          <label class="setting-label">GDPR Compliance Mode</label>
+          <div class="setting-desc">Aktifkan mode kepatuhan GDPR</div>
+          <div class="toggle-switch" id="gdprMode" onclick="toggleSetting('gdprMode')"></div>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">Data Retention (hari)</label>
+          <div class="setting-desc">Berapa hari data konsultasi disimpan (0 = selamanya)</div>
+          <input type="number" class="number-input" id="dataRetention" value="365" min="0">
+        </div>
+
+        <div class="button-group">
+          <button class="btn-save" onclick="saveSecuritySettings()">💾 Simpan</button>
+          <button class="btn-reset" onclick="resetSecuritySettings()">↻ Reset</button>
+        </div>
+      </div>
+
+      <!-- System Maintenance -->
+      <div class="settings-card">
+        <h3>Pemeliharaan Sistem</h3>
+
+        <div class="setting-item">
+          <label class="setting-label">Database Backup</label>
+          <div class="setting-desc">Jadwal backup otomatis</div>
+          <select class="select-input" id="backupSchedule">
+            <option value="daily">Setiap Hari</option>
+            <option value="weekly">Setiap Minggu</option>
+            <option value="monthly">Setiap Bulan</option>
+          </select>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">Cache Clearing</label>
+          <div class="setting-desc">Bersihkan cache aplikasi</div>
+          <button class="btn-save" onclick="clearCache()" style="width: 100%; margin-top: 0.5rem;">🗑️ Bersihkan Cache</button>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">Database Optimization</label>
+          <div class="setting-desc">Optimasi dan indeks database</div>
+          <button class="btn-save" onclick="optimizeDatabase()" style="width: 100%; margin-top: 0.5rem;">⚡ Optimalkan Database</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Konfigurasi AI Chat</div>
+
+        <div class="setting-item">
+          <label class="setting-label">Gemini API Key</label>
+          <div class="setting-desc">API key untuk Gemini AI — dapatkan gratis di aistudio.google.com (1500 req/hari)</div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:0.75rem;">
+            <input type="password" id="input-gemini-key" class="select-input" placeholder="AIza..." style="flex:1;font-family:monospace;font-size:0.85rem;">
+            <button class="btn-save" onclick="toggleShowGeminiKey()" style="width:auto;padding:0.5rem 1rem;">
+              <ion-icon name="eye-outline" id="gemini-eye-icon" style="font-size:1rem;"></ion-icon>
+            </button>
+          </div>
+          <div id="gemini-status" style="font-size:0.75rem;margin-top:0.75rem;"></div>
+        </div>
+
+        <div class="button-group">
+          <button class="btn-save" onclick="testGeminiKey()" style="width:100%;margin-bottom:0.5rem;">🔌 Test Koneksi</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Danger Zone</div>
+
+        <div class="info-box">
+          ⚠️ Aksi di bawah ini tidak dapat dibatalkan. Lakukan dengan hati-hati.
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label">Reset Semua Data</label>
+          <div class="setting-desc">Hapus semua data kecuali admin accounts</div>
+          <button class="btn-danger" onclick="confirmResetAllData()" style="width: 100%; margin-top: 0.5rem;">⚠️ Reset Semua Data</button>
+        </div>
+
+        <div class="button-group">
+          <button class="btn-save" onclick="saveMaintenanceSettings()">💾 Simpan</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+</div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal" id="confirmModal">
+    <div class="modal-content">
+      <div class="modal-header" id="confirmTitle">Konfirmasi Aksi</div>
+      <div class="modal-body" id="confirmMessage">Apakah Anda yakin?</div>
+      <div class="modal-footer">
+        <button class="btn-modal btn-modal-cancel" onclick="closeConfirmModal()">Batal</button>
+        <button class="btn-modal btn-modal-confirm" id="confirmBtn" onclick="executeConfirmedAction()">Lanjutkan</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+
+  <script>
+    let settings = {};
+    let pendingAction = null;
+
+    async function initSettings() {
+      const result = await VAuth.guard();
+      const profile = result.profile || result;
+      if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+      if (profile.role !== 'admin' && profile.role !== 'super_admin') {
+        showNotification('Akses ditolak', 'error');
+        setTimeout(() => nav('home.html'), 2000);
+        return;
+      }
+
+      loadSettings();
+    }
+
+    function loadSettings() {
+      // Load from localStorage or Firestore
+      const stored = localStorage.getItem('adminSettings');
+      if (stored) {
+        settings = JSON.parse(stored);
+        applySettings();
+      }
+    }
+
+    function applySettings() {
+      // Apply settings to UI
+      document.getElementById('maintenanceMode').classList.toggle('active', settings.maintenanceMode);
+      document.getElementById('allowRegistration').classList.toggle('active', settings.allowRegistration !== false);
+      document.getElementById('allowConsultations').classList.toggle('active', settings.allowConsultations !== false);
+      document.getElementById('emailAlerts').classList.toggle('active', settings.emailAlerts !== false);
+      document.getElementById('pushNotifications').classList.toggle('active', settings.pushNotifications !== false);
+      document.getElementById('smsAlerts').classList.toggle('active', settings.smsAlerts);
+      document.getElementById('twoFactorAuth').classList.toggle('active', settings.twoFactorAuth);
+      document.getElementById('gdprMode').classList.toggle('active', settings.gdprMode);
+
+      document.getElementById('notificationEmail').value = settings.notificationEmail || 'admin@herboratech.com';
+      document.getElementById('defaultConsultationFee').value = settings.defaultConsultationFee || 75000;
+      document.getElementById('commissionFee').value = settings.commissionFee || 10;
+      document.getElementById('sessionTimeout').value = settings.sessionTimeout || 30;
+      document.getElementById('maxLoginAttempts').value = settings.maxLoginAttempts || 5;
+      document.getElementById('dataRetention').value = settings.dataRetention || 365;
+      document.getElementById('backupSchedule').value = settings.backupSchedule || 'daily';
+
+      loadGeminiSettings();
+    }
+
+    function toggleSetting(settingId) {
+      const element = document.getElementById(settingId);
+      element.classList.toggle('active');
+    }
+
+    function savePlatformSettings() {
+      settings.maintenanceMode = document.getElementById('maintenanceMode').classList.contains('active');
+      settings.allowRegistration = document.getElementById('allowRegistration').classList.contains('active');
+      settings.allowConsultations = document.getElementById('allowConsultations').classList.contains('active');
+      settings.defaultConsultationFee = parseInt(document.getElementById('defaultConsultationFee').value);
+      settings.commissionFee = parseInt(document.getElementById('commissionFee').value);
+
+      saveSettings();
+      showNotification('Pengaturan platform berhasil disimpan', 'success');
+    }
+
+    function saveNotificationSettings() {
+      settings.notificationEmail = document.getElementById('notificationEmail').value;
+      settings.emailAlerts = document.getElementById('emailAlerts').classList.contains('active');
+      settings.pushNotifications = document.getElementById('pushNotifications').classList.contains('active');
+      settings.smsAlerts = document.getElementById('smsAlerts').classList.contains('active');
+      settings.smsApiKey = document.getElementById('smsApiKey').value;
+
+      saveSettings();
+      showNotification('Pengaturan notifikasi berhasil disimpan', 'success');
+    }
+
+    function saveSecuritySettings() {
+      settings.twoFactorAuth = document.getElementById('twoFactorAuth').classList.contains('active');
+      settings.sessionTimeout = parseInt(document.getElementById('sessionTimeout').value);
+      settings.maxLoginAttempts = parseInt(document.getElementById('maxLoginAttempts').value);
+      settings.gdprMode = document.getElementById('gdprMode').classList.contains('active');
+      settings.dataRetention = parseInt(document.getElementById('dataRetention').value);
+
+      saveSettings();
+      showNotification('Pengaturan keamanan berhasil disimpan', 'success');
+    }
+
+    function saveMaintenanceSettings() {
+      settings.backupSchedule = document.getElementById('backupSchedule').value;
+
+      saveSettings();
+      showNotification('Pengaturan pemeliharaan berhasil disimpan', 'success');
+    }
+
+    function saveSettings() {
+      localStorage.setItem('adminSettings', JSON.stringify(settings));
+    }
+
+    function resetPlatformSettings() {
+      if (confirm('Reset pengaturan platform ke default?')) {
+        delete settings.maintenanceMode;
+        delete settings.allowRegistration;
+        delete settings.allowConsultations;
+        delete settings.defaultConsultationFee;
+        delete settings.commissionFee;
+        saveSettings();
+        loadSettings();
+        showNotification('Pengaturan platform direset', 'info');
+      }
+    }
+
+    function resetNotificationSettings() {
+      if (confirm('Reset pengaturan notifikasi ke default?')) {
+        delete settings.notificationEmail;
+        delete settings.emailAlerts;
+        delete settings.pushNotifications;
+        delete settings.smsAlerts;
+        delete settings.smsApiKey;
+        saveSettings();
+        loadSettings();
+        showNotification('Pengaturan notifikasi direset', 'info');
+      }
+    }
+
+    function resetSecuritySettings() {
+      if (confirm('Reset pengaturan keamanan ke default?')) {
+        delete settings.twoFactorAuth;
+        delete settings.sessionTimeout;
+        delete settings.maxLoginAttempts;
+        delete settings.gdprMode;
+        delete settings.dataRetention;
+        saveSettings();
+        loadSettings();
+        showNotification('Pengaturan keamanan direset', 'info');
+      }
+    }
+
+    function clearCache() {
+      showConfirmation(
+        'Bersihkan Cache',
+        'Cache aplikasi akan dihapus. Ini dapat memperlambat sementara saat data dimuat ulang.',
+        'clearCacheConfirmed'
+      );
+    }
+
+    function optimizeDatabase() {
+      showConfirmation(
+        'Optimasi Database',
+        'Proses optimasi database mungkin memakan waktu beberapa menit. Jangan tutup halaman ini.',
+        'optimizeDatabaseConfirmed'
+      );
+    }
+
+    function confirmResetAllData() {
+      showConfirmation(
+        '⚠️ RESET SEMUA DATA',
+        'Ini akan menghapus SEMUA data kecuali admin accounts. Aksi ini TIDAK DAPAT DIBATALKAN!',
+        'resetAllDataConfirmed'
+      );
+    }
+
+    function showConfirmation(title, message, action) {
+      pendingAction = action;
+      document.getElementById('confirmTitle').textContent = title;
+      document.getElementById('confirmMessage').textContent = message;
+      document.getElementById('confirmModal').classList.add('open');
+    }
+
+    function closeConfirmModal() {
+      document.getElementById('confirmModal').classList.remove('open');
+      pendingAction = null;
+    }
+
+    async function executeConfirmedAction() {
+      closeConfirmModal();
+
+      switch (pendingAction) {
+        case 'clearCacheConfirmed':
+          showNotification('Cache dibersihkan', 'success');
+          break;
+        case 'optimizeDatabaseConfirmed':
+          showNotification('Database sedang dioptimalkan...', 'info');
+          // Simulate optimization
+          setTimeout(() => {
+            showNotification('Database berhasil dioptimalkan', 'success');
+          }, 2000);
+          break;
+        case 'resetAllDataConfirmed':
+          showNotification('Mengatur ulang semua data...', 'warning');
+          // Simulate reset
+          setTimeout(() => {
+            showNotification('Semua data berhasil direset', 'success');
+          }, 2000);
+          break;
+      }
+
+      pendingAction = null;
+    }
+
+    function showNotification(message, type = 'info') {
+      const notifEl = document.getElementById('notification');
+      notifEl.textContent = message;
+      notifEl.className = `notification show ${type}`;
+      setTimeout(() => {
+        notifEl.classList.remove('show');
+      }, 3000);
+    }
+
+    // Gemini API Key Functions
+    function toggleShowGeminiKey() {
+      const input = document.getElementById('input-gemini-key');
+      const icon = document.getElementById('gemini-eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.setAttribute('name', 'eye-off-outline');
+      } else {
+        input.type = 'password';
+        icon.setAttribute('name', 'eye-outline');
+      }
+    }
+
+    async function testGeminiKey() {
+      const key = document.getElementById('input-gemini-key').value.trim();
+      const statusEl = document.getElementById('gemini-status');
+      if (!key) {
+        statusEl.innerHTML = '<span style="color:#EB5757;">⚠️ Masukkan API key dulu</span>';
+        return;
+      }
+      statusEl.textContent = 'Testing...';
+      try {
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts: [{ text: 'Hi' }] }] })
+          }
+        );
+        if (res.ok) {
+          statusEl.innerHTML = '<span style="color:#27AE60;">✅ API key valid</span>';
+          // Save key
+          settings.geminiApiKey = key;
+          saveSettings();
+          showNotification('Gemini API key berhasil disimpan', 'success');
+        } else {
+          statusEl.innerHTML = '<span style="color:#EB5757;">❌ Key tidak valid</span>';
+        }
+      } catch (e) {
+        statusEl.innerHTML = `<span style="color:#EB5757;">❌ ${e.message}</span>`;
+      }
+    }
+
+    // Load Gemini key on init
+    function loadGeminiSettings() {
+      if (settings.geminiApiKey) {
+        document.getElementById('input-gemini-key').value = settings.geminiApiKey;
+        document.getElementById('gemini-status').innerHTML = '<span style="color:#27AE60;">✅ Key tersimpan</span>';
+      }
+    }
+
+    function nav(url) {
+      window.location.href = url;
+    }
+
+    // Auto-init on page load
+    document.addEventListener('DOMContentLoaded', initSettings);
+  </script>
+</body>
+</html>

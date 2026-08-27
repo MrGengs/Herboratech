@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+  <title>HerboraTech — AI Health Assistant</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #1E1350 0%, #4A43CC 100%); box-shadow: 0 2px 20px rgba(74,67,204,0.4); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.15); }
+    /* Judul header: anak langsung adalah wrapper flex, bukan div ber-font-weight — pakai descendant */
+    .app-header div[style*="font-weight:700"] { color: #fff; }
+
+    .ai-badge {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .intro-card {
+      background: linear-gradient(135deg, rgba(74,67,204,0.08), rgba(108,99,255,0.05));
+      border: 1px solid rgba(108,99,255,0.2);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .ai-avatar-sm {
+      width: 36px; height: 36px; border-radius: 12px;
+      background: linear-gradient(135deg, #4A43CC, #6C63FF);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; box-shadow: 0 3px 10px rgba(108,99,255,0.4);
+    }
+    .intro-text { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
+
+    .vitals-mini {
+      display: flex; gap: 8px; margin-bottom: 16px;
+    }
+    .vital-mini-card {
+      flex: 1; background: var(--bg); border-radius: 12px;
+      box-shadow: var(--shadow-out-sm); padding: 10px 8px; text-align: center;
+    }
+    .vital-mini-val { font-size: 0.9rem; font-weight: 700; color: var(--text-primary); }
+    .vital-mini-label { font-size: 0.58rem; color: var(--text-muted); margin-top: 2px; }
+    .vital-mini-icon { font-size: 0.85rem; margin-bottom: 3px; }
+
+    .chat-area {
+      display: flex; flex-direction: column; gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .chat-bubble-ai {
+      display: flex; gap: 8px; align-items: flex-start;
+    }
+    .bubble-ai {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 0 14px 14px 14px;
+      padding: 11px 14px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 82%;
+    }
+    .bubble-user {
+      background: linear-gradient(135deg, #4A43CC, #6C63FF);
+      border-radius: 14px 14px 0 14px;
+      padding: 11px 14px;
+      font-size: 0.8rem;
+      color: #fff;
+      line-height: 1.6;
+      max-width: 82%;
+      align-self: flex-end;
+      box-shadow: 0 3px 12px rgba(108,99,255,0.3);
+    }
+    .chat-timestamp {
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      align-self: flex-end;
+    }
+
+    .ai-assessment-card {
+      border: 2px solid rgba(108,99,255,0.3);
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(74,67,204,0.05), rgba(108,99,255,0.03));
+      padding: 16px;
+    }
+    .assessment-title { font-size: 0.82rem; font-weight: 700; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .assessment-row { margin-bottom: 8px; }
+    .assessment-diagnosis { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 4px; }
+    .confidence-bar-track { height: 6px; background: var(--bg); box-shadow: var(--shadow-in); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+    .confidence-bar-fill { height: 100%; border-radius: 3px; }
+    .assessment-rec { font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(108,99,255,0.15); }
+
+    /* Layout — fullscreen chat, no bottom nav */
+    .mobile-frame {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      padding-bottom: 0 !important;
+    }
+
+    .section-scroll {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    .chat-input-bar {
+      flex-shrink: 0;
+      background: var(--bg);
+      padding: 10px 16px;
+      padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+      border-top: 1px solid rgba(200,208,231,0.4);
+      display: flex; gap: 8px; align-items: center;
+    }
+    .chat-input-wrap {
+      flex: 1;
+      background: var(--bg);
+      box-shadow: var(--shadow-in);
+      border-radius: 24px;
+      display: flex; align-items: center;
+      padding: 6px 14px; gap: 6px;
+    }
+    .chat-input-wrap input {
+      flex: 1; border: none; background: transparent;
+      font-family: 'Poppins', sans-serif; font-size: 0.82rem;
+      color: var(--text-primary);
+    }
+    .chat-input-wrap input:focus { outline: none; }
+    .chat-input-wrap input::placeholder { color: var(--text-muted); }
+    .send-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, #4A43CC, #6C63FF);
+      border: none; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0;
+      box-shadow: 0 3px 10px rgba(108,99,255,0.4);
+    }
+    .send-btn ion-icon { color: #fff; font-size: 1rem; }
+    .send-btn:active { transform: scale(0.94); }
+    .send-btn:disabled { opacity: 0.5; pointer-events: none; }
+
+    .section-scroll { padding-bottom: 16px; }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('consultation.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="font-size:1.05rem;font-weight:700;">AI Health Assistant</div>
+      <span class="ai-badge">AI</span>
+    </div>
+    <button class="neu-icon-btn" onclick="clearChat()">
+      <ion-icon name="trash-outline"></ion-icon>
+    </button>
+  </header>
+
+  <div class="section section-scroll">
+
+    <!-- Intro Card -->
+    <div class="intro-card" data-animate="up" id="introCard">
+      <div class="ai-avatar-sm">
+        <ion-icon name="hardware-chip-outline" style="color:#fff;font-size:1rem;"></ion-icon>
+      </div>
+      <div class="intro-text">
+        Saya adalah asisten kesehatan AI HerboraTech. Saya akan membantu Anda menganalisis gejala berdasarkan <strong>data sensor real-time</strong> Anda.
+      </div>
+    </div>
+
+    <!-- Mode Selector (Initial) -->
+    <div id="modeSelector" data-animate="up" data-delay="60" style="display:none;margin-bottom:16px;">
+      <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:8px;font-weight:500;">Pilih mode konsultasi:</div>
+      <button class="neu-btn neu-btn-primary neu-btn-block" onclick="startQuickCheck()" style="margin-bottom:8px;">
+        <ion-icon name="flash-outline"></ion-icon> Quick Symptom Check (2-3 menit)
+      </button>
+      <button class="neu-btn neu-btn-accent neu-btn-block" onclick="startDetailedAssessment()" style="background:linear-gradient(135deg,#1E1350,#4A43CC);color:#fff;">
+        <ion-icon name="clipboard-outline"></ion-icon> Detailed Assessment (5-7 menit)
+      </button>
+    </div>
+
+    <!-- Current Vitals Mini -->
+    <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:8px;font-weight:500;" data-animate="up" data-delay="80" id="vitalsLabel">
+      <ion-icon name="pulse-outline" style="vertical-align:-2px;color:var(--accent);"></ion-icon> Data sensor Anda
+    </div>
+    <div class="vitals-mini" data-animate="up" data-delay="100" id="vitalsMini">
+      <div class="vital-mini-card">
+        <div class="vital-mini-icon" style="color:var(--danger);">&#10084;&#65039;</div>
+        <div class="vital-mini-val" id="hrVal">--</div>
+        <div class="vital-mini-label">HR bpm</div>
+      </div>
+      <div class="vital-mini-card">
+        <div class="vital-mini-icon" style="color:var(--info);">&#128167;</div>
+        <div class="vital-mini-val" id="spo2Val">--</div>
+        <div class="vital-mini-label">SpO2</div>
+      </div>
+      <div class="vital-mini-card">
+        <div class="vital-mini-icon" style="color:var(--warning);">&#127777;&#65039;</div>
+        <div class="vital-mini-val" id="tempVal">--</div>
+        <div class="vital-mini-label">Suhu C</div>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area" id="chatArea" data-animate="up" data-delay="120"></div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" style="display:none;margin-top:12px;padding:12px;background:rgba(108,99,255,0.1);border-radius:12px;border:1px solid rgba(108,99,255,0.2);text-align:center;">
+      <ion-icon name="hourglass-outline" style="color:var(--accent);animation:spin 2s linear infinite;"></ion-icon>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Analisis AI sedang berjalan...</div>
+    </div>
+
+    <!-- Refer Button -->
+    <button class="neu-btn neu-btn-accent neu-btn-block" id="referBtn" data-animate="up" data-delay="200" onclick="nav('consultation.html')" style="background:linear-gradient(135deg,#1E1350,#4A43CC);display:none;">
+      <ion-icon name="person-outline"></ion-icon> Rujuk ke Dokter Manusia
+    </button>
+
+  </div>
+
+  <!-- Chat Input -->
+  <div class="chat-input-bar">
+    <button class="neu-icon-btn" style="box-shadow:var(--shadow-out-sm);" onclick="showToast('Pilih gejala dari daftar', 'info')">
+      <ion-icon name="list-outline" style="color:var(--accent);"></ion-icon>
+    </button>
+    <div class="chat-input-wrap">
+      <ion-icon name="mic-outline" style="color:var(--text-muted);font-size:1.1rem;cursor:pointer;" onclick="showToast('Fitur suara segera hadir', 'info')"></ion-icon>
+      <input type="text" id="chatInput" placeholder="Ketik gejala atau pertanyaan..." onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); sendChat(); }">
+    </div>
+    <button class="send-btn" id="sendBtn" onclick="sendChat()">
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </div>
+
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/risk-engine.js"></script>
+<script src="../shared/gemini-keys.js"></script>
+<script>
+// ── API Keys & Failover ───────────────────────────────────────────────────
+const API_KEYS = window.GEMINI_API_KEYS || [];
+let currentKeyIndex = 0;
+
+// ── State ─────────────────────────────────────────────────────────────────
+let currentUser = null;
+let currentProfile = null;
+let conversationHistory = [];
+let currentMode = null;
+let vitalsData = { hr: 0, spo2: 0, temp: 0 };
+let healthProfile = null;
+let riskScores = null;
+let isLoading = false;
+
+const SYSTEM_PROMPT = `Anda adalah asisten kesehatan AI profesional untuk platform telemedisin HerboraTech. Anda berbicara dalam bahasa Indonesia yang mudah dipahami.
+Berikan informasi kesehatan yang berguna, namun selalu ingatkan pengguna untuk berkonsultasi ke dokter untuk diagnosis resmi.
+Jangan memberikan diagnosis pasti atau meresepkan obat.
+Jika pengguna terlihat darurat (nyeri dada, sesak napas berat, kehilangan kesadaran), segera sarankan panggil darurat 112/119.`;
+
+// ── Init ──────────────────────────────────────────────────────────────────
+(async () => {
+  try {
+    const auth = await VAuth.guard('patient', 1);
+    currentUser = auth.user;
+    currentProfile = auth.profile;
+  } catch(e) {
+    currentProfile = { name: 'Pengguna' };
+  }
+
+  // Load patient vitals
+  loadPatientVitals();
+
+  // Load health profile for risk context
+  if (currentUser) {
+    try {
+      healthProfile = await VDB.getHealthProfile(currentUser.uid);
+      if (healthProfile && typeof RiskEngine !== 'undefined') {
+        riskScores = RiskEngine.calculateAll(healthProfile);
+      }
+    } catch (e) {
+      console.warn('Could not load health profile:', e);
+    }
+  }
+
+  if (API_KEYS.length === 0) {
+    showNoKeyBanner();
+    return;
+  }
+
+  // Show mode selector
+  document.getElementById('modeSelector').style.display = 'block';
+  document.getElementById('introCard').style.display = 'block';
+
+  // Greeting
+  setTimeout(() => {
+    addAIMessage(`Halo ${currentProfile.name}! Saya siap membantu Anda menganalisis kesehatan berdasarkan data sensor real-time Anda. Pilih mode konsultasi di atas, atau langsung ketik pertanyaan Anda.`);
+  }, 500);
+})();
+
+function showNoKeyBanner() {
+  document.getElementById('modeSelector').style.display = 'none';
+  document.querySelector('.chat-input-bar').style.display = 'none';
+  const area = document.getElementById('chatArea');
+  area.innerHTML = `
+    <div style="margin:20px 0;padding:20px;border-radius:16px;background:var(--bg);box-shadow:var(--shadow-out);text-align:center;">
+      <div style="font-size:2rem;margin-bottom:10px;">&#129302;</div>
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">Fitur AI Belum Aktif</div>
+      <p style="font-size:0.78rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;">
+        API Key belum dikonfigurasi. Silakan konsultasi langsung dengan dokter.
+      </p>
+      <button class="neu-btn-primary" style="width:100%;" onclick="nav('consultation.html')">
+        <ion-icon name="person-outline" style="vertical-align:-2px;margin-right:6px;"></ion-icon>
+        Cari Dokter
+      </button>
+    </div>`;
+}
+
+// ── Vitals Loading ────────────────────────────────────────────────────────
+async function loadPatientVitals() {
+  try {
+    // Try VitalsManager first
+    if (window.VitalsManager) {
+      const latest = VitalsManager.getCurrent();
+      if (latest && latest.hr) {
+        vitalsData = { hr: latest.hr, spo2: latest.spo2 || 0, temp: latest.temperature || 0 };
+        updateVitalsUI();
+        return;
+      }
+    }
+
+    // Fallback: get from Firestore vitals history
+    if (currentUser) {
+      const history = await VDB.getVitalsHistory(currentUser.uid, 1);
+      if (history && history.length > 0) {
+        const last = history[history.length - 1];
+        vitalsData.hr = last.hr || 0;
+        vitalsData.spo2 = last.spo2 || 0;
+        vitalsData.temp = last.temperature || 0;
+      }
+    }
+
+    // If still no data, use simulated defaults
+    if (!vitalsData.hr) {
+      vitalsData = { hr: 78, spo2: 97, temp: 36.6 };
+    }
+
+    updateVitalsUI();
+  } catch (e) {
+    console.warn('Error loading vitals:', e);
+    vitalsData = { hr: 78, spo2: 97, temp: 36.6 };
+    updateVitalsUI();
+  }
+}
+
+function updateVitalsUI() {
+  document.getElementById('hrVal').textContent = Math.round(vitalsData.hr);
+  document.getElementById('spo2Val').textContent = Math.round(vitalsData.spo2) + '%';
+  document.getElementById('tempVal').textContent = vitalsData.temp.toFixed(1) + '\u00B0';
+}
+
+// ── Chat Render Helpers ───────────────────────────────────────────────────
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function timeStr() {
+  return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+}
+
+function addUserMessage(msg) {
+  const area = document.getElementById('chatArea');
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;flex-direction:column;align-items:flex-end;';
+  div.innerHTML = `<div class="bubble-user">${escHtml(msg)}</div><div class="chat-timestamp">${timeStr()}</div>`;
+  area.appendChild(div);
+  div.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function addAIMessage(msg) {
+  const area = document.getElementById('chatArea');
+  const div = document.createElement('div');
+  div.className = 'chat-bubble-ai';
+  const formatted = escHtml(msg)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+  div.innerHTML = `
+    <div class="ai-avatar-sm" style="width:28px;height:28px;border-radius:8px;min-width:28px;">
+      <ion-icon name="hardware-chip-outline" style="color:#fff;font-size:0.75rem;"></ion-icon>
+    </div>
+    <div>
+      <div class="bubble-ai">${formatted}</div>
+      <div class="chat-timestamp" style="margin-left:4px;">${timeStr()}</div>
+    </div>`;
+  area.appendChild(div);
+  div.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ── Gemini API with Failover ──────────────────────────────────────────────
+async function callGeminiWithFailover(systemPrompt, contents) {
+  let lastError = null;
+
+  for (let attempt = 0; attempt < API_KEYS.length; attempt++) {
+    const keyIndex = (currentKeyIndex + attempt) % API_KEYS.length;
+    const apiKey = API_KEYS[keyIndex];
+
+    try {
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: systemPrompt }] },
+            contents,
+            generationConfig: { maxOutputTokens: 600, temperature: 0.7 }
+          })
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        const error = new Error(err.error?.message || `HTTP ${res.status}`);
+        error.status = res.status;
+        throw error;
+      }
+
+      const data = await res.json();
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!reply) throw new Error('Empty response from API');
+
+      // Success — remember this key
+      currentKeyIndex = keyIndex;
+      return reply;
+    } catch (e) {
+      lastError = e;
+      if (e.status === 429 || e.status === 403) {
+        console.warn(`Key #${keyIndex + 1} limit (HTTP ${e.status}), trying next...`);
+        continue;
+      }
+      throw e;
+    }
+  }
+
+  currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
+  throw lastError || new Error('Semua API key telah mencapai batas.');
+}
+
+// ── Mode Starters ─────────────────────────────────────────────────────────
+function startQuickCheck() {
+  currentMode = 'quick';
+  document.getElementById('modeSelector').style.display = 'none';
+  document.getElementById('introCard').style.display = 'none';
+  conversationHistory = [];
+  addAIMessage('Mari kita lakukan pemeriksaan cepat. Apa gejala utama yang Anda rasakan hari ini?');
+}
+
+function startDetailedAssessment() {
+  currentMode = 'detailed';
+  document.getElementById('modeSelector').style.display = 'none';
+  document.getElementById('introCard').style.display = 'none';
+  conversationHistory = [];
+  addAIMessage(`Kita akan melakukan penilaian kesehatan menyeluruh. Saya melihat data sensor Anda:\n\n❤️ HR: ${Math.round(vitalsData.hr)} bpm\n💧 SpO2: ${Math.round(vitalsData.spo2)}%\n🌡️ Suhu: ${vitalsData.temp.toFixed(1)}°C\n\nCeritakan keluhan utama Anda secara detail — sejak kapan, seberapa sering, dan apa yang memperburuk atau memperingan gejala?`);
+}
+
+function clearChat() {
+  conversationHistory = [];
+  currentMode = null;
+  document.getElementById('chatArea').innerHTML = '';
+  document.getElementById('modeSelector').style.display = 'block';
+  document.getElementById('introCard').style.display = 'block';
+  document.getElementById('referBtn').style.display = 'none';
+  document.getElementById('loadingIndicator').style.display = 'none';
+  // Re-enable input in case it was disabled
+  document.getElementById('chatInput').disabled = false;
+  document.getElementById('sendBtn').disabled = false;
+  addAIMessage(`Halo ${currentProfile.name}! Saya siap membantu. Pilih mode konsultasi di atas, atau langsung ketik pertanyaan Anda.`);
+}
+
+// ── Send Chat ─────────────────────────────────────────────────────────────
+async function sendChat() {
+  if (isLoading) return;
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  // If no mode selected yet, auto-select quick mode
+  if (!currentMode) {
+    currentMode = 'quick';
+    document.getElementById('modeSelector').style.display = 'none';
+    document.getElementById('introCard').style.display = 'none';
+  }
+
+  addUserMessage(msg);
+  conversationHistory.push({ role: 'user', content: msg });
+  input.value = '';
+
+  // Show loading
+  isLoading = true;
+  document.getElementById('loadingIndicator').style.display = 'block';
+  document.getElementById('chatInput').disabled = true;
+  document.getElementById('sendBtn').disabled = true;
+
+  try {
+    // Build risk summary if available
+    let riskSummary = '';
+    if (riskScores && healthProfile) {
+      const diseaseMap = {
+        metabolic: 'Sindrom Metabolik',
+        diabetes: 'Diabetes Mellitus',
+        heart: 'Penyakit Jantung',
+        hypertension: 'Hipertensi',
+        stroke: 'Stroke',
+        sleep: 'Gangguan Tidur'
+      };
+
+      const topRisks = Object.entries(riskScores)
+        .filter(([k, v]) => k !== 'calculatedAt' && k !== 'calculatedWith' && v && v.score !== undefined)
+        .sort((a, b) => (b[1]?.score || 0) - (a[1]?.score || 0))
+        .slice(0, 3)
+        .map(([k, v]) => {
+          const topFactors = v.factors ? v.factors.slice(0, 2).join(', ') : 'Data tidak lengkap';
+          return `${diseaseMap[k] || k}: ${v.score}/100 (Faktor: ${topFactors})`;
+        })
+        .join('\n');
+
+      if (topRisks) {
+        riskSummary = `\n\nProfil Risiko Kesehatan Pasien (Top 3):\n${topRisks}\nHubungkan gejala yang dilaporkan dengan faktor risiko jika relevan.`;
+      }
+    }
+
+    // Build system prompt with context
+    const systemCtx = `${SYSTEM_PROMPT}
+
+Data Pasien:
+- Nama: ${currentProfile.name}
+- Vital Signs: HR ${Math.round(vitalsData.hr)} bpm, SpO2 ${Math.round(vitalsData.spo2)}%, Suhu ${vitalsData.temp.toFixed(1)}°C
+- Mode: ${currentMode === 'quick' ? 'Quick Symptom Check (2-3 pertanyaan singkat)' : 'Detailed Assessment (5-7 pertanyaan mendalam)'}${riskSummary}
+
+Instruksi:
+${currentMode === 'quick'
+  ? '- Tanya maksimal 2-3 gejala lainnya secara singkat.\n- Setelah cukup info, berikan assessment ringkas.\n- Selalu sarankan konsultasi dokter untuk diagnosis pasti.'
+  : '- Tanya detail tentang gejala, durasi, faktor pemicu, riwayat medis.\n- Hubungkan dengan vital signs yang abnormal jika ada.\n- Setelah cukup percakapan, buat assessment komprehensif.\n- Berikan rekomendasi tindakan.'}
+- Jawab dengan natural, supportif, dan tidak terlalu formal. Maksimal 4-5 kalimat per respon kecuali diminta detail.`;
+
+    // Build conversation contents for Gemini
+    const contents = [];
+    conversationHistory.forEach(m => {
+      contents.push({
+        role: m.role === 'user' ? 'user' : 'model',
+        parts: [{ text: m.content }]
+      });
+    });
+
+    const aiResponse = await callGeminiWithFailover(systemCtx, contents);
+
+    addAIMessage(aiResponse);
+    conversationHistory.push({ role: 'assistant', content: aiResponse });
+
+    // Keep history compact
+    if (conversationHistory.length > 30) {
+      conversationHistory = conversationHistory.slice(-30);
+    }
+
+    // Auto-generate assessment after enough exchanges
+    const threshold = currentMode === 'quick' ? 6 : 10;
+    if (conversationHistory.length >= threshold) {
+      document.getElementById('referBtn').style.display = 'block';
+      // Only auto-generate assessment once
+      if (!document.querySelector('.ai-assessment-card')) {
+        setTimeout(() => generateAssessment(), 1500);
+      }
+    }
+  } catch (e) {
+    console.error('[AI consultation]', e);
+    addAIMessage('Maaf, terjadi gangguan koneksi ke layanan AI. Silakan coba lagi dalam beberapa saat.');
+  } finally {
+    isLoading = false;
+    document.getElementById('loadingIndicator').style.display = 'none';
+    document.getElementById('chatInput').disabled = false;
+    document.getElementById('sendBtn').disabled = false;
+    document.getElementById('chatInput').focus();
+  }
+}
+
+// ── Assessment Generator ──────────────────────────────────────────────────
+async function generateAssessment() {
+  isLoading = true;
+  document.getElementById('loadingIndicator').style.display = 'block';
+
+  const assessmentPrompt = `Berdasarkan percakapan berikut, buatkan assessment kesehatan.
+
+Percakapan:
+${conversationHistory.map(m => `${m.role === 'user' ? 'Pasien' : 'AI'}: ${m.content}`).join('\n')}
+
+Vital Signs: HR ${Math.round(vitalsData.hr)}, SpO2 ${Math.round(vitalsData.spo2)}%, Suhu ${vitalsData.temp.toFixed(1)}°C
+
+Balas HANYA dalam JSON valid (tanpa markdown code block):
+{
+  "diagnosis": "Diagnosis utama berdasarkan gejala",
+  "confidence": 75,
+  "differential": [
+    {"name": "Diagnosis alternatif 1", "probability": 20},
+    {"name": "Diagnosis alternatif 2", "probability": 5}
+  ],
+  "recommendation": "Rekomendasi tindakan lanjutan",
+  "urgency": "rendah"
+}
+
+Nilai urgency: "rendah", "sedang", atau "tinggi". Confidence 0-100.`;
+
+  try {
+    const contents = [{ role: 'user', parts: [{ text: assessmentPrompt }] }];
+    const response = await callGeminiWithFailover(SYSTEM_PROMPT, contents);
+
+    // Try to extract JSON from response
+    let jsonStr = response.trim();
+    // Strip markdown code blocks if present
+    jsonStr = jsonStr.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '');
+
+    const assessment = JSON.parse(jsonStr);
+    displayAssessmentCard(assessment);
+  } catch (e) {
+    console.warn('Assessment parse error, showing as text:', e);
+    // If JSON parse fails, just show as regular message
+    addAIMessage('Berdasarkan percakapan kita, saya menyarankan Anda untuk berkonsultasi dengan dokter untuk pemeriksaan lebih lanjut.');
+  } finally {
+    isLoading = false;
+    document.getElementById('loadingIndicator').style.display = 'none';
+    document.getElementById('referBtn').style.display = 'block';
+  }
+}
+
+function displayAssessmentCard(assessment) {
+  const area = document.getElementById('chatArea');
+  const div = document.createElement('div');
+  div.className = 'chat-bubble-ai';
+
+  const urgencyColor = assessment.urgency === 'tinggi' ? '#EB5757' : assessment.urgency === 'sedang' ? '#F2994A' : '#6FCF97';
+  const urgencyBg = assessment.urgency === 'tinggi' ? 'rgba(235,87,87,0.1)' : assessment.urgency === 'sedang' ? 'rgba(242,153,74,0.1)' : 'rgba(111,207,151,0.1)';
+
+  let differentialHTML = '';
+  if (assessment.differential && assessment.differential.length > 0) {
+    differentialHTML = '<div style="margin-top:8px;border-top:1px solid rgba(108,99,255,0.15);padding-top:8px;"><strong style="font-size:0.78rem;">Diagnosis Alternatif:</strong>';
+    assessment.differential.forEach(d => {
+      differentialHTML += `<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:4px;">${escHtml(d.name)} (${d.probability}%)</div>`;
+    });
+    differentialHTML += '</div>';
+  }
+
+  div.innerHTML = `
+    <div class="ai-avatar-sm" style="width:28px;height:28px;border-radius:8px;min-width:28px;flex-shrink:0;">
+      <ion-icon name="hardware-chip-outline" style="color:#fff;font-size:0.75rem;"></ion-icon>
+    </div>
+    <div style="flex:1;">
+      <div class="ai-assessment-card">
+        <div class="assessment-title">
+          <ion-icon name="analytics-outline"></ion-icon> Analisis AI Anda
+        </div>
+        <div class="assessment-row">
+          <div class="assessment-diagnosis">
+            <span style="font-weight:700;color:var(--text-primary);">${escHtml(assessment.diagnosis)}</span>
+            <span style="font-size:0.72rem;color:${urgencyColor};font-weight:600;"> ${assessment.confidence}%</span>
+          </div>
+          <div class="confidence-bar-track">
+            <div class="confidence-bar-fill" style="width:${assessment.confidence}%;background:linear-gradient(90deg,${urgencyColor},${urgencyColor}66);"></div>
+          </div>
+        </div>
+        ${differentialHTML}
+        <div class="assessment-rec" style="background:${urgencyBg};padding:8px;border-radius:8px;border:none;margin-top:10px;">
+          <ion-icon name="information-circle-outline" style="vertical-align:-2px;color:${urgencyColor};"></ion-icon>
+          <strong>Rekomendasi:</strong> ${escHtml(assessment.recommendation)}
+        </div>
+      </div>
+      <div class="chat-timestamp" style="margin-top:4px;">${timeStr()}</div>
+    </div>`;
+
+  area.appendChild(div);
+  div.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Gemini API Keys</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-layout { display: flex; min-height: 100vh; }
+    .admin-sidebar { width: 240px; background: #0D2B1A; padding: 24px 0; position: fixed; height: 100vh; overflow-y: auto; }
+    .admin-main { margin-left: 240px; flex: 1; background: var(--bg); }
+    .sidebar-logo { font-size: 1.4rem; font-weight: 800; color: #fff; padding: 0 24px 24px; letter-spacing: -0.5px; }
+    .sidebar-logo span { color: #6FCF97; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 0; }
+    .sidebar-item { padding: 14px 24px; color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; border-left: 3px solid transparent; }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.1); }
+    .sidebar-item.active { color: #6FCF97; background: rgba(111,207,151,0.12); border-left-color: #6FCF97; }
+    .sidebar-item ion-icon { margin-right: 12px; font-size: 1.1rem; }
+
+    .admin-topbar { background: #fff; border-bottom: 1px solid var(--shadow-dark); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
+    .admin-topbar h1 { font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin: 0; }
+    .admin-topbar button { background: linear-gradient(135deg, #27AE60, #6FCF97); color: #fff; border: none; padding: 10px 20px; border-radius: 100px; cursor: pointer; font-weight: 600; }
+
+    .admin-content { padding: 40px; max-width: 1200px; margin: 0 auto; }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+    .stat-box { background: #fff; border-radius: 14px; padding: 24px; box-shadow: var(--shadow-out-sm); }
+    .stat-label { font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 8px; }
+    .stat-value { font-size: 2.2rem; font-weight: 800; color: var(--primary-dark); }
+
+    .keys-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-out-sm); }
+    .keys-table th { background: linear-gradient(135deg, #0D2B1A, #1A5C38); color: #fff; padding: 16px; text-align: left; font-weight: 600; font-size: 0.85rem; }
+    .keys-table td { padding: 16px; border-bottom: 1px solid var(--shadow-dark); font-size: 0.9rem; }
+    .keys-table tbody tr:hover { background: var(--bg); }
+
+    .key-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .status-ok { background: rgba(39,174,96,0.15); color: #27AE60; }
+    .status-warning { background: rgba(242,153,74,0.15); color: #F2994A; }
+    .status-full { background: rgba(235,87,87,0.15); color: #EB5757; }
+
+    .progress-bar { width: 100%; height: 8px; background: var(--shadow-dark); border-radius: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #27AE60, #6FCF97); transition: width 0.3s; }
+
+    .action-btn { padding: 6px 12px; font-size: 0.8rem; border: none; border-radius: 6px; cursor: pointer; background: var(--shadow-dark); color: var(--text-primary); transition: all 0.2s; margin-right: 6px; }
+    .action-btn:hover { background: var(--primary-dark); color: #fff; }
+    .action-btn.danger { background: rgba(235,87,87,0.15); color: #EB5757; }
+    .action-btn.danger:hover { background: #EB5757; color: #fff; }
+
+    .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+    .modal.active { display: flex; }
+    .modal-content { background: #fff; border-radius: 14px; padding: 32px; width: 90%; max-width: 500px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+    .modal-title { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; font-size: 0.9rem; }
+    .form-input, .form-textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--shadow-dark); border-radius: 8px; font-family: inherit; font-size: 0.9rem; }
+    .form-textarea { resize: vertical; min-height: 100px; }
+    .modal-buttons { display: flex; gap: 12px; margin-top: 24px; justify-content: flex-end; }
+    .modal-btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .modal-btn-primary { background: linear-gradient(135deg, #27AE60, #6FCF97); color: #fff; }
+    .modal-btn-secondary { background: var(--shadow-dark); color: var(--text-primary); }
+
+    @media (max-width: 1024px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .admin-sidebar { width: 180px; }
+      .admin-main { margin-left: 180px; }
+    }
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .keys-table { font-size: 0.8rem; }
+      .keys-table th, .keys-table td { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <h1>🔑 Gemini API Keys</h1>
+      <button onclick="openAddModal()"><ion-icon name="add-outline"></ion-icon> Tambah Key</button>
+    </div>
+
+    <div class="admin-content">
+      <!-- STATS -->
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">Total Keys</div>
+          <div class="stat-value" id="totalKeys">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Active Keys</div>
+          <div class="stat-value" id="activeKeys">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Avg Usage</div>
+          <div class="stat-value" id="avgUsage">0%</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Last Reset</div>
+          <div class="stat-value" id="lastReset" style="font-size:1.2rem;">-</div>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <table class="keys-table">
+        <thead>
+          <tr>
+            <th>Key ID</th>
+            <th>Status</th>
+            <th>Usage</th>
+            <th>Progress</th>
+            <th>Last Used</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="keysTableBody">
+          <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal" id="keyModal">
+  <div class="modal-content">
+    <h2 class="modal-title" id="modalTitle">Tambah API Key</h2>
+    <div class="form-group">
+      <label class="form-label">Key ID (nama unik)</label>
+      <input class="form-input" id="keyId" placeholder="gemini-key-1" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label">API Key</label>
+      <textarea class="form-textarea" id="keyValue" placeholder="Paste Gemini API key di sini" required></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Daily Limit (requests)</label>
+      <input class="form-input" id="keyLimit" type="number" value="10000" required>
+    </div>
+    <div class="form-group">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+        <input type="checkbox" id="keyActive" checked> Aktif
+      </label>
+    </div>
+    <div class="modal-buttons">
+      <button class="modal-btn modal-btn-secondary" onclick="closeKeyModal()">Batal</button>
+      <button class="modal-btn modal-btn-primary" onclick="saveKey()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/gemini-key-manager.js"></script>
+
+<script>
+let editingKeyId = null;
+let keysUnsubscribe = null;
+
+// Load keys on page load
+document.addEventListener('DOMContentLoaded', async () => {
+  const { user, profile: _vp } = await VAuth.guard('admin', 1);
+  if (_vp && _vp.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+  // Use real-time listener instead of polling (eliminates 12 reads/minute)
+  keysUnsubscribe = VFirebase.db.collection('gemini-api-keys')
+    .orderBy('order', 'asc')
+    .onSnapshot(snap => {
+      const keys = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      updateKeysUI(keys);
+    }, err => {
+      console.error('Error listening to keys:', err);
+    });
+});
+
+function updateKeysUI(keys) {
+  try {
+    // Update stats
+    const totalKeys = keys.length;
+    const activeKeys = keys.filter(k => k.active).length;
+    const avgUsage = keys.length > 0 ? Math.round(keys.reduce((sum, k) => sum + (k.usage / k.limit), 0) / keys.length * 100) : 0;
+
+    document.getElementById('totalKeys').textContent = totalKeys;
+    document.getElementById('activeKeys').textContent = activeKeys;
+    document.getElementById('avgUsage').textContent = avgUsage + '%';
+
+    // Update table
+    const tbody = document.getElementById('keysTableBody');
+    tbody.innerHTML = keys.map((key, idx) => {
+      const usage = key.usage || 0;
+      const limit = key.limit || 10000;
+      const percentage = Math.round((usage / limit) * 100);
+      const lastUsed = key.lastUsed ? new Date(key.lastUsed.toDate()).toLocaleString('id-ID') : '-';
+
+      let statusBadge = percentage >= 90 ? 'status-full' : percentage >= 70 ? 'status-warning' : 'status-ok';
+      let statusText = percentage >= 90 ? '🔴 PENUH' : percentage >= 70 ? '🟡 TINGGI' : '🟢 OK';
+
+      return `
+        <tr>
+          <td><code style="background:var(--bg);padding:4px 8px;border-radius:4px;font-size:0.85rem;">${key.id}</code></td>
+          <td><span class="key-badge ${statusBadge}">${statusText}</span></td>
+          <td>${usage} / ${limit}</td>
+          <td style="width:150px;">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:${Math.min(percentage, 100)}%"></div>
+            </div>
+            <small style="color:var(--text-muted);">${percentage}%</small>
+          </td>
+          <td><small>${lastUsed}</small></td>
+          <td>
+            <button class="action-btn" onclick="editKey('${key.id}')">Edit</button>
+            <button class="action-btn danger" onclick="deleteKey('${key.id}')">Hapus</button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  } catch (e) {
+    console.error('Error updating keys UI:', e);
+  }
+}
+
+function openAddModal() {
+  editingKeyId = null;
+  document.getElementById('modalTitle').textContent = 'Tambah API Key';
+  document.getElementById('keyId').value = '';
+  document.getElementById('keyValue').value = '';
+  document.getElementById('keyLimit').value = '10000';
+  document.getElementById('keyActive').checked = true;
+  document.getElementById('keyModal').classList.add('active');
+}
+
+async function editKey(keyId) {
+  try {
+    const doc = await VFirebase.db.collection('gemini-api-keys').doc(keyId).get();
+    const key = doc.data();
+
+    editingKeyId = keyId;
+    document.getElementById('modalTitle').textContent = 'Edit API Key';
+    document.getElementById('keyId').value = keyId;
+    document.getElementById('keyId').disabled = true;
+    document.getElementById('keyValue').value = key.key;
+    document.getElementById('keyLimit').value = key.limit || 10000;
+    document.getElementById('keyActive').checked = key.active;
+    document.getElementById('keyModal').classList.add('active');
+  } catch (e) {
+    showToast('Error loading key', 'error');
+  }
+}
+
+async function saveKey() {
+  const keyId = document.getElementById('keyId').value;
+  const keyValue = document.getElementById('keyValue').value;
+  const keyLimit = parseInt(document.getElementById('keyLimit').value);
+  const keyActive = document.getElementById('keyActive').checked;
+
+  if (!keyId || !keyValue || !keyLimit) {
+    showToast('Semua field wajib diisi', 'warning');
+    return;
+  }
+
+  try {
+    if (editingKeyId) {
+      await VFirebase.db.collection('gemini-api-keys').doc(editingKeyId).update({
+        key: keyValue,
+        limit: keyLimit,
+        active: keyActive,
+        updatedAt: new Date()
+      });
+      showToast('Key diperbarui', 'success');
+    } else {
+      const nextOrder = (await VFirebase.db.collection('gemini-api-keys').get()).size + 1;
+      await VFirebase.db.collection('gemini-api-keys').doc(keyId).set({
+        key: keyValue,
+        limit: keyLimit,
+        active: keyActive,
+        usage: 0,
+        order: nextOrder,
+        createdAt: new Date()
+      });
+      showToast('Key ditambahkan', 'success');
+    }
+    closeKeyModal();
+    await loadKeysTable();
+  } catch (e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+}
+
+function closeKeyModal() {
+  document.getElementById('keyModal').classList.remove('active');
+  document.getElementById('keyId').disabled = false;
+  editingKeyId = null;
+}
+
+async function deleteKey(keyId) {
+  if (!confirm(`Hapus key "${keyId}"? Ini tidak bisa dibatalkan!`)) return;
+
+  try {
+    await VFirebase.db.collection('gemini-api-keys').doc(keyId).delete();
+    showToast('Key dihapus', 'success');
+    await loadKeysTable();
+  } catch (e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+}
+
+// Close modal on outside click
+document.getElementById('keyModal').addEventListener('click', (e) => {
+  if (e.target.id === 'keyModal') closeKeyModal();
+});
+
+// Cleanup listener on page unload
+window.addEventListener('beforeunload', () => {
+  if (keysUnsubscribe) keysUnsubscribe();
+});
+</script>
+
+</body>
+</html>

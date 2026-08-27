@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Riwayat Skrining</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: var(--text-primary); color: #fff; }
+    .history-card { margin-bottom: 16px; }
+    .history-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 0; border-bottom: 1px solid var(--shadow-dark);
+    }
+    .history-item:last-child { border-bottom: none; }
+    .h-date { font-size: 0.7rem; color: var(--text-tertiary); }
+    .h-res { font-size: 0.8rem; font-weight: 700; }
+    .badge-risk { font-size: 0.6rem; padding: 2px 8px; border-radius: 10px; font-weight: 800; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('disease-risk.html')" style="color:#fff;">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="page-title" style="color:#fff;">Riwayat Skrining</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+    <div id="history-container">
+      <div id="loading-history" style="text-align:center;padding:40px 0;">
+        <div class="spinner"></div>
+        <p style="margin-top:16px;font-size:0.8rem;color:var(--text-tertiary);">Memuat riwayat pemeriksaan...</p>
+      </div>
+      
+      <div id="empty-history" style="display:none;text-align:center;padding:60px 20px;">
+        <ion-icon name="document-text-outline" style="font-size:3rem;color:var(--shadow-dark);"></ion-icon>
+        <p style="margin-top:16px;color:var(--text-secondary);font-size:0.9rem;">Belum ada riwayat pemeriksaan klinis.</p>
+        <button class="neu-btn neu-btn-primary mt-24" onclick="nav('disease-risk.html')">Mulai Skrining Sekarang</button>
+      </div>
+
+      <div id="actual-history" style="display:none;">
+        <!-- Categories will be injected here -->
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  const DISEASES = [
+    { id: 'dyslipidemia', label: 'Dyslipidemia', icon: '🧬', color: '#F2994A' },
+    { id: 'hypertension', label: 'Hipertensi', icon: '💓', color: '#EB5757' },
+    { id: 'nafld', label: 'NAFLD (Hati)', icon: '💧', color: '#2F80ED' },
+    { id: 'metabolic_syndrome', label: 'Sindrom Metabolik', icon: '🔋', color: '#6C63FF' },
+    { id: 'obesity_insulin', label: 'Resistensi Insulin', icon: '⚖️', color: '#27AE60' },
+    { id: 'depression', label: 'Depresi (PHQ-9)', icon: '🧠', color: '#9B59B6' },
+    { id: 'stress', label: 'Stres', icon: '😰', color: '#E67E22' }
+  ];
+
+  async function initHistory() {
+    try {
+      const { user } = await VAuth.guard('patient', 1);
+      const historyWrap = document.getElementById('actual-history');
+      let totalFound = 0;
+
+      for (const d of DISEASES) {
+        const records = await VDB.getScreeningHistory(user.uid, d.id, 5);
+        if (records.length > 0) {
+          totalFound += records.length;
+          const card = document.createElement('div');
+          card.className = 'neu-card history-card';
+          card.style.borderLeft = `4px solid ${d.color}`;
+          
+          let itemsHtml = '';
+          records.forEach(r => {
+            const date = r.timestamp ? r.timestamp.toDate().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Baru saja';
+            const risk = r.riskLevel || 'UNKNOWN';
+            let riskColor = '#27AE60';
+            if (risk.includes('HIGH') || risk.includes('BERAT') || risk.includes('POSITIF') || risk.includes('TINGGI')) riskColor = '#EB5757';
+            else if (risk.includes('MODERATE') || risk.includes('SEDANG') || risk.includes('INDETERMINATE') || risk.includes('ELEVATED')) riskColor = '#F2994A';
+
+            itemsHtml += `
+              <div class="history-item">
+                <div>
+                  <div class="h-res">${r.score !== undefined ? 'Skor: ' + r.score : (r.fib4Score ? 'FIB-4: ' + r.fib4Score.toFixed(2) : (r.totalScore !== undefined ? 'Skor PHQ: ' + r.totalScore : 'Selesai'))}</div>
+                  <div class="h-date">${date}</div>
+                </div>
+                <div class="badge-risk" style="background:${riskColor}1A; color:${riskColor}">${risk}</div>
+              </div>
+            `;
+          });
+
+          card.innerHTML = `
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <span style="font-size:1.2rem;">${d.icon}</span>
+              <span style="font-weight:800;font-size:0.9rem;">${d.label}</span>
+            </div>
+            ${itemsHtml}
+          `;
+          historyWrap.appendChild(card);
+        }
+      }
+
+      document.getElementById('loading-history').style.display = 'none';
+      if (totalFound > 0) {
+        historyWrap.style.display = 'block';
+      } else {
+        document.getElementById('empty-history').style.display = 'block';
+      }
+
+    } catch (e) {
+      console.error('[history] error:', e);
+      showToast('Gagal memuat riwayat', 'error');
+    }
+  }
+
+  initHistory();
+</script>
+</body>
+</html>

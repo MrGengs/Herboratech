@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Ensiklopedia Penyakit</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    :root {
+      --primary-enc: #6C63FF;
+      --primary-enc-dark: #5A51D4;
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, var(--primary-enc) 0%, #8B7FFF 100%);
+      box-shadow: 0 2px 16px rgba(108, 99, 255, 0.25);
+    }
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12); box-shadow: none;
+      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .app-header .page-title { color: #fff; font-size: 1.0rem; font-weight: 700; }
+
+    .search-bar {
+      background: var(--bg); box-shadow: var(--shadow-out-sm);
+      padding: 12px 16px; margin: 16px; border-radius: 14px;
+      display: flex; gap: 10px; align-items: center;
+    }
+    .search-bar input { flex: 1; border: none; background: transparent; font-family: var(--font); outline: none; }
+    .search-bar ion-icon { color: var(--text-tertiary); }
+
+    .disease-filter {
+      display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 12px; scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .disease-filter::-webkit-scrollbar { display: none; }
+    .filter-chip {
+      padding: 8px 14px; border-radius: 20px; border: 1px solid var(--shadow-dark);
+      background: #fff; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;
+      white-space: nowrap; flex-shrink: 0; font-weight: 600;
+    }
+    .filter-chip.active {
+      background: var(--primary-enc); color: #fff; border-color: var(--primary-enc);
+    }
+
+    .disease-card {
+      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 16px;
+      padding: 20px; margin: 16px; cursor: pointer; transition: all 0.3s;
+      border-left: 5px solid transparent;
+    }
+    .disease-card:active { transform: scale(0.98); }
+    .disease-card.dys { border-left-color: #F2994A; }
+    .disease-card.hyp { border-left-color: #EB5757; }
+    .disease-card.naf { border-left-color: #2F80ED; }
+    .disease-card.met { border-left-color: #27AE60; }
+    .disease-card.obe { border-left-color: #A29BFE; }
+    .disease-card.dia { border-left-color: #FF6B6B; }
+    .disease-card.dep { border-left-color: #74B9FF; }
+
+    .disease-header {
+      display: flex; gap: 12px; align-items: center; margin-bottom: 12px;
+    }
+    .disease-icon { font-size: 2.2rem; }
+    .disease-title { font-size: 1.1rem; font-weight: 800; color: var(--text-primary); }
+    .disease-subtitle { font-size: 0.75rem; color: var(--text-tertiary); text-transform: uppercase; font-weight: 600; }
+
+    .disease-summary { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+
+    .info-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; margin-right: 6px; }
+    .badge-papers { background: rgba(108,99,255,0.15); color: var(--primary-enc-dark); }
+    .badge-score { background: rgba(47,128,237,0.15); color: #1B4F72; }
+    .badge-evidence { background: rgba(39,174,96,0.15); color: #1A5C38; }
+
+    .expand-btn {
+      background: transparent; border: none; color: var(--primary-enc); cursor: pointer;
+      font-weight: 700; padding: 8px 0; display: flex; align-items: center; gap: 6px;
+      font-size: 0.85rem; transition: all 0.3s;
+    }
+    .expand-btn ion-icon { transition: transform 0.3s; }
+    .expand-btn.expanded ion-icon { transform: rotate(180deg); }
+
+    .disease-detail {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;
+    }
+    .disease-detail.expanded { max-height: 2000px; }
+
+    .detail-section {
+      margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--shadow-dark);
+    }
+    .section-title { font-size: 0.95rem; font-weight: 800; color: var(--text-primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .section-title ion-icon { color: var(--primary-enc); }
+
+    .risk-cascade {
+      background: var(--bg); box-shadow: var(--shadow-in); padding: 14px; border-radius: 12px;
+      font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; font-family: 'Courier New', monospace;
+    }
+
+    .paper-item {
+      background: rgba(108,99,255,0.03); border-left: 3px solid var(--primary-enc);
+      padding: 12px; border-radius: 8px; margin-bottom: 10px; font-size: 0.8rem;
+    }
+    .paper-title { font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .paper-meta { font-size: 0.75rem; color: var(--text-tertiary); }
+
+    .risk-table {
+      width: 100%; font-size: 0.8rem; border-collapse: collapse; margin-top: 10px;
+    }
+    .risk-table th, .risk-table td { padding: 8px; text-align: left; border-bottom: 1px solid var(--shadow-dark); }
+    .risk-table th { background: rgba(108,99,255,0.08); font-weight: 700; color: var(--text-primary); }
+    .risk-table tr:hover { background: rgba(108,99,255,0.03); }
+
+    .section { padding: 0 0 20px; }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('disease-risk.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="page-title">Ensiklopedia Penyakit</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="search-bar">
+    <ion-icon name="search-outline"></ion-icon>
+    <input type="text" id="searchInput" placeholder="Cari penyakit atau risiko..." oninput="filterDiseases()">
+  </div>
+
+  <div class="disease-filter">
+    <div class="filter-chip active" data-filter="all" onclick="setFilter('all'); filterDiseases();">Semua</div>
+    <div class="filter-chip" data-filter="dys" onclick="setFilter('dys'); filterDiseases();">Dyslipidemia</div>
+    <div class="filter-chip" data-filter="hyp" onclick="setFilter('hyp'); filterDiseases();">Hipertensi</div>
+    <div class="filter-chip" data-filter="naf" onclick="setFilter('naf'); filterDiseases();">NAFLD</div>
+    <div class="filter-chip" data-filter="met" onclick="setFilter('met'); filterDiseases();">MetS</div>
+    <div class="filter-chip" data-filter="dia" onclick="setFilter('dia'); filterDiseases();">Diabetes</div>
+  </div>
+
+  <div class="section" id="diseaseList"></div>
+
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+let currentFilter = 'all';
+const diseases = [
+  {
+    id: 'dys',
+    icon: '🩸',
+    name: 'Dyslipidemia',
+    subtitle: 'Gangguan Profil Lipid',
+    class: 'dys',
+    summary: 'Ketidaknormalan kadar kolesterol dan trigliserida darah yang meningkatkan risiko penyakit kardiovaskuler. Mempengaruhi 39% populasi dewasa global.',
+    papers: [
+      { title: 'Familial Hypercholesterolemia is Underdiagnosed', author: 'Nordestgaard BG, et al.', journal: 'Eur Heart J (2016)', citations: 2847, doi: '10.1093/eurheartj/ehw145' },
+      { title: 'Heart Disease & Stroke Statistics', author: 'Mozaffarian D, et al.', journal: 'Circulation (2015)', citations: 3200, doi: '10.1161/CIR.0000000000000350' },
+      { title: 'Effect of Potentially Modifiable Risk Factors Associated with Myocardial Infarction in 52 Countries', author: 'Yusuf S, et al.', journal: 'Lancet (2004)', citations: 4100, doi: '10.1016/S0140-6736(04)17018-9' }
+    ],
+    biomarkers: ['Total Kolesterol', 'LDL-C', 'HDL-C', 'Trigliserida', 'Non-HDL Cholesterol'],
+    riskScoring: `
+0-30 pts: LOW RISK
+• Profil lipid normal
+• BMI sehat
+• Tanpa gejala
+→ Intervensi preventif, screening setiap 1 tahun
+
+31-70 pts: MODERATE RISK
+• Kolesterol borderline
+• BMI 25-30
+• Faktor risiko gaya hidup
+→ Terapi intensif, lab 3 bulan
+
+71-100 pts: HIGH RISK
+• LDL/TG tinggi
+• Tanda klinis (xantoma, xanthelasma)
+• Riwayat keluarga positif
+→ Rujukan kardiologi, obat penurun lipid
+    `,
+    evidenceGrade: 'GRADE A (High Quality)',
+    prevalence: '39% populasi dewasa'
+  },
+  {
+    id: 'hyp',
+    icon: '❤️',
+    name: 'Hipertensi',
+    subtitle: 'Tekanan Darah Tinggi',
+    class: 'hyp',
+    summary: 'Peningkatan tekanan darah persisten yang merusak pembuluh darah dan jantung. Faktor risiko utama stroke, MI, dan gagal jantung.',
+    papers: [
+      { title: 'ACC/AHA Blood Pressure Guidelines 2017', author: 'Whelton PK, et al.', journal: 'Hypertension (2017)', citations: 5200, doi: '10.1161/HYP.0000000000000065' },
+      { title: 'Framingham Heart Study - Blood Pressure and Risk of Cardiovascular Disease', author: 'Kannel WB, et al.', journal: 'N Engl J Med (1970)', citations: 8500, doi: '10.1056/NEJM197005282820801' },
+      { title: 'A Randomized Trial of Intensive versus Standard Blood-Pressure Control', author: 'Wright Jr JT, et al.', journal: 'NEJM (2015)', citations: 2400, doi: '10.1056/NEJMoa1511939' }
+    ],
+    biomarkers: ['Tekanan Sistolik', 'Tekanan Diastolik', 'Mean Arterial Pressure'],
+    riskScoring: `
+BP Kategori:
+• Normal: <120/<80 mmHg
+• Elevated: 120-129/<80
+• HTN Stage 1: 130-139/80-89
+• HTN Stage 2: ≥140/≥90
+• Hipertensive Crisis: >180/>120
+
+Risk Score Kalkulasi:
+Baseline 20 poin + faktor risiko
+→ 0-30: Low (Lifestyle)
+→ 31-70: Moderate (Monitor + Rx)
+→ 71-100: High (Urgent referral)
+    `,
+    evidenceGrade: 'GRADE A (Landmark trials)',
+    prevalence: '1.13 miliar orang dunia'
+  },
+  {
+    id: 'naf',
+    icon: '🔬',
+    name: 'NAFLD',
+    subtitle: 'Non-Alcoholic Fatty Liver Disease',
+    class: 'naf',
+    summary: 'Akumulasi lemak di hati tanpa riwayat alkohol. Linked dengan metabolic syndrome, DM2, dan penyakit kardiovaskuler.',
+    papers: [
+      { title: 'NAFLD Diagnosis & Management', author: 'Younossi ZM, et al.', journal: 'Hepatology (2018)', citations: 1800, doi: '10.1002/hep.29367' },
+      { title: 'Fibrosis-4 Index as a Non-invasive Measure of Fibrosis in Nonalcoholic Fatty Liver Disease', author: 'Shah AG, et al.', journal: 'Clin Gastroenterol Hepatol (2009)', citations: 950, doi: '10.1016/j.cgh.2009.05.026' },
+      { title: 'Metabolic Dysfunction-associated Fatty Liver Disease: A Disease of the Modern World', author: 'Stefan N, et al.', journal: 'Nat Rev (2021)', citations: 1200, doi: '10.1038/s41572-021-00285-w' }
+    ],
+    biomarkers: ['AST (Aspartate Aminotransferase)', 'ALT (Alanine Aminotransferase)', 'Platelet count', 'FIB-4 Index'],
+    riskScoring: `
+FIB-4 Index = (Age × AST) / (Platelet × √ALT)
+
+Interpretasi:
+<1.30: LOW RISK (F0-F1)
+→ Kemungkinan fibrosis rendah
+
+1.30-2.67: INTERMEDIATE RISK (F2)
+→ Monitoring ketat, biopsi pertimbangkan
+
+>2.67: HIGH RISK (F3-F4)
+→ Probable advanced fibrosis/cirrhosis
+→ Rujukan hepatologi
+    `,
+    evidenceGrade: 'GRADE B (Moderate quality)',
+    prevalence: '25-30% populasi global'
+  },
+  {
+    id: 'met',
+    icon: '⚠️',
+    name: 'Metabolic Syndrome',
+    subtitle: 'Sindrom Metabolik',
+    class: 'met',
+    summary: 'Kluster dari 5 kondisi (obesitas sentral, HTN, gula darah ↑, lipid abnormal) yang meningkatkan risiko CVD dan DM2 hingga 5x lipat.',
+    papers: [
+      { title: 'IDF Definition and Diagnosis of Metabolic Syndrome', author: 'Alberti KGMM, et al.', journal: 'Diabetes Care (2005)', citations: 3900, doi: '10.2337/diacare.29.01.06.dc05-1813' },
+      { title: 'The Metabolic Syndrome and Cardiovascular Risk', author: 'Mottillo S, et al.', journal: 'J Am Coll Cardiol (2010)', citations: 1650, doi: '10.1016/j.jacc.2010.05.034' },
+      { title: 'Primary Prevention of Cardiovascular Disease with a Mediterranean Diet', author: 'Estruch R, et al.', journal: 'NEJM (2013)', citations: 2800, doi: '10.1056/NEJMoa1200303' }
+    ],
+    biomarkers: ['Waist Circumference', 'Tekanan Darah', 'Fasting Glucose', 'Triglycerides', 'HDL-C'],
+    riskScoring: `
+DIAGNOSTIC CRITERIA (≥3 dari 5):
+1. Waist Circumference: >94cm (pria), >80cm (wanita)
+2. Tekanan Darah: ≥130/85 mmHg
+3. Fasting Glucose: ≥100 mg/dL
+4. Triglycerides: ≥150 mg/dL
+5. HDL-C: <40 mg/dL (pria), <50 mg/dL (wanita)
+
+Risk Stratification:
+• 3 kriteria: Moderate risk
+• 4 kriteria: High risk
+• 5 kriteria: Very high risk
+    `,
+    evidenceGrade: 'GRADE A (Well-established)',
+    prevalence: '25-30% populasi global'
+  },
+  {
+    id: 'dia',
+    icon: '🍬',
+    name: 'Diabetes Tipe 2',
+    subtitle: 'Diabetes Mellitus Tipe 2',
+    class: 'dia',
+    summary: 'Gangguan metabolisme glukosa akibat resistansi insulin dan disfungsi sel beta. Menyebabkan 4.2 juta kematian per tahun.',
+    papers: [
+      { title: 'Sustained Effect of Intensive Treatment of Type 1 Diabetes on Development and Progression of Diabetic Nephropathy', author: 'Epidemiology of Diabetes Interventions and Complications (EDIC)', journal: 'NEJM (2005)', citations: 6500, doi: '10.1056/NEJMoa041134' },
+      { title: 'American Diabetes Association Standards of Medical Care in Diabetes', author: 'Skyler JS, et al.', journal: 'Diabetes Care (2021)', citations: 2100, doi: '10.2337/dc21-S001' },
+      { title: 'The Insulin Resistance Syndrome', author: 'Kahn R, et al.', journal: 'Diabetes (2005)', citations: 3200, doi: '10.2337/diabetes.54.9.2625' }
+    ],
+    biomarkers: ['Fasting Glucose', 'HbA1c', 'HOMA-IR', '2-hour Glucose (OGTT)'],
+    riskScoring: `
+DIAGNOSTIC:
+• Fasting Glucose ≥126 mg/dL
+• HbA1c ≥6.5%
+• 2-hour glucose ≥200 mg/dL (OGTT)
+• Random glucose ≥200 + symptoms
+
+Risk Stratification:
+Fasting 100-125: Prediabetes
+HbA1c 5.7-6.4%: Prediabetes
+→ Lifestyle intervention
+
+Fasting ≥126: Diagnostic
+HbA1c ≥6.5%: Diagnostic
+→ Medical therapy + intensive management
+    `,
+    evidenceGrade: 'GRADE A (Definitive)',
+    prevalence: '537 juta orang (10.5% global)'
+  }
+];
+
+let allDiseases = [...diseases];
+
+function getConceptualDiagram(diseaseId) {
+  const diagrams = {
+    'dys': `
+      <div style="background:rgba(242,153,74,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
+        <div style="color:var(--primary-enc);font-weight:700;margin-bottom:10px;">📊 DYSLIPIDEMIA PATHOPHYSIOLOGY</div>
+        <pre style="margin:0;white-space:pre-wrap;">
+GENETIC FACTORS (15-20%)
+    ↓ LDL receptor mutations, ApoE polymorphisms
+    ↓
+MODIFIABLE RISK FACTORS (60-70%)
+├─ Dietary: Saturated fat, Trans fat, Refined carbs
+├─ Lifestyle: Smoking, Inactivity, Obesity (BMI>30)
+└─ Metabolic: Insulin resistance, Type 2 DM
+    ↓
+BIOMARKER CASCADE
+├─ ↑ Triglycerides (>150 mg/dL) — MOST SENSITIVE
+├─ ↑ LDL-C (>130 mg/dL)
+├─ ↓ HDL-C (<40M, <50W)
+└─ Small dense LDL particles (sd-LDL)
+    ↓
+CLINICAL MANIFESTATIONS
+├─ Xantomas (tendon/tuberous)
+├─ Xanthelasma (eyelids)
+├─ Corneal arcus
+└─ Premature CAD (<55 years)
+    ↓
+RISK STRATIFICATION
+├─ LOW (0-30): Preventive intervention
+├─ MODERATE (31-70): Therapeutic intervention
+└─ HIGH (71-100): Urgent medical referral
+        </pre>
+      </div>
+    `,
+    'hyp': `
+      <div style="background:rgba(235,87,87,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
+        <div style="color:#C0392B;font-weight:700;margin-bottom:10px;">❤️ HYPERTENSION PATHOPHYSIOLOGY</div>
+        <pre style="margin:0;white-space:pre-wrap;">
+SODIUM & VASCULAR FACTORS
+├─ ↑ Sodium intake → Fluid retention
+├─ ↓ Nitric oxide → Vasoconstriction
+└─ ↑ Angiotensin II → Vessel stiffness
+    ↓
+LIFESTYLE FACTORS (60-80% attributable)
+├─ Sedentary behavior
+├─ High sodium diet (>2300 mg/day)
+├─ Alcohol (>2 drinks/day)
+├─ Obesity (BMI >30)
+└─ Chronic stress
+    ↓
+DEMOGRAPHIC & GENETIC RISKS
+├─ Age (risk increases with age)
+├─ Ethnicity (African descent: 2x risk)
+└─ Family history (30-60% heritability)
+    ↓
+BP ELEVATION
+├─ SBP: <120 (Normal) → 180+ (Crisis)
+└─ DBP: <80 (Normal) → 120+ (Crisis)
+    ↓
+ORGAN DAMAGE CASCADE
+├─ Left ventricular hypertrophy
+├─ Arterial stiffness & atherosclerosis
+├─ Kidney damage (proteinuria)
+└─ Stroke, MI, Heart failure risk
+    ↓
+RISK CATEGORIES
+├─ Normal: SBP<120 & DBP<80
+├─ Elevated: SBP 120-129 & DBP<80
+├─ HTN Stage 1: SBP 130-139 or DBP 80-89
+├─ HTN Stage 2: SBP ≥140 or DBP ≥90
+└─ Hypertensive Crisis: SBP >180 or DBP >120
+        </pre>
+      </div>
+    `,
+    'naf': `
+      <div style="background:rgba(47,128,237,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
+        <div style="color:#1B4F72;font-weight:700;margin-bottom:10px;">🔬 NAFLD PATHOPHYSIOLOGY & FIB-4 CASCADE</div>
+        <pre style="margin:0;white-space:pre-wrap;">
+METABOLIC DYSFUNCTION (Root cause)
+├─ Insulin resistance (HOMA-IR >2.5)
+├─ Type 2 Diabetes (↑glucose)
+├─ Obesity (waist circumference ↑)
+└─ Dyslipidemia (TG ↑, HDL ↓)
+    ↓
+HEPATIC FAT ACCUMULATION
+├─ De novo lipogenesis ↑
+├─ Fatty acid import ↑
+├─ FAT OXIDATION ↓ (mitochondrial dysfunction)
+└─ VLDL export ↓
+    ↓
+STEATOSIS → INFLAMMATION → FIBROSIS
+    ↓
+FIBROSIS BIOMARKER CASCADE
+├─ AST (Aspartate aminotransferase) ↑
+├─ ALT (Alanine aminotransferase) ↑
+├─ Platelet count ↓ (portal hypertension)
+└─ FIB-4 Index = (Age × AST)/(Platelet × √ALT)
+    ↓
+FIB-4 INTERPRETATION
+├─ <1.30: LOW RISK (F0-F1, no fibrosis)
+│  → Counseling: Lifestyle, weight loss
+│  → Monitor every 1 year
+│
+├─ 1.30-2.67: INTERMEDIATE RISK (F2)
+│  → Enhanced monitoring
+│  → Liver biopsy consideration
+│  → Lab follow-up every 3-6 months
+│
+└─ >2.67: HIGH RISK (F3-F4, advanced fibrosis)
+   → Probable advanced fibrosis/cirrhosis
+   → Urgent hepatology referral
+   → Endoscopy for varices screening
+        </pre>
+      </div>
+    `,
+    'met': `
+      <div style="background:rgba(39,174,96,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
+        <div style="color:#1A5C38;font-weight:700;margin-bottom:10px;">⚠️ METABOLIC SYNDROME CASCADE</div>
+        <pre style="margin:0;white-space:pre-wrap;">
+PRIMARY DRIVER: INSULIN RESISTANCE
+    ↓
+    ├─ Mitochondrial dysfunction
+    ├─ Ectopic fat deposition (visceral, liver, muscle)
+    ├─ Chronic low-grade inflammation (TNF-α, IL-6 ↑)
+    └─ Increased free fatty acids → pancreatic dysfunction
+    ↓
+CLUSTER OF 5 CONDITIONS (≥3 required for diagnosis)
+    ├─ 1. ABDOMINAL OBESITY
+    │  └─ Waist: >94cm (♂), >80cm (♀)
+    │     → Visceral fat → Insulin resistance feedback
+    │
+    ├─ 2. DYSLIPIDEMIA (Lipid Triad)
+    │  ├─ ↑ Triglycerides (≥150 mg/dL)
+    │  ├─ ↓ HDL-C (<40 mg/dL men, <50 women)
+    │  └─ ↑ Small dense LDL particles
+    │
+    ├─ 3. HYPERGLYCEMIA
+    │  ├─ Fasting glucose ≥100 mg/dL
+    │  └─ Progresses to Type 2 Diabetes
+    │
+    ├─ 4. HYPERTENSION
+    │  ├─ ↑ BP ≥130/85 mmHg
+    │  └─ Sodium sensitivity ↑ (insulin resistance)
+    │
+    └─ 5. PROTHROMBOTIC STATE
+       ├─ ↑ Fibrinogen
+       ├─ ↑ Plasminogen activator inhibitor-1
+       └─ ↑ CVD risk
+    ↓
+HEALTH CONSEQUENCES
+├─ CVD Risk: 3-5x higher
+├─ Type 2 DM risk: 3-7x higher
+├─ Stroke risk: 2-3x higher
+├─ Chronic kidney disease
+└─ Non-alcoholic fatty liver disease (80%)
+    ↓
+INTERVENTION TARGETS
+└─ Weight loss 5-10% → Insulin sensitivity ↑
+   → TG ↓, BP ↓, glucose ↓
+        </pre>
+      </div>
+    `,
+    'dia': `
+      <div style="background:rgba(255,107,107,0.05);padding:16px;border-radius:12px;font-family:monospace;font-size:0.75rem;color:var(--text-secondary);overflow-x:auto;">
+        <div style="color:#C0392B;font-weight:700;margin-bottom:10px;">🍬 TYPE 2 DIABETES PATHOPHYSIOLOGY</div>
+        <pre style="margin:0;white-space:pre-wrap;">
+GENETIC PREDISPOSITION + LIFESTYLE
+    ├─ Family history (30-60% heritability)
+    ├─ Obesity (BMI >30)
+    ├─ Physical inactivity
+    └─ High-calorie diet (refined carbs, sugar)
+    ↓
+INSULIN RESISTANCE (PRIMARY DEFECT)
+├─ Skeletal muscle: ↓ glucose uptake (IRS1/PI3K pathway)
+├─ Liver: ↑ glucose production (PEPCK/G6Pase ↑)
+├─ Adipose tissue: ↑ lipolysis → ↑ FFA → lipotoxicity
+└─ Pancreatic β-cells: Lipid accumulation → dysfunction
+    ↓
+COMPENSATORY HYPERINSULINEMIA (2-5 years)
+├─ Insulin secretion ↑ to overcome resistance
+├─ Fasting insulin: >12 mIU/L indicates IR (HOMA-IR >2.5)
+├─ Fasting glucose: Still normal (<100 mg/dL)
+└─ ORAL GLUCOSE TOLERANCE TEST (OGTT)
+   └─ 2-hour glucose: 140-199 mg/dL (Impaired Glucose Tolerance)
+    ↓
+PROGRESSION TO DIABETES
+├─ β-cell exhaustion (amyloid deposition, apoptosis)
+├─ Fasting glucose ↑: ≥126 mg/dL
+├─ HbA1c ↑: ≥6.5% (3-month average glucose)
+└─ Postprandial glucose ↑: ≥200 mg/dL (OGTT)
+    ↓
+ACUTE COMPLICATIONS
+├─ Hyperglycemia-hyperosmolar crisis
+├─ Diabetic ketoacidosis (Type 1, rare in T2DM)
+└─ Hypoglycemia (if on insulin/sulfonylureas)
+    ↓
+CHRONIC MICROVASCULAR & MACROVASCULAR COMPLICATIONS
+├─ MICROVASCULAR (from hyperglycemia)
+│  ├─ Retinopathy (leading blindness cause <65 years)
+│  ├─ Nephropathy (leading dialysis cause)
+│  └─ Neuropathy (leading amputation cause)
+│
+└─ MACROVASCULAR (from insulin resistance + hyperglycemia)
+   ├─ Coronary artery disease (2-4x risk)
+   ├─ Stroke (2-4x risk)
+   ├─ Peripheral arterial disease
+   └─ Heart failure
+    ↓
+DIAGNOSTIC CRITERIA (ANY ONE of):
+├─ Fasting glucose ≥126 mg/dL (8-hour fast)
+├─ HbA1c ≥6.5%
+├─ 2-hour glucose ≥200 mg/dL (OGTT)
+└─ Random glucose ≥200 mg/dL + symptoms (polyuria, polydipsia)
+        </pre>
+      </div>
+    `
+  };
+  return diagrams[diseaseId] || '<div>Diagram tidak tersedia</div>';
+}
+
+function filterDiseases() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = allDiseases.filter(d => {
+    const matchFilter = currentFilter === 'all' || d.id === currentFilter;
+    const matchSearch = query === '' || d.name.toLowerCase().includes(query) || d.summary.toLowerCase().includes(query);
+    return matchFilter && matchSearch;
+  });
+  renderDiseases(filtered);
+}
+
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  document.querySelector('[data-filter="' + f + '"]').classList.add('active');
+}
+
+function renderDiseases(list) {
+  const html = list.map(d => `
+    <div class="disease-card ${d.class}">
+      <div class="disease-header">
+        <div class="disease-icon">${d.icon}</div>
+        <div>
+          <div class="disease-title">${d.name}</div>
+          <div class="disease-subtitle">${d.subtitle}</div>
+        </div>
+      </div>
+
+      <div class="disease-summary">${d.summary}</div>
+
+      <div style="margin-bottom:12px;">
+        <span class="info-badge badge-papers">📚 ${d.papers.length} Papers</span>
+        <span class="info-badge badge-score">📊 Risk Scoring</span>
+        <span class="info-badge badge-evidence">${d.evidenceGrade}</span>
+      </div>
+
+      <button class="expand-btn" onclick="toggleExpand(this, '${d.id}')">
+        <span>Lihat Detail Lengkap</span>
+        <ion-icon name="chevron-down-outline"></ion-icon>
+      </button>
+
+      <div class="disease-detail" id="detail-${d.id}">
+
+        <div class="detail-section">
+          <div class="section-title">
+            <ion-icon name="git-network-outline"></ion-icon>
+            Kerangka Konseptual Patofisiologi
+          </div>
+          ${getConceptualDiagram(d.id)}
+        </div>
+
+        <div class="detail-section">
+          <div class="section-title">
+            <ion-icon name="book-outline"></ion-icon>
+            Landmark Papers (Research Evidence)
+          </div>
+          ${d.papers.map(p => `
+            <a href="https://doi.org/${p.doi || '#'}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">
+              <div class="paper-item" style="cursor:pointer;">
+                <div class="paper-title" style="color:var(--primary-enc);">🔗 ${p.title}</div>
+                <div class="paper-meta">${p.author} | ${p.journal} | <strong>${p.citations}+ citations</strong></div>
+                <div style="font-size:0.7rem;color:var(--primary-enc);margin-top:4px;">📄 Buka di PubMed/DOI →</div>
+              </div>
+            </a>
+          `).join('')}
+        </div>
+
+        <div class="detail-section">
+          <div class="section-title">
+            <ion-icon name="flask-outline"></ion-icon>
+            Biomarker Utama
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            ${d.biomarkers.map(b => `
+              <div style="background:rgba(108,99,255,0.08);padding:10px;border-radius:8px;font-size:0.8rem;color:var(--text-secondary);">✓ ${b}</div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="section-title">
+            <ion-icon name="trending-up-outline"></ion-icon>
+            Algoritma Risk Scoring
+          </div>
+          <div class="risk-cascade">${d.riskScoring}</div>
+        </div>
+
+        <div class="detail-section">
+          <div class="section-title">
+            <ion-icon name="globe-outline"></ion-icon>
+            Epidemiologi Global
+          </div>
+          <div style="background:var(--bg);padding:14px;border-radius:12px;font-size:0.85rem;color:var(--text-secondary);">
+            <strong>Prevalensi:</strong> ${d.prevalence}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('diseaseList').innerHTML = html;
+}
+
+function toggleExpand(btn, diseaseId) {
+  const detail = document.getElementById('detail-' + diseaseId);
+  btn.classList.toggle('expanded');
+  detail.classList.toggle('expanded');
+}
+
+// Initial render
+filterDiseases();
+</script>
+
+</body>
+</html>

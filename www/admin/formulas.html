@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Kelola Formula Herbal</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .admin-main { padding: 24px; }
+    .container { max-width: 100%; margin: 0; }
+
+    .header { margin-bottom: 2rem; }
+    .header h1 { color: var(--text-primary); margin: 0; }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-input, .filter-select {
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--bg-white);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .search-input { flex: 1; min-width: 250px; }
+    .search-input:focus, .filter-select:focus { outline: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+    .btn-add {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .btn-add:hover { box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4); transform: translateY(-2px); }
+
+    .table-wrapper { overflow-x: auto; margin-bottom: 2rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    th {
+      background: var(--bg-light);
+      padding: 1rem;
+      text-align: left;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-primary);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background: var(--bg-light); }
+
+    .evidence { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 12px; font-weight: 600; font-size: 0.85rem; }
+    .ev-A { background: #d4edda; color: #155724; }
+    .ev-B { background: #d1ecf1; color: #0c5460; }
+    .ev-C { background: #fff3cd; color: #856404; }
+
+    .badge { display: inline-block; padding: 0.35rem 0.75rem; background: #e7f3ff; color: #0066cc; border-radius: 12px; font-size: 0.85rem; }
+
+    .actions { display: flex; gap: 0.5rem; }
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+    .btn-edit:hover { background: #bbdefb; }
+
+    .btn-delete {
+      background: #ffebee;
+      color: #d32f2f;
+    }
+    .btn-delete:hover { background: #ffcdd2; }
+
+    .pagination {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pagination button {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border-light);
+      background: var(--bg-white);
+      color: var(--text-primary);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pagination button.active {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
+    }
+
+    .pagination button:hover:not(.active) { background: var(--bg-light); }
+
+    /* Modals */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal.open { display: flex; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .modal-content {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 1rem;
+    }
+
+    .modal-header h2 { margin: 0; color: var(--text-primary); }
+
+    .btn-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      font-family: var(--font-family);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .ingredients-list {
+      background: var(--bg-light);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .ingredient-item {
+      background: var(--bg-white);
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .ingredient-item button {
+      background: #ffebee;
+      color: #d32f2f;
+      border: none;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .add-ingredient {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .add-ingredient input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+    }
+
+    .add-ingredient button {
+      padding: 0.5rem 1rem;
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .btn-cancel {
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-light);
+      color: var(--text-primary);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-submit {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-submit:hover { opacity: 0.9; }
+
+    .confirmation-text {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item active" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar"><h1>🧪 Kelola Formula Herbal</h1></div>
+    <div class="container">
+    <div class="header">
+      <h1>Manajemen Formula Herbal</h1>
+    </div>
+
+    <div class="controls">
+      <input type="text" class="search-input" id="searchInput" placeholder="Cari nama formula atau indikasi..." oninput="filterTable()">
+      <select class="filter-select" id="evidenceFilter" onchange="filterTable()">
+        <option value="">Semua Evidence Level</option>
+        <option value="A">Evidence A</option>
+        <option value="B">Evidence B</option>
+        <option value="C">Evidence C</option>
+      </select>
+      <select class="filter-select" id="categoryFilter" onchange="filterTable()">
+        <option value="">Semua Kategori</option>
+      </select>
+      <select class="filter-select" id="preparationFilter" onchange="filterTable()">
+        <option value="">Semua Tipe Persiapan</option>
+        <option value="rebus">Rebus</option>
+        <option value="seduh">Seduh</option>
+        <option value="minum">Minum</option>
+        <option value="salep">Salep</option>
+        <option value="kompres">Kompres</option>
+      </select>
+      <button class="btn-add" onclick="openAddModal()">+ Tambah Formula</button>
+    </div>
+
+    <div class="table-wrapper" id="tableWrapper">
+      <table id="formulasTable">
+        <thead>
+          <tr>
+            <th>Nama Formula</th>
+            <th>Indikasi</th>
+            <th>Kategori</th>
+            <th>Evidence</th>
+            <th>Tipe</th>
+            <th>Verifikasi</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="formulasBody">
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+    </div>
+  </main>
+</div>
+
+  <!-- Edit Modal -->
+  <div class="modal" id="editModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="editTitle">Edit Formula</h2>
+        <button class="btn-close" onclick="closeEditModal()">×</button>
+      </div>
+      <form onsubmit="saveFormula(event)">
+        <div class="form-group">
+          <label>Nama Formula</label>
+          <input type="text" id="editName" required>
+        </div>
+
+        <div class="form-group">
+          <label>Indikasi (pisahkan dengan koma)</label>
+          <textarea id="editIndications" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Kategori</label>
+          <select id="editCategory" required></select>
+        </div>
+
+        <div class="form-group">
+          <label>Tipe Persiapan</label>
+          <select id="editPreparationType" required>
+            <option value="rebus">Rebus</option>
+            <option value="seduh">Seduh</option>
+            <option value="minum">Minum</option>
+            <option value="salep">Salep</option>
+            <option value="kompres">Kompres</option>
+            <option value="jus">Jus</option>
+            <option value="bubuk">Bubuk</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Metode Persiapan</label>
+          <textarea id="editPreparationMethod" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Bahan-Bahan</label>
+          <div class="add-ingredient">
+            <input type="text" id="ingredientInput" placeholder="Nama bahan (Latin Name, Jumlah unit)">
+            <button type="button" onclick="addIngredientField()">Tambah</button>
+          </div>
+          <div class="ingredients-list" id="ingredientsList"></div>
+        </div>
+
+        <div class="form-group">
+          <label>Dosis</label>
+          <input type="text" id="editDosage" required>
+        </div>
+
+        <div class="form-group">
+          <label>Frekuensi</label>
+          <input type="text" id="editFrequency" required>
+        </div>
+
+        <div class="form-group">
+          <label>Durasi Penggunaan</label>
+          <input type="text" id="editDuration" required>
+        </div>
+
+        <div class="form-group">
+          <label>Peringatan & Kontraindikasi</label>
+          <textarea id="editWarnings" placeholder="Satu peringatan per baris"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Evidence Level</label>
+          <select id="editEvidenceLevel" required>
+            <option value="A">A - Strong</option>
+            <option value="B">B - Moderate</option>
+            <option value="C">C - Traditional</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="editDoctorVerified"> Terverifikasi Dokter
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Sumber</label>
+          <input type="text" id="editSource">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-cancel" onclick="closeEditModal()">Batal</button>
+          <button type="submit" class="btn-submit">Simpan Formula</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal" id="deleteModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Hapus Formula</h2>
+        <button class="btn-close" onclick="closeDeleteModal()">×</button>
+      </div>
+      <div class="confirmation-text">
+        Apakah Anda yakin ingin menghapus formula <strong id="deleteFormulaName"></strong>?
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeDeleteModal()">Batal</button>
+        <button class="btn-delete" onclick="confirmDelete()" style="flex: 1;">Hapus Formula</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../shared/firebase.js"></script>
+
+  <script>
+    let formulas = [];
+    let filteredFormulas = [];
+    let currentPage = 1;
+    const ITEMS_PER_PAGE = 15;
+    let editingId = null;
+    let deletingId = null;
+    let ingredientList = [];
+    let allCategories = [];
+
+    async function initFormulas() {
+      const result = await VAuth.guard();
+      const profile = result.profile || result;
+      if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+      if (profile.role !== 'admin' && profile.role !== 'super_admin') {
+        showToast('Akses ditolak', 'error');
+        setTimeout(() => nav('home.html'), 2000);
+        return;
+      }
+
+      await loadFormulas();
+      await loadCategories();
+      filterTable();
+    }
+
+    async function loadFormulas() {
+      const snapshot = await VFirebase.db.collection('formulas').orderBy('name', 'asc').get();
+      formulas = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+      filteredFormulas = [...formulas];
+    }
+
+    async function loadCategories() {
+      allCategories = [
+        'pencernaan', 'imunitas', 'metabolisme', 'reproduksi', 'dermatologi',
+        'antiinflamasi', 'kardiovaskular', 'onkologi', 'urologi', 'relaksasi',
+        'mulut', 'tulang', 'hematologi', 'mata-telinga', 'kebugaran', 'lainnya'
+      ];
+
+      const categorySelect = document.getElementById('categoryFilter');
+      const editCategorySelect = document.getElementById('editCategory');
+
+      allCategories.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat;
+        option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+        categorySelect.appendChild(option);
+
+        const editOption = document.createElement('option');
+        editOption.value = cat;
+        editOption.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+        editCategorySelect.appendChild(editOption);
+      });
+    }
+
+    function filterTable() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const evidence = document.getElementById('evidenceFilter').value;
+      const category = document.getElementById('categoryFilter').value;
+      const preparation = document.getElementById('preparationFilter').value;
+
+      filteredFormulas = formulas.filter(f => {
+        const nameMatch = (f.name || '').toLowerCase().includes(search);
+        const indicationsMatch = (f.indications || []).some(ind => ind.toLowerCase().includes(search));
+        const searchMatch = nameMatch || indicationsMatch;
+
+        const evidenceMatch = !evidence || f.evidenceLevel === evidence;
+        const categoryMatch = !category || f.category === category;
+        const prepMatch = !preparation || f.preparationType === preparation;
+
+        return searchMatch && evidenceMatch && categoryMatch && prepMatch;
+      });
+
+      currentPage = 1;
+      renderTable();
+      renderPagination();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('formulasBody');
+      tbody.innerHTML = '';
+
+      if (filteredFormulas.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="no-data">Tidak ada formula yang ditemukan</td></tr>';
+        return;
+      }
+
+      const start = (currentPage - 1) * ITEMS_PER_PAGE;
+      const end = start + ITEMS_PER_PAGE;
+      const pageData = filteredFormulas.slice(start, end);
+
+      pageData.forEach(f => {
+        const indications = (f.indications || []).join(', ');
+        const evidenceClass = `ev-${f.evidenceLevel || 'C'}`;
+        const verifiedBadge = f.doctorVerified ? '<span class="badge">✓ Terverifikasi</span>' : '';
+
+        const row = `
+          <tr>
+            <td><strong>${f.name || '-'}</strong></td>
+            <td>${indications || '-'}</td>
+            <td>${f.category || '-'}</td>
+            <td><span class="evidence ${evidenceClass}">${f.evidenceLevel || 'C'}</span></td>
+            <td>${f.preparationType || '-'}</td>
+            <td>${verifiedBadge}</td>
+            <td>
+              <div class="actions">
+                <button class="btn-sm btn-edit" onclick="openEditModal('${f.id}')">Edit</button>
+                <button class="btn-sm btn-delete" onclick="openDeleteModal('${f.id}')">Hapus</button>
+              </div>
+            </td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function renderPagination() {
+      const totalPages = Math.ceil(filteredFormulas.length / ITEMS_PER_PAGE);
+      const paginationDiv = document.getElementById('pagination');
+      paginationDiv.innerHTML = '';
+
+      if (totalPages <= 1) return;
+
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = i === currentPage ? 'active' : '';
+        btn.onclick = () => {
+          currentPage = i;
+          renderTable();
+          renderPagination();
+          document.querySelector('.table-wrapper').scrollIntoView({ behavior: 'smooth' });
+        };
+        paginationDiv.appendChild(btn);
+      }
+    }
+
+    function openAddModal() {
+      editingId = null;
+      ingredientList = [];
+      document.getElementById('editTitle').textContent = 'Tambah Formula Baru';
+      document.getElementById('editName').value = '';
+      document.getElementById('editIndications').value = '';
+      document.getElementById('editCategory').value = '';
+      document.getElementById('editPreparationType').value = 'rebus';
+      document.getElementById('editPreparationMethod').value = '';
+      document.getElementById('editDosage').value = '';
+      document.getElementById('editFrequency').value = '';
+      document.getElementById('editDuration').value = '';
+      document.getElementById('editWarnings').value = '';
+      document.getElementById('editEvidenceLevel').value = 'C';
+      document.getElementById('editDoctorVerified').checked = false;
+      document.getElementById('editSource').value = '';
+      document.getElementById('ingredientsList').innerHTML = '';
+      document.getElementById('editModal').classList.add('open');
+    }
+
+    function openEditModal(id) {
+      editingId = id;
+      const formula = formulas.find(f => f.id === id);
+      if (!formula) return;
+
+      document.getElementById('editTitle').textContent = 'Edit Formula';
+      document.getElementById('editName').value = formula.name || '';
+      document.getElementById('editIndications').value = (formula.indications || []).join(', ');
+      document.getElementById('editCategory').value = formula.category || '';
+      document.getElementById('editPreparationType').value = formula.preparationType || 'rebus';
+      document.getElementById('editPreparationMethod').value = formula.preparationMethod || '';
+      document.getElementById('editDosage').value = formula.dosage || '';
+      document.getElementById('editFrequency').value = formula.frequency || '';
+      document.getElementById('editDuration').value = formula.duration || '';
+      document.getElementById('editWarnings').value = (formula.warnings || []).join('\n');
+      document.getElementById('editEvidenceLevel').value = formula.evidenceLevel || 'C';
+      document.getElementById('editDoctorVerified').checked = formula.doctorVerified || false;
+      document.getElementById('editSource').value = formula.source || '';
+
+      ingredientList = [...(formula.ingredients || [])];
+      renderIngredientsList();
+
+      document.getElementById('editModal').classList.add('open');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').classList.remove('open');
+      ingredientList = [];
+    }
+
+    function addIngredientField() {
+      const input = document.getElementById('ingredientInput').value.trim();
+      if (!input) {
+        showToast('Masukkan bahan terlebih dahulu', 'warning');
+        return;
+      }
+
+      ingredientList.push({ herb: input, latinName: '', amount: '', unit: 'gram', condition: '' });
+      document.getElementById('ingredientInput').value = '';
+      renderIngredientsList();
+    }
+
+    function removeIngredient(index) {
+      ingredientList.splice(index, 1);
+      renderIngredientsList();
+    }
+
+    function renderIngredientsList() {
+      const list = document.getElementById('ingredientsList');
+      list.innerHTML = ingredientList.map((ing, idx) => `
+        <div class="ingredient-item">
+          <span>${ing.herb}${ing.amount ? ` (${ing.amount} ${ing.unit})` : ''}</span>
+          <button type="button" onclick="removeIngredient(${idx})">Hapus</button>
+        </div>
+      `).join('');
+    }
+
+    async function saveFormula(e) {
+      e.preventDefault();
+
+      const formulaData = {
+        name: document.getElementById('editName').value,
+        indications: document.getElementById('editIndications').value.split(',').map(s => s.trim()).filter(s => s),
+        category: document.getElementById('editCategory').value,
+        preparationType: document.getElementById('editPreparationType').value,
+        preparationMethod: document.getElementById('editPreparationMethod').value,
+        ingredients: ingredientList,
+        dosage: document.getElementById('editDosage').value,
+        frequency: document.getElementById('editFrequency').value,
+        duration: document.getElementById('editDuration').value,
+        warnings: document.getElementById('editWarnings').value.split('\n').map(s => s.trim()).filter(s => s),
+        evidenceLevel: document.getElementById('editEvidenceLevel').value,
+        doctorVerified: document.getElementById('editDoctorVerified').checked,
+        source: document.getElementById('editSource').value,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      if (!formulaData.ingredients.length) {
+        showToast('Tambahkan minimal 1 bahan', 'warning');
+        return;
+      }
+
+      try {
+        if (editingId) {
+          await VFirebase.db.collection('formulas').doc(editingId).update(formulaData);
+          showToast('Formula berhasil diperbarui', 'success');
+        } else {
+          formulaData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+          await VFirebase.db.collection('formulas').add(formulaData);
+          showToast('Formula berhasil ditambahkan', 'success');
+        }
+        closeEditModal();
+        await loadFormulas();
+        filterTable();
+      } catch (error) {
+        console.error('Save error:', error);
+        showToast('Gagal menyimpan formula: ' + error.message, 'error');
+      }
+    }
+
+    function openDeleteModal(id) {
+      deletingId = id;
+      const formula = formulas.find(f => f.id === id);
+      if (formula) {
+        document.getElementById('deleteFormulaName').textContent = formula.name;
+        document.getElementById('deleteModal').classList.add('open');
+      }
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('open');
+      deletingId = null;
+    }
+
+    async function confirmDelete() {
+      if (!deletingId) return;
+
+      try {
+        await VFirebase.db.collection('formulas').doc(deletingId).delete();
+        showToast('Formula berhasil dihapus', 'success');
+        closeDeleteModal();
+        await loadFormulas();
+        filterTable();
+      } catch (error) {
+        console.error('Delete error:', error);
+        showToast('Gagal menghapus formula: ' + error.message, 'error');
+      }
+    }
+
+    function nav(url) {
+      window.location.href = url;
+    }
+
+    function showToast(message, type = 'info') {
+      // Simple toast implementation
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 4px;
+        z-index: 2000;
+        animation: slideUp 0.3s ease;
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Auto-init on page load
+    document.addEventListener('DOMContentLoaded', initFormulas);
+  </script>
+</body>
+</html>

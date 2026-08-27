@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Konsultasi</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #6FCF97; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--primary-dark); padding-left: 10px; }
+    .nav-item.active { color: var(--primary-dark); font-weight: 700; position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary-dark); }
+    .nav-item.active ion-icon { color: var(--primary-dark); filter: drop-shadow(0 0 4px rgba(39,174,96,0.5)); }
+    .neu-chip.active-chip { background: var(--primary-gradient); color: #fff; box-shadow: 3px 3px 6px rgba(39,174,96,0.3); }
+    .neu-chip { cursor: pointer; transition: all 0.2s ease; }
+    .neu-chip:hover:not(.active-chip) { background: var(--shadow-dark); }
+    #doctorsList .neu-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    #doctorsList .neu-card:hover { transform: translateY(-2px); }
+    .empty-state { text-align: center; padding: 40px 20px; color: var(--text-tertiary); }
+    .empty-state ion-icon { font-size: 3rem; margin-bottom: 12px; opacity: 0.5; }
+    .search-header-btn { position: relative; }
+    .search-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 100; }
+    .search-overlay.active { display: flex; align-items: flex-start; justify-content: center; padding-top: 60px; }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <div style="width:42px"></div>
+    <div style="font-size:1.05rem;font-weight:700;">Konsultasi</div>
+    <button class="neu-icon-btn" onclick="focusSearch()"><ion-icon name="search-outline"></ion-icon></button>
+  </header>
+
+  <div class="section" style="padding-bottom:0">
+    <div class="neu-tabs">
+      <div class="neu-tab active" data-tab="doctors" onclick="switchTab('doctors')">Dokter</div>
+      <div class="neu-tab" data-tab="ai" onclick="switchTab('ai')">AI Konsultasi</div>
+    </div>
+  </div>
+
+  <!-- Doctor List Tab -->
+  <div class="section" id="tab-doctors">
+    <div class="neu-search" data-animate="up">
+      <ion-icon name="search-outline"></ion-icon>
+      <input id="searchDoctorInput" placeholder="Cari dokter atau spesialisasi..." oninput="filterDoctors()">
+    </div>
+
+    <div id="specialtyChips" style="display:flex;gap:8px;margin-top:16px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;" data-animate="up" data-delay="100">
+      <span class="neu-chip active-chip" data-specialty="all" onclick="filterBySpecialty('all')">Semua</span>
+      <span class="neu-chip" data-specialty="Umum" onclick="filterBySpecialty('Umum')">Umum</span>
+      <span class="neu-chip" data-specialty="Penyakit Dalam" onclick="filterBySpecialty('Penyakit Dalam')">Penyakit Dalam</span>
+      <span class="neu-chip" data-specialty="Jantung" onclick="filterBySpecialty('Jantung')">Jantung</span>
+      <span class="neu-chip" data-specialty="Saraf" onclick="filterBySpecialty('Saraf')">Saraf</span>
+    </div>
+
+    <!-- Doctor Cards -->
+    <div id="doctorsList" style="margin-top:20px;display:flex;flex-direction:column;gap:16px;">
+      <div class="neu-card" data-animate="up" data-delay="150" style="cursor:pointer;" onclick="showToast('Membuka profil dokter')">
+        <div style="display:flex;gap:14px;">
+          <div class="neu-avatar-lg" style="background:linear-gradient(135deg,#2F80ED,#56CCF2)">SW</div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:0.9rem;">dr. Sarah Wijaya, Sp.PD</div>
+            <div style="font-size:0.72rem;color:var(--text-tertiary);">Spesialis Penyakit Dalam</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:4px;"><ion-icon name="star" style="color:#FFD54F;font-size:0.8rem;"></ion-icon><span style="font-size:0.72rem;font-weight:600;">4.9</span><span style="font-size:0.65rem;color:var(--text-muted);">(238 ulasan)</span></div>
+            <div style="display:flex;gap:6px;margin-top:8px;">
+              <span class="neu-chip-primary" style="font-size:0.6rem;">💬 Chat</span>
+              <span class="neu-chip-info" style="font-size:0.6rem;background:var(--info-bg);color:var(--info);">📹 Video</span>
+              <span class="neu-chip" style="font-size:0.6rem;background:var(--accent-bg);color:var(--accent);">🔬 Integratif</span>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <span class="v-status normal" style="font-size:0.6rem;">● Online</span>
+            <div style="font-size:0.85rem;font-weight:700;color:var(--primary-dark);margin-top:8px;">Rp 75K</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="neu-card" data-animate="up" data-delay="200" style="cursor:pointer;">
+        <div style="display:flex;gap:14px;">
+          <div class="neu-avatar-lg" style="background:linear-gradient(135deg,#EB5757,#FF7B7B)">AR</div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:0.9rem;">dr. Andi Rahmanto, Sp.JP</div>
+            <div style="font-size:0.72rem;color:var(--text-tertiary);">Spesialis Jantung</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:4px;"><ion-icon name="star" style="color:#FFD54F;font-size:0.8rem;"></ion-icon><span style="font-size:0.72rem;font-weight:600;">4.8</span><span style="font-size:0.65rem;color:var(--text-muted);">(156 ulasan)</span></div>
+            <div style="display:flex;gap:6px;margin-top:8px;"><span class="neu-chip-primary" style="font-size:0.6rem;">💬 Chat</span><span class="neu-chip-info" style="font-size:0.6rem;background:var(--info-bg);color:var(--info);">📹 Video</span></div>
+          </div>
+          <div style="text-align:right;"><div style="font-size:0.85rem;font-weight:700;color:var(--primary-dark);margin-top:8px;">Rp 100K</div></div>
+        </div>
+      </div>
+
+      <div class="neu-card" data-animate="up" data-delay="250" style="cursor:pointer;">
+        <div style="display:flex;gap:14px;">
+          <div class="neu-avatar-lg" style="background:linear-gradient(135deg,#6C63FF,#8B83FF)">NP</div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:0.9rem;">dr. Nadia Putri, M.Ked</div>
+            <div style="font-size:0.72rem;color:var(--text-tertiary);">Dokter Umum</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:4px;"><ion-icon name="star" style="color:#FFD54F;font-size:0.8rem;"></ion-icon><span style="font-size:0.72rem;font-weight:600;">4.7</span><span style="font-size:0.65rem;color:var(--text-muted);">(312 ulasan)</span></div>
+            <div style="display:flex;gap:6px;margin-top:8px;"><span class="neu-chip-primary" style="font-size:0.6rem;">💬 Chat</span></div>
+          </div>
+          <div style="text-align:right;"><span class="v-status normal" style="font-size:0.6rem;">● Online</span><div style="font-size:0.85rem;font-weight:700;color:var(--primary-dark);margin-top:8px;">Rp 35K</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Consultation Tab -->
+  <div class="section" id="tab-ai" style="display:none;">
+    <div class="neu-card" data-animate="up" style="background:linear-gradient(135deg,#6C63FF 0%,#8B83FF 100%);color:#fff;text-align:center;padding:32px 24px;">
+      <div style="font-size:3rem;margin-bottom:12px;">🤖</div>
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">AI Health Assistant</h3>
+      <p style="font-size:0.8rem;opacity:0.9;margin-bottom:20px;">Konsultasi cepat dengan AI untuk gejala ringan dan pertanyaan kesehatan umum</p>
+      <button class="neu-btn" style="background:#fff;color:#6C63FF;font-weight:600;" onclick="nav('ai-consultation.html')">
+        <ion-icon name="chatbubble-ellipses-outline" style="margin-right:6px;"></ion-icon>
+        Mulai Chat dengan AI
+      </button>
+    </div>
+
+    <div style="margin-top:20px;">
+      <div class="section-header" style="margin-bottom:12px;">
+        <span class="section-title" style="border-left:3px solid var(--accent);padding-left:10px;">Fitur AI Assistant</span>
+      </div>
+
+      <div class="neu-card" data-animate="up" data-delay="100" style="cursor:pointer;margin-bottom:12px;" onclick="nav('ai-consultation.html?mode=symptom')">
+        <div style="display:flex;gap:14px;align-items:center;">
+          <div style="width:48px;height:48px;border-radius:12px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;">
+            <ion-icon name="search-circle-outline" style="font-size:1.5rem;color:var(--accent);"></ion-icon>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:600;font-size:0.9rem;">Symptom Checker</div>
+            <div style="font-size:0.72rem;color:var(--text-tertiary);">Analisis gejala dan rekomendasi awal</div>
+          </div>
+          <ion-icon name="chevron-forward-outline" style="color:var(--text-muted);"></ion-icon>
+        </div>
+      </div>
+
+      <div class="neu-card" data-animate="up" data-delay="150" style="cursor:pointer;margin-bottom:12px;" onclick="nav('ai-consultation.html?mode=medicine')">
+        <div style="display:flex;gap:14px;align-items:center;">
+          <div style="width:48px;height:48px;border-radius:12px;background:var(--info-bg);display:flex;align-items:center;justify-content:center;">
+            <ion-icon name="medkit-outline" style="font-size:1.5rem;color:var(--info);"></ion-icon>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:600;font-size:0.9rem;">Info Obat & Interaksi</div>
+            <div style="font-size:0.72rem;color:var(--text-tertiary);">Cek interaksi obat dan efek samping</div>
+          </div>
+          <ion-icon name="chevron-forward-outline" style="color:var(--text-muted);"></ion-icon>
+        </div>
+      </div>
+
+      <div class="neu-card" data-animate="up" data-delay="200" style="cursor:pointer;margin-bottom:12px;" onclick="nav('ai-consultation.html?mode=nutrition')">
+        <div style="display:flex;gap:14px;align-items:center;">
+          <div style="width:48px;height:48px;border-radius:12px;background:var(--success-bg);display:flex;align-items:center;justify-content:center;">
+            <ion-icon name="nutrition-outline" style="font-size:1.5rem;color:var(--primary-dark);"></ion-icon>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:600;font-size:0.9rem;">Konsultasi Nutrisi</div>
+            <div style="font-size:0.72rem;color:var(--text-tertiary);">Saran pola makan dan suplemen</div>
+          </div>
+          <ion-icon name="chevron-forward-outline" style="color:var(--text-muted);"></ion-icon>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="300" style="margin-top:20px;background:var(--info-bg);border-left:3px solid var(--info);">
+      <div style="display:flex;gap:12px;align-items:start;">
+        <ion-icon name="information-circle" style="font-size:1.3rem;color:var(--info);flex-shrink:0;margin-top:2px;"></ion-icon>
+        <div>
+          <div style="font-weight:600;font-size:0.85rem;color:var(--info);margin-bottom:4px;">Penting</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;">AI Assistant memberikan informasi umum dan bukan pengganti konsultasi dokter. Untuk gejala serius, segera konsultasi dengan dokter.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item" href="monitoring.html">
+      <ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span>
+    </a>
+    <a class="nav-item active" href="consultation.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span>
+    </a>
+    <a class="nav-item" href="herbal.html">
+      <ion-icon name="leaf-outline"></ion-icon><span>Jamu</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+let _allDoctors = [];
+let _currentSpecialty = 'all';
+let _searchQuery = '';
+
+(async () => {
+  const { user, profile } = await VAuth.guard('patient', 1);
+  const nameEl = document.getElementById('userName') || document.querySelector('[data-user-name]');
+  if (nameEl) nameEl.textContent = profile.name;
+
+  // Load active consultations
+  await loadActiveConsultations(user.uid);
+
+  // Load doctors from Firestore
+  await loadDoctors();
+})();
+
+// Focus search input
+function focusSearch() {
+  switchTab('doctors'); // Switch to doctors tab
+  const input = document.getElementById('searchDoctorInput');
+  if (input) {
+    input.focus();
+    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+// Tab switching function
+function switchTab(tabName) {
+  // Update tab buttons
+  document.querySelectorAll('.neu-tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.tab === tabName);
+  });
+
+  // Show/hide tab content
+  document.getElementById('tab-doctors').style.display = tabName === 'doctors' ? 'block' : 'none';
+  document.getElementById('tab-ai').style.display = tabName === 'ai' ? 'block' : 'none';
+}
+
+// Filter by specialty
+function filterBySpecialty(specialty) {
+  _currentSpecialty = specialty;
+
+  // Update chip styles
+  document.querySelectorAll('#specialtyChips .neu-chip').forEach(chip => {
+    chip.classList.toggle('active-chip', chip.dataset.specialty === specialty);
+  });
+
+  // Apply filters
+  applyFilters();
+}
+
+// Filter by search query
+function filterDoctors() {
+  _searchQuery = document.getElementById('searchDoctorInput').value.toLowerCase().trim();
+  applyFilters();
+}
+
+// Apply all filters
+function applyFilters() {
+  const container = document.getElementById('doctorsList');
+  if (!container) return;
+
+  let filtered = _allDoctors;
+
+  // Filter by specialty
+  if (_currentSpecialty !== 'all') {
+    filtered = filtered.filter(doc => {
+      const specialty = (doc.specialty || 'Umum').toLowerCase();
+      return specialty.includes(_currentSpecialty.toLowerCase());
+    });
+  }
+
+  // Filter by search query
+  if (_searchQuery) {
+    filtered = filtered.filter(doc => {
+      const name = (doc.name || '').toLowerCase();
+      const specialty = (doc.specialty || '').toLowerCase();
+      return name.includes(_searchQuery) || specialty.includes(_searchQuery);
+    });
+  }
+
+  // Render filtered results
+  renderDoctors(filtered);
+}
+
+// Render doctors to container
+function renderDoctors(doctors) {
+  const container = document.getElementById('doctorsList');
+  if (!container) return;
+
+  container.innerHTML = '';
+
+  if (doctors.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <ion-icon name="search-outline"></ion-icon>
+        <div style="font-size:0.9rem;font-weight:600;margin-bottom:4px;">Tidak ditemukan</div>
+        <div style="font-size:0.8rem;">Coba ubah filter atau kata kunci pencarian</div>
+      </div>
+    `;
+    return;
+  }
+
+  const gradients = [
+    'linear-gradient(135deg,#2F80ED,#56CCF2)',
+    'linear-gradient(135deg,#EB5757,#FF7B7B)',
+    'linear-gradient(135deg,#6C63FF,#8B83FF)',
+    'linear-gradient(135deg,#27AE60,#6FCF97)',
+    'linear-gradient(135deg,#F2994A,#F2C94C)'
+  ];
+
+  doctors.forEach((doctor, idx) => {
+    const initials = (doctor.name || 'DR').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+    const rating = doctor.rating || 4.5;
+    const reviewCount = doctor.reviewCount || 0;
+    const specialty = doctor.specialty || 'Dokter Umum';
+    const isOnline = doctor.isOnline;
+    const price = doctor.consultationFee?.chat || doctor.pricing?.chat || 50000;
+    const priceFormatted = 'Rp ' + (price / 1000) + 'K';
+    const gradient = gradients[idx % gradients.length];
+
+    // Create avatar HTML (photo or gradient with initials)
+    let avatarHTML = '';
+    if (doctor.photoURL) {
+      avatarHTML = `<img src="${doctor.photoURL}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;box-shadow:var(--shadow-out-sm);" alt="${doctor.name}">`;
+    } else {
+      avatarHTML = `<div class="neu-avatar-lg" style="background:${gradient}">${initials}</div>`;
+    }
+
+    // Consultation type badges
+    const types = doctor.consultTypes || ['chat'];
+    let typeBadges = '';
+    if (types.includes('chat')) typeBadges += '<span class="neu-chip-primary" style="font-size:0.6rem;">💬 Chat</span>';
+    if (types.includes('video')) typeBadges += '<span class="neu-chip-info" style="font-size:0.6rem;background:var(--info-bg);color:var(--info);">📹 Video</span>';
+    if (types.includes('integrative')) typeBadges += '<span class="neu-chip" style="font-size:0.6rem;background:var(--accent-bg);color:var(--accent);">🔬 Integratif</span>';
+
+    const card = document.createElement('div');
+    card.className = 'neu-card';
+    card.setAttribute('data-animate', 'up');
+    card.setAttribute('data-delay', String(150 + idx * 50));
+    card.style.cursor = 'pointer';
+    card.innerHTML = `
+      <div style="display:flex;gap:14px;">
+        ${avatarHTML}
+        <div style="flex:1">
+          <div style="font-weight:700;font-size:0.9rem;">${doctor.name}</div>
+          <div style="font-size:0.72rem;color:var(--text-tertiary);">${specialty}</div>
+          <div style="display:flex;align-items:center;gap:4px;margin-top:4px;">
+            <ion-icon name="star" style="color:#FFD54F;font-size:0.8rem;"></ion-icon>
+            <span style="font-size:0.72rem;font-weight:600;">${rating}</span>
+            <span style="font-size:0.65rem;color:var(--text-muted);">(${reviewCount} ulasan)</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;">${typeBadges}</div>
+        </div>
+        <div style="text-align:right;">
+          ${isOnline ? '<span class="v-status normal" style="font-size:0.6rem;">● Online</span>' : '<span style="font-size:0.6rem;color:var(--text-muted);">● Offline</span>'}
+          <div style="font-size:0.85rem;font-weight:700;color:var(--primary-dark);margin-top:8px;">${priceFormatted}</div>
+        </div>
+      </div>
+    `;
+    card.onclick = () => nav('doctor-detail.html?id=' + doctor.uid);
+    container.appendChild(card);
+  });
+}
+
+async function loadActiveConsultations(patientId) {
+  try {
+    const consultations = await VDB.getPatientConsultations(patientId);
+    // Deduplikasi per dokter — tampilkan hanya 1 konsultasi terbaru per dokter
+    const seen = new Set();
+    const activeConsults = consultations
+      .filter(c => c.status === 'active' || c.status === 'pending')
+      .filter(c => {
+        const key = c.doctorId || c.id;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
+    if (activeConsults.length === 0) return;
+
+    // Create active consultations section
+    const container = document.querySelector('.section');
+    const activeSection = document.createElement('div');
+    activeSection.className = 'active-consults-section';
+    activeSection.style.cssText = 'margin-bottom:20px;';
+    activeSection.innerHTML = `
+      <div class="section-header" style="margin-bottom:12px;">
+        <span class="section-title" style="border-left:3px solid var(--primary-dark);padding-left:10px;">Konsultasi Aktif</span>
+      </div>
+      <div id="activeConsultsList"></div>
+    `;
+    container.insertBefore(activeSection, container.firstChild);
+
+    const listEl = document.getElementById('activeConsultsList');
+
+    for (const consult of activeConsults) {
+      const doctor = consult.doctorId ? await VDB.getUser(consult.doctorId) : null;
+      const doctorName = doctor ? doctor.name : 'Menunggu dokter...';
+      const initials = doctor ? doctor.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2) : '??';
+      const statusBadge = consult.status === 'active'
+        ? '<span style="background:var(--success-bg);color:var(--primary-dark);padding:2px 8px;border-radius:10px;font-size:0.65rem;font-weight:600;">Aktif</span>'
+        : '<span style="background:var(--warning-bg);color:var(--warning);padding:2px 8px;border-radius:10px;font-size:0.65rem;font-weight:600;">Menunggu</span>';
+
+      const card = document.createElement('div');
+      card.className = 'neu-card';
+      card.style.cssText = 'cursor:pointer;margin-bottom:12px;border-left:3px solid var(--primary-dark);';
+      card.innerHTML = `
+        <div style="display:flex;gap:12px;align-items:center;">
+          <div class="neu-avatar" style="background:linear-gradient(135deg,#27AE60,#6FCF97);width:44px;height:44px;font-size:0.85rem;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;border-radius:50%;">${initials}</div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:0.88rem;">${doctorName}</div>
+            <div style="font-size:0.72rem;color:var(--text-tertiary);">${consult.type === 'video' ? 'Video Call' : consult.type === 'integrative' ? 'Pemeriksaan Integratif' : 'Chat'}</div>
+          </div>
+          ${statusBadge}
+          <ion-icon name="chevron-forward-outline" style="color:var(--text-muted);font-size:1.2rem;"></ion-icon>
+        </div>
+      `;
+      card.onclick = () => nav('chat-room.html?consultId=' + consult.id);
+      listEl.appendChild(card);
+    }
+  } catch (e) {
+    console.error('[consultation] load active error:', e);
+  }
+}
+
+async function loadDoctors() {
+  try {
+    const doctors = await VDB.getAllUsers('doctor');
+    // Filter only approved doctors
+    _allDoctors = doctors.filter(d => d.roleStatus === 'approved' || !d.roleStatus);
+
+    // Render doctors
+    renderDoctors(_allDoctors);
+
+    // Show empty state if no doctors
+    if (_allDoctors.length === 0) {
+      const container = document.getElementById('doctorsList');
+      if (container) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <ion-icon name="people-outline"></ion-icon>
+            <div style="font-size:0.9rem;font-weight:600;margin-bottom:4px;">Belum ada dokter</div>
+            <div style="font-size:0.8rem;">Dokter akan tersedia setelah diverifikasi admin</div>
+          </div>
+        `;
+      }
+    }
+  } catch (e) {
+    console.error('[consultation] load doctors error:', e);
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — SLR Dyslipidemia</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .slr-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    .slr-table th { background: var(--primary-gradient); color: #fff; padding: 12px; text-align: left; font-size: 0.8rem; font-weight: 700; border-bottom: 2px solid #27AE60; }
+    .slr-table td { padding: 12px; border-bottom: 1px solid rgba(39,174,96,0.2); font-size: 0.8rem; line-height: 1.5; }
+    .slr-table tr:hover { background: rgba(39,174,96,0.04); }
+    .paper-title { font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .paper-meta { font-size: 0.75rem; color: var(--text-secondary); }
+    .novelty-badge { background: rgba(39,174,96,0.12); color: #27AE60; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; display: inline-block; margin-top: 6px; }
+    .gap-badge { background: rgba(235,87,87,0.12); color: #EB5757; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; display: inline-block; margin-top: 6px; }
+    .doi-link { color: #2F80ED; text-decoration: none; word-break: break-all; font-family: monospace; font-size: 0.7rem; }
+    .doi-link:hover { text-decoration: underline; }
+    .overview-card { background: linear-gradient(135deg, rgba(39,174,96,0.08) 0%, rgba(111,207,151,0.04) 100%); border-left: 4px solid #27AE60; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('material-research.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;">Dyslipidemia & Kolesterol</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+    <div class="overview-card">
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">📊 Tinjauan Topik</div>
+      <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;">Dyslipidemia adalah kondisi abnormal lipid darah yang merupakan faktor risiko utama penyakit kardiovaskular. Sumber: 10 paper peer-reviewed (2025-2026) tentang screening, biomarker, dan strategi penatalaksanaan kolesterol.</p>
+    </div>
+
+    <!-- Key findings summary -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+      <div class="neu-card" style="padding:14px;">
+        <div style="font-size:0.85rem;font-weight:700;color:#27AE60;margin-bottom:6px;">🔑 Biomarker Utama</div>
+        <div style="font-size:0.75rem;line-height:1.5;color:var(--text-secondary);">
+          • TyG Index<br>
+          • Non-HDL-C<br>
+          • TG/HDL-C ratio<br>
+          • Metrnl adipokine
+        </div>
+      </div>
+      <div class="neu-card" style="padding:14px;">
+        <div style="font-size:0.85rem;font-weight:700;color:#27AE60;margin-bottom:6px;">📈 Target Terapi</div>
+        <div style="font-size:0.75rem;line-height:1.5;color:var(--text-secondary);">
+          • Non-HDL-C <1.8 mmol/L<br>
+          • LDL-C <1.4 mmol/L<br>
+          • Kombinasi LLT<br>
+          • Pharmacogenomics
+        </div>
+      </div>
+    </div>
+
+    <!-- Papers table -->
+    <div style="overflow-x:auto;">
+      <table class="slr-table">
+        <thead>
+          <tr>
+            <th style="width:5%;">#</th>
+            <th style="width:30%;">Judul & Author</th>
+            <th style="width:8%;">Tahun</th>
+            <th style="width:25%;">Novelty (Kontribusi Utama)</th>
+            <th style="width:25%;">Gap Research</th>
+            <th style="width:7%;">DOI</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- Paper 1 -->
+          <tr>
+            <td style="text-align:center;font-weight:700;">1</td>
+            <td>
+              <div class="paper-title">Atherogenic Lipid Indices in Colorectal Cancer</div>
+              <div class="paper-meta">Marinescu, R.A. | Diagnostics</div>
+            </td>
+            <td style="text-align:center;"><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;">2026</span></td>
+            <td>
+              <div class="novelty-badge">Evaluasi indeks lipid aterogenic (AIP, AC, RC) sebagai biomarker prognostik pada pasien kanker kolorektal dengan T2DM</div>
+            </td>
+            <td>
+              <div class="gap-badge">Utilitas prognostik terbatas; perlu integrasi profiling lipid dalam stratifikasi risiko kanker</div>
+            </td>
+            <td><a href="https://doi.org/10.3390/diagnostics16050810" class="doi-link" target="_blank">DOI ↗</a></td>
+          </tr>
+
+          <!-- Paper 2 -->
+          <tr>
+            <td style="text-align:center;font-weight:700;">2</td>
+            <td>
+              <div class="paper-title">Therapeutic Effects of Huangqi Chifeng Decoction</div>
+              <div class="paper-meta">Shen, J. | China Journal of Chinese Materia Medica</div>
+            </td>
+            <td style="text-align:center;"><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;">2026</span></td>
+            <td>
+              <div class="novelty-badge">Metabolomics mengkonfirmasi mekanisme penurun lipid formula herbal; melibatkan siklus TCA dan metabolisme fruktosa/mannosa</div>
+            </td>
+            <td>
+              <div class="gap-badge">Uji klinis terbatas pada herbal tradisional; perlu validasi RCT pada manusia</div>
+            </td>
+            <td><a href="https://doi.org/10.19540/j.cnki.cjcmm.20251104.901" class="doi-link" target="_blank">DOI ↗</a></td>
+          </tr>
+
+          <!-- Paper 3 -->
+          <tr>
+            <td style="text-align:center;font-weight:700;">3</td>
+            <td>
+              <div class="paper-title">Dyslipidemia in Rheumatoid Arthritis Patients</div>
+              <div class="paper-meta">Liu, J. | Immunobiology</div>
+            </td>
+            <td style="text-align:center;"><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;">2026</span></td>
+            <td>
+              <div class="novelty-badge">Model prediktif integratif menggabungkan penanda klinis + inflamasi; TC, TG, LDL-C berkorelasi dengan aktivitas penyakit</div>
+            </td>
+            <td>
+              <div class="gap-badge">Validasi prospektif diperlukan; pemahaman mekanisme abnormalitas lipid spesifik penyakit</div>
+            </td>
+            <td><a href="https://doi.org/10.1016/j.imbio.2026.153171" class="doi-link" target="_blank">DOI ↗</a></td>
+          </tr>
+
+          <!-- Paper 4 -->
+          <tr>
+            <td style="text-align:center;font-weight:700;">4</td>
+            <td>
+              <div class="paper-title">Non-HDL Cholesterol Targets in Europe (DA VINCI Study)</div>
+              <div class="paper-meta">Arif, A. | Atherosclerosis</div>
+            </td>
+            <td style="text-align:center;"><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;">2026</span></td>
+            <td>
+              <div class="novelty-badge">Hanya 59% pasien mencapai target non-HDL-C; panduan 2019 lebih ketat (40% goal attainment); risiko residual pada subkelas lipoprotein kaya TG</div>
+            </td>
+            <td>
+              <div class="gap-badge">Terapi kombinasi penurun lipid intensif kurang digunakan; perlu protokol terapi berbasis risiko</div>
+            </td>
+            <td><a href="https://doi.org/10.1016/j.atherosclerosis.2026.120644" class="doi-link" target="_blank">DOI ↗</a></td>
+          </tr>
+
+          <!-- Paper 5 -->
+          <tr>
+            <td style="text-align:center;font-weight:700;">5</td>
+            <td>
+              <div class="paper-title">LCAT Biomarker for Diabetes Diagnosis</div>
+              <div class="paper-meta">Liu, T. | Diabetes/Metabolism Research & Reviews</div>
+            </td>
+            <td style="text-align:center;"><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;">2026</span></td>
+            <td>
+              <div class="novelty-badge">LCAT eksosom urin sebagai biomarker novel; menunjukkan perubahan dinamis (awal naik, kemudian turun dengan kontrol buruk)</div>
+            </td>
+            <td>
+              <div class="gap-badge">Validasi dalam kohort lebih besar; mekanisme link antara disfungsi LCAT dan progres penyakit metabolik</div>
+            </td>
+            <td><a href="https://doi.org/10.1002/dmrr.70133" class="doi-link" target="_blank">DOI ↗</a></td>
+          </tr>
+
+          <!-- Paper 6 -->
+          <tr>
+            <td style="text-align:center;font-weight:700;">6</td>
+            <td>
+              <div class="paper-title">APOB rs1042034 & Rosuvastatin Response (Vietnam)</div>
+              <div class="paper-meta">Doan, C.T.K. | J Cardiovasc Pharmacol Ther</div>
+            </td>
+            <td style="text-align:center;"><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;">2026</span></td>
+            <td>
+              <div class="novelty-badge">Genotip APOB rs1042034 TT menunjukkan respons statin berkurang; varian farmakogenomik mempengaruhi efikasi penurun lipid</div>
+            </td>
+            <td>
+              <div class="gap-badge">Perlu screening farmakogenomik dalam manajemen hiperkolesterol; validasi cutoff spesifik etnis</div>
+            </td>
+            <td><a href="https://doi.org/10.1177/10742484261428536" class="doi-link" target="_blank">DOI ↗</a></td>
+          </tr>
+
+          <!-- Paper 7 -->
+          <tr>
+            <td style="text-align:center;font-weight:700;">7</td>
+            <td>
+              <div class="paper-title">Metrnl Adipokine & Postprandial Hypertriglyceridemia</div>
+              <div class="paper-meta">Wang, X. | Frontiers in Endocrinology</div>
+            </td>
+            <td style="text-align:center;"><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;">2026</span></td>
+            <td>
+              <div class="novelty-badge">Model Metrnl + TG puasa mencapai AUC 0.908 untuk prediksi hipertrigliseridemia postprandial; cutoff protektif Metrnl 2.11 ng/ml</div>
+            </td>
+            <td>
+              <div class="gap-badge">Studi mekanistik pada signaling Metrnl; integrasi dengan adipokin lain untuk prediksi risiko yang lebih baik</div>
+            </td>
+            <td><a href="https://doi.org/10.3389/fendo.2026.1729571" class="doi-link" target="_blank">DOI ↗</a></td>
+          </tr>
+
+          <!-- Paper 8 -->
+          <tr>
+            <td style="text-align:center;font-weight:700;">8</td>
+            <td>
+              <div class="paper-title">Dyslipidemia in Secondary Prevention (Johannesburg)</div>
+              <div class="paper-meta">Ntila, P. | Cardiovascular Journal of Africa</div>
+            </td>
+            <td style="text-align:center;"><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;">2025</span></td>
+            <td>
+              <div class="novelty-badge">Hanya 20.3% pasien ASCVD mencapai LDL-C <1.4 mmol/L; CAD/stroke sebelumnya meningkatkan risiko kontrol buruk</div>
+            </td>
+            <td>
+              <div class="gap-badge">Hambatan pencapaian target LDL-C pada populasi Afrika; strategi implementasi untuk kepatuhan guideline</div>
+            </td>
+            <td><a href="https://doi.org/10.5830/CVJA-2025-035" class="doi-link" target="_blank">DOI ↗</a></td>
+          </tr>
+
+          <!-- Paper 9 -->
+          <tr>
+            <td style="text-align:center;font-weight:700;">9</td>
+            <td>
+              <div class="paper-title">Lipid Biomarkers & Endometrial Cancer Meta-Analysis</div>
+              <div class="paper-meta">Clim, I.A. | Life</div>
+            </td>
+            <td style="text-align:center;"><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;">2026</span></td>
+            <td>
+              <div class="novelty-badge">Meta-analisis 6 studi: TG tinggi (SMD +0.87), HDL-C rendah (SMD -0.92), LDL-C tinggi (SMD +0.74) pada pasien kanker endometrium</div>
+            </td>
+            <td>
+              <div class="gap-badge">Mekanisme kausalitas pada patogenesis kanker; perlu studi kohort prospektif; integrasi dalam algoritma screening kanker</div>
+            </td>
+            <td><a href="https://doi.org/10.3390/life16020330" class="doi-link" target="_blank">DOI ↗</a></td>
+          </tr>
+
+          <!-- Paper 10 -->
+          <tr>
+            <td style="text-align:center;font-weight:700;">10</td>
+            <td>
+              <div class="paper-title">Association of Dyslipidemia & Endometrial Cancer</div>
+              <div class="paper-meta">Li, S. | Kaohsiung Journal of Medical Sciences</div>
+            </td>
+            <td style="text-align:center;"><span style="background:rgba(39,174,96,0.2);color:#27AE60;padding:4px 8px;border-radius:6px;">2026</span></td>
+            <td>
+              <div class="novelty-badge">TG tinggi (≥1.7 mmol/L) dan HDL-C rendah (<1.0 mmol/L) secara independen memprediksi OS pada kanker endometrium; median survival 81.6 vs 91.2 bulan</div>
+            </td>
+            <td>
+              <div class="gap-badge">Profiling lipid tidak rutin terintegrasi dalam penilaian prognostik kanker; validasi cutoff standardisasi diperlukan</div>
+            </td>
+            <td><a href="https://doi.org/10.1002/kjm2.70195" class="doi-link" target="_blank">DOI ↗</a></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Summary & recommendations -->
+    <div class="neu-card" style="margin-top:20px;padding:16px;background:rgba(39,174,96,0.04);border-left:3px solid #27AE60;">
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px;">💡 Ringkasan & Rekomendasi untuk HerboraTech</div>
+      <ul style="font-size:0.8rem;color:var(--text-secondary);line-height:1.8;margin:0;padding-left:20px;">
+        <li><strong>Biomarker screening terdepan:</strong> TyG index, non-HDL-C, TG/HDL-C ratio</li>
+        <li><strong>Cutoff klinis validated:</strong> Non-HDL-C target <1.8 mmol/L; LDL-C <1.4 mmol/L</li>
+        <li><strong>Farmakogenomik:</strong> Pertimbangkan APOB rs1042034 untuk optimasi respons statin</li>
+        <li><strong>Pendekatan terintegrasi:</strong> Kombinasi lipid profiling + inflimatory markers + metabolomic signatures</li>
+        <li><strong>Gap research:</strong> Perlu validasi prospektif dalam populasi diverse; mekanisme shared pathways dengan kanker & penyakit metabolik lain</li>
+      </ul>
+    </div>
+
+    <!-- Citation -->
+    <div style="margin-top:16px;padding:12px;background:rgba(100,100,100,0.05);border-radius:8px;font-size:0.75rem;color:var(--text-tertiary);line-height:1.6;border-left:2px solid #999;">
+      <strong>Sumber & Verifikasi:</strong> Systematic Literature Review dari PubMed (2015-2026). Semua paper memiliki DOI terverifikasi dan dipublikasikan di peer-reviewed journals. Data dikompilasi pada 2026-03-27.
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item" href="monitoring.html">
+      <ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span>
+    </a>
+    <a class="nav-item" href="consultation.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span>
+    </a>
+    <a class="nav-item" href="herbal.html">
+      <ion-icon name="leaf-outline"></ion-icon><span>Jamu</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+  (async () => {
+    await VAuth.guard('patient', 1);
+  })();
+</script>
+</body>
+</html>

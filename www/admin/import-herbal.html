@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Import Herbal JSON</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+
+    .import-card { background: var(--bg); box-shadow: var(--shadow-out); border-radius: 20px; padding: 24px; margin-bottom: 20px; }
+    .import-title { font-weight: 800; font-size: 1rem; color: var(--text-primary); margin-bottom: 6px; }
+    .import-sub { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px; }
+
+    .tab-bar { display: flex; gap: 8px; margin-bottom: 20px; }
+    .tab-btn { padding: 8px 18px; border-radius: 10px; border: none; font-family: var(--font); font-size: 0.82rem; font-weight: 700; cursor: pointer; background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); transition: all 0.2s; }
+    .tab-btn.active { background: linear-gradient(135deg,#27AE60,#6FCF97); color: #fff; box-shadow: 0 4px 14px rgba(39,174,96,0.3); }
+
+    .json-textarea { width: 100%; height: 280px; border-radius: 12px; border: 1.5px solid var(--shadow-dark); background: #10180f; color: #6FCF97; font-family: 'Consolas', monospace; font-size: 0.78rem; padding: 14px; resize: vertical; outline: none; line-height: 1.6; box-sizing: border-box; }
+    .json-textarea:focus { border-color: #6FCF97; }
+
+    .drop-zone { border: 2px dashed var(--shadow-dark); border-radius: 14px; padding: 36px 20px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .drop-zone:hover, .drop-zone.drag-over { border-color: #6FCF97; background: rgba(111,207,151,0.05); }
+    .drop-zone ion-icon { font-size: 2.2rem; color: var(--text-secondary); }
+    .drop-zone p { font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0 0; }
+    .drop-zone small { font-size: 0.75rem; color: var(--text-tertiary); }
+    input[type="file"] { display: none; }
+
+    .preview-box { background: var(--bg); box-shadow: var(--shadow-in); border-radius: 12px; padding: 14px; margin-top: 12px; }
+    .preview-stat { display: flex; gap: 12px; flex-wrap: wrap; }
+    .ps-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; }
+    .ps-chip.green { background: rgba(39,174,96,0.12); color: #27AE60; }
+    .ps-chip.blue { background: rgba(86,204,242,0.12); color: #2D9CDB; }
+    .ps-chip.orange { background: rgba(242,153,74,0.12); color: #F2994A; }
+    .ps-chip.red { background: rgba(235,87,87,0.12); color: #EB5757; }
+
+    .import-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: var(--font); font-size: 0.9rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; transition: all 0.2s; }
+    .import-btn.primary { background: linear-gradient(135deg,#27AE60,#6FCF97); color: #fff; box-shadow: 0 4px 16px rgba(39,174,96,0.35); }
+    .import-btn.secondary { background: var(--bg); box-shadow: var(--shadow-out-sm); color: var(--text-secondary); }
+    .import-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .import-btn:hover:not(:disabled) { transform: translateY(-2px); }
+
+    .progress-wrap { background: var(--shadow-dark); border-radius: 8px; height: 10px; margin: 10px 0; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #27AE60, #6FCF97); border-radius: 8px; transition: width 0.3s ease; width: 0%; }
+
+    .log-area { background: #0d1f0d; border-radius: 12px; padding: 14px; max-height: 260px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.74rem; line-height: 1.7; margin-top: 14px; }
+    .log-line.success { color: #6FCF97; }
+    .log-line.error { color: #EB5757; }
+    .log-line.info { color: #56CCF2; }
+    .log-line.warn { color: #F2C94C; }
+    .log-line.dim { color: rgba(255,255,255,0.3); }
+
+    .schema-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; padding: 3px 8px; border-radius: 6px; background: rgba(86,204,242,0.1); color: #56CCF2; font-family: monospace; }
+
+    .collection-toggle { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
+    .ct-label { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); }
+    .ct-opt { padding: 6px 14px; border-radius: 8px; border: 1.5px solid var(--shadow-dark); font-family: var(--font); font-size: 0.78rem; font-weight: 700; cursor: pointer; background: var(--bg); color: var(--text-secondary); transition: all 0.15s; }
+    .ct-opt.selected { border-color: #27AE60; color: #27AE60; background: rgba(39,174,96,0.08); }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item active" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar" data-animate="up">
+      <h1 style="border-left:4px solid var(--primary-dark);padding-left:12px;">Import Herbal JSON</h1>
+      <div class="header-actions">
+        <button class="neu-icon-btn"><ion-icon name="notifications-outline"></ion-icon><span class="badge"></span></button>
+        <div class="neu-avatar-sm" style="background:linear-gradient(135deg,#F2994A,#FFD54F)">A</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px;" data-animate="up" data-delay="100">
+
+      <!-- Panel Kiri — Input JSON -->
+      <div>
+        <div class="import-card">
+          <div class="import-title">Input JSON</div>
+          <div class="import-sub">Paste JSON hasil kerja Claude CLI #1/#2 atau upload file .json dari OCR</div>
+
+          <div class="tab-bar">
+            <button class="tab-btn active" id="tab-paste" onclick="switchTab('paste')">Paste JSON</button>
+            <button class="tab-btn" id="tab-file" onclick="switchTab('file')">Upload File</button>
+          </div>
+
+          <!-- Paste tab -->
+          <div id="pane-paste">
+            <textarea class="json-textarea" id="jsonInput" placeholder='{
+  "metadata": { "totalFormulas": 68, ... },
+  "formulas": [ { "name": "...", ... }, ... ]
+}
+
+atau array langsung:
+[ { "name": "...", "indications": [...] }, ... ]'></textarea>
+            <button class="import-btn secondary" onclick="loadSample()" style="margin-top:8px;">
+              <ion-icon name="code-outline"></ion-icon> Load Contoh JSON
+            </button>
+          </div>
+
+          <!-- File tab -->
+          <div id="pane-file" style="display:none;">
+            <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()"
+                 ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+              <ion-icon name="cloud-upload-outline"></ion-icon>
+              <p>Klik atau drag &amp; drop file JSON</p>
+              <small>Maks. 50MB — .json</small>
+            </div>
+            <input type="file" id="fileInput" accept=".json" onchange="handleFileSelect(event)">
+            <div id="fileInfo" style="display:none;margin-top:10px;font-size:0.8rem;color:var(--primary-dark);font-weight:700;"></div>
+          </div>
+        </div>
+
+        <!-- Target Collection -->
+        <div class="import-card" style="padding:16px 24px;">
+          <div class="import-title" style="margin-bottom:12px;">Target Firestore Collection</div>
+          <div class="collection-toggle">
+            <span class="ct-label">Import ke:</span>
+            <button class="ct-opt selected" id="col-formulas" onclick="selectCollection('herbalFormulas')">herbalFormulas</button>
+            <button class="ct-opt" id="col-herbals" onclick="selectCollection('herbals')">herbals</button>
+          </div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.6;">
+            <b>herbalFormulas</b> — Resep ramuan (formulas_A.json, formulas_B.json, raw_formulas.json OCR)<br>
+            <b>herbals</b> — Profil tanaman (herbals_profiles.json dari Claude CLI #1)
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="import-card" style="padding:16px 24px;">
+          <button class="import-btn primary" id="parseBtn" onclick="parseJSON()">
+            <ion-icon name="search-outline"></ion-icon> Parse & Preview
+          </button>
+          <button class="import-btn primary" id="importBtn" onclick="startImport()" disabled
+                  style="background:linear-gradient(135deg,#1565C0,#42A5F5);margin-top:8px;">
+            <ion-icon name="cloud-upload-outline"></ion-icon> Mulai Import ke Firestore
+          </button>
+          <button class="import-btn secondary" id="clearBtn" onclick="clearAll()">
+            <ion-icon name="trash-outline"></ion-icon> Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Panel Kanan — Preview & Progress -->
+      <div>
+        <div class="import-card">
+          <div class="import-title">Preview Data</div>
+          <div class="import-sub" id="previewSub">Parse JSON terlebih dahulu untuk melihat preview.</div>
+          <div class="preview-box" id="previewBox" style="display:none;">
+            <div class="preview-stat" id="previewStats"></div>
+            <div style="margin-top:14px;max-height:200px;overflow-y:auto;" id="previewList"></div>
+          </div>
+        </div>
+
+        <div class="import-card">
+          <div class="import-title">Progress Import</div>
+          <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-secondary);">
+            <span id="progressLabel">Siap</span>
+            <span id="progressPct">0%</span>
+          </div>
+          <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+          <div class="log-area" id="logArea">
+            <div class="log-line info">[HerboraTech Import] Siap menerima data...</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  let parsedItems = [];
+  let targetCollection = 'herbalFormulas';
+  let isImporting = false;
+  let isOCRData = false;
+  let isTCMData = false;
+  const BATCH_SIZE = 490;
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  //  OCR CLEANING ENGINE
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Keywords yang menandai peringatan valid
+  const WARN_KEYWORDS = [
+    'dilarang','tidak boleh','jangan','hindari','hati-hati','kontraindikasi',
+    'ibu hamil','ibu menyusui','anak-anak','bayi','overdosis','berlebihan',
+    'gangguan ginjal','gangguan hati','gangguan jantung','penyakit hati',
+    'toksik','beracun','berbahaya','efek samping','alergi','reaksi',
+    'berhenti','konsultasikan','periksakan','disfungsi','impotensi',
+    'kehamilan','menyebabkan','dapat menyebabkan'
+  ];
+
+  /**
+   * Bersihkan satu field teks dari OCR noise.
+   * Noise patterns yang ditangani:
+   *  - Trailing " | ..." (pipe separator yang bocor dari kolom lain)
+   *  - Trailing "<=>" atau "==>" (halaman marker)
+   *  - Trailing "1001 Asam/Batuk/..." (header halaman buku)
+   *  - Karakter kontrol: \f \r \x00-\x08
+   *  - Noise karakter acak pendek di akhir kalimat
+   */
+  function cleanText(text) {
+    if (!text || typeof text !== 'string') return text;
+
+    // 1. Hapus trailing " | ..." (dengan konteks di sekitarnya)
+    text = text.replace(/\s+\|\s+(?:<=>|==>)?[\s\S]*$/, '');
+    text = text.replace(/\s+\|$/, '');
+
+    // 2. Hapus trailing "<=>" dan "==>"
+    text = text.replace(/\s*<=>[\s\S]*$/, '');
+    text = text.replace(/\s*==>[\s\S]*$/, '');
+
+    // 3. Hapus trailing "1001 [word]" (header halaman buku)
+    text = text.replace(/\s+1001\s+\S[\s\S]*$/, '');
+
+    // 4. Hapus karakter kontrol (kecuali spasi normal)
+    text = text.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F\f]/g, ' ');
+
+    // 4b. Strip OCR column bleed yang mengandung operator chars (=, ~, \)
+    //     Pola: setelah kalimat valid berakhir "./_/!", sisa teks mengandung =~ atau \ → buang semuanya
+    //     Menangani kasus: "...½ gelas. oA x, 2 =~ ap" dan "...ramuan ini. \"3\ Iscam me _..."
+    text = text.replace(/([.!?])\s+(?=[^\n]*[=~\\])[^\n]*$/, '$1');
+
+    // 5. Hapus noise karakter di akhir teks:
+    //    Pola: setelah kalimat valid, muncul karakter acak pendek misal "23 - as" atau "oA x, 2"
+    //    Heuristik: kalimat valid diakhiri ". " atau tanda baca, setelah itu ada noise
+    //    Cari kalimat valid terakhir yang diakhiri titik/koma/seru
+    text = text.replace(/([.!?])\s+[^A-Za-zÀ-ÿ]*[a-z]{1,2}\s+[\s\S]*$/, '$1');
+
+    // 6. Normalisasi spasi
+    text = text.replace(/\s{2,}/g, ' ').trim();
+
+    // 7. Hapus trailing tanda baca / noise sisa
+    text = text.replace(/[\s|=\-~\\\/,]+$/, '').trim();
+
+    return text;
+  }
+
+  /**
+   * Bersihkan array warnings[].
+   * Hanya pertahankan kalimat yang mengandung kata kunci peringatan valid.
+   */
+  function cleanWarnings(warnings) {
+    if (!Array.isArray(warnings) || warnings.length === 0) return [];
+    const result = [];
+    const seen = new Set();
+
+    for (const raw of warnings) {
+      // Bersihkan teks noise dulu
+      const cleaned = cleanText(raw || '');
+      if (!cleaned || cleaned.length < 15) continue;
+
+      // Pecah jadi kalimat (titik + huruf kapital / titik + spasi)
+      const sentences = cleaned
+        .split(/(?<=[.!?])\s+(?=[A-ZA-Za-z])/)
+        .map(s => s.trim())
+        .filter(s => s.length >= 15);
+
+      for (const sentence of sentences) {
+        const lower = sentence.toLowerCase();
+        // Cek apakah kalimat mengandung kata kunci peringatan
+        const isWarning = WARN_KEYWORDS.some(kw => lower.includes(kw));
+        if (!isWarning) continue;
+
+        // Hapus duplikat (substring match)
+        const isDup = [...seen].some(s => s.includes(sentence) || sentence.includes(s));
+        if (!isDup) {
+          seen.add(sentence);
+          result.push(sentence);
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Map preparationType dari data OCR ke nilai standar HerboraTech.
+   * Menangani "giling/tumbuk" dan re-klasifikasi kumur/gargle.
+   */
+  function mapPrepType(formula) {
+    let type = (formula.preparationType || '').toLowerCase().trim();
+    const dosageLow  = (formula.dosage || '').toLowerCase();
+    const methodLow  = (formula.preparationMethod || '').toLowerCase();
+    const combined   = dosageLow + ' ' + methodLow;
+
+    // "giling/tumbuk" → "tumbuk"
+    if (type === 'giling/tumbuk') type = 'tumbuk';
+
+    // Kumur / gargle → oral-kumur, bukan topikal
+    if (combined.includes('kumur') || combined.includes('gargle')) {
+      return { preparationType: 'oral-kumur', isTopical: false };
+    }
+
+    // tumbuk + balur/oles/tempel/kompres → topikal
+    if (type === 'tumbuk' && /balur|oleskan|tempelkan|kompres|poleskan|dioleskan/.test(combined)) {
+      return { preparationType: 'tumbuk', isTopical: true };
+    }
+
+    // mandi → topikal
+    if (type === 'mandi') {
+      return { preparationType: 'mandi', isTopical: true };
+    }
+
+    // Nilai isTopical dari data asli, fallback ke deteksi
+    const originalIsTopical = formula.isTopical != null
+      ? formula.isTopical
+      : /balur|oles|tempel|kompres|gosok|usap|cuci area/.test(combined);
+
+    return { preparationType: type || 'rebus', isTopical: originalIsTopical };
+  }
+
+  /**
+   * Map satu record OCR → schema Firestore herbalFormulas.
+   * Sekaligus jalankan cleaning.
+   */
+  function cleanOCRFormula(f) {
+    const { preparationType, isTopical } = mapPrepType(f);
+
+    // Generate ID deterministik dari recipeNumber
+    const docId = f.recipeNumber ? 'ocr-' + String(f.recipeNumber).padStart(4, '0') : null;
+
+    // Map ingredients: pastikan field-field standar ada
+    const ingredients = (f.ingredients || []).map(ing => ({
+      herb:      (ing.herb || ing.name || '').trim(),
+      latinName: ing.latinName || null,
+      amount:    ing.amount    || null,
+      unit:      ing.unit      || null,
+      condition: ing.condition || null
+    }));
+
+    return {
+      id:                docId,
+      recipeNumber:      f.recipeNumber || null,
+      name:              'Ramuan ' + (f.condition || 'Herbal') + (f.recipeNumber ? ' #' + f.recipeNumber : ''),
+      condition:         f.condition || null,       // simpan kondisi asli
+      indications:       f.indications || [],
+      category:          f.category    || 'lainnya',
+      isTopical:         isTopical,
+      preparationType:   preparationType,
+      ingredients:       ingredients,
+      preparationMethod: cleanText(f.preparationMethod),
+      dosage:            cleanText(f.dosage),
+      frequency:         cleanText(f.frequency),
+      warnings:          cleanWarnings(f.warnings),
+      evidenceLevel:     'C',
+      doctorVerified:    false,
+      source:            '1001 Resep Herbal — dr. Setiawan Dalimartha (2008)',
+      tags:              f.indications || [],
+    };
+  }
+
+  /**
+   * Hitung statistik cleaning:
+   * berapa record yang dosage-nya dipotong, warnings dibersihkan, dll.
+   */
+  function calcCleanStats(raw, cleaned) {
+    let dosageCleaned = 0, warnCleaned = 0, prepReclassified = 0;
+    for (let i = 0; i < raw.length; i++) {
+      const r = raw[i], c = cleaned[i];
+      if ((r.dosage || '') !== (c.dosage || '')) dosageCleaned++;
+      if (JSON.stringify(r.warnings || []) !== JSON.stringify(c.warnings || [])) warnCleaned++;
+      if (r.preparationType !== c.preparationType) prepReclassified++;
+    }
+    return { dosageCleaned, warnCleaned, prepReclassified };
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  //  TCM SCHEMA MAPPING
+  //  herboratech_enriched.json → Firestore herbals schema
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Map satu record dari herboratech_enriched.json → schema Firestore herbals.
+   * Field utama dari riset (benefits, activeCompounds) akan diisi nanti oleh merge_herbals.js
+   * setelah Claude CLI #1 selesai. Record ini disimpan sebagai "TCM stub".
+   */
+  function cleanTCMHerb(h) {
+    return {
+      id:                h.id || null,
+      name:              h.name || '',
+      latinName:         h.latinName || null,
+      family:            h.family || null,
+      categories:        h.categories || [],
+      benefits:          h.benefits || [],
+      activeCompounds:   h.activeCompounds || [],
+      usageMethods:      h.usageMethods || [],
+      dosage:            h.dosage || [],
+      contraindications: h.contraindications || [],
+      drugInteractions:  h.drugInteractions || [],
+      references: [
+        { source: h.tcmSource || 'TCM-MKG v1.0', license: h.license || 'CC BY-NC 4.0' }
+      ],
+      bpomStatus:        h.bpomStatus || null,
+      studyCount:        h.studyCount || 0,
+      evidenceLevel:     h.evidenceLevel || 'B',
+      // TCM-specific fields
+      tcmIds:            h.tcmIds      || [],
+      tcmNames:          h.tcmNames    || [],
+      tcmProperties:     h.tcmProperties || {},
+      speciesVariants:   h.speciesVariants || [],
+      // Marker: perlu di-enrich dengan profil lengkap dari herbals_profiles.json
+      enrichmentPending: true,
+    };
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  //  AUTH + UI INIT
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Tunggu DOM fully loaded sebelum eksekusi guard
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      VAuth.guard('admin').then(({ profile }) => {
+        if (profile && profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+        // Hanya update jika element ada
+        const nameEl = document.querySelector('#admin-topbar-name');
+        if (nameEl) nameEl.textContent = profile.name;
+      }).catch(err => {
+        console.warn('Admin guard error (non-critical):', err);
+      });
+    });
+  } else {
+    VAuth.guard('admin').then(({ profile }) => {
+      const nameEl = document.querySelector('#admin-topbar-name');
+      if (nameEl) nameEl.textContent = profile.name;
+    }).catch(err => {
+      console.warn('Admin guard error (non-critical):', err);
+    });
+  }
+
+  function switchTab(tab) {
+    try {
+      document.getElementById('pane-paste').style.display = tab === 'paste' ? '' : 'none';
+      document.getElementById('pane-file').style.display  = tab === 'file'  ? '' : 'none';
+      document.getElementById('tab-paste').classList.toggle('active', tab === 'paste');
+      document.getElementById('tab-file').classList.toggle('active', tab === 'file');
+    } catch(err) {
+      console.error('switchTab error:', err);
+    }
+  }
+
+  function selectCollection(col) {
+    try {
+      targetCollection = col;
+      document.getElementById('col-formulas').classList.toggle('selected', col === 'herbalFormulas');
+      document.getElementById('col-herbals').classList.toggle('selected', col === 'herbals');
+    } catch(err) {
+      console.error('selectCollection error:', err);
+    }
+  }
+
+  function handleDragOver(e) {
+    try {
+      e.preventDefault();
+      document.getElementById('dropZone').classList.add('drag-over');
+    } catch(err) { console.error('handleDragOver error:', err); }
+  }
+
+  function handleDragLeave(e) {
+    try {
+      document.getElementById('dropZone').classList.remove('drag-over');
+    } catch(err) { console.error('handleDragLeave error:', err); }
+  }
+
+  function handleDrop(e) {
+    try {
+      e.preventDefault();
+      document.getElementById('dropZone').classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) readFile(file);
+    } catch(err) { console.error('handleDrop error:', err); }
+  }
+
+  function handleFileSelect(e) {
+    try {
+      const file = e.target.files[0];
+      if (file) readFile(file);
+    } catch(err) { console.error('handleFileSelect error:', err); }
+  }
+
+  function readFile(file) {
+    try {
+      const info = document.getElementById('fileInfo');
+      info.style.display = '';
+      info.textContent = '📄 ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+      const reader = new FileReader();
+      reader.onload = ev => {
+        try {
+          document.getElementById('jsonInput').value = ev.target.result;
+          log('File dimuat: ' + file.name, 'info');
+          switchTab('paste');
+        } catch(err) {
+          log('Error processing file: ' + err.message, 'error');
+          console.error('File processing error:', err);
+        }
+      };
+      reader.onerror = err => {
+        log('Error membaca file: ' + err.message, 'error');
+      };
+      reader.readAsText(file);
+    } catch(err) {
+      log('Error readFile: ' + err.message, 'error');
+      console.error('readFile error:', err);
+    }
+  }
+
+  // ── Parse + Auto-Clean ─────────────────────────────────────────────────────
+  function parseJSON() {
+    try {
+      const raw = document.getElementById('jsonInput').value.trim();
+      if (!raw) { log('Error: Input JSON kosong', 'error'); return; }
+
+    let data;
+    try { data = JSON.parse(raw); } catch(e) { log('JSON tidak valid: ' + e.message, 'error'); return; }
+
+    let items = [];
+    if (Array.isArray(data)) {
+      items = data;
+    } else if (data.formulas && Array.isArray(data.formulas)) {
+      items = data.formulas;
+    } else if (data.herbals && Array.isArray(data.herbals)) {
+      items = data.herbals;
+      if (targetCollection === 'herbalFormulas') selectCollection('herbals');
+    } else if (data.herbs && Array.isArray(data.herbs)) {
+      // herboratech_enriched.json menggunakan key "herbs"
+      items = data.herbs;
+      if (targetCollection === 'herbalFormulas') selectCollection('herbals');
+    } else {
+      log('Format JSON tidak dikenali. Butuh array atau objek {formulas:[...]} / {herbals:[...]} / {herbs:[...]}', 'error');
+      return;
+    }
+
+    if (items.length === 0) { log('Array kosong — tidak ada item untuk diimport', 'warn'); return; }
+
+    // Deteksi tipe data
+    const firstItem = items[0];
+    isOCRData  = !!(firstItem.condition && firstItem.recipeNumber != null && !firstItem.name);
+    isTCMData  = !!(firstItem.tcmIds && firstItem.tcmProperties && !isOCRData);
+
+    let cleanedItems = items;
+    let cleanStats = null;
+
+    if (isOCRData) {
+      log('Terdeteksi data OCR (raw_formulas.json) — menerapkan cleaning + schema mapping...', 'info');
+      cleanedItems = items.map(cleanOCRFormula);
+      cleanStats = calcCleanStats(items, cleanedItems);
+      log('✓ Cleaning selesai: ' + cleanStats.dosageCleaned + ' dosage dibersihkan, '
+        + cleanStats.warnCleaned + ' warnings difilter, '
+        + cleanStats.prepReclassified + ' preparationType direklasifikasi', 'success');
+    } else if (isTCMData) {
+      log('Terdeteksi data TCM (herboratech_enriched.json) — menerapkan schema mapping ke herbals...', 'info');
+      if (targetCollection !== 'herbals') selectCollection('herbals');
+      cleanedItems = items.map(cleanTCMHerb);
+      log('✓ Mapping TCM selesai: ' + cleanedItems.length + ' herb stubs siap (enrichmentPending=true)', 'success');
+    } else if (targetCollection === 'herbalFormulas' && firstItem.latinName && !firstItem.indications) {
+      selectCollection('herbals');
+      log('Auto-detect: berubah ke collection herbals', 'info');
+    }
+
+      parsedItems = cleanedItems;
+      renderPreview(cleanedItems, data.metadata, cleanStats);
+      document.getElementById('importBtn').disabled = false;
+      log('Parse berhasil: ' + cleanedItems.length + ' item siap diimport', 'success');
+    } catch(err) {
+      log('Error dalam parseJSON: ' + err.message, 'error');
+      console.error('parseJSON error:', err);
+    }
+  }
+
+  function renderPreview(items, meta, cleanStats) {
+    try {
+      const box   = document.getElementById('previewBox');
+      const stats = document.getElementById('previewStats');
+      const list  = document.getElementById('previewList');
+      const sub   = document.getElementById('previewSub');
+
+    box.style.display = '';
+    sub.textContent = meta?.source || (isTCMData ? 'TCM-MKG v1.0 — herboratech_enriched.json' : '1001 Resep Herbal — dr. Setiawan Dalimartha (2008)');
+
+    const evCounts = { A: 0, B: 0, C: 0, '-': 0 };
+    const topical  = items.filter(f => f.isTopical).length;
+    items.forEach(f => { evCounts[f.evidenceLevel || '-']++; });
+
+    const batches = Math.ceil(items.length / BATCH_SIZE);
+    stats.innerHTML =
+      `<span class="ps-chip green">${items.length} item</span>` +
+      (evCounts.A  ? `<span class="ps-chip green">ev.A: ${evCounts.A}</span>` : '') +
+      (evCounts.B  ? `<span class="ps-chip blue">ev.B: ${evCounts.B}</span>` : '') +
+      (evCounts.C  ? `<span class="ps-chip orange">ev.C: ${evCounts.C}</span>` : '') +
+      (topical     ? `<span class="ps-chip orange">${topical} topikal</span>` : '') +
+      `<span class="ps-chip blue">~${batches} batch</span>`;
+
+    // Cleaning stats jika OCR
+    if (cleanStats) {
+      stats.innerHTML +=
+        `<div style="width:100%;margin-top:10px;padding:8px 10px;background:rgba(39,174,96,0.08);border-radius:10px;font-size:0.75rem;color:var(--text-secondary);">` +
+        `<span style="font-weight:700;color:#27AE60;">🧹 Cleaning OCR:</span> ` +
+        `${cleanStats.dosageCleaned} dosage dibersihkan · ` +
+        `${cleanStats.warnCleaned} warnings difilter · ` +
+        `${cleanStats.prepReclassified} tipe direklasifikasi` +
+        `</div>`;
+    }
+
+    // Info TCM data
+    if (isTCMData) {
+      const withMeridian = items.filter(f => f.tcmProperties?.meridianAffinity?.length > 0).length;
+      stats.innerHTML +=
+        `<div style="width:100%;margin-top:10px;padding:8px 10px;background:rgba(86,204,242,0.08);border-radius:10px;font-size:0.75rem;color:var(--text-secondary);">` +
+        `<span style="font-weight:700;color:#2D9CDB;">🌿 TCM Enrichment:</span> ` +
+        `${withMeridian}/${items.length} dengan data meridian · enrichmentPending=true` +
+        `</div>`;
+    }
+
+    // List preview 20 item
+      list.innerHTML = items.slice(0, 20).map(f => {
+        const evColor = f.evidenceLevel === 'A' ? '#27AE60' : f.evidenceLevel === 'B' ? '#2D9CDB' : '#F2994A';
+        const evBg    = f.evidenceLevel === 'A' ? 'rgba(39,174,96,0.12)' : f.evidenceLevel === 'B' ? 'rgba(86,204,242,0.12)' : 'rgba(242,153,74,0.12)';
+        const sub2    = isTCMData
+          ? (f.tcmProperties?.flavor || []).join(', ')
+          : (f.indications || []).slice(0,2).join(', ');
+        return `<div style="padding:5px 0;border-bottom:1px solid var(--shadow-dark);font-size:0.77rem;">
+          <span style="font-weight:700;color:var(--text-primary);">${f.name || f.condition || f.id || '—'}</span>
+          <span style="color:var(--text-tertiary);margin-left:6px;">${sub2}</span>
+          <span style="float:right;font-size:0.65rem;background:${evBg};color:${evColor};padding:1px 7px;border-radius:8px;">ev.${f.evidenceLevel || 'C'}</span>
+        </div>`;
+      }).join('') + (items.length > 20
+        ? `<div style="color:var(--text-tertiary);font-size:0.75rem;padding-top:6px;">...dan ${items.length - 20} item lainnya</div>`
+        : '');
+    } catch(err) {
+      console.error('renderPreview error:', err);
+      log('Error rendering preview: ' + err.message, 'error');
+    }
+  }
+
+  // ── Import to Firestore ────────────────────────────────────────────────────
+  async function startImport() {
+    if (isImporting || parsedItems.length === 0) {
+      log('Error: Tidak ada data untuk diimport atau proses sedang berlangsung', 'error');
+      return;
+    }
+
+    // Check Firebase availability
+    if (typeof VFirebase === 'undefined' || !VFirebase.db) {
+      log('Error: Firebase belum terinisialisasi. Coba refresh halaman.', 'error');
+      return;
+    }
+
+    isImporting = true;
+
+    const btn = document.getElementById('importBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<ion-icon name="hourglass-outline"></ion-icon> Mengimport...';
+
+    try {
+      if (!VFirebase.auth.currentUser) {
+        try { await VFirebase.auth.signInAnonymously(); } catch(e) { /* rules open */ }
+      }
+
+      const total = parsedItems.length;
+      let done = 0;
+      const db = VFirebase.db;
+
+      log('=== MULAI IMPORT: ' + total + ' item → ' + targetCollection + ' ===', 'info');
+      if (isOCRData) log('Sumber: 1001 Resep Herbal (OCR cleaned) — evidenceLevel: C', 'info');
+
+      try {
+      for (let i = 0; i < parsedItems.length; i += BATCH_SIZE) {
+        const chunk = parsedItems.slice(i, i + BATCH_SIZE);
+        const batch = db.batch();
+
+        chunk.forEach(item => {
+          // Gunakan ID deterministik untuk OCR (ocr-0001 dst.) agar re-import aman
+          const docId = item.id || db.collection(targetCollection).doc().id;
+          const { id: _id, ...data } = item;
+          const ref = db.collection(targetCollection).doc(docId);
+          batch.set(ref, {
+            ...data,
+            importedAt:   firebase.firestore.FieldValue.serverTimestamp(),
+            importSource: 'import-herbal.html'
+          }, { merge: true });
+        });
+
+        await batch.commit();
+        done += chunk.length;
+        const pct = Math.round((done / total) * 100);
+        setProgress(pct, done + '/' + total);
+        log('✓ Batch ' + Math.ceil((i + 1) / BATCH_SIZE) + ': ' + chunk.length + ' item (total ' + done + ')', 'success');
+      }
+
+        setProgress(100, done + '/' + total);
+        log('', 'dim');
+        log('=== IMPORT SELESAI: ' + done + ' item → ' + targetCollection + ' ===', 'success');
+        btn.innerHTML = '<ion-icon name="checkmark-circle-outline"></ion-icon> Import Selesai (' + done + ' item)';
+      } catch(e) {
+        log('Error fatal: ' + e.message, 'error');
+        console.error('Import error:', e);
+        btn.disabled = false;
+        btn.innerHTML = '<ion-icon name="cloud-upload-outline"></ion-icon> Mulai Import ke Firestore';
+      }
+    } catch(e) {
+      log('Error fatal (outer): ' + e.message, 'error');
+      console.error('startImport outer error:', e);
+      btn.disabled = false;
+      btn.innerHTML = '<ion-icon name="cloud-upload-outline"></ion-icon> Mulai Import ke Firestore';
+    } finally {
+      isImporting = false;
+    }
+  }
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  function setProgress(pct, label) {
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+    document.getElementById('progressLabel').textContent = label;
+  }
+
+  function log(msg, type = 'info') {
+    const area = document.getElementById('logArea');
+    const div  = document.createElement('div');
+    div.className  = 'log-line ' + type;
+    div.textContent = (type !== 'dim' ? '[' + new Date().toLocaleTimeString('id-ID') + '] ' : '') + msg;
+    area.appendChild(div);
+    area.scrollTop = area.scrollHeight;
+  }
+
+  function clearAll() {
+    try {
+      document.getElementById('jsonInput').value = '';
+      document.getElementById('previewBox').style.display = 'none';
+      document.getElementById('previewSub').textContent = 'Parse JSON terlebih dahulu untuk melihat preview.';
+      document.getElementById('importBtn').disabled = true;
+      document.getElementById('importBtn').innerHTML = '<ion-icon name="cloud-upload-outline"></ion-icon> Mulai Import ke Firestore';
+      document.getElementById('logArea').innerHTML = '<div class="log-line info">[HerboraTech Import] Cleared.</div>';
+      setProgress(0, 'Siap');
+      parsedItems = [];
+      isOCRData = false;
+      log('Data dan preview berhasil dihapus', 'info');
+    } catch(err) {
+      console.error('clearAll error:', err);
+    }
+  }
+
+  function loadSample() {
+    try {
+      document.getElementById('jsonInput').value = JSON.stringify({
+      "metadata": {
+        "generatedBy": "Claude CLI #1",
+        "generatedAt": "2026-03-22",
+        "totalFormulas": 2,
+        "evidenceBasis": "FOHAI Kemenkes RI, WHO Monographs"
+      },
+      "formulas": [
+        {
+          "id": "f-sample-1",
+          "recipeNumber": null,
+          "name": "Contoh Formula Asam Urat",
+          "indications": ["asam-urat"],
+          "category": "metabolisme",
+          "ingredients": [
+            { "herb": "Akar Sidaguri", "latinName": "Sida rhombifolia L.", "amount": 60, "unit": "gram", "condition": "kering" }
+          ],
+          "preparationMethod": "Rebus dengan 600ml air hingga tersisa 200ml. Saring.",
+          "preparationType": "rebus",
+          "dosage": "1 gelas (200ml)",
+          "frequency": "1× sehari",
+          "duration": "14 hari",
+          "isTopical": false,
+          "evidenceLevel": "B",
+          "doctorVerified": false,
+          "warnings": ["Ibu hamil dilarang"],
+          "source": "Saintifikasi Jamu Kemenkes",
+          "tags": ["asam-urat", "sidaguri", "rebus"]
+        },
+        {
+          "id": "f-sample-2",
+          "name": "Contoh Olesan Anti-Gatal",
+          "indications": ["gatal", "eksim"],
+          "category": "dermatologi",
+          "ingredients": [
+            { "herb": "Lidah Buaya", "latinName": "Aloe vera", "amount": 50, "unit": "gram", "condition": "gel bagian dalam" }
+          ],
+          "preparationMethod": "Oleskan gel langsung ke area yang gatal.",
+          "preparationType": "tempel",
+          "dosage": "Tipis merata",
+          "frequency": "2-3× sehari",
+          "duration": "Sesuai kebutuhan",
+          "isTopical": true,
+          "evidenceLevel": "A",
+          "doctorVerified": false,
+          "warnings": ["Uji reaksi di area kecil dulu"],
+          "source": "WHO Monographs",
+          "tags": ["gatal", "eksim", "lidah-buaya", "topikal"]
+        }
+      ]
+      }, null, 2);
+      log('Contoh JSON dimuat. Klik Parse & Preview untuk melihat hasilnya.', 'info');
+    } catch(err) {
+      log('Error loading sample: ' + err.message, 'error');
+      console.error('loadSample error:', err);
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  //  INITIALIZATION CHECK
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Tunggu Firebase siap
+  const initCheckInterval = setInterval(() => {
+    if (typeof VFirebase !== 'undefined' && VFirebase.db) {
+      clearInterval(initCheckInterval);
+      console.log('✓ Import Herbal: Firebase siap, semua fungsi loaded');
+      log('[SIAP] Firebase terinisialisasi. Gunakan tab di atas untuk mulai import.', 'success');
+      // Pastikan semua button functions tersedia
+      if (typeof parseJSON === 'function' && typeof startImport === 'function' && typeof clearAll === 'function') {
+        console.log('✓ Semua button handlers terdaftar dengan baik');
+      } else {
+        console.error('⚠ Ada fungsi yang belum terdaftar!');
+        log('⚠ Ada fungsi yang belum terdaftar. Coba refresh halaman.', 'warn');
+      }
+    }
+  }, 100);
+
+  // Timeout jika Firebase tidak siap dalam 5 detik
+  setTimeout(() => {
+    if (typeof VFirebase === 'undefined' || !VFirebase.db) {
+      clearInterval(initCheckInterval);
+      console.error('✗ Firebase tidak terinisialisasi setelah 5 detik');
+      log('✗ Firebase belum terinisialisasi. Coba refresh halaman atau periksa console.', 'error');
+    }
+  }, 5000);
+</script>
+</body>
+</html>

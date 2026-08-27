@@ -1,0 +1,13 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ═══════════════════════════════════════════════════════════════════════
+    //  DEV RULES — OPEN untuk development, GANTI sebelum production!
+    //  TODO: Ganti dengan production rules sebelum deploy ke publik
+    // ═══════════════════════════════════════════════════════════════════════
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

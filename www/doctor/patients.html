@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Dokter — Pasien</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0C2352 0%, #1D5DB5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #56CCF2; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
+    .nav-item.active { color: var(--info); font-weight: 700; position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--info); }
+    .nav-item.active ion-icon { color: var(--info); filter: drop-shadow(0 0 4px rgba(47,128,237,0.5)); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;">Management Pasien</div>
+    <button class="neu-icon-btn" ><ion-icon name="filter-outline"></ion-icon></button>
+  </header>
+
+  <div class="section">
+    <div class="neu-search" data-animate="up"><ion-icon name="search-outline"></ion-icon><input placeholder="Cari pasien..."></div>
+
+    <div class="section-header mt-24"><span class="section-title">Pasien Aktif</span><span class="section-link" id="patient-count">238 Pasien</span></div>
+
+    <div id="patients-list" style="display:flex;flex-direction:column;gap:12px;">
+      <!-- Hardcoded fallback UI -->
+      <div class="neu-card" data-animate="up" data-delay="100" style="display:flex;gap:14px;align-items:center;cursor:pointer;" onclick="nav('patient-detail.html')">
+        <div class="neu-avatar" style="background:linear-gradient(135deg,#EB5757,#FF7B7B)">AF</div>
+        <div style="flex:1"><div style="font-weight:600;font-size:0.85rem;">Ahmad Fauzi</div><div style="font-size:0.68rem;color:var(--text-muted);">L, 32 th · DM T2 Risk: 28%</div></div>
+        <span class="neu-chip-danger" style="font-size:0.6rem;">Alert</span>
+      </div>
+      <div class="neu-card" data-animate="up" data-delay="150" style="display:flex;gap:14px;align-items:center;cursor:pointer;" onclick="nav('patient-detail.html')">
+        <div class="neu-avatar" style="background:linear-gradient(135deg,#6C63FF,#8B83FF)">DS</div>
+        <div style="flex:1"><div style="font-weight:600;font-size:0.85rem;">Dewi Sartika</div><div style="font-size:0.68rem;color:var(--text-muted);">P, 45 th · Hipertensi Stage 1</div></div>
+        <span class="neu-chip-warning" style="font-size:0.6rem;">Follow-up</span>
+      </div>
+      <div class="neu-card" data-animate="up" data-delay="200" style="display:flex;gap:14px;align-items:center;cursor:pointer;" onclick="nav('patient-detail.html')">
+        <div class="neu-avatar" style="background:linear-gradient(135deg,#27AE60,#6FCF97)">BS</div>
+        <div style="flex:1"><div style="font-weight:600;font-size:0.85rem;">Budi Santoso</div><div style="font-size:0.68rem;color:var(--text-muted);">L, 28 th · Healthy</div></div>
+        <span class="neu-chip-primary" style="font-size:0.6rem;">Stable</span>
+      </div>
+      <div class="neu-card" data-animate="up" data-delay="250" style="display:flex;gap:14px;align-items:center;cursor:pointer;" onclick="nav('patient-detail.html')">
+        <div class="neu-avatar" style="background:linear-gradient(135deg,#F2994A,#FFD54F)">RW</div>
+        <div style="flex:1"><div style="font-weight:600;font-size:0.85rem;">Rina Wulandari</div><div style="font-size:0.68rem;color:var(--text-muted);">P, 55 th · Sindrom Metabolik</div></div>
+        <span class="neu-chip-danger" style="font-size:0.6rem;">Monitoring</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item active" href="patients.html">
+      <ion-icon name="people"></ion-icon><span>Pasien</span>
+    </a>
+    <a class="nav-item" href="chat.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Chat</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+const avatarColors = [
+  'linear-gradient(135deg,#EB5757,#FF7B7B)',
+  'linear-gradient(135deg,#6C63FF,#8B83FF)',
+  'linear-gradient(135deg,#27AE60,#6FCF97)',
+  'linear-gradient(135deg,#F2994A,#FFD54F)',
+  'linear-gradient(135deg,#2F80ED,#56CCF2)',
+  'linear-gradient(135deg,#9B51E0,#BB6BD9)',
+];
+
+function getInitials(name) {
+  if (!name) return '??';
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+function getStatusChip(status) {
+  const map = {
+    alert: '<span class="neu-chip-danger" style="font-size:0.6rem;">Alert</span>',
+    followup: '<span class="neu-chip-warning" style="font-size:0.6rem;">Follow-up</span>',
+    stable: '<span class="neu-chip-primary" style="font-size:0.6rem;">Stable</span>',
+    monitoring: '<span class="neu-chip-danger" style="font-size:0.6rem;">Monitoring</span>',
+  };
+  return map[status] || '<span class="neu-chip" style="font-size:0.6rem;">Active</span>';
+}
+
+function renderPatients(patients) {
+  const list = document.getElementById('patients-list');
+  if (!patients || patients.length === 0) return; // keep fallback
+  list.innerHTML = '';
+  patients.forEach((p, i) => {
+    const initials = getInitials(p.name);
+    const color = avatarColors[i % avatarColors.length];
+    const gender = p.gender === 'male' || p.gender === 'L' ? 'L' : 'P';
+    const age = p.age ? `${p.age} th` : '';
+    const condition = p.condition || p.diagnosis || '';
+    const subtext = [gender, age, condition].filter(Boolean).join(' · ');
+    const chip = getStatusChip(p.status);
+    const card = document.createElement('div');
+    card.className = 'neu-card';
+    card.setAttribute('data-animate', 'up');
+    card.setAttribute('data-delay', String(100 + i * 50));
+    card.style.cssText = 'display:flex;gap:14px;align-items:center;cursor:pointer;';
+    card.onclick = () => nav('patient-detail.html?id=' + p.id);
+    card.innerHTML = `
+      <div class="neu-avatar" style="background:${color}">${initials}</div>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:0.85rem;">${p.name || 'Pasien'}</div>
+        <div style="font-size:0.68rem;color:var(--text-muted);">${subtext}</div>
+      </div>
+      ${chip}
+    `;
+    list.appendChild(card);
+  });
+  document.getElementById('patient-count').textContent = `${patients.length} Pasien`;
+}
+
+VAuth.guard('doctor', 1).then(({ user }) => {
+  VFirebase.db.collection('patients')
+    .where('assignedDoctors', 'array-contains', user.uid)
+    .get()
+    .then(snapshot => {
+      if (!snapshot.empty) {
+        const patients = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderPatients(patients);
+      }
+      // else: keep hardcoded fallback UI
+    })
+    .catch(() => {
+      // keep hardcoded fallback UI on error
+    });
+});
+</script>
+
+</body>
+</html>

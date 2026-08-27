@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Dokter — Beranda</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0C2352 0%, #1D5DB5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #56CCF2; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
+    .nav-item.active { color: var(--info); font-weight: 700; position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--info); }
+    .nav-item.active ion-icon { color: var(--info); filter: drop-shadow(0 0 4px rgba(47,128,237,0.5)); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <div class="logo">Herbora<span>Tech</span> <span style="font-size:0.65rem;color:var(--info);font-weight:600;background:var(--info-bg);padding:2px 8px;border-radius:10px;margin-left:4px;">Doctor</span></div>
+    <div class="header-actions">
+      <button class="neu-icon-btn" onclick="nav('notification.html')"><ion-icon name="notifications-outline"></ion-icon><span class="badge" id="notif-badge"></span></button>
+    </div>
+  </header>
+
+  <div class="section" style="padding-bottom:0">
+    <p class="text-sm" style="color:var(--text-tertiary)" data-animate="up" id="greeting-text">Selamat Pagi</p>
+    <h2 style="font-size:1.3rem;font-weight:700;margin-top:2px" data-animate="up" data-delay="50" id="doctor-name">dr. Sarah Wijaya, Sp.PD</h2>
+  </div>
+
+  <!-- Stats -->
+  <div class="section">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;" data-animate="up" data-delay="100">
+      <div class="neu-card-sm" style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:var(--primary-dark);" id="stat-today">8</div><div style="font-size:0.68rem;color:var(--text-muted);">Konsultasi Hari Ini</div></div>
+      <div class="neu-card-sm" style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:var(--info);" id="stat-pending">3</div><div style="font-size:0.68rem;color:var(--text-muted);">Menunggu</div></div>
+      <div class="neu-card-sm" style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:var(--warning);">⭐ 4.9</div><div style="font-size:0.68rem;color:var(--text-muted);">Rating</div></div>
+      <div class="neu-card-sm" style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:var(--accent);">238</div><div style="font-size:0.68rem;color:var(--text-muted);">Total Pasien</div></div>
+    </div>
+  </div>
+
+  <!-- Upcoming -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header" data-animate="up" data-delay="200"><span class="section-title">Jadwal Selanjutnya</span></div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="neu-card" data-animate="up" data-delay="250" style="display:flex;gap:14px;align-items:center;cursor:pointer;">
+        <div class="neu-avatar" style="background:linear-gradient(135deg,#EB5757,#FF7B7B)">AF</div>
+        <div style="flex:1"><div style="font-weight:600;font-size:0.85rem;">Ahmad Fauzi</div><div style="font-size:0.7rem;color:var(--text-tertiary);">Keluhan: Pusing, HRV rendah</div></div>
+        <div style="text-align:right;"><span style="font-size:0.72rem;font-weight:600;color:var(--info);">09:00</span><br><span style="font-size:0.6rem;color:var(--text-muted);">Video Call</span></div>
+      </div>
+      <div class="neu-card" data-animate="up" data-delay="300" style="display:flex;gap:14px;align-items:center;cursor:pointer;">
+        <div class="neu-avatar" style="background:linear-gradient(135deg,#6C63FF,#8B83FF)">DS</div>
+        <div style="flex:1"><div style="font-weight:600;font-size:0.85rem;">Dewi Sartika</div><div style="font-size:0.7rem;color:var(--text-tertiary);">Follow-up: Hipertensi</div></div>
+        <div style="text-align:right;"><span style="font-size:0.72rem;font-weight:600;color:var(--info);">10:30</span><br><span style="font-size:0.6rem;color:var(--text-muted);">Chat</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Patient Alerts -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header" data-animate="up" data-delay="350"><span class="section-title">🚨 Patient Alerts</span></div>
+    <div class="neu-card" data-animate="up" data-delay="400" style="border-left:4px solid var(--danger);">
+      <div style="display:flex;gap:12px;align-items:center;">
+        <div class="neu-avatar-sm" style="background:var(--danger-bg);color:var(--danger);box-shadow:none;">!</div>
+        <div><div style="font-weight:600;font-size:0.82rem;color:var(--danger);">SpO2 Anomali — Ahmad Fauzi</div><div style="font-size:0.7rem;color:var(--text-tertiary);">SpO2 turun ke 93% pukul 02:30 WIB</div></div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item active" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item" href="patients.html">
+      <ion-icon name="people-outline"></ion-icon><span>Pasien</span>
+    </a>
+    <a class="nav-item" href="chat.html">
+      <ion-icon name="chatbubbles-outline"></ion-icon><span>Chat</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+VAuth.guard('doctor', 1).then(({ user, profile }) => {
+  // Dynamic greeting based on hour
+  const hour = new Date().getHours();
+  let greeting = 'Selamat Malam';
+  if (hour >= 5 && hour < 12) greeting = 'Selamat Pagi';
+  else if (hour >= 12 && hour < 15) greeting = 'Selamat Siang';
+  else if (hour >= 15 && hour < 19) greeting = 'Selamat Sore';
+  document.getElementById('greeting-text').textContent = greeting;
+
+  // Replace mock name with real name
+  if (profile && profile.name) {
+    document.getElementById('doctor-name').textContent = profile.name;
+  }
+
+  // Load unread notification count
+  VDB.subscribeNotifications(user.uid, (notifications) => {
+    const unread = notifications.filter(n => !n.read).length;
+    const badge = document.getElementById('notif-badge');
+    if (unread > 0) {
+      badge.textContent = unread > 9 ? '9+' : unread;
+      badge.style.display = 'flex';
+    } else {
+      badge.style.display = 'none';
+    }
+  });
+
+  // Load today's consultation stats
+  VDB.getDoctorConsultations(user.uid).then((consultations) => {
+    if (!consultations) return;
+    const today = new Date().toDateString();
+    const todayConsults = consultations.filter(c => {
+      const d = c.createdAt && c.createdAt.toDate ? c.createdAt.toDate() : new Date(c.createdAt);
+      return d.toDateString() === today;
+    });
+    const pending = consultations.filter(c => c.status === 'pending' || c.status === 'waiting');
+    document.getElementById('stat-today').textContent = todayConsults.length;
+    document.getElementById('stat-pending').textContent = pending.length;
+  }).catch(() => {
+    // Keep fallback values on error
+  });
+});
+</script>
+
+</body>
+</html>

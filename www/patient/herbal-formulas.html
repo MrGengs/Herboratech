@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Herbal Formulas</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); color: #fff; }
+    .formula-card { border-left: 4px solid #27AE60; background: linear-gradient(135deg, rgba(39,174,96,0.08) 0%, rgba(111,207,151,0.04) 100%); }
+    .ingredients-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.75rem; }
+    .ingredients-table td { padding: 8px; border-bottom: 1px solid rgba(39,174,96,0.2); }
+    .ingredient-name { font-weight: 600; color: var(--text-primary); }
+    .ingredient-quantity { color: #27AE60; font-weight: 600; }
+    .ingredient-note { color: var(--text-secondary); font-size: 0.7rem; }
+    .preparation-step { display: flex; gap: 10px; margin-bottom: 12px; }
+    .step-num { background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+    .step-content { flex: 1; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+    .indication-badge { background: rgba(39,174,96,0.12); color: #27AE60; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; display: inline-block; margin-right: 6px; margin-bottom: 6px; }
+    .overview-card { background: linear-gradient(135deg, rgba(39,174,96,0.08) 0%, rgba(111,207,151,0.04) 100%); border-left: 4px solid #27AE60; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
+    .category-header { font-weight:700;font-size:1rem;color:var(--text-primary);margin-top:24px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid rgba(39,174,96,0.2); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('material-research.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;color:#fff;">Herbal Formulas</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+    <div class="overview-card">
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">🌿 Traditional Herbal Formulas</div>
+      <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;margin:0;">
+        Evidence-informed traditional Indonesian herbal formulas (Jamu) for metabolic disease prevention and management. Each formula combines multiple herbals with synergistic properties, organized by indication. Preparation methods and dosage based on traditional protocols and modern clinical experience.
+      </p>
+    </div>
+
+    <!-- ANTI-LIPID FORMULAS -->
+    <div class="category-header">💊 Anti-Lipid Formulas (Dyslipidemia)</div>
+
+    <div class="neu-card formula-card" style="padding:16px;margin-bottom:16px;">
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:4px;">Formula 1: Turmeric-Garlic Lipid Tonic</div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">Traditional name: Jamu Kunyit Bawang (Curcuma-Allium combination)</div>
+
+      <div style="margin-bottom:12px;">
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:8px;">📋 Ingredients</div>
+        <table class="ingredients-table">
+          <tr>
+            <td class="ingredient-name">Turmeric root (Curcuma longa)</td>
+            <td class="ingredient-quantity">15 g</td>
+            <td class="ingredient-note">standardized 3% curcuminoid ideal</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Garlic bulb (Allium sativum) — aged</td>
+            <td class="ingredient-quantity">10 g</td>
+            <td class="ingredient-note">fermented preferred (10-20% allicin)</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Ginger rhizome (Zingiber officinale)</td>
+            <td class="ingredient-quantity">8 g</td>
+            <td class="ingredient-note">dried preferred for concentration</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Olive leaves (Olea europaea)</td>
+            <td class="ingredient-quantity">5 g</td>
+            <td class="ingredient-note">dried or extract form</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Licorice root (Glycyrrhiza glabra)</td>
+            <td class="ingredient-quantity">3 g</td>
+            <td class="ingredient-note">sweetening + inflammatory support</td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:8px;">🔥 Preparation</div>
+        <div class="preparation-step">
+          <div class="step-num">1</div>
+          <div class="step-content">Chop all ingredients finely. Bring 800 mL water to boil in ceramic/glass pot (avoid metal reactivity with turmeric).</div>
+        </div>
+        <div class="preparation-step">
+          <div class="step-num">2</div>
+          <div class="step-content">Add all ingredients. Reduce heat to low simmer for 30-40 minutes until liquid reduces to ~500 mL (1:1.6 concentration ratio).</div>
+        </div>
+        <div class="preparation-step">
+          <div class="step-num">3</div>
+          <div class="step-content">Strain through fine mesh filter. Cool to room temperature. Add 1 tsp raw honey (post-cooling, preserves enzymes).</div>
+        </div>
+        <div class="preparation-step">
+          <div class="step-num">4</div>
+          <div class="step-content">Store in glass bottle in cool, dark place. Shelf life: 5-7 days refrigerated (or freeze in ice cube trays for 3 months).</div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:6px;">💊 Dosage & Indication</div>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">
+          <strong>Dose:</strong> 150 mL (5 oz) daily, preferably in morning on empty stomach or with light breakfast<br>
+          <strong>Duration:</strong> Minimum 8-12 weeks for measurable lipid improvement<br>
+          <strong>Indication:</strong> <span class="indication-badge">Dyslipidemia</span> <span class="indication-badge">Atherosclerosis Risk</span><br>
+          <strong>Expected Benefit:</strong> LDL ↓15-25%, TG ↓15-20% based on herbal GRADE evidence
+        </div>
+      </div>
+    </div>
+
+    <!-- ANTI-HYPERTENSION FORMULAS -->
+    <div class="category-header">🩹 Anti-Hypertension Formulas</div>
+
+    <div class="neu-card formula-card" style="padding:16px;margin-bottom:16px;">
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:4px;">Formula 2: Garlic-Olive Leaf Blood Pressure Support</div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">Traditional name: Jamu Bawang Putih Daun Zaitun (Garlic-Olive blend)</div>
+
+      <div style="margin-bottom:12px;">
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:8px;">📋 Ingredients</div>
+        <table class="ingredients-table">
+          <tr>
+            <td class="ingredient-name">Aged garlic extract powder</td>
+            <td class="ingredient-quantity">6 g</td>
+            <td class="ingredient-note">or 15g fresh fermented garlic</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Olive leaf extract</td>
+            <td class="ingredient-quantity">4 g</td>
+            <td class="ingredient-note">standardized polyphenol content ideal</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Hibiscus flowers (Hibiscus sabdariffa)</td>
+            <td class="ingredient-quantity">5 g</td>
+            <td class="ingredient-note">additional BP support + flavor</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Celery seeds (Apium graveolens)</td>
+            <td class="ingredient-quantity">3 g</td>
+            <td class="ingredient-note">traditional HTN remedy</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Hawthorn leaves/berries (Crataegus spp.)</td>
+            <td class="ingredient-quantity">4 g</td>
+            <td class="ingredient-note">cardiovascular support</td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:8px;">🔥 Preparation</div>
+        <div class="preparation-step">
+          <div class="step-num">1</div>
+          <div class="step-content">Boil 700 mL water. Add all herbs. Simmer 25-30 minutes.</div>
+        </div>
+        <div class="preparation-step">
+          <div class="step-num">2</div>
+          <div class="step-content">Strain. Divide into 2 portions (350 mL each) for morning and evening dosing.</div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:6px;">💊 Dosage & Indication</div>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">
+          <strong>Dose:</strong> 350 mL twice daily (morning & evening)<br>
+          <strong>Duration:</strong> 12 weeks for stable BP reduction<br>
+          <strong>Indication:</strong> <span class="indication-badge">Hypertension</span> <span class="indication-badge">Cardiovascular Risk</span><br>
+          <strong>Expected Benefit:</strong> SBP ↓5-8 mmHg, DBP ↓2-4 mmHg
+        </div>
+      </div>
+    </div>
+
+    <!-- ANTI-DIABETES FORMULAS -->
+    <div class="category-header">🍬 Anti-Diabetes Formulas</div>
+
+    <div class="neu-card formula-card" style="padding:16px;margin-bottom:16px;">
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:4px;">Formula 3: Cinnamon-Ginger-Curcumin Glucose Support</div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">Traditional name: Jamu Kayu Manis Jahe Kunyit (3-spice metabolic blend)</div>
+
+      <div style="margin-bottom:12px;">
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:8px;">📋 Ingredients</div>
+        <table class="ingredients-table">
+          <tr>
+            <td class="ingredient-name">Ceylon cinnamon bark (Cinnamomum verum)</td>
+            <td class="ingredient-quantity">4 g</td>
+            <td class="ingredient-note">⚠️ Use Ceylon not Cassia (low coumarin)</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Ginger rhizome (Zingiber officinale)</td>
+            <td class="ingredient-quantity">6 g</td>
+            <td class="ingredient-note">fresh preferred</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Turmeric root (Curcuma longa)</td>
+            <td class="ingredient-quantity">8 g</td>
+            <td class="ingredient-note">dried preferred</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Fenugreek seeds (Trigonella foenum-graecum)</td>
+            <td class="ingredient-quantity">4 g</td>
+            <td class="ingredient-note">glucose modulation</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Bitter melon leaves (Momordica charantia)</td>
+            <td class="ingredient-quantity">5 g</td>
+            <td class="ingredient-note">traditional glucose support</td>
+          </tr>
+        </table>
+      </div>
+
+      <div>
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:6px;">💊 Dosage & Indication</div>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">
+          <strong>Dose:</strong> 200 mL once daily (morning, before breakfast)<br>
+          <strong>Duration:</strong> 12+ weeks for HbA1c improvement<br>
+          <strong>Indication:</strong> <span class="indication-badge">Type 2 Diabetes</span> <span class="indication-badge">Prediabetes</span> <span class="indication-badge">Metabolic Syndrome</span><br>
+          <strong>Expected Benefit:</strong> FPG ↓10-15%, HbA1c ↓0.5-0.8%<br>
+          <strong>⚠️ Note:</strong> Ceylon cinnamon ONLY to avoid coumarin interaction if on anticoagulants
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVER SUPPORT FORMULAS -->
+    <div class="category-header">🫀 Liver Support Formulas (NAFLD)</div>
+
+    <div class="neu-card formula-card" style="padding:16px;margin-bottom:16px;">
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:4px;">Formula 4: Curcumin-Silymarin Liver Detox</div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">Traditional name: Jamu Pendetox Hati (Hepatoprotective blend)</div>
+
+      <div style="margin-bottom:12px;">
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:8px;">📋 Ingredients</div>
+        <table class="ingredients-table">
+          <tr>
+            <td class="ingredient-name">Turmeric root (Curcuma longa)</td>
+            <td class="ingredient-quantity">10 g</td>
+            <td class="ingredient-note">primary hepatoprotectant</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Milk thistle seeds (Silybum marianum)</td>
+            <td class="ingredient-quantity">8 g</td>
+            <td class="ingredient-note">silymarin for liver regeneration</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Ginger rhizome</td>
+            <td class="ingredient-quantity">6 g</td>
+            <td class="ingredient-note">anti-inflammatory</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Dandelion root (Taraxacum officinale)</td>
+            <td class="ingredient-quantity">5 g</td>
+            <td class="ingredient-note">bile support + antioxidant</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Artichoke leaves (Cynara cardunculus)</td>
+            <td class="ingredient-quantity">4 g</td>
+            <td class="ingredient-note">choleretic (bile production)</td>
+          </tr>
+        </table>
+      </div>
+
+      <div>
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:6px;">💊 Dosage & Indication</div>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">
+          <strong>Dose:</strong> 200 mL twice daily (morning & evening)<br>
+          <strong>Duration:</strong> 16 weeks minimum for steatosis improvement<br>
+          <strong>Indication:</strong> <span class="indication-badge">NAFLD/MASLD</span> <span class="indication-badge">Elevated ALT/AST</span><br>
+          <strong>Expected Benefit:</strong> ALT ↓25-30%, steatosis degree ↓ on ultrasound
+        </div>
+      </div>
+    </div>
+
+    <!-- METABOLIC BALANCE FORMULA -->
+    <div class="category-header">⚖️ Metabolic Balance Formula (Comprehensive MetS)</div>
+
+    <div class="neu-card formula-card" style="padding:16px;margin-bottom:16px;">
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:4px;">Formula 5: The Five-Herb Metabolic Harmony Blend</div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">Traditional name: Jamu Harmoni Metabolik (Comprehensive multi-herbal for all 5 MetS components)</div>
+
+      <div style="margin-bottom:12px;">
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:8px;">📋 Ingredients</div>
+        <table class="ingredients-table">
+          <tr>
+            <td class="ingredient-name">Turmeric root (Curcuma longa)</td>
+            <td class="ingredient-quantity">12 g</td>
+            <td class="ingredient-note">central anti-inflammatory agent</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Green tea leaves (Camellia sinensis)</td>
+            <td class="ingredient-quantity">6 g</td>
+            <td class="ingredient-note">EGCG + antioxidant</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Ginger rhizome (Zingiber officinale)</td>
+            <td class="ingredient-quantity">7 g</td>
+            <td class="ingredient-note">glucose + lipid support</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Garlic bulb (Allium sativum) — aged</td>
+            <td class="ingredient-quantity">8 g</td>
+            <td class="ingredient-note">BP + lipid support</td>
+          </tr>
+          <tr>
+            <td class="ingredient-name">Cinnamon bark (Cinnamomum verum) - CEYLON ONLY</td>
+            <td class="ingredient-quantity">3 g</td>
+            <td class="ingredient-note">glucose modulation</td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:8px;">🔥 Preparation (Cold Brew Option)</div>
+        <div class="preparation-step">
+          <div class="step-num">1</div>
+          <div class="step-content"><strong>Cold Brew Method (24 hours):</strong> Place all ingredients in 1 L room-temperature water. Cover. Steep 24 hours at room temp.</div>
+        </div>
+        <div class="preparation-step">
+          <div class="step-num">2</div>
+          <div class="step-content">Strain through fine mesh. Divide into 5 × 200 mL portions. Drink one portion each morning for 5 consecutive days per week.</div>
+        </div>
+        <div class="preparation-step">
+          <div class="step-num">3</div>
+          <div class="step-content"><strong>Or Hot Brew:</strong> Simmer 20 minutes in 1 L water. Strain. Refrigerate for 5 days maximum.</div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);margin-bottom:6px;">💊 Dosage & Indication</div>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">
+          <strong>Dose:</strong> 200 mL daily, 5 days/week (rest 2 days for tolerance)<br>
+          <strong>Duration:</strong> 12 weeks minimum for multi-component MetS improvement<br>
+          <strong>Indication:</strong> <span class="indication-badge">Metabolic Syndrome</span> <span class="indication-badge">Multiple HTN+Lipid+Glucose+Obesity</span><br>
+          <strong>Expected Benefit:</strong> Overall MetS components ↓ 15-25%, CRP ↓ 20-30%<br>
+          <strong>⚠️ Important:</strong> Ceylon cinnamon ONLY. Consult doctor if on anticoagulants.
+        </div>
+      </div>
+    </div>
+
+    <!-- SOURCING & STORAGE -->
+    <div class="neu-card" style="padding:16px;background:rgba(39,174,96,0.04);border-left:3px solid #27AE60;">
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px;">🛍️ Sourcing & Storage Guidelines</div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.8;">
+        <strong>Quality Selection:</strong><br>
+        • Purchase whole dried herbs when possible (better preservation of active compounds)<br>
+        • Check for pesticide-free certification (organic preferred)<br>
+        • Store in airtight glass containers, away from light & heat<br>
+        • Discard if mold, off-odor, or pest presence noted<br><br>
+        <strong>Local Sourcing (Indonesia):</strong><br>
+        • Traditional herbal markets (pasar jamu) in major cities<br>
+        • Certified organic suppliers (verify certification)<br>
+        • Licensed health food stores<br><br>
+        <strong>Online Sourcing:</strong><br>
+        • Verify supplier credentials & third-party testing (heavy metals, microbial contamination)<br>
+        • Check for GMP (Good Manufacturing Practice) certification<br><br>
+        <strong>Shelf Life:</strong><br>
+        • Dried herbs: 6-12 months in cool, dark place<br>
+        • Fresh decoctions: 5-7 days refrigerated<br>
+        • Frozen portions: Up to 3 months in freezer
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html"><ion-icon name="home"></ion-icon><span>Beranda</span></a>
+    <a class="nav-item" href="monitoring.html"><ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span></a>
+    <a class="nav-item" href="consultation.html"><ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span></a>
+    <a class="nav-item" href="herbal.html"><ion-icon name="leaf-outline"></ion-icon><span>Jamu</span></a>
+    <a class="nav-item" href="profile.html"><ion-icon name="person-outline"></ion-icon><span>Profil</span></a>
+  </nav>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+  (async () => {
+    await VAuth.guard('patient', 1);
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git remote add:*)",
+      "Bash(firebase deploy:*)",
+      "Bash(python -m platformio run -e esp32-s3-waveshare --target upload)",
+      "Bash(for f:*)",
+      "Bash(do echo:*)",
+      "Read(//media/mrgengs/New Volume/1Works/herboratech/www/patient/**)",
+      "Bash(done)",
+      "Bash(while read:*)",
+      "Read(//media/mrgengs/New Volume/1Works/herboratech/**)",
+      "Bash(grep -l .paper-meta /media/mrgengs/New Volume/1Works/herboratech/www/patient/research-*.html)",
+      "Bash(do)",
+      "Bash(sed -i 's/\\\\.paper-meta { font-size: 0.7rem; color: var\\(--text-tertiary\\); display: flex; gap: 8px; }/.paper-meta { font-size: 0.7rem; color: var\\(--text-tertiary\\); display: flex; gap: 8px; flex-wrap: wrap; }/' \"$f\")",
+      "Bash(grep -rl finding-card.*grid-template-columns '/media/mrgengs/New Volume/1Works/herboratech/www/patient/')"
+    ]
+  }
+}

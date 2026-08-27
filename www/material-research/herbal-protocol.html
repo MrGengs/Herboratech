@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Herbal SLR Protocol — HerboraTech Evidence Portal</title>
+  <link rel="stylesheet" href="../../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    :root {
+      --primary-herbal: #27AE60;
+      --primary-herbal-dark: #1E8449;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f0fdf4 0%, #e8f5e9 100%);
+    }
+
+    .mobile-frame {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 480px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #f0fdf4 0%, #e8f5e9 100%);
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      color: #fff;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(13, 43, 26, 0.2);
+    }
+
+    .app-header .header-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      flex: 1;
+      text-align: center;
+    }
+
+    .app-header .neu-icon-btn {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .app-header .neu-icon-btn:active {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .content-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .content-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .content-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .content-scroll::-webkit-scrollbar-thumb {
+      background: rgba(39, 174, 96, 0.3);
+      border-radius: 3px;
+    }
+
+    .neu-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(39, 174, 96, 0.1);
+      border-left: 6px solid var(--primary-herbal);
+    }
+
+    .neu-card h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary-herbal);
+      margin: 0 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .neu-card h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 16px 0 8px;
+      text-transform: uppercase;
+    }
+
+    .neu-card p, .neu-card li {
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .neu-card ul {
+      margin-left: 16px;
+      padding: 0;
+    }
+
+    .neu-card li {
+      margin-bottom: 6px;
+    }
+
+    .herbal-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .herbal-item {
+      background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(61, 215, 127, 0.05));
+      border: 2px solid rgba(39, 174, 96, 0.2);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary-herbal);
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(61, 215, 127, 0.05));
+      border: 2px solid rgba(39, 174, 96, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-herbal);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .search-strategy {
+      background: #f9f9f9;
+      border-left: 4px solid var(--primary-herbal);
+      padding: 12px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      color: var(--primary-herbal);
+      overflow-x: auto;
+      margin: 12px 0;
+      line-height: 1.5;
+    }
+
+    .checklist-item {
+      display: flex;
+      gap: 8px;
+      padding: 10px;
+      margin-bottom: 6px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-herbal);
+      align-items: flex-start;
+    }
+
+    .checklist-item ion-icon {
+      color: #27AE60;
+      font-size: 1rem;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .checklist-item span {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    [data-animate] {
+      opacity: 0;
+      animation: slideUp 0.5s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer-spacer {
+      height: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="window.history.back()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="header-title">Herbal Protocol</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="content-scroll">
+
+    <div class="neu-card" data-animate="up" data-delay="0">
+      <h2><ion-icon name="leaf-outline"></ion-icon> Project Overview</h2>
+      <p><strong>Project:</strong> Herbal & Traditional Medicine Review untuk Metabolic Disease</p>
+      <p><strong>Tujuan:</strong> Systematic evaluation herbal remedies dengan GRADE quality assessment</p>
+      <p><strong>Tipe:</strong> Narrative systematic review, PRISMA 2020 Compliant</p>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="100">
+      <h2><ion-icon name="help-circle-outline"></ion-icon> Research Questions</h2>
+      <h3>Q1. Efficacy</h3>
+      <p>Herbal mana yang punya evidence untuk dyslipidemia, hypertension, NAFLD, MetS, T2DM?</p>
+      <h3>Q2. Compounds</h3>
+      <p>Phytochemical compounds mana (curcumin, EGCG, allicin) yang terbukti klinis?</p>
+      <h3>Q3. Dosage</h3>
+      <p>Optimal dosages & formulations berdasarkan RCT evidence?</p>
+      <h3>Q4-8. Safety & Gaps</h3>
+      <p>Quality of evidence, safety, mechanisms, dan research gaps?</p>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="200">
+      <h2><ion-icon name="checkmark-circle-outline"></ion-icon> Inclusion Criteria</h2>
+      <h3>Study Design</h3>
+      <p>RCTs, CCTs, cohort, systematic reviews, meta-analyses</p>
+      <h3>Population</h3>
+      <p>Adults ≥18 years dengan atau at-risk metabolic disease</p>
+      <h3>Publication</h3>
+      <p>Peer-reviewed, English, 2010-2026</p>
+      <h3>Primary Herbals (7)</h3>
+      <div class="herbal-list">
+        <div class="herbal-item">Curcumin</div>
+        <div class="herbal-item">Green Tea</div>
+        <div class="herbal-item">Garlic</div>
+        <div class="herbal-item">Ginger</div>
+        <div class="herbal-item">Cinnamon</div>
+        <div class="herbal-item">Olive Leaf</div>
+        <div class="herbal-item">Jamu</div>
+      </div>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="300">
+      <h2><ion-icon name="search-outline"></ion-icon> Search Strategy</h2>
+      <h3>Databases</h3>
+      <p>PubMed, Cochrane, Consensus.app, Journal of Ethnopharmacology, WHO/ESC/ADA Guidelines</p>
+      <h3>Search Terms</h3>
+      <div class="search-strategy">(herbal OR phytochemical* OR plant extract*)<br/>AND<br/>(dyslipidemia OR hypertension OR NAFLD OR metabolic syndrome OR diabetes)<br/>AND<br/>(RCT OR clinical trial OR efficacy)</div>
+      <h3>Filters</h3>
+      <p>2010-2026, English, Human studies, Standardized extracts</p>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="400">
+      <h2><ion-icon name="filter-outline"></ion-icon> Study Selection</h2>
+      <h3>Stage 1: Title & Abstract</h3>
+      <p>Automated + manual screening untuk herbal intervention keywords</p>
+      <h3>Stage 2: Full-Text Review</h3>
+      <p>Retrieve full texts, assess inclusion criteria, extract GRADE quality</p>
+      <h3>Quality Control</h3>
+      <p>90% inter-rater agreement target, dual review 10% abstracts</p>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="500">
+      <h2><ion-icon name="stats-chart-outline"></ion-icon> Data Extraction</h2>
+      <h3>Core Elements (25+)</h3>
+      <ul>
+        <li>Study characteristics: Author, year, DOI, design, n, duration</li>
+        <li>Intervention: Herbal name, extract type, active compounds, dosage</li>
+        <li>Outcomes: Biomarker changes (LDL, HDL, BP, FPG), effect sizes</li>
+        <li>Safety: Adverse events, drug-herb interactions, contraindications</li>
+        <li>Evidence: GRADE rating (A-D), risk of bias assessment</li>
+      </ul>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="600">
+      <h2><ion-icon name="shield-checkmark-outline"></ion-icon> GRADE Categories</h2>
+      <ul>
+        <li><strong>Grade A (High):</strong> Multiple RCTs, consistent, large n</li>
+        <li><strong>Grade B (Moderate):</strong> RCTs dengan limitations atau multiple smaller trials</li>
+        <li><strong>Grade C (Low):</strong> Few RCTs, small n, inconsistent (common untuk herbal)</li>
+        <li><strong>Grade D (Very Low):</strong> Case series, observational only, high bias</li>
+      </ul>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="700">
+      <h2><ion-icon name="checkmark-done-outline"></ion-icon> PRISMA Compliance</h2>
+      <div class="checklist-item">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span><strong>Title & Abstract:</strong> Systematic review study identified</span>
+      </div>
+      <div class="checklist-item">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span><strong>Objectives & Eligibility:</strong> 8 research questions documented</span>
+      </div>
+      <div class="checklist-item">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span><strong>Search Strategy:</strong> Full strategy across 5 databases</span>
+      </div>
+      <div class="checklist-item">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span><strong>Selection & Extraction:</strong> 2-stage screening + 25-element framework</span>
+      </div>
+      <div class="checklist-item">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span><strong>Risk of Bias & Certainty:</strong> GRADE A-D methodology</span>
+      </div>
+    </div>
+
+    <div class="neu-card" data-animate="up" data-delay="800">
+      <h2><ion-icon name="bar-chart-outline"></ion-icon> Key Statistics</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">Papers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">7</div>
+          <div class="stat-label">Herbals</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">DOI Verified</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">GRADE B-C</div>
+          <div class="stat-label">Target</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-spacer"></div>
+
+  </div>
+
+</div>
+
+<script src="../../shared/app.js"></script>
+</body>
+</html>

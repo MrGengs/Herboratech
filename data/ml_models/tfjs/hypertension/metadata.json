@@ -1,0 +1,49 @@
+{
+  "modelName": "hypertension",
+  "modelType": "random_forest_proxy",
+  "version": "1.0",
+  "trainedAt": "2026-03-22",
+  "accuracy": 0.7708,
+  "featureNames": [
+    "age",
+    "bmi",
+    "salt",
+    "stress",
+    "sleep",
+    "fam",
+    "smoking",
+    "exercise",
+    "bp_hist"
+  ],
+  "featureCount": 9,
+  "scalerMean": [
+    50.702770780856426,
+    25.993010075566733,
+    8.500692695214095,
+    4.974811083123425,
+    6.427833753148613,
+    0.48740554156171284,
+    0.5717884130982368,
+    0.7292191435768262,
+    0.0
+  ],
+  "scalerStd": [
+    19.457304997444528,
+    4.546270124811921,
+    2.0120432798455905,
+    3.152204502610053,
+    1.5302388126522537,
+    0.49984135444823,
+    0.9036785030325011,
+    0.7740941857417962,
+    1.0
+  ],
+  "outputLabels": [
+    "No Hypertension",
+    "Hypertension"
+  ],
+  "outputCount": 2,
+  "thresholds": {
+    "threshold": 0.5
+  }
+}

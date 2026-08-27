@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Detail User</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .profile-card { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+    .profile-avatar { width: 96px; height: 96px; border-radius: 50%; background: linear-gradient(135deg, #6FCF97, #27AE60); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; color: #fff; flex-shrink: 0; box-shadow: var(--shadow-out); }
+    .profile-info { flex: 1; }
+    .profile-name { font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .profile-meta { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .profile-meta-row { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); }
+    .profile-meta-row ion-icon { color: var(--primary-dark); font-size: 1rem; }
+    .profile-actions { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+    @media (max-width: 640px) {
+      .admin-topbar .header-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+      .admin-topbar .header-actions button { font-size: 0.75rem; padding: 6px 10px; }
+    }
+
+    .stats-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+    @media (min-width: 768px) { .stats-row { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
+    .stat-mini { background: var(--bg); border-radius: 16px; box-shadow: var(--shadow-out); padding: 20px; text-align: center; }
+    .stat-mini-val { font-size: 1.8rem; font-weight: 800; color: var(--primary-dark); }
+    .stat-mini-lbl { font-size: 0.78rem; color: var(--text-tertiary); margin-top: 4px; }
+
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: var(--bg); border-radius: 20px; box-shadow: var(--shadow-out); padding: 32px; max-width: 420px; width: 90%; }
+    .modal-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
+    .modal-desc { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
+    .modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
+
+    .breadcrumb { font-size: 0.8rem; color: var(--text-tertiary); display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--primary-dark); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item active" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+
+    <div class="admin-topbar" data-animate="up">
+      <div>
+        <h1>Detail User</h1>
+        <div class="breadcrumb" style="margin-top:4px;">
+          <a href="users.html">Users</a>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+          <span id="breadcrumb-name">Memuat...</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="neu-btn" id="btn-deactivate" style="color:var(--warning);border-color:var(--warning);display:none;" onclick="deactivateUser()">
+          <ion-icon name="ban-outline"></ion-icon> Nonaktifkan Akun
+        </button>
+        <button class="neu-btn-primary neu-btn-sm" id="btn-activate" style="display:none;" onclick="activateUser()">
+          <ion-icon name="checkmark-circle-outline"></ion-icon> Aktifkan Akun
+        </button>
+        <button class="neu-btn" style="color:var(--warning);border-color:var(--warning);" onclick="document.getElementById('suspendModal').classList.add('open')">
+          <ion-icon name="ban-outline"></ion-icon> Suspend
+        </button>
+        <button class="neu-btn-danger neu-btn-sm" onclick="document.getElementById('deleteModal').classList.add('open')">
+          <ion-icon name="trash-outline"></ion-icon> Delete
+        </button>
+      </div>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="neu-card" data-animate="up" data-delay="100">
+      <div class="profile-card">
+        <div class="profile-avatar" id="profile-avatar">--</div>
+        <div class="profile-info">
+          <div class="profile-name" id="profile-name">Memuat...</div>
+          <div style="display:flex;gap:8px;margin-top:6px;align-items:center;">
+            <span class="neu-chip" id="role-chip" style="background:var(--info-bg);color:var(--info);font-size:0.72rem;padding:3px 10px;">-</span>
+            <button class="neu-btn-sm" style="font-size:0.7rem;padding:4px 10px;" onclick="openRoleModal()">
+              <ion-icon name="pencil-outline"></ion-icon> Ubah Role
+            </button>
+            <span class="neu-chip" id="status-chip" style="background:#E8F8F0;color:#27AE60;font-size:0.72rem;padding:3px 10px;">-</span>
+          </div>
+          <div class="profile-meta">
+            <div class="profile-meta-row"><ion-icon name="mail-outline"></ion-icon> <span id="profile-email">-</span></div>
+            <div class="profile-meta-row"><ion-icon name="calendar-outline"></ion-icon> Bergabung: <span id="profile-created">-</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row" data-animate="up" data-delay="150">
+      <div class="stat-mini">
+        <div class="stat-mini-val">12</div>
+        <div class="stat-mini-lbl">Konsultasi</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-val">8</div>
+        <div class="stat-mini-lbl">Bulan Aktif</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-val">45</div>
+        <div class="stat-mini-lbl">Total Login</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-val">7</div>
+        <div class="stat-mini-lbl">Artikel Dibaca</div>
+      </div>
+    </div>
+
+    <!-- Audit Log -->
+    <div class="neu-table-wrap" data-animate="up" data-delay="200" style="margin-top:24px;">
+      <div style="padding:20px 20px 12px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;">Log Aktivitas</span>
+        <span class="neu-chip" style="font-size:0.72rem;">5 entri terbaru</span>
+      </div>
+      <table class="neu-table">
+        <thead>
+          <tr>
+            <th>Tanggal & Waktu</th>
+            <th>Aksi</th>
+            <th>Detail</th>
+            <th>IP Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--text-tertiary);font-size:0.82rem;">20 Mar 2026, 14:32</td>
+            <td><span class="neu-chip" style="background:var(--info-bg);color:var(--info);font-size:0.7rem;padding:2px 8px;">Login</span></td>
+            <td style="font-size:0.85rem;">Login berhasil via aplikasi</td>
+            <td style="font-size:0.82rem;color:var(--text-tertiary);font-family:monospace;">182.1.44.55</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-tertiary);font-size:0.82rem;">18 Mar 2026, 09:15</td>
+            <td><span class="neu-chip" style="background:#E8F8F0;color:#27AE60;font-size:0.7rem;padding:2px 8px;">Booking</span></td>
+            <td style="font-size:0.85rem;">Booking konsultasi dengan dr. Sarah W.</td>
+            <td style="font-size:0.82rem;color:var(--text-tertiary);font-family:monospace;">182.1.44.55</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-tertiary);font-size:0.82rem;">15 Mar 2026, 11:40</td>
+            <td><span class="neu-chip" style="background:var(--accent-bg);color:var(--accent);font-size:0.7rem;padding:2px 8px;">Vital Upload</span></td>
+            <td style="font-size:0.85rem;">Upload data vital dari perangkat BLE</td>
+            <td style="font-size:0.82rem;color:var(--text-tertiary);font-family:monospace;">182.1.44.55</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-tertiary);font-size:0.82rem;">10 Mar 2026, 16:05</td>
+            <td><span class="neu-chip" style="background:var(--info-bg);color:var(--info);font-size:0.7rem;padding:2px 8px;">Login</span></td>
+            <td style="font-size:0.85rem;">Login berhasil via web</td>
+            <td style="font-size:0.82rem;color:var(--text-tertiary);font-family:monospace;">114.122.8.91</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-tertiary);font-size:0.82rem;">05 Mar 2026, 08:20</td>
+            <td><span class="neu-chip" style="background:var(--warning-bg);color:var(--warning);font-size:0.7rem;padding:2px 8px;">Vital Upload</span></td>
+            <td style="font-size:0.85rem;">Upload data detak jantung & SpO2</td>
+            <td style="font-size:0.82rem;color:var(--text-tertiary);font-family:monospace;">182.1.44.55</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+
+<!-- Suspend Modal -->
+<div class="modal-overlay" id="suspendModal">
+  <div class="modal-box">
+    <div class="modal-title">Suspend Akun Pengguna?</div>
+    <div class="modal-desc">
+      Anda akan menangguhkan akun <strong id="modal-user-name">pengguna ini</strong>. Pengguna tidak dapat login hingga suspensi dicabut. Tindakan ini akan dicatat di log audit.
+    </div>
+    <div class="modal-actions">
+      <button class="neu-btn neu-btn-sm" onclick="document.getElementById('suspendModal').classList.remove('open')">Batal</button>
+      <button class="neu-btn-danger neu-btn-sm" onclick="suspendUser()">
+        <ion-icon name="ban-outline"></ion-icon> Suspend Akun
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal-box">
+    <div class="modal-title" style="color:var(--danger);">
+      <ion-icon name="warning-outline"></ion-icon> Hapus Akun?
+    </div>
+    <div class="modal-desc">
+      Akun <strong id="modal-delete-name">pengguna ini</strong> akan dihapus permanen. Data konsultasi tetap tersimpan untuk keperluan medis. Tindakan ini tidak dapat dibatalkan.
+    </div>
+    <div class="modal-actions">
+      <button class="neu-btn neu-btn-sm" onclick="document.getElementById('deleteModal').classList.remove('open')">Batal</button>
+      <button class="neu-btn-danger neu-btn-sm" onclick="deleteUserSoft()">
+        <ion-icon name="trash-outline"></ion-icon> Hapus Akun
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Change Role Modal -->
+<div class="modal-overlay" id="roleModal">
+  <div class="modal-box">
+    <div class="modal-title">Ubah Role Pengguna</div>
+    <div class="modal-desc">
+      Pilih role baru untuk <strong id="modal-role-name">pengguna ini</strong>:
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+      <label class="role-option" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg);box-shadow:var(--shadow-out-sm);border-radius:12px;cursor:pointer;border:2px solid transparent;" onclick="selectRoleOption(this, 'patient')">
+        <input type="radio" name="newRole" value="patient" style="display:none;">
+        <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#27AE60,#6FCF97);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="person-outline" style="color:#fff;font-size:1.2rem;"></ion-icon>
+        </div>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:0.9rem;">Pasien</div>
+          <div style="font-size:0.72rem;color:var(--text-tertiary);">Akses portal pasien, monitoring, konsultasi</div>
+        </div>
+        <ion-icon name="checkmark-circle" class="check-icon" style="color:var(--primary-dark);font-size:1.4rem;display:none;"></ion-icon>
+      </label>
+      <label class="role-option" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg);box-shadow:var(--shadow-out-sm);border-radius:12px;cursor:pointer;border:2px solid transparent;" onclick="selectRoleOption(this, 'doctor')">
+        <input type="radio" name="newRole" value="doctor" style="display:none;">
+        <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#1D5DB5,#56CCF2);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="medkit-outline" style="color:#fff;font-size:1.2rem;"></ion-icon>
+        </div>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:0.9rem;">Dokter</div>
+          <div style="font-size:0.72rem;color:var(--text-tertiary);">Akses portal dokter, terima konsultasi, resep</div>
+        </div>
+        <ion-icon name="checkmark-circle" class="check-icon" style="color:var(--primary-dark);font-size:1.4rem;display:none;"></ion-icon>
+      </label>
+      <label class="role-option" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg);box-shadow:var(--shadow-out-sm);border-radius:12px;cursor:pointer;border:2px solid transparent;" onclick="selectRoleOption(this, 'admin')">
+        <input type="radio" name="newRole" value="admin" style="display:none;">
+        <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#4A43CC,#9B59B6);display:flex;align-items:center;justify-content:center;">
+          <ion-icon name="settings-outline" style="color:#fff;font-size:1.2rem;"></ion-icon>
+        </div>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:0.9rem;">Admin</div>
+          <div style="font-size:0.72rem;color:var(--text-tertiary);">Akses penuh, kelola users, konten, sistem</div>
+        </div>
+        <ion-icon name="checkmark-circle" class="check-icon" style="color:var(--primary-dark);font-size:1.4rem;display:none;"></ion-icon>
+      </label>
+    </div>
+    <div class="modal-actions">
+      <button class="neu-btn neu-btn-sm" onclick="closeRoleModal()">Batal</button>
+      <button class="neu-btn-primary neu-btn-sm" id="btn-save-role" onclick="saveNewRole()">
+        <ion-icon name="save-outline"></ion-icon> Simpan
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+const uid = new URLSearchParams(location.search).get('id') || new URLSearchParams(location.search).get('uid');
+let _currentUser = null;
+
+(async () => {
+  try {
+    const { profile } = await VAuth.guard('admin', 1);
+    if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+
+    if (!uid) {
+      showToast('ID user tidak ditemukan di URL.', 'error');
+      return;
+    }
+
+    const user = await VDB.getUser(uid);
+    if (!user) {
+      showToast('User tidak ditemukan.', 'error');
+      return;
+    }
+
+    _currentUser = user;
+
+    // Populate breadcrumb
+    document.getElementById('breadcrumb-name').textContent = user.name || 'Tanpa Nama';
+
+    // Populate avatar initials
+    const initials = (user.name || 'U').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+    document.getElementById('profile-avatar').textContent = initials;
+
+    // Populate profile info
+    document.getElementById('profile-name').textContent = user.name || 'Tanpa Nama';
+    document.getElementById('profile-email').textContent = user.email || '-';
+
+    // Created at
+    if (user.createdAt && user.createdAt.toDate) {
+      const d = user.createdAt.toDate();
+      document.getElementById('profile-created').textContent = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    } else {
+      document.getElementById('profile-created').textContent = '-';
+    }
+
+    // Role chip
+    const roleMap = { patient: 'Pasien', doctor: 'Dokter', admin: 'Admin' };
+    document.getElementById('role-chip').textContent = roleMap[user.role] || user.role || '-';
+
+    // Status chip + toggle buttons
+    const statusChip = document.getElementById('status-chip');
+    const btnDeactivate = document.getElementById('btn-deactivate');
+    const btnActivate = document.getElementById('btn-activate');
+
+    if (user.isActive !== false) {
+      statusChip.textContent = 'Aktif';
+      statusChip.style.background = '#E8F8F0';
+      statusChip.style.color = '#27AE60';
+      btnDeactivate.style.display = '';
+      btnActivate.style.display = 'none';
+    } else {
+      statusChip.textContent = 'Nonaktif';
+      statusChip.style.background = 'var(--warning-bg)';
+      statusChip.style.color = 'var(--warning)';
+      btnDeactivate.style.display = 'none';
+      btnActivate.style.display = '';
+    }
+
+    // Modal name
+    document.getElementById('modal-user-name').textContent = user.name || 'pengguna ini';
+
+  } catch (err) {
+    console.error(err);
+    showToast('Gagal memuat data user: ' + (err.message || err), 'error');
+  }
+})();
+
+async function deactivateUser() {
+  try {
+    await VDB.updateUser(uid, { isActive: false });
+    showToast('Akun berhasil dinonaktifkan.', 'warning');
+    document.getElementById('status-chip').textContent = 'Nonaktif';
+    document.getElementById('status-chip').style.background = 'var(--warning-bg)';
+    document.getElementById('status-chip').style.color = 'var(--warning)';
+    document.getElementById('btn-deactivate').style.display = 'none';
+    document.getElementById('btn-activate').style.display = '';
+  } catch (err) {
+    showToast('Gagal menonaktifkan akun: ' + (err.message || err), 'error');
+  }
+}
+
+async function activateUser() {
+  try {
+    await VDB.updateUser(uid, { isActive: true });
+    showToast('Akun berhasil diaktifkan.', 'success');
+    document.getElementById('status-chip').textContent = 'Aktif';
+    document.getElementById('status-chip').style.background = '#E8F8F0';
+    document.getElementById('status-chip').style.color = '#27AE60';
+    document.getElementById('btn-activate').style.display = 'none';
+    document.getElementById('btn-deactivate').style.display = '';
+  } catch (err) {
+    showToast('Gagal mengaktifkan akun: ' + (err.message || err), 'error');
+  }
+}
+
+// === ROLE CHANGE FUNCTIONS ===
+let _selectedNewRole = null;
+
+function openRoleModal() {
+  if (!_currentUser) return;
+  document.getElementById('modal-role-name').textContent = _currentUser.name || 'pengguna ini';
+
+  // Reset selection
+  _selectedNewRole = null;
+  document.querySelectorAll('.role-option').forEach(opt => {
+    opt.style.borderColor = 'transparent';
+    opt.querySelector('.check-icon').style.display = 'none';
+    opt.querySelector('input').checked = false;
+  });
+
+  // Pre-select current role
+  const currentRole = _currentUser.role || 'patient';
+  document.querySelectorAll('.role-option').forEach(opt => {
+    const radio = opt.querySelector('input');
+    if (radio.value === currentRole) {
+      selectRoleOption(opt, currentRole);
+    }
+  });
+
+  document.getElementById('roleModal').classList.add('open');
+}
+
+function closeRoleModal() {
+  document.getElementById('roleModal').classList.remove('open');
+}
+
+function selectRoleOption(el, role) {
+  _selectedNewRole = role;
+
+  // Reset all options
+  document.querySelectorAll('.role-option').forEach(opt => {
+    opt.style.borderColor = 'transparent';
+    opt.querySelector('.check-icon').style.display = 'none';
+    opt.querySelector('input').checked = false;
+  });
+
+  // Highlight selected
+  el.style.borderColor = 'var(--primary-dark)';
+  el.querySelector('.check-icon').style.display = 'block';
+  el.querySelector('input').checked = true;
+}
+
+async function saveNewRole() {
+  if (!_selectedNewRole) {
+    showToast('Pilih role terlebih dahulu.', 'warning');
+    return;
+  }
+
+  if (_selectedNewRole === _currentUser.role) {
+    showToast('Role tidak berubah.', 'info');
+    closeRoleModal();
+    return;
+  }
+
+  const btn = document.getElementById('btn-save-role');
+  btn.disabled = true;
+  btn.innerHTML = '<ion-icon name="reload-outline" style="animation:spin 0.8s linear infinite"></ion-icon> Menyimpan...';
+
+  try {
+    await VDB.updateUser(uid, { role: _selectedNewRole });
+
+    // Update UI
+    const roleMap = { patient: 'Pasien', doctor: 'Dokter', admin: 'Admin' };
+    const roleColors = {
+      patient: { bg: '#E8F8F0', color: '#27AE60' },
+      doctor: { bg: 'var(--info-bg)', color: 'var(--info)' },
+      admin: { bg: 'var(--accent-bg)', color: 'var(--accent)' }
+    };
+
+    const roleChip = document.getElementById('role-chip');
+    roleChip.textContent = roleMap[_selectedNewRole] || _selectedNewRole;
+    roleChip.style.background = roleColors[_selectedNewRole]?.bg || 'var(--info-bg)';
+    roleChip.style.color = roleColors[_selectedNewRole]?.color || 'var(--info)';
+
+    _currentUser.role = _selectedNewRole;
+
+    showToast('Role berhasil diubah menjadi ' + roleMap[_selectedNewRole] + '!', 'success');
+    closeRoleModal();
+  } catch (err) {
+    showToast('Gagal mengubah role: ' + (err.message || err), 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<ion-icon name="save-outline"></ion-icon> Simpan';
+  }
+}
+
+// === SUSPEND USER ===
+async function suspendUser() {
+  if (!_currentUser) return;
+
+  const reason = 'Akun disuspend oleh admin';
+  document.getElementById('suspendModal').classList.remove('open');
+
+  try {
+    await VDB.updateUser(uid, {
+      isActive: false,
+      suspended: true,
+      suspendedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      suspendReason: reason
+    });
+
+    // Update UI
+    const chip = document.getElementById('status-chip');
+    chip.textContent = 'Suspended';
+    chip.style.cssText = 'background:rgba(235,87,87,0.12);color:#EB5757;';
+    document.getElementById('btn-deactivate').style.display = 'none';
+    document.getElementById('btn-activate').style.display = '';
+
+    _currentUser.suspended = true;
+    _currentUser.isActive = false;
+
+    showToast('Akun berhasil disuspend', 'warning');
+  } catch (e) {
+    showToast('Gagal: ' + (e.message || e), 'error');
+  }
+}
+
+// === DELETE USER (SOFT DELETE) ===
+async function deleteUserSoft() {
+  if (!_currentUser) return;
+
+  document.getElementById('deleteModal').classList.remove('open');
+
+  try {
+    await VDB.updateUser(uid, {
+      deleted: true,
+      isActive: false,
+      deletedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    showToast('Akun berhasil dihapus', 'success');
+    setTimeout(() => nav('users.html'), 1500);
+  } catch (e) {
+    showToast('Gagal: ' + (e.message || e), 'error');
+  }
+}
+
+// === INITIALIZE DELETE MODAL NAME ===
+document.addEventListener('DOMContentLoaded', () => {
+  const modalDeleteName = document.getElementById('modal-delete-name');
+  setTimeout(() => {
+    if (_currentUser && modalDeleteName) {
+      modalDeleteName.textContent = _currentUser.name || 'pengguna ini';
+    }
+  }, 100);
+});
+</script>
+</body>
+</html>

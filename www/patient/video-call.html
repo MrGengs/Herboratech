@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Video Call</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #071A0F;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .vc-container {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Main video area */
+    .vc-main-video {
+      flex: 1;
+      position: relative;
+      background: radial-gradient(ellipse at center, #0F3320 0%, #071A0F 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Fake video background blur effect */
+    .vc-main-video::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(39,174,96,0.12) 0%, transparent 60%),
+        radial-gradient(circle at 70% 60%, rgba(27,94,56,0.15) 0%, transparent 60%);
+    }
+
+    /* Real remote video element */
+    #remoteVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    #remoteVideo.active { display: block; }
+
+    .vc-camera-mock {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      color: rgba(255,255,255,0.25);
+      z-index: 1;
+    }
+    .vc-camera-icon {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      border: 2px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+    }
+    .vc-camera-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* Doctor name overlay */
+    .vc-doctor-name {
+      position: absolute;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.15);
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    /* PiP self-view */
+    .vc-pip {
+      position: absolute;
+      bottom: 100px;
+      right: 16px;
+      width: 90px;
+      height: 130px;
+      border-radius: 16px;
+      background: linear-gradient(160deg, #0D3320 0%, #071A0F 100%);
+      border: 2px solid rgba(255,255,255,0.2);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      z-index: 5;
+    }
+    .vc-pip-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.35);
+    }
+    .vc-pip-inner ion-icon { font-size: 1.5rem; }
+    .vc-pip-inner span { font-size: 0.6rem; font-weight: 600; }
+    #localVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    #localVideo.active { display: block; }
+
+    /* Top overlay */
+    .vc-top-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(7,26,15,0.8) 0%, transparent 100%);
+      z-index: 10;
+    }
+
+    /* Vitals */
+    .vc-vitals {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .vc-vital-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      padding: 5px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .vc-vital-item ion-icon { font-size: 0.85rem; }
+    .vc-vital-item span { font-size: 0.72rem; font-weight: 700; color: #fff; }
+
+    /* Call duration */
+    .vc-duration {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      letter-spacing: 1px;
+    }
+
+    /* Doctor name chip top right */
+    .vc-name-chip {
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 600;
+    }
+
+    /* Bottom controls */
+    .vc-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 20px 20px calc(32px + env(safe-area-inset-bottom, 0px));
+      background: linear-gradient(0deg, rgba(7,26,15,0.95) 0%, rgba(7,26,15,0.7) 60%, transparent 100%);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+    }
+
+    .vc-btn {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .vc-btn:hover { background: rgba(255,255,255,0.2); }
+    .vc-btn:active { transform: scale(0.9); }
+    .vc-btn.active { background: rgba(255,255,255,0.25); }
+    .vc-btn.muted { background: rgba(235,87,87,0.3); border-color: rgba(235,87,87,0.4); }
+
+    .vc-btn-end {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, #EB5757, #FF3B3B);
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 6px 20px rgba(235,87,87,0.5);
+      color: #fff;
+      font-size: 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .vc-btn-end:active { transform: scale(0.9); }
+
+    .vc-btn-label {
+      font-size: 0.55rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 4px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .btn-wrap { display: flex; flex-direction: column; align-items: center; }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.25); opacity: 0; }
+    }
+    .vc-pulse-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid rgba(39,174,96,0.5);
+      animation: pulse-ring 2s ease-out infinite;
+    }
+  </style>
+</head>
+<body>
+
+<div class="vc-container">
+  <!-- Main video area -->
+  <div class="vc-main-video">
+    <video id="remoteVideo" autoplay playsinline></video>
+    <div class="vc-camera-mock" id="remoteVideoMock">
+      <div class="vc-camera-icon" style="position:relative;">
+        <div class="vc-pulse-ring"></div>
+        <ion-icon name="videocam-outline"></ion-icon>
+      </div>
+      <span class="vc-camera-label" id="connectingLabel">Menghubungkan...</span>
+    </div>
+    <div class="vc-doctor-name" id="remoteName">dr. Dokter</div>
+  </div>
+
+  <!-- PiP self-view -->
+  <div class="vc-pip">
+    <video id="localVideo" autoplay playsinline muted></video>
+    <div class="vc-pip-inner" id="localVideoMock">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Saya</span>
+    </div>
+  </div>
+
+  <!-- Top overlay -->
+  <div class="vc-top-overlay">
+    <div class="vc-vitals">
+      <div class="vc-vital-item">
+        <ion-icon name="heart-outline" style="color:#EB5757;"></ion-icon>
+        <span id="vc-hr">-- bpm</span>
+      </div>
+      <div class="vc-vital-item">
+        <ion-icon name="water-outline" style="color:#56CCF2;"></ion-icon>
+        <span id="vc-spo2">--%</span>
+      </div>
+    </div>
+
+    <div class="vc-duration" id="callDuration">00:00</div>
+
+    <div class="vc-name-chip" id="nameChip">Terhubung</div>
+  </div>
+
+  <!-- Bottom controls -->
+  <div class="vc-controls">
+    <div class="btn-wrap">
+      <button class="vc-btn" id="micBtn" onclick="toggleMic()">
+        <ion-icon name="mic-outline"></ion-icon>
+      </button>
+      <span class="vc-btn-label">Mikrofon</span>
+    </div>
+    <div class="btn-wrap">
+      <button class="vc-btn" id="camBtn" onclick="toggleCam()">
+        <ion-icon name="videocam-outline"></ion-icon>
+      </button>
+      <span class="vc-btn-label">Kamera</span>
+    </div>
+    <div class="btn-wrap">
+      <button class="vc-btn-end" onclick="endCall()">
+        <ion-icon name="call-outline" style="transform:rotate(135deg);"></ion-icon>
+      </button>
+      <span class="vc-btn-label" style="color:rgba(235,87,87,0.8);">Akhiri</span>
+    </div>
+    <div class="btn-wrap">
+      <button class="vc-btn" onclick="showToast('Screen share tidak tersedia di prototype','info')">
+        <ion-icon name="desktop-outline"></ion-icon>
+      </button>
+      <span class="vc-btn-label">Layar</span>
+    </div>
+    <div class="btn-wrap">
+      <button class="vc-btn" onclick="showToast('Efek latar belakang','info')">
+        <ion-icon name="color-wand-outline"></ion-icon>
+      </button>
+      <span class="vc-btn-label">Efek</span>
+    </div>
+  </div>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/chat-manager.js"></script>
+<script src="../shared/webrtc-manager.js"></script>
+<script>
+  // Timer
+  let callSeconds = 0;
+  let timerInterval = null;
+  const durationEl = document.getElementById('callDuration');
+
+  function formatTime(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+  }
+
+  function startTimer() {
+    timerInterval = setInterval(() => {
+      callSeconds++;
+      durationEl.textContent = formatTime(callSeconds);
+    }, 1000);
+  }
+
+  let micOn = true;
+  function toggleMic() {
+    if (wm) {
+      micOn = wm.toggleMic();
+    } else {
+      micOn = !micOn;
+    }
+    const btn = document.getElementById('micBtn');
+    btn.classList.toggle('muted', !micOn);
+    btn.innerHTML = micOn
+      ? '<ion-icon name="mic-outline"></ion-icon>'
+      : '<ion-icon name="mic-off-outline"></ion-icon>';
+    showToast(micOn ? 'Mikrofon aktif' : 'Mikrofon dimatikan', micOn ? 'success' : 'warning');
+  }
+
+  let camOn = true;
+  function toggleCam() {
+    if (wm) {
+      camOn = wm.toggleCamera();
+    } else {
+      camOn = !camOn;
+    }
+    const btn = document.getElementById('camBtn');
+    btn.classList.toggle('muted', !camOn);
+    btn.innerHTML = camOn
+      ? '<ion-icon name="videocam-outline"></ion-icon>'
+      : '<ion-icon name="videocam-off-outline"></ion-icon>';
+    showToast(camOn ? 'Kamera aktif' : 'Kamera dimatikan', camOn ? 'success' : 'warning');
+  }
+
+  async function endCall() {
+    clearInterval(timerInterval);
+    if (wm) {
+      try { await wm.endCall(); } catch(e) {}
+    }
+    showToast('Panggilan berakhir', 'info');
+    setTimeout(() => window.history.back(), 800);
+  }
+
+  let wm = null;
+
+  // ── Video Call Diagnostic Tool ─────────────────────────────────────────
+  // Jalankan di browser console: vcDiag()
+  window.vcDiag = async function() {
+    const log = (msg, ok) => console.log((ok === false ? '❌' : ok === true ? '✅' : 'ℹ️') + ' ' + msg);
+    console.group('=== HERBORATECH VIDEO CALL DIAGNOSTIC ===');
+
+    const params = new URLSearchParams(location.search);
+    log('URL params: consultId=' + params.get('consultId') + ' callId=' + params.get('callId') + ' isDoctor=' + params.get('isDoctor'));
+
+    // 1. Firebase Auth
+    const auth = window.VFirebase?.auth;
+    const user = auth?.currentUser;
+    log('Firebase Auth: user=' + (user?.uid || 'null'), !!user);
+
+    // 2. WebRTC Manager
+    log('VWebRTC loaded: ' + typeof VWebRTC, typeof VWebRTC === 'function');
+    log('wm instance: ' + (wm ? 'ada' : 'null'), !!wm);
+    if (wm) {
+      log('PeerConnection state: ' + (wm.pc?.connectionState || 'no pc'), !!(wm.pc));
+      log('ICE state: ' + (wm.pc?.iceConnectionState || 'no pc'));
+      log('Local stream: ' + (wm.localStream ? wm.localStream.getTracks().map(t => t.kind).join(',') : 'null'), !!wm.localStream);
+      log('Remote stream: ' + (wm.remoteStream?.active ? 'active' : 'null/inactive'));
+      log('callId: ' + (wm.callId || 'null'), !!wm.callId);
+    }
+
+    // 3. Camera/Mic permission
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const cam = devices.filter(d => d.kind === 'videoinput');
+      const mic = devices.filter(d => d.kind === 'audioinput');
+      log('Kamera ditemukan: ' + cam.length + ' device', cam.length > 0);
+      log('Mikrofon ditemukan: ' + mic.length + ' device', mic.length > 0);
+    } catch (e) { log('Gagal enumerate devices: ' + e.message, false); }
+
+    // 4. Firestore calls collection
+    const consultId = params.get('consultId');
+    if (consultId && window.VFirebase?.db) {
+      try {
+        const snap = await VFirebase.db.collection('calls')
+          .where('consultId', '==', consultId).limit(5).get();
+        log('Firestore calls untuk consultId ini: ' + snap.size + ' dokumen', snap.size > 0);
+        snap.docs.forEach(d => {
+          const data = d.data();
+          log('  call ' + d.id.slice(0,8) + '... status=' + data.status + ' offer=' + !!data.offer + ' answer=' + !!data.answer);
+        });
+      } catch (e) { log('Gagal query Firestore calls: ' + e.message, false); }
+    }
+
+    // 5. STUN test
+    log('Testing STUN connectivity...');
+    try {
+      await new Promise((resolve, reject) => {
+        const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+        pc.createDataChannel('test');
+        pc.createOffer().then(o => pc.setLocalDescription(o));
+        const t = setTimeout(() => { pc.close(); reject(new Error('timeout')); }, 5000);
+        pc.onicecandidate = e => {
+          if (e.candidate) { clearTimeout(t); pc.close(); resolve(); }
+        };
+      });
+      log('STUN Google: OK', true);
+    } catch (e) { log('STUN Google: GAGAL — ' + e.message, false); }
+
+    console.groupEnd();
+  };
+  console.log('%c[VideoCall] Debug tool siap. Ketik vcDiag() di console untuk diagnosa.', 'color:#6FCF97;font-weight:bold');
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const params    = new URLSearchParams(location.search);
+    const isDoctor  = params.get('isDoctor') === 'true';
+    const consultId = params.get('consultId');
+    const callId    = params.get('callId');
+
+    // Guard sesuai role yang mengakses halaman ini
+    const { user } = await VAuth.guard(isDoctor ? 'doctor' : 'patient', 1);
+
+    const localVideoEl  = document.getElementById('localVideo');
+    const remoteVideoEl = document.getElementById('remoteVideo');
+    const localMock     = document.getElementById('localVideoMock');
+    const remoteMock    = document.getElementById('remoteVideoMock');
+
+    // Start vitals display
+    VitalsManager.start(user.uid);
+    VitalsManager.subscribe(vitals => {
+      document.getElementById('vc-hr').textContent = (vitals.hr || '--') + ' bpm';
+      document.getElementById('vc-spo2').textContent = (vitals.spo2 || '--') + '%';
+    });
+
+    wm = new VWebRTC();
+
+    // When remote stream arrives, show it
+    wm.onRemoteStream = stream => {
+      remoteVideoEl.srcObject = stream;
+      remoteVideoEl.classList.add('active');
+      remoteMock.style.display = 'none';
+      document.getElementById('connectingLabel').textContent = 'Terhubung';
+    };
+
+    // When call ends remotely
+    wm.onCallEnded = () => {
+      clearInterval(timerInterval);
+      showToast('Panggilan berakhir', 'info');
+      setTimeout(() => window.history.back(), 800);
+    };
+
+    // Get local stream first
+    try {
+      const localStream = await wm.getLocalStream();
+      localVideoEl.srcObject = localStream;
+      localVideoEl.classList.add('active');
+      localMock.style.display = 'none';
+    } catch (e) {
+      showToast('Kamera tidak tersedia', 'warning');
+    }
+
+    if (callId) {
+      // Patient is receiving a call
+      document.getElementById('connectingLabel').textContent = 'Sedang menghubungkan...';
+      try {
+        await wm.joinCall(callId);
+        startTimer();
+      } catch (e) {
+        showToast('Gagal bergabung ke panggilan: ' + e.message, 'error');
+      }
+    } else if (isDoctor && consultId) {
+      // Doctor side starting a call (routed through patient URL with isDoctor=true)
+      try {
+        document.getElementById('connectingLabel').textContent = 'Memulai panggilan...';
+        const consult = await VDB.getConsultation(consultId);
+        const patientId = consult?.patientId || '';
+        const newCallId = await wm.startCall(user.uid, patientId, consultId);
+        document.getElementById('nameChip').textContent = 'Call ID: ' + newCallId.slice(0, 6);
+        startTimer();
+      } catch (e) {
+        showToast('Gagal memulai panggilan: ' + e.message, 'error');
+      }
+    } else {
+      // Pasien menunggu — listen Firestore untuk incoming call dari dokter
+      document.getElementById('connectingLabel').textContent = 'Menunggu dokter...';
+      const unsubIncoming = VWebRTC.listenForIncomingCall(user.uid, async incoming => {
+        document.getElementById('connectingLabel').textContent = 'Dokter menghubungi...';
+        unsubIncoming(); // stop listening setelah call ditemukan
+        try {
+          await wm.joinCall(incoming.callId);
+          startTimer();
+        } catch (e) {
+          showToast('Gagal bergabung: ' + e.message, 'error');
+        }
+      });
+    }
+
+    // Load doctor/remote name from consultation
+    if (consultId) {
+      try {
+        const consult = await VDB.getConsultation(consultId);
+        if (consult) {
+          const remoteUid = isDoctor ? consult.patientId : consult.doctorId;
+          if (remoteUid) {
+            const remoteProfile = await VDB.getUser(remoteUid);
+            if (remoteProfile) {
+              const label = isDoctor ? remoteProfile.name : 'dr. ' + remoteProfile.name;
+              document.getElementById('remoteName').textContent = label;
+              document.getElementById('nameChip').textContent = label;
+            }
+          }
+        }
+      } catch (e) {
+        // silently fail — keep default label
+      }
+    }
+  });
+</script>
+</body>
+</html>

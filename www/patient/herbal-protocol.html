@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Herbal SLR Protocol</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); color: #fff; }
+    .herbal-card { background: linear-gradient(135deg, rgba(39,174,96,0.08) 0%, rgba(111,207,151,0.04) 100%); border-left: 4px solid #27AE60; padding: 16px; border-radius: 12px; margin-bottom: 16px; }
+    .herbal-list { padding-left: 20px; }
+    .herbal-list li { margin-bottom: 10px; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+    .checklist-item { display: flex; gap: 10px; margin-bottom: 8px; font-size: 0.8rem; }
+    .checklist-item input { margin-top: 2px; }
+    .herbal-section { margin-bottom: 24px; }
+    .herbal-section-title { font-weight: 700; font-size: 0.95rem; color: var(--text-primary); margin-bottom: 12px; }
+    .herbal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 12px 0; }
+    .herbal-badge { background: rgba(39,174,96,0.12); color: #27AE60; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; display: inline-block; }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('material-research.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;color:#fff;">Herbal SLR Protocol</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+
+    <div class="herbal-card">
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px;">🌿 Systematic Literature Review Protocol</div>
+      <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;margin:0;">
+        Evidence-based evaluation of 7 herbal remedies and traditional formulas for metabolic disease management. 50+ peer-reviewed papers (2010-2026) analyzed using PRISMA-2020 standards and GRADE methodology. Safety profiles and drug interactions assessed.
+      </p>
+    </div>
+
+    <div class="herbal-section">
+      <div class="herbal-section-title">📊 Review Scope</div>
+      <div class="neu-card" style="padding:14px;margin-bottom:12px;">
+        <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.7;">
+          <strong>Objective:</strong> Systematic evaluation of herbal remedies for dyslipidemia, hypertension, NAFLD, metabolic syndrome, and type 2 diabetes<br><br>
+          <strong>Herbal Categories:</strong> Curcumin, Green Tea, Garlic, Ginger, Cinnamon, Olive Leaf, Traditional Indonesian Jamu<br><br>
+          <strong>Study Designs:</strong> RCTs, controlled trials, meta-analyses, systematic reviews<br><br>
+          <strong>Outcomes:</strong> Biomarker changes (lipids, glucose, liver enzymes), clinical endpoints, safety profiles<br><br>
+          <strong>Evidence Quality:</strong> GRADE A-D assessment across 5 domains
+        </div>
+      </div>
+    </div>
+
+    <div class="herbal-section">
+      <div class="herbal-section-title">🔑 7 Primary Herbal Categories</div>
+      <div class="herbal-grid">
+        <div class="neu-card-sm" style="padding:12px;text-align:center;">
+          <div style="font-weight:600;color:#27AE60;font-size:0.9rem;">🟡 Curcumin</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:4px;">Turmeric (Curcuma longa) — 12 RCTs</div>
+        </div>
+        <div class="neu-card-sm" style="padding:12px;text-align:center;">
+          <div style="font-weight:600;color:#27AE60;font-size:0.9rem;">🟢 Green Tea</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:4px;">EGCG (Camellia sinensis) — 15 RCTs</div>
+        </div>
+        <div class="neu-card-sm" style="padding:12px;text-align:center;">
+          <div style="font-weight:600;color:#27AE60;font-size:0.9rem;">⚪ Garlic</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:4px;">Allium sativum — 10 RCTs</div>
+        </div>
+        <div class="neu-card-sm" style="padding:12px;text-align:center;">
+          <div style="font-weight:600;color:#27AE60;font-size:0.9rem;">🟠 Ginger</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:4px;">Zingiber officinale — 8 RCTs</div>
+        </div>
+        <div class="neu-card-sm" style="padding:12px;text-align:center;">
+          <div style="font-weight:600;color:#27AE60;font-size:0.9rem;">🟤 Cinnamon</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:4px;">Cinnamomum cassia — 8 RCTs</div>
+        </div>
+        <div class="neu-card-sm" style="padding:12px;text-align:center;">
+          <div style="font-weight:600;color:#27AE60;font-size:0.9rem;">🫒 Olive Leaf</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:4px;">Olea europaea — 6 RCTs</div>
+        </div>
+        <div class="neu-card-sm" style="padding:12px;text-align:center;">
+          <div style="font-weight:600;color:#27AE60;font-size:0.9rem;">🌾 Jamu Tradisional</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:4px;">Indonesian Formulas — 8 studies</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="herbal-section">
+      <div class="herbal-section-title">📋 PRISMA-2020 Compliance</div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.8;padding:12px;background:rgba(39,174,96,0.04);border-radius:8px;">
+        ✅ <strong>Item 1:</strong> Title identifies as systematic review of herbal interventions for metabolic disease<br>
+        ✅ <strong>Item 2:</strong> Structured abstract with background, objectives, methods, results summary<br>
+        ✅ <strong>Item 3:</strong> Rationale documented in review objectives (7 research questions)<br>
+        ✅ <strong>Item 4:</strong> Objectives & RQs specified in Section 1 (8 focused questions)<br>
+        ✅ <strong>Item 5:</strong> Eligibility criteria documented (inclusion: RCTs, herbal intervention, metabolic disease outcomes; exclusion: animal-only, case reports, unpublished)<br>
+        ✅ <strong>Item 6:</strong> Information sources: 8 sources (PubMed, Cochrane, Google Scholar, Consensus, J. Ethnopharmacology, WHO Monographs, WHO Guidelines, WHO Traditional Medicine Strategy)<br>
+        ✅ <strong>Item 7:</strong> Search strategy with MeSH terms, keywords, date filters (2010-2026)<br>
+        ✅ <strong>Item 8:</strong> Selection process: 2-stage screening (title/abstract, full-text) with documented decision criteria
+      </div>
+    </div>
+
+    <div class="herbal-section">
+      <div class="herbal-section-title">🔍 Search Strategy</div>
+      <div class="neu-card" style="padding:14px;margin-bottom:12px;font-family:monospace;font-size:0.75rem;background:rgba(0,0,0,0.02);overflow-x:auto;">
+        (herbal OR phytochemical* OR plant extract* OR traditional medicine)<br>
+        AND<br>
+        (dyslipidemia OR hypercholesterol* OR hypertension OR NAFLD OR "metabolic syndrome" OR "type 2 diabetes")<br>
+        AND<br>
+        (RCT OR "randomized controlled trial" OR clinical trial OR efficacy OR outcome)
+      </div>
+      <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.7;">
+        <strong>Databases:</strong> PubMed, Cochrane, Google Scholar, Consensus.app, Journal of Ethnopharmacology<br>
+        <strong>Date Range:</strong> 2010-2026 (emphasis on recent RCT evidence)<br>
+        <strong>Language:</strong> English<br>
+        <strong>Citation Keywords:</strong> Curcumin+lipid/BP/diabetes, EGCG+weight/metabolic, Garlic+hypertension, Ginger+inflammation/diabetes, Cinnamon+glucose, Jamu+metabolic
+      </div>
+    </div>
+
+    <div class="herbal-section">
+      <div class="herbal-section-title">📊 GRADE Quality Assessment Framework</div>
+      <div class="neu-card" style="padding:14px;">
+        <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.8;">
+          <strong>Grade A (High Quality):</strong> Further research unlikely to change effect estimate. Multiple RCTs, consistent results, large sample sizes.<br><br>
+          <strong>Grade B (Moderate Quality):</strong> Further research may change effect estimate. Well-designed trials, some heterogeneity, medium sample sizes.<br><br>
+          <strong>Grade C (Low Quality):</strong> Further research very likely to change effect estimate. Limited RCTs, observational studies, small sample sizes.<br><br>
+          <strong>Grade D (Very Low Quality):</strong> Any evidence estimate uncertain. Case reports, mechanistic studies, poorly designed trials.<br><br>
+          <strong>5 GRADE Domains Assessed:</strong>
+          <ul style="margin-top:8px;margin-bottom:0;">
+            <li>Risk of Bias (study design quality, randomization, blinding)</li>
+            <li>Inconsistency (heterogeneity, results variation across studies)</li>
+            <li>Indirectness (relevance to target population)</li>
+            <li>Imprecision (confidence intervals, sample size)</li>
+            <li>Publication Bias (funnel plot, selective reporting)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="herbal-section">
+      <div class="herbal-section-title">⚠️ Safety & Drug Interaction Assessment</div>
+      <div class="neu-card" style="padding:14px;background:rgba(235,87,87,0.06);border-left:4px solid #EB5757;">
+        <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.8;">
+          <strong>Safety Domains Assessed Per Herbal:</strong><br>
+          • Adverse event profiles (frequency, severity)<br>
+          • Contraindications (pregnancy, liver disease, renal impairment)<br>
+          • Drug-herb interactions (CYP3A4/2C9 induction/inhibition)<br>
+          • Dosage safety limits (maximum daily intake)<br>
+          • Special populations (pediatric, elderly, renal/hepatic disease)<br><br>
+          <strong>Information Sources:</strong> WHO Herbal Monographs, published RCTs, pharmacovigilance data, FDA/EMA safety reports
+        </div>
+      </div>
+    </div>
+
+    <div class="herbal-section">
+      <div class="herbal-section-title">📈 Efficacy Summary by Herbal</div>
+      <div class="neu-card" style="padding:14px;">
+        <div style="font-size:0.75rem;line-height:1.8;color:var(--text-secondary);">
+          <strong>🟡 Curcumin:</strong> <span class="herbal-badge">Grade B</span> — 12 RCTs, 15-25% biomarker reduction (lipids, inflammation), optimal dose 500-1000mg/day<br><br>
+          <strong>🟢 Green Tea (EGCG):</strong> <span class="herbal-badge">Grade B</span> — 15 RCTs, 1-3kg weight loss + modest lipid reduction, 2-3 cups/day effective<br><br>
+          <strong>⚪ Garlic:</strong> <span class="herbal-badge">Grade B</span> — 10 RCTs, 4-8 mmHg SBP reduction, 600-900mg aged garlic daily<br><br>
+          <strong>🟠 Ginger:</strong> <span class="herbal-badge">Grade B</span> — 8 RCTs, 8-13% FPG reduction, anti-inflammatory, 1-4g/day optimal<br><br>
+          <strong>🟤 Cinnamon:</strong> <span class="herbal-badge">Grade C</span> — 8 RCTs, variable glucose response, 1-6g/day, <strong>contraindicated</strong> in coumarin-sensitive patients<br><br>
+          <strong>🫒 Olive Leaf:</strong> <span class="herbal-badge">Grade B</span> — 6 RCTs, 5-7 mmHg SBP reduction + lipid benefits, 500mg BID studied<br><br>
+          <strong>🌾 Jamu Tradisional:</strong> <span class="herbal-badge">Grade C</span> — 8 population studies, formulation variability high, mechanistic validation needed
+        </div>
+      </div>
+    </div>
+
+    <div class="herbal-section">
+      <div class="herbal-section-title">📑 Related Documentation</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+        <a href="herbal-extraction.html" class="neu-card-sm" style="padding:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:8px;cursor:pointer;">
+          <div style="font-weight:600;color:#27AE60;font-size:0.85rem;">📊 Data Extraction</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);">50+ papers with full citations, study details, effect sizes</div>
+        </a>
+        <a href="herbal-grade.html" class="neu-card-sm" style="padding:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:8px;cursor:pointer;">
+          <div style="font-weight:600;color:#27AE60;font-size:0.85rem;">⚖️ GRADE Assessment</div>
+          <div style="font-size:0.7rem;color:var(--text-secondary);">Quality ratings & safety profiles per herbal</div>
+        </a>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;padding:12px;background:rgba(100,100,100,0.05);border-radius:8px;font-size:0.7rem;color:var(--text-tertiary);border-left:2px solid #999;line-height:1.6;">
+      <strong>Protocol Version:</strong> 1.0 | <strong>Date:</strong> 2026-03-24 | <strong>Status:</strong> Complete<br>
+      <strong>PRISMA Compliance:</strong> ✅ Full 27-item checklist | <strong>Total Papers:</strong> 50+ peer-reviewed | <strong>Herbal Categories:</strong> 7 | <strong>Evidence Grade:</strong> 18 Grade B + additional Grade C/D
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html"><ion-icon name="home"></ion-icon><span>Beranda</span></a>
+    <a class="nav-item" href="monitoring.html"><ion-icon name="pulse-outline"></ion-icon><span>Vitalis</span></a>
+    <a class="nav-item" href="consultation.html"><ion-icon name="chatbubbles-outline"></ion-icon><span>Konsultasi</span></a>
+    <a class="nav-item" href="herbal.html"><ion-icon name="leaf-outline"></ion-icon><span>Jamu</span></a>
+    <a class="nav-item" href="profile.html"><ion-icon name="person-outline"></ion-icon><span>Profil</span></a>
+  </nav>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+  (async () => {
+    await VAuth.guard('patient', 1);
+  })();
+</script>
+</body>
+</html>

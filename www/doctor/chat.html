@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Dokter — Chat</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #0C2352 0%, #1D5DB5 100%); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .app-header .logo { color: #fff; }
+    .app-header .logo span { color: #56CCF2; }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .app-header .neu-icon-btn:active { background: rgba(255,255,255,0.2); }
+    .app-header > div[style*="font-weight:700"] { color: #fff; }
+    .section-header .section-title { border-left: 3px solid var(--info); padding-left: 10px; }
+    .nav-item.active { color: var(--info); font-weight: 700; position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--info); }
+    .nav-item.active ion-icon { color: var(--info); filter: drop-shadow(0 0 4px rgba(47,128,237,0.5)); }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('home.html')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+    <div style="font-size:1.05rem;font-weight:700;">Chat & Orders</div>
+    <button class="neu-icon-btn" ><ion-icon name="create-outline"></ion-icon></button>
+  </header>
+
+  <div class="section" style="padding-bottom:0">
+    <div class="neu-tabs">
+      <div class="neu-tab active" onclick="switchTab('antrian', this)">Antrian</div>
+      <div class="neu-tab" onclick="switchTab('aktif', this)">Aktif</div>
+      <div class="neu-tab" onclick="switchTab('resep', this)">Selesai</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div id="chatList" style="display:flex;flex-direction:column;gap:12px;">
+      <div style="text-align:center;padding:30px;color:var(--text-muted);font-size:0.8rem;">
+        Memuat konsultasi...
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="home.html">
+      <ion-icon name="home"></ion-icon><span>Beranda</span>
+    </a>
+    <a class="nav-item" href="patients.html">
+      <ion-icon name="people-outline"></ion-icon><span>Pasien</span>
+    </a>
+    <a class="nav-item active" href="chat.html">
+      <ion-icon name="chatbubbles"></ion-icon><span>Chat</span>
+    </a>
+    <a class="nav-item" href="profile.html">
+      <ion-icon name="person-outline"></ion-icon><span>Profil</span>
+    </a>
+  </nav>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+let activeTab = 'antrian';
+let currentDoctorId = null;
+
+(async () => {
+  const { user } = await VAuth.guard('doctor', 1);
+  currentDoctorId = user.uid;
+  await loadConsultations(currentDoctorId);
+})();
+
+function switchTab(tab, el) {
+  activeTab = tab;
+  document.querySelectorAll('.neu-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  loadConsultations(currentDoctorId);
+}
+
+async function loadConsultations(doctorId) {
+  if (!doctorId) return;
+  const chatList = document.getElementById('chatList');
+  chatList.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-muted);font-size:0.8rem;">Memuat...</div>';
+
+  try {
+    const db = VFirebase.db;
+
+    // Tab Selesai (resep) — completed consultations for this doctor
+    if (activeTab === 'resep') {
+      const completedSnap = await db.collection('consultations')
+        .where('doctorId', '==', doctorId)
+        .where('status', '==', 'completed')
+        .orderBy('startTime', 'desc')
+        .limit(30)
+        .get();
+      const completed = completedSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderCompletedList(completed);
+      return;
+    }
+
+    // Tab Antrian: pending (semua, termasuk null doctorId)
+    // Tab Aktif: active assigned ke dokter ini
+    const statusTarget = activeTab === 'antrian' ? 'pending' : 'active';
+
+    // Query doctor's own consultations
+    const ownSnap = await db.collection('consultations')
+      .where('doctorId', '==', doctorId)
+      .where('status', '==', statusTarget)
+      .orderBy('startTime', 'desc')
+      .limit(20)
+      .get();
+
+    let allConsults = ownSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    // For antrian tab: also include unassigned (doctorId == null)
+    if (activeTab === 'antrian') {
+      const openSnap = await db.collection('consultations')
+        .where('status', '==', 'pending')
+        .orderBy('startTime', 'desc')
+        .limit(30)
+        .get();
+      const openList = openSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const seen = new Set(allConsults.map(c => c.id));
+      openList.forEach(c => { if (!seen.has(c.id)) { seen.add(c.id); allConsults.push(c); } });
+    }
+
+    const emptyLabel = activeTab === 'antrian' ? 'Tidak ada antrian baru' : 'Tidak ada konsultasi aktif';
+    if (allConsults.length === 0) {
+      chatList.innerHTML = `
+        <div style="text-align:center;padding:40px 20px;color:var(--text-muted);">
+          <ion-icon name="chatbubbles-outline" style="font-size:3rem;margin-bottom:12px;opacity:0.5;display:block;"></ion-icon>
+          <div style="font-size:0.85rem;">${emptyLabel}</div>
+          <div style="font-size:0.72rem;margin-top:4px;">Data baru akan muncul otomatis</div>
+        </div>
+      `;
+      return;
+    }
+
+    chatList.innerHTML = '';
+
+    const gradients = [
+      'linear-gradient(135deg,#EB5757,#FF7B7B)',
+      'linear-gradient(135deg,#6C63FF,#8B83FF)',
+      'linear-gradient(135deg,#27AE60,#6FCF97)',
+      'linear-gradient(135deg,#2F80ED,#56CCF2)',
+      'linear-gradient(135deg,#F2994A,#F2C94C)'
+    ];
+
+    for (let i = 0; i < allConsults.length; i++) {
+      const consult = allConsults[i];
+      const patient = consult.patientId ? await VDB.getUser(consult.patientId) : null;
+      const patientName = patient?.name || 'Pasien';
+      const initials = patientName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+      const gradient = gradients[i % gradients.length];
+
+      // Status badge
+      let statusBadge = '';
+      let borderColor = '';
+      if (consult.status === 'pending') {
+        statusBadge = '<span class="neu-chip-warning" style="font-size:0.6rem;background:var(--warning-bg);color:var(--warning);">Menunggu</span>';
+        borderColor = 'border-left:4px solid var(--warning);';
+      } else if (consult.status === 'active') {
+        statusBadge = '<span class="neu-chip-primary" style="font-size:0.6rem;">Aktif</span>';
+        borderColor = 'border-left:4px solid var(--primary-dark);';
+      }
+
+      // Complaint preview
+      const complaint = consult.complaint || 'Tidak ada keluhan';
+      const complaintPreview = complaint.length > 40 ? complaint.slice(0, 40) + '...' : complaint;
+
+      // Time
+      const time = consult.startTime?.toDate ? consult.startTime.toDate() : new Date();
+      const timeStr = formatRelativeTime(time);
+
+      const card = document.createElement('div');
+      card.className = 'neu-card';
+      card.setAttribute('data-animate', 'up');
+      card.setAttribute('data-delay', String(50 + i * 50));
+      card.style.cssText = 'display:flex;gap:14px;align-items:center;cursor:pointer;' + borderColor;
+      card.innerHTML = `
+        <div class="neu-avatar" style="background:${gradient}">${initials}</div>
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:0.85rem;">${patientName}</div>
+          <div style="font-size:0.7rem;color:var(--text-tertiary);">${complaintPreview}</div>
+        </div>
+        <div style="text-align:right;">
+          ${statusBadge}
+          <div style="font-size:0.6rem;color:var(--text-muted);margin-top:4px;">${timeStr}</div>
+        </div>
+      `;
+      card.onclick = () => {
+        if (consult.status === 'pending' && consult.doctorId !== currentDoctorId) {
+          claimConsultation(consult.id);
+        } else {
+          nav('chat-room.html?consultId=' + consult.id);
+        }
+      };
+      chatList.appendChild(card);
+    }
+
+  } catch (e) {
+    console.error('[doctor/chat] load error:', e);
+    chatList.innerHTML = `
+      <div style="text-align:center;padding:30px;color:var(--danger);font-size:0.8rem;">
+        Gagal memuat: ${e.message}
+      </div>
+    `;
+  }
+}
+
+async function renderCompletedList(consults) {
+  const chatList = document.getElementById('chatList');
+  if (!consults.length) {
+    chatList.innerHTML = `<div style="text-align:center;padding:40px 20px;color:var(--text-muted);">
+      <ion-icon name="checkmark-circle-outline" style="font-size:3rem;margin-bottom:12px;opacity:0.5;display:block;"></ion-icon>
+      <div style="font-size:0.85rem;">Belum ada konsultasi selesai</div>
+    </div>`;
+    return;
+  }
+  chatList.innerHTML = '';
+  const gradients = ['linear-gradient(135deg,#EB5757,#FF7B7B)','linear-gradient(135deg,#6C63FF,#8B83FF)','linear-gradient(135deg,#27AE60,#6FCF97)','linear-gradient(135deg,#2F80ED,#56CCF2)','linear-gradient(135deg,#F2994A,#F2C94C)'];
+  for (let i = 0; i < consults.length; i++) {
+    const c = consults[i];
+    const patient = c.patientId ? await VDB.getUser(c.patientId) : null;
+    const patientName = patient?.name || 'Pasien';
+    const initials = patientName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+    const time = c.startTime?.toDate ? c.startTime.toDate() : new Date();
+    const timeStr = time.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+    const complaint = (c.complaint || 'Tidak ada keluhan').slice(0, 50);
+    const card = document.createElement('div');
+    card.className = 'neu-card';
+    card.style.cssText = 'display:flex;gap:14px;align-items:center;cursor:pointer;border-left:4px solid var(--primary-dark);';
+    card.innerHTML = `
+      <div class="neu-avatar" style="background:${gradients[i % gradients.length]}">${initials}</div>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:0.85rem;">${patientName}</div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);">${complaint}</div>
+      </div>
+      <div style="text-align:right;">
+        <span style="font-size:0.6rem;padding:2px 8px;border-radius:8px;background:var(--primary-bg);color:var(--primary-dark);font-weight:600;">Selesai</span>
+        <div style="font-size:0.6rem;color:var(--text-muted);margin-top:4px;">${timeStr}</div>
+      </div>`;
+    card.onclick = () => nav('chat-room.html?consultId=' + c.id);
+    chatList.appendChild(card);
+  }
+}
+
+async function claimConsultation(consultId) {
+  try {
+    const user = VFirebase.auth.currentUser;
+    await VDB.updateConsultation(consultId, {
+      doctorId: user.uid,
+      status: 'active'
+    });
+    showToast('Konsultasi diambil!', 'success');
+    nav('chat-room.html?consultId=' + consultId);
+  } catch (e) {
+    showToast('Gagal mengambil konsultasi', 'error');
+  }
+}
+
+function formatRelativeTime(date) {
+  const now = new Date();
+  const diff = Math.floor((now - date) / 1000);
+  if (diff < 60) return 'Baru saja';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm lalu';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'j lalu';
+  return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+}
+</script>
+</body>
+</html>

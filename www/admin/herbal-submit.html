@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Tambah Data Herbal</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .form-section { background: var(--bg); box-shadow: var(--shadow-out); border-radius: 20px; padding: 24px; margin-bottom: 20px; }
+    .form-section h3 { font-size: 0.9rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .field-group { margin-bottom: 16px; }
+    .field-group label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+    .field-group input, .field-group select, .field-group textarea {
+      width: 100%; padding: 10px 14px; border-radius: 10px; border: none;
+      background: var(--bg); box-shadow: var(--shadow-in); font-family: var(--font);
+      font-size: 0.85rem; color: var(--text-primary); resize: vertical;
+    }
+    .field-group textarea { min-height: 80px; }
+    .field-hint { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+    .dynamic-list { display: flex; flex-direction: column; gap: 8px; }
+    .dynamic-row { display: flex; gap: 8px; align-items: flex-start; }
+    .dynamic-row input, .dynamic-row select { flex: 1; }
+    .btn-remove { width: 32px; height: 32px; border-radius: 8px; border: none; background: var(--danger-bg, #FFE5E5); color: var(--danger); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .btn-add-row { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 10px; border: none; background: var(--bg); box-shadow: var(--shadow-out-sm); font-size: 0.8rem; font-weight: 600; color: var(--primary-dark); cursor: pointer; margin-top: 8px; }
+    .submit-bar { position: sticky; bottom: 0; background: var(--bg); padding: 16px 0; border-top: 1px solid var(--shadow-dark); display: flex; gap: 12px; }
+    .badge-level { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
+    .badge-A { background: #E8F5E9; color: #27AE60; }
+    .badge-B { background: #FFF3E0; color: #F2994A; }
+    .badge-C { background: #F3E5F5; color: #9B51E0; }
+    @media (max-width: 640px) {
+      .form-section [style*="grid-template-columns: 1fr 1fr"],
+      .form-section [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      .dynamic-row { flex-wrap: wrap; }
+      .dynamic-row input, .dynamic-row select { min-width: 0; flex: 1 1 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item active" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar" data-animate="up">
+      <h1 style="border-left:4px solid var(--primary-dark);padding-left:12px;">Tambah Data Herbal</h1>
+      <div class="header-actions">
+        <div class="neu-avatar-sm" id="admin-avatar" style="background:linear-gradient(135deg,#27AE60,#6FCF97)">A</div>
+      </div>
+    </div>
+
+    <!-- Tab: Tanaman atau Formula -->
+    <div style="display:flex;gap:10px;margin-bottom:24px;" data-animate="up" data-delay="50">
+      <button class="neu-btn" id="tab-herb-btn" onclick="switchTab('herb')" style="flex:1;background:linear-gradient(135deg,#27AE60,#6FCF97);color:#fff;">🌿 Tambah Tanaman</button>
+      <button class="neu-btn" id="tab-formula-btn" onclick="switchTab('formula')" style="flex:1;">🧪 Tambah Formula</button>
+    </div>
+
+    <!-- FORM TANAMAN -->
+    <div id="form-herb" data-animate="up" data-delay="100">
+      <div class="form-section">
+        <h3>Identifikasi Tanaman</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="field-group">
+            <label>Nama Indonesia *</label>
+            <input type="text" id="h-name" placeholder="cth: Jahe Merah">
+          </div>
+          <div class="field-group">
+            <label>Nama Latin *</label>
+            <input type="text" id="h-latin" placeholder="cth: Zingiber officinale var. rubrum">
+          </div>
+          <div class="field-group">
+            <label>Famili</label>
+            <input type="text" id="h-family" placeholder="cth: Zingiberaceae">
+          </div>
+          <div class="field-group">
+            <label>Bagian yang Digunakan</label>
+            <input type="text" id="h-part" placeholder="cth: Rimpang">
+          </div>
+          <div class="field-group">
+            <label>Emoji</label>
+            <input type="text" id="h-emoji" placeholder="🌿" maxlength="4">
+          </div>
+          <div class="field-group">
+            <label>Status BPOM</label>
+            <select id="h-bpom">
+              <option value="">-- Pilih --</option>
+              <option value="Fitofarmaka">Fitofarmaka</option>
+              <option value="Obat Herbal Terstandar">Obat Herbal Terstandar</option>
+              <option value="Jamu">Jamu (tradisional)</option>
+              <option value="Belum terdaftar">Belum terdaftar BPOM</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Level Evidence</label>
+          <select id="h-evidence">
+            <option value="A">A — Tinggi (RCT/meta-analisis, efek terbukti kuat)</option>
+            <option value="B" selected>B — Sedang (studi klinis terbatas)</option>
+            <option value="C">C — Tradisional (penggunaan empiris, bukti terbatas)</option>
+          </select>
+          <div class="field-hint">A = bukti ilmiah kuat | B = sedang | C = tradisional/empiris</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="field-group">
+            <label>Jumlah Studi yang Mendukung</label>
+            <input type="number" id="h-studycount" placeholder="cth: 24" min="0">
+          </div>
+          <div class="field-group">
+            <label>Asal Daerah (pisahkan koma)</label>
+            <input type="text" id="h-origin" placeholder="cth: Jawa, Sumatera">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Kandungan & Manfaat</h3>
+        <div class="field-group">
+          <label>Senyawa Aktif Utama (pisahkan koma) *</label>
+          <input type="text" id="h-compounds" placeholder="cth: Gingerol, Shogaol, Paradol">
+        </div>
+        <div class="field-group">
+          <label>Manfaat Klinis</label>
+          <div class="dynamic-list" id="benefits-list">
+            <div class="dynamic-row">
+              <input type="text" placeholder="Nama manfaat (cth: Anti-inflamasi)" class="ben-name">
+              <input type="text" placeholder="Mekanisme aksi" class="ben-mech">
+              <button class="btn-remove" onclick="removeRow(this)">✕</button>
+            </div>
+          </div>
+          <button class="btn-add-row" onclick="addBenefitRow()">+ Tambah Manfaat</button>
+        </div>
+        <div class="field-group">
+          <label>Metode Penggunaan (centang yang sesuai)</label>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
+            <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:400;cursor:pointer;"><input type="checkbox" value="rebus" class="usage-check"> Rebus/Dekok</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:400;cursor:pointer;"><input type="checkbox" value="seduh" class="usage-check"> Seduh</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:400;cursor:pointer;"><input type="checkbox" value="kapsul" class="usage-check"> Kapsul</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:400;cursor:pointer;"><input type="checkbox" value="ekstrak" class="usage-check"> Ekstrak</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:400;cursor:pointer;"><input type="checkbox" value="jus" class="usage-check"> Jus/Perasan</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:400;cursor:pointer;"><input type="checkbox" value="tetes" class="usage-check"> Tetes/Tincture</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Dosis Terapeutik</h3>
+        <div class="dynamic-list" id="dosage-list">
+          <div class="dynamic-row">
+            <input type="text" placeholder="Kondisi/Indikasi" class="dos-cond" style="flex:1.2">
+            <input type="text" placeholder="Dosis" class="dos-dose">
+            <input type="text" placeholder="Durasi" class="dos-dur">
+            <button class="btn-remove" onclick="removeRow(this)">✕</button>
+          </div>
+        </div>
+        <button class="btn-add-row" onclick="addDosageRow()">+ Tambah Dosis</button>
+      </div>
+
+      <div class="form-section">
+        <h3>Keamanan & Interaksi</h3>
+        <div class="field-group">
+          <label>Kontraindikasi (satu per baris)</label>
+          <textarea id="h-contraindications" placeholder="cth: Kehamilan trimester 1&#10;Batu empedu aktif&#10;Alergi Zingiberaceae"></textarea>
+        </div>
+        <div class="field-group">
+          <label>Interaksi Obat</label>
+          <div class="dynamic-list" id="interaction-list">
+            <div class="dynamic-row">
+              <input type="text" placeholder="Nama obat" class="int-drug" style="flex:1.2">
+              <select class="int-sev" style="flex:0.7">
+                <option value="ringan">Ringan</option>
+                <option value="sedang">Sedang</option>
+                <option value="berat">Berat</option>
+              </select>
+              <input type="text" placeholder="Keterangan" class="int-desc">
+              <button class="btn-remove" onclick="removeRow(this)">✕</button>
+            </div>
+          </div>
+          <button class="btn-add-row" onclick="addInteractionRow()">+ Tambah Interaksi</button>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Referensi Ilmiah</h3>
+        <div class="dynamic-list" id="refs-list">
+          <div class="dynamic-row">
+            <input type="text" placeholder="Penulis (cth: Mashhadi NS et al.)" class="ref-author" style="flex:1.5">
+            <input type="number" placeholder="Tahun" class="ref-year" style="flex:0.5">
+            <input type="text" placeholder="Jurnal" class="ref-journal">
+            <input type="text" placeholder="PMID/DOI" class="ref-pmid" style="flex:0.7">
+            <button class="btn-remove" onclick="removeRow(this)">✕</button>
+          </div>
+        </div>
+        <button class="btn-add-row" onclick="addRefRow()">+ Tambah Referensi</button>
+      </div>
+
+      <div class="submit-bar">
+        <button class="neu-btn" onclick="submitHerbal()" style="flex:2;background:linear-gradient(135deg,#27AE60,#6FCF97);color:#fff;font-weight:700;" id="submit-herb-btn">
+          📤 Kirim untuk Diverifikasi
+        </button>
+        <button class="neu-btn" onclick="clearHerbForm()" style="flex:1;">Reset</button>
+      </div>
+    </div>
+
+    <!-- FORM FORMULA -->
+    <div id="form-formula" style="display:none" data-animate="up" data-delay="100">
+      <div class="form-section">
+        <h3>Identifikasi Formula</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="field-group">
+            <label>Nama Formula *</label>
+            <input type="text" id="f-name" placeholder="cth: Formula Cabe Puyang">
+          </div>
+          <div class="field-group">
+            <label>Kategori</label>
+            <input type="text" id="f-category" placeholder="cth: Anti-Pegal & Sirkulasi">
+          </div>
+          <div class="field-group">
+            <label>Emoji</label>
+            <input type="text" id="f-emoji" placeholder="🌿" maxlength="4">
+          </div>
+          <div class="field-group">
+            <label>Sumber Referensi</label>
+            <input type="text" id="f-source" placeholder="cth: FOHAI Kemenkes RI, 2020">
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Deskripsi Singkat</label>
+          <textarea id="f-desc" placeholder="Jelaskan manfaat utama dan latar belakang formula ini..."></textarea>
+        </div>
+        <div class="field-group">
+          <label>Indikasi (pisahkan koma)</label>
+          <input type="text" id="f-indications" placeholder="cth: rematik, pegal linu, sirkulasi">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Komposisi Bahan</h3>
+        <div class="dynamic-list" id="ingredients-list">
+          <div class="dynamic-row">
+            <input type="text" placeholder="Nama bahan (cth: Jahe Merah)" class="ing-name" style="flex:1.2">
+            <input type="text" placeholder="Dosis (cth: 15g)" class="ing-dose" style="flex:0.7">
+            <input type="text" placeholder="Nama latin" class="ing-latin">
+            <button class="btn-remove" onclick="removeRow(this)">✕</button>
+          </div>
+        </div>
+        <button class="btn-add-row" onclick="addIngredientRow()">+ Tambah Bahan</button>
+      </div>
+
+      <div class="form-section">
+        <h3>Cara Pembuatan</h3>
+        <div class="dynamic-list" id="steps-list">
+          <div class="dynamic-row">
+            <input type="text" placeholder="Langkah 1..." class="step-text">
+            <button class="btn-remove" onclick="removeRow(this)">✕</button>
+          </div>
+        </div>
+        <button class="btn-add-row" onclick="addStepRow()">+ Tambah Langkah</button>
+        <div class="field-group" style="margin-top:16px;">
+          <label>Dosis & Aturan Minum</label>
+          <input type="text" id="f-dosage" placeholder="cth: 200ml per kali, 2× sehari">
+        </div>
+        <div class="field-group">
+          <label>Durasi Penggunaan</label>
+          <input type="text" id="f-duration" placeholder="cth: 7-14 hari">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Efek Samping & Peringatan</h3>
+        <div class="field-group">
+          <label>Efek Samping (satu per baris)</label>
+          <textarea id="f-sideeffects" placeholder="cth: Rasa hangat berlebih&#10;Hindari pada ibu hamil"></textarea>
+        </div>
+      </div>
+
+      <div class="submit-bar">
+        <button class="neu-btn" onclick="submitFormula()" style="flex:2;background:linear-gradient(135deg,#27AE60,#6FCF97);color:#fff;font-weight:700;" id="submit-formula-btn">
+          📤 Kirim untuk Diverifikasi
+        </button>
+        <button class="neu-btn" onclick="clearFormulaForm()" style="flex:1;">Reset</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+let currentUser, currentProfile;
+
+(async () => {
+  const { user, profile } = await VAuth.guard('admin', 1);
+  currentUser = user;
+  currentProfile = profile;
+  if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+  const initials = (profile.name || 'A').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+  document.getElementById('admin-avatar').textContent = initials;
+})();
+
+function switchTab(tab) {
+  document.getElementById('form-herb').style.display = tab === 'herb' ? '' : 'none';
+  document.getElementById('form-formula').style.display = tab === 'formula' ? '' : 'none';
+  document.getElementById('tab-herb-btn').style.cssText = tab === 'herb'
+    ? 'flex:1;background:linear-gradient(135deg,#27AE60,#6FCF97);color:#fff;'
+    : 'flex:1;';
+  document.getElementById('tab-formula-btn').style.cssText = tab === 'formula'
+    ? 'flex:1;background:linear-gradient(135deg,#27AE60,#6FCF97);color:#fff;'
+    : 'flex:1;';
+}
+
+function removeRow(btn) { btn.closest('.dynamic-row').remove(); }
+
+function addBenefitRow() {
+  const row = document.createElement('div'); row.className = 'dynamic-row';
+  row.innerHTML = '<input type="text" placeholder="Nama manfaat" class="ben-name"><input type="text" placeholder="Mekanisme aksi" class="ben-mech"><button class="btn-remove" onclick="removeRow(this)">✕</button>';
+  document.getElementById('benefits-list').appendChild(row);
+}
+function addDosageRow() {
+  const row = document.createElement('div'); row.className = 'dynamic-row';
+  row.innerHTML = '<input type="text" placeholder="Kondisi/Indikasi" class="dos-cond" style="flex:1.2"><input type="text" placeholder="Dosis" class="dos-dose"><input type="text" placeholder="Durasi" class="dos-dur"><button class="btn-remove" onclick="removeRow(this)">✕</button>';
+  document.getElementById('dosage-list').appendChild(row);
+}
+function addInteractionRow() {
+  const row = document.createElement('div'); row.className = 'dynamic-row';
+  row.innerHTML = '<input type="text" placeholder="Nama obat" class="int-drug" style="flex:1.2"><select class="int-sev" style="flex:0.7"><option value="ringan">Ringan</option><option value="sedang">Sedang</option><option value="berat">Berat</option></select><input type="text" placeholder="Keterangan" class="int-desc"><button class="btn-remove" onclick="removeRow(this)">✕</button>';
+  document.getElementById('interaction-list').appendChild(row);
+}
+function addRefRow() {
+  const row = document.createElement('div'); row.className = 'dynamic-row';
+  row.innerHTML = '<input type="text" placeholder="Penulis" class="ref-author" style="flex:1.5"><input type="number" placeholder="Tahun" class="ref-year" style="flex:0.5"><input type="text" placeholder="Jurnal" class="ref-journal"><input type="text" placeholder="PMID/DOI" class="ref-pmid" style="flex:0.7"><button class="btn-remove" onclick="removeRow(this)">✕</button>';
+  document.getElementById('refs-list').appendChild(row);
+}
+function addIngredientRow() {
+  const row = document.createElement('div'); row.className = 'dynamic-row';
+  row.innerHTML = '<input type="text" placeholder="Nama bahan" class="ing-name" style="flex:1.2"><input type="text" placeholder="Dosis" class="ing-dose" style="flex:0.7"><input type="text" placeholder="Nama latin" class="ing-latin"><button class="btn-remove" onclick="removeRow(this)">✕</button>';
+  document.getElementById('ingredients-list').appendChild(row);
+}
+function addStepRow() {
+  const row = document.createElement('div'); row.className = 'dynamic-row';
+  row.innerHTML = '<input type="text" placeholder="Langkah..." class="step-text"><button class="btn-remove" onclick="removeRow(this)">✕</button>';
+  document.getElementById('steps-list').appendChild(row);
+}
+
+function getListValues(listId, ...selectors) {
+  return Array.from(document.getElementById(listId).querySelectorAll('.dynamic-row'))
+    .map(row => {
+      const obj = {};
+      selectors.forEach(sel => {
+        const el = row.querySelector('.' + sel);
+        obj[sel.replace(/-/g, '_')] = el ? el.value.trim() : '';
+      });
+      return obj;
+    })
+    .filter(obj => Object.values(obj).some(v => v));
+}
+
+async function submitHerbal() {
+  const name = document.getElementById('h-name').value.trim();
+  const latin = document.getElementById('h-latin').value.trim();
+  if (!name || !latin) { alert('Nama dan nama latin wajib diisi!'); return; }
+
+  const btn = document.getElementById('submit-herb-btn');
+  btn.disabled = true; btn.textContent = 'Mengirim...';
+
+  const data = {
+    type: 'herbal',
+    status: 'pending_review',
+    submittedBy: currentUser.uid,
+    submitterName: currentProfile.name,
+    submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    name,
+    latinName: latin,
+    family: document.getElementById('h-family').value.trim(),
+    partUsed: document.getElementById('h-part').value.trim(),
+    emoji: document.getElementById('h-emoji').value.trim() || '🌿',
+    bpomStatus: document.getElementById('h-bpom').value,
+    evidenceLevel: document.getElementById('h-evidence').value,
+    studyCount: parseInt(document.getElementById('h-studycount').value) || 0,
+    origin: document.getElementById('h-origin').value.split(',').map(s => s.trim()).filter(Boolean),
+    activeCompounds: document.getElementById('h-compounds').value.split(',').map(s => s.trim()).filter(Boolean),
+    usageMethods: Array.from(document.querySelectorAll('.usage-check:checked')).map(el => el.value),
+    benefits: getListValues('benefits-list', 'ben-name', 'ben-mech').map(r => ({ name: r.ben_name, mechanism: r.ben_mech })),
+    dosage: getListValues('dosage-list', 'dos-cond', 'dos-dose', 'dos-dur').map(r => ({ condition: r.dos_cond, dose: r.dos_dose, duration: r.dos_dur })),
+    contraindications: document.getElementById('h-contraindications').value.split('\n').map(s => s.trim()).filter(Boolean),
+    drugInteractions: getListValues('interaction-list', 'int-drug', 'int-sev', 'int-desc').map(r => ({ drug: r.int_drug, severity: r.int_sev, description: r.int_desc })),
+    references: getListValues('refs-list', 'ref-author', 'ref-year', 'ref-journal', 'ref-pmid').map(r => ({ author: r.ref_author, year: parseInt(r.ref_year) || 0, journal: r.ref_journal, pmid: r.ref_pmid }))
+  };
+
+  try {
+    await VFirebase.db.collection('herbalSubmissions').add(data);
+    alert('✅ Data herbal "' + name + '" berhasil dikirim!\nMenunggu verifikasi dari Super Admin.');
+    clearHerbForm();
+  } catch (e) {
+    alert('Gagal mengirim: ' + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = '📤 Kirim untuk Diverifikasi';
+  }
+}
+
+async function submitFormula() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { alert('Nama formula wajib diisi!'); return; }
+
+  const btn = document.getElementById('submit-formula-btn');
+  btn.disabled = true; btn.textContent = 'Mengirim...';
+
+  const data = {
+    type: 'formula',
+    status: 'pending_review',
+    submittedBy: currentUser.uid,
+    submitterName: currentProfile.name,
+    submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    name,
+    category: document.getElementById('f-category').value.trim(),
+    emoji: document.getElementById('f-emoji').value.trim() || '🌿',
+    source: document.getElementById('f-source').value.trim(),
+    description: document.getElementById('f-desc').value.trim(),
+    indications: document.getElementById('f-indications').value.split(',').map(s => s.trim()).filter(Boolean),
+    ingredients: getListValues('ingredients-list', 'ing-name', 'ing-dose', 'ing-latin').map(r => ({ name: r.ing_name, dose: r.ing_dose, latinName: r.ing_latin })),
+    preparationSteps: Array.from(document.querySelectorAll('#steps-list .step-text')).map(el => el.value.trim()).filter(Boolean),
+    dosageInstruction: document.getElementById('f-dosage').value.trim(),
+    duration: document.getElementById('f-duration').value.trim(),
+    sideEffects: document.getElementById('f-sideeffects').value.split('\n').map(s => s.trim()).filter(Boolean)
+  };
+
+  try {
+    await VFirebase.db.collection('herbalSubmissions').add(data);
+    alert('✅ Formula "' + name + '" berhasil dikirim!\nMenunggu verifikasi dari Super Admin.');
+    clearFormulaForm();
+  } catch (e) {
+    alert('Gagal mengirim: ' + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = '📤 Kirim untuk Diverifikasi';
+  }
+}
+
+function clearHerbForm() {
+  ['h-name','h-latin','h-family','h-part','h-emoji','h-origin','h-compounds','h-contraindications','h-studycount'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('h-evidence').value = 'B';
+  document.getElementById('h-bpom').value = '';
+  document.querySelectorAll('.usage-check').forEach(el => el.checked = false);
+  ['benefits-list','dosage-list','interaction-list','refs-list'].forEach(clearDynamicList);
+}
+function clearFormulaForm() {
+  ['f-name','f-category','f-emoji','f-source','f-desc','f-indications','f-dosage','f-duration','f-sideeffects'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  ['ingredients-list','steps-list'].forEach(clearDynamicList);
+}
+function clearDynamicList(listId) {
+  const list = document.getElementById(listId);
+  while (list.children.length > 1) list.removeChild(list.lastChild);
+}
+</script>
+</body>
+</html>

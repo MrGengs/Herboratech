@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Detail Kampanye</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .detail-layout { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 24px; align-items: start; }
+    @media (min-width: 900px) { .detail-layout { grid-template-columns: 1fr 360px; } }
+
+    /* Stats */
+    .camp-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+    @media (min-width: 768px) { .camp-stats { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
+    .camp-stat-card { background: var(--bg); border-radius: 18px; box-shadow: var(--shadow-out); padding: 22px 18px; text-align: center; }
+    .camp-stat-val { font-size: 2rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
+    .camp-stat-lbl { font-size: 0.78rem; color: var(--text-tertiary); margin-top: 6px; }
+    .camp-stat-sub { font-size: 0.72rem; margin-top: 4px; }
+
+    /* Bar chart */
+    .bar-chart-wrap { margin-top: 24px; }
+    .bar-chart { display: flex; align-items: flex-end; gap: 10px; height: 140px; padding: 0 4px; }
+    .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .bar { width: 100%; border-radius: 6px 6px 0 0; background: linear-gradient(180deg,#6FCF97,#27AE60); min-height: 4px; transition: height 0.4s ease; box-shadow: var(--shadow-out-sm); }
+    .bar-label { font-size: 0.7rem; color: var(--text-tertiary); }
+    .bar-val { font-size: 0.7rem; font-weight: 700; color: var(--primary-dark); }
+    .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+
+    /* Banner preview */
+    .banner-preview-card { border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-out); }
+    .banner-img { height: 160px; background: linear-gradient(135deg,#6C63FF 0%,#2F80ED 50%,#56CCF2 100%); display: flex; align-items: center; justify-content: center; position: relative; }
+    .banner-img-text { position: absolute; text-align: center; color: #fff; }
+    .banner-img-text h2 { font-size: 1.2rem; font-weight: 800; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .banner-img-text p { font-size: 0.8rem; opacity: 0.85; margin-top: 4px; }
+    .banner-img-badge { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.2); backdrop-filter: blur(6px); color: #fff; font-size: 0.7rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
+
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--shadow-dark); font-size: 0.85rem; }
+    .info-row:last-child { border-bottom: none; }
+    .info-row-label { color: var(--text-tertiary); }
+    .info-row-value { font-weight: 600; color: var(--text-primary); }
+
+    .action-btns { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item active" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+
+    <div class="admin-topbar" data-animate="up">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <h1>Detail Kampanye</h1>
+        <span id="camp-title-topbar" style="font-size:1rem;font-weight:600;color:var(--text-secondary);">Memuat...</span>
+        <span class="neu-chip" id="status-chip" style="background:#E8F8F0;color:#27AE60;font-size:0.78rem;font-weight:600;">
+          <ion-icon name="ellipse" style="font-size:0.6rem;vertical-align:middle;margin-right:3px;"></ion-icon><span id="status-label">Aktif</span>
+        </span>
+      </div>
+      <div class="header-actions">
+        <button class="neu-btn neu-btn-sm" onclick="nav('advertise.html')"><ion-icon name="arrow-back-outline"></ion-icon> Kembali</button>
+      </div>
+    </div>
+
+    <!-- Stats Row (full width) -->
+    <div class="camp-stats" data-animate="up" data-delay="100">
+      <div class="camp-stat-card">
+        <div class="camp-stat-val" id="impressions-val">0</div>
+        <div class="camp-stat-lbl">Impressions</div>
+        <div class="camp-stat-sub" style="color:var(--primary-dark);">↑ 8.3% vs minggu lalu</div>
+      </div>
+      <div class="camp-stat-card">
+        <div class="camp-stat-val" id="clicks-val">0</div>
+        <div class="camp-stat-lbl">Clicks</div>
+        <div class="camp-stat-sub" style="color:var(--primary-dark);">↑ 12.1% vs minggu lalu</div>
+      </div>
+      <div class="camp-stat-card">
+        <div class="camp-stat-val" style="color:var(--info);">4.08%</div>
+        <div class="camp-stat-lbl">CTR</div>
+        <div class="camp-stat-sub" style="color:var(--info);">Rata-rata industri 2.1%</div>
+      </div>
+      <div class="camp-stat-card">
+        <div class="camp-stat-val" id="conv-val">0</div>
+        <div class="camp-stat-lbl">Konversi</div>
+        <div class="camp-stat-sub" style="color:var(--primary-dark);">CVR 6.9%</div>
+      </div>
+    </div>
+
+    <div class="detail-layout">
+
+      <!-- Left: Chart -->
+      <div data-animate="up" data-delay="200">
+
+        <!-- Performance Chart -->
+        <div class="neu-card" style="padding:24px;">
+          <div class="chart-header">
+            <div>
+              <div style="font-weight:700;font-size:0.95rem;">Performa 7 Hari Terakhir</div>
+              <div style="font-size:0.78rem;color:var(--text-tertiary);margin-top:2px;">Klik harian kampanye</div>
+            </div>
+            <span class="neu-chip" style="font-size:0.72rem;background:rgba(111,207,151,0.1);color:var(--primary-dark);">14 – 20 Mar 2026</span>
+          </div>
+
+          <div class="bar-chart" id="bar-chart">
+            <!-- generated by JS -->
+          </div>
+          <div style="display:flex;gap:10px;margin-top:4px;" id="bar-labels">
+            <!-- generated by JS -->
+          </div>
+        </div>
+
+        <!-- Performance Table -->
+        <div class="neu-table-wrap" style="margin-top:24px;">
+          <div style="padding:20px 20px 12px;font-weight:700;">Log Harian</div>
+          <table class="neu-table">
+            <thead>
+              <tr><th>Tanggal</th><th>Impressions</th><th>Clicks</th><th>CTR</th><th>Konversi</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>20 Mar</td><td>6,892</td><td>298</td><td><span style="color:var(--primary-dark);font-weight:600;">4.32%</span></td><td>21</td></tr>
+              <tr><td>19 Mar</td><td>7,120</td><td>301</td><td><span style="color:var(--primary-dark);font-weight:600;">4.23%</span></td><td>19</td></tr>
+              <tr><td>18 Mar</td><td>6,504</td><td>258</td><td><span style="color:var(--warning);font-weight:600;">3.97%</span></td><td>16</td></tr>
+              <tr><td>17 Mar</td><td>5,988</td><td>237</td><td><span style="color:var(--warning);font-weight:600;">3.96%</span></td><td>18</td></tr>
+              <tr><td>16 Mar</td><td>6,320</td><td>263</td><td><span style="color:var(--primary-dark);font-weight:600;">4.16%</span></td><td>20</td></tr>
+              <tr><td>15 Mar</td><td>6,211</td><td>248</td><td><span style="color:var(--primary-dark);font-weight:600;">3.99%</span></td><td>17</td></tr>
+              <tr><td>14 Mar</td><td>6,165</td><td>242</td><td><span style="color:var(--primary-dark);font-weight:600;">3.93%</span></td><td>17</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-btns" data-animate="up" data-delay="300">
+          <button class="neu-btn" style="color:var(--warning);border:1px solid var(--warning);" onclick="showToast('Kampanye dijeda sementara.','warning')">
+            <ion-icon name="pause-circle-outline"></ion-icon> Pause
+          </button>
+          <button class="neu-btn" onclick="nav('create-campaign.html')">
+            <ion-icon name="create-outline"></ion-icon> Edit
+          </button>
+          <button class="neu-btn-danger neu-btn-sm" id="btn-close-campaign" onclick="closeCampaign()">
+            <ion-icon name="close-circle-outline"></ion-icon> Tutup Kampanye
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Info -->
+      <div data-animate="up" data-delay="250">
+
+        <!-- Banner Preview -->
+        <div class="banner-preview-card" style="margin-bottom:24px;">
+          <div class="banner-img">
+            <ion-icon name="heart-outline" style="font-size:4rem;color:rgba(255,255,255,0.15);"></ion-icon>
+            <div class="banner-img-text">
+              <h2 id="banner-title">-</h2>
+              <p id="banner-desc">-</p>
+            </div>
+            <div class="banner-img-badge" id="banner-badge">Banner Aktif</div>
+          </div>
+        </div>
+
+        <!-- Campaign Info -->
+        <div class="neu-card" style="padding:20px;">
+          <div style="font-weight:700;margin-bottom:12px;font-size:0.9rem;">Info Kampanye</div>
+          <div class="info-row">
+            <span class="info-row-label">Judul</span>
+            <span class="info-row-value" id="info-title">-</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Tanggal Mulai</span>
+            <span class="info-row-value" id="info-start">-</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Tanggal Selesai</span>
+            <span class="info-row-value" id="info-end">-</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Budget / Target</span>
+            <span class="info-row-value" id="info-target" style="color:var(--primary-dark);">-</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Status</span>
+            <span class="info-row-value" id="info-status">-</span>
+          </div>
+          <div class="info-row" style="border-bottom:none;">
+            <span class="info-row-label">Dibuat</span>
+            <span class="info-row-value" id="info-created">-</span>
+          </div>
+
+          <!-- Budget Progress -->
+          <div style="margin-top:16px;">
+            <div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:6px;">
+              <span style="color:var(--text-tertiary);">Penggunaan Budget</span>
+              <span style="font-weight:700;color:var(--primary-dark);">62.6%</span>
+            </div>
+            <div class="neu-progress">
+              <div class="neu-progress-fill" style="width:62.6%;background:linear-gradient(90deg,#27AE60,#6FCF97)"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-top:4px;">
+              <span>Rp 7,82 jt terpakai</span>
+              <span>Rp 4,68 jt tersisa</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+const id = new URLSearchParams(location.search).get('id');
+
+function formatDate(val) {
+  if (!val) return '-';
+  // Firestore Timestamp
+  if (val && val.toDate) {
+    return val.toDate().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  // String date like "2026-04-01"
+  if (typeof val === 'string') {
+    const d = new Date(val);
+    if (!isNaN(d)) return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  return String(val);
+}
+
+function formatCurrency(val) {
+  if (!val) return '-';
+  return 'Rp ' + Number(val).toLocaleString('id-ID');
+}
+
+(async () => {
+  try {
+    const { profile } = await VAuth.guard('admin', 1);
+    if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+
+    if (!id) {
+      showToast('ID kampanye tidak ditemukan di URL.', 'error');
+      return;
+    }
+
+    const snap = await VFirebase.db.collection('campaigns').doc(id).get();
+    if (!snap.exists) {
+      showToast('Kampanye tidak ditemukan.', 'error');
+      return;
+    }
+
+    const camp = snap.data();
+
+    // Topbar
+    document.getElementById('camp-title-topbar').textContent = camp.title || 'Tanpa Judul';
+
+    // Status chip
+    const statusLabel = document.getElementById('status-label');
+    const statusChip = document.getElementById('status-chip');
+    const statusMap = {
+      active: { label: 'Aktif', bg: '#E8F8F0', color: '#27AE60' },
+      closed: { label: 'Ditutup', bg: 'var(--warning-bg)', color: 'var(--warning)' },
+      draft:  { label: 'Draft',  bg: 'var(--info-bg)',    color: 'var(--info)' }
+    };
+    const s = statusMap[camp.status] || statusMap['active'];
+    statusLabel.textContent = s.label;
+    statusChip.style.background = s.bg;
+    statusChip.style.color = s.color;
+
+    // Banner preview
+    document.getElementById('banner-title').textContent = camp.title || '-';
+    document.getElementById('banner-desc').textContent = camp.description || 'Kampanye HerboraTech';
+    document.getElementById('banner-badge').textContent = s.label;
+
+    // Info rows
+    document.getElementById('info-title').textContent = camp.title || '-';
+    document.getElementById('info-start').textContent = formatDate(camp.startDate);
+    document.getElementById('info-end').textContent = formatDate(camp.endDate);
+    document.getElementById('info-target').textContent = formatCurrency(camp.target);
+    document.getElementById('info-status').textContent = s.label;
+    document.getElementById('info-created').textContent = formatDate(camp.createdAt);
+
+    // Count-up stats
+    const el1 = document.getElementById('impressions-val');
+    const el2 = document.getElementById('clicks-val');
+    const el3 = document.getElementById('conv-val');
+    if (typeof animateNumber === 'function') {
+      animateNumber(el1, 45200, 1500);
+      animateNumber(el2, 1847, 1500);
+      animateNumber(el3, 128, 1200);
+    } else {
+      el1.textContent = '45.2K';
+      el2.textContent = '1,847';
+      el3.textContent = '128';
+    }
+
+    // Bar chart
+    const data = [242, 248, 263, 237, 258, 301, 298];
+    const labels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+    const maxVal = Math.max(...data);
+    const chartEl = document.getElementById('bar-chart');
+    const labelsEl = document.getElementById('bar-labels');
+
+    chartEl.style.display = 'flex';
+    chartEl.style.alignItems = 'flex-end';
+    chartEl.style.gap = '10px';
+    chartEl.style.height = '140px';
+
+    data.forEach((val, i) => {
+      const heightPct = (val / maxVal) * 100;
+      const col = document.createElement('div');
+      col.style.flex = '1';
+      col.style.display = 'flex';
+      col.style.flexDirection = 'column';
+      col.style.alignItems = 'center';
+      col.style.gap = '4px';
+
+      const valLabel = document.createElement('div');
+      valLabel.style.fontSize = '0.68rem';
+      valLabel.style.fontWeight = '700';
+      valLabel.style.color = '#27AE60';
+      valLabel.textContent = val;
+
+      const bar = document.createElement('div');
+      bar.style.width = '100%';
+      bar.style.height = heightPct + '%';
+      bar.style.borderRadius = '6px 6px 0 0';
+      bar.style.background = i === 5 || i === 6 ? 'linear-gradient(180deg,#6FCF97,#27AE60)' : 'linear-gradient(180deg,#c8d0e7,#b0b9cc)';
+      bar.style.minHeight = '4px';
+      bar.style.transition = 'height 0.5s ease';
+
+      col.appendChild(valLabel);
+      col.appendChild(bar);
+      chartEl.appendChild(col);
+
+      const lbl = document.createElement('div');
+      lbl.style.flex = '1';
+      lbl.style.textAlign = 'center';
+      lbl.style.fontSize = '0.7rem';
+      lbl.style.color = '#8896A6';
+      lbl.textContent = labels[i];
+      labelsEl.appendChild(lbl);
+    });
+
+  } catch (err) {
+    console.error(err);
+    showToast('Gagal memuat data kampanye: ' + (err.message || err), 'error');
+  }
+})();
+
+async function closeCampaign() {
+  if (!id) return;
+  const btn = document.getElementById('btn-close-campaign');
+  btn.disabled = true;
+  try {
+    await VFirebase.db.collection('campaigns').doc(id).update({ status: 'closed' });
+    showToast('Kampanye berhasil ditutup.', 'warning');
+
+    // Update UI
+    document.getElementById('status-label').textContent = 'Ditutup';
+    document.getElementById('status-chip').style.background = 'var(--warning-bg)';
+    document.getElementById('status-chip').style.color = 'var(--warning)';
+    document.getElementById('info-status').textContent = 'Ditutup';
+    document.getElementById('banner-badge').textContent = 'Ditutup';
+  } catch (err) {
+    btn.disabled = false;
+    showToast('Gagal menutup kampanye: ' + (err.message || err), 'error');
+  }
+}
+</script>
+</body>
+</html>

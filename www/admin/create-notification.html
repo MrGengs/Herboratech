@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerboraTech — Admin Buat Notifikasi</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #040E07 0%, #0D2B1A 100%); border-right: 1px solid rgba(111,207,151,0.1); }
+    .sidebar-logo { color: #fff !important; }
+    .sidebar-logo span { color: #6FCF97 !important; }
+    .sidebar-item { color: rgba(255,255,255,0.6); }
+    .sidebar-item:hover { color: #6FCF97; background: rgba(111,207,151,0.08); }
+    .sidebar-item.active { color: #6FCF97 !important; background: rgba(111,207,151,0.15); border-left: 3px solid #6FCF97; }
+    .admin-topbar h1 { border-left: 4px solid var(--primary-dark); padding-left: 12px; }
+
+    .form-layout { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 24px; align-items: start; }
+    @media (min-width: 900px) { .form-layout { grid-template-columns: 1fr 380px; } }
+    .form-group { margin-bottom: 20px; }
+    .form-label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 8px; }
+    .form-textarea { width: 100%; border-radius: 12px; border: none; box-shadow: var(--shadow-in); background: var(--bg); padding: 12px 16px; font-family: 'Poppins', sans-serif; font-size: 0.88rem; color: var(--text-primary); resize: vertical; min-height: 100px; outline: none; box-sizing: border-box; }
+
+    .drop-zone { border: 2px dashed rgba(111,207,151,0.4); border-radius: 14px; padding: 32px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--bg); }
+    .drop-zone:hover { border-color: var(--primary-dark); background: rgba(111,207,151,0.04); }
+    .drop-zone ion-icon { font-size: 2.5rem; color: var(--primary-dark); }
+    .drop-zone p { font-size: 0.85rem; color: var(--text-tertiary); margin-top: 8px; }
+
+    .audience-cards { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 480px) { .audience-cards { grid-template-columns: repeat(2, 1fr); } }
+    .audience-card { border-radius: 12px; box-shadow: var(--shadow-out-sm); padding: 14px; cursor: pointer; transition: all 0.2s; position: relative; }
+    .audience-card input[type="radio"] { position: absolute; opacity: 0; }
+    .audience-card.selected { box-shadow: 0 0 0 2px var(--primary-dark), var(--shadow-out-sm); background: rgba(111,207,151,0.06); }
+    .audience-card-icon { font-size: 1.4rem; color: var(--primary-dark); margin-bottom: 6px; }
+    .audience-card-label { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+    .audience-card-sub { font-size: 0.72rem; color: var(--text-tertiary); }
+
+    .segmentation-panel { display: none; margin-top: 16px; padding: 16px; border-radius: 12px; box-shadow: var(--shadow-in); background: var(--bg); }
+    .segmentation-panel.visible { display: block; }
+    .check-group { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px; }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 0.83rem; color: var(--text-secondary); cursor: pointer; }
+    .check-item input { accent-color: var(--primary-dark); width: 16px; height: 16px; }
+
+    .preview-card { border-radius: 16px; box-shadow: var(--shadow-out); overflow: hidden; }
+    .preview-banner { height: 100px; background: linear-gradient(135deg,#6FCF97,#27AE60); display: flex; align-items: center; justify-content: center; }
+    .preview-banner ion-icon { font-size: 2.5rem; color: rgba(255,255,255,0.5); }
+    .preview-body { padding: 16px; }
+    .preview-app-name { font-size: 0.7rem; color: var(--text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .preview-title { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .preview-message { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; }
+    .preview-time { font-size: 0.72rem; color: var(--text-muted); margin-top: 10px; text-align: right; }
+
+    .range-group { margin-top: 8px; }
+    .range-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-tertiary); margin-top: 4px; }
+    input[type="range"] { width: 100%; accent-color: var(--primary-dark); }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">Herbora<span>Tech</span></div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item" href="home.html"><ion-icon name="grid-outline"></ion-icon>Dashboard</a>
+      <a class="sidebar-item" href="users.html"><ion-icon name="people-outline"></ion-icon>Users</a>
+      <a class="sidebar-item" href="doctor-verification.html"><ion-icon name="checkmark-circle-outline"></ion-icon>Verifikasi Role</a>
+      <a class="sidebar-item active" href="notifications.html"><ion-icon name="notifications-outline"></ion-icon>Notifikasi</a>
+      <a class="sidebar-item" href="consultations.html"><ion-icon name="chatbubbles-outline"></ion-icon>Konsultasi</a>
+      <a class="sidebar-item" href="news.html"><ion-icon name="newspaper-outline"></ion-icon>News</a>
+      <a class="sidebar-item" href="advertise.html"><ion-icon name="megaphone-outline"></ion-icon>Iklan</a>
+      <a class="sidebar-item" href="herbal-submit.html"><ion-icon name="leaf-outline"></ion-icon>Tambah Herbal</a>
+      <a class="sidebar-item" id="nav-verify-herbal" href="herbal-verify.html"><ion-icon name="shield-checkmark-outline"></ion-icon>Verifikasi Herbal</a>
+      <a class="sidebar-item" href="herbals.html"><ion-icon name="leaf-outline"></ion-icon>Kelola Herbal</a>
+      <a class="sidebar-item" href="formulas.html"><ion-icon name="flask-outline"></ion-icon>Kelola Formula</a>
+      <a class="sidebar-item" href="reports.html"><ion-icon name="bar-chart-outline"></ion-icon>Laporan & Ekspor</a>
+      <a class="sidebar-item" href="ml-models.html"><ion-icon name="analytics-outline"></ion-icon>Model Risiko</a>
+      <a class="sidebar-item" href="settings.html"><ion-icon name="settings-outline"></ion-icon>Pengaturan</a>
+    </nav>
+    <a class="sidebar-item" href="../index.html" style="margin-top:auto;"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+  </aside>
+  <main class="admin-main">
+
+    <div class="admin-topbar" data-animate="up">
+      <h1>Buat Notifikasi</h1>
+      <div class="header-actions">
+        <button class="neu-btn neu-btn-sm" onclick="nav('notifications.html')"><ion-icon name="arrow-back-outline"></ion-icon> Kembali</button>
+      </div>
+    </div>
+
+    <div class="form-layout">
+      <!-- Left: Form -->
+      <div data-animate="up" data-delay="100">
+        <div class="neu-card" style="padding:28px;">
+
+          <div class="form-group">
+            <label class="form-label">Judul Notifikasi</label>
+            <input class="neu-input" type="text" id="notif-title" placeholder="Masukkan judul notifikasi..." oninput="updatePreview()" value="">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Isi Pesan</label>
+            <textarea class="form-textarea" id="notif-body" placeholder="Tulis isi pesan notifikasi..." oninput="updatePreview()"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Upload Gambar (Opsional)</label>
+            <div class="drop-zone" onclick="showToast('Pilih gambar dari perangkat Anda.','info')">
+              <ion-icon name="image-outline"></ion-icon>
+              <p>Drag &amp; drop gambar di sini, atau <strong style="color:var(--primary-dark);">klik untuk pilih</strong></p>
+              <p style="font-size:0.75rem;margin-top:4px;">PNG, JPG maks. 2MB</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Deep Link URL</label>
+            <input class="neu-input" type="text" id="notif-deeplink" placeholder="herboratech://fitur/detail/123">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Target Audiens</label>
+            <div class="audience-cards">
+              <label class="audience-card selected" id="aud-semua" onclick="selectAudience('semua')">
+                <input type="radio" name="audience" value="semua" checked>
+                <div class="audience-card-icon"><ion-icon name="earth-outline"></ion-icon></div>
+                <div class="audience-card-label">Semua</div>
+                <div class="audience-card-sub">Semua pengguna</div>
+              </label>
+              <label class="audience-card" id="aud-patient" onclick="selectAudience('patient')">
+                <input type="radio" name="audience" value="patient">
+                <div class="audience-card-icon"><ion-icon name="person-outline"></ion-icon></div>
+                <div class="audience-card-label">Pasien</div>
+                <div class="audience-card-sub">Pengguna role patient</div>
+              </label>
+              <label class="audience-card" id="aud-doctor" onclick="selectAudience('doctor')">
+                <input type="radio" name="audience" value="doctor">
+                <div class="audience-card-icon"><ion-icon name="medkit-outline"></ion-icon></div>
+                <div class="audience-card-label">Dokter</div>
+                <div class="audience-card-sub">Pengguna role doctor</div>
+              </label>
+              <label class="audience-card" id="aud-custom" onclick="selectAudience('custom')">
+                <input type="radio" name="audience" value="custom">
+                <div class="audience-card-icon"><ion-icon name="options-outline"></ion-icon></div>
+                <div class="audience-card-label">Custom</div>
+                <div class="audience-card-sub">Segmentasi manual</div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Custom Segmentation Panel -->
+          <div class="segmentation-panel" id="segmentation-panel">
+            <div class="form-label" style="margin-bottom:10px;">Segmentasi Wilayah</div>
+            <div class="check-group">
+              <label class="check-item"><input type="checkbox" checked> Jakarta</label>
+              <label class="check-item"><input type="checkbox"> Surabaya</label>
+              <label class="check-item"><input type="checkbox"> Bandung</label>
+              <label class="check-item"><input type="checkbox"> Medan</label>
+              <label class="check-item"><input type="checkbox"> Makassar</label>
+              <label class="check-item"><input type="checkbox"> Yogyakarta</label>
+            </div>
+            <div class="form-label" style="margin-top:16px;margin-bottom:6px;">Rentang Usia</div>
+            <div class="range-group">
+              <input type="range" min="18" max="70" value="35">
+              <div class="range-labels"><span>18 tahun</span><span>35 tahun</span><span>70 tahun</span></div>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:20px;">
+            <label class="form-label">Waktu Pengiriman Terjadwal</label>
+            <input class="neu-input" type="datetime-local" id="notif-scheduled" value="2026-03-22T09:00">
+          </div>
+
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:16px;">
+          <button class="neu-btn-primary" id="btn-send" onclick="sendNow()">
+            <ion-icon name="send-outline"></ion-icon> Kirim Sekarang
+          </button>
+          <button class="neu-btn" id="btn-schedule" onclick="scheduleNotif()">
+            <ion-icon name="calendar-outline"></ion-icon> Jadwalkan
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Preview -->
+      <div data-animate="up" data-delay="200">
+        <div class="neu-card" style="padding:20px;">
+          <div style="font-weight:700;margin-bottom:16px;font-size:0.9rem;">Preview Notifikasi</div>
+          <div style="background:#1C1C1E;border-radius:16px;padding:16px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#6FCF97,#27AE60);display:flex;align-items:center;justify-content:center;">
+                <ion-icon name="heart-outline" style="color:#fff;font-size:1rem;"></ion-icon>
+              </div>
+              <span style="color:rgba(255,255,255,0.6);font-size:0.72rem;font-weight:600;">HERBORATECH</span>
+              <span style="color:rgba(255,255,255,0.35);font-size:0.7rem;margin-left:auto;">sekarang</span>
+            </div>
+            <div id="preview-title-display" style="color:#fff;font-weight:700;font-size:0.9rem;margin-bottom:4px;">Judul Notifikasi</div>
+            <div id="preview-body-display" style="color:rgba(255,255,255,0.65);font-size:0.78rem;line-height:1.5;">Isi pesan notifikasi akan tampil di sini...</div>
+          </div>
+          <div style="margin-top:16px;padding:12px;background:rgba(111,207,151,0.06);border-radius:10px;font-size:0.78rem;color:var(--text-tertiary);">
+            <ion-icon name="information-circle-outline" style="color:var(--info);vertical-align:middle;margin-right:4px;"></ion-icon>
+            Preview diperbarui secara real-time
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script>
+let _currentUser = null;
+let _selectedAudience = 'semua';
+
+function updatePreview() {
+  const title = document.getElementById('notif-title').value || 'Judul Notifikasi';
+  const body  = document.getElementById('notif-body').value  || 'Isi pesan notifikasi akan tampil di sini...';
+  document.getElementById('preview-title-display').textContent = title;
+  document.getElementById('preview-body-display').textContent  = body;
+}
+
+function selectAudience(type) {
+  ['semua','patient','doctor','custom'].forEach(t => {
+    document.getElementById('aud-' + t).classList.remove('selected');
+  });
+  document.getElementById('aud-' + type).classList.add('selected');
+  _selectedAudience = type;
+  const panel = document.getElementById('segmentation-panel');
+  panel.classList.toggle('visible', type === 'custom');
+}
+
+function getFormData() {
+  return {
+    title:     document.getElementById('notif-title').value.trim(),
+    body:      document.getElementById('notif-body').value.trim(),
+    deepLink:  document.getElementById('notif-deeplink').value.trim(),
+    target:    _selectedAudience,
+    scheduled: document.getElementById('notif-scheduled').value,
+  };
+}
+
+async function sendNow() {
+  const { title, body, deepLink, target } = getFormData();
+  if (!title || !body) { showToast('Judul dan isi pesan wajib diisi.', 'warning'); return; }
+
+  const btn = document.getElementById('btn-send');
+  btn.disabled = true;
+  btn.textContent = 'Mengirim...';
+
+  try {
+    // Determine role filter for sendNotificationToAll
+    const roleMap = { semua: null, patient: 'patient', doctor: 'doctor', custom: null };
+    const roleFilter = roleMap[target] ?? null;
+
+    // Send to all matched users
+    await VDB.sendNotificationToAll(
+      { title, body, type: 'info', data: { link: deepLink || '' } },
+      roleFilter
+    );
+
+    // Save broadcast record
+    await VFirebase.db.collection('broadcastNotifications').add({
+      title, body, target,
+      sentBy:    _currentUser.uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    showToast('Notifikasi berhasil dikirim!', 'success');
+
+    // Reset form
+    document.getElementById('notif-title').value   = '';
+    document.getElementById('notif-body').value    = '';
+    document.getElementById('notif-deeplink').value = '';
+    updatePreview();
+
+    setTimeout(() => nav('notifications.html'), 1500);
+  } catch (e) {
+    showToast('Gagal mengirim: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<ion-icon name="send-outline"></ion-icon> Kirim Sekarang';
+  }
+}
+
+async function scheduleNotif() {
+  const { title, body, deepLink, target, scheduled } = getFormData();
+  if (!title || !body)      { showToast('Judul dan isi pesan wajib diisi.', 'warning');   return; }
+  if (!scheduled)           { showToast('Pilih waktu pengiriman terjadwal.', 'warning'); return; }
+
+  const btn = document.getElementById('btn-schedule');
+  btn.disabled = true;
+  btn.textContent = 'Menyimpan...';
+
+  try {
+    await VFirebase.db.collection('scheduledNotifications').add({
+      title, body, target,
+      deepLink:    deepLink || '',
+      scheduledAt: new Date(scheduled),
+      createdAt:   firebase.firestore.FieldValue.serverTimestamp(),
+      sentBy:      _currentUser.uid,
+      status:      'scheduled'
+    });
+
+    const dt = new Date(scheduled).toLocaleString('id-ID', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    showToast('Notifikasi dijadwalkan untuk ' + dt + '.', 'info');
+
+    setTimeout(() => nav('notifications.html'), 1500);
+  } catch (e) {
+    showToast('Gagal menjadwalkan: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<ion-icon name="calendar-outline"></ion-icon> Jadwalkan';
+  }
+}
+
+(async () => {
+  const { user, profile } = await VAuth.guard('admin', 1);
+  if (profile.role === 'super_admin') { const el = document.getElementById('nav-verify-herbal'); if (el) el.style.display = ''; }
+  _currentUser = user;
+})();
+</script>
+</body>
+</html>

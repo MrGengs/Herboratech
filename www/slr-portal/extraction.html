@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Extraction — HerboraTech SLR</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header {
+      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .app-header .neu-icon-btn {
+      background: rgba(255,255,255,0.12);
+      box-shadow: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .app-header .neu-icon-btn:active {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .app-header .title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .header-spacer {
+      width: 42px;
+    }
+
+    .section-header .section-title {
+      border-left: 4px solid #27AE60;
+      padding-left: 10px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      border-top: 3px solid #27AE60;
+    }
+
+    .stat-number {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #27AE60;
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 0;
+      margin-bottom: 16px;
+      scroll-behavior: smooth;
+    }
+
+    .filter-chips::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .filter-chips::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+    }
+
+    .filter-chips::-webkit-scrollbar-thumb {
+      background: #27AE60;
+      border-radius: 10px;
+    }
+
+    .filter-chip {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border: 2px solid transparent;
+      border-radius: 16px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+
+    .filter-chip:hover {
+      border-color: #27AE60;
+    }
+
+    .filter-chip.active {
+      background: #27AE60;
+      color: #fff;
+      box-shadow: var(--shadow-out);
+    }
+
+    .disease-section {
+      margin-bottom: 24px;
+    }
+
+    .disease-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .disease-icon {
+      font-size: 1.3rem;
+    }
+
+    .paper-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .paper-card {
+      background: var(--bg);
+      box-shadow: var(--shadow-out-sm);
+      border-radius: 12px;
+      padding: 12px;
+      border-left: 4px solid #27AE60;
+      transition: all 0.3s;
+    }
+
+    .paper-card:active {
+      box-shadow: var(--shadow-in-sm);
+    }
+
+    .paper-id {
+      display: inline-block;
+      background: rgba(39, 174, 96, 0.12);
+      color: #27AE60;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .paper-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .paper-meta {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .meta-item {
+      margin-bottom: 4px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .meta-label {
+      font-weight: 700;
+      color: #27AE60;
+      min-width: 60px;
+    }
+
+    .meta-value {
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .key-findings {
+      background: rgba(39, 174, 96, 0.08);
+      border-radius: 8px;
+      padding: 8px;
+      margin-top: 8px;
+      font-size: 0.7rem;
+      line-height: 1.4;
+      color: var(--text-secondary);
+    }
+
+    .key-findings strong {
+      color: var(--text-primary);
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(39, 174, 96, 0.15);
+      color: #27AE60;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .section {
+      padding: 16px 20px;
+    }
+
+    .summary-text {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin: 12px 0 0;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      line-height: 1.5;
+    }
+
+    .neu-card {
+      background: var(--bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow-out-sm);
+      padding: 12px;
+    }
+
+    .page-enter {
+      animation: pageEnter 0.5s ease-out;
+    }
+
+    @keyframes pageEnter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="nav('index.html')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="title">Data Extraction</div>
+    <div class="header-spacer"></div>
+  </header>
+
+  <!-- SUMMARY STATS -->
+  <div class="section" data-animate="up" data-delay="0">
+    <div class="section-header"><span class="section-title">Summary</span></div>
+    <div class="neu-card" style="border-left:4px solid #27AE60;">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">15</div>
+          <div class="stat-label">Papers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">30+</div>
+          <div class="stat-label">Data Elements</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label">Diseases</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label">Grades A-B</div>
+        </div>
+      </div>
+      <p class="summary-text">
+        Structured extraction from 15 landmark peer-reviewed studies across 5 prioritized diseases. Each paper analyzed for biomarkers, diagnostic cutoffs, risk algorithms, and clinical applicability.
+      </p>
+    </div>
+  </div>
+
+  <!-- FILTER -->
+  <div class="section" data-animate="up" data-delay="100">
+    <div class="filter-chips">
+      <button class="filter-chip active" onclick="filterDisease(event, 'all')">All (15)</button>
+      <button class="filter-chip" onclick="filterDisease(event, 'dyslipidemia')">Dyslipidemia (3)</button>
+      <button class="filter-chip" onclick="filterDisease(event, 'hypertension')">Hypertension (3)</button>
+      <button class="filter-chip" onclick="filterDisease(event, 'nafld')">NAFLD (3)</button>
+      <button class="filter-chip" onclick="filterDisease(event, 'metabolic')">MetS (3)</button>
+      <button class="filter-chip" onclick="filterDisease(event, 'diabetes')">Diabetes (3)</button>
+    </div>
+  </div>
+
+  <!-- DYSLIPIDEMIA -->
+  <div class="disease-section" id="section-dyslipidemia" data-animate="up" data-delay="200">
+    <div class="section">
+      <div class="disease-title">
+        <span class="disease-icon">💛</span> Dyslipidemia
+      </div>
+      <div class="paper-cards">
+        <div class="paper-card">
+          <div class="paper-id">DYS-001</div>
+          <div class="paper-title">Familial Hypercholesterolemia is Underdiagnosed and Undertreated</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">Nordestgaard BG, et al.</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2016</span></div>
+            <div class="meta-item"><span class="meta-label">Journal:</span> <span class="meta-value">Eur Heart J</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">Systematic Review</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> FH prevalence 1:500. LDL >3.0 mmol/L elevated. Dutch Lipid Clinic Network Score for diagnosis.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">Risk Score</span>
+            <span class="badge">Genetic</span>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="paper-id">DYS-002</div>
+          <div class="paper-title">INTERHEART: Case-Control Study of MI Risk Factors</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">Yusuf S, et al.</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2004</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">Case-Control, 27,098</span></div>
+            <div class="meta-item"><span class="meta-label">Countries:</span> <span class="meta-value">52 countries</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> 9 risk factors account for 90% MI risk. ApoB/A1 ratio primary. INTERHEART AUROC = 0.87.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">Algorithm</span>
+            <span class="badge">CV Risk</span>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="paper-id">DYS-003</div>
+          <div class="paper-title">Heart Disease & Stroke Statistics 2015</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">Mozaffarian D, Benjamin EJ</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2015</span></div>
+            <div class="meta-item"><span class="meta-label">Journal:</span> <span class="meta-value">Circulation</span></div>
+            <div class="meta-item"><span class="meta-label">Studies:</span> <span class="meta-value">1,000+</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> Dyslipidemia affects 39% of adults. LDL optimal <100, high ≥160 mg/dL. Framingham Risk Score embedded.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">Epidemiology</span>
+            <span class="badge">Modifiable</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HYPERTENSION -->
+  <div class="disease-section hidden" id="section-hypertension" data-animate="up" data-delay="200">
+    <div class="section">
+      <div class="disease-title">
+        <span class="disease-icon">❤️‍🩹</span> Hypertension
+      </div>
+      <div class="paper-cards">
+        <div class="paper-card">
+          <div class="paper-id">HTN-001</div>
+          <div class="paper-title">2017 ACC/AHA High Blood Pressure Guidelines</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">Whelton PK, Carey RM</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2017</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">Clinical Guideline</span></div>
+            <div class="meta-item"><span class="meta-label">Studies:</span> <span class="meta-value">600+</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> HTN: SBP ≥130 or DBP ≥80. Intensive control (SBP <120) reduces CVD 27%. Affects 1.13B globally.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">Diagnostic</span>
+            <span class="badge">Treatment</span>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="paper-id">HTN-002</div>
+          <div class="paper-title">Framingham Heart Study: Hypertension Outcomes</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">Kannel WB, et al.</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2002-2020</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">Prospective Cohort, 44y</span></div>
+            <div class="meta-item"><span class="meta-label">Population:</span> <span class="meta-value">~8,000 subjects</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> BP-CVD dose-dependent. Framingham Risk Score: 10-year CVD calculator. Stage 1 HTN shows ASCVD ≥10%.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">Landmark</span>
+            <span class="badge">Calculator</span>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="paper-id">HTN-003</div>
+          <div class="paper-title">SPRINT Trial: Intensive BP Control in High-Risk</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">SPRINT Research Group</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2015</span></div>
+            <div class="meta-item"><span class="meta-label">Journal:</span> <span class="meta-value">NEJM</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">RCT, 9,361</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> Intensive SBP <120 vs <140 reduces CVD 27%. Supports 2017 ACC/AHA threshold redefinition.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">RCT</span>
+            <span class="badge">Treatment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAFLD -->
+  <div class="disease-section hidden" id="section-nafld" data-animate="up" data-delay="200">
+    <div class="section">
+      <div class="disease-title">
+        <span class="disease-icon">🏥</span> NAFLD
+      </div>
+      <div class="paper-cards">
+        <div class="paper-card">
+          <div class="paper-id">NAFLD-001</div>
+          <div class="paper-title">NAFLD Clinical Guideline: Screening and Management</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">EASL Guideline Committee</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2016</span></div>
+            <div class="meta-item"><span class="meta-label">Journal:</span> <span class="meta-value">J Hepatology</span></div>
+            <div class="meta-item"><span class="meta-label">Focus:</span> <span class="meta-value">Non-invasive fibrosis</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> FIB-4 = (Age × AST) / (Platelet × √ALT). AUROC 0.81. Non-invasive alternative to biopsy.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">Fibrosis</span>
+            <span class="badge">Non-invasive</span>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="paper-id">NAFLD-002</div>
+          <div class="paper-title">FIB-4 Index Validation: Advanced Fibrosis Detection</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">Shah AG, et al.</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2009</span></div>
+            <div class="meta-item"><span class="meta-label">Journal:</span> <span class="meta-value">Hepatology</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">Cross-sectional</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> FIB-4 AUROC 0.81-0.88 for advanced fibrosis. Outperforms APRI. Cost-effective, broadly applicable.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">Accuracy</span>
+            <span class="badge">Cost-effective</span>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="paper-id">NAFLD-003</div>
+          <div class="paper-title">Insulin Resistance as Common Driver of NAFLD-MetS</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">Stefan N, et al.</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2018</span></div>
+            <div class="meta-item"><span class="meta-label">Journal:</span> <span class="meta-value">Nat Rev</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">Review</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> IR central to NAFLD. Links NAFLD-MetS-DM. Dietary intervention targets IR. HOMA-IR for risk.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE B</span>
+            <span class="badge">Pathophysiology</span>
+            <span class="badge">IR Marker</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- METABOLIC SYNDROME -->
+  <div class="disease-section hidden" id="section-metabolic" data-animate="up" data-delay="200">
+    <div class="section">
+      <div class="disease-title">
+        <span class="disease-icon">📈</span> Metabolic Syndrome
+      </div>
+      <div class="paper-cards">
+        <div class="paper-card">
+          <div class="paper-id">MET-001</div>
+          <div class="paper-title">IDF Definition of Metabolic Syndrome 2019</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">IDF Consensus Group</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2019</span></div>
+            <div class="meta-item"><span class="meta-label">Org:</span> <span class="meta-value">Int'l Diabetes Fdn</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">Consensus</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> MetS = Central obesity + 2 of: HTN, dyslipidemia, hyperglycemia, low HDL. CVD risk 2-4x, DM 5-9x.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">Diagnostic</span>
+            <span class="badge">5-Component</span>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="paper-id">MET-002</div>
+          <div class="paper-title">MetS & CVD Risk: Meta-Analysis</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">Mottillo S, et al.</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2010</span></div>
+            <div class="meta-item"><span class="meta-label">Journal:</span> <span class="meta-value">JACC</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">Meta-Analysis, 87</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> MetS diagnosis increases CVD 2.35x (RR 2.35, 95% CI 2.02-2.74). Mortality 1.52x.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">CVD Risk</span>
+            <span class="badge">Meta-Analysis</span>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="paper-id">MET-003</div>
+          <div class="paper-title">PREDIMED Study: Mediterranean Diet & CVD</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">Estruch R, et al.</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2013</span></div>
+            <div class="meta-item"><span class="meta-label">Journal:</span> <span class="meta-value">NEJM</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">RCT, 7,447</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> Mediterranean diet reduces CVD 30% in MetS. Primary prevention. Olive oil, nuts, whole grains.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">RCT</span>
+            <span class="badge">Dietary</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TYPE 2 DIABETES -->
+  <div class="disease-section hidden" id="section-diabetes" data-animate="up" data-delay="200">
+    <div class="section">
+      <div class="disease-title">
+        <span class="disease-icon">🩺</span> Type 2 Diabetes
+      </div>
+      <div class="paper-cards">
+        <div class="paper-card">
+          <div class="paper-id">DM2-001</div>
+          <div class="paper-title">DCCT/EDIC: Intensive Glycemic Control</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">DCCT/EDIC Group</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">1993-2020</span></div>
+            <div class="meta-item"><span class="meta-label">Journal:</span> <span class="meta-value">NEJM</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">RCT, 1,441</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> Intensive control (HbA1c <7%) reduces neuropathy 54%, nephropathy 63%, retinopathy 76%. HbA1c ≥6.5% diagnostic.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">RCT</span>
+            <span class="badge">Complications</span>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="paper-id">DM2-002</div>
+          <div class="paper-title">ADA Standards of Care 2024</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">American Diabetes Assn</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2024</span></div>
+            <div class="meta-item"><span class="meta-label">Journal:</span> <span class="meta-value">Diabetes Care</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">Guidelines</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> T2DM: FPG ≥126, OGTT ≥200, HbA1c ≥6.5%. Screen ≥45y or overweight+risk. FINDRISC score.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE A</span>
+            <span class="badge">Diagnostic</span>
+            <span class="badge">Screening</span>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="paper-id">DM2-003</div>
+          <div class="paper-title">Insulin Resistance & Metabolic Syndrome</div>
+          <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Author:</span> <span class="meta-value">Kahn R, et al.</span></div>
+            <div class="meta-item"><span class="meta-label">Year:</span> <span class="meta-value">2005</span></div>
+            <div class="meta-item"><span class="meta-label">Journal:</span> <span class="meta-value">JCEM</span></div>
+            <div class="meta-item"><span class="meta-label">Design:</span> <span class="meta-value">Consensus</span></div>
+          </div>
+          <div class="key-findings">
+            <strong>Key Finding:</strong> IR central to T2DM. HOMA-IR = (fasting insulin × glucose)/22.5. Linked to obesity, inactivity. Reversible.
+          </div>
+          <div class="badge-row">
+            <span class="badge">GRADE B</span>
+            <span class="badge">Pathophysiology</span>
+            <span class="badge">HOMA-IR</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+function filterDisease(event, disease) {
+  const chips = document.querySelectorAll('.filter-chip');
+  const sections = document.querySelectorAll('.disease-section');
+
+  chips.forEach(chip => chip.classList.remove('active'));
+  event.target.classList.add('active');
+
+  sections.forEach(section => {
+    if (disease === 'all') {
+      section.classList.remove('hidden');
+    } else {
+      section.classList.add('hidden');
+    }
+  });
+
+  if (disease !== 'all') {
+    document.getElementById(`section-${disease}`).classList.remove('hidden');
+  }
+}
+
+function nav(url) {
+  window.location.href = url;
+}
+
+// Initialize animations
+window.addEventListener('load', () => {
+  initScrollAnimations();
+});
+</script>
+
+</body>
+</html>
