@@ -658,59 +658,68 @@
     if (!p) return;
 
     // Step A
-    if (p.dateOfBirth) document.getElementById('dateOfBirth').value = p.dateOfBirth;
+    if (p.dateOfBirth && document.getElementById('dateOfBirth')) document.getElementById('dateOfBirth').value = p.dateOfBirth;
     if (p.gender)      pickRadioVal('gender', p.gender);
-    if (p.heightCm)    { document.getElementById('heightCm').value = p.heightCm; updateSlider('heightCm','heightVal','cm'); }
-    if (p.weightKg)    { document.getElementById('weightKg').value = p.weightKg; updateSlider('weightKg','weightVal','kg'); }
-    if (p.waistCircumferenceCm) { document.getElementById('waistCircumferenceCm').value = p.waistCircumferenceCm; updateSlider('waistCircumferenceCm','waistVal','cm'); }
+    if (p.heightCm && document.getElementById('heightCm'))       { document.getElementById('heightCm').value = p.heightCm; updateSlider('heightCm','heightVal','cm'); }
+    if (p.weightKg && document.getElementById('weightKg'))       { document.getElementById('weightKg').value = p.weightKg; updateSlider('weightKg','weightVal','kg'); }
+    if (p.waistCircumferenceCm && document.getElementById('waistCircumferenceCm')) { document.getElementById('waistCircumferenceCm').value = p.waistCircumferenceCm; updateSlider('waistCircumferenceCm','waistVal','cm'); }
     calcBMI();
 
     // Step B
     if (p.smokingStatus)         pickRadioVal('smokingStatus', p.smokingStatus);
     if (p.alcoholUse)            pickRadioVal('alcoholUse', p.alcoholUse);
-    if (p.exerciseFreqPerWeek != null) { document.getElementById('exerciseFreqPerWeek').value = p.exerciseFreqPerWeek; updateSlider('exerciseFreqPerWeek','exerciseVal','x/minggu'); }
+    if (p.exerciseFreqPerWeek != null && document.getElementById('exerciseFreqPerWeek')) { document.getElementById('exerciseFreqPerWeek').value = p.exerciseFreqPerWeek; updateSlider('exerciseFreqPerWeek','exerciseVal','x/minggu'); }
     if (p.exerciseIntensity)     pickRadioVal('exerciseIntensity', p.exerciseIntensity);
-    if (p.sleepHoursPerNight)    { document.getElementById('sleepHoursPerNight').value = p.sleepHoursPerNight; updateSlider('sleepHoursPerNight','sleepVal','jam'); }
-    if (p.sleepQuality)          { document.getElementById('sleepQuality').value = p.sleepQuality; updateSliderRaw('sleepQuality','sleepQualVal'); }
+    if (p.sleepHoursPerNight && document.getElementById('sleepHoursPerNight'))    { document.getElementById('sleepHoursPerNight').value = p.sleepHoursPerNight; updateSlider('sleepHoursPerNight','sleepVal','jam'); }
+    if (p.sleepQuality && document.getElementById('sleepQuality'))          { document.getElementById('sleepQuality').value = p.sleepQuality; updateSliderRaw('sleepQuality','sleepQualVal'); }
     if (p.sugarIntake)           pickRadioVal('sugarIntake', p.sugarIntake);
     if (p.saltIntake)            pickRadioVal('saltIntake', p.saltIntake);
     if (p.jobType)               pickRadioVal('jobType', p.jobType);
 
+    // Herbal
+    if (p.herbalExperience)      pickRadioVal('herbalExperience', p.herbalExperience);
+    if (p.herbalAllergy && document.getElementById('herbalAllergy')) document.getElementById('herbalAllergy').value = p.herbalAllergy;
+    if (p.herbalInterest)        pickRadioVal('herbalInterest', p.herbalInterest);
+
     // Step C
     const fh = p.familyHistory || {};
-    if (fh.heart)        document.getElementById('fhHeart').checked = true;
-    if (fh.diabetes)     document.getElementById('fhDiabetes').checked = true;
-    if (fh.hypertension) document.getElementById('fhHypertension').checked = true;
-    if (fh.stroke)       document.getElementById('fhStroke').checked = true;
+    if (fh.heart && document.getElementById('fhHeart'))               document.getElementById('fhHeart').checked = true;
+    if (fh.diabetes && document.getElementById('fhDiabetes'))         document.getElementById('fhDiabetes').checked = true;
+    if (fh.hypertension && document.getElementById('fhHypertension')) document.getElementById('fhHypertension').checked = true;
+    if (fh.stroke && document.getElementById('fhStroke'))             document.getElementById('fhStroke').checked = true;
 
     // Step D
     const kc = p.knownConditions || {};
-    if (kc.hypertension) document.getElementById('condHypertension').checked = true;
-    if (kc.diabetes)     document.getElementById('condDiabetes').checked = true;
-    if (kc.highCholesterol) document.getElementById('condHighChol').checked = true;
-    if (kc.heartAttack)  document.getElementById('condHeartAttack').checked = true;
-    if (kc.onBPMeds)     document.getElementById('condOnBPMeds').checked = true;
+    if (kc.hypertension && document.getElementById('condHypertension')) document.getElementById('condHypertension').checked = true;
+    if (kc.diabetes && document.getElementById('condDiabetes'))         document.getElementById('condDiabetes').checked = true;
+    if (kc.highCholesterol && document.getElementById('condHighChol'))  document.getElementById('condHighChol').checked = true;
+    if (kc.heartAttack && document.getElementById('condHeartAttack'))   document.getElementById('condHeartAttack').checked = true;
+    if (kc.onBPMeds && document.getElementById('condOnBPMeds'))         document.getElementById('condOnBPMeds').checked = true;
 
     // Step E
     const lab = p.labResults || {};
-    if (lab.fastingGlucose)  document.getElementById('labFastingGlucose').value  = lab.fastingGlucose;
-    if (lab.hbA1c)           document.getElementById('labHbA1c').value           = lab.hbA1c;
-    if (lab.totalCholesterol) document.getElementById('labTotalChol').value      = lab.totalCholesterol;
-    if (lab.hdl)             document.getElementById('labHDL').value             = lab.hdl;
-    if (lab.ldl)             document.getElementById('labLDL').value             = lab.ldl;
-    if (lab.triglycerides)   document.getElementById('labTriglycerides').value   = lab.triglycerides;
-    if (lab.sbp)             document.getElementById('labSBP').value             = lab.sbp;
-    if (lab.dbp)             document.getElementById('labDBP').value             = lab.dbp;
-    if (lab.uricAcid)        document.getElementById('labUricAcid').value        = lab.uricAcid;
-    if (lab.creatinine)      document.getElementById('labCreatinine').value      = lab.creatinine;
-    if (lab.acr)             document.getElementById('labACR').value             = lab.acr; // BATCH 16
-    if (lab.labDate)         document.getElementById('labDate').value            = lab.labDate;
+    const setVal = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.value = val; };
+    setVal('labFastingGlucose', lab.fastingGlucose);
+    setVal('labHbA1c', lab.hbA1c);
+    setVal('labTotalChol', lab.totalCholesterol);
+    setVal('labHDL', lab.hdl);
+    setVal('labLDL', lab.ldl);
+    setVal('labTriglycerides', lab.triglycerides);
+    setVal('labSBP', lab.sbp);
+    setVal('labDBP', lab.dbp);
+    setVal('labUricAcid', lab.uricAcid);
+    setVal('labCreatinine', lab.creatinine);
+    setVal('labACR', lab.acr);
+    setVal('labDate', lab.labDate);
 
     // Mental Health
     const mh = p.mentalHealth || {};
     if (mh.anxietyLevel)     pickRadioVal('anxietyLevel', mh.anxietyLevel);
     if (mh.depressionLevel)  pickRadioVal('depressionLevel', mh.depressionLevel);
-    if (mh.workStressLevel)  { document.getElementById('workStressLevel').value = mh.workStressLevel; updateSliderRaw('workStressLevel','workStressVal'); }
+    if (mh.workStressLevel && document.getElementById('workStressLevel')) { 
+      document.getElementById('workStressLevel').value = mh.workStressLevel; 
+      updateSliderRaw('workStressLevel','workStressVal'); 
+    }
 
     // Diet
     const diet = p.diet || {};
@@ -724,7 +733,10 @@
     if (sdoh.employmentStatus) pickRadioVal('employmentStatus', sdoh.employmentStatus);
     if (sdoh.maritalStatus)    pickRadioVal('maritalStatus', sdoh.maritalStatus);
     if (sdoh.householdIncome)  pickRadioVal('householdIncome', sdoh.householdIncome);
-    if (sdoh.socialIsolation)  { document.getElementById('socialIsolation').value = sdoh.socialIsolation; updateSocialSlider(); }
+    if (sdoh.socialIsolation && document.getElementById('socialIsolation')) { 
+      document.getElementById('socialIsolation').value = sdoh.socialIsolation; 
+      updateSocialSlider(); 
+    }
     if (sdoh.healthcareAccess) pickRadioVal('healthcareAccess', sdoh.healthcareAccess);
   }
 
@@ -737,7 +749,8 @@
   async function nextStepD() {
     await saveCurrentStep();
     goToStep(4);
-    document.getElementById('ctaDashboard').style.display = '';
+    const cta = document.getElementById('ctaDashboard');
+    if (cta) cta.style.display = '';
   }
 
   function prevStep() {
@@ -745,9 +758,11 @@
   }
 
   function goToStep(n) {
-    document.getElementById('step-' + currentStep).classList.remove('active');
+    const curEl = document.getElementById('step-' + currentStep);
+    if (curEl) curEl.classList.remove('active');
     currentStep = n;
-    document.getElementById('step-' + n).classList.add('active');
+    const nextEl = document.getElementById('step-' + n);
+    if (nextEl) nextEl.classList.add('active');
     updateProgressBar();
     window.scrollTo(0, 0);
   }
@@ -758,8 +773,10 @@
       if (!el) continue;
       el.className = 'progress-step' + (i < currentStep ? ' done' : i === currentStep ? ' active' : '');
     }
-    document.getElementById('stepLabel').textContent =
-      'Langkah ' + (currentStep + 1) + ' dari 6 — ' + STEP_LABELS[currentStep];
+    const lbl = document.getElementById('stepLabel');
+    if (lbl) {
+      lbl.textContent = 'Langkah ' + (currentStep + 1) + ' dari 6 — ' + (STEP_LABELS[currentStep] || '');
+    }
   }
 
   // ── Save logic ────────────────────────────────────────────────────────────
@@ -771,32 +788,43 @@
   }
 
   function collectStepData(step) {
+    const getNum = id => {
+      const el = document.getElementById(id);
+      if (!el || el.value === '' || isNaN(el.value)) return null;
+      return parseFloat(el.value);
+    };
+
     if (step === 0) {
       return {
-        dateOfBirth:          document.getElementById('dateOfBirth').value || null,
+        dateOfBirth:          document.getElementById('dateOfBirth')?.value || null,
         gender:               getRadioVal('gender'),
-        heightCm:             parseInt(document.getElementById('heightCm').value),
-        weightKg:             parseInt(document.getElementById('weightKg').value),
-        waistCircumferenceCm: parseInt(document.getElementById('waistCircumferenceCm').value),
+        heightCm:             getNum('heightCm'),
+        weightKg:             getNum('weightKg'),
+        waistCircumferenceCm: getNum('waistCircumferenceCm'),
       };
     }
     if (step === 1) {
+      const stressEl = document.getElementById('workStressLevel');
       return {
         // Lifestyle
         smokingStatus:        getRadioVal('smokingStatus'),
         alcoholUse:           getRadioVal('alcoholUse'),
-        exerciseFreqPerWeek:  parseInt(document.getElementById('exerciseFreqPerWeek').value),
+        exerciseFreqPerWeek:  getNum('exerciseFreqPerWeek') ?? 0,
         exerciseIntensity:    getRadioVal('exerciseIntensity'),
-        sleepHoursPerNight:   parseFloat(document.getElementById('sleepHoursPerNight').value),
-        sleepQuality:         parseInt(document.getElementById('sleepQuality').value),
+        sleepHoursPerNight:   getNum('sleepHoursPerNight') ?? 7,
+        sleepQuality:         getNum('sleepQuality') ?? 7,
         sugarIntake:          getRadioVal('sugarIntake'),
         saltIntake:           getRadioVal('saltIntake'),
         jobType:              getRadioVal('jobType'),
+        // Herbal
+        herbalExperience:     getRadioVal('herbalExperience'),
+        herbalAllergy:        document.getElementById('herbalAllergy')?.value || '',
+        herbalInterest:       getRadioVal('herbalInterest'),
         // Mental Health
         mentalHealth: {
           anxietyLevel:       getRadioVal('anxietyLevel'),
           depressionLevel:    getRadioVal('depressionLevel'),
-          workStressLevel:    parseInt(document.getElementById('workStressLevel').value),
+          workStressLevel:    stressEl ? parseInt(stressEl.value) : null,
         },
         // Diet Quality
         diet: {
@@ -809,21 +837,21 @@
     if (step === 2) {
       return {
         familyHistory: {
-          heart:        document.getElementById('fhHeart').checked,
-          diabetes:     document.getElementById('fhDiabetes').checked,
-          hypertension: document.getElementById('fhHypertension').checked,
-          stroke:       document.getElementById('fhStroke').checked,
+          heart:        !!document.getElementById('fhHeart')?.checked,
+          diabetes:     !!document.getElementById('fhDiabetes')?.checked,
+          hypertension: !!document.getElementById('fhHypertension')?.checked,
+          stroke:       !!document.getElementById('fhStroke')?.checked,
         }
       };
     }
     if (step === 3) {
       return {
         knownConditions: {
-          hypertension:    document.getElementById('condHypertension').checked,
-          diabetes:        document.getElementById('condDiabetes').checked,
-          highCholesterol: document.getElementById('condHighChol').checked,
-          heartAttack:     document.getElementById('condHeartAttack').checked,
-          onBPMeds:        document.getElementById('condOnBPMeds').checked,
+          hypertension:    !!document.getElementById('condHypertension')?.checked,
+          diabetes:        !!document.getElementById('condDiabetes')?.checked,
+          highCholesterol: !!document.getElementById('condHighChol')?.checked,
+          heartAttack:     !!document.getElementById('condHeartAttack')?.checked,
+          onBPMeds:        !!document.getElementById('condOnBPMeds')?.checked,
         }
       };
     }
@@ -832,13 +860,14 @@
       return {};
     }
     if (step === 5) {
+      const isolEl = document.getElementById('socialIsolation');
       return {
         socialDeterminants: {
           educationLevel:     getRadioVal('educationLevel'),
           employmentStatus:   getRadioVal('employmentStatus'),
           maritalStatus:      getRadioVal('maritalStatus'),
           householdIncome:    getRadioVal('householdIncome'),
-          socialIsolation:    parseInt(document.getElementById('socialIsolation').value),
+          socialIsolation:    isolEl ? parseInt(isolEl.value) : 3,
           healthcareAccess:   getRadioVal('healthcareAccess'),
         }
       };
@@ -848,7 +877,12 @@
 
   async function saveLab() {
     if (!userId) return;
-    const num = id => { const v = parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; };
+    const num = id => { 
+      const el = document.getElementById(id);
+      if (!el || el.value === '') return null;
+      const v = parseFloat(el.value); 
+      return isNaN(v) ? null : v; 
+    };
     const creatinine = num('labCreatinine');
     const acr = num('labACR');
 
@@ -892,7 +926,7 @@
       acr:              acr,  // NEW: Albumin-Creatinine Ratio (BATCH 16)
       eGFR:             eGFR, // NEW: Auto-calculated (BATCH 16)
       kdigoStage:       kdigoStage, // NEW: Auto-derived KDIGO stage (BATCH 16)
-      labDate:          document.getElementById('labDate').value || null,
+      labDate:          document.getElementById('labDate')?.value || null,
     });
     flashSave(4);
     setTimeout(() => nav('health-dashboard.html'), 800);
@@ -909,9 +943,11 @@
   }
 
   function updateSocialSlider() {
-    const val = parseInt(document.getElementById('socialIsolation').value);
+    const el = document.getElementById('socialIsolation');
+    const val = el ? parseInt(el.value) : 3;
     const labels = ['Sangat terisolasi', 'Terisolasi', 'Cukup sering', 'Sering terhubung', 'Sangat terhubung'];
-    document.getElementById('socialVal').textContent = labels[val - 1] || 'Cukup sering';
+    const lblEl = document.getElementById('socialVal');
+    if (lblEl) lblEl.textContent = labels[val - 1] || 'Cukup sering';
   }
 
   function flashSave(step) {
@@ -931,15 +967,22 @@
 
   // ── UI helpers ────────────────────────────────────────────────────────────
   function updateSlider(id, valId, unit) {
-    document.getElementById(valId).textContent = document.getElementById(id).value + ' ' + unit;
+    const el = document.getElementById(id);
+    const valEl = document.getElementById(valId);
+    if (el && valEl) valEl.textContent = el.value + ' ' + unit;
   }
   function updateSliderRaw(id, valId) {
-    document.getElementById(valId).textContent = document.getElementById(id).value + ' / 10';
+    const el = document.getElementById(id);
+    const valEl = document.getElementById(valId);
+    if (el && valEl) valEl.textContent = el.value + ' / 10';
   }
 
   function calcBMI() {
-    const h = parseInt(document.getElementById('heightCm').value) / 100;
-    const w = parseInt(document.getElementById('weightKg').value);
+    const hEl = document.getElementById('heightCm');
+    const wEl = document.getElementById('weightKg');
+    if (!hEl || !wEl) return;
+    const h = parseInt(hEl.value) / 100;
+    const w = parseInt(wEl.value);
     if (!h || !w) return;
     const bmi = w / (h * h);
     let cat, cls;
@@ -948,11 +991,13 @@
     else if (bmi < 30)   { cat = 'Kelebihan Berat'; cls = 'overweight'; }
     else                  { cat = 'Obesitas';        cls = 'obese'; }
     const el = document.getElementById('bmiDisplay');
-    el.className = 'bmi-badge ' + cls;
-    document.getElementById('bmiText').textContent = 'BMI: ' + bmi.toFixed(1) + ' — ' + cat;
+    if (el) el.className = 'bmi-badge ' + cls;
+    const txtEl = document.getElementById('bmiText');
+    if (txtEl) txtEl.textContent = 'BMI: ' + bmi.toFixed(1) + ' — ' + cat;
   }
 
   function pickRadio(el) {
+    if (!el) return;
     const group = el.dataset.group;
     document.querySelectorAll('[data-group="' + group + '"]').forEach(e => e.classList.remove('selected'));
     el.classList.add('selected');
