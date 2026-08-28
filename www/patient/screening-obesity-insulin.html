@@ -14,13 +14,12 @@
       --primary-obs: #17A05C;
       --primary-obs-dark: #219653;
     }
-    .app-header {
-      background: linear-gradient(135deg, var(--primary-obs) 0%, #0E7C46 100%);
+    .app-header { background: var(--surface); box-shadow: 0 1px 3px rgba(16,24,40,0.06); border-bottom: 1px solid rgba(16,24,40,0.08); 0%, #0E7C46 100%);
       box-shadow: 0 2px 16px rgba(23, 160, 92, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
-      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1);
     }
     .app-header .page-title { color: var(--text-primary); font-size: 0.9rem; font-weight: 700; }
 
@@ -36,7 +35,7 @@
     .step-dots { display: flex; align-items: center; justify-content: center; gap: 0; }
     .step-dot {
       width: 26px; height: 24px; border-radius: 50%;
-      border: 2px solid var(--shadow-dark); background: var(--bg);
+      border: 2px solid var(--shadow-dark); background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       display: flex; align-items: center; justify-content: center;
       font-size: 0.65rem; font-weight: 700; color: var(--text-tertiary);
@@ -80,7 +79,7 @@
     .homa-lbl { font-size: 0.75rem; font-weight: 700; color: var(--primary-obs-dark); margin-top: 4px; }
 
     .symptom-opt {
-      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 12px; padding: 12px;
+      background: var(--surface); box-shadow: var(--shadow-out-sm); border-radius: 12px; padding: 12px;
       text-align: center; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
     }
     .symptom-opt.selected { border-color: var(--primary-obs); background: rgba(23,160,92,0.05); }

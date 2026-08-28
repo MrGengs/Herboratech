@@ -10,14 +10,11 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .app-header {
-      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
-      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
-    }
+    .app-header { background: var(--surface); box-shadow: 0 1px 3px rgba(16,24,40,0.06); border-bottom: 1px solid rgba(16,24,40,0.08); }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12);
       box-shadow: none;
-      color: #fff;
+      color: var(--text-primary);
       border: 1px solid rgba(255,255,255,0.1);
     }
 
@@ -79,7 +76,7 @@
       position: relative;
     }
     .chat-bubble.received {
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       color: var(--text-primary);
       border-bottom-left-radius: 4px;
@@ -103,7 +100,7 @@
 
     /* Inline cards */
     .vital-card-inline {
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       border-radius: 14px;
       padding: 12px 14px;
@@ -132,7 +129,7 @@
     }
 
     .resep-card-inline {
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       border-radius: 14px;
       padding: 12px 14px;
@@ -179,7 +176,7 @@
       width: 40px; height: 40px;
       border-radius: 50%;
       border: none;
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       display: flex; align-items: center; justify-content: center;
       color: var(--text-tertiary);

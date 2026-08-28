@@ -10,13 +10,10 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .app-header {
-      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
-      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
-    }
+    .app-header { background: var(--surface); box-shadow: 0 1px 3px rgba(16,24,40,0.06); border-bottom: 1px solid rgba(16,24,40,0.08); }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
-      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1);
     }
     .app-header .page-title { color: var(--text-primary); font-size: 1.05rem; font-weight: 700; }
     .date-chip {
@@ -31,7 +28,7 @@
 
     /* Diagnosis card */
     .diagnosis-card {
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out);
       border-radius: 20px;
       padding: 20px;
@@ -61,7 +58,7 @@
 
     /* Doctor note card */
     .doctor-note-card {
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       border-radius: 16px;
       padding: 18px;
@@ -81,7 +78,7 @@
 
     /* Output section cards */
     .output-card {
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       border-radius: 16px;
       padding: 18px;

@@ -10,14 +10,11 @@
   <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
   <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
   <style>
-    .app-header {
-      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
-      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
-    }
+    .app-header { background: var(--surface); box-shadow: 0 1px 3px rgba(16,24,40,0.06); border-bottom: 1px solid rgba(16,24,40,0.08); }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12);
       box-shadow: none;
-      color: #fff;
+      color: var(--text-primary);
       border: 1px solid rgba(255,255,255,0.1);
     }
     .app-header .page-title { color: var(--text-primary); font-size: 1.05rem; font-weight: 700; }
@@ -45,7 +42,7 @@
       justify-content: center;
       font-size: 0.78rem;
       font-weight: 700;
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       color: var(--text-tertiary);
       border: 2px solid transparent;
@@ -77,7 +74,7 @@
 
     /* Consultation type cards */
     .consult-card {
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       border-radius: 16px;
       padding: 16px;
@@ -124,7 +121,7 @@
       width: 52px;
       padding: 10px 6px;
       border-radius: 14px;
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       cursor: pointer;
       border: 2px solid transparent;
@@ -150,7 +147,7 @@
     .time-slot {
       padding: 10px 6px;
       border-radius: 12px;
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       text-align: center;
       font-size: 0.8rem;
@@ -173,7 +170,7 @@
       align-items: center;
       gap: 12px;
       padding: 14px;
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       border-radius: 16px;
     }

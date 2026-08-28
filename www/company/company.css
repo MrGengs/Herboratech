@@ -1,0 +1,284 @@
+/* ============================================================
+   company.css — bahasa visual baru untuk halaman perusahaan
+
+   Keempat halaman (Fitur, Cara Kerja, Tentang, Kontak) memakai kerangka
+   kelas yang sama peninggalan landing page lama: nav gelap, hero gelap,
+   pita terang-gelap bergantian, dan pembatas ombak.
+
+   Berkas ini menimpa kerangka itu dengan bahasa visual landing page yang
+   baru, TANPA menyentuh markup isinya. Ditautkan paling akhir di <head>
+   supaya menang atas <style> masing-masing halaman pada kekhususan yang
+   sama.
+
+   Kalau kelak halaman-halaman ini ditulis ulang, berkas ini bisa dibuang
+   dan gayanya dipindahkan ke tempatnya masing-masing.
+   ============================================================ */
+
+:root {
+  --mk-ink:      #0F1A14;
+  --mk-ink-2:    #46564C;
+  /* Dipakai untuk teks paragraf, jadi harus lolos AA. Nilai semula
+     #7C8A82 hanya 3.38:1 di atas --mk-paper — cukup untuk teks besar,
+     tidak untuk badan tulisan. */
+  --mk-ink-3:    #616F67;
+  --mk-line:     #E4E8E5;
+  --mk-paper:    #F6F8F6;
+  --mk-card:     #FFFFFF;
+  --mk-em:       #17A05C;
+  --mk-deep:     #0E7C46;
+  --mk-darker:   #0A5F35;
+  --mk-soft:     #8FD3AC;
+  --mk-wash:     #EAF6F0;
+  --mk-sh-sm: 0 1px 3px rgba(15,26,20,0.05), 0 1px 2px rgba(15,26,20,0.03);
+  --mk-sh-md: 0 4px 18px rgba(15,26,20,0.07), 0 1px 4px rgba(15,26,20,0.04);
+  --mk-sh-lg: 0 18px 48px rgba(15,26,20,0.12), 0 4px 12px rgba(15,26,20,0.05);
+}
+
+body {
+  background: var(--mk-paper) !important;
+  color: var(--mk-ink) !important;
+}
+
+/* ── Pembatas ombak ──────────────────────────────────────────
+   Ciri paling kentara desain lama. Markup-nya ikut dibuang, tapi aturan
+   ini dipertahankan sebagai jaring pengaman kalau ada yang terlewat. */
+.wave { display: none !important; }
+
+/* ── Teks yang dirancang untuk latar gelap ──────────────────
+
+   Aturan di bawah dihasilkan dengan membaca <style> keempat halaman dan
+   mengumpulkan setiap selektor yang menyetel warna teks putih. Setelah
+   latarnya jadi terang, semuanya menjadi putih di atas putih.
+
+   Penggantinya dipilih dari seberapa pekat putihnya semula: yang tadinya
+   putih penuh menjadi tinta penuh, yang tadinya pudar menjadi abu
+   sekunder. Dengan begitu hierarki tulisannya tetap terjaga, tidak
+   sekadar semuanya jadi hitam.
+
+   Tombol emerald padat dan isi panel ajakan sengaja DIKECUALIKAN —
+   keduanya tetap berlatar gelap, jadi teks putihnya memang benar.
+   ────────────────────────────────────────────────────────── */
+
+.btn-submit { color: var(--mk-ink) !important; }
+.desc-dark { color: var(--mk-ink-3) !important; }
+.detail-list li { color: var(--mk-ink-2) !important; }
+.device-name { color: var(--mk-ink) !important; }
+.device-sub { color: var(--mk-ink-3) !important; }
+.f-copy { color: var(--mk-ink-3) !important; }
+.f-links a { color: var(--mk-ink-3) !important; }
+.f-logo { color: var(--mk-ink) !important; }
+.faq-a p { color: var(--mk-ink-3) !important; }
+.faq-chevron { color: var(--mk-ink-3) !important; }
+.faq-q span { color: var(--mk-ink) !important; }
+.glass-card h3 { color: var(--mk-ink) !important; }
+.glass-card p { color: var(--mk-ink-3) !important; }
+.journey-col h3 { color: var(--mk-ink) !important; }
+.jtab-blue.active { color: var(--mk-ink) !important; }
+.jtab-blue:hover { color: var(--mk-ink) !important; }
+.jtab-green.active { color: var(--mk-ink) !important; }
+.jtab-green:hover { color: var(--mk-ink) !important; }
+.map-placeholder p { color: var(--mk-ink-3) !important; }
+.nav-links a { color: var(--mk-ink-2) !important; }
+.nav-logo { color: var(--mk-ink) !important; }
+.novelty-card h3 { color: var(--mk-ink) !important; }
+.novelty-card p { color: var(--mk-ink-3) !important; }
+.novelty-num { color: var(--mk-ink-3) !important; }
+.on-dark { color: var(--mk-ink) !important; }
+.page-hero h1 { color: var(--mk-ink) !important; }
+.page-hero p { color: var(--mk-ink-3) !important; }
+.si-content h4 { color: var(--mk-ink) !important; }
+.si-content p { color: var(--mk-ink-3) !important; }
+.spec-tag { color: var(--mk-ink-3) !important; }
+.step-content h3 { color: var(--mk-ink) !important; }
+.step-content p { color: var(--mk-ink-3) !important; }
+.team-desc { color: var(--mk-ink-3) !important; }
+.team-name { color: var(--mk-ink) !important; }
+.topic-btn.selected { color: var(--mk-ink) !important; }
+.topic-btn:hover { color: var(--mk-ink) !important; }
+
+/* ── NAV: pil mengambang ─────────────────────────────────── */
+.site-nav {
+  position: fixed !important;
+  inset: 14px 0 auto !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  pointer-events: none;
+  z-index: 1000;
+}
+.nav-inner {
+  pointer-events: auto;
+  width: min(1100px, calc(100% - 32px)) !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 9px 9px 9px 18px !important;
+  height: auto !important;
+  gap: 22px !important;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--mk-line);
+  border-radius: 999px;
+  box-shadow: var(--mk-sh-md);
+}
+.nav-logo {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 10px;
+  color: var(--mk-ink) !important;
+  font-size: 1.08rem !important;
+}
+.nav-logo svg { width: 30px; height: 30px; display: block; flex-shrink: 0; }
+.nav-logo span, .nav-logo b { color: var(--mk-deep) !important; }
+
+.nav-links { gap: 4px !important; margin-left: auto; }
+.nav-links a {
+  color: var(--mk-ink-2) !important;
+  font-size: 0.86rem !important;
+  font-weight: 600 !important;
+  padding: 8px 14px !important;
+  border-radius: 999px;
+  transition: background .18s, color .18s;
+}
+.nav-links a:hover,
+.nav-links a.active { background: var(--mk-wash) !important; color: var(--mk-deep) !important; }
+
+.nav-cta {
+  background: var(--mk-deep) !important;
+  color: #fff !important;
+  border: none !important;
+  font-size: 0.86rem !important;
+  font-weight: 700 !important;
+  padding: 10px 20px !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+}
+.nav-cta:hover { background: var(--mk-darker) !important; transform: translateY(-1px); }
+
+/* ── HERO: terang, bukan gelap ────────────────────────────── */
+.page-hero {
+  background: var(--mk-paper) !important;
+  color: var(--mk-ink) !important;
+  position: relative;
+  overflow: hidden;
+  padding-top: 140px !important;
+  padding-bottom: 64px !important;
+}
+.page-hero::before,
+.page-hero::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+.page-hero::before {
+  width: 700px; height: 700px; right: -270px; top: -300px;
+  background: radial-gradient(circle, rgba(23,160,92,0.15), transparent 62%);
+}
+.page-hero::after {
+  width: 480px; height: 480px; left: -220px; bottom: -260px;
+  background: radial-gradient(circle, rgba(143,211,172,0.26), transparent 64%);
+}
+.page-hero h1, .page-hero h2 { color: var(--mk-ink) !important; position: relative; }
+.page-hero p { color: var(--mk-ink-2) !important; position: relative; }
+
+.hero-label, .section-tag {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--mk-wash) !important;
+  color: var(--mk-darker) !important;
+  border: 1px solid rgba(14,124,70,0.16) !important;
+  border-radius: 999px !important;
+  padding: 6px 14px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  position: relative;
+}
+
+/* ── Pita gelap jadi terang ───────────────────────────────── */
+.section-dark, .section-dark2, .section-light {
+  background: var(--mk-paper) !important;
+  color: var(--mk-ink) !important;
+}
+.section-dark2 { background: var(--mk-card) !important; border-block: 1px solid var(--mk-line); }
+
+.section-title { color: var(--mk-ink) !important; }
+.section-desc, .desc-dark, .on-dark, .sensor-intro { color: var(--mk-ink-2) !important; }
+
+/* ── Kartu ────────────────────────────────────────────────── */
+.novelty-card, .disease-card, .sensor-item, .sensor-device, .step-card,
+.value-card, .team-card, .contact-card, .faq-item, .info-card {
+  background: var(--mk-card) !important;
+  border: 1px solid var(--mk-line) !important;
+  border-radius: 22px !important;
+  box-shadow: var(--mk-sh-sm) !important;
+  color: var(--mk-ink) !important;
+  transition: transform .22s, box-shadow .22s, border-color .22s;
+}
+.novelty-card:hover, .disease-card:hover, .sensor-item:hover,
+.step-card:hover, .value-card:hover, .contact-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--mk-sh-md) !important;
+  border-color: rgba(23,160,92,0.28) !important;
+}
+
+/* Wadah ikon: kotak membulat bertint, seragam dengan aplikasi. */
+.novelty-icon, .disease-icon, .si-icon, .benefit-icon, .info-icon,
+.glass-icon, .step-icon {
+  background: var(--mk-wash) !important;
+  color: var(--mk-deep) !important;
+  border: none !important;
+  border-radius: 12px !important;
+}
+
+.novelty-num { color: var(--mk-deep) !important; opacity: 0.25; }
+.novelty-tag, .spec-tag, .badge, .tag-green {
+  background: var(--mk-wash) !important;
+  color: var(--mk-deep) !important;
+  border: 1px solid rgba(14,124,70,0.18) !important;
+  border-radius: 999px !important;
+}
+
+/* ── Tombol ───────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--mk-deep) !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  box-shadow: 0 8px 22px rgba(14,124,70,0.26) !important;
+}
+.btn-primary:hover { background: var(--mk-darker) !important; transform: translateY(-2px); }
+
+/* ── Ajakan ───────────────────────────────────────────────── */
+.cta-section {
+  background: linear-gradient(140deg, var(--mk-deep) 0%, var(--mk-darker) 68%, #073F24 100%) !important;
+  border-radius: 32px;
+  margin: 0 auto 74px;
+  width: min(1140px, 100% - 40px);
+  color: #fff !important;
+}
+.cta-section h2, .cta-section h3 { color: #fff !important; }
+.cta-section p { color: rgba(255,255,255,0.78) !important; }
+.cta-section .btn-primary {
+  background: #fff !important;
+  color: var(--mk-darker) !important;
+  box-shadow: none !important;
+}
+
+/* ── Kaki ─────────────────────────────────────────────────── */
+.site-footer {
+  background: var(--mk-paper) !important;
+  border-top: 1px solid var(--mk-line);
+  color: var(--mk-ink-2) !important;
+}
+.f-logo { color: var(--mk-ink) !important; display: inline-flex; align-items: center; gap: 10px; }
+.f-logo svg { width: 28px; height: 28px; display: block; }
+.f-logo span, .f-logo b { color: var(--mk-deep) !important; }
+.f-links a { color: var(--mk-ink-2) !important; }
+.f-links a:hover { color: var(--mk-deep) !important; }
+.f-copy { color: var(--mk-ink-3) !important; }
+
+@media (max-width: 900px) {
+  .nav-links { display: none !important; }
+  .page-hero { padding-top: 120px !important; }
+}

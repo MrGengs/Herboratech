@@ -51,7 +51,7 @@
     /* MISSION VISION */
     .mv-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
     @media (max-width:700px) { .mv-grid { grid-template-columns:1fr; } }
-    .mv-card { background:var(--bg); border-radius:20px; box-shadow:var(--shadow-out); padding:32px; }
+    .mv-card { background: var(--surface); border-radius:20px; box-shadow:var(--shadow-out); padding:32px; }
     .mv-icon { font-size:2rem; margin-bottom:14px; }
     .mv-card h3 { font-size:1.05rem; font-weight:700; color:var(--text-primary); margin-bottom:10px; }
     .mv-card p { font-size:0.87rem; color:var(--text-secondary); line-height:1.7; }
@@ -76,9 +76,9 @@
     /* STORY */
     .story-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
     @media (max-width:700px) { .story-grid { grid-template-columns:1fr; } }
-    .story-visual { background:var(--bg); border-radius:24px; box-shadow:var(--shadow-out); padding:32px; display:flex; flex-direction:column; gap:16px; }
+    .story-visual { background: var(--surface); border-radius:24px; box-shadow:var(--shadow-out); padding:32px; display:flex; flex-direction:column; gap:16px; }
     .story-stat-row { display:flex; gap:16px; }
-    .story-stat { background:var(--bg); border-radius:16px; box-shadow:var(--shadow-out-sm); padding:16px; flex:1; text-align:center; }
+    .story-stat { background: var(--surface); border-radius:16px; box-shadow:var(--shadow-out-sm); padding:16px; flex:1; text-align:center; }
     .story-stat .num { font-size:1.6rem; font-weight:800; color:var(--primary-dark); }
     .story-stat .lbl { font-size:0.72rem; color:var(--text-tertiary); }
     .timeline-item { display:flex; gap:14px; align-items:flex-start; }
@@ -115,12 +115,25 @@
     .f-links a:hover { color:#17A05C; }
     .f-copy { font-size:0.72rem; color:rgba(255,255,255,0.25); }
   </style>
+  <link rel="stylesheet" href="company.css">
 </head>
 <body>
 
 <nav class="site-nav">
   <div class="nav-inner">
-    <a href="../index.html" class="nav-logo">Herbora<span>Tech</span></a>
+    <a href="../index.html" class="nav-logo"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs><linearGradient id="hbMk1" x1="14" y1="47" x2="42" y2="21" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#4CAF6E"/><stop offset="1" stop-color="#22B5A6"/></linearGradient></defs>
+  <path d="M25 5h14a2 2 0 0 1 2 2v7H23V7a2 2 0 0 1 2-2z" fill="#17395C"/>
+  <path d="M23 50h18v7a2 2 0 0 1-2 2H25a2 2 0 0 1-2-2z" fill="#17395C"/>
+  <rect x="17.6" y="12.6" width="28.8" height="38.8" rx="9.4" fill="#FFFFFF" stroke="#17395C" stroke-width="3.2"/>
+  <rect x="47.4" y="26" width="3.2" height="8" rx="1.6" fill="#17395C"/>
+  <path d="M31 47c-1.5-9 1-19.5 8.5-25 2 10-1 21-8.5 25z" fill="url(#hbMk1)"/>
+  <path d="M31 47c-5.5-5.5-11-8.5-17-8.5 3.5 7 10 10 17 8.5z" fill="url(#hbMk1)"/>
+  <path d="M41.8 27.6a8.4 8.4 0 0 1-1.6 13.2" fill="none" stroke="#3FA3F0" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="42.4" cy="25.2" r="2.9" fill="#3FA3F0"/>
+</svg>
+      Herbora<b>Tech</b></a>
     <div class="nav-links">
       <a href="../index.html">Beranda</a>
       <a href="about.html" class="active">Tentang</a>
@@ -140,7 +153,6 @@
 </section>
 
 <!-- WAVE to light -->
-<div class="wave"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,36 C240,72 480,0 720,36 C960,72 1200,4 1440,40 L1440,72 L0,72 Z" fill="#E7EAE8"/></svg></div>
 
 <!-- MISSION & VISION -->
 <section class="section-light">
@@ -163,7 +175,6 @@
 </section>
 
 <!-- WAVE to dark -->
-<div class="wave"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,20 C360,72 720,0 1080,50 C1260,72 1380,20 1440,36 L1440,72 L0,72 Z" fill="#0D2B1A"/></svg></div>
 
 <!-- VALUES -->
 <section class="section-dark">
@@ -206,7 +217,6 @@
 </section>
 
 <!-- WAVE to light -->
-<div class="wave" style="background:#0D2B1A"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,50 C200,10 500,72 800,30 C1000,8 1250,60 1440,20 L1440,72 L0,72 Z" fill="#E7EAE8"/></svg></div>
 
 <!-- STORY -->
 <section class="section-light">
@@ -272,7 +282,6 @@
 </section>
 
 <!-- WAVE to dark -->
-<div class="wave"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,36 C300,4 600,72 900,20 C1100,0 1300,60 1440,36 L1440,72 L0,72 Z" fill="#0D2B1A"/></svg></div>
 
 <!-- TEAM -->
 <section class="section-dark">
@@ -321,7 +330,6 @@
 </section>
 
 <!-- WAVE to CTA -->
-<div class="wave" style="background:#0D2B1A"><svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,36 C480,72 960,0 1440,36 L1440,72 L0,72 Z" fill="#0D2B1A"/></svg></div>
 
 <!-- CTA -->
 <section class="cta-section">
@@ -335,7 +343,19 @@
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="f-logo">Herbora<span>Tech</span></div>
+    <div class="f-logo"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs><linearGradient id="hbMk2" x1="14" y1="47" x2="42" y2="21" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#4CAF6E"/><stop offset="1" stop-color="#22B5A6"/></linearGradient></defs>
+  <path d="M25 5h14a2 2 0 0 1 2 2v7H23V7a2 2 0 0 1 2-2z" fill="#17395C"/>
+  <path d="M23 50h18v7a2 2 0 0 1-2 2H25a2 2 0 0 1-2-2z" fill="#17395C"/>
+  <rect x="17.6" y="12.6" width="28.8" height="38.8" rx="9.4" fill="#FFFFFF" stroke="#17395C" stroke-width="3.2"/>
+  <rect x="47.4" y="26" width="3.2" height="8" rx="1.6" fill="#17395C"/>
+  <path d="M31 47c-1.5-9 1-19.5 8.5-25 2 10-1 21-8.5 25z" fill="url(#hbMk2)"/>
+  <path d="M31 47c-5.5-5.5-11-8.5-17-8.5 3.5 7 10 10 17 8.5z" fill="url(#hbMk2)"/>
+  <path d="M41.8 27.6a8.4 8.4 0 0 1-1.6 13.2" fill="none" stroke="#3FA3F0" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="42.4" cy="25.2" r="2.9" fill="#3FA3F0"/>
+</svg>
+      Herbora<b>Tech</b></div>
     <div class="f-links">
       <a href="../index.html">Beranda</a>
       <a href="features.html">Fitur</a>

@@ -17,10 +17,7 @@
       --grade-d: #E74C3C;
     }
 
-    .app-header {
-      background: linear-gradient(135deg, #0D2B1A 0%, #1A5C38 100%);
-      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
-      position: sticky;
+    .app-header { background: var(--surface); box-shadow: 0 1px 3px rgba(16,24,40,0.06); border-bottom: 1px solid rgba(16,24,40,0.08); position: sticky;
       top: 0;
       z-index: 100;
       padding: 16px 24px;
@@ -33,7 +30,7 @@
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12);
       box-shadow: none;
-      color: #fff;
+      color: var(--text-primary);
       border: 1px solid rgba(255,255,255,0.1);
     }
 
@@ -44,7 +41,7 @@
     .app-header .title {
       font-size: 1.05rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--text-primary);
     }
 
     .header-spacer {
@@ -64,7 +61,7 @@
     }
 
     .grade-legend-item {
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       border-radius: 10px;
       padding: 10px;
@@ -141,7 +138,7 @@
     }
 
     .paper-grade-card {
-      background: var(--bg);
+      background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       border-radius: 10px;
       padding: 10px;
@@ -215,7 +212,7 @@
     }
 
     .neu-card {
-      background: var(--bg);
+      background: var(--surface);
       border-radius: 12px;
       box-shadow: var(--shadow-out-sm);
       padding: 12px;

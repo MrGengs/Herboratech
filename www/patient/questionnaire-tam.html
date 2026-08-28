@@ -14,13 +14,12 @@
       --tam-primary: #2F7D56;
       --tam-dark: #1D583B;
     }
-    .app-header {
-      background: linear-gradient(135deg, var(--tam-dark) 0%, var(--tam-primary) 100%);
+    .app-header { background: var(--surface); box-shadow: 0 1px 3px rgba(16,24,40,0.06); border-bottom: 1px solid rgba(16,24,40,0.08); 0%, var(--tam-primary) 100%);
       box-shadow: 0 2px 16px rgba(29,88,59, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
-      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1);
     }
     .app-header .page-title { color: var(--text-primary); font-size: 1.0rem; font-weight: 700; }
 
@@ -35,7 +34,7 @@
     .step-dots { display: flex; align-items: center; justify-content: center; gap: 0; }
     .step-dot {
       width: 28px; height: 28px; border-radius: 50%;
-      border: 2px solid var(--shadow-dark); background: var(--bg);
+      border: 2px solid var(--shadow-dark); background: var(--surface);
       box-shadow: var(--shadow-out-sm);
       display: flex; align-items: center; justify-content: center;
       font-size: 0.65rem; font-weight: 700; color: var(--text-tertiary);
@@ -73,7 +72,7 @@
     .btn-proceed:disabled { opacity: 0.5; cursor: not-allowed; }
 
     .likert-question {
-      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 16px;
+      background: var(--surface); box-shadow: var(--shadow-out-sm); border-radius: 16px;
       padding: 18px; margin-bottom: 14px;
     }
     .likert-question .q-text {
@@ -86,7 +85,7 @@
     }
     .likert-options { display: flex; flex-direction: column; gap: 8px; }
     .likert-opt {
-      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 10px; padding: 10px 14px;
+      background: var(--surface); box-shadow: var(--shadow-out-sm); border-radius: 10px; padding: 10px 14px;
       cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
       font-size: 0.78rem; font-weight: 500; color: var(--text-secondary);
       display: flex; align-items: center; gap: 10px;

@@ -15,18 +15,17 @@
       --primary-enc-dark: #29704D;
     }
 
-    .app-header {
-      background: linear-gradient(135deg, var(--primary-enc) 0%, #2FA46A 100%);
+    .app-header { background: var(--surface); box-shadow: 0 1px 3px rgba(16,24,40,0.06); border-bottom: 1px solid rgba(16,24,40,0.08); 0%, #2FA46A 100%);
       box-shadow: 0 2px 16px rgba(14, 124, 70, 0.25);
     }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12); box-shadow: none;
-      color: #fff; border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1);
     }
     .app-header .page-title { color: var(--text-primary); font-size: 1.0rem; font-weight: 700; }
 
     .search-bar {
-      background: var(--bg); box-shadow: var(--shadow-out-sm);
+      background: var(--surface); box-shadow: var(--shadow-out-sm);
       padding: 12px 16px; margin: 16px; border-radius: 14px;
       display: flex; gap: 10px; align-items: center;
     }
@@ -48,7 +47,7 @@
     }
 
     .disease-card {
-      background: var(--bg); box-shadow: var(--shadow-out-sm); border-radius: 16px;
+      background: var(--surface); box-shadow: var(--shadow-out-sm); border-radius: 16px;
       padding: 20px; margin: 16px; cursor: pointer; transition: all 0.3s;
       border-left: 5px solid transparent;
     }

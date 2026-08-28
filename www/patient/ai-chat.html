@@ -14,13 +14,10 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="../shared/firebase.js"></script>
   <style>
-    .app-header {
-      background: linear-gradient(135deg, #0C2B1C 0%, #1F6C46 100%);
-      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
-    }
+    .app-header { background: var(--surface); box-shadow: 0 1px 3px rgba(16,24,40,0.06); border-bottom: 1px solid rgba(16,24,40,0.08); }
     .app-header .neu-icon-btn {
       background: rgba(255,255,255,0.12);
-      box-shadow: none; color: #fff;
+      box-shadow: none; color: var(--text-primary);
       border: 1px solid rgba(255,255,255,0.1);
     }
 
@@ -109,7 +106,7 @@
     .chips-bar::-webkit-scrollbar { display: none; }
     .chip {
       flex-shrink: 0; padding: 6px 14px; border-radius: 20px;
-      background: var(--bg); box-shadow: var(--shadow-out-sm);
+      background: var(--surface); box-shadow: var(--shadow-out-sm);
       font-size: 0.72rem; font-weight: 500; color: var(--info);
       cursor: pointer; border: 1px solid rgba(47,125,86,0.2);
       white-space: nowrap; transition: all 0.15s;
@@ -141,7 +138,7 @@
     .chat-text-input::placeholder { color: var(--text-muted); }
     .chat-action-btn {
       width: 40px; height: 40px; border-radius: 50%; border: none;
-      background: var(--bg); box-shadow: var(--shadow-out-sm);
+      background: var(--surface); box-shadow: var(--shadow-out-sm);
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; color: var(--text-secondary); font-size: 1.1rem;
       transition: box-shadow 0.15s;
@@ -151,12 +148,12 @@
       background: linear-gradient(135deg, #1F6C46, #2F7D56);
       color: #fff; box-shadow: 0 3px 10px rgba(47,125,86,0.4);
     }
-    .chat-action-btn.send:disabled { background: var(--bg); color: var(--text-muted); box-shadow: var(--shadow-out-sm); }
+    .chat-action-btn.send:disabled { background: var(--surface); color: var(--text-muted); box-shadow: var(--shadow-out-sm); }
 
     /* No-key banner */
     .no-key-card {
       margin: 20px 16px; padding: 20px; border-radius: 16px;
-      background: var(--bg); box-shadow: var(--shadow-out);
+      background: var(--surface); box-shadow: var(--shadow-out);
       text-align: center;
     }
   </style>

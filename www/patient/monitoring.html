@@ -139,8 +139,15 @@
         <div class="neu-tab" style="font-size:0.7rem;">1 Tahun</div>
       </div>
       <div class="neu-card mt-16">
-        <div class="section-title" style="font-size:0.85rem;">Detak Jantung (7 Hari)</div>
+        <div class="section-title" style="font-size:0.85rem;">Detak Jantung (24 Jam)</div>
         <div id="hist-chart" style="height:100px;margin-top:12px;"></div>
+        <!-- Ditampilkan saat rentang yang dipilih tidak punya pembacaan.
+             Tanpa ini, layar diam-diam menyisakan angka rentang sebelumnya
+             dan pemakai mengira tabnya tidak berfungsi. -->
+        <div id="hist-empty" style="display:none;padding:18px 4px;text-align:center;">
+          <div style="font-size:0.8rem;font-weight:600;color:var(--text-secondary);">Belum ada data pada rentang ini</div>
+          <div style="font-size:0.7rem;color:var(--text-tertiary);margin-top:4px;">Hubungkan perangkat dan biarkan merekam beberapa saat.</div>
+        </div>
         <div style="display:flex;justify-content:space-between;margin-top:12px;">
           <div style="text-align:center"><span style="font-size:0.65rem;color:var(--text-muted);">Min</span><br><strong style="color:var(--info);">--</strong></div>
           <div style="text-align:center"><span style="font-size:0.65rem;color:var(--text-muted);">Rata-rata</span><br><strong>--</strong></div>
@@ -219,7 +226,10 @@
   document.querySelectorAll('.neu-tab[data-tab]').forEach(tab => {
     tab.addEventListener('click', () => {
       // Deactivate all main tabs
-      document.querySelectorAll('.neu-tabs:not(:has(.neu-tabs .neu-tabs)) .neu-tab').forEach(t => t.classList.remove('active'));
+      // Hanya tab tingkat atas yang disorot ulang. Selektor lama memakai
+      // :has() dengan pola yang tidak pernah cocok, sehingga ia ikut
+      // mencabut sorotan dari tab rentang di dalam panel Riwayat.
+      document.querySelectorAll('.neu-tab[data-tab]').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
 
       // Hide all panels
@@ -354,37 +364,60 @@
       ];
       const range = ranges[idx];
 
-      // Load from Firestore
+      const titleEl = document.querySelector('#history .section-title');
+      const statEls = document.querySelectorAll('#history .neu-card strong');
+      const chartEl = document.getElementById('hist-chart');
+      const emptyEl = document.getElementById('hist-empty');
+
+      // Judul diperbarui LEBIH DULU, di luar penjagaan data.
+      //
+      // Sebelumnya judul ikut di dalam blok "kalau ada pembacaan", sehingga
+      // ketika Firestore mengembalikan nol baris — keadaan yang wajar selama
+      // perangkat belum pernah tersambung — mengeklik tab apa pun tidak
+      // mengubah apa-apa. Layar terus menampilkan judul statis dari markup,
+      // dan keempat tab terasa tidak berfungsi.
+      if (titleEl) titleEl.textContent = `Detak Jantung (${range.label})`;
+
+      let hrData = [];
       try {
         const readings = await VDB.getVitalsHistory(user.uid, range.days);
-        if (readings && readings.length > 0) {
-          const hrData = readings.map(r => r.hr || 0).filter(v => v > 0);
-          const spo2Data = readings.map(r => r.spo2 || 0).filter(v => v > 0);
-
-          // Update title and chart
-          document.querySelector('#history .section-title').textContent = `Detak Jantung (${range.label})`;
-
-          // Calculate stats
-          const min = Math.min(...hrData);
-          const max = Math.max(...hrData);
-          const avg = Math.round(hrData.reduce((a, b) => a + b) / hrData.length);
-
-          const statEls = document.querySelectorAll('#history .neu-card strong');
-          if (statEls[0]) statEls[0].textContent = min;
-          if (statEls[1]) statEls[1].textContent = avg;
-          if (statEls[2]) statEls[2].textContent = max;
-
-          // Draw chart
-          sparkline(document.getElementById('hist-chart'), hrData.slice(-20), '#0E7C46', 80);
-        }
+        hrData = (readings || []).map(r => r.hr || 0).filter(v => v > 0);
       } catch (e) {
         console.warn('History load failed:', e);
       }
+
+      if (hrData.length === 0) {
+        statEls.forEach(el => el.textContent = '--');
+        if (chartEl) chartEl.innerHTML = '';
+        if (emptyEl) emptyEl.style.display = '';
+        return;
+      }
+      if (emptyEl) emptyEl.style.display = 'none';
+
+      // Min dan max dihitung dengan perulangan, bukan Math.min(...arr).
+      // Rentang "1 Tahun" bisa mengembalikan ratusan ribu baris, dan
+      // menyebarkannya sebagai argumen akan meluapkan tumpukan pemanggilan.
+      let min = hrData[0], max = hrData[0], sum = 0;
+      for (const v of hrData) {
+        if (v < min) min = v;
+        if (v > max) max = v;
+        sum += v;
+      }
+      const avg = Math.round(sum / hrData.length);
+
+      if (statEls[0]) statEls[0].textContent = min;
+      if (statEls[1]) statEls[1].textContent = avg;
+      if (statEls[2]) statEls[2].textContent = max;
+
+      sparkline(chartEl, hrData.slice(-20), '#0E7C46', 80);
     });
   });
 
   // Trigger first history tab on load
-  if (historySubTabs[1]) historySubTabs[1].click();
+  // Tab bawaan mengikuti yang ditandai aktif di markup, yaitu 24 Jam.
+  // Sebelumnya kode mengeklik indeks 1 sementara markup menandai indeks 0,
+  // sehingga sorotan tab dan isi yang dimuat tidak sinkron sejak awal.
+  if (historySubTabs[0]) historySubTabs[0].click();
 
   // ========== HRV TAB ==========
   const hrvTab = document.querySelector('.neu-tab[data-tab="hrv"]');

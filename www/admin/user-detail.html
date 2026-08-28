@@ -33,13 +33,13 @@
 
     .stats-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
     @media (min-width: 768px) { .stats-row { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
-    .stat-mini { background: var(--bg); border-radius: 16px; box-shadow: var(--shadow-out); padding: 20px; text-align: center; }
+    .stat-mini { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow-out); padding: 20px; text-align: center; }
     .stat-mini-val { font-size: 1.8rem; font-weight: 800; color: var(--primary-dark); }
     .stat-mini-lbl { font-size: 0.78rem; color: var(--text-tertiary); margin-top: 4px; }
 
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; align-items: center; justify-content: center; }
     .modal-overlay.open { display: flex; }
-    .modal-box { background: var(--bg); border-radius: 20px; box-shadow: var(--shadow-out); padding: 32px; max-width: 420px; width: 90%; }
+    .modal-box { background: var(--surface); border-radius: 20px; box-shadow: var(--shadow-out); padding: 32px; max-width: 420px; width: 90%; }
     .modal-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
     .modal-desc { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
     .modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
