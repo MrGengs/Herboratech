@@ -1,0 +1,78 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===== HERBALS COLLECTION =====
+    // Public read-only access (no auth required for AI consultation)
+    match /herbals/{herbalId} {
+      allow read: if true;
+      allow write: if false;
+
+      // Subcollections
+      match /drug_interactions/{docId} {
+        allow read: if true;
+        allow write: if false;
+      }
+
+      match /herbal_interactions/{docId} {
+        allow read: if true;
+        allow write: if false;
+      }
+
+      match /landmark_papers/{docId} {
+        allow read: if true;
+        allow write: if false;
+      }
+    }
+
+    // ===== FORMULAS COLLECTION =====
+    // Public read-only access
+    match /formulas/{formulaId} {
+      allow read: if true;
+      allow write: if false;
+
+      // Subcollections
+      match /ingredients/{docId} {
+        allow read: if true;
+        allow write: if false;
+      }
+
+      match /ingredient_sources/{docId} {
+        allow read: if true;
+        allow write: if false;
+      }
+
+      match /research_citations/{docId} {
+        allow read: if true;
+        allow write: if false;
+      }
+    }
+
+    // ===== CITATIONS COLLECTION =====
+    // Public read-only access
+    match /citations/{citationId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ===== ADMIN UPDATES (Requires admin token) =====
+    // For future updates by pharmacists/researchers
+    match /herbals/{herbalId}/{subcollection=**} {
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    match /formulas/{formulaId}/{subcollection=**} {
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    match /citations/{citationId} {
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // ===== DEFAULT DENY ALL =====
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

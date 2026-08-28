@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vitalora — Hasil Skrining</title>
+  <link rel="stylesheet" href="../shared/neumorphic.css">
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    .app-header { background: linear-gradient(135deg, #6C63FF, #8B7FFF); box-shadow: 0 2px 16px rgba(108,99,255,0.25); }
+    .app-header .neu-icon-btn { background: rgba(255,255,255,0.12); box-shadow: none; color: #fff; }
+    .app-header .page-title { color: #fff; }
+
+    .result-card {
+      background: var(--bg); box-shadow: var(--shadow-out-sm);
+      border-radius: 16px; padding: 24px; margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .result-score {
+      font-size: 3rem; font-weight: 800; margin: 20px 0;
+      color: var(--text-primary);
+    }
+
+    .result-label {
+      font-size: 0.9rem; font-weight: 700; color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .badge-risk {
+      display: inline-block; padding: 8px 16px; border-radius: 20px;
+      font-weight: 700; font-size: 0.85rem; margin-bottom: 20px;
+    }
+
+    .badge-risk.high { background: rgba(235,87,87,0.15); color: #EB5757; }
+    .badge-risk.medium { background: rgba(242,153,74,0.15); color: #F2994A; }
+    .badge-risk.low { background: rgba(39,174,96,0.15); color: #27AE60; }
+
+    .result-meta {
+      font-size: 0.75rem; color: var(--text-tertiary);
+      margin-top: 16px; padding-top: 16px;
+      border-top: 1px solid var(--shadow-dark);
+    }
+
+    .button-group { display: flex; gap: 12px; margin-top: 24px; }
+    .button-group button { flex: 1; }
+
+    .loading-state {
+      text-align: center; padding: 60px 20px;
+    }
+
+    .spinner {
+      width: 40px; height: 40px; margin: 0 auto 16px;
+      border: 3px solid var(--shadow-dark);
+      border-top-color: var(--accent);
+      border-radius: 50%; animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+<div class="mobile-frame page-enter">
+
+  <header class="app-header">
+    <button class="neu-icon-btn" onclick="goBack()" style="color:#fff;">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <div class="page-title" style="color:#fff;" id="headerTitle">Hasil Skrining</div>
+    <div style="width:42px"></div>
+  </header>
+
+  <div class="section">
+    <!-- Loading State -->
+    <div id="loading-state" class="loading-state">
+      <div class="spinner"></div>
+      <p style="color:var(--text-secondary);font-size:0.9rem;">Memproses hasil skrining...</p>
+    </div>
+
+    <!-- No Previous Results State -->
+    <div id="no-results-state" style="display:none;text-align:center;padding:60px 20px;">
+      <ion-icon name="checkmark-circle-outline" style="font-size:3rem;color:var(--primary);"></ion-icon>
+      <p style="margin-top:20px;color:var(--text-secondary);font-size:0.9rem;">Belum ada hasil skrining sebelumnya.</p>
+      <button class="neu-btn neu-btn-primary" style="margin-top:24px;width:100%;" onclick="startNewScreening()">
+        <ion-icon name="play-outline"></ion-icon> Mulai Skrining Baru
+      </button>
+    </div>
+
+    <!-- Results Display State -->
+    <div id="results-state" style="display:none;">
+      <div class="result-card">
+        <div class="result-label" id="resultLabel">Hasil Terbaru</div>
+        <div class="badge-risk" id="riskBadge">-</div>
+        <div class="result-score" id="scoreDisplay">-</div>
+        <div style="font-size:0.9rem;color:var(--text-secondary);" id="scoreLabel">Skor</div>
+        <div class="result-meta" id="resultMeta">Tanggal: -</div>
+      </div>
+
+      <div class="button-group">
+        <button class="neu-btn neu-btn-primary" onclick="startNewScreening()" style="flex:1;">
+          <ion-icon name="refresh-outline"></ion-icon> Skrining Ulang
+        </button>
+        <button class="neu-btn" onclick="goBack()" style="flex:1;">
+          <ion-icon name="arrow-back-outline"></ion-icon> Kembali
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../shared/firebase.js"></script>
+<script src="../shared/app.js"></script>
+<script>
+  const SCREENING_TYPE = new URLSearchParams(window.location.search).get('type') || 'dyslipidemia';
+  const SCREENING_MAP = {
+    'dyslipidemia': { label: 'Dyslipidemia', screen: 'screening-dyslipidemia.html' },
+    'hypertension': { label: 'Hipertensi', screen: 'screening-hypertension.html' },
+    'nafld': { label: 'NAFLD', screen: 'screening-nafld.html' },
+    'metabolic_syndrome': { label: 'Sindrom Metabolik', screen: 'screening-metabolic-syndrome.html' },
+    'obesity_insulin': { label: 'Resistensi Insulin', screen: 'screening-obesity-insulin.html' },
+    'depression': { label: 'Depresi', screen: 'screening-depression.html' }
+  };
+
+  async function initPreview() {
+    try {
+      // Get screening type from URL
+      const type = SCREENING_TYPE;
+      const screeningInfo = SCREENING_MAP[type];
+
+      if (!screeningInfo) {
+        showToast('Tipe skrining tidak dikenali', 'error');
+        setTimeout(() => nav('disease-risk.html'), 1500);
+        return;
+      }
+
+      // Update header
+      document.getElementById('headerTitle').textContent = screeningInfo.label;
+
+      // Try to get results from localStorage first (offline mode)
+      const localResults = JSON.parse(localStorage.getItem(type + '_results') || '[]');
+
+      if (localResults && localResults.length > 0) {
+        // Show latest result
+        displayResults(localResults[localResults.length - 1], screeningInfo);
+      } else {
+        // Try Firebase
+        try {
+          const { user } = await VAuth.guard('patient', 1);
+          const results = await VDB.getScreeningHistory(user.uid, type, 1);
+
+          if (results && results.length > 0) {
+            displayResults(results[0], screeningInfo);
+          } else {
+            showNoResults();
+          }
+        } catch (e) {
+          console.warn('[preview] Firebase unavailable, no local results either:', e);
+          showNoResults();
+        }
+      }
+    } catch (e) {
+      console.error('[preview] init error:', e);
+      showNoResults();
+    }
+  }
+
+  function displayResults(result, screeningInfo) {
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('no-results-state').style.display = 'none';
+    document.getElementById('results-state').style.display = 'block';
+
+    // Determine score display
+    let scoreText = result.score !== undefined ? result.score : (result.fib4Score ? result.fib4Score.toFixed(2) : result.totalScore);
+    let scoreLabel = result.score !== undefined ? 'Skor' : (result.fib4Score ? 'FIB-4' : 'Skor PHQ');
+
+    // Determine risk level
+    let riskLevel = result.riskLevel || 'Sedang';
+    let riskClass = 'medium';
+    if (riskLevel.includes('HIGH') || riskLevel.includes('TINGGI') || riskLevel.includes('BERAT')) riskClass = 'high';
+    else if (riskLevel.includes('LOW') || riskLevel.includes('RENDAH')) riskClass = 'low';
+
+    // Format date
+    let dateStr = 'Baru saja';
+    if (result.timestamp) {
+      const date = result.timestamp.toDate ? result.timestamp.toDate() : new Date(result.timestamp);
+      dateStr = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Populate UI
+    document.getElementById('scoreDisplay').textContent = scoreText;
+    document.getElementById('scoreLabel').textContent = scoreLabel;
+    document.getElementById('resultLabel').textContent = `Hasil Terbaru - ${screeningInfo.label}`;
+    document.getElementById('riskBadge').textContent = riskLevel;
+    document.getElementById('riskBadge').className = 'badge-risk ' + riskClass;
+    document.getElementById('resultMeta').innerHTML = `<strong>Tanggal:</strong> ${dateStr}<br><strong>Status:</strong> ${riskLevel}`;
+  }
+
+  function showNoResults() {
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('results-state').style.display = 'none';
+    document.getElementById('no-results-state').style.display = 'block';
+  }
+
+  function startNewScreening() {
+    const type = SCREENING_TYPE;
+    const screeningInfo = SCREENING_MAP[type];
+    if (screeningInfo) {
+      nav(screeningInfo.screen);
+    }
+  }
+
+  function goBack() {
+    nav('disease-risk.html');
+  }
+
+  // Initialize when page loads
+  initPreview();
+</script>
+</body>
+</html>

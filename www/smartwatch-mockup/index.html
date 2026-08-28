@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vitalora Smartwatch Mockup</title>
+  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <style>
+    /* ===== DESIGN TOKENS (untuk LVGL reference) ===== */
+    :root {
+      /* Colors - Vitalora style */
+      --primary: #27AE60;
+      --primary-dark: #1A5C38;
+      --primary-light: #6FCF97;
+      --bg-base: #FFFFFF;
+      --bg-card: #F8F8F8;
+      --border-light: #E0E0E0;
+      --text-primary: #333333;
+      --text-secondary: #666666;
+      --text-tertiary: #999999;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+
+      /* Danger/Alert colors */
+      --danger: #EB5757;
+      --warning: #F2994A;
+      --info: #2F80ED;
+      --success: #27AE60;
+
+      /* Typography */
+      --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-size-title: 16px;
+      --font-size-body: 12px;
+      --font-size-small: 10px;
+      --font-size-tiny: 9px;
+
+      /* Spacing */
+      --spacing-xs: 4px;
+      --spacing-sm: 8px;
+      --spacing-md: 12px;
+      --spacing-lg: 16px;
+
+      /* Border radius */
+      --radius-sm: 8px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: var(--spacing-md);
+    }
+
+    /* ===== SMARTWATCH FRAME ===== */
+    .smartwatch-container {
+      width: 172px;
+      height: 320px;
+      background: #1a1a1a;
+      border-radius: 28px;
+      padding: 8px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .smartwatch-display {
+      width: 100%;
+      height: 100%;
+      background: var(--bg-base);
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ===== SCREEN MANAGEMENT ===== */
+    .screens-wrapper {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+
+    .screen {
+      width: 172px;
+      height: 320px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+
+    .screen::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* ===== HEADER (Green gradient like Vitalora) ===== */
+    .screen-header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      padding: var(--spacing-md);
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .screen-header-title {
+      font-size: var(--font-size-title);
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .screen-header-icon {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    /* ===== CONTENT AREA ===== */
+    .screen-content {
+      flex: 1;
+      padding: var(--spacing-md);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+
+    /* ===== CARDS (Neumorphic style Vitalora) ===== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-title {
+      font-size: var(--font-size-tiny);
+      color: var(--text-tertiary);
+      font-weight: 500;
+      margin-bottom: var(--spacing-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .card-unit {
+      font-size: var(--font-size-tiny);
+      color: var(--text-tertiary);
+      font-weight: 500;
+    }
+
+    .card-label {
+      font-size: var(--font-size-body);
+      color: var(--text-primary);
+      font-weight: 600;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .card-sublabel {
+      font-size: var(--font-size-small);
+      color: var(--text-secondary);
+    }
+
+    /* ===== VITAL CARD WITH STATUS ===== */
+    .vital-card {
+      display: flex;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-md);
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .vital-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .vital-info {
+      flex: 1;
+    }
+
+    .vital-name {
+      font-size: var(--font-size-small);
+      color: var(--text-tertiary);
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .vital-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .vital-status {
+      font-size: var(--font-size-tiny);
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* ===== STATUS BADGE ===== */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: var(--font-size-tiny);
+      padding: 4px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+      margin-top: var(--spacing-sm);
+    }
+
+    .status-connected {
+      background: rgba(39, 174, 96, 0.12);
+      color: var(--primary);
+    }
+
+    .status-disconnected {
+      background: rgba(235, 87, 87, 0.12);
+      color: var(--danger);
+    }
+
+    .status-pulse {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* ===== BUTTON ===== */
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: var(--spacing-sm) var(--spacing-md);
+      font-size: var(--font-size-body);
+      font-weight: 600;
+      font-family: var(--font-family);
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+      margin-top: var(--spacing-md);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+      box-shadow: 0 1px 4px rgba(39, 174, 96, 0.3);
+    }
+
+    /* ===== SLIDER ===== */
+    .slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--font-size-body);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border-light);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      border: none;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ===== TOGGLE SWITCH ===== */
+    .toggle-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-md);
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .toggle-label {
+      display: flex;
+      gap: var(--spacing-sm);
+      align-items: center;
+      font-size: var(--font-size-body);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .toggle-icon {
+      font-size: 18px;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 24px;
+      background: var(--border-light);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-switch.active {
+      background: var(--primary);
+    }
+
+    .toggle-knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: left 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .toggle-switch.active .toggle-knob {
+      left: 18px;
+    }
+
+    /* ===== VITALS GRID ===== */
+    .vitals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-sm);
+    }
+
+    .vital-mini-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-sm);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .vital-mini-icon {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .vital-mini-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .vital-mini-unit {
+      font-size: var(--font-size-tiny);
+      color: var(--text-tertiary);
+    }
+
+    .vital-mini-label {
+      font-size: 8px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    /* ===== HRV METRICS ===== */
+    .hrv-metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-sm);
+      background: var(--bg-card);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--spacing-sm);
+      border-left: 3px solid var(--primary);
+    }
+
+    .hrv-label {
+      font-size: var(--font-size-small);
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .hrv-value {
+      font-size: var(--font-size-body);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* ===== INFO ITEM ===== */
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-md);
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .info-label {
+      font-size: var(--font-size-body);
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .info-value {
+      font-size: var(--font-size-body);
+      color: var(--primary);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* ===== SWIPE INDICATOR ===== */
+    .swipe-indicator {
+      text-align: center;
+      padding: var(--spacing-sm);
+      font-size: var(--font-size-tiny);
+      color: var(--text-tertiary);
+      margin-top: auto;
+    }
+
+    /* ===== CONNECTION ALERT ===== */
+    .alert {
+      background: rgba(235, 87, 87, 0.1);
+      border-left: 4px solid var(--danger);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .alert-title {
+      font-size: var(--font-size-body);
+      color: var(--danger);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .alert-text {
+      font-size: var(--font-size-small);
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      .smartwatch-container {
+        width: 100vw;
+        max-width: 172px;
+        height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="smartwatch-container">
+  <div class="smartwatch-display">
+    <div class="screens-wrapper" id="screensWrapper">
+
+      <!-- ===== SCREEN 1: BLE CONNECTIVITY ===== -->
+      <div class="screen" id="screen-1">
+        <div class="screen-header">
+          <span class="screen-header-title">BLE Connection</span>
+          <span class="screen-header-icon">📡</span>
+        </div>
+        <div class="screen-content">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:var(--spacing-md);">
+            <div style="font-size:40px;">📡</div>
+            <div id="ble-status-text" style="font-size:20px;font-weight:700;color:var(--primary);text-align:center;">Connected</div>
+            <div id="ble-status-label" style="font-size:var(--font-size-body);color:var(--text-tertiary);text-align:center;">BLE Active</div>
+          </div>
+
+          <div class="card">
+            <div style="display:flex;gap:var(--spacing-md);align-items:center;">
+              <span style="font-size:18px;">📱</span>
+              <div style="flex:1;">
+                <div class="card-label">Vitalora Phone</div>
+                <div class="card-sublabel">Signal: -45 dBm</div>
+              </div>
+            </div>
+            <div class="status-badge status-connected" style="margin-left:26px;">
+              <span class="status-pulse"></span> Connected
+            </div>
+          </div>
+
+          <button class="btn" onclick="simulateConnect()">Scan Devices</button>
+
+          <div class="swipe-indicator">← Swipe untuk navigasi →</div>
+        </div>
+      </div>
+
+      <!-- ===== SCREEN 2: VITAL SIGNS (Main) ===== -->
+      <div class="screen" id="screen-2">
+        <div class="screen-header">
+          <span class="screen-header-title">Vital Signs</span>
+          <span class="screen-header-icon">❤️</span>
+        </div>
+        <div class="screen-content">
+          <!-- Primary Vital: Heart Rate -->
+          <div style="text-align:center;margin-bottom:var(--spacing-md);">
+            <div style="font-size:32px;margin-bottom:var(--spacing-xs);">❤️</div>
+            <div class="card-title">HEART RATE</div>
+            <div style="font-size:32px;font-weight:700;color:var(--primary);line-height:1;">
+              <span id="hr-value">72</span>
+            </div>
+            <div class="card-unit">bpm</div>
+          </div>
+
+          <!-- Secondary Vitals Grid -->
+          <div class="vitals-grid">
+            <div class="vital-mini-card">
+              <div class="vital-mini-icon">🩸</div>
+              <div class="vital-mini-label">SpO2</div>
+              <div class="vital-mini-value"><span id="spo2-value">98</span><span class="vital-mini-unit">%</span></div>
+            </div>
+            <div class="vital-mini-card">
+              <div class="vital-mini-icon">🌡️</div>
+              <div class="vital-mini-label">Temp</div>
+              <div class="vital-mini-value"><span id="temp-value">36.8</span><span class="vital-mini-unit">°C</span></div>
+            </div>
+            <div class="vital-mini-card">
+              <div class="vital-mini-icon">🫁</div>
+              <div class="vital-mini-label">RR</div>
+              <div class="vital-mini-value"><span id="rr-value">16</span><span class="vital-mini-unit">/m</span></div>
+            </div>
+            <div class="vital-mini-card">
+              <div class="vital-mini-icon">😰</div>
+              <div class="vital-mini-label">Stress</div>
+              <div class="vital-mini-value"><span id="stress-value">35</span><span class="vital-mini-unit">%</span></div>
+            </div>
+          </div>
+
+          <!-- Steps -->
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div class="card-title">DAILY STEPS</div>
+                <div style="font-size:20px;font-weight:700;color:var(--primary);">
+                  <span id="steps-value">6,842</span>
+                </div>
+              </div>
+              <span style="font-size:28px;">🚶</span>
+            </div>
+          </div>
+
+          <div class="swipe-indicator">← Swipe untuk navigasi →</div>
+        </div>
+      </div>
+
+      <!-- ===== SCREEN 3: SETTINGS ===== -->
+      <div class="screen" id="screen-3">
+        <div class="screen-header">
+          <span class="screen-header-title">Settings</span>
+          <span class="screen-header-icon">⚙️</span>
+        </div>
+        <div class="screen-content">
+          <!-- Brightness -->
+          <div class="card">
+            <div style="display:flex;gap:var(--spacing-sm);align-items:center;margin-bottom:var(--spacing-md);">
+              <span style="font-size:18px;">☀️</span>
+              <div style="flex:1;">
+                <div class="card-label">Brightness</div>
+              </div>
+              <span id="brightness-value" style="font-size:var(--font-size-body);color:var(--primary);font-weight:700;">80%</span>
+            </div>
+            <input type="range" class="slider" id="brightness-slider" min="0" max="100" value="80" oninput="updateBrightness(this.value)">
+          </div>
+
+          <!-- Bluetooth Toggle -->
+          <div class="toggle-group">
+            <div class="toggle-label">
+              <span class="toggle-icon">📡</span>
+              <span>Bluetooth</span>
+            </div>
+            <div class="toggle-switch active" onclick="toggleBluetooth(this)">
+              <div class="toggle-knob"></div>
+            </div>
+          </div>
+
+          <!-- WiFi Toggle -->
+          <div class="toggle-group">
+            <div class="toggle-label">
+              <span class="toggle-icon">📶</span>
+              <span>WiFi</span>
+            </div>
+            <div class="toggle-switch" onclick="toggleWiFi(this)">
+              <div class="toggle-knob"></div>
+            </div>
+          </div>
+
+          <!-- Battery Info -->
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div class="card-title">BATTERY</div>
+                <div style="font-size:18px;font-weight:700;color:var(--primary);">
+                  <span id="battery-value">87</span>%
+                </div>
+              </div>
+              <span style="font-size:24px;">🔋</span>
+            </div>
+          </div>
+
+          <div class="swipe-indicator">← Swipe untuk navigasi →</div>
+        </div>
+      </div>
+
+      <!-- ===== SCREEN 4: DEVICE INFO ===== -->
+      <div class="screen" id="screen-4">
+        <div class="screen-header">
+          <span class="screen-header-title">Device Info</span>
+          <span class="screen-header-icon">ℹ️</span>
+        </div>
+        <div class="screen-content">
+          <!-- Device Name -->
+          <div class="info-item">
+            <span class="info-label">📱 Device Name</span>
+            <span class="info-value">Vitalora Watch</span>
+          </div>
+
+          <!-- Firmware -->
+          <div class="info-item">
+            <span class="info-label">⚡ Firmware</span>
+            <span class="info-value">v1.2.3</span>
+          </div>
+
+          <!-- Battery -->
+          <div class="info-item">
+            <span class="info-label">🔋 Battery</span>
+            <span class="info-value"><span id="battery-info">87</span>%</span>
+          </div>
+
+          <!-- MAC Address -->
+          <div class="info-item">
+            <span class="info-label">🔗 BLE MAC</span>
+            <span class="info-value" style="font-size:9px;font-family:monospace;">AA:BB:CC:DD:EE:FF</span>
+          </div>
+
+          <!-- HRV Metrics -->
+          <div style="margin-top:var(--spacing-md);">
+            <div class="card-title" style="margin-bottom:var(--spacing-sm);">HRV METRICS</div>
+            <div class="hrv-metric">
+              <span class="hrv-label">SDNN</span>
+              <span class="hrv-value"><span id="sdnn-value">42</span> ms</span>
+            </div>
+            <div class="hrv-metric">
+              <span class="hrv-label">RMSSD</span>
+              <span class="hrv-value"><span id="rmssd-value">38</span> ms</span>
+            </div>
+            <div class="hrv-metric">
+              <span class="hrv-label">pNN50</span>
+              <span class="hrv-value"><span id="pnn50-value">18</span> %</span>
+            </div>
+          </div>
+
+          <div class="swipe-indicator">← Swipe untuk navigasi →</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== DESIGN TOKENS (Reference for LVGL) =====
+  const DESIGN_TOKENS = {
+    colors: {
+      primary: '#27AE60',
+      primaryDark: '#1A5C38',
+      primaryLight: '#6FCF97',
+      bgBase: '#FFFFFF',
+      bgCard: '#F8F8F8',
+      borderLight: '#E0E0E0',
+      textPrimary: '#333333',
+      textSecondary: '#666666',
+      textTertiary: '#999999',
+      danger: '#EB5757',
+      warning: '#F2994A',
+      info: '#2F80ED',
+      success: '#27AE60'
+    },
+    sizes: {
+      screenWidth: 172,
+      screenHeight: 320,
+      headerHeight: 50,
+      cardPadding: 12,
+      cardRadius: 10
+    },
+    typography: {
+      fontFamily: 'Poppins',
+      sizes: {
+        title: '16px',
+        body: '12px',
+        small: '10px',
+        tiny: '9px'
+      },
+      weights: {
+        bold: 700,
+        semibold: 600,
+        medium: 500,
+        regular: 400
+      }
+    },
+    spacing: {
+      xs: '4px',
+      sm: '8px',
+      md: '12px',
+      lg: '16px'
+    }
+  };
+
+  // ===== STATE & SENSOR DATA =====
+  const sensorData = {
+    hr: 72,
+    spo2: 98,
+    temperature: 36.8,
+    rr: 16,
+    stress: 35,
+    steps: 6842,
+    battery: 87,
+    sdnn: 42,
+    rmssd: 38,
+    pnn50: 18,
+    brightness: 80,
+    bleConnected: true,
+    wifiEnabled: false
+  };
+
+  let currentScreen = 1;
+  const totalScreens = 4;
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  // ===== INITIALIZATION =====
+  function init() {
+    setupTouchHandlers();
+    updateSensorDisplay();
+    startSensorSimulation();
+  }
+
+  // ===== TOUCH & SWIPE HANDLING =====
+  function setupTouchHandlers() {
+    const wrapper = document.getElementById('screensWrapper');
+
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    });
+
+    document.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+
+      // Only trigger swipe if horizontal movement > vertical
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
+        if (deltaX > 0) {
+          swipeToScreen(currentScreen - 1);
+        } else {
+          swipeToScreen(currentScreen + 1);
+        }
+      }
+    });
+
+    // Mouse support for desktop testing
+    document.addEventListener('mousedown', (e) => {
+      touchStartX = e.clientX;
+      touchStartY = e.clientY;
+    });
+
+    document.addEventListener('mouseup', (e) => {
+      const deltaX = e.clientX - touchStartX;
+      const deltaY = e.clientY - touchStartY;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
+        if (deltaX > 0) {
+          swipeToScreen(currentScreen - 1);
+        } else {
+          swipeToScreen(currentScreen + 1);
+        }
+      }
+    });
+  }
+
+  function swipeToScreen(screenNum) {
+    if (screenNum < 1 || screenNum > totalScreens) return;
+    currentScreen = screenNum;
+
+    const wrapper = document.getElementById('screensWrapper');
+    const offset = -(screenNum - 1) * 172;
+    wrapper.style.transform = `translateX(${offset}px)`;
+
+    console.log(`Switched to screen ${screenNum}`);
+  }
+
+  // ===== SENSOR DATA SIMULATION =====
+  function startSensorSimulation() {
+    setInterval(() => {
+      // Simulate HR variation ±2-5 bpm
+      sensorData.hr += Math.floor((Math.random() - 0.5) * 4);
+      sensorData.hr = Math.max(60, Math.min(100, sensorData.hr));
+
+      // Simulate SpO2 variation ±1%
+      sensorData.spo2 += Math.floor((Math.random() - 0.5) * 2);
+      sensorData.spo2 = Math.max(95, Math.min(100, sensorData.spo2));
+
+      // Simulate Temp variation ±0.1°C
+      sensorData.temperature += (Math.random() - 0.5) * 0.1;
+      sensorData.temperature = Math.max(36.0, Math.min(37.5, sensorData.temperature));
+
+      // Simulate RR variation
+      sensorData.rr += Math.floor((Math.random() - 0.5) * 2);
+      sensorData.rr = Math.max(12, Math.min(20, sensorData.rr));
+
+      // Simulate Stress variation
+      sensorData.stress += Math.floor((Math.random() - 0.5) * 4);
+      sensorData.stress = Math.max(10, Math.min(90, sensorData.stress));
+
+      // Increment steps randomly
+      sensorData.steps += Math.floor(Math.random() * 3);
+
+      // Battery slowly decreases
+      sensorData.battery = Math.max(0, sensorData.battery - 0.1);
+
+      updateSensorDisplay();
+    }, 2000); // Update every 2 seconds
+  }
+
+  function updateSensorDisplay() {
+    // Screen 2: Vitals
+    document.getElementById('hr-value').textContent = sensorData.hr;
+    document.getElementById('spo2-value').textContent = sensorData.spo2;
+    document.getElementById('temp-value').textContent = sensorData.temperature.toFixed(1);
+    document.getElementById('rr-value').textContent = sensorData.rr;
+    document.getElementById('stress-value').textContent = sensorData.stress;
+    document.getElementById('steps-value').textContent = sensorData.steps.toLocaleString();
+
+    // Screen 3: Settings
+    document.getElementById('battery-value').textContent = Math.round(sensorData.battery);
+
+    // Screen 4: Device Info
+    document.getElementById('battery-info').textContent = Math.round(sensorData.battery);
+  }
+
+  // ===== INTERACTIVE CONTROLS =====
+  function updateBrightness(value) {
+    sensorData.brightness = value;
+    document.getElementById('brightness-value').textContent = value + '%';
+    console.log(`Brightness: ${value}%`);
+  }
+
+  function toggleBluetooth(element) {
+    element.classList.toggle('active');
+    sensorData.bleConnected = element.classList.contains('active');
+    console.log(`Bluetooth: ${sensorData.bleConnected ? 'ON' : 'OFF'}`);
+  }
+
+  function toggleWiFi(element) {
+    element.classList.toggle('active');
+    sensorData.wifiEnabled = element.classList.contains('active');
+    console.log(`WiFi: ${sensorData.wifiEnabled ? 'ON' : 'OFF'}`);
+  }
+
+  function simulateConnect() {
+    alert('Scanning for BLE devices...');
+    console.log('Scan initiated');
+  }
+
+  // Start the app
+  init();
+</script>
+
+</body>
+</html>
