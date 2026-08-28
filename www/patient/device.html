@@ -5,10 +5,10 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" href="../favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HerboraTech — Perangkat</title>
+  <title>Herboratech — Perangkat</title>
   <link rel="stylesheet" href="../shared/neumorphic.css">
-  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
-  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script type='module' src='https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js'></script>
   <style>
     body { background: var(--bg); }
     .mobile-frame { max-width: 480px; margin: 0 auto; }
@@ -521,7 +521,18 @@
   <div class="section" style="padding-bottom:0;">
     <button id="scanBtn" class="neu-btn-primary scan-btn" onclick="startScan()">
       <ion-icon name="bluetooth-outline"></ion-icon>
-      <span id="scanBtnText">Scan Perangkat HerboraTech</span>
+      <span id="scanBtnText">Scan Herboratech</span>
+    </button>
+
+    <!--  Jalan keluar saat kotak pilih Chrome tetap kosong. Penyaring yang
+          normal hanya menampilkan perangkat yang cocok; kalau di mode ini
+          pun jam tidak terlihat, penyebabnya ada di papan atau adapter dan
+          bukan di penyaring — itu memisahkan dua kemungkinan yang dari
+          sisi pengguna terlihat persis sama.  -->
+    <button id="scanAnyBtn" class="neu-btn" onclick="startScan(true)"
+            style="width:100%;margin-top:10px;font-size:0.8rem;">
+      <ion-icon name="search-outline"></ion-icon>
+      <span>Jam tidak muncul? Tampilkan semua perangkat</span>
     </button>
 
     <div style="margin-top:14px;">
@@ -545,7 +556,7 @@
       <div class="empty-state">
         <div class="empty-state-icon">📡</div>
         <div class="empty-state-text">Belum ada perangkat</div>
-        <div class="empty-state-hint">Tekan "Scan" untuk mencari HerboraTech Watch</div>
+        <div class="empty-state-hint">Tekan "Scan" untuk mencari Herboratech</div>
       </div>
     </div>
   </div>
@@ -617,6 +628,7 @@
 let isConnected = false;
 let isScanning = false;
 let _unsubBLE = null;
+let _unsubSession = null;
 
 // DOM Elements
 const scanBtn = document.getElementById('scanBtn');
@@ -642,14 +654,29 @@ const autoReconnectToggle = document.getElementById('autoReconnect');
   const { user, profile } = await VAuth.guard('patient', 1);
 })();
 
-// Check browser support
-function checkBrowserSupport() {
-  if (!navigator.bluetooth) {
+/*  Tiga prasyarat Web Bluetooth gagal dengan gejala yang SAMA dari sisi
+ *  pengguna — kotak pilih kosong, "perangkat tidak muncul" — padahal
+ *  penyebab dan penanganannya berbeda:
+ *    · browser tanpa Web Bluetooth (Firefox, Safari)  -> ganti browser
+ *    · halaman bukan secure context (http:// atau file://) -> ganti URL
+ *    · adapter Bluetooth mati                          -> nyalakan
+ *  Dulu ketiganya dilaporkan sebagai "API tidak didukung", yang menyuruh
+ *  pengguna mengganti browser padahal browsernya sudah benar. */
+async function checkBrowserSupport() {
+  const sup = BLEManager.checkSupport();
+  if (!sup.ok) {
     browserWarningSection.style.display = 'block';
     scanBtn.disabled = true;
     scanBtn.style.opacity = '0.5';
-    log('Web Bluetooth API tidak didukung', 'error');
+    const anyBtn = document.getElementById('scanAnyBtn');
+    if (anyBtn) { anyBtn.disabled = true; anyBtn.style.opacity = '0.5'; }
+    log(sup.message, 'error');
     return false;
+  }
+
+  if (!(await BLEManager.isAdapterAvailable())) {
+    log('Adapter Bluetooth perangkat ini mati. Nyalakan dulu, lalu scan lagi.', 'warning');
+    // sengaja TIDAK men-disable tombol: adapter bisa dinyalakan tanpa muat ulang
   }
   return true;
 }
@@ -707,12 +734,15 @@ function updateConnectionStatus(status) {
 function subscribeBLEData() {
   if (_unsubBLE) _unsubBLE(); // Remove previous subscription
   _unsubBLE = BLEManager.onData((data) => {
-    // Update live vitals preview
-    if (data.hr) document.getElementById('liveHR').textContent = data.hr;
-    if (data.spo2) document.getElementById('liveSpO2').textContent = Math.round(data.spo2);
-    if (data.temp != null) {
-      document.getElementById('liveTemp').textContent = typeof data.temp === 'number' ? data.temp.toFixed(1) : data.temp;
-    }
+    /*  Firmware menandai nilai yang TIDAK sah lewat bendera, dan
+     *  BLEManager menerjemahkannya jadi null. Nol adalah angka; "belum
+     *  terukur" bukan. Keduanya harus terlihat berbeda di layar — sama
+     *  seperti jam yang menampilkan "-". */
+    const num = (v, d = 0) => (v == null ? '--' : v.toFixed(d));
+
+    document.getElementById('liveHR').textContent   = num(data.hr);
+    document.getElementById('liveSpO2').textContent = num(data.spo2);
+    document.getElementById('liveTemp').textContent = num(data.temp, 1);
 
     // Display in data area
     const time = new Date().toLocaleTimeString('id-ID');
@@ -720,7 +750,7 @@ function subscribeBLEData() {
     entry.className = 'data-entry';
     entry.innerHTML = `
       <span class="data-timestamp">[${time}]</span>
-      <span class="data-value">HR: ${data.hr || '--'} | SpO2: ${data.spo2 || '--'} | Suhu: ${data.temp != null ? (typeof data.temp === 'number' ? data.temp.toFixed(1) : data.temp) : '--'}°C | Steps: ${data.steps || 0}</span>
+      <span class="data-value">HR: ${num(data.hr)} | SpO2: ${num(data.spo2)} | Suhu: ${num(data.temp, 1)}°C | HRV: ${num(data.hrv)} ms | Langkah: ${data.steps} | Baterai: ${num(data.battery)}%</span>
     `;
     dataDisplay.appendChild(entry);
     dataDisplay.scrollTop = dataDisplay.scrollHeight;
@@ -730,7 +760,14 @@ function subscribeBLEData() {
       dataDisplay.removeChild(dataDisplay.firstChild);
     }
 
-    log(`Data diterima: HR=${data.hr} SpO2=${data.spo2} Suhu=${data.temp} Steps=${data.steps}`, 'success');
+    log(`Data diterima: HR=${num(data.hr)} SpO2=${num(data.spo2)} ` +
+        `Suhu=${num(data.temp, 1)} Langkah=${data.steps}`, 'success');
+  });
+
+  if (_unsubSession) _unsubSession();
+  _unsubSession = BLEManager.onSession((r) => {
+    log(`Hasil pemeriksaan terpandu: HR=${r.hr ?? '--'} SpO2=${r.spo2 ?? '--'} ` +
+        `Suhu=${r.temp ?? '--'}°C`, 'success');
   });
 }
 
@@ -747,7 +784,7 @@ function displayDevice(name, id) {
   deviceItem.innerHTML = `
     <div class="device-icon connected">⌚</div>
     <div class="device-info">
-      <div class="device-name">${name || 'HerboraTech Watch'}</div>
+      <div class="device-name">${name || 'Herboratech'}</div>
       <div class="device-id">${id ? id.substring(0, 20) + '...' : 'Connected'}</div>
       <div class="device-meta">
         <div class="rssi-indicator">
@@ -767,8 +804,8 @@ function displayDevice(name, id) {
 }
 
 // Start BLE scan — uses BLEManager singleton
-async function startScan() {
-  if (!checkBrowserSupport()) return;
+async function startScan(anyDevice = false) {
+  if (!(await checkBrowserSupport())) return;
 
   try {
     isScanning = true;
@@ -779,7 +816,8 @@ async function startScan() {
     log('Memulai scan BLE...', 'info');
 
     // Use BLEManager for connection (handles scan, connect, notifications)
-    const success = await BLEManager.connect();
+    const success = anyDevice ? await BLEManager.connectAnyDevice()
+                              : await BLEManager.connect();
 
     if (success) {
       const status = BLEManager.getStatus();
@@ -788,8 +826,26 @@ async function startScan() {
       log('Service & Characteristic ditemukan', 'success');
       log('Notifications aktif', 'success');
 
+      /*  Jam tidak punya sumber waktu sendiri — RTC-nya berjalan terus saat
+       *  daya mati, tapi tidak pernah tahu jam berapa sekarang sampai ada
+       *  yang memberitahunya. Dibandingkan di sini supaya kalau cap waktu
+       *  riwayat kesehatan meleset, selisihnya terlihat, bukan ditebak. */
+      if (status.lastTimeSyncAt) {
+        const jam = await BLEManager.readDeviceTime();
+        if (jam) {
+          const selisih = Math.round((jam - new Date()) / 1000);
+          log(`Waktu tersinkron — jam di band ${jam.toLocaleString('id-ID')} ` +
+              `(selisih ${selisih >= 0 ? '+' : ''}${selisih} detik)`,
+              Math.abs(selisih) <= 2 ? 'success' : 'warning');
+        } else {
+          log('Waktu dikirim ke jam', 'success');
+        }
+      } else {
+        log('Waktu GAGAL dikirim — cap waktu di jam tidak akan akurat', 'warning');
+      }
+
       // Update UI
-      deviceNameMain.textContent = status.deviceName || 'HerboraTech Watch';
+      deviceNameMain.textContent = status.deviceName || 'Herboratech';
       deviceIdMain.textContent = `ID: ${status.deviceId?.substring(0, 17) || '...'}`;
       updateConnectionStatus('connected');
       showToast('Perangkat terhubung!', 'success');
@@ -811,7 +867,7 @@ async function startScan() {
     isScanning = false;
     scanBtn.classList.remove('scanning');
     scanBtn.disabled = false;
-    scanBtnText.textContent = 'Scan Perangkat HerboraTech';
+    scanBtnText.textContent = 'Scan Herboratech';
   }
 }
 
@@ -820,6 +876,7 @@ async function disconnectDevice() {
   try {
     await BLEManager.disconnect();
     if (_unsubBLE) { _unsubBLE(); _unsubBLE = null; }
+    if (_unsubSession) { _unsubSession(); _unsubSession = null; }
     log('Terputus oleh pengguna', 'info');
   } catch (error) {
     log(`Disconnect error: ${error.message}`, 'error');
@@ -875,7 +932,7 @@ function refreshStatus() {
 
   if (status.connected) {
     updateConnectionStatus('connected');
-    deviceNameMain.textContent = status.deviceName || 'HerboraTech Watch';
+    deviceNameMain.textContent = status.deviceName || 'Herboratech';
     deviceIdMain.textContent = `ID: ${status.deviceId?.substring(0, 17) || '...'}`;
     showToast('Perangkat terhubung', 'success');
   } else {
@@ -900,7 +957,7 @@ setInterval(() => {
         const ok = await BLEManager.connect();
         if (ok) {
           const s = BLEManager.getStatus();
-          deviceNameMain.textContent = s.deviceName || 'HerboraTech Watch';
+          deviceNameMain.textContent = s.deviceName || 'Herboratech';
           deviceIdMain.textContent = `ID: ${s.deviceId?.substring(0, 17) || '...'}`;
           updateConnectionStatus('connected');
           subscribeBLEData();
@@ -912,16 +969,16 @@ setInterval(() => {
 }, 3000);
 
 // Initialize
-checkBrowserSupport();
+checkBrowserSupport();   // async, hasilnya dilaporkan lewat log
 log('BLE Scanner diinisialisasi', 'info');
-log('Mencari perangkat dengan prefix: "HerboraTech"', 'info');
+log('Penyaring pindai: UUID layanan 6f1a0000-… + nama berawalan "Herboratech"', 'info');
 
 // Check if BLEManager is already connected (e.g. from another page)
 if (window.BLEManager) {
   const status = BLEManager.getStatus();
   if (status.connected) {
     updateConnectionStatus('connected');
-    deviceNameMain.textContent = status.deviceName || 'HerboraTech Watch';
+    deviceNameMain.textContent = status.deviceName || 'Herboratech';
     deviceIdMain.textContent = `ID: ${status.deviceId?.substring(0, 17) || '...'}`;
     displayDevice(status.deviceName, status.deviceId);
     log('Terhubung dari sesi sebelumnya', 'success');
