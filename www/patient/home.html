@@ -638,6 +638,10 @@ async function loadAds() {
 function updateHealthScoreDisplay(score) {
   const scoreEl = document.getElementById('main-health-score');
   if (scoreEl) scoreEl.textContent = score;
+  // Busur cincin dibaca dari --pct, jadi angka saja tidak cukup: tanpa baris
+  // ini cincin tetap menggambar nilai baku di CSS berapa pun skornya.
+  const ringEl = document.querySelector('.score-ring');
+  if (ringEl) ringEl.style.setProperty('--pct', Math.max(0, Math.min(100, Number(score) || 0)));
   const changeEl = document.getElementById('score-change-label');
   if (changeEl) {
     const prevScore = parseInt(localStorage.getItem('herboratech_prev_score') || score);
