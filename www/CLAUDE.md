@@ -142,8 +142,8 @@ herboratech/
   <title>HerboraTech — [JUDUL]</title>
   <!-- Sesuaikan path relatif ke shared/ -->
   <link rel="stylesheet" href="../shared/neumorphic.css">
-  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
-  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script type='module' src='https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js'></script>
 </head>
 <body>
 <div class="mobile-frame page-enter">
@@ -187,8 +187,8 @@ herboratech/
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HerboraTech — Admin [JUDUL]</title>
   <link rel="stylesheet" href="../shared/neumorphic.css">
-  <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
-  <script nomodule src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+  <script type='module' src='https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js'></script>
+  <script nomodule src='https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js'></script>
 </head>
 <body>
 <div class="admin-layout">
